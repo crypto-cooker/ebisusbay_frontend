@@ -1,5 +1,9 @@
 import ListingsRepository from "@src/core/services/api-service/mapi/repositories/listings";
-import {ListingsQuery, ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
+import {
+  ListingsQuery,
+  ListingsQueryParams,
+  listingsQuerySchema
+} from "@src/core/services/api-service/mapi/queries/listings";
 import {PagedList} from "@src/core/services/api-service/paginated-list";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
 import axios from "axios";
@@ -50,7 +54,11 @@ class Mapi {
   }
 
   async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
-    const response = await this.listings.getListings(new ListingsQuery(query));
+    if (query && query.collection !== undefined && !Array.isArray(query.collection)) {
+      query.collection = [query.collection];
+    }
+    const casted = listingsQuerySchema.cast(query) as ListingsQueryParams;
+    const response = await this.listings.getListings(new ListingsQuery(casted));
 
     return new PagedList<Listing>(
       response.data.listings,

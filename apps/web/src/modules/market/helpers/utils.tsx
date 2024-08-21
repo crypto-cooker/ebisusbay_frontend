@@ -9,6 +9,7 @@ import ImageService from "@src/core/services/image";
 import {ethers} from "ethers";
 import {MouseEventHandler} from "react";
 import Decimal from 'decimal.js-light';
+import knownTokens from '@src/modules/dex/config/tokens.json';
 
 const config = appConfig();
 const drops = config.drops;
@@ -743,8 +744,8 @@ export const titleCase = (str: string) => {
 }
 
 export const knownErc20Token = (address: string) => {
-  const value = Object.entries(config.tokens).find(([key, value]) => ciEquals(value.address, address));
-  return value ? value[1] : null;
+  const value = knownTokens.tokens.find(token => ciEquals(token.address, address));
+  return value ?? null;
 }
 
 export const isFortuneToken = (address: string) => {

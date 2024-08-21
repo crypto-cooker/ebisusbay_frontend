@@ -39,6 +39,8 @@ import {toast} from "react-toastify";
 import useCart from "@market/hooks/use-cart";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBagShopping, faHand} from "@fortawesome/free-solid-svg-icons";
+import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
+import {CurrencyLogoByAddress} from "@dex/components/logo";
 
 const config = appConfig();
 
@@ -53,8 +55,7 @@ interface PriceActionBarProps {
 }
 
 const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }: PriceActionBarProps) => {
-  const [runAuthedFunction] = useAuthedFunction();
-  const cart = useCart();
+   const cart = useCart();
 
   const { currentListing: listing, nft } = useAppSelector((state) => state.nft);
   const [canBuy, setCanBuy] = useState(false);
@@ -66,9 +67,10 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     {base: true, sm: false},
     {fallback: 'sm'},
   );
+  const [runAuthedFunction] = useAuthedFunctionWithChainID(listing.chain);
 
   const handlePurchaseSelected = async () => {
-    await runAuthedFunction(() => setIsPurchaseDialogOpen(true));
+    await runAuthedFunction(() => setIsPurchaseDialogOpen(true), listing.chain);
   };
 
   const handleSellSelected = () => {
@@ -181,7 +183,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                   <span>
                     {listing ? (
                       <Stack direction='row' alignItems='center'>
-                        <DynamicCurrencyIcon address={listing.currency} boxSize={6} />
+                        <CurrencyLogoByAddress address={listing.currency} chainId={listing.chain} size='24px' />
                         <Text fontSize={28} ms={1} fontWeight='bold'>
                           <span className="ms-1">{ethers.utils.commify(listing.price)}</span>
                         </Text>

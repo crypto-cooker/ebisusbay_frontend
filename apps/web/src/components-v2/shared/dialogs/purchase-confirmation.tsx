@@ -60,6 +60,8 @@ import useTransak from "@market/hooks/use-transak";
 import {useAppConfig} from "@src/config/hooks";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
+import {ApiService} from "@src/core/services/api-service";
+import {CurrencyLogoByAddress} from "@dex/components/logo";
 
 enum PaymentType {
   CRYPTO = 'CRYPTO',
@@ -91,7 +93,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const {isEligible} = useTransak();
 
   const getInitialProps = async () => {
-    const listingsResponse = await NextApiService.getListingsByIds(listingId);
+    const listingsResponse = await ApiService.withoutKey().getListings({listingId: [listingId]});
     const listing = listingsResponse.data[0];
 
     return listing;
@@ -292,6 +294,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                         {paymentType === PaymentType.CRYPTO && (
                           <DotIcon icon={faCheck} />
                         )}
+                        <CurrencyLogoByAddress address={listing.currency} chainId={listing.chain} />
                         {knownErc20Token(listing.currency) ? (
                           <CurrencyOption currency={knownErc20Token(listing.currency)!} />
                         ) : (

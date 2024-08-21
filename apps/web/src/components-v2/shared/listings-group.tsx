@@ -8,6 +8,7 @@ import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/l
 import {Box, Center, ResponsiveValue, SimpleGrid, Spinner} from "@chakra-ui/react";
 import nextApiService from "@src/core/services/api-service/next";
 import {useInfiniteQuery} from "@tanstack/react-query";
+import {ApiService} from "@src/core/services/api-service";
 
 interface ListingsGroupProps {
   limitSize?: number;
@@ -40,7 +41,7 @@ const ListingsGroup = ({limitSize, showLoadMore = true, queryParams, fullWidth, 
         page: pageParam,
         ...queryParams
       }
-      return nextApiService.getListings(params)
+      return ApiService.withoutKey().getListings(params)
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {

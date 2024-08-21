@@ -20,6 +20,7 @@ export interface Listing {
   collection: any;
   currency: string;
   amount: number;
+  chain: number;
 }
 
 export interface OwnerListing extends Listing {
