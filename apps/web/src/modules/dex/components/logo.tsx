@@ -1,5 +1,5 @@
 import {WrappedTokenInfo} from "@dex/hooks/use-supported-tokens";
-import {Image, Flex, SpaceProps} from "@chakra-ui/react";
+import {Image, Flex, SpaceProps, Box, Avatar, BoxProps} from "@chakra-ui/react";
 import React, {memo, useMemo, useState} from "react";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
 import {isChainSupported} from "@src/wagmi";
@@ -59,7 +59,7 @@ export function CurrencyLogo({
   size?: string;
   style?: React.CSSProperties;
   useTrustWalletUrl?: boolean;
-} & SpaceProps) {
+} & BoxProps) {
   const uriLocations = useHttpLocations(currency?.logoURI);
 
   const srcs: string[] = useMemo(() => {
@@ -275,9 +275,78 @@ interface DoubleCurrencyLogoProps {
 
 export function DoubleCurrencyLogo({ currency0, currency1, size = 20, margin = false }: DoubleCurrencyLogoProps) {
   return (
-    <Flex direction='row' me={2} margin={margin}>
+    <Flex direction='row' me={2}>
       {currency0 && <CurrencyLogo currency={currency0} size={`${size.toString()}px`} style={{ marginRight: '4px' }} />}
       {currency1 && <CurrencyLogo currency={currency1} size={`${size.toString()}px`} />}
     </Flex>
+  )
+}
+
+
+interface DoubleCurrencyLayeredLogoProps {
+  address1: string;
+  address2: string;
+  chainId?: number;
+  size1?: number
+  size2?: number
+  variant?: 'horizontal' | 'diagonal'
+}
+
+export function DoubleCurrencyLayeredLogo({ address1, address2, chainId, size1 = 24, size2 = 32, variant }: DoubleCurrencyLayeredLogoProps) {
+  const currency1: CurrencyInfo = useMemo(() => {
+    const isNative = address1 === ethers.constants.AddressZero;
+    const nativeSymbol = NATIVE[chainId as ChainId]?.symbol ?? '';
+
+    return {
+      address: address1 as Address,
+      chainId,
+      symbol: isNative ? nativeSymbol : '',
+      isToken: !isNative,
+      isNative
+    }
+  }, [address1]);
+
+  const currency2: CurrencyInfo = useMemo(() => {
+    const isNative = address2 === ethers.constants.AddressZero;
+    const nativeSymbol = NATIVE[chainId as ChainId]?.symbol ?? '';
+
+    return {
+      address: address2 as Address,
+      chainId,
+      symbol: isNative ? nativeSymbol : '',
+      isToken: !isNative,
+      isNative
+    }
+  }, [address2]);
+
+  return (
+    <Box position='relative' w={`40px`} h={`${variant === 'diagonal' ? 40 : 24}px`}>
+      <CurrencyLogo
+        currency={currency1}
+        size={`${size1}px`}
+      />
+      <CurrencyLogo
+        currency={currency2}
+        size={`${size2}px`}
+        position='absolute'
+        bottom={variant === 'diagonal' ? 0 : undefined}
+        top={variant !== 'diagonal' ? 0 : undefined}
+        right={0}
+      />
+
+      {/*<Avatar*/}
+      {/*  src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${info.row.original.data.pair.token0.symbol.toLowerCase()}.webp`}*/}
+      {/*  rounded='full'*/}
+      {/*  size='xs'*/}
+      {/*/>*/}
+      {/*<Avatar*/}
+      {/*  src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${info.row.original.data.pair.token1.symbol.toLowerCase()}.webp`}*/}
+      {/*  rounded='full'*/}
+      {/*  size='sm'*/}
+      {/*  position='absolute'*/}
+      {/*  bottom={0}*/}
+      {/*  right={0}*/}
+      {/*/>*/}
+    </Box>
   )
 }

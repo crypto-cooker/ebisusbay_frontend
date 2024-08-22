@@ -28,6 +28,7 @@ import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useAppChainConfig} from "@src/config/hooks";
 import {useErrorLogger} from "@market/hooks/use-error-logger";
+import {DoubleCurrencyLayeredLogo} from "@dex/components/logo";
 
 interface StakeLpTokensDialogProps {
   isOpen: boolean;
@@ -91,21 +92,14 @@ export default function StakeLpTokensDialog({isOpen, onClose, farm, userData, on
               <HStack>
                 <Box>
                   {farm.data.pair ? (
-                    <Box position='relative' w='40px' h='24px'>
-                      <Avatar
-                        src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${farm.data.pair.token0.symbol.toLowerCase()}.webp`}
-                        rounded='full'
-                        size='xs'
-                      />
-                      <Avatar
-                        src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${farm.data.pair.token1.symbol.toLowerCase()}.webp`}
-                        rounded='full'
-                        size='xs'
-                        position='absolute'
-                        top={0}
-                        right={0}
-                      />
-                    </Box>
+                    <DoubleCurrencyLayeredLogo
+                      address1={farm.data.pair.token0.id}
+                      address2={farm.data.pair.token1.id}
+                      chainId={farm.derived.chainId}
+                      size1={24}
+                      size2={24}
+                      variant='horizontal'
+                    />
                   ) : (
                     <Box position='relative' w='40px' h='40px'>
                       <Avatar

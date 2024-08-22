@@ -55,7 +55,7 @@ import {useUserFarmsRefetch} from '@dex/farms/hooks/user-farms';
 import {useExchangeRate} from '@market/hooks/useGlobalPrices';
 import {useAppChainConfig} from "@src/config/hooks";
 import {getBlockExplorerLink} from "@dex/utils";
-import {CurrencyLogo} from "@dex/components/logo";
+import {CurrencyLogo, DoubleCurrencyLayeredLogo} from "@dex/components/logo";
 import useMultichainCurrencyBroker, {MultichainBrokerCurrency} from "@market/hooks/use-multichain-currency-broker";
 
 export type DataTableProps = {
@@ -379,24 +379,16 @@ const columnHelper = createColumnHelper<DerivedFarm>();
 const columns: ColumnDef<DerivedFarm, any>[] = [
   columnHelper.accessor("derived.name", {
     cell: (info) => {
+      console.log('DoubleCurrencyLayeredLogo-1', info.row.original.derived.chainId)
       return (
         <HStack>
           {info.row.original.data.pair ? (
-            <Box position='relative' w='40px' h='40px'>
-              <Avatar
-                src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${info.row.original.data.pair.token0.symbol.toLowerCase()}.webp`}
-                rounded='full'
-                size='xs'
-              />
-              <Avatar
-                src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${info.row.original.data.pair.token1.symbol.toLowerCase()}.webp`}
-                rounded='full'
-                size='sm'
-                position='absolute'
-                bottom={0}
-                right={0}
-              />
-            </Box>
+            <DoubleCurrencyLayeredLogo
+              address1={info.row.original.data.pair.token0.id}
+              address2={info.row.original.data.pair.token1.id}
+              chainId={info.row.original.derived.chainId}
+              variant='diagonal'
+            />
           ) : (
             <Box position='relative' w='40px' h='40px'>
               <Avatar

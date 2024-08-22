@@ -65,7 +65,8 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
             dailyRewards: dailyRewards,
             stakedLiquidity: `$${commify(round(stakedLiquidity))}`,
             apr: `${['Infinity', 'NaN'].includes(pairFarm.apr) ? '-' : `${commify(round(pairFarm.apr, 2))}%`}`,
-            state: farmState
+            state: farmState,
+            chainId: queryParams.chain
           }
         }
     }));

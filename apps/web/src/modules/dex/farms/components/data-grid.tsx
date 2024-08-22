@@ -38,11 +38,11 @@ import UnstakeLpTokensDialog from "@dex/farms/components/unstake-lp-tokens-dialo
 import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
 import {useUser} from "@src/components-v2/useUser";
 import {getTheme} from "@src/global/theme/theme";
-import useCurrencyBroker from "@market/hooks/use-currency-broker";
 import {useExchangeRate} from "@market/hooks/useGlobalPrices";
 import {useAppChainConfig} from "@src/config/hooks";
 import {getBlockExplorerLink} from "@dex/utils";
 import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
+import {DoubleCurrencyLayeredLogo} from "@dex/components/logo";
 
 export type DataGridProps = {
   data: DerivedFarm[];
@@ -119,21 +119,14 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
         <Box p={4}>
           <Flex justify='space-between'>
             <Box>
-              <Box position='relative' w='40px' h='24px'>
-                <Avatar
-                  src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${farm.data.pair.token0.symbol.toLowerCase()}.webp`}
-                  rounded='full'
-                  size='xs'
-                />
-                <Avatar
-                  src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${farm.data.pair.token1.symbol.toLowerCase()}.webp`}
-                  rounded='full'
-                  size='xs'
-                  position='absolute'
-                  top={0}
-                  right={0}
-                />
-              </Box>
+              <DoubleCurrencyLayeredLogo
+                address1={farm.data.pair.token0.id}
+                address2={farm.data.pair.token1.id}
+                chainId={farm.derived.chainId}
+                size1={24}
+                size2={24}
+                variant='horizontal'
+              />
             </Box>
             <Box textAlign='end' fontSize='xl' fontWeight='bold'>
               {farm.data.pair.name}
