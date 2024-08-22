@@ -66,7 +66,6 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
 
   const {getByAddress} = useMultichainCurrencyBroker(appChainConfig.chain.id);
   const [enableFarm, enablingFarm] = useEnableFarm();
-  const {usdValueForToken} = useExchangeRate();
   const { refetchBalances } = useUserFarmsRefetch();
   const borderColor = useColorModeValue('#bbb', '#ffffff33');
   const [harvestRewards, harvestingRewards] = useHarvestRewards();
@@ -169,7 +168,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                 const isMultiYield = rewarder && farm.data.rewarders.length > 1;
                 const isActiveNativeYield = rewarder && rewarder.isMain && rewarder.allocPoint > 0;
 
-                return (!!token && (earning.amount > 0 || !isMultiYield || isActiveNativeYield || rewarder.allocPoint > 0)) ? (
+                return (!!token && !!rewarder && (earning.amount > 0 || !isMultiYield || isActiveNativeYield || rewarder.allocPoint > 0)) ? (
                   <Stack key={i}>
                     <Box>
                       <Box fontSize='xl' fontWeight='bold'>
@@ -177,7 +176,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                       </Box>
                       {/*{!!earnedDollarValue && token.symbol !== 'USDC' && (*/}
                         <Box fontSize='xs' color={text2Color}>
-                          ~ ${round(usdValueForToken(Number(ethers.utils.formatUnits(earning.amount ?? 0, token.decimals)), token.address), 2)}
+                          ~ ${round(Number(rewarder.price) * Number(ethers.utils.formatUnits(earning.amount ?? 0, token.decimals)), 2)}
                         </Box>
                       {/*)}*/}
                     </Box>
