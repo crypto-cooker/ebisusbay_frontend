@@ -24,7 +24,7 @@ export default function Row({token, hasVerticalScrollbar, onSelect}: RowProps) {
       }}
       onClick={() => onSelect(token.currency)}
     >
-      <HStack w='full'>..
+      <HStack w='full'>
         <Box>
           <Image src={(token.currency as WrappedTokenInfo).logoURI} w='30px' rounded='full' />
         </Box>
