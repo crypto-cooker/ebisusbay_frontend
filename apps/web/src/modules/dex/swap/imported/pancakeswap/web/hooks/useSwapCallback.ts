@@ -1,16 +1,17 @@
+import { INITIAL_ALLOWED_SLIPPAGE } from "@dex/swap/constants"
+import { V2TradeAndStableSwap } from "@dex/swap/constants/types"
+import useAccountActiveChain from "@eb-pancakeswap-web/hooks/useAccountActiveChain"
+import { usePaymaster } from '@eb-pancakeswap-web/hooks/usePaymaster'
+import { calculateGasMargin } from "@eb-pancakeswap-web/utils"
+import { basisPointsToPercent } from "@eb-pancakeswap-web/utils/exchange"
+import { isUserRejected } from "@eb-pancakeswap-web/utils/sentry"
+import { transactionErrorToUserReadableMessage } from "@eb-pancakeswap-web/utils/transactionErrorToUserReadableMessage"
 import { SwapParameters, TradeType } from '@pancakeswap/sdk'
 import isZero from '@pancakeswap/utils/isZero'
 import truncateHash from '@pancakeswap/utils/truncateHash'
 import { useMemo } from 'react'
 import { Hash, isAddress } from 'viem'
-import {V2TradeAndStableSwap} from "@dex/swap/constants/types";
-import {INITIAL_ALLOWED_SLIPPAGE} from "@dex/swap/constants";
-import useAccountActiveChain from "@eb-pancakeswap-web/hooks/useAccountActiveChain";
-import {useGasPrice} from "wagmi";
-import {basisPointsToPercent} from "@eb-pancakeswap-web/utils/exchange";
-import {transactionErrorToUserReadableMessage} from "@eb-pancakeswap-web/utils/transactionErrorToUserReadableMessage";
-import {calculateGasMargin} from "@eb-pancakeswap-web/utils";
-import {isUserRejected} from "@eb-pancakeswap-web/utils/sentry";
+import { useGasPrice } from "wagmi"
 
 
 export enum SwapCallbackState {
@@ -47,6 +48,7 @@ export function useSwapCallback(
 ): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: string | null } {
   const { account, chainId } = useAccountActiveChain()
   const gasPrice = useGasPrice()
+  const { isPaymasterAvailable, isPaymasterTokenActive, sendPaymasterTransaction } = usePaymaster()
 
   // const addTransaction = useTransactionAdder()
 
@@ -118,11 +120,18 @@ export function useSwapCallback(
           gasEstimate,
         } = successfulEstimation
 
-        return contract.write[methodName](args, {
-          gas: calculateGasMargin(gasEstimate),
-          gasPrice: gasPrice.data,
-          ...(value && !isZero(value) ? { value, account } : { account }),
-        })
+        let sendTxResult: Promise<SendTransactionReturnType> | undefined
+        if (isPaymasterAvailable && isPaymasterTokenActive) {
+          sendTxResult = sendPaymasterTransaction(call, account)
+        } else {
+          sendTxResult = contract.write[methodName](args, {
+            gas: calculateGasMargin(gasEstimate),
+            gasPrice: gasPrice.data,
+            ...(value && !isZero(value) ? { value, account } : { account }),
+          })
+        }
+
+        return sendTxResult
           .then((response: Hash) => {
             const inputSymbol = trade.inputAmount.currency.symbol
             const outputSymbol = trade.outputAmount.currency.symbol

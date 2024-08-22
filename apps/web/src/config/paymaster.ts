@@ -1,18 +1,25 @@
 import { cronosZkEvmTokens } from '@pancakeswap/tokens'
 
 import { ChainId } from '@pancakeswap/chains'
-import { Currency, Native } from '@pancakeswap/sdk'
+import {Currency, ERC20Token, Native} from '@pancakeswap/sdk'
 import { Address, Hex } from 'viem'
+import {V2_ROUTER_ADDRESS} from "@dex/swap/constants/exchange";
 
 // export const DEFAULT_PAYMASTER_TOKEN = Native.onChain(ChainId.ZKSYNC)
 
 export const paymasterTokens: Currency[] = [
   // DEFAULT_PAYMASTER_TOKEN,
   Native.onChain(ChainId.CRONOS_ZKEVM),
-  cronosZkEvmTokens.wcro,
+  new ERC20Token(
+    ChainId.CRONOS_ZKEVM,
+    '0xBCaA34FF9D5BFD0d948b18Cf6Bf39a882F4a1cBD',
+    8,
+    'CRO',
+    'Cronos',
+  ),
   cronosZkEvmTokens.frtn,
   cronosZkEvmTokens.vusd,
-  cronosZkEvmTokens.veth,
+  cronosZkEvmTokens.veth
 ]
 
 export const DEFAULT_PAYMASTER_TOKEN = paymasterTokens[2]
@@ -43,6 +50,7 @@ export const paymasterInfo: {
  * In addition, ERC20 Approve transactions are allowed.
  */
 export const PAYMASTER_CONTRACT_WHITELIST = [
+    V2_ROUTER_ADDRESS[ChainId.CRONOS_ZKEVM]
   // getUniversalRouterAddress(ChainId.ZKSYNC), // Universal Router on zkSync
 ].map((address) => address.toLowerCase())
 
@@ -50,8 +58,8 @@ export const PAYMASTER_CONTRACT_WHITELIST = [
 export const ZYFI_PAYMASTER_URL = 'https://api.zyfi.org/api/erc20_paymaster/v1'
 export const ZYFI_SPONSORED_PAYMASTER_URL = 'https://api.zyfi.org/api/erc20_sponsored_paymaster/v1'
 
-export const ZYFI_VAULT: Address = '0x32faBA244AB815A5cb3E09D55c941464DBe31496'
-export const PCS_ACCOUNT_IN_ZYFI_VAULT: Address = '0xf8d936A86a3844084Eb82b57E2107B1fEDFb1DD7'
+// export const ZYFI_VAULT: Address = '0x32faBA244AB815A5cb3E09D55c941464DBe31496'
+// export const PCS_ACCOUNT_IN_ZYFI_VAULT: Address = '0xf8d936A86a3844084Eb82b57E2107B1fEDFb1DD7'
 
 export interface ZyfiResponse {
   txData: TxData

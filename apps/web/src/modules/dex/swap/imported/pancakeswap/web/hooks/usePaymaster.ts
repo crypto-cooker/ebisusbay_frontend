@@ -70,7 +70,7 @@ export const usePaymaster = () => {
       account,
       to: txResponse.txData.to,
       value: txResponse.txData.value && !isZero(txResponse.txData.value) ? hexToBigInt(txResponse.txData.value) : 0n,
-      chainId: ChainId.ZKSYNC,
+      chainId: ChainId.CRONOS_ZKEVM,
       gas: BigInt(txResponse.gasLimit),
       maxFeePerGas: BigInt(txResponse.txData.maxFeePerGas),
       maxPriorityFeePerGas: BigInt(0),
