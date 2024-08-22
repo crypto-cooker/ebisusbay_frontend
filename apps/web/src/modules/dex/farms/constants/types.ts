@@ -82,6 +82,7 @@ export interface FarmRow {
   stakedLiquidity: string;
   apr: string;
   state: FarmState;
+  chainId: number;
 }
 
 export enum FarmState {
