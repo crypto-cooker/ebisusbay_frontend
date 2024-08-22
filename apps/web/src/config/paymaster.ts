@@ -48,8 +48,8 @@ export const paymasterTokens: Record<SupportedPaymasterChain, Currency[]> = {
 }
 
 export const DEFAULT_PAYMASTER_TOKEN: Record<SupportedPaymasterChain, Currency> = {
-  [ChainId.CRONOS_ZKEVM]: paymasterTokens[ChainId.CRONOS_ZKEVM][1],
-  [ChainId.CRONOS_ZKEVM_TESTNET]: paymasterTokens[ChainId.CRONOS_ZKEVM_TESTNET][1]
+  [ChainId.CRONOS_ZKEVM]: paymasterTokens[ChainId.CRONOS_ZKEVM][0],
+  [ChainId.CRONOS_ZKEVM_TESTNET]: paymasterTokens[ChainId.CRONOS_ZKEVM_TESTNET][0]
 }
 
 export const paymasterInfo: Record<SupportedPaymasterChain, { [gasTokenAddress: Address]: { discount: `-${number}%` | 'FREE'; discountLabel?: string } }> = {
