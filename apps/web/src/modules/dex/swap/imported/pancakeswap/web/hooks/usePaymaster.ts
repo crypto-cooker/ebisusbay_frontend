@@ -9,6 +9,7 @@ import { publicClient } from '@eb-pancakeswap-web/utils/viem'
 import { eip712WalletActions } from 'viem/zksync'
 import { useWalletClient } from 'wagmi'
 import {useGasToken, useGasTokenByChain} from '@eb-pancakeswap-web/hooks/use-gas-token'
+import {useAppConfig} from "@src/config/hooks";
 
 interface SwapCall {
   address: Address
@@ -22,6 +23,7 @@ interface SwapCall {
 export const usePaymaster = () => {
   const chain = useActiveChainId()
   const { data: walletClient } = useWalletClient()
+  const { config: appConfig } = useAppConfig()
 
   const [gasToken] = useGasTokenByChain(chain.chainId)
 
@@ -51,12 +53,12 @@ export const usePaymaster = () => {
     if (!gasToken.isToken) throw new Error('Selected gas token is not an ERC20 token. Unsupported by Paymaster.')
     if (!isPaymasterAvailable || !isPaymasterTokenActive) throw new Error('Paymaster is not available or active.')
 
-    const response = await fetch('/api/paymaster', {
+    const response = await fetch(appConfig.urls.cms, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: stringify({
+      body: JSON.stringify({
         call,
         account,
         gasTokenAddress: gasToken.address,

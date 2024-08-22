@@ -24,12 +24,7 @@ import {
 import {ArrowRightIcon, ChevronDownIcon, WarningIcon} from "@chakra-ui/icons";
 import {TradeEssentialForPriceBreakdown} from "@eb-pancakeswap-web/views/Swap/V3Swap/utils/exchange";
 import {useNativeBalances, useTokenBalancesWithLoadingIndicator} from "@eb-pancakeswap-web/state/wallet/hooks";
-import {
-  DEFAULT_PAYMASTER_TOKEN,
-  isSupportedPaymasterChainId,
-  paymasterInfo,
-  paymasterTokens, SupportedPaymasterChain
-} from '@src/config/paymaster'
+import {DEFAULT_PAYMASTER_TOKEN, paymasterInfo, paymasterTokens, SupportedPaymasterChain} from '@src/config/paymaster'
 import {CurrencyLogo} from "@dex/components/logo";
 import {QuestionHelper} from "@dex/swap/components/tabs/swap/question-helper";
 import {useGasTokenByChain} from "@eb-pancakeswap-web/hooks/use-gas-token";
