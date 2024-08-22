@@ -59,6 +59,7 @@ export interface MapiFarmRewarder {
   rewardPerSecond?: number;
   isMain: boolean;
   tokenDecimals: number;
+  price: string;
   rewardPerBlock: string;
   rewardPerBlockInUSD: number;
   rewardPerDay: string;
