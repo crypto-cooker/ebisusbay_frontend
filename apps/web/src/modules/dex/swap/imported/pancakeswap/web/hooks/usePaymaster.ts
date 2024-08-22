@@ -8,7 +8,7 @@ import { ZyfiResponse } from '@src/config/paymaster'
 import { publicClient } from '@eb-pancakeswap-web/utils/viem'
 import { eip712WalletActions } from 'viem/zksync'
 import { useWalletClient } from 'wagmi'
-import { useGasToken } from '@eb-pancakeswap-web/hooks/use-gas-token'
+import {useGasToken, useGasTokenByChain} from '@eb-pancakeswap-web/hooks/use-gas-token'
 
 interface SwapCall {
   address: Address
@@ -23,13 +23,13 @@ export const usePaymaster = () => {
   const chain = useActiveChainId()
   const { data: walletClient } = useWalletClient()
 
-  const [gasToken] = useGasToken()
+  const [gasToken] = useGasTokenByChain(chain.chainId)
 
   /**
    * Check if the Paymaster for zkSync is available
    */
   const isPaymasterAvailable = useMemo(() => {
-    return chain && chain.chainId === ChainId.CRONOS_ZKEVM
+    return chain && (chain.chainId === ChainId.CRONOS_ZKEVM || chain.chainId === ChainId.CRONOS_ZKEVM_TESTNET)
   }, [chain])
 
   /**
@@ -37,7 +37,7 @@ export const usePaymaster = () => {
    * Default is the native token to pay gas
    */
   const isPaymasterTokenActive = useMemo(() => {
-    return gasToken.isToken && gasToken.address && isAddress(gasToken.address)
+    return gasToken && gasToken.isToken && gasToken.address && isAddress(gasToken.address)
   }, [gasToken])
 
   async function sendPaymasterTransaction(
@@ -47,6 +47,7 @@ export const usePaymaster = () => {
     account?: Address,
   ) {
     if (!account) throw new Error('An active wallet connection is required to send paymaster transaction')
+    if (!gasToken) throw new Error('No gas token detected')
     if (!gasToken.isToken) throw new Error('Selected gas token is not an ERC20 token. Unsupported by Paymaster.')
     if (!isPaymasterAvailable || !isPaymasterTokenActive) throw new Error('Paymaster is not available or active.')
 

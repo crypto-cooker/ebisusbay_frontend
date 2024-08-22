@@ -24,12 +24,18 @@ import {
 import {ArrowRightIcon, ChevronDownIcon, WarningIcon} from "@chakra-ui/icons";
 import {TradeEssentialForPriceBreakdown} from "@eb-pancakeswap-web/views/Swap/V3Swap/utils/exchange";
 import {useNativeBalances, useTokenBalancesWithLoadingIndicator} from "@eb-pancakeswap-web/state/wallet/hooks";
-import {DEFAULT_PAYMASTER_TOKEN, paymasterInfo, paymasterTokens} from '@src/config/paymaster'
+import {
+  DEFAULT_PAYMASTER_TOKEN,
+  isSupportedPaymasterChainId,
+  paymasterInfo,
+  paymasterTokens, SupportedPaymasterChain
+} from '@src/config/paymaster'
 import {CurrencyLogo} from "@dex/components/logo";
 import {QuestionHelper} from "@dex/swap/components/tabs/swap/question-helper";
-import {useGasToken} from "@eb-pancakeswap-web/hooks/use-gas-token";
+import {useGasTokenByChain} from "@eb-pancakeswap-web/hooks/use-gas-token";
 import {useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
 import {Virtuoso} from "react-virtuoso";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 
 // Selector Styles
 const GasTokenSelectButton = styled(Button).attrs({ variant: 'text', scale: 'xs' })`
@@ -96,15 +102,21 @@ export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
   } = useResponsiveDialog();
   const { address: account } = useAccount()
 
+  const { chainId } = useActiveChainId()
+  const supportedChainId = chainId as SupportedPaymasterChain;
+  const supportedPaymasterInfo = paymasterInfo[supportedChainId] ?? {}
+  const supportedPaymasterTokens = paymasterTokens[supportedChainId] ?? [];
+
   const config = useConfig()
 
-  const [gasToken, setGasToken] = useGasToken()
-  const gasTokenInfo = paymasterInfo[gasToken.isToken ? gasToken?.wrapped.address : '']
+  const [gasToken, setGasToken] = useGasTokenByChain(supportedChainId);
+  const gasTokenInfo = supportedPaymasterInfo[gasToken.isToken ? gasToken?.wrapped.address : '']
 
   const nativeBalances = useNativeBalances([account])
+
   const [balances, balancesLoading] = useTokenBalancesWithLoadingIndicator(
     account,
-    paymasterTokens.filter((token) => token.isToken) as any[],
+    supportedPaymasterTokens.filter((token) => token.isToken) as any[],
   )
 
   // Input Token Address from Swap
@@ -125,7 +137,7 @@ export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
   useEffect(() => {
     return watchAccount(config, {
       onChange() {
-        setGasToken(DEFAULT_PAYMASTER_TOKEN)
+        setGasToken(DEFAULT_PAYMASTER_TOKEN[supportedChainId])
       },
     })
   }, [config, setGasToken])
@@ -249,16 +261,17 @@ export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
           <QuestionHelper
             text={
               <>
-                <Text mb="12px">
-                  <Text fontWeight='bold' display="inline-block">
+                <VStack fontWeight='normal' fontSize='md'>
+                  <Text>
                     Gas Token
                   </Text>
-                  <br />
-                  <br />
-                  Select a token to pay gas fees.
-                  <br /> <br />
-                  Please refer to the transaction confirmation on your wallet for the final gas fee.
-                </Text>
+                  <Text>
+                    Select a token to pay gas fees.
+                  </Text>
+                  <Text>
+                    Please refer to the transaction confirmation on your wallet for the final gas fee.
+                  </Text>
+                </VStack>
               </>
             }
             ml="4px"
@@ -339,12 +352,11 @@ export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
           <DialogCloseButton />
         </DialogHeader>
         <DialogBody>
-
           <Virtuoso
             style={{ height: 450 }}
-            data={paymasterTokens.toSorted(tokenListSortComparator)}
+            data={supportedPaymasterTokens.toSorted(tokenListSortComparator)}
             itemContent={Row}
-            totalCount={paymasterTokens.length}
+            totalCount={supportedPaymasterTokens.length}
           />
         </DialogBody>
         <DialogFooter>
