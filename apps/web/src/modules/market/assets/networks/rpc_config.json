@@ -35610,6 +35610,83 @@
         "escrow": false,
         "verified": true
       }
+    },
+    {
+      "id": 194,
+      "slug": "free-the-gang",
+      "title": "Free The Gang",
+      "subtitle": "\"Free The Gang\", the upgrade art from the legendary Fury Mouse Gang collection & the first ever NFT collection on zkEVM Cronos chain.",
+      "description": "Get ready to join the revolution with the Fury Mouse Gang's latest NFT collection, \"Free The Gang.\" This groundbreaking collection is the first of its kind on the zkEVM Cronos chain, brought to you by a well-established project and a veteran team.\n\nThe Legacy Continues,  For the past two years, the Fury Mouse Gang has been a force to reckon with on the streets of Cronos. Our first-generation NFTs shattered sellout records, and our empire has only expanded since then. Loyal holders of our first-generation NFTs have seen substantial returns on their investments. At the peak, the assets distributed to our holders, such as the $STUCK token airdrop, were more valuable than the initial mint price, offering significant profits.  The FMG has grown to over 5,000 strong holders, forming alliances with blue-chip projects and major marketplaces like Ebisu's Bay. Our influence even extends to the world of DeFi, with our memecoin listed on Crypto.com DeFi Wallet and other top exchanges. \n\nArt at the Forefront, While Fury Mouse Gang has consistently delivered some of the most sought-after NFTs in the ecosystem, art remains the number one priority with \"Free The Gang.\" We're pushing the boundaries of what NFT art can be, offering a stunning visual upgrade that sets this collection apart. Ensuring that this collection is not just an investment but also a masterpiece to be cherished.  But \"Free The Gang\" isn't just about owning a piece of digital art—it's about being part of something bigger.\n\nHere's what’s in store:  DAO-Driven Decisions: 25% of all profits will go directly into a DAO wallet, giving the Gang full control over how this money is used. zkCRO/STUCK LP Development: Another 25% will be invested in creating zkCRO/STUCK liquidity pools on-chain and further developing the $STUCK memecoin. Staking for Rewards: The new generation of NFTs can be staked to earn $STUCK tokens, sourced from the team wallet. Royalties for Holders: 75% of secondary market royalties will be redistributed",
+      "author": {
+        "name": "Fury Mouse Gang",
+        "website": "https://furymousegang.com",
+        "twitter": "https://twitter.com/FuryMouseGang",
+        "discord": "https://discord.gg/zmWKbuja5N"
+      },
+      "address": "",
+      "maxMintPerTx": 20,
+      "maxMintPerAddress": 1000,
+      "totalSupply": 2000,
+      "cost": "400",
+      "memberCost": "370",
+      "whitelistCost": "370",
+      "foundersOnly": false,
+      "start": null,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/banner.webp",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/avatar.webp",
+        "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 195,
+      "slug": "aryoshin",
+      "title": "Aryoshin \uD83E\uDE75_\uD83E\uDE75",
+      "subtitle": "Arioshin \uD83E\uDE75_\uD83E\uDE75 Collectible and exchangeable NFTs, pixel art, with innovative details, dedicated to ARY fans. Find the lucky MANEKI and receive the prize Created by Thomas founder of ARY Kevin designer (@vcmxss) Piero Data Optimizer (@PieroPasqiari88)",
+      "description": "The new ARY collection after the previously released ARYKNIFE collection has the aim of enriching the project and legitimately financing future developments of the project, which will include buybacks of the $ARY token, deposits of new liquidity and developing a dedicated platform. as well as developing award services on social media (X, discord).",
+      "author": {
+        "name": "Aryoshin",
+        "website": "https://www.aryioshin.com/",
+        "twitter": "https://twitter.com/CronosAry",
+        "discord": "https://discord.gg/KatxH57WYU",
+        "telegram": "https://t.me/ARY_FAM"
+      },
+      "address": "",
+      "maxMintPerTx": 3,
+      "maxMintPerAddress": 3,
+      "totalSupply": 1000,
+      "cost": "73",
+      "memberCost": "51",
+      "whitelistCost": "51",
+      "foundersOnly": false,
+      "start": null,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/aryoshin/banner.webp",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/aryoshin/avatar.webp",
+        "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/aryoshin/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "escrow": false,
+        "verified": true
+      }
     }
   ]
 }
