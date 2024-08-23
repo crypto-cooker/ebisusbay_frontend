@@ -27944,6 +27944,32 @@
         "doxx": true,
         "kyc": true
       }
+    },
+    {
+      "name": "Mr. Big Back",
+      "slug": "mr-big-back",
+      "multiToken": false,
+      "address": "0xcF2Ff1ecDa881d9b2AbD8BaA039a299f7223061d",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Mr. Big Back has packed his bag full of coins and is ready to give back to the CROFam! Join him on his journey and help him succeed by meeting more and more people from the Cronos ecosystem.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/mr-big-back/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/mr-big-back/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/mr-big-back/banner.webp",
+        "website": "https://mr-big-back.netlify.app/",
+        "twitter": "https://twitter.com/BgBk_Official",
+        "discord": "https://discord.gg/Ur6EVjeTCT",
+        "telegram": "https://t.me/BgBk_Official",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
