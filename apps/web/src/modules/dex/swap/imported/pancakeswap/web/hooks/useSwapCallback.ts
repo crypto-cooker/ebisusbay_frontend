@@ -125,7 +125,6 @@ export function useSwapCallback(
           const firstNoErrorCall = estimatedCalls.find<SwapCallEstimate>(
             (call): call is SwapCallEstimate => !('error' in call),
           )
-          console.log('HERP_CALLS', estimatedCalls, firstNoErrorCall);
           if (!firstNoErrorCall) throw new Error('Unexpected error. Could not estimate gas for the swap.')
           bestCallOption = firstNoErrorCall
         }

@@ -1,20 +1,26 @@
 import isZero from '@pancakeswap/utils/isZero'
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId'
 import { useMemo } from 'react'
-import { Address, Hex, hexToBigInt, isAddress, stringify } from 'viem'
+import {Address, encodeFunctionData, Hex, hexToBigInt, isAddress, stringify} from 'viem'
 
 import { ChainId } from '@pancakeswap/chains'
 import { ZyfiResponse } from '@src/config/paymaster'
 import { publicClient } from '@eb-pancakeswap-web/utils/viem'
 import { eip712WalletActions } from 'viem/zksync'
 import { useWalletClient } from 'wagmi'
-import {useGasToken, useGasTokenByChain} from '@eb-pancakeswap-web/hooks/use-gas-token'
+import {useGasTokenByChain} from '@eb-pancakeswap-web/hooks/use-gas-token'
 import {useAppConfig} from "@src/config/hooks";
+import { SwapParameters } from '@pancakeswap/sdk'
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 
+// interface SwapCall {
+//   address: Address
+//   calldata: Hex
+//   value?: Hex
+// }
 interface SwapCall {
-  address: Address
-  calldata: Hex
-  value?: Hex
+  contract: any
+  parameters: SwapParameters
 }
 
 /**
@@ -24,6 +30,7 @@ export const usePaymaster = () => {
   const chain = useActiveChainId()
   const { data: walletClient } = useWalletClient()
   const { config: appConfig } = useAppConfig()
+  const {requestSignature} = useEnforceSignature();
 
   const [gasToken] = useGasTokenByChain(chain.chainId)
 
@@ -53,15 +60,35 @@ export const usePaymaster = () => {
     if (!gasToken.isToken) throw new Error('Selected gas token is not an ERC20 token. Unsupported by Paymaster.')
     if (!isPaymasterAvailable || !isPaymasterTokenActive) throw new Error('Paymaster is not available or active.')
 
-    const response = await fetch(appConfig.urls.cms, {
+    const userSig = await requestSignature();
+
+    const calldata = encodeFunctionData({
+      abi: call.contract.abi,
+      args: call.parameters.args,
+      functionName: call.parameters.methodName
+    })
+    console.log('CALLDATA', {
+      abi: call.contract.abi,
+      args: call.parameters.args,
+      functionName: call.parameters.methodName
+    }, calldata)
+
+    const modifiedSwapCall = {
+      address: call.contract.address,
+      calldata,
+      value: call.parameters.value
+    }
+
+    const response = await fetch(`${appConfig.urls.cms}paymaster/swap?address=${account}&signature=${userSig}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        call,
+      body: stringify({
+        call: modifiedSwapCall,
         account,
         gasTokenAddress: gasToken.address,
+        chainId: chain.chainId
       }),
     })
 
