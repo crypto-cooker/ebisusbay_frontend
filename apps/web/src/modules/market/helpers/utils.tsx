@@ -498,16 +498,16 @@ export const relativePrecision = (num: number, minDecimals = 1) => {
  */
 export const findCollectionByAddress = (address: string, tokenId?: string) => {
   return collections.find((c) => {
-    const matchesAddress = ciEquals(c.address, address);
-    if (!tokenId) return matchesAddress;
+    // const matchesAddress = ciEquals(c.address, address);
+    // if (!tokenId) return matchesAddress;
+    //
+    // if (c.is_1155 && c.slug !== 'ryoshi-resources') {
+    //   const ids = c.tokens?.map((t: any) => t.id) ?? [c.id];
+    //   const matchesToken = ids.includes(parseInt(tokenId));
+    //   return matchesAddress && matchesToken;
+    // }
 
-    if (c.is_1155 && c.slug !== 'ryoshi-resources') {
-      const ids = c.tokens?.map((t: any) => t.id) ?? [c.id];
-      const matchesToken = ids.includes(parseInt(tokenId));
-      return matchesAddress && matchesToken;
-    }
-
-    return matchesAddress;
+    return ciEquals(c.address, address);
   });
 };
 
