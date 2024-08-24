@@ -111,7 +111,7 @@ export default function MakeOfferDialog({ isOpen, initialNft, onClose, nftId, nf
       }
 
       const collection = await getCollection(nftAddress);
-      if (collection.multiToken) {
+      if (collection.is_1155) {
         setFloorPrice(collection.stats.total.floorPrice ?? 0);
       } else {
         setFloorPrice(collection.stats.total.floorPrice ?? 0);

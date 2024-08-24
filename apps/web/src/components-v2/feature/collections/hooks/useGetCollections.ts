@@ -70,7 +70,7 @@ const useGetCollections = () => {
           volume30d: collection.stats?.total?.volume30d,
           volume1dIncrease: collection.stats?.total?.volume1d_increase,
           volume7dIncrease: collection.stats?.total?.volume7d_increase,
-          multiToken: collection.multiToken,
+          is_1155: collection.is_1155,
           verification: collection.verification,
           chain: collection.chain
         };

@@ -501,7 +501,7 @@ export const findCollectionByAddress = (address: string, tokenId?: string) => {
     const matchesAddress = ciEquals(c.address, address);
     if (!tokenId) return matchesAddress;
 
-    if (c.multiToken && c.slug !== 'ryoshi-resources') {
+    if (c.is_1155 && c.slug !== 'ryoshi-resources') {
       const ids = c.tokens?.map((t: any) => t.id) ?? [c.id];
       const matchesToken = ids.includes(parseInt(tokenId));
       return matchesAddress && matchesToken;

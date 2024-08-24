@@ -315,7 +315,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         price: totalPrice,
         amount: Number(quantity),
         expirationDate: expirationDate.value,
-        is1155: nft.multiToken,
+        is1155: nft.is_1155,
         currencySymbol: selectedCurrency!.symbol,
         listingId: listing?.listingId,
         chainId: nft.chain,
@@ -442,7 +442,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       <ModalOverlay />
       <ModalContent>
         <ModalHeader className="text-center">
-          {(listing || nft.listed) && !nft.multiToken ? 'Update' : 'Sell'} {nft.name}
+          {(listing || nft.listed) && !nft.is_1155 ? 'Update' : 'Sell'} {nft.name}
         </ModalHeader>
         <ModalCloseButton color={getTheme(user.theme).colors.textColor4} />
         {!isLoading ? (
@@ -468,7 +468,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                 <div className="col-12 col-sm-6">
                   <Flex h="full" direction="column" justify="space-between">
                     <Box>
-                      {(nft.balance > 1 || (listing && nft.multiToken)) && (
+                      {(nft.balance > 1 || (listing && nft.is_1155)) && (
                         <FormControl className="mb-3" isInvalid={!!quantityError}>
                           <FormLabel className="formLabel">
                             Quantity (up to {nft.balance})
@@ -487,7 +487,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       <FormControl isInvalid={!!priceError}>
                         <FormLabel className='formLabel' me={0} mb={1}>
                           <Flex justify='space-between' alignItems='center'>
-                            {(nft.balance > 1 || (listing && nft.multiToken)) ? (
+                            {(nft.balance > 1 || (listing && nft.is_1155)) ? (
                               <>
                                 <Box>
                                   Listing Price ({priceType})
@@ -717,7 +717,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                                 loadingText='Confirming'
                                 className="flex-fill"
                               >
-                                {(listing || nft.listed) && !nft.multiToken ? 'Update Listing' : 'Confirm Listing'}
+                                {(listing || nft.listed) && !nft.is_1155 ? 'Update Listing' : 'Confirm Listing'}
                               </PrimaryButton>
                             </div>
                           </>

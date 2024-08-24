@@ -9,4 +9,4 @@ export const limitSizeOptions = {
 export const marketPlaceCollectionFilterOptions = appConfig('collections')
   .filter((c) => c.listable)
   .sort((a, b) => (a.name > b.name ? 1 : -1))
-  .map((x) => new MarketFilterCollection(x.name, x.multiToken && x.split ? `${x.address}-${x.id}` : x.address));
+  .map((x) => new MarketFilterCollection(x.name, x.is_1155 && x.split ? `${x.address}-${x.id}` : x.address));

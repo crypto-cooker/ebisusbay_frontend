@@ -217,7 +217,7 @@ const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMob
         ))}
         onSelect={handleCurrencyFilter}
       />
-      {!collection.multiToken && (
+      {!collection.is_1155 && (
         <RangeFilter
           field='rank'
           label='Rank'

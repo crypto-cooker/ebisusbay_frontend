@@ -182,12 +182,12 @@ export async function getNftFromFile(collectionId, nftId) {
         canSell: canSell,
       };
     } else {
-      const isMultiToken =
-        knownContracts.findIndex((x) => ciEquals(x.address, collectionId) && x.multiToken) > -1;
+      const is1155 =
+        knownContracts.findIndex((x) => ciEquals(x.address, collectionId) && x.is_1155) > -1;
 
       let uri;
       var contract;
-      if (isMultiToken) {
+      if (is1155) {
         contract = new Contract(collectionId, ERC1155, readProvider);
         uri = await contract.uri(nftId);
       } else {
