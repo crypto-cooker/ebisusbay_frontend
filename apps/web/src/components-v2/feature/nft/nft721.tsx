@@ -69,7 +69,8 @@ import {
   Tag,
   Text,
   useBreakpointValue,
-  useClipboard
+  useClipboard,
+  VStack
 } from "@chakra-ui/react";
 import {toast} from "react-toastify";
 import {Menu} from '@src/Components/components/chakra-components';
@@ -90,6 +91,7 @@ import {ApiService} from "@src/core/services/api-service";
 import DynamicNftImage from '@src/components-v2/shared/media/dynamic-nft-image';
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
+import {getBlockExplorerLink} from "@dex/utils";
 
 const config = appConfig();
 const tabs = {
@@ -1029,38 +1031,36 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                       )}
 
                       {currentTab === tabs.info && (
-                        <div className="tab-1 onStep fadeIn">
-                          <div className="d-block mb-3">
-                            <div className="row gx-3 gy-2">
-                              <div className="d-flex justify-content-between">
-                                <div>Contract Address</div>
-                                <div>
-                                  <a href={`${config.urls.explorer}address/${address}`} target="_blank">
-                                    {shortAddress(address)}
-                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted" />
-                                  </a>
-                                </div>
-                              </div>
-                              <div className="d-flex justify-content-between">
-                                <div>Token ID</div>
-                                <div>
-                                  <a href={`${config.urls.explorer}token/${address}?a=${id}`} target="_blank">
-                                    {id.length > 10 ? shortAddress(id) : id}
-                                    <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted" />
-                                  </a>
-                                </div>
-                              </div>
-                              <div className="d-flex justify-content-between">
-                                <div>Token Standard</div>
-                                <div>{collection.multiToken ? 'CRC-1155' : 'CRC-721'}</div>
-                              </div>
-                              <div className="d-flex justify-content-between">
-                                <div>Royalty</div>
-                                <div>{royalty ? `${royalty}%` : 'N/A'}</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        <Box className="tab-1 onStep fadeIn">
+                          <VStack align='stretch'>
+                            <Flex justify='space-between'>
+                              <Box>Contract Address</Box>
+                              <Box>
+                                <Link href={getBlockExplorerLink(address, 'address', nft.chain)} target="_blank">
+                                  {shortAddress(address)}
+                                  <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted" />
+                                </Link>
+                              </Box>
+                            </Flex>
+                            <Flex justify='space-between'>
+                              <Box>Token ID</Box>
+                              <Box>
+                                <Link href={getBlockExplorerLink(`${address}?a=${id}`, 'token', nft.chain)} target="_blank">
+                                  {id.length > 10 ? shortAddress(id) : id}
+                                  <FontAwesomeIcon icon={faExternalLinkAlt} className="ms-2 text-muted" />
+                                </Link>
+                              </Box>
+                            </Flex>
+                            <Flex justify='space-between'>
+                              <Box>Token Standard</Box>
+                              <Box>{collection.multiToken ? 'CRC-1155' : 'CRC-721'}</Box>
+                            </Flex>
+                            <Flex justify='space-between'>
+                              <Box>Royalty</Box>
+                              <Box>{royalty ? `${royalty}%` : 'N/A'}</Box>
+                            </Flex>
+                          </VStack>
+                        </Box>
                       )}
 
                       {currentTab === tabs.breeding && babyWeirdApeBreed && (

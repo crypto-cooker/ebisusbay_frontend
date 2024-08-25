@@ -10,11 +10,15 @@ export function getBlockExplorerLink(
   const chainId = chainIdOverride || ChainId.CRONOS
   const chain = CHAINS.find((c) => c.id === chainId)
   if (!chain || !data) return cronos.blockExplorers.default.url
+
   switch (type) {
     case 'transaction': {
       return `${chain?.blockExplorers?.default.url}/tx/${data}`
     }
     case 'token': {
+      if (typeof data === 'string' && chain.blockExplorers?.default.url.includes('explorer.zkevm.cronos.org')) {
+        data = data.replace('a=', 'tokenId=')
+      }
       return `${chain?.blockExplorers?.default.url}/token/${data}`
     }
     case 'block': {
