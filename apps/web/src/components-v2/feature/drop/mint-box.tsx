@@ -23,7 +23,6 @@ import * as Sentry from "@sentry/react";
 import {appConfig} from "@src/config";
 import {Drop} from "@src/core/models/drop";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
-import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
 import Link from "next/link";
 import {ApiService} from "@src/core/services/api-service";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
@@ -31,7 +30,8 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import Bank from "@src/global/contracts/Bank.json";
-import {CurrencyLogoByAddress} from "@dex/components/logo";
+import {ChainLogo, CurrencyLogoByAddress} from "@dex/components/logo";
+import { ChainId } from "@pancakeswap/chains";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -279,7 +279,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       {!!regularCost && !drop.erc20Only && (
                         <Heading as="h5" size="md">
                           <Flex alignItems='center'>
-                            <CronosIconBlue boxSize={5} />
+                            <ChainLogo chainId={drop.chainId ?? ChainId.CRONOS} />
                             <span className="ms-2">{ethers.utils.commify(round(regularCost))}</span>
                           </Flex>
                         </Heading>
@@ -304,7 +304,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                         </Heading>
                         <Heading as="h5" size="md">
                           <Flex alignItems='center'>
-                            <CronosIconBlue boxSize={5} />
+                            <ChainLogo chainId={drop.chainId ?? ChainId.CRONOS} />
                             <span className="ms-2">{ethers.utils.commify(round(memberCost))}</span>
                           </Flex>
                         </Heading>
@@ -343,7 +343,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                     <Heading as="h6" size="sm" className="mb-1">Whitelist Price</Heading>
                     <Heading as="h5" size="md">
                       <Flex alignItems='center'>
-                        <CronosIconBlue boxSize={5} />
+                        <ChainLogo chainId={drop.chainId ?? ChainId.CRONOS} />
                         <span className="ms-2">{ethers.utils.commify(round(whitelistCost))}</span>
                       </Flex>
                     </Heading>
@@ -363,7 +363,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                     <Heading as="h6" size="sm" className="mb-1">{specialWhitelist.name}</Heading>
                     <Heading as="h5" size="md">
                       <Flex alignItems='center'>
-                        <CronosIconBlue boxSize={5} />
+                        <ChainLogo chainId={drop.chainId ?? ChainId.CRONOS} />
                         <span className="ms-2">{ethers.utils.commify(round(specialWhitelist.value))}</span>
                       </Flex>
                     </Heading>

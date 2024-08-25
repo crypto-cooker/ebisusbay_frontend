@@ -35613,6 +35613,7 @@
     },
     {
       "id": 194,
+      "chainId": 388,
       "slug": "free-the-gang",
       "title": "Free The Gang",
       "subtitle": "\"Free The Gang\", the upgrade art from the legendary Fury Mouse Gang collection & the first ever NFT collection on zkEVM Cronos chain.",
@@ -35631,7 +35632,7 @@
       "memberCost": "370",
       "whitelistCost": "370",
       "foundersOnly": false,
-      "start": null,
+      "start": 1724698800000,
       "end": null,
       "referral": false,
       "is1155": false,
@@ -35651,6 +35652,7 @@
     },
     {
       "id": 195,
+      "chainId": 388,
       "slug": "aryoshin",
       "title": "Aryoshin \uD83E\uDE75_\uD83E\uDE75",
       "subtitle": "Arioshin \uD83E\uDE75_\uD83E\uDE75 Collectible and exchangeable NFTs, pixel art, with innovative details, dedicated to ARY fans. Find the lucky MANEKI and receive the prize Created by Thomas founder of ARY Kevin designer (@vcmxss) Piero Data Optimizer (@PieroPasqiari88)",

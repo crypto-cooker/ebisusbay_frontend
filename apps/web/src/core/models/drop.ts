@@ -2,6 +2,7 @@ import {isEmptyObj} from "@market/helpers/utils";
 
 export interface Drop {
   id: number;
+  chainId: number;
   slug: string;
   title: string;
   subtitle: string;
@@ -76,6 +77,7 @@ export interface SpecialWhitelist {
 export function mapDrop(drop: any): Drop {
   const obj: Drop = {
     id: drop.id,
+    chainId: drop.chainId ?? 25,
     slug: drop.slug,
     title: drop.title,
     subtitle: drop.subtitle,
