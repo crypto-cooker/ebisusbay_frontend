@@ -27970,6 +27970,58 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "$GM: GM Genesis",
+      "slug": "gm-genesis",
+      "multiToken": false,
+      "address": "0xC7d556A8e4167F336C7F4625E07109F48F4dF9eF",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Rise and Grind, Positive Vibes! The $GM Cronos Genesis NFT collection is the way.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/gm-genesis/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/gm-genesis/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/gm-genesis/banner.webp",
+        "website": "https://www.gmcronos.com/",
+        "twitter": "https://twitter.com/GMCronos",
+        "discord": "https://discord.gg/N5cE9TzzQ5",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Croginal Cats Loyalty Series",
+      "slug": "croginal-cats-loyalty-series",
+      "multiToken": false,
+      "address": "0x4b4e86585e1b136e3e360f9fe7a0d83dd0338d94",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "A special NFT drop for our dedicated community. Featuring Deadpool x Wolverine in the Croginal timeline.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/croginal-cats-loyalty-series/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/croginal-cats-loyalty-series/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/croginal-cats-loyalty-series/banner.webp",
+        "website": "https://www.croginalcats.xyz/",
+        "twitter": "https://www.twitter.com/Croginal",
+        "discord": "https://discord.gg/croginalcats",
+        "medium": "https://medium.com/@chocopuff_cro",
+        "telegram": "https://t.me/+pS3HhqN2YghlM2Qx",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
