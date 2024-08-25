@@ -14,7 +14,7 @@ import {
   scrollSepolia,
   sepolia,
   zkSync,
-  zkSyncTestnet,
+  zkSyncSepoliaTestnet,
 } from 'wagmi/chains'
 import {notEmpty} from "@eb-pancakeswap-web/utils/notEmpty";
 
@@ -69,7 +69,7 @@ export const SERVER_NODES = {
   [ChainId.ZKSYNC]: [
     ...zkSync.rpcUrls.default.http,
   ],
-  [ChainId.ZKSYNC_TESTNET]: zkSyncTestnet.rpcUrls.default.http,
+  [ChainId.ZKSYNC_TESTNET]: zkSyncSepoliaTestnet.rpcUrls.default.http,
   [ChainId.LINEA]: linea.rpcUrls.default.http,
   [ChainId.LINEA_TESTNET]: [
     'https://rpc.goerli.linea.build',
@@ -142,7 +142,7 @@ export const PUBLIC_NODES: Record<ChainId, string[] | readonly string[]> = {
   [ChainId.ZKSYNC]: [
     ...zkSync.rpcUrls.default.http,
   ],
-  [ChainId.ZKSYNC_TESTNET]: zkSyncTestnet.rpcUrls.default.http,
+  [ChainId.ZKSYNC_TESTNET]: zkSyncSepoliaTestnet.rpcUrls.default.http,
   [ChainId.LINEA]: linea.rpcUrls.default.http,
   [ChainId.LINEA_TESTNET]: [
     'https://rpc.goerli.linea.build',
