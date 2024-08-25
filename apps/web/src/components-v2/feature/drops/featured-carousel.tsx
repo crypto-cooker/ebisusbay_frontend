@@ -206,7 +206,7 @@ const FeaturedDrops = () => {
                 <div className="nft__item_lg">
                   <div className="row align-items-center">
                     <div className="col-lg-6 text-center">
-                      <img src={hostedImage(drop.images.drop)} className="img-fluid mx-auto" alt={drop.title} />
+                      <img src={hostedImage(drop.images.drop ?? drop.images.preview)} className="img-fluid mx-auto" alt={drop.title} />
                     </div>
                     <div className="col-lg-6">
                       <div className="d-desc">
