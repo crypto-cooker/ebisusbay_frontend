@@ -21,6 +21,7 @@ import {useRouter} from "next/router";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import LocalDataService from "@src/core/services/local-data-service";
 import {millisecondTimestamp} from "@market/helpers/utils";
+import {ChainId} from "@pancakeswap/chains";
 
 const tokens = appConfig('tokens')
 const drops: Drop[] = appConfig('drops').map((drop: any) => mapDrop(drop));
@@ -287,10 +288,10 @@ const FeaturedDrops = () => {
                                       (Array.isArray(drop.cost) ? (
                                         <Heading as="h3" size="md">
                                           {ethers.utils.commify(Math.min(...drop.cost.map((c) => parseInt(c))))} -{' '}
-                                          {ethers.utils.commify(Math.max(...drop.cost.map((c) => parseInt(c))))} CRO
+                                          {ethers.utils.commify(Math.max(...drop.cost.map((c) => parseInt(c))))} {drop.chainId === ChainId.CRONOS_ZKEVM ? 'zkCRO' : 'CRO' }
                                         </Heading>
                                       ) : (
-                                        <Heading as="h3" size="md">{ethers.utils.commify(drop.cost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
+                                        <Heading as="h3" size="md">{ethers.utils.commify(drop.cost)} {drop.chainId === ChainId.CRONOS_ZKEVM ? 'zkCRO' : 'CRO' }</Heading>
                                       ))}
                                     {drop.memberMitama && !!drop.erc20MemberCost && !!drop.erc20Token ? (
                                       <HStack mt={2} mb={4}>
@@ -336,10 +337,10 @@ const FeaturedDrops = () => {
                                   (Array.isArray(drop.memberCost) ? (
                                     <Heading as="h5" size="sm">
                                       Members: {ethers.utils.commify(Math.min(...drop.memberCost.map((c) => parseInt(c))))}{' '}
-                                      - {ethers.utils.commify(Math.max(...drop.memberCost.map((c) => parseInt(c))))} CRO
+                                      - {ethers.utils.commify(Math.max(...drop.memberCost.map((c) => parseInt(c))))} {drop.chainId === ChainId.CRONOS_ZKEVM ? 'zkCRO' : 'CRO' }
                                     </Heading>
                                   ) : (
-                                    <Heading as="h5" size="sm">Members: {ethers.utils.commify(drop.memberCost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
+                                    <Heading as="h5" size="sm">Members: {ethers.utils.commify(drop.memberCost)} {drop.chainId === ChainId.CRONOS_ZKEVM ? 'zkCRO' : 'CRO' }</Heading>
                                   ))}
 
                                 {!!drop.rewardCost && !!drop.erc20Token && (
@@ -369,10 +370,10 @@ const FeaturedDrops = () => {
                                     <Heading as="h5" size="sm">
                                       Whitelist:{' '}
                                       {ethers.utils.commify(Math.min(...(drop.whitelistCost as any[])?.map((c) => parseInt(c))))} -{' '}
-                                      {ethers.utils.commify(Math.max(...(drop.whitelistCost as any[])?.map((c) => parseInt(c))))} CRO
+                                      {ethers.utils.commify(Math.max(...(drop.whitelistCost as any[])?.map((c) => parseInt(c))))} {drop.chainId === ChainId.CRONOS_ZKEVM ? 'zkCRO' : 'CRO' }
                                     </Heading>
                                   ) : (
-                                    <Heading as="h5" size="sm">Whitelist: {ethers.utils.commify(drop.whitelistCost)} {drop.chain ? 'ETH' : 'CRO'}</Heading>
+                                    <Heading as="h5" size="sm">Whitelist: {ethers.utils.commify(drop.whitelistCost)} {drop.chainId === ChainId.CRONOS_ZKEVM ? 'zkCRO' : 'CRO' }</Heading>
                                   ))}
                                 {drop.specialWhitelistCost && (
                                   <Heading as="h5" size="sm">
