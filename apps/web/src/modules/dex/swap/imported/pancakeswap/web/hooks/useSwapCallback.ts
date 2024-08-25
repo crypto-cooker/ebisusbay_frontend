@@ -102,70 +102,39 @@ export function useSwapCallback(
         )
 
         // a successful estimation is a bignumber gas estimate and the next call is also a bignumber gas estimate
-        let bestCallOption: SuccessfulCall | SwapCallEstimate | undefined = estimatedCalls.find(
+        const successfulEstimation = estimatedCalls.find(
           (el, ix, list): el is SuccessfulCall =>
             'gasEstimate' in el && (ix === list.length - 1 || 'gasEstimate' in list[ix + 1]),
         )
 
-        // // a successful estimation is a bignumber gas estimate and the next call is also a bignumber gas estimate
-        // const successfulEstimation = estimatedCalls.find(
-        //   (el, ix, list): el is SuccessfulCall =>
-        //     'gasEstimate' in el && (ix === list.length - 1 || 'gasEstimate' in list[ix + 1]),
-        // )
-
-        // if (!successfulEstimation) {
-        //   const errorCalls = estimatedCalls.filter((call): call is FailedCall => 'error' in call)
-        //   if (errorCalls.length > 0) throw new Error(errorCalls[errorCalls.length - 1].error)
-        //   throw new Error('Unexpected error. Could not estimate gas for the swap.')
-        // }
-
-        if (!bestCallOption) {
+        if (!successfulEstimation) {
           const errorCalls = estimatedCalls.filter((call): call is FailedCall => 'error' in call)
-          if (errorCalls.length > 0) throw errorCalls[errorCalls.length - 1].error
-          const firstNoErrorCall = estimatedCalls.find<SwapCallEstimate>(
-            (call): call is SwapCallEstimate => !('error' in call),
-          )
-          if (!firstNoErrorCall) throw new Error('Unexpected error. Could not estimate gas for the swap.')
-          bestCallOption = firstNoErrorCall
+          if (errorCalls.length > 0) throw new Error(errorCalls[errorCalls.length - 1].error)
+          throw new Error('Unexpected error. Could not estimate gas for the swap.')
         }
 
-        const call =
-          'getCall' in bestCallOption.call
-            ? await bestCallOption.call.getCall()
-            : (bestCallOption.call as SwapCall & { gas?: string | bigint })
-
-        if ('error' in call) {
-          throw new Error('Route lost. Need to restart.')
-        }
-
-        if ('gas' in call && call.gas) {
-          // prepared Wallchain's call have gas estimate inside
-          call.gas = BigInt(call.gas)
-        } else {
-          call.gas =
-            'gasEstimate' in bestCallOption && bestCallOption.gasEstimate
-              ? calculateGasMargin(bestCallOption.gasEstimate, 2000n)
-              : undefined
-        }
+        const {
+          call: {
+            contract,
+            parameters: { methodName, args, value },
+          },
+          gasEstimate,
+        } = successfulEstimation
 
         let sendTxResult: Promise<SendTransactionReturnType> | undefined
 
         if (isPaymasterAvailable && isPaymasterTokenActive) {
-          sendTxResult = sendPaymasterTransaction(call, account)
+          sendTxResult = sendPaymasterTransaction(successfulEstimation.call, account)
         } else {
-          sendTxResult = sendTransactionAsync({
-            account,
-            chainId,
-            to: call.address,
-            data: call.calldata,
-            value: call.value && !isZero(call.value) ? hexToBigInt(call.value) : 0n,
-            gas: call.gas,
+          sendTxResult = contract.write[methodName](args, {
+            gas: calculateGasMargin(gasEstimate),
+            gasPrice: gasPrice.data,
+            ...(value && !isZero(value) ? { value, account } : { account }),
           })
-          // sendTxResult = contract.write[methodName](args, {
-          //   gas: calculateGasMargin(gasEstimate),
-          //   gasPrice: gasPrice.data,
-          //   ...(value && !isZero(value) ? { value, account } : { account }),
-          // })
+        }
+
+        if (!sendTxResult) {
+          throw new Error('Transaction failed. Please try again')
         }
 
         return sendTxResult

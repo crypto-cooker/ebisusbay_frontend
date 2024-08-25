@@ -67,6 +67,7 @@ export const usePaymaster = () => {
       args: call.parameters.args,
       functionName: call.parameters.methodName
     })
+    console.log('CALL-RAW', call);
     console.log('CALLDATA', {
       abi: call.contract.abi,
       args: call.parameters.args,
@@ -76,9 +77,16 @@ export const usePaymaster = () => {
     const modifiedSwapCall = {
       address: call.contract.address,
       calldata,
-      value: call.parameters.value
+      value: call.parameters.value,
+      gas: call.gas
     }
 
+    console.log('PAYMASTER-REQUEST', stringify({
+      call: modifiedSwapCall,
+      account,
+      gasTokenAddress: gasToken.address,
+      chainId: chain.chainId
+    }))
     const response = await fetch(`${appConfig.urls.cms}paymaster/swap?address=${account}&signature=${userSig}`, {
       method: 'POST',
       headers: {
@@ -94,36 +102,53 @@ export const usePaymaster = () => {
 
     if (!response.ok) throw new Error('Failed to send paymaster transaction')
 
-    const txResponse: ZyfiResponse = await response.json()
+
+    const { data } = await response.json()
+    const txResponse = data as ZyfiResponse;
+
+    console.log('PAYMASTER-RESPONSE', txResponse);
 
     const newTx = {
       account,
       to: txResponse.txData.to,
       value: txResponse.txData.value && !isZero(txResponse.txData.value) ? hexToBigInt(txResponse.txData.value) : 0n,
-      chainId: ChainId.CRONOS_ZKEVM,
+      chainId: chain.chainId,
       gas: BigInt(txResponse.gasLimit),
       maxFeePerGas: BigInt(txResponse.txData.maxFeePerGas),
       maxPriorityFeePerGas: BigInt(0),
-      data: call.calldata,
+      data: calldata,
       gasPerPubdata: BigInt(txResponse.txData.customData.gasPerPubdata),
       paymaster: txResponse.txData.customData.paymasterParams.paymaster,
       paymasterInput: txResponse.txData.customData.paymasterParams.paymasterInput,
     }
+    console.log('PAYMASTER-PREPARE1', newTx);
 
     if (!walletClient) {
       throw new Error('Failed to execute paymaster transaction')
     }
+    console.log('PAYMASTER-PREPARE2', { chainId: chain.chainId });
 
-    const zkPublicClient = publicClient({ chainId: ChainId.ZKSYNC })
+    const zkPublicClient = publicClient({ chainId: chain.chainId })
     const client: any = walletClient.extend(eip712WalletActions() as any)
 
-    const txReq = await client.prepareTransactionRequest(newTx)
-    const signature = await client.signTransaction(txReq)
-    const hash = await zkPublicClient.sendRawTransaction({
-      serializedTransaction: signature,
-    })
+    const block = await zkPublicClient.getBlock({ blockTag: 'latest' });
+    console.log('PAYMASTER-FEE', block.baseFeePerGas)
+    try {
+      console.log('PAYMASTER-PREPARE3', walletClient);
+      const txReq = await client.prepareTransactionRequest(newTx)
+      console.log('PAYMASTER-PREPARE4', stringify(txReq));
+      const signature = await client.sendTransaction(txReq)
+      console.log('PAYMASTER-PREPARE5', signature);
+      const hash = await zkPublicClient.sendRawTransaction({
+        serializedTransaction: signature,
+      })
+      console.log('PAYMASTER-SENT', hash);
 
-    return hash
+      return hash
+    } catch (e) {
+      console.log(e);
+      throw new Error(e)
+    }
   }
 
   return {
