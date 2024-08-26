@@ -32,9 +32,11 @@ import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import Bank from "@src/global/contracts/Bank.json";
 import {ChainLogo, CurrencyLogoByAddress} from "@dex/components/logo";
 import { ChainId } from "@pancakeswap/chains";
+import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
+import {useAppChainConfig} from "@src/config/hooks";
 
 const config = appConfig();
-const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+
 enum FundingType {
   NATIVE = 'native',
   ERC20 = 'erc20',
@@ -62,7 +64,9 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   const user = useUser();
   const userTheme = user.theme;
   const {requestSignature} = useEnforceSigner();
-  const [runAuthedFunction] = useAuthedFunction();
+  const [runAuthedFunction] = useAuthedFunctionWithChainID(drop.chainId);
+  const { config: appChainConfig } = useAppChainConfig(drop.chainId)
+  const readProvider = new ethers.providers.JsonRpcProvider(appChainConfig.chain.rpcUrls.default.http[0]);
 
   const [mintingWithType, setMintingWithType] = useState<FundingType>();
   const [numToMint, setNumToMint] = useState(1);
@@ -101,7 +105,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     const regCost = ethers.utils.parseEther(regularCost.toString() ?? '0');
     const mbrCost = ethers.utils.parseEther(memberCost?.toString() ?? '0');
 
-    if (drop.memberMitama) {
+    if (drop.memberMitama && [338, 25].includes(chainId)) {
       if (fundingType === FundingType.REWARDS) {
         return ethers.utils.parseEther(drop.rewardCost?.toString() ?? '5000');
       }
