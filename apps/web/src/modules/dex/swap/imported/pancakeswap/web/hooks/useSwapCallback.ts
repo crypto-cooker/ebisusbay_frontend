@@ -208,6 +208,13 @@ export function useSwapCallback(
             if (isUserRejected(error)) {
               throw new Error('Transaction rejected.')
             } else {
+
+              if (isPaymasterAvailable && isPaymasterTokenActive) {
+                throw new Error(
+                  `Swap failed: Try again with more gas token balance. ${transactionErrorToUserReadableMessage(error)}`,
+                )
+              }
+
               // otherwise, the error was unexpected and we need to convey that
               console.error(`Swap failed`, error, methodName, args, value)
               throw new Error(`Swap failed: ${transactionErrorToUserReadableMessage(error)}`)

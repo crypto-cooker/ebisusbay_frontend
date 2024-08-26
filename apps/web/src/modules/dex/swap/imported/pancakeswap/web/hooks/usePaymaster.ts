@@ -1,17 +1,18 @@
 import isZero from '@pancakeswap/utils/isZero'
-import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId'
-import { useMemo } from 'react'
-import {Address, encodeFunctionData, Hex, hexToBigInt, isAddress, stringify} from 'viem'
+import {useActiveChainId} from '@eb-pancakeswap-web/hooks/useActiveChainId'
+import {useMemo} from 'react'
+import {Address, encodeFunctionData, hexToBigInt, isAddress, stringify} from 'viem'
 
-import { ChainId } from '@pancakeswap/chains'
-import { ZyfiResponse } from '@src/config/paymaster'
-import { publicClient } from '@eb-pancakeswap-web/utils/viem'
-import { eip712WalletActions } from 'viem/zksync'
-import { useWalletClient } from 'wagmi'
+import {ChainId} from '@pancakeswap/chains'
+import {ZyfiResponse} from '@src/config/paymaster'
+import {eip712WalletActions} from 'viem/zksync'
+import {useWalletClient} from 'wagmi'
 import {useGasTokenByChain} from '@eb-pancakeswap-web/hooks/use-gas-token'
 import {useAppConfig} from "@src/config/hooks";
-import { SwapParameters } from '@pancakeswap/sdk'
+import {SwapParameters} from '@pancakeswap/sdk'
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {getTransactionCount} from "@wagmi/core";
+import {wagmiConfig} from "@src/wagmi";
 
 // interface SwapCall {
 //   address: Address
@@ -67,12 +68,6 @@ export const usePaymaster = () => {
       args: call.parameters.args,
       functionName: call.parameters.methodName
     })
-    console.log('CALL-RAW', call);
-    console.log('CALLDATA', {
-      abi: call.contract.abi,
-      args: call.parameters.args,
-      functionName: call.parameters.methodName
-    }, calldata)
 
     const modifiedSwapCall = {
       address: call.contract.address,
@@ -81,12 +76,6 @@ export const usePaymaster = () => {
       gas: call.gas
     }
 
-    console.log('PAYMASTER-REQUEST', stringify({
-      call: modifiedSwapCall,
-      account,
-      gasTokenAddress: gasToken.address,
-      chainId: chain.chainId
-    }))
     const response = await fetch(`${appConfig.urls.cms}paymaster/swap?address=${account}&signature=${userSig}`, {
       method: 'POST',
       headers: {
@@ -106,7 +95,7 @@ export const usePaymaster = () => {
     const { data } = await response.json()
     const txResponse = data as ZyfiResponse;
 
-    console.log('PAYMASTER-RESPONSE', txResponse);
+    const nonce = await getTransactionCount(wagmiConfig, { address: account })
 
     const newTx = {
       account,
@@ -120,35 +109,16 @@ export const usePaymaster = () => {
       gasPerPubdata: BigInt(txResponse.txData.customData.gasPerPubdata),
       paymaster: txResponse.txData.customData.paymasterParams.paymaster,
       paymasterInput: txResponse.txData.customData.paymasterParams.paymasterInput,
+      nonce
     }
-    console.log('PAYMASTER-PREPARE1', newTx);
 
     if (!walletClient) {
       throw new Error('Failed to execute paymaster transaction')
     }
-    console.log('PAYMASTER-PREPARE2', { chainId: chain.chainId });
 
-    const zkPublicClient = publicClient({ chainId: chain.chainId })
-    const client: any = walletClient.extend(eip712WalletActions() as any)
-
-    const block = await zkPublicClient.getBlock({ blockTag: 'latest' });
-    console.log('PAYMASTER-FEE', block.baseFeePerGas)
-    try {
-      console.log('PAYMASTER-PREPARE3', walletClient);
-      const txReq = await client.prepareTransactionRequest(newTx)
-      console.log('PAYMASTER-PREPARE4', stringify(txReq));
-      const signature = await client.sendTransaction(txReq)
-      console.log('PAYMASTER-PREPARE5', signature);
-      const hash = await zkPublicClient.sendRawTransaction({
-        serializedTransaction: signature,
-      })
-      console.log('PAYMASTER-SENT', hash);
-
-      return hash
-    } catch (e) {
-      console.log(e);
-      throw new Error(e)
-    }
+    const client = walletClient.extend(eip712WalletActions())
+    const txReq = await client.prepareTransactionRequest(newTx)
+    return await client.sendTransaction(txReq)
   }
 
   return {
