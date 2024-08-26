@@ -35714,6 +35714,7 @@
       "published": true,
       "complete": false,
       "images": {
+        "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/free-the-gang/drop.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/banner.webp",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/avatar.webp",
         "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/card.webp"
