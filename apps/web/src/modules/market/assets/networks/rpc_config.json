@@ -35773,7 +35773,7 @@
       "memberCost": "51",
       "whitelistCost": "51",
       "foundersOnly": false,
-      "start": null,
+      "start": 1724958000000,
       "end": null,
       "referral": false,
       "is1155": false,
