@@ -22,6 +22,9 @@ import ImageService from "@src/core/services/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {useUser} from "@src/components-v2/useUser";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {useChainId} from "wagmi";
+import {useAppChainConfig} from "@src/config/hooks";
 
 const Markdown= dynamic(() => import('react-markdown'),{ ssr: false });
 
@@ -72,8 +75,8 @@ interface SingleDropProps {
 const SingleDrop = ({drop}: SingleDropProps) => {
   const router = useRouter();
   const { slug } = router.query;
-
-  const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+  const { config: appChainConfig } = useAppChainConfig(drop.chainId)
+  const readProvider = new ethers.providers.JsonRpcProvider(appChainConfig.chain.rpcUrls.default.http[0]);
 
   // const [loading, setLoading] = useState(true);
   const [dropObject, setDropObject] = useState<Drop | null>(null);
