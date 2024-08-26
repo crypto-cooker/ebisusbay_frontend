@@ -28046,6 +28046,31 @@
         "doxx": true,
         "kyc": true
       }
+    },
+    {
+      "name": "ARY",
+      "slug": "ary",
+      "chainId": 282,
+      "multiToken": false,
+      "address": "",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "1,000 exclusive and tradable NFTs designed for ARY fans, each featuring unique traits and expressions that make every piece truly one-of-a-kind.   Powered by:   - Thomas (Founder of ARY)   - Kevin (Artist) [@Vcmxss]   - Piero (Data Optimizer) [@PieroPasqiari88]",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/banner.webp",
+        "website": "https://www.aryoshin.com/",
+        "twitter": "https://twitter.com/CronosAry",
+        "discord": "https://discord.gg/KatxH57WYU",
+        "telegram": "https://t.me/ARY_FAM",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -35714,6 +35739,7 @@
       "published": true,
       "complete": false,
       "images": {
+        "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/free-the-gang/drop.webp",
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/banner.webp",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/avatar.webp",
         "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/card.webp"
@@ -35728,13 +35754,13 @@
     {
       "id": 195,
       "chainId": 388,
-      "slug": "aryoshin",
-      "title": "Aryoshin \uD83E\uDE75_\uD83E\uDE75",
-      "subtitle": "Arioshin \uD83E\uDE75_\uD83E\uDE75 Collectible and exchangeable NFTs, pixel art, with innovative details, dedicated to ARY fans. Find the lucky MANEKI and receive the prize Created by Thomas founder of ARY Kevin designer (@vcmxss) Piero Data Optimizer (@PieroPasqiari88)",
-      "description": "The new ARY collection after the previously released ARYKNIFE collection has the aim of enriching the project and legitimately financing future developments of the project, which will include buybacks of the $ARY token, deposits of new liquidity and developing a dedicated platform. as well as developing award services on social media (X, discord).",
+      "slug": "ary",
+      "title": "ARY",
+      "subtitle": "1,000 exclusive and tradable NFTs designed for ARY fans, each featuring unique traits and expressions that make every piece truly one-of-a-kind.   Powered by:   - Thomas (Founder of ARY)   - Kevin (Artist) [@Vcmxss]   - Piero (Data Optimizer) [@PieroPasqiari88]",
+      "description": "The primary goal of this collection is to enhance the ARY project and generate liquidity for future developments. Upcoming steps in the roadmap include increasing liquidity for more stable exchanges and developing a Web3 DApp on the Cronos chain.",
       "author": {
         "name": "Aryoshin",
-        "website": "https://www.aryioshin.com/",
+        "website": "https://www.aryoshin.com/",
         "twitter": "https://twitter.com/CronosAry",
         "discord": "https://discord.gg/KatxH57WYU",
         "telegram": "https://t.me/ARY_FAM"
@@ -35754,9 +35780,10 @@
       "published": true,
       "complete": false,
       "images": {
-        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/aryoshin/banner.webp",
-        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/aryoshin/avatar.webp",
-        "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/aryoshin/card.webp"
+        "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/ary/drop.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/banner.webp",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/avatar.webp",
+        "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/card.webp"
       },
       "verification": {
         "doxx": false,
