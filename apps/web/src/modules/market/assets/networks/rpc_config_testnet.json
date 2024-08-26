@@ -3989,6 +3989,30 @@
         "doxx": true,
         "kyc": true
       }
+    },
+    {
+      "name": "Free The Gang",
+      "slug": "free-the-gang",
+      "chainId": 282,
+      "multiToken": false,
+      "address": "0x67A96285C2aD0385F8e511813dfd72a0140B6456",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "\"Free The Gang\", the upgrade art from the legendary Fury Mouse Gang collection & the first ever NFT collection on zkEVM Cronos chain.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/banner.webp",
+        "website": "https://furymousegang.com",
+        "twitter": "https://twitter.com/FuryMouseGang",
+        "discord": "https://discord.gg/zmWKbuja5N",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -9620,7 +9644,7 @@
         "twitter": "https://twitter.com/FuryMouseGang",
         "discord": "https://discord.gg/zmWKbuja5N"
       },
-      "address": "0x598c315e0A7a30acba5D01ed0B56684fa595629e",
+      "address": "0x67A96285C2aD0385F8e511813dfd72a0140B6456",
       "maxMintPerTx": 20,
       "maxMintPerAddress": 1000,
       "totalSupply": 2000,
