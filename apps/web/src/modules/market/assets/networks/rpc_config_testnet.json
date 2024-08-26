@@ -9649,7 +9649,6 @@
       "maxMintPerAddress": 1000,
       "totalSupply": 2000,
       "cost": "400",
-      "memberCost": "370",
       "whitelistCost": "370",
       "foundersOnly": false,
       "start": 1724649125000,
