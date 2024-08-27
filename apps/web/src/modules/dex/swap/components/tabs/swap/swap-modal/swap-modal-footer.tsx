@@ -1,14 +1,20 @@
 import { Trade, Currency, CurrencyAmount, TradeType } from '@pancakeswap/sdk'
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import {Field} from "@eb-pancakeswap-web/state/swap/actions";
 import {computeTradePriceBreakdown, warningSeverity} from "@eb-pancakeswap-web/utils/exchange";
-import {Box, Button, Flex, HStack, Text, VStack} from "@chakra-ui/react";
+import {Badge, Box, Button, Flex, HStack, Text, Tooltip, VStack} from "@chakra-ui/react";
 import {QuestionHelper} from "@dex/swap/components/tabs/swap/question-helper";
 import FormattedPriceImpact from "@dex/swap/components/tabs/swap/formatted-price-impact";
 import {TradePrice} from "@dex/swap/components/tabs/swap/trade-price";
 import {SwapCallbackError} from "@dex/swap/components/tabs/swap/swap-callback-error";
 import {Card} from "@src/components-v2/foundation/card";
+import {useGasTokenByChain} from "@eb-pancakeswap-web/hooks/use-gas-token";
+import {usePaymaster} from "@eb-pancakeswap-web/hooks/usePaymaster";
+import {paymasterInfo, SupportedPaymasterChain} from "@src/config/paymaster";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {CurrencyLogo} from "@dex/components/logo";
+import {ChevronDownIcon} from "@chakra-ui/icons";
 
 export default function SwapModalFooter({
   trade,
@@ -25,6 +31,18 @@ export default function SwapModalFooter({
   swapErrorMessage?: string | undefined
   disabledConfirm: boolean
 }) {
+  const { chainId } = useActiveChainId()
+  const supportedChainId = chainId as SupportedPaymasterChain;
+  const supportedPaymasterInfo = paymasterInfo[supportedChainId] ?? {}
+
+  const [gasToken] = useGasTokenByChain(supportedChainId)
+  const { isPaymasterAvailable, isPaymasterTokenActive } = usePaymaster()
+  const gasTokenInfo = supportedPaymasterInfo[gasToken.isToken ? gasToken?.wrapped.address : '']
+
+  const gasTokenBadge = gasTokenInfo?.discount &&
+    (gasTokenInfo.discount === 'FREE'
+      ? 'Gas fees is fully sponsored'
+      : `${gasTokenInfo.discount} discount on this gas fee token`)
 
   const {
     priceImpactWithoutFee,
@@ -80,6 +98,35 @@ export default function SwapModalFooter({
           </HStack>
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
         </Flex>
+        {isPaymasterAvailable && isPaymasterTokenActive && (
+          <Flex justify='space-between'>
+            <HStack>
+              <Text fontSize="14px">Gas token</Text>
+              {gasTokenInfo && gasTokenInfo.discount && (
+                <Tooltip label={gasTokenBadge} aria-label='Token gas info'>
+                  <Badge variant='solid' colorScheme='green'>
+                    ️ ⛽️ {gasTokenInfo.discountLabel ?? gasTokenInfo.discount}
+                  </Badge>
+                </Tooltip>
+              )}
+            </HStack>
+            <Flex alignItems="center">
+              <Box position='relative'>
+                <CurrencyLogo currency={gasToken} useTrustWalletUrl={false} size="20px" />
+                <Box position='absolute' bottom='-2px' right='-6px' fontSize='sm'>⛽️</Box>
+              </Box>
+
+              <Text marginLeft={2} fontSize={14} fontWeight='bold'>
+                {(gasToken && gasToken.symbol && gasToken.symbol.length > 10
+                  ? `${gasToken.symbol.slice(0, 4)}...${gasToken.symbol.slice(
+                    gasToken.symbol.length - 5,
+                    gasToken.symbol.length,
+                  )}`
+                  : gasToken?.symbol) || ''}
+              </Text>
+            </Flex>
+          </Flex>
+        )}
         {/* <RowBetween>
           <RowFixed>
             <Text fontSize="14px">{t('Liquidity Provider Fee')}</Text>

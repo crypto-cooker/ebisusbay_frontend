@@ -14,6 +14,7 @@ import {
   Button,
   Flex,
   HStack,
+  Image,
   Spinner,
   Text,
   Tooltip,
@@ -183,7 +184,7 @@ export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
     const item = currency
 
     // Extra info for the token
-    const itemInfo = paymasterInfo[item.isToken ? item.wrapped.address : '']
+    const itemInfo = supportedPaymasterInfo[item.isToken ? item.wrapped.address : '']
 
     const disabled = false
     // const disabled = useMemo(
@@ -288,10 +289,10 @@ export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
           data-dd-action-name="Zyfi Gas Token Select Button"
         >
           <Flex alignItems="center">
-            <div style={{ position: 'relative' }}>
+            <Box position='relative'>
               <CurrencyLogo currency={gasToken} useTrustWalletUrl={false} size="20px" />
-              <p style={{ position: 'absolute', bottom: '-2px', right: '-6px', fontSize: '14px' }}>⛽️</p>
-            </div>
+              <Box position='absolute' bottom='-2px' right='-6px' fontSize='sm'>⛽️</Box>
+            </Box>
 
             <Text marginLeft={2} fontSize={14} fontWeight='bold'>
               {(gasToken && gasToken.symbol && gasToken.symbol.length > 10
@@ -356,8 +357,8 @@ export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
         </DialogBody>
         <DialogFooter>
           <Flex justify='center' align='center' w='full' fontWeight='bold'>
-            <span>Powered by Zyfi Paymaster</span>
-            <img
+            <Box as='span'>Powered by Zyfi Paymaster</Box>
+            <Image
               src={`https://assets.pancakeswap.finance/web/paymasters/zyfi-logo.png`}
               alt="Zyfi Logo"
               width={18}
