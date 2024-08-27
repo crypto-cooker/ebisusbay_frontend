@@ -3,7 +3,6 @@ import Blockies from 'react-blockies';
 import NextLink from 'next/link';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
-  faArrowRightArrowLeft,
   faBolt,
   faCoins,
   faCopy,
@@ -24,16 +23,18 @@ import styles from './accountmenu.module.scss';
 import {useWeb3Modal} from '@web3modal/wagmi/react'
 import {appConfig} from '@src/config';
 import classnames from "classnames";
-import Button from "@src/Components/components/Button";
 import {
   Box,
+  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
+  Flex,
   Heading,
+  HStack,
   Image,
   Link,
   Modal,
@@ -62,14 +63,29 @@ import {useContractService, useUser} from "@src/components-v2/useUser";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {GasWriter} from "@src/core/chain/gas-writer";
 import * as Sentry from "@sentry/nextjs";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {ChainId} from "@pancakeswap/chains";
+import {ChainLogo, CurrencyLogo} from "@dex/components/logo";
+import {ChevronDownIcon} from "@chakra-ui/icons";
+import {useGasTokenByChain} from "@eb-pancakeswap-web/hooks/use-gas-token";
+import {SupportedPaymasterChain} from "@src/config/paymaster";
+import GasTokenSelectorDialog from "@dex/swap/components/tabs/swap/paymaster/gas-token-selector-dialog";
+import {Card} from "@src/components-v2/foundation/card";
 
 const config = appConfig();
 
-const Index = function () {
+const AccountMenu = function () {
   const user = useUser();
+
+  const { chainId } = useActiveChainId();
+  const supportedChainId = chainId as SupportedPaymasterChain;
+
+  const [gasToken, setGasToken] = useGasTokenByChain(supportedChainId);
+
   const { open: openWeb3Modal, close: closeWeb3Modal } = useWeb3Modal();
   const contractService = useContractService();
   const { isOpen: isLoginWizardOpen, onOpen: onLoginWizardOpen, onClose: onLoginWizardClose } = useDisclosure()
+  const { isOpen: isOpenGasToken, onOpen: onOpenGasToken, onClose: onCloseGasToken } = useDisclosure()
 
   const [showMenu, setShowMenu] = useState(false);
   const slideDirection = useBreakpointValue<'bottom' | 'right'>(
@@ -293,7 +309,7 @@ const Index = function () {
                 <NextLink href={`/account/${user.wallet.address}`} passHref>
                   <Box className={styles.col} onClick={closeMenu}>
                     <span>
-                      <FontAwesomeIcon icon={faUser} />
+                      <FontAwesomeIcon icon={faUser}/>
                     </span>
                     <span className="ms-2">My Profile</span>
                   </Box>
@@ -301,7 +317,7 @@ const Index = function () {
                 <NextLink href='/account/settings/profile' passHref>
                   <Box className={styles.col} onClick={closeMenu}>
                     <span>
-                      <FontAwesomeIcon icon={faEdit} />
+                      <FontAwesomeIcon icon={faEdit}/>
                     </span>
                     <span className="ms-2">Edit Account</span>
                   </Box>
@@ -309,7 +325,7 @@ const Index = function () {
                 <NextLink href={`/account/${user.wallet.address}?tab=offers`} passHref>
                   <Box className={styles.col} onClick={closeMenu}>
                     <span>
-                      <FontAwesomeIcon icon={faHand} />
+                      <FontAwesomeIcon icon={faHand}/>
                     </span>
                     <span className="ms-2">My Offers</span>
                   </Box>
@@ -317,7 +333,7 @@ const Index = function () {
                 <NextLink href='/staking' passHref>
                   <Box className={styles.col} onClick={closeMenu}>
                     <span>
-                      <FontAwesomeIcon icon={faBolt} />
+                      <FontAwesomeIcon icon={faBolt}/>
                     </span>
                     <span className="ms-2">Staking</span>
                   </Box>
@@ -325,7 +341,7 @@ const Index = function () {
                 <NextLink href={`/account/${user.wallet.address}?tab=listings`} passHref>
                   <Box className={styles.col} onClick={closeMenu}>
                     <span>
-                      <FontAwesomeIcon icon={faCoins} />
+                      <FontAwesomeIcon icon={faCoins}/>
                     </span>
                     <span className="ms-2">Listings</span>
                   </Box>
@@ -333,7 +349,7 @@ const Index = function () {
                 <NextLink href={`/account/${user.wallet.address}?tab=sales`} passHref>
                   <Box className={styles.col} onClick={closeMenu}>
                     <span>
-                      <FontAwesomeIcon icon={faDollarSign} />
+                      <FontAwesomeIcon icon={faDollarSign}/>
                     </span>
                     <span className="ms-2">Sales</span>
                   </Box>
@@ -341,7 +357,7 @@ const Index = function () {
                 <NextLink href={`/account/${user.wallet.address}?tab=favorites`} passHref>
                   <Box className={styles.col} onClick={closeMenu}>
                     <span>
-                      <FontAwesomeIcon icon={faHeart} />
+                      <FontAwesomeIcon icon={faHeart}/>
                     </span>
                     <span className="ms-2">Favorites</span>
                   </Box>
@@ -349,7 +365,7 @@ const Index = function () {
                 <Box as='span' onClick={toggleTheme}>
                   <Box className={styles.col}>
                     <span>
-                      <FontAwesomeIcon icon={user.theme === 'dark' ? faMoon : faSun} />
+                      <FontAwesomeIcon icon={user.theme === 'dark' ? faMoon : faSun}/>
                     </span>
                     <span className="ms-2">Dark mode</span>
                   </Box>
@@ -368,7 +384,7 @@ const Index = function () {
                     {!user.initializing ? (
                       <span className="d-wallet-value">
                         <div className="d-flex">
-                          <FortuneIcon boxSize={6} />
+                          <FortuneIcon boxSize={6}/>
                           <span className="ms-1">
                             {ethers.utils.commify(round(user.balances.frtn))}
                           </span>
@@ -376,7 +392,7 @@ const Index = function () {
                       </span>
                     ) : (
                       <span>
-                        <Spinner size='sm' />
+                        <Spinner size='sm'/>
                       </span>
                     )}
                   </div>
@@ -395,7 +411,7 @@ const Index = function () {
                       <span className="d-wallet-value">
                       {user.balances ? (
                         <div className="d-flex">
-                          <CronosIconBlue boxSize={6} />
+                          <CronosIconBlue boxSize={6}/>
                           <span className="ms-1">
                             {ethers.utils.commify(round(user.balances.cro, 2))}
                           </span>
@@ -406,17 +422,16 @@ const Index = function () {
                     </span>
                     ) : (
                       <span>
-                        <Spinner size='sm' />
+                        <Spinner size='sm'/>
                       </span>
                     )}
                   </div>
                 </div>
                 <div className="my-auto">
-                  <Button type="legacy"
-                          onClick={handleBuyCro}>
-                    <CronosIconFlat boxSize={4} />
+                  <PrimaryButton onClick={handleBuyCro}>
+                    <CronosIconFlat boxSize={4}/>
                     <Text ms={1}>Buy CRO</Text>
-                  </Button>
+                  </PrimaryButton>
                 </div>
               </div>
               <div className="d-flex mt-2">
@@ -427,7 +442,7 @@ const Index = function () {
                       {user.escrow.balance ? (
                         <>
                           <div className="d-flex">
-                            <CronosIconBlue boxSize={6} />
+                            <CronosIconBlue boxSize={6}/>
                             <span className="ms-1">
                               {ethers.utils.commify(round(user.escrow.balance, 2))}
                             </span>
@@ -439,7 +454,7 @@ const Index = function () {
                     </div>
                   ) : (
                     <span>
-                      <Spinner size='sm' />
+                      <Spinner size='sm'/>
                     </span>
                   )}
                 </div>
@@ -470,8 +485,10 @@ const Index = function () {
                 </div>
               </div>
               <Text fontSize={'xs'}>
-                {user.escrow.enabled ? <>Sales and royalties must be claimed from escrow. Opt-out to receive payments directly</>
-                  : <>Sales and royalties go directly to your wallet. If you prefer claiming from escrow, opt-in above</>
+                {user.escrow.enabled ? <>Sales and royalties must be claimed from escrow. Opt-out to receive payments
+                    directly</>
+                  : <>Sales and royalties go directly to your wallet. If you prefer claiming from escrow, opt-in
+                    above</>
                 }
               </Text>
               <div className="d-flex mt-2">
@@ -492,7 +509,7 @@ const Index = function () {
                       </>
                     ) : (
                       <span>
-                        <Spinner size='sm' />
+                        <Spinner size='sm'/>
                       </span>
                     )}
                   </div>
@@ -507,8 +524,45 @@ const Index = function () {
                 </div>
               </div>
               <Text fontSize={'xs'}>
-                From 13 Dec 2023, staking rewards are now issued in <strong>$FRTN</strong>. Visit the <Link as={NextLink} href='/ryoshi' className='color' color='auto' fontWeight='bold'>Ryoshi Dynasties Bank</Link> to claim
+                From 13 Dec 2023, staking rewards are now issued in <strong>$FRTN</strong>. Visit the <Link
+                as={NextLink} href='/ryoshi' className='color' color='auto' fontWeight='bold'>Ryoshi Dynasties
+                Bank</Link> to claim
               </Text>
+              {chainId === ChainId.CRONOS_ZKEVM && (
+                <Card mt={4}>
+                  <Box as="h4" mb={4}>
+                    <HStack>
+                      <ChainLogo chainId={388} />
+                      <Box fontSize='lg' fontWeight='bold'>Cronos ZKEVM Options</Box>
+                    </HStack>
+                  </Box>
+                  <Flex justify='space-between' align='center'>
+                    <Box fontWeight='bold'>Paymaster Token</Box>
+                    <Button
+                      isSelected={!!gasToken}
+                      onClick={onOpenGasToken}
+                      data-dd-action-name="Zyfi Gas Token Select Button"
+                    >
+                      <Flex alignItems="center">
+                        <Box position='relative'>
+                          <CurrencyLogo currency={gasToken} useTrustWalletUrl={false} size="20px"/>
+                          <Box position='absolute' bottom='-2px' right='-6px' fontSize='sm'>⛽️</Box>
+                        </Box>
+
+                        <Text marginLeft={2} fontSize={14} fontWeight='bold'>
+                          {(gasToken && gasToken.symbol && gasToken.symbol.length > 10
+                            ? `${gasToken.symbol.slice(0, 4)}...${gasToken.symbol.slice(
+                              gasToken.symbol.length - 5,
+                              gasToken.symbol.length,
+                            )}`
+                            : gasToken?.symbol) || ''}
+                        </Text>
+                        <ChevronDownIcon marginLeft={1}/>
+                      </Flex>
+                    </Button>
+                  </Flex>
+                </Card>
+              )}
               <div className="row mt-3">
                 <div className="col">
                   <div className="d-flex justify-content-evenly">
@@ -525,13 +579,15 @@ const Index = function () {
           </DrawerContent>
         </Drawer>
       )}
+
+      <GasTokenSelectorDialog isOpen={isOpenGasToken} onClose={onCloseGasToken}/>
     </div>
   );
 };
 
-export default memo(Index);
+export default memo(AccountMenu);
 
-const FunctionButton = ({title, fn}: {title: string, fn: () => Promise<void>}) => {
+const FunctionButton = ({title, fn}: { title: string, fn: () => Promise<void> }) => {
   const [isExecuting, setIsExecuting] = useState(false);
 
   const handleExecution = async () => {
