@@ -257,8 +257,8 @@ export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
           <QuestionHelper
             text={
               <>
-                <VStack fontWeight='normal' fontSize='md'>
-                  <Text>
+                <VStack fontWeight='normal' fontSize='md' align='start'>
+                  <Text fontWeight='bold'>
                     Gas Token
                   </Text>
                   <Text>
