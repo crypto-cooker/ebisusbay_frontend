@@ -84,7 +84,7 @@ const get721NftById = async (collectionAddress, tokenId, readContract = null) =>
     description: json.description,
     properties: json.properties ? json.properties : json.attributes,
     address: collectionAddress,
-    is_1155: false,
+    is1155: false,
   };
 };
 

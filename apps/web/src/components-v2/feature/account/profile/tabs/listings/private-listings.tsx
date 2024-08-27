@@ -266,7 +266,7 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
                   const collection = collections.find((c: any) => ciEquals(c.address, listing.nftAddress));
                   let nft = listing.nft;
                   if (!!collection) {
-                    nft = {...listing.nft, is_1155: collection.is_1155};
+                    nft = {...listing.nft, is1155: collection.is1155};
                   }
                   setUpdateListingNft({...listing, nft});
                 }}

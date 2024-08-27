@@ -17,7 +17,7 @@
       "name": "Ebisu's Bay VIP",
       "onChain": false,
       "address": "0x3F1590A5984C89e6d5831bFB76788F3517Cdf034",
-      "is_1155": true,
+      "is1155": true,
       "id": 2,
       "listable": true,
       "metadata": {
@@ -42,7 +42,7 @@
       "name": "EbisusBay Founder",
       "onChain": false,
       "address": "0x3F1590A5984C89e6d5831bFB76788F3517Cdf034",
-      "is_1155": true,
+      "is1155": true,
       "id": 1,
       "listable": true,
       "metadata": {
@@ -64,7 +64,7 @@
     {
       "name": "Ryoshi Tales Halloween",
       "slug": "ryoshi-tales-halloween",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xe51377a260043381b8B525D33B9fFBC601A1469b",
       "onChain": false,
       "listable": true,
@@ -90,7 +90,7 @@
     {
       "slug": "basic-nft",
       "name": "Basic NFT",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xCfEEe4c7B10C52854e061607C347e0D79C6F73A1",
       "onChain": false,
       "listable": true,
@@ -113,7 +113,7 @@
     {
       "slug": "cronos-warrior",
       "name": "Cronos Warrior",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x6777a24aef6374265B4A900c9Db57673cFF426Ab",
       "onChain": false,
       "listable": true,
@@ -136,7 +136,7 @@
     {
       "slug": "cronies",
       "name": "Cronies",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xe9DCa9E03F31CBD538A19a89eA2cA3684AF2788f",
       "onChain": true,
       "listable": true,
@@ -159,7 +159,7 @@
     {
       "slug": "crypto-lovers",
       "name": "CryptoLovers",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xEf05151db4e0c96fff0921481300e2d53618Ee96",
       "onChain": false,
       "listable": true,
@@ -182,7 +182,7 @@
     {
       "slug": "admiration",
       "name": "Deplone",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xBf792Bdfd565Bc9D4619ed085d4E8B8EA4d9E79E",
       "onChain": false,
       "listable": true,
@@ -202,7 +202,7 @@
     {
       "slug": "lazy-horse",
       "name": "LazyHorse",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x6200a747EccE14315b6a9eDd3cAF76dC6C4F53A2",
       "onChain": false,
       "listable": true,
@@ -222,7 +222,7 @@
     {
       "slug": "crougars",
       "name": "CROugars",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x7B1A84D5766B5670C0dab14fA9526b39c284E11A",
       "onChain": false,
       "listable": true,
@@ -242,7 +242,7 @@
     {
       "slug": "lazy-horse-pony",
       "name": "The Lazy Horse Member NFT (PONY)",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x3B94bF5B766419a7f8E3a6d23921EA4F02712d56",
       "onChain": false,
       "listable": true,
@@ -262,7 +262,7 @@
     {
       "slug": "space-crystal-unicorns",
       "name": "Space Crystal Unicorns",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xefEf991Be8F4911764f72598e4C4776D917A1F9D",
       "onChain": false,
       "listable": true,
@@ -282,7 +282,7 @@
     {
       "slug": "crognomes",
       "name": "Crognomes",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x570966a3503aE3fc2191f68dae3a6395eeFB897A",
       "onChain": false,
       "listable": true,
@@ -305,7 +305,7 @@
     {
       "slug": "aunah",
       "name": "Aunah",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xFdc26dde39BE26e01f25e26999AF26C672541174",
       "onChain": false,
       "listable": true,
@@ -325,7 +325,7 @@
     {
       "slug": "cronogods",
       "name": "CronoGods",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xc25914a85652a160CE4b74e678354aB336A1C217",
       "onChain": false,
       "listable": true,
@@ -348,7 +348,7 @@
     {
       "name": "Marie's Cyborgs",
       "slug": "maries-cyborgs",
-      "is_1155": false,
+      "is1155": false,
       "address": "",
       "onChain": false,
       "listable": true,
@@ -374,7 +374,7 @@
     {
       "name": "MAG Brew Vikings",
       "slug": "mag-brew-vikings",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x3620FC8174199A2666cca88A18Fcf6e9c4B166eB",
       "onChain": false,
       "listable": true,
@@ -399,7 +399,7 @@
     {
       "name": "The LAB: Crazy Scientists",
       "slug": "crazy-scientists",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x6F25b5cCf0Ab49A1906E36C9572CF202e62aE066",
       "onChain": false,
       "listable": true,
@@ -423,7 +423,7 @@
     {
       "name": "BobaNFTea",
       "slug": "boba-nftea",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xde0d3CCA05A9870D82180e771Eb2efc1de039cB9",
       "onChain": false,
       "listable": true,
@@ -447,7 +447,7 @@
     {
       "name": "RecklessRobots",
       "slug": "reckless-robots",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x3b3BC5Ca5451D6dDDFCa7248AF04172632f4A990",
       "onChain": false,
       "listable": true,
@@ -471,7 +471,7 @@
     {
       "name": "The HD: Hyped Dogs",
       "slug": "hyped-dogs",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x1D3587f44944a665F28bE1d9D9E322d43318DbB8",
       "onChain": false,
       "listable": true,
@@ -495,7 +495,7 @@
     {
       "name": "Creatures",
       "slug": "creatures",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xd036b2223bcc2A96164B023022D6b78CD71A1a12",
       "onChain": false,
       "listable": true,
@@ -520,7 +520,7 @@
     {
       "name": "Cronos ALIENFT",
       "slug": "alie-nft",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x10F7D2BbaEEF04e7b61335ba4b680412d0B167D6",
       "onChain": false,
       "listable": true,
@@ -544,7 +544,7 @@
     {
       "name": "Meta Cyborgs",
       "slug": "meta-cyborgs",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xdd5014784763ea9C0d758b8C84a7979ca29BADDF",
       "onChain": false,
       "listable": true,
@@ -568,7 +568,7 @@
     {
       "name": "Crosmocrafts",
       "slug": "crosmocrafts",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x65d9377905Ceb76B96055B13A8d84DFdf59529aA",
       "onChain": false,
       "listable": true,
@@ -592,7 +592,7 @@
     {
       "name": "Cronos Gorilla Business",
       "slug": "cronos-gorilla-business",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xC10e3eAdaE647E1C8CBA8497256CCd5f278f6E7c",
       "onChain": false,
       "listable": true,
@@ -616,7 +616,7 @@
     {
       "name": "3DSlothty",
       "slug": "3d-slothty",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x7d09ff680b210770D6D9a1296b4A74bd5391b341",
       "onChain": false,
       "listable": true,
@@ -640,7 +640,7 @@
     {
       "slug": "super-nft",
       "name": "Super NFT",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x99a1E178d0AB41DbdA42EED5faaDFAA073c4AA14",
       "onChain": false,
       "listable": true,
@@ -663,7 +663,7 @@
     {
       "name": "Lolita Friends",
       "slug": "lolita-friends",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x87de5d738c1a9a3fDEEb85A2fA5c04E54b21AEC4",
       "onChain": false,
       "listable": true,
@@ -686,7 +686,7 @@
     {
       "name": "Gold Partner",
       "slug": "gold-partner",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x4668329e1cb30841282c0b209B20e6b069f8C523",
       "onChain": false,
       "listable": true,
@@ -710,7 +710,7 @@
     {
       "name": "CronosFighters",
       "slug": "crono-fighters",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x17e95a737533d93cf4B7180f8f48070914b84706",
       "metadata": {
         "description": "",
@@ -732,7 +732,7 @@
     {
       "name": "Big Bad Wolves",
       "slug": "big-bad-wolves",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x0E1B4c3370005b5F9bDBBa12ea97D90aC2dCdaDe",
       "onChain": false,
       "listable": true,
@@ -756,7 +756,7 @@
     {
       "name": "NoBuddies NFT (Gen 2)",
       "slug": "nobuddies-gen2",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x424616fAb8A0f2DE40627bd798e03Fdd718CfAcd",
       "onChain": false,
       "listable": true,
@@ -779,7 +779,7 @@
     {
       "name": "MarbleVerse",
       "slug": "marbleverse",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x6262825f4f0B32918AF227DcdF9Eba7ff39EDb76",
       "onChain": false,
       "listable": true,
@@ -804,7 +804,7 @@
     {
       "name": "LazyHorse Skybox",
       "slug": "lazy-horse-skybox",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xC997749351CC4C9770f885B0147F455F5907F11A",
       "onChain": false,
       "listable": true,
@@ -828,7 +828,7 @@
     {
       "name": "CronosVerse",
       "slug": "cronosverse",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x77436B454e9EAAeA307c84243F521F313fb89BD9",
       "onChain": false,
       "listable": true,
@@ -851,7 +851,7 @@
     {
       "name": "Cro Succubus",
       "slug": "cro-succubus",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x00F2218f253b1AF8315b5aA7Dce9D692eB0817Bb",
       "onChain": false,
       "listable": true,
@@ -874,7 +874,7 @@
     {
       "name": "Crobees",
       "slug": "crobees",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xBde6bc3dd2265b23684435C4C87AA7DD85910739",
       "onChain": false,
       "listable": true,
@@ -898,7 +898,7 @@
     {
       "name": "Lady Ri",
       "slug": "lady-ri",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x231729415031099336930158078859A19409D1c6",
       "onChain": false,
       "listable": true,
@@ -921,7 +921,7 @@
     {
       "name": "Kardia",
       "slug": "kardia",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x24DBc5f5F6e8637cf77DDe8c09ee076d36C469d4",
       "onChain": false,
       "listable": true,
@@ -946,7 +946,7 @@
     {
       "name": "Monkey Of Anarkey",
       "slug": "monkey-of-anarkey",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xF559EefCD14E0a65e20281b9F0aD4c7FabF9D855",
       "onChain": false,
       "listable": true,
@@ -971,7 +971,7 @@
     {
       "name": "Barn Cats",
       "slug": "barn-cats",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x000732Ddc0f7208b2400944d4a7296bc001aE866",
       "onChain": false,
       "listable": true,
@@ -995,7 +995,7 @@
     {
       "name": "Panels Project - Primate Cronos",
       "slug": "panels-project-primate-cronos",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xA53b72d9733aBEaCF97e0557f2767B189404a066",
       "onChain": false,
       "listable": true,
@@ -1019,7 +1019,7 @@
     {
       "name": "CroClubs",
       "slug": "cro-clubs",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xFB7C34B7D5782baF2fF2F65B40Ab0d4070674c19",
       "onChain": false,
       "listable": true,
@@ -1043,7 +1043,7 @@
     {
       "name": "Like Humans",
       "slug": "like-humans",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xF184aD3a4f31376b5D9372040f12A80d3198a9D6",
       "onChain": false,
       "listable": true,
@@ -1064,7 +1064,7 @@
     {
       "name": "Employee of the Month",
       "slug": "employee-of-the-month",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x781aF58CA8caEE76042Aa50d76059339E8A4AB26",
       "onChain": false,
       "listable": true,
@@ -1088,7 +1088,7 @@
     {
       "name": "Selfies of the Multiverse",
       "slug": "multiverse-selfies",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x794dc82F15fce5f5A90Ea2c4442FA03B76e8C8a8",
       "onChain": false,
       "listable": true,
@@ -1111,7 +1111,7 @@
     {
       "name": "Psycho Golden Lady",
       "slug": "psycho-golden-lady",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x2b918ed7929ff2787a8eebcf2d78378672530882",
       "onChain": false,
       "listable": true,
@@ -1134,7 +1134,7 @@
     {
       "name": "Cro Of Thrones",
       "slug": "cro-of-thrones",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x660c86fc9977278204245f2e54C11A0f1276a94b",
       "onChain": false,
       "listable": true,
@@ -1157,7 +1157,7 @@
     {
       "name": "Smash Stunts",
       "slug": "smash-stunts",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xB458E21EB481Ef9652684e0656a96ca002554AAb",
       "onChain": false,
       "listable": true,
@@ -1180,7 +1180,7 @@
     {
       "name": "Croppelganger",
       "slug": "croppelganger",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x979b561e9e596ca6f8aacb26ecc605e71a30e0fe",
       "onChain": false,
       "listable": true,
@@ -1202,7 +1202,7 @@
     {
       "name": "Genesis Crates",
       "slug": "genesis-crates",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xb65477F31262399777A511Cf0d7e668C775095B1",
       "onChain": false,
       "listable": true,
@@ -1227,7 +1227,7 @@
     {
       "name": "Beta Mascots",
       "slug": "beta-mascots",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xb588883f69E94889A81608bf58EB0a578B93aa6f",
       "onChain": false,
       "listable": true,
@@ -1251,7 +1251,7 @@
     {
       "name": "Ghetto Doves",
       "slug": "ghetto-doves",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x01A0962b78AF631AE0a56cDE60458Abdb81467Db",
       "onChain": false,
       "listable": true,
@@ -1275,7 +1275,7 @@
     {
       "name": "Ghetto Doves: The Self Titled Drop - VIP",
       "slug": "ghetto-doves-vip",
-      "is_1155": true,
+      "is1155": true,
       "tokens": [
         {
           "id": 1
@@ -1304,7 +1304,7 @@
     {
       "name": "CyberClone",
       "slug": "cyber-clone",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x2D803AC436d7F86d52070Bc5eB72F72358dA150b",
       "onChain": false,
       "listable": true,
@@ -1328,7 +1328,7 @@
     {
       "name": "Bankroll Bear Society",
       "slug": "bankroll-bear-society",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x9CD90D8Efa6D7302b5d1E720E31aA98C014A4c2b",
       "onChain": false,
       "listable": true,
@@ -1351,7 +1351,7 @@
     {
       "name": "Looneycorns",
       "slug": "looneycorns",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x7a7Ac50912B869a8Cd7f1614499b9684859Bb71b",
       "onChain": false,
       "listable": true,
@@ -1374,7 +1374,7 @@
     {
       "name": "DR BOO'S GHOSTS",
       "slug": "dr-boos-ghosts",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xE91CcEF501e07B1A0928085e104a67F67ef40201",
       "onChain": false,
       "listable": true,
@@ -1398,7 +1398,7 @@
     {
       "name": "Northern Hippo Syndicate",
       "slug": "northern-hippo-syndicate",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xFF2d132Ec0B07210448D662EccB9BE68380e4DcF",
       "onChain": false,
       "listable": true,
@@ -1421,7 +1421,7 @@
     {
       "name": "Flaming Phenix Club",
       "slug": "flaming-phenix-club",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x3279F28dC59783d204D9cD66a965cF4AA120706F",
       "onChain": false,
       "listable": true,
@@ -1446,7 +1446,7 @@
     {
       "name": "Icy Valkyries",
       "slug": "icy-valkyries",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x6270Da0F8a685Af46CBBFbdba18EbE76AdA942A3",
       "onChain": false,
       "listable": true,
@@ -1470,7 +1470,7 @@
     {
       "name": "Carkayous",
       "slug": "carkayous",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xd0186A9e068407738A5D4c710347F37763c20394",
       "onChain": false,
       "listable": true,
@@ -1493,7 +1493,7 @@
     {
       "name": "Lost Toys VIP",
       "slug": "lost-toys-vip",
-      "is_1155": true,
+      "is1155": true,
       "address": "0x44fcFB92e9F08770449e0f39A9A449502432c3cc",
       "onChain": false,
       "listable": true,
@@ -1516,7 +1516,7 @@
     {
       "name": "CyberSquad",
       "slug": "cyber-squad",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xe6f9Bbe97183F1849697cF6722e414Ff46398b74",
       "onChain": false,
       "listable": true,
@@ -1539,7 +1539,7 @@
     {
       "name": "DragonsoftheWest",
       "slug": "dragons-of-the-west",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x37f42eb690f03b845BA4a4eb19a977AaE10dB448",
       "onChain": false,
       "listable": true,
@@ -1556,7 +1556,7 @@
     {
       "name": "AristoDog",
       "slug": "aristodog",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xd0997A498E6e4e90ff850202BAEEe88C64d265Fb",
       "onChain": false,
       "listable": true,
@@ -1580,7 +1580,7 @@
     {
       "name": "Alien Apocalypse",
       "slug": "alien-apocalypse",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xa20A2502777948ba4D2231c100011F27cD0B8444",
       "onChain": false,
       "listable": true,
@@ -1603,7 +1603,7 @@
     {
       "name": "Hype Hogs",
       "slug": "hype-hogs",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xA23A6AE440CfE3Ca3d1FEc8424153a8c50C1A342",
       "onChain": false,
       "listable": true,
@@ -1628,7 +1628,7 @@
       "name": "Ebisu's Land",
       "onChain": false,
       "address": "0x962026657a05BA7F52b27d249fe3fa90D9691692",
-      "is_1155": false,
+      "is1155": false,
       "listable": true,
       "metadata": {
         "description": "",
@@ -1650,7 +1650,7 @@
     {
       "name": "Fury Mouse Gang",
       "slug": "fury-mouse-gang",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xf28aD2F8557ae2b53B26211c5cF4a5EF99b0347F",
       "onChain": false,
       "listable": true,
@@ -1673,7 +1673,7 @@
     {
       "name": "Battle Ready Boyz",
       "slug": "battle-ready-boyz",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x782ab511719f5A1560eEaEbD19676aD47cD45384",
       "onChain": false,
       "listable": true,
@@ -1697,7 +1697,7 @@
     {
       "name": "Apes Utopia",
       "slug": "apes-utopia",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x9aD80cc42Cb644AbB5fdb7cE37F44f79c902C821",
       "onChain": false,
       "listable": true,
@@ -1722,7 +1722,7 @@
     {
       "name": "TestNFT",
       "slug": "test-nft",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x063E25D6B7B087c4f0FB875821e30f8cFdB6E33e",
       "onChain": false,
       "listable": true,
@@ -1738,7 +1738,7 @@
     {
       "name": "Everybody's not friends",
       "slug": "everybodys-not-friends",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xFCd08C7BE680b36522BA87240B296377A80a01D0",
       "onChain": false,
       "listable": true,
@@ -1761,7 +1761,7 @@
     {
       "name": "Noodles Club",
       "slug": "noodles-club",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x53973c3239388a23f99fA5D6CF85106434d27076",
       "onChain": false,
       "listable": true,
@@ -1785,7 +1785,7 @@
     {
       "name": "Ryborgs",
       "slug": "ryborgs",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xe823026da4f921E6830b435672B8c74BF3f426Ac",
       "onChain": false,
       "listable": true,
@@ -1809,7 +1809,7 @@
     {
       "name": "Crovilians",
       "slug": "crovilians",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xbCaE686611A3B5006389955cA265A0Bd2272aeAA",
       "onChain": false,
       "listable": true,
@@ -1832,7 +1832,7 @@
     {
       "name": "AlphaClone",
       "slug": "alpha-clone",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x4a2d5c811E8117C4C4ea574ce810D681D5Cd14F2",
       "onChain": false,
       "listable": true,
@@ -1856,7 +1856,7 @@
     {
       "name": "Pocket Demons",
       "slug": "pocket-demons",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x0EFccB1889EB8eE3b92a805A5d66D49fC9ae885E",
       "onChain": false,
       "listable": true,
@@ -1879,7 +1879,7 @@
     {
       "name": "CroHamsters",
       "slug": "cro-hamsters",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x0BfBd9d15e5cD740917d1a0F63ec5137005673b9",
       "onChain": false,
       "listable": true,
@@ -1903,7 +1903,7 @@
     {
       "name": "Trippin Panda",
       "slug": "trippin-panda",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x69C4984ABdc4164A73C26e44195ea572F8132285",
       "onChain": false,
       "listable": true,
@@ -1920,7 +1920,7 @@
     {
       "name": "GymKongz",
       "slug": "gymkongz",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x3f29cc0c07736eddb9c0678a51515d5de6a1d7e2",
       "onChain": false,
       "listable": true,
@@ -1943,7 +1943,7 @@
     {
       "name": "CroKami",
       "slug": "crokami",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xA383245Cd497aFb047802e6A64B79A234f43F33D",
       "onChain": false,
       "listable": true,
@@ -1966,7 +1966,7 @@
     {
       "name": "Cronos Women",
       "slug": "cronos-women",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x6D8E071C38a6386EA8BDBa0d4022C3c4645c1792",
       "onChain": false,
       "listable": true,
@@ -1990,7 +1990,7 @@
     {
       "name": "Carkayous - BunnyFish",
       "slug": "carkayous-bunnyfish",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x8f0596af0dda307c3e58fa07230f506ace395784",
       "onChain": false,
       "listable": true,
@@ -2013,7 +2013,7 @@
     {
       "name": "God Hates Cro Fam",
       "slug": "god-hates-crofam",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xa2Dd607A92252daf79901d04c6eB871B95e31ddE",
       "onChain": false,
       "listable": true,
@@ -2035,7 +2035,7 @@
     {
       "name": "Cronos Name Service",
       "slug": "cronos-name-service",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xe7cbE08d6B4684c2962E5e06c1D1019Ba86dff79",
       "onChain": false,
       "listable": true,
@@ -2060,7 +2060,7 @@
     {
       "name": "Trillionaire Trashcans",
       "slug": "trillionaire-trashcans",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xFec1D8AcBCBaDDC00cec22D544854E2fD938cF05",
       "onChain": false,
       "listable": true,
@@ -2083,7 +2083,7 @@
     {
       "name": "World Of Cats",
       "slug": "world-of-cats",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xbFFE791a74Ac0BC08a55853F9A41f6B073752e2F",
       "onChain": false,
       "listable": true,
@@ -2106,7 +2106,7 @@
     {
       "name": "The Meanies",
       "slug": "the-meanies",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x449e8DcD04f7E232Ee669090799FA30aE778851d",
       "onChain": false,
       "listable": true,
@@ -2131,7 +2131,7 @@
     {
       "name": "Finger Monkeys",
       "slug": "finger-monkeys",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xd324C3B5e160266A858c7B35968e7d9eAD8cfE59",
       "onChain": false,
       "listable": true,
@@ -2153,7 +2153,7 @@
     {
       "name": "Spiteful Sea Club Access Cards",
       "slug": "ssc-access-cards",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xdab24a4cfbc3bb5eef28adfffd6e48966cae9ac8",
       "onChain": false,
       "listable": true,
@@ -2177,7 +2177,7 @@
     {
       "name": "Cronos Fighters",
       "slug": "cronos-fighters-v2",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x52795c4B3aC043990076947013c71BE1eC0c3123",
       "onChain": false,
       "listable": true,
@@ -2201,7 +2201,7 @@
     {
       "name": "0xLuckless v2.0",
       "slug": "0xluckless-v2-0",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x8845C0ce2bFCFE5fa3F28c919134096f6035E261",
       "onChain": false,
       "listable": true,
@@ -2226,7 +2226,7 @@
     {
       "name": "Whale Family",
       "slug": "whalefam",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xFa6D6607E6850bBB10bD48370C99aB9C985BF759",
       "onChain": false,
       "listable": true,
@@ -2251,7 +2251,7 @@
     {
       "name": "Devil Loves Cro Fam",
       "slug": "devil-loves-crofam",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x04bc90269D272078B1d5f2CB9969836162ACE0AA",
       "onChain": false,
       "listable": true,
@@ -2273,7 +2273,7 @@
     {
       "name": "Evolution Hogs",
       "slug": "evolution-hogs",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x5be9A14fE14F13954Ef44B5efDBbab1AD1f17Ac4",
       "onChain": false,
       "listable": true,
@@ -2296,7 +2296,7 @@
     {
       "name": "Lion Social Club",
       "slug": "lion-social-club",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x4B02dBAF4Ee8b4B3137BC549e6158B4a502f01bf",
       "onChain": false,
       "listable": true,
@@ -2320,7 +2320,7 @@
     {
       "name": "Grey_hart's Broken Hearts",
       "slug": "broken-hearts",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x902b4C3B8F847bBdD2b1897FeBa15638baC5bafe",
       "onChain": false,
       "listable": true,
@@ -2343,7 +2343,7 @@
     {
       "name": "Grey_hart's Broken Hearts - Text",
       "slug": "broken-hearts-text",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x2a4c54c64487734080843188642c1ac48f772053",
       "onChain": false,
       "listable": true,
@@ -2366,7 +2366,7 @@
     {
       "name": "Renegade Monks",
       "slug": "renegade-monks",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x313D04832B309CD5f3D75eD7407F34f655cf6455",
       "onChain": false,
       "listable": true,
@@ -2389,7 +2389,7 @@
     {
       "name": "Team Movember",
       "slug": "team-movember",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x6AEc192705203eb4EE1106bA5bcf9a11f44397B1",
       "onChain": false,
       "listable": true,
@@ -2412,7 +2412,7 @@
     {
       "name": "The Resurrection by Dr. Boo",
       "slug": "dr-boo-resurrection",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xcA2a705cd8c623Ed52848A272c8F8414Baeb918c",
       "onChain": false,
       "listable": true,
@@ -2435,7 +2435,7 @@
     {
       "name": "AlstoniaVerse Access Card",
       "slug": "alstoniaverse-access-card",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x51Cd050BB937AD8f6aF35e4413c97073e9f73D2d",
       "onChain": false,
       "listable": true,
@@ -2457,7 +2457,7 @@
     {
       "name": "Rebel Punks",
       "slug": "rebel-punks",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xa658fc75FC40B079345810503eb3E4Cca9Feae06",
       "onChain": false,
       "listable": true,
@@ -2483,7 +2483,7 @@
     {
       "name": "Patron NFT",
       "slug": "patron-nft",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x0EfaD04B14cdFcCC5e322481663043441c0048d7",
       "onChain": false,
       "listable": true,
@@ -2508,7 +2508,7 @@
     {
       "name": "Cro Llamas",
       "slug": "cro-llamas",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x068E74818582A542e35a37057b92f974F0823A50",
       "onChain": false,
       "listable": true,
@@ -2531,7 +2531,7 @@
     {
       "name": "Crazy Crossbreeds",
       "slug": "crazy-crossbreeds",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xf90f9C8448c8d147faC73695635f868D6c1f8f0b",
       "onChain": false,
       "listable": true,
@@ -2555,7 +2555,7 @@
     {
       "name": "Selfie Guys",
       "slug": "selfie-guys",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x803F1caB2Bf0B13FbcaB54E993f552a0dd1AD28F",
       "onChain": false,
       "listable": true,
@@ -2579,7 +2579,7 @@
     {
       "name": "Ryoshi Tales VIP",
       "slug": "ryoshi-tales-vip",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xCF7aedEbC5223c4C620625A560300582B77D8719",
       "onChain": false,
       "listable": true,
@@ -2609,7 +2609,7 @@
       "name": "Legacy Ebisu's Bay VIP",
       "onChain": false,
       "address": "0xa937e814A2c5e99E9e86c4F34162c4F012F75a52",
-      "is_1155": false,
+      "is1155": false,
       "listable": true,
       "metadata": {
         "description": "",
@@ -2633,7 +2633,7 @@
       "name": "SeaShrine VIP",
       "onChain": false,
       "address": "0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9",
-      "is_1155": false,
+      "is1155": false,
       "listable": true,
       "metadata": {
         "description": "",
@@ -2655,7 +2655,7 @@
     {
       "name": "CroWorld Cup",
       "slug": "cro-world-cup",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x65479558b3e1a178E9eD460c290B443D0944fdc7",
       "onChain": false,
       "listable": true,
@@ -2678,7 +2678,7 @@
     {
       "name": "Piggy Bank Finance",
       "slug": "piggy-bank-finance",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xF0ce06Ac2bB27d14177aAB1b52f1C0D0A780e14f",
       "onChain": false,
       "listable": true,
@@ -2704,7 +2704,7 @@
     {
       "name": "Meta Planet Club",
       "slug": "meta-planet-club",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xA9806E1F6Aa8FdF47470c06a2c1f563CFA501690",
       "onChain": false,
       "listable": true,
@@ -2729,7 +2729,7 @@
     {
       "name": "Wetland Razzles",
       "slug": "wetland-razzles",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x7389d2eb61593940c87fca0ae9785ef196141093",
       "onChain": false,
       "listable": true,
@@ -2755,7 +2755,7 @@
     {
       "name": "Buds",
       "slug": "buds",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x50c96032C5f10E21078C9269e1088D200a76CD4a",
       "onChain": false,
       "listable": true,
@@ -2781,7 +2781,7 @@
     {
       "name": "C\u00b3: Cronos Crow Crew",
       "slug": "c3-cronos-crow-crew",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x0b54c93A363A3f064F97777C0491A2D798547378",
       "onChain": false,
       "listable": true,
@@ -2804,7 +2804,7 @@
     {
       "name": "Ebisu's Bay NFT Bundles",
       "slug": "nft-bundles",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xEbFB981D5a7A7C2133752F7787263B58495bb923",
       "onChain": false,
       "listable": true,
@@ -2830,7 +2830,7 @@
     {
       "name": "NFT Rings by Aperson Lyeque",
       "slug": "nft-rings-aperson-lyeque",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xb948d0B3D18d4d9Db61226F840395e7A8E3a7F30",
       "onChain": false,
       "listable": true,
@@ -2853,7 +2853,7 @@
     {
       "name": "Trippy Meanies",
       "slug": "trippy-meanies",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x786e53f0E8979367aE015b612EB3a9fcA24307dA",
       "onChain": false,
       "listable": true,
@@ -2878,7 +2878,7 @@
     {
       "name": "Ryoshi Tales Christmas",
       "slug": "ryoshi-tales-christmas",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad",
       "onChain": false,
       "listable": true,
@@ -2904,7 +2904,7 @@
     {
       "name": "Trollfam Xmas",
       "slug": "trollfam-xmas",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xd9094AbE3cc719735E3aEc8D0356Ca2Faf729A10",
       "onChain": false,
       "listable": true,
@@ -2928,7 +2928,7 @@
     {
       "name": "Cro Snowmen",
       "slug": "cro-snowmen",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x90E4bE01f94d6A8851Bf1a576B6495A77C5Ba0Ed",
       "onChain": false,
       "listable": true,
@@ -2953,7 +2953,7 @@
     {
       "name": "ICY",
       "slug": "icy",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xFAdF08b861BEFB90F024fd12F814Dcf07E7545E9",
       "onChain": false,
       "listable": true,
@@ -2979,7 +2979,7 @@
     {
       "name": "Blumies",
       "slug": "blumies",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xce4329B17BeF21Fb8651Ac4107412C50AfE5b2e5",
       "onChain": false,
       "listable": true,
@@ -3003,7 +3003,7 @@
     {
       "name": "CroHamsterNFT Items MK1",
       "slug": "crohamsternft-items-mk1",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xfaDb4ef67596492534d7315C405B4B06D1e19Bf1",
       "onChain": false,
       "listable": true,
@@ -3029,7 +3029,7 @@
     {
       "name": "Turkey Earthquake Support",
       "slug": "turkey-earthquake-support",
-      "is_1155": true,
+      "is1155": true,
       "tokens": [
         {
           "id": 0
@@ -3057,7 +3057,7 @@
     {
       "name": "Reckless Robots Legends",
       "slug": "reckless-robots-legends",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x14dc317829f1bd1d76abedbc586a94c83fb0e3f1",
       "onChain": false,
       "listable": true,
@@ -3085,7 +3085,7 @@
     {
       "name": "Fallen Angels - Demons",
       "slug": "fallen-angels-demons",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x66adfe35f6a4371b4cC91481E633B03c83Ff423E",
       "onChain": false,
       "listable": true,
@@ -3110,7 +3110,7 @@
     {
       "name": "The CronosVerse Suites",
       "slug": "the-cronosverse-suites",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x3443171b364B49B7D0f87861e961240D0b1D88a8",
       "onChain": false,
       "listable": true,
@@ -3137,7 +3137,7 @@
     {
       "name": "For My Brothers",
       "slug": "for-my-brothers",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x6DFdA93e4a23Ef5245278ff7328fC541FeC1DC3D",
       "onChain": false,
       "listable": true,
@@ -3162,7 +3162,7 @@
     {
       "name": "CroMorphs",
       "slug": "cromorphs",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x0a9aDe7c04AF4902c84D120B18d69fFFe5AE099E",
       "onChain": false,
       "listable": true,
@@ -3188,7 +3188,7 @@
     {
       "name": "GDC Proof-Of-Attendance VIP",
       "slug": "gdc-poa-vip",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xd464f36885163e124e3a15e31c0e581ba3f648ab",
       "onChain": false,
       "listable": true,
@@ -3213,7 +3213,7 @@
     {
       "name": "Elf Citizens",
       "slug": "elf-citizens",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xa3a9bd5142bfaf3126734096cacc96a71103611f",
       "onChain": false,
       "listable": true,
@@ -3237,7 +3237,7 @@
     {
       "name": "The CronosVerse In-Game Assets",
       "slug": "cronosverse-in-game-assets",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x57f458ad92147c27b5e00995cd228a2ba708480f",
       "onChain": false,
       "listable": true,
@@ -3263,7 +3263,7 @@
     {
       "name": "Rebel AUT Club",
       "slug": "rebel-aut-club",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xFAD821B0aA4C1a749BD71be595C223240B232d62",
       "onChain": false,
       "listable": true,
@@ -3288,7 +3288,7 @@
     {
       "name": "0xLuckless v2.2",
       "slug": "0xluckless-v2-2",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x367f3dbad544885264388507008cd91c4766684a",
       "onChain": false,
       "listable": true,
@@ -3315,7 +3315,7 @@
     {
       "name": "Diamond Coins of the Grind Guild",
       "slug": "diamond-coins",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xA9a3141033100ab6c1e7618eF140FB2bA02ADb25",
       "onChain": false,
       "listable": true,
@@ -3341,7 +3341,7 @@
     {
       "name": "Crypto Crows",
       "slug": "crypto-crows",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x5Ec772bcE2D981C6ce42ff002a586B10f257031D",
       "onChain": false,
       "listable": true,
@@ -3366,7 +3366,7 @@
     {
       "name": "FortuneTeller",
       "slug": "fortuneteller",
-      "is_1155": true,
+      "is1155": true,
       "address": "0xE1D0a4ae1DF871510d82144a282FF14bAcA8f2c0",
       "tokens": [
         {
@@ -3409,7 +3409,7 @@
     {
       "name": "The Pogo",
       "slug": "the-pogo",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xf92988Ee3dB59DA98d17BEb832491BDAb3825D70",
       "onChain": false,
       "listable": true,
@@ -3435,7 +3435,7 @@
     {
       "name": "Cronos Towers",
       "slug": "cronos-towers",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x8aB4457eE1D5E8eAcB8716a4A183E6FF21321bC4",
       "onChain": false,
       "listable": true,
@@ -3458,7 +3458,7 @@
     {
       "name": "Strange Camel Society",
       "slug": "strange-camel-society",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x2963a24552A5E544e4CA5820Ba8A0B9e87a46011",
       "onChain": false,
       "listable": true,
@@ -3483,7 +3483,7 @@
     {
       "name": "Ryoshi Resources",
       "slug": "ryoshi-resources",
-      "is_1155": true,
+      "is1155": true,
       "address": "0xda72ee0b52a5a6d5c989f0e817c9e2af72e572b5",
       "tokens": [
         {
@@ -3514,7 +3514,7 @@
     {
       "name": "Fortune Guards",
       "slug": "fortune-guards",
-      "is_1155": true,
+      "is1155": true,
       "address": "0x04Bd856E96127f3ef3C45864BeAEe26F5Df5066a",
       "tokens": [
         {
@@ -3554,7 +3554,7 @@
     {
       "name": "Ballies Cheerleaders",
       "slug": "ballies-cheerleaders",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xbf274fD475CBB7Dfc84d0Fbe35ce35bB8b1AA5e1",
       "onChain": false,
       "listable": true,
@@ -3580,7 +3580,7 @@
     {
       "name": "Barber Shop",
       "slug": "barber-shop",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x5a78147a57824872EE7AD0D07B0Eb57f92F3Dfb5",
       "onChain": false,
       "listable": true,
@@ -3605,7 +3605,7 @@
     {
       "name": "Izanami's Cradle: Land Deeds",
       "slug": "izanamis-cradle-land-deeds",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad",
       "onChain": false,
       "listable": true,
@@ -3631,7 +3631,7 @@
     {
       "name": "JAFC-Comics",
       "slug": "jafc-comics",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x653397aA2E3167492e13f34191EaEc6455D0C3C1",
       "onChain": false,
       "listable": true,
@@ -3656,7 +3656,7 @@
     {
       "name": "Coom Cats",
       "slug": "coom-cats",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x757092f15Fc90BEDa1089B3bd999AD8Ff45E1ef6",
       "onChain": false,
       "listable": true,
@@ -3679,7 +3679,7 @@
     {
       "name": "Crypto Hodl'em",
       "slug": "crypto-hodlem",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x75524C8c0509223A9F4B81FF34901FC132ce32f3",
       "onChain": false,
       "listable": false,
@@ -3705,7 +3705,7 @@
     {
       "name": "Ryoshi Playing Cards",
       "slug": "ryoshi-playing-cards",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x75524C8c0509223A9F4B81FF34901FC132ce32f3",
       "onChain": false,
       "listable": true,
@@ -3731,7 +3731,7 @@
     {
       "name": "BOB Headz",
       "slug": "bob-headz",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x485B4fB0E252eF1695210a1254c2B6cDDa84053C",
       "onChain": false,
       "listable": false,
@@ -3756,7 +3756,7 @@
     {
       "name": "The Luckl355",
       "slug": "the-luckl355",
-      "is_1155": false,
+      "is1155": false,
       "address": "",
       "onChain": false,
       "listable": false,
@@ -3783,7 +3783,7 @@
     {
       "name": "Ryoshi Tales",
       "slug": "ryoshi-tales",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xCDC905b5cDaDE71BFd3540e632aeFfE99b9965E4",
       "onChain": false,
       "listable": true,
@@ -3809,7 +3809,7 @@
     {
       "name": "Ryoshi Heroes",
       "slug": "ryoshi-heroes",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x458073C0fb97e42d441778aE4beFc8c1180E513e",
       "onChain": false,
       "listable": true,
@@ -3835,7 +3835,7 @@
     {
       "name": "Ryoshi Vaults",
       "slug": "ryoshi-vaults",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74",
       "onChain": false,
       "listable": true,
@@ -3861,7 +3861,7 @@
     {
       "name": "Pixel Ebisu",
       "slug": "pixel-ebisu",
-      "is_1155": false,
+      "is1155": false,
       "address": "0xb115C623109b7998e497837Ae6200FF79e49E1Ee",
       "onChain": false,
       "listable": true,
@@ -3882,7 +3882,7 @@
     {
       "name": "SONORC",
       "slug": "sonorc",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x386628E36B208B83aD119d2a81fB71eD6a86bB83",
       "onChain": false,
       "listable": true,
@@ -3899,7 +3899,7 @@
     {
       "name": "Argonauts Gears",
       "slug": "argonauts-gears",
-      "is_1155": false,
+      "is1155": false,
       "address": "0x3db259075fbf8c509591e17fa583fc89cef8f91d",
       "onChain": false,
       "listable": false,
@@ -3927,7 +3927,7 @@
       "name": "Cronies ZK",
       "slug": "cronies-zk",
       "chainId": 282,
-      "is_1155": false,
+      "is1155": false,
       "address": "0x1A695B3aC30D41F9A1D856A27DD0D9DdaaCe750d",
       "onChain": false,
       "listable": true,
@@ -3951,7 +3951,7 @@
     {
       "name": "Moggy Money Brokers",
       "slug": "moggy-money-brokers",
-      "is_1155": true,
+      "is1155": true,
       "address": "0x0500aff9876f3df33e126238365c58d2733bb22a",
       "tokens": [
         {

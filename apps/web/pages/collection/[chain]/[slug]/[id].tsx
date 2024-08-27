@@ -51,7 +51,7 @@ const Nft = ({ initialSlug, initialId, initialNftData, initialCollection, initia
     enabled: !!collection && !!id && !!chainConfig
   });
 
-  const type = collection?.is_1155 ? '1155' : '721';
+  const type = collection?.is1155 ? '1155' : '721';
 
   const getTraits = (anNFT: any) => {
     if (

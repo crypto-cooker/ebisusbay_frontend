@@ -53,7 +53,7 @@ export const BundleDrawer = () => {
     const arrays: ReducedItems = batchListingCart.items.reduce<ReducedItems>((object, item) => {
       const addresses = [item.nft.nftAddress];
       const ids = [item.nft.nftId];
-      if (item.nft.is_1155 && item.quantity > 1) {
+      if (item.nft.is1155 && item.quantity > 1) {
         for (let qty = 1; qty < item.quantity; qty++) {
           addresses.push(item.nft.nftAddress);
           ids.push(item.nft.nftId);

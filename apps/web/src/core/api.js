@@ -183,7 +183,7 @@ export async function getNftFromFile(collectionId, nftId) {
       };
     } else {
       const is1155 =
-        knownContracts.findIndex((x) => ciEquals(x.address, collectionId) && x.is_1155) > -1;
+        knownContracts.findIndex((x) => ciEquals(x.address, collectionId) && x.is1155) > -1;
 
       let uri;
       var contract;

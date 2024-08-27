@@ -217,7 +217,7 @@ const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMob
         ))}
         onSelect={handleCurrencyFilter}
       />
-      {!collection.is_1155 && (
+      {!collection.is1155 && (
         <RangeFilter
           field='rank'
           label='Rank'

@@ -130,7 +130,7 @@ const StakingNftCard = ({
                   cursor="pointer"
                   onClick={onRemove}
                 >
-                  {nft.balance && nft.is_1155 && cartCount() + nft.balance > 0 ? (
+                  {nft.balance && nft.is1155 && cartCount() + nft.balance > 0 ? (
                     <Box
                       rounded='full'
                       bg='dodgerblue'

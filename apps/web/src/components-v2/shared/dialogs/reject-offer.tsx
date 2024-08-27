@@ -69,7 +69,7 @@ const DialogContent = ({isOpen, onClose, collection, isCollectionOffer, offer, D
       // Sentry.captureEvent({message: 'handleRejectOffer', extra: {address: collection.address}});
       if (isCollectionOffer) {
         throw new Error('Cannot reject a collection offer');
-      } else if (collection.is_1155) {
+      } else if (collection.is1155) {
         throw new Error('Cannot reject a public offer');
       } else {
         const tx = await contractService!.offer.rejectOffer(offer.hash, offer.offerIndex);

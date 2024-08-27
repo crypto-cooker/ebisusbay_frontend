@@ -226,10 +226,10 @@ export default function Inventory({ address }: InventoryProps) {
                         <MyNftCard
                           nft={nft}
                           canTransfer={nft.canTransfer}
-                          canSell={nft.listable && (!nft.listed || nft.is_1155) && nft.canSell}
+                          canSell={nft.listable && (!nft.listed || nft.is1155) && nft.canSell}
                           isStaked={nft.isStaked}
                           canCancel={nft.listed && !!nft.listingId}
-                          canUpdate={nft.listable && nft.listed && !nft.is_1155}
+                          canUpdate={nft.listable && nft.listed && !nft.is1155}
                           isVault={isVaultCollection(nft.nftAddress)}
                           onTransferButtonPressed={() => setTransferDialogNft(nft)}
                           onSellButtonPressed={() => setCreateListingNft(nft)}

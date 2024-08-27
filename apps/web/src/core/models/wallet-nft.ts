@@ -7,7 +7,7 @@ class WalletNft {
   image: string;
   type: '721' | '1155';
   // @deprecated: use type instead
-  is_1155: boolean;
+  is1155: boolean;
   lastSale: any;
   market: any;
   name: string;
@@ -43,7 +43,7 @@ class WalletNft {
     this.edition = props.edition;
     this.image = props.image;
     this.type = props.type;
-    this.is_1155 = props.is_1155;
+    this.is1155 = props.is1155;
     this.lastSale = props.lastSale;
     this.market = props.market;
     this.name = props.name;
@@ -66,7 +66,7 @@ class WalletNft {
       edition: props.edition,
       image: props.image,
       type: props.is1155 ? '1155' : '721',
-      is_1155: props.is1155,
+      is1155: props.is1155,
       lastSale: props.lastSale,
       market: props.market,
       name: props.name,

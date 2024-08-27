@@ -47,7 +47,7 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }: CollectionPr
     }
 
     const { chain, ...sanitizedQuery} = remainingQuery as any;
-    setType(ssrCollection.is_1155 ? collectionTypes.ERC1155 : collectionTypes.ERC721);
+    setType(ssrCollection.is1155 ? collectionTypes.ERC1155 : collectionTypes.ERC721);
     setQueryParams(sanitizedQuery);
     setInitialized(true);
   }, [slug]);
