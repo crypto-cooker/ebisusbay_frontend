@@ -76,6 +76,7 @@ export const cronosZkEVMTestnet = {
 
 export const cronosZkEVM = {
   ...cronoszkEVM_,
+  ...chainConfig,
   contracts: {
     multicall3: {
       address: '0x06f4487D7C4a5983d2660DB965Cc6d2565E4cfaA',
