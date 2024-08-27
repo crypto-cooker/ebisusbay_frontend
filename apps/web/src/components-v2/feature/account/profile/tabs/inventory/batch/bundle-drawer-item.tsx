@@ -192,7 +192,7 @@ const BundleDrawerItem = ({ item, disabled, onAddCollection }: BundleDrawerItemP
                         Not Listable
                       </Badge>
                     </Box>
-                  ) : (item.nft.multiToken) && (
+                  ) : (item.nft.is1155) && (
                     <FormControl isInvalid={invalid}>
                       <Stack direction="row">
                         <HStack>
