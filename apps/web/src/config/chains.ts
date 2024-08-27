@@ -4,8 +4,12 @@ import {
   Chain,
   cronosTestnet as cronosTestnet_,
   cronos as cronos_,
+  cronoszkEVMTestnet as cronoszkEVMTestnet_,
+  cronoszkEVM as cronoszkEVM_,
+  zkSync
 } from 'wagmi/chains'
 import {defineChain} from "viem";
+import {chainConfig} from "viem/zksync";
 
 export const CHAIN_QUERY_NAME = chainNames
 
@@ -59,61 +63,27 @@ const cronosTestnet = {
   },
 } satisfies Chain
 
-export const cronosZkEVMTestnet  = /*#__PURE__*/ defineChain({
-  id: 282,
-  name: 'Cronos zkEVM Testnet',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'zkTCRO',
-    symbol: 'zkTCRO',
-  },
-  rpcUrls: {
-    default: { http: ['https://testnet.zkevm.cronos.org'] },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Cronos zkEVM (Testnet) Explorer',
-      url: 'https://explorer.zkevm.cronos.org/testnet',
-    },
-  },
+export const cronosZkEVMTestnet = {
+  ...cronoszkEVMTestnet_,
+  ...chainConfig,
   contracts: {
     multicall3: {
       address: '0xA44d020A117C14645E3686Db0e539657236c289F',
       blockCreated: 157022,
     },
   },
-  testnet: true,
-})
+} satisfies Chain
 
-export const cronosZkEVM  = /*#__PURE__*/ defineChain({
-  id: 388,
-  name: 'Cronos zkEVM',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'zkCRO',
-    symbol: 'zkCRO',
-  },
-  rpcUrls: {
-    default: {
-      http: [
-        'https://mainnet.zkevm.cronos.org/'
-      ]
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Cronos zkEVM Explorer',
-      url: 'https://explorer.zkevm.cronos.org/',
-    },
-  },
+export const cronosZkEVM = {
+  ...cronoszkEVM_,
+  ...chainConfig,
   contracts: {
     multicall3: {
       address: '0x06f4487D7C4a5983d2660DB965Cc6d2565E4cfaA',
       blockCreated: 1,
     },
   },
-  testnet: false,
-})
+} satisfies Chain
 
 /**
  * Controls some L2 specific behavior, e.g. slippage tolerance, special UI behavior.

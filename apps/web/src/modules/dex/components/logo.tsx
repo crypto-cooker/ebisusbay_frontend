@@ -196,6 +196,7 @@ export const chainName: { [key: number]: string } = {
   [ChainId.POLYGON_ZKEVM]: "polygon-zkevm",
   [ChainId.CRONOS]: "cronos",
   [ChainId.CRONOS_ZKEVM]: "cronos-zkevm",
+  [ChainId.CRONOS_ZKEVM_TESTNET]: "cronos-zkevm-testnet",
   [ChainId.ARBITRUM_ONE]: "arbitrum",
   [ChainId.ZKSYNC]: "zksync",
   [ChainId.LINEA]: "linea",
