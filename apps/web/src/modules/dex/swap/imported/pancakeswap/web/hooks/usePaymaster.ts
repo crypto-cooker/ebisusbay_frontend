@@ -6,13 +6,12 @@ import {Address, encodeFunctionData, hexToBigInt, isAddress, stringify} from 'vi
 import {ChainId} from '@pancakeswap/chains'
 import {ZyfiResponse} from '@src/config/paymaster'
 import {eip712WalletActions} from 'viem/zksync'
-import {useWalletClient} from 'wagmi'
+import {useConfig, useWalletClient} from 'wagmi'
 import {useGasTokenByChain} from '@eb-pancakeswap-web/hooks/use-gas-token'
 import {useAppConfig} from "@src/config/hooks";
 import {SwapParameters} from '@pancakeswap/sdk'
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {getTransactionCount} from "@wagmi/core";
-import {wagmiConfig} from "@src/wagmi";
 
 // interface SwapCall {
 //   address: Address
@@ -32,6 +31,7 @@ export const usePaymaster = () => {
   const { data: walletClient } = useWalletClient()
   const { config: appConfig } = useAppConfig()
   const {requestSignature} = useEnforceSignature();
+  const wagmiConfig = useConfig()
 
   const [gasToken] = useGasTokenByChain(chain.chainId)
 

@@ -40,7 +40,6 @@ export const paymasterTokens: Record<SupportedPaymasterChain, Currency[]> = {
   [ChainId.CRONOS_ZKEVM_TESTNET]: [
     Native.onChain(ChainId.CRONOS_ZKEVM_TESTNET),
     cronosZkEvmTestnetTokens.frtn,
-    cronosZkEvmTestnetTokens.usdc,
     cronosZkEvmTestnetTokens.wcro,
     cronosZkEvmTestnetTokens.red,
     cronosZkEvmTestnetTokens.blue
@@ -80,7 +79,7 @@ export const paymasterInfo: Record<SupportedPaymasterChain, { [gasTokenAddress: 
       discount: 'FREE',
       discountLabel: 'FREE SWAP',
     },
-    [cronosZkEvmTestnetTokens.usdc.address]: {
+    [cronosZkEvmTestnetTokens.vusd.address]: {
       discount: 'FREE',
       discountLabel: 'FREE SWAP',
     },
