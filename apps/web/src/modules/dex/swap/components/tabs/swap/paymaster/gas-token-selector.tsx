@@ -95,7 +95,7 @@ export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
   const config = useConfig()
 
   const [gasToken, setGasToken] = useGasTokenByChain(supportedChainId);
-  const gasTokenInfo = supportedPaymasterInfo[gasToken.isToken ? gasToken?.wrapped.address : '']
+  const gasTokenInfo = gasToken?.isToken ? supportedPaymasterInfo[gasToken.wrapped.address] : undefined;
 
   // Input Token Address from Swap
   const inputCurrency = useMemo(() => trade && trade.inputAmount.currency, [trade])

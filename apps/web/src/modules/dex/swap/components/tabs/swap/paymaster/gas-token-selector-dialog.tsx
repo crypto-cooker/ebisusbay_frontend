@@ -3,7 +3,6 @@ import {QuestionHelper} from "@dex/swap/components/tabs/swap/question-helper";
 import {Virtuoso} from "react-virtuoso";
 import React, {useCallback, useEffect, useMemo} from "react";
 import {useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
-import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {DEFAULT_PAYMASTER_TOKEN, paymasterInfo, paymasterTokens, SupportedPaymasterChain} from "@src/config/paymaster";
 import {CurrencyLogo} from "@dex/components/logo";
 import {formatAmount} from "@pancakeswap/utils/formatFractions";
@@ -60,8 +59,7 @@ export default function GasTokenSelectorDialog({isOpen, onClose}: GasTokenSelect
 
   const config = useConfig()
 
-  const [gasToken, setGasToken] = useGasTokenByChain(supportedChainId);
-  const gasTokenInfo = supportedPaymasterInfo[gasToken?.isToken ? gasToken?.wrapped.address : '']
+  const [_, setGasToken] = useGasTokenByChain(supportedChainId);
 
   const nativeBalances = useNativeBalances([account])
 
@@ -106,14 +104,6 @@ export default function GasTokenSelectorDialog({isOpen, onClose}: GasTokenSelect
 
     return 0
   }
-
-  // Item Key for FixedSizeList
-  const itemKey = useCallback((index: number, data: any) => `${data[index]}-${index}`, [])
-
-  const gasTokenBadge = gasTokenInfo?.discount &&
-    (gasTokenInfo.discount === 'FREE'
-      ? 'Gas fees is fully sponsored'
-      : `${gasTokenInfo.discount} discount on this gas fee token`)
 
   const Row = (index: number, currency: any, style: any) => {
     const hoverBackground = useColorModeValue('gray.100', '#424242');
