@@ -117,7 +117,7 @@ const formatCollections = (collections) => {
       volume1d: collection?.stats?.total?.volume1d,
       volume7d: collection?.stats?.total?.volume7d,
       volume30d: collection?.stats?.total?.volume30d,
-      multiToken: collection?.multiToken
+      is1155: collection?.is1155
     }
   ))
 }

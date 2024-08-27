@@ -263,7 +263,7 @@ export const ListingDrawer = () => {
       price: item.priceType === 'each' ? item.price! * item.quantity : item.price!,
       amount: item.quantity,
       expirationDate: new Date().getTime() + item.expiration!,
-      is1155: item.nft.multiToken,
+      is1155: item.nft.is1155,
       currencySymbol: item.currency,
       chainId: ChainId.CRONOS
     })))

@@ -513,7 +513,7 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                             </Flex>
                             <Flex justify='space-between'>
                               <Box>Token Standard</Box>
-                              <Box>{collection.multiToken ? 'CRC-1155' : 'CRC-721'}</Box>
+                              <Box>{collection.is1155 ? 'CRC-1155' : 'CRC-721'}</Box>
                             </Flex>
                             <Flex justify='space-between'>
                               <Box>Supply</Box>

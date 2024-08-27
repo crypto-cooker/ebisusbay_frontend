@@ -104,7 +104,7 @@ const batchListingSlice = createSlice({
       const itemToModify = action.payload.nft;
       const quantity = action.payload.quantity;
       const foundIndex = state.items.findIndex((o) => ciEquals(o.nft.nftAddress, itemToModify.nftAddress) && o.nft.nftId === itemToModify.nftId);
-      if (foundIndex >= 0 && itemToModify.multiToken) {
+      if (foundIndex >= 0 && itemToModify.is1155) {
         const nft = state.items[foundIndex]
         nft.quantity = quantity;
         state.items[foundIndex] = nft;
