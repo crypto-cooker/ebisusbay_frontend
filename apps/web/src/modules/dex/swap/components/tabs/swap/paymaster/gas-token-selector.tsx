@@ -1,64 +1,23 @@
-import {formatAmount} from '@pancakeswap/utils/formatFractions'
-import memoize from 'lodash/memoize'
 import React, {useCallback, useEffect, useMemo} from 'react'
 import styled from 'styled-components'
-import {Address} from 'viem'
-import {useAccount, useConfig} from 'wagmi'
+import {useConfig} from 'wagmi'
 
 import {SmartRouterTrade} from '@pancakeswap/smart-router'
-import {Currency, TradeType} from '@pancakeswap/swap-sdk-core'
+import {TradeType} from '@pancakeswap/swap-sdk-core'
 import {watchAccount} from '@wagmi/core'
-import {
-  Badge,
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Image,
-  Spinner,
-  Text,
-  Tooltip,
-  useColorModeValue,
-  useDisclosure,
-  VStack
-} from "@chakra-ui/react";
-import {ArrowRightIcon, ChevronDownIcon, WarningIcon} from "@chakra-ui/icons";
+import {Badge, Box, Button, Flex, HStack, Text, Tooltip, useDisclosure, VStack} from "@chakra-ui/react";
+import {ChevronDownIcon, WarningIcon} from "@chakra-ui/icons";
 import {TradeEssentialForPriceBreakdown} from "@eb-pancakeswap-web/views/Swap/V3Swap/utils/exchange";
-import {useNativeBalances, useTokenBalancesWithLoadingIndicator} from "@eb-pancakeswap-web/state/wallet/hooks";
-import {DEFAULT_PAYMASTER_TOKEN, paymasterInfo, paymasterTokens, SupportedPaymasterChain} from '@src/config/paymaster'
+import {DEFAULT_PAYMASTER_TOKEN, paymasterInfo, SupportedPaymasterChain} from '@src/config/paymaster'
 import {CurrencyLogo} from "@dex/components/logo";
 import {QuestionHelper} from "@dex/swap/components/tabs/swap/question-helper";
 import {useGasTokenByChain} from "@eb-pancakeswap-web/hooks/use-gas-token";
-import {useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
-import {Virtuoso} from "react-virtuoso";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import GasTokenSelectorDialog from "@dex/swap/components/tabs/swap/paymaster/gas-token-selector-dialog";
 
 // Selector Styles
 const GasTokenSelectButton = styled(Button).attrs({ variant: 'text', scale: 'xs' })`
   padding: 18px 0 18px 6px;
-`
-
-// Modal Styles
-const FixedHeightRow = styled.div<{ $disabled: boolean }>`
-  cursor: ${({ $disabled }) => !$disabled && 'pointer'};
-
-  &:hover {
-    background-color: ${({ theme, $disabled }) => !$disabled && theme.colors.background};
-  }
-
-  ${({ $disabled }) =>
-  $disabled &&
-  `
-    opacity: 0.5;
-    user-select: none;
-`}
-`
-
-const StyledBalanceText = styled(Text).attrs({ small: true })`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 `
 
 const SameTokenWarningBox = styled(Box)`
@@ -86,7 +45,6 @@ interface GasTokenSelectorProps {
 
 export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { address: account } = useAccount()
 
   const { chainId } = useActiveChainId()
   const supportedChainId = chainId as SupportedPaymasterChain;
@@ -200,7 +158,11 @@ export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
         </SameTokenWarningBox>
       )}
 
-      <GasTokenSelectorDialog isOpen={isOpen} onClose={onClose} />
+      <GasTokenSelectorDialog
+        isOpen={isOpen}
+        onClose={onClose}
+        chainId={chainId}
+      />
     </>
   )
 }

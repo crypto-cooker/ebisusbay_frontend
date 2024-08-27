@@ -115,8 +115,8 @@ export const paymasterInfo: Record<SupportedPaymasterChain, { [gasTokenAddress: 
 //   },
 // }
 
-export function isSupportedPaymasterChainId(value: number | string): value is SupportedPaymasterChain {
-  return (SUPPORTED_PAYMASTER_CHAINS as readonly number[]).includes(Number(value));
+export function isSupportedPaymasterChainId(value?: number | string): value is SupportedPaymasterChain {
+  return !!value && (SUPPORTED_PAYMASTER_CHAINS as readonly number[]).includes(Number(value));
 }
 
 /**

@@ -11,11 +11,12 @@ import {Currency} from "@pancakeswap/swap-sdk-core";
 import {useGasTokenByChain} from "@eb-pancakeswap-web/hooks/use-gas-token";
 import {useNativeBalances, useTokenBalancesWithLoadingIndicator} from "@eb-pancakeswap-web/state/wallet/hooks";
 import useAccountActiveChain from "@eb-pancakeswap-web/hooks/useAccountActiveChain";
-import {useConfig} from "wagmi";
+import {useAccount, useConfig} from "wagmi";
 import {watchAccount} from "@wagmi/core";
 import memoize from "lodash/memoize";
 import {Address} from "viem";
 import styled from "styled-components";
+import {ChainId} from "@pancakeswap/chains";
 
 const FixedHeightRow = styled.div<{ $disabled: boolean }>`
   cursor: ${({ $disabled }) => !$disabled && 'pointer'};
@@ -41,9 +42,10 @@ const StyledBalanceText = styled(Text).attrs({ small: true })`
 interface GasTokenSelectorDialogProps {
   isOpen: boolean;
   onClose: () => void;
+  chainId: ChainId;
 }
 
-export default function GasTokenSelectorDialog({isOpen, onClose}: GasTokenSelectorDialogProps) {
+export default function GasTokenSelectorDialog({isOpen, onClose, chainId}: GasTokenSelectorDialogProps) {
   const {
     DialogComponent,
     DialogHeader,
@@ -52,7 +54,7 @@ export default function GasTokenSelectorDialog({isOpen, onClose}: GasTokenSelect
     DialogCloseButton
   } = useResponsiveDialog();
 
-  const { chainId, account } = useAccountActiveChain()
+  const { address: account} = useAccount();
   const supportedChainId = chainId as SupportedPaymasterChain;
   const supportedPaymasterInfo = paymasterInfo[supportedChainId] ?? {}
   const supportedPaymasterTokens = paymasterTokens[supportedChainId] ?? [];

@@ -4,7 +4,7 @@ import {useMemo} from 'react'
 import {Address, encodeFunctionData, hexToBigInt, isAddress, stringify} from 'viem'
 
 import {ChainId} from '@pancakeswap/chains'
-import {ZyfiResponse} from '@src/config/paymaster'
+import {isSupportedPaymasterChainId, ZyfiResponse} from '@src/config/paymaster'
 import {eip712WalletActions} from 'viem/zksync'
 import {useConfig, useWalletClient} from 'wagmi'
 import {useGasTokenByChain} from '@eb-pancakeswap-web/hooks/use-gas-token'
@@ -39,7 +39,7 @@ export const usePaymaster = () => {
    * Check if the Paymaster for zkSync is available
    */
   const isPaymasterAvailable = useMemo(() => {
-    return chain && (chain.chainId === ChainId.CRONOS_ZKEVM || chain.chainId === ChainId.CRONOS_ZKEVM_TESTNET)
+    return chain && isSupportedPaymasterChainId(chain.chainId);
   }, [chain])
 
   /**

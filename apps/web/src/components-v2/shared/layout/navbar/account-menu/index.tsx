@@ -539,7 +539,6 @@ const AccountMenu = function () {
                   <Flex justify='space-between' align='center'>
                     <Box fontWeight='bold'>Paymaster Token</Box>
                     <Button
-                      isSelected={!!gasToken}
                       onClick={onOpenGasToken}
                       data-dd-action-name="Zyfi Gas Token Select Button"
                     >
@@ -580,7 +579,11 @@ const AccountMenu = function () {
         </Drawer>
       )}
 
-      <GasTokenSelectorDialog isOpen={isOpenGasToken} onClose={onCloseGasToken}/>
+      <GasTokenSelectorDialog
+        isOpen={isOpenGasToken}
+        onClose={onCloseGasToken}
+        chainId={chainId}
+      />
     </div>
   );
 };
