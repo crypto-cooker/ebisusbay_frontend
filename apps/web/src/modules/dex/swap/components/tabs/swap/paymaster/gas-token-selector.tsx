@@ -40,10 +40,6 @@ const GasTokenSelectButton = styled(Button).attrs({ variant: 'text', scale: 'xs'
 
 // Modal Styles
 const FixedHeightRow = styled.div<{ $disabled: boolean }>`
-  height: 56px;
-  display: flex;
-  align-items: center;
-
   cursor: ${({ $disabled }) => !$disabled && 'pointer'};
 
   &:hover {
@@ -209,6 +205,8 @@ export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
           _hover={{
             bg: hoverBackground
           }}
+          px={6}
+          py={2}
         >
           <HStack alignItems="center">
             <CurrencyLogo currency={item} useTrustWalletUrl={false} />
@@ -347,7 +345,7 @@ export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
           </Flex>
           <DialogCloseButton />
         </DialogHeader>
-        <DialogBody>
+        <DialogBody px={0}>
           <Virtuoso
             style={{ height: 450 }}
             data={supportedPaymasterTokens.toSorted(tokenListSortComparator)}
