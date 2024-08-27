@@ -3994,7 +3994,7 @@
       "name": "Free The Gang",
       "slug": "free-the-gang",
       "chainId": 282,
-      "multiToken": false,
+      "is1155": false,
       "address": "0x67A96285C2aD0385F8e511813dfd72a0140B6456",
       "onChain": false,
       "listable": true,
