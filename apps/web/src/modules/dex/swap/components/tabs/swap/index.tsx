@@ -389,7 +389,13 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
             {({isConnected, connect}) => (
               <>
                 {!isConnected ? (
-                  <PrimaryButton onClick={connect}>Connect Wallet</PrimaryButton>
+                  <PrimaryButton
+                    w='full'
+                    size='lg'
+                    onClick={connect}
+                  >
+                    Connect Wallet
+                  </PrimaryButton>
                 ) : showWrap ? (
                   <PrimaryButton
                     size='lg'

@@ -55,6 +55,11 @@ const firebase = initializeApp(firebaseConfig);
 
 function GlobalHooks() {
   useAccountEventListener()
+  return null
+}
+
+function GlobalDexHooks() {
+  useAccountEventListener()
   usePollBlockNumber()
   return null
 }
@@ -65,9 +70,13 @@ function App({ Component, ...pageProps }: AppProps) {
   const { colorMode } = useColorMode()
   const exchangePrices = useGlobalPrices();
   const {theme: userTheme} = useUser();
-  const isDexRoute = router.pathname.startsWith('/dex');
 
-  const GlobalDexHooks = isDexRoute ? GlobalHooks : React.Fragment;
+  const isDexRoute = router.pathname.startsWith('/dex');
+  const isSupportedNetworkRoute = isDexRoute || router.pathname.includes('/drops/')
+
+  const GlobalAppHooks = isDexRoute ?
+    GlobalDexHooks :
+    (isSupportedNetworkRoute ? GlobalHooks : React.Fragment);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -91,7 +100,7 @@ function App({ Component, ...pageProps }: AppProps) {
   return (
     <ThemeProvider theme={getTheme(userTheme)}>
       <ExchangePricesContext.Provider value={{prices: exchangePrices.data ?? []}}>
-        <GlobalDexHooks />
+        <GlobalAppHooks />
         <NetworkModal
           pageSupportedChains={isDexRoute ? CHAIN_IDS : []}
         />

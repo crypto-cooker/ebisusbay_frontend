@@ -352,4 +352,6 @@ export const CHAINS = Object.values(chainConfigs)
   })
   .map(({ chain }) => chain);
 
+export const DEFAULT_CHAIN_ID = process.env.NEXT_PUBLIC_ENV === 'testnet' ? ChainId.CRONOS_TESTNET : ChainId.CRONOS;
+
 export default chainConfigs;
