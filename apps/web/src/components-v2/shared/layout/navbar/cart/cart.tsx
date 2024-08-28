@@ -18,6 +18,7 @@ import {
   Text,
   useBreakpointValue,
   useColorModeValue,
+  useDisclosure,
   VStack,
   Wrap
 } from "@chakra-ui/react";
@@ -44,6 +45,9 @@ import {Tab, Tabs} from "@src/components-v2/foundation/tabs";
 import {Chain} from "wagmi/chains";
 import {CartItem} from "@market/state/jotai/atoms/cart";
 import {ApiService} from "@src/core/services/api-service";
+import GasTokenSelectorDialog from "@dex/swap/components/tabs/swap/paymaster/gas-token-selector-dialog";
+import {GasTokenSelector} from "@src/components-v2/shared/layout/navbar/cart/gas-token-selector";
+import {useMarketPaymaster} from "@market/hooks/useMarketPaymaster";
 
 const Cart = function () {
   const user = useUser();
@@ -52,7 +56,7 @@ const Cart = function () {
   const [soldItems, setSoldItems] = useState<string[]>([]);
   const [invalidItems, setInvalidItems] = useState<string[]>([]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
-  const [buyGaslessListings, response] = useBuyGaslessListings();
+  const { isOpen: isOpenGasToken, onOpen: onOpenGasToken, onClose: onCloseGasToken } = useDisclosure()
 
   const handleTabsChange = (index: number) => {
     setSelectedChain(cartChains[index]);
@@ -72,7 +76,9 @@ const Cart = function () {
   }, {} as Record<SupportedChainId, typeof cart.items>);
 
   const cartChains = chains.filter((chain) => !!mappedItemsByChain[chain.id as SupportedChainId]);
-  const [selectedChain, setSelectedChain] = useState<Chain>()
+  const [selectedChain, setSelectedChain] = useState<Chain>(cartChains[0])
+  const { isPaymasterAvailable } = useMarketPaymaster(selectedChain?.id);
+  const [buyGaslessListings, response] = useBuyGaslessListings(selectedChain?.id);
 
   const slideDirection = useBreakpointValue<'bottom' | 'right'>(
     {
@@ -100,11 +106,14 @@ const Cart = function () {
   };
 
   const handleClose = () => {
+    setSelectedChain(cartChains[0]);
     cart.closeCart();
   };
+
   const handleClearCart = (newItems?: CartItem[]) => {
     cart.clearCart(newItems)
   };
+
   const handleRemoveItem = (nft: any) => {
     cart.removeItem(nft.listingId);
     setSoldItems(soldItems.filter((listingId) => listingId !== nft.listingId))
@@ -266,9 +275,9 @@ const Cart = function () {
             </Flex>
             {cart.items.length > 0 ? (
               <Tabs defaultIndex={0} onChange={handleTabsChange}>
-                {Object.entries(mappedItemsByChain).map(([chainId, items]) => (
-                  <Tab key={chainId} label={cartChains.find((chain) => chain.id.toString() === chainId)?.name ?? 'Cronos'}>
-                    {items.map((nft, key) => (
+                {cartChains.map((chain) => (
+                  <Tab key={chain.id} label={chain.name}>
+                    {Object.entries(mappedItemsByChain).find(([chainId, items]) => chainId.toString() === chain.id.toString())?.[1].map((nft) => (
                       <Box
                         key={nft.listingId}
                         _hover={{background: hoverBackground}}
@@ -385,7 +394,7 @@ const Cart = function () {
                   </Box>
                 </Flex>
               </Box>
-              <Box mb={4}>
+              <Box mb={0}>
                 <Flex>
                   <Box flex='1'>
                     <Text fontWeight="bold">Total Price</Text>
@@ -397,7 +406,11 @@ const Cart = function () {
                   </Box>
                 </Flex>
               </Box>
-
+              {isPaymasterAvailable && !!selectedChain && (
+                <Box mb={4}>
+                  <GasTokenSelector chainId={selectedChain.id} />
+                </Box>
+              )}
               <Button
                 className="w-100"
                 title="Refresh Metadata"
@@ -414,6 +427,14 @@ const Cart = function () {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
+
+      {isPaymasterAvailable && (
+        <GasTokenSelectorDialog
+          isOpen={isOpenGasToken}
+          onClose={onCloseGasToken}
+          chainId={selectedChain?.id}
+        />
+      )}
     </div>
   );
 };
