@@ -278,7 +278,11 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
     approveCallback: approveACallback,
     revokeCallback: revokeACallback,
     currentAllowance: currentAllowanceA,
-  } = useApproveCallback(parsedAmounts[Field.INPUT], chainId ? V2_ROUTER_ADDRESS[chainId] : undefined)
+  } = useApproveCallback(
+    parsedAmounts[Field.INPUT],
+    chainId ? V2_ROUTER_ADDRESS[chainId] : undefined,
+    { enablePaymaster: true }
+  )
 
   const isValid = !inputError && approvalA === ApprovalState.APPROVED;
 

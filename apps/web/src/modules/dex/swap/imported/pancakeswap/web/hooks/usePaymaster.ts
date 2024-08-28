@@ -55,12 +55,14 @@ export const usePaymaster = () => {
       gas?: string | bigint | undefined
     },
     account?: Address,
+    type?: 'approve' | 'swap'
   ) {
     if (!account) throw new Error('An active wallet connection is required to send paymaster transaction')
     if (!gasToken) throw new Error('No gas token detected')
     if (!gasToken.isToken) throw new Error('Selected gas token is not an ERC20 token. Unsupported by Paymaster.')
     if (!isPaymasterAvailable || !isPaymasterTokenActive) throw new Error('Paymaster is not available or active.')
-
+    if (!type) type = 'swap';
+    
     const userSig = await requestSignature();
 
     const calldata = encodeFunctionData({
@@ -76,7 +78,8 @@ export const usePaymaster = () => {
       gas: call.gas
     }
 
-    const response = await fetch(`${appConfig.urls.cms}paymaster/swap?address=${account}&signature=${userSig}`, {
+    const endpoint = type;
+    const response = await fetch(`${appConfig.urls.cms}paymaster/${endpoint}?address=${account}&signature=${userSig}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -53,22 +53,22 @@ export const DEFAULT_PAYMASTER_TOKEN: Record<SupportedPaymasterChain, Currency> 
 
 export const paymasterInfo: Record<SupportedPaymasterChain, { [gasTokenAddress: Address]: { discount: `-${number}%` | 'FREE'; discountLabel?: string } }> = {
   [ChainId.CRONOS_ZKEVM]: {
-    [cronosZkEvmTokens.wcro.address]: {
-      discount: 'FREE', // Example: -20%, FREE
-      discountLabel: 'FREE SWAP',
-    },
+    // [cronosZkEvmTokens.wcro.address]: {
+    //   discount: 'FREE', // Example: -20%, FREE
+    //   discountLabel: 'FREE SWAP',
+    // },
     [cronosZkEvmTokens.frtn.address]: {
       discount: 'FREE',
       discountLabel: 'FREE SWAP',
     },
-    [cronosZkEvmTokens.vusd.address]: {
-      discount: 'FREE',
-      discountLabel: 'FREE SWAP',
-    },
-    [cronosZkEvmTokens.veth.address]: {
-      discount: 'FREE',
-      discountLabel: 'FREE SWAP',
-    }
+    // [cronosZkEvmTokens.vusd.address]: {
+    //   discount: 'FREE',
+    //   discountLabel: 'FREE SWAP',
+    // },
+    // [cronosZkEvmTokens.veth.address]: {
+    //   discount: 'FREE',
+    //   discountLabel: 'FREE SWAP',
+    // }
   },
   [ChainId.CRONOS_ZKEVM_TESTNET]: {
     [cronosZkEvmTestnetTokens.wcro.address]: {
@@ -87,10 +87,10 @@ export const paymasterInfo: Record<SupportedPaymasterChain, { [gasTokenAddress: 
       discount: 'FREE',
       discountLabel: 'FREE SWAP',
     },
-    [cronosZkEvmTestnetTokens.blue.address]: {
-      discount: 'FREE',
-      discountLabel: 'FREE SWAP',
-    }
+    // [cronosZkEvmTestnetTokens.blue.address]: {
+    //   discount: 'FREE',
+    //   discountLabel: 'FREE SWAP',
+    // }
   }
 }
 

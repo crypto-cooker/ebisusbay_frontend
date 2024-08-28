@@ -149,19 +149,20 @@ export function useApproveCallback(
       let sendTxResult: Promise<SendTransactionReturnType> | undefined
 
       if (enablePaymaster && isPaymasterAvailable && isPaymasterTokenActive) {
-        const calldata = encodeFunctionData({
-          abi: parseAbi(['function approve(address spender, uint256 amount) public returns (bool)']),
-          functionName: 'approve',
-          args: [spender as Address, finalAmount],
-        })
-
         const call = {
-          address: tokenContract.address,
+          contract: {
+            abi: parseAbi(['function approve(address spender, uint256 amount) public returns (bool)']),
+            address: tokenContract.address
+          },
+          parameters: {
+            methodName: 'approve',
+            args: [spender as Address, finalAmount],
+          },
           gas: estimatedGas,
-          calldata,
+          value: '0x0'
         }
 
-        sendTxResult = sendPaymasterTransaction(call, account)
+        sendTxResult = sendPaymasterTransaction(call, account, 'approve')
       } else {
         sendTxResult = callWithGasPrice(tokenContract, 'approve' as const, [spender as Address, finalAmount], {
           gas: calculateGasMargin(estimatedGas),
@@ -190,7 +191,7 @@ export function useApproveCallback(
           // logError(error)
           console.error('Failed to approve token', error)
           toast.error(`Error: ${getViemErrorMessage(error)}`)
-          throw error
+          // throw error
         })
     },
     [

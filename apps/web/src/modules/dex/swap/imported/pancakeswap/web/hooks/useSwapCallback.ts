@@ -124,7 +124,7 @@ export function useSwapCallback(
         let sendTxResult: Promise<SendTransactionReturnType> | undefined
 
         if (isPaymasterAvailable && isPaymasterTokenActive) {
-          sendTxResult = sendPaymasterTransaction(successfulEstimation.call, account)
+          sendTxResult = sendPaymasterTransaction(successfulEstimation.call, account, 'swap')
         } else {
           sendTxResult = contract.write[methodName](args, {
             gas: calculateGasMargin(gasEstimate),
