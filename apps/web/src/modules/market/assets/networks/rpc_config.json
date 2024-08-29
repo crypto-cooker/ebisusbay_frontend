@@ -28052,7 +28052,7 @@
       "slug": "ary",
       "chainId": 282,
       "is1155": false,
-      "address": "",
+      "address": "0x582a5FAF1f6eAc517335E0654e2d97Cc59388eE6",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -35765,7 +35765,7 @@
         "discord": "https://discord.gg/KatxH57WYU",
         "telegram": "https://t.me/ARY_FAM"
       },
-      "address": "",
+      "address": "0x582a5FAF1f6eAc517335E0654e2d97Cc59388eE6",
       "maxMintPerTx": 3,
       "maxMintPerAddress": 3,
       "totalSupply": 1000,

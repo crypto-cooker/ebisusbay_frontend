@@ -4013,6 +4013,31 @@
         "doxx": true,
         "kyc": true
       }
+    },
+    {
+      "name": "ARY",
+      "slug": "ary",
+      "chainId": 282,
+      "is1155": false,
+      "address": "0x022Da2417657220C651535117360B06634068Eff",
+      "onChain": false,
+      "listable": false,
+      "metadata": {
+        "description": "1,000 exclusive and tradable NFTs designed for ARY fans, each featuring unique traits and expressions that make every piece truly one-of-a-kind.   Powered by:   - Thomas (Founder of ARY)   - Kevin (Artist) [@Vcmxss]   - Piero (Data Optimizer) [@PieroPasqiari88]",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/banner.webp",
+        "website": "https://www.aryoshin.com/",
+        "twitter": "https://twitter.com/CronosAry",
+        "discord": "https://discord.gg/KatxH57WYU",
+        "telegram": "https://t.me/ARY_FAM",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
+        "kyc": true
+      }
     }
   ],
   "drops": [
@@ -9661,6 +9686,47 @@
         "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/banner.webp",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/avatar.webp",
         "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/card.webp"
+      },
+      "verification": {
+        "doxx": false,
+        "kyc": false,
+        "escrow": false,
+        "verified": true
+      }
+    },
+    {
+      "id": 195,
+      "chainId": 282,
+      "slug": "ary",
+      "title": "ARY",
+      "subtitle": "1,000 exclusive and tradable NFTs designed for ARY fans, each featuring unique traits and expressions that make every piece truly one-of-a-kind.   Powered by:   - Thomas (Founder of ARY)   - Kevin (Artist) [@Vcmxss]   - Piero (Data Optimizer) [@PieroPasqiari88]",
+      "description": "The primary goal of this collection is to enhance the ARY project and generate liquidity for future developments. Upcoming steps in the roadmap include increasing liquidity for more stable exchanges and developing a Web3 DApp on the Cronos chain.",
+      "author": {
+        "name": "Aryoshin",
+        "website": "https://www.aryoshin.com/",
+        "twitter": "https://twitter.com/CronosAry",
+        "discord": "https://discord.gg/KatxH57WYU",
+        "telegram": "https://t.me/ARY_FAM"
+      },
+      "address": "0x022Da2417657220C651535117360B06634068Eff",
+      "maxMintPerTx": 3,
+      "maxMintPerAddress": 3,
+      "totalSupply": 1000,
+      "cost": "73",
+      "memberCost": "51",
+      "whitelistCost": "51",
+      "foundersOnly": false,
+      "start": 1724948201000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "images": {
+        "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/ary/drop.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/banner.webp",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/avatar.webp",
+        "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/card.webp"
       },
       "verification": {
         "doxx": false,
