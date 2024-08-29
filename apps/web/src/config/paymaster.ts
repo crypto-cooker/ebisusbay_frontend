@@ -34,6 +34,7 @@ export const paymasterTokens: Record<SupportedPaymasterChain, Currency[]> = {
   [ChainId.CRONOS_ZKEVM]: [
     Native.onChain(ChainId.CRONOS_ZKEVM),
     cronosZkEvmTokens.frtn,
+    cronosZkEvmTokens.cro,
     cronosZkEvmTokens.vusd,
     cronosZkEvmTokens.veth
   ],
