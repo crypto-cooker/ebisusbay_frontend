@@ -35770,7 +35770,6 @@
       "maxMintPerAddress": 3,
       "totalSupply": 1000,
       "cost": "73",
-      "memberCost": "51",
       "whitelistCost": "51",
       "foundersOnly": false,
       "start": 1724958000000,
