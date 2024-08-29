@@ -199,8 +199,18 @@ export function useAllLists(): {
     readonly error: string | null
   }
 } {
-  const { chainId } = useActiveChainId()
+  const {chainId} = useActiveChainId()
+  return useAllListsByChainId(chainId)
+}
 
+export function useAllListsByChainId(chainId: number): {
+  readonly [url: string]: {
+    readonly current: TokenList | null
+    readonly pendingUpdate: TokenList | null
+    readonly loadingRequestId: string | null
+    readonly error: string | null
+  }
+} {
   const urls = useAtomValue(selectorByUrlsAtom)
 
   return useMemo(
@@ -219,7 +229,11 @@ function combineMaps(map1: TokenAddressMap, map2: TokenAddressMap): TokenAddress
 
 // filter out unsupported lists
 export function useActiveListUrls(): string[] | undefined {
-  const { chainId } = useActiveChainId()
+  const {chainId} = useActiveChainId()
+  return useActiveListUrlsByChainId(chainId)
+}
+
+export function useActiveListUrlsByChainId(chainId: number): string[] | undefined {
   const urls = useAtomValue(activeListUrlsAtom)
 
   return useMemo(() => urls.filter((url) => chainId && MULTI_CHAIN_LIST_URLS[chainId]?.includes(url)), [urls, chainId])
