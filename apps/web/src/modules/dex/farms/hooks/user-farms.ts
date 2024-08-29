@@ -125,11 +125,12 @@ export const fetchBalances = async (userAddress: string, chainId: number) => {
       tokens = tokens.slice(1);
       amounts = amounts.slice(1);
     }
+
     // @ts-ignore
-    balances[pool.result![0].toLowerCase()].earnings = tokens.map((token) => ({
+    balances[pool.result![0].toLowerCase()].earnings = tokens?.map((token) => ({
       address: token,
       amount: amounts[tokens.indexOf(token)]
-    }));
+    })) ?? [];
   });
 
 

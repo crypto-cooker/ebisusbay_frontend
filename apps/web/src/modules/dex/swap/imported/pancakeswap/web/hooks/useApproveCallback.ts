@@ -1,7 +1,7 @@
 import { Currency, CurrencyAmount, ERC20Token } from '@pancakeswap/sdk'
 import { MaxUint256 } from '@pancakeswap/swap-sdk-core'
 import isUndefinedOrNull from '@pancakeswap/utils/isUndefinedOrNull'
-// import { usePaymaster } from 'hooks/usePaymaster'
+import { usePaymaster } from '@eb-pancakeswap-web/hooks/usePaymaster'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useHasPendingApproval, useTransactionAdder } from '@eb-pancakeswap-web/state/transactions/hooks'
 import { calculateGasMargin } from '@eb-pancakeswap-web/utils'
@@ -44,14 +44,7 @@ export function useApproveCallback(
   const token = amountToApprove?.currency?.isToken ? amountToApprove.currency : undefined
   const { allowance: currentAllowance, refetch } = useTokenAllowance(token, account ?? undefined, spender)
   const pendingApproval = useHasPendingApproval(token?.address, spender)
-  // const { isPaymasterAvailable, isPaymasterTokenActive, sendPaymasterTransaction } = usePaymaster()
-  const { isPaymasterAvailable, isPaymasterTokenActive, sendPaymasterTransaction } = {
-    isPaymasterAvailable: false,
-    isPaymasterTokenActive: false,
-    sendPaymasterTransaction: () => {
-      return Promise.resolve({ hash: '' })
-    },
-  }
+  const { isPaymasterAvailable, isPaymasterTokenActive, sendPaymasterTransaction } = usePaymaster()
 
   const [pending, setPending] = useState<boolean>(pendingApproval)
   const [isPendingError, setIsPendingError] = useState<boolean>(false)
@@ -156,19 +149,20 @@ export function useApproveCallback(
       let sendTxResult: Promise<SendTransactionReturnType> | undefined
 
       if (enablePaymaster && isPaymasterAvailable && isPaymasterTokenActive) {
-        const calldata = encodeFunctionData({
-          abi: parseAbi(['function approve(address spender, uint256 amount) public returns (bool)']),
-          functionName: 'approve',
-          args: [spender as Address, finalAmount],
-        })
-
         const call = {
-          address: tokenContract.address,
+          contract: {
+            abi: parseAbi(['function approve(address spender, uint256 amount) public returns (bool)']),
+            address: tokenContract.address
+          },
+          parameters: {
+            methodName: 'approve',
+            args: [spender as Address, finalAmount],
+          },
           gas: estimatedGas,
-          calldata,
+          value: '0x0'
         }
 
-        sendTxResult = sendPaymasterTransaction(call, account)
+        sendTxResult = sendPaymasterTransaction(call, account, 'approve')
       } else {
         sendTxResult = callWithGasPrice(tokenContract, 'approve' as const, [spender as Address, finalAmount], {
           gas: calculateGasMargin(estimatedGas),
@@ -197,7 +191,7 @@ export function useApproveCallback(
           // logError(error)
           console.error('Failed to approve token', error)
           toast.error(`Error: ${getViemErrorMessage(error)}`)
-          throw error
+          // throw error
         })
     },
     [

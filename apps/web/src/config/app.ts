@@ -10,7 +10,7 @@ export enum AppEnvironment {
 }
 
 type AppConfigMap = {
-  [K in AppEnvironment]: PartialAppConfig;
+  [K in AppEnvironment]: AppEnvironmentConfig;
 };
 
 type PartialAppConfig = {
@@ -61,7 +61,7 @@ interface AppEnvironmentConfig {
   currencies: AppCurrencies
 }
 
-const appConfigs: AppConfigMap = {
+const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
   [AppEnvironment.PRODUCTION]: {
     defaultChainId: ChainId.CRONOS,
     urls: {
@@ -503,8 +503,8 @@ const appConfigs: AppConfigMap = {
     urls: {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
-      cms: 'https://testcms.ebisusbay.biz/api/',
-      // cms: "http://localhost:4000/api/",
+      // cms: 'https://testcms.ebisusbay.biz/api/',
+      cms: "http://localhost:4000/api/",
       cmsSocket: 'wss://testcms.ebisusbay.biz/socket/',
       // cmsSocket: 'ws://localhost:4000/socket/',
       explorer: 'https://testnet.cronoscan.com/',
@@ -576,10 +576,15 @@ const appConfigs: AppConfigMap = {
         deals: []
       }
     }
-  },
-  [AppEnvironment.LOCAL]: {
-    inherits: AppEnvironment.TESTNET,
+  }
+}
+
+function localAppConfig(): AppEnvironmentConfig {
+  const inheritedEnv = remoteConfigs[AppEnvironment.TESTNET];
+  return {
+    ...inheritedEnv,
     urls: {
+      ...inheritedEnv.urls,
       app: 'http://localhost:3000/',
       // cms: 'https://cms.ebisusbay.com/api/',
       cms: 'http://localhost:4000/api/',
@@ -587,6 +592,11 @@ const appConfigs: AppConfigMap = {
       cmsSocket: 'ws://localhost:4000/socket/',
     }
   }
+}
+
+export const appConfigs: AppConfigMap = {
+  ...remoteConfigs,
+  [AppEnvironment.LOCAL]: localAppConfig()
 }
 
 export default appConfigs;

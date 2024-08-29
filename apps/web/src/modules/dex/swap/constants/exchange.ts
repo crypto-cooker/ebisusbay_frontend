@@ -37,7 +37,7 @@ export const SUGGESTED_BASES: ChainTokenList = {
   ],
   [ChainId.CRONOS_ZKEVM_TESTNET]: [
     cronosZkEvmTestnetTokens.wcro,
-    cronosZkEvmTestnetTokens.usdc,
+    cronosZkEvmTestnetTokens.vusd,
     cronosZkEvmTestnetTokens.red,
     cronosZkEvmTestnetTokens.blue,
     cronosZkEvmTestnetTokens.frtn,
@@ -58,7 +58,6 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   ],
   [ChainId.CRONOS_ZKEVM_TESTNET]: [
     cronosZkEvmTestnetTokens.wcro,
-    cronosZkEvmTestnetTokens.usdc,
     cronosZkEvmTestnetTokens.red,
     cronosZkEvmTestnetTokens.blue,
     cronosZkEvmTestnetTokens.frtn,
@@ -76,7 +75,14 @@ export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } 
     [USDC[ChainId.CRONOS], WCRO[ChainId.CRONOS]],
   ],
   [ChainId.CRONOS_TESTNET]: [
-    [cronosZkEvmTestnetTokens.wcro, cronosZkEvmTestnetTokens.usdc]
+    [cronosTestnetTokens.wcro, cronosTestnetTokens.usdc]
+  ],
+  [ChainId.CRONOS_ZKEVM]: [
+    [cronosZkEvmTokens.wcro, cronosZkEvmTokens.frtn]
+  ],
+  [ChainId.CRONOS_ZKEVM_TESTNET]: [
+    [cronosZkEvmTestnetTokens.wcro, cronosZkEvmTestnetTokens.frtn],
+    [cronosZkEvmTestnetTokens.red, cronosZkEvmTestnetTokens.blue]
   ],
 }
 

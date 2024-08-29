@@ -30,7 +30,7 @@ import {
   useOutsideClick,
   VStack
 } from '@chakra-ui/react';
-import Cart from './cart';
+import Cart from './cart/cart';
 import { ChevronDownIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import Search from '@src/components-v2/shared/layout/navbar/search';
 import MobileSearchDrawer from '@src/components-v2/shared/layout/navbar/search/drawer';

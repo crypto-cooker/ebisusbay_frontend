@@ -3,11 +3,11 @@ import {Contract, ContractReceipt, ethers} from "ethers";
 import {toast} from 'react-toastify';
 import {getServerSignature} from '@src/core/cms/endpoints/gaslessListing';
 import {pluralize} from "@market/helpers/utils";
-import {useContractService, useUser} from "@src/components-v2/useUser";
+import {useUser} from "@src/components-v2/useUser";
 import gaslessListingContract from "@src/global/contracts/GaslessListing.json";
 import chainConfigs, {SupportedChainId} from "@src/config/chains";
-import {useContractWrite} from "wagmi";
-import {erc20Abi} from "viem";
+import {Address, erc20Abi} from "viem";
+import {useMarketPaymaster} from "@market/hooks/useMarketPaymaster";
 
 type ResponseProps = {
   loading: boolean;
@@ -22,7 +22,7 @@ interface PendingGaslessPurchase {
   chainId: number;
 }
 
-const useBuyGaslessListings = () => {
+const useBuyGaslessListings = (chainId?: SupportedChainId) => {
   const [response, setResponse] = useState<ResponseProps>({
     loading: false,
     error: undefined,
@@ -30,8 +30,7 @@ const useBuyGaslessListings = () => {
   });
 
   const {address, provider} = useUser();
-
-  const contractService = useContractService();
+  const { isPaymasterAvailable, isPaymasterTokenActive, sendPaymasterTransaction } = useMarketPaymaster(chainId)
 
   const buyGaslessListings = async (pendingPurchases: PendingGaslessPurchase[]) => {
     setResponse({
@@ -42,8 +41,8 @@ const useBuyGaslessListings = () => {
     });
 
     try {
-      const chainId = pendingPurchases[0].chainId as SupportedChainId
-      const chainConfig = chainConfigs[chainId];
+      const targetChainId = chainId ?? pendingPurchases[0].chainId as SupportedChainId
+      const chainConfig = chainConfigs[targetChainId];
 
       const croTotal = pendingPurchases
         .filter((purchase) => !purchase.currency || purchase.currency === ethers.constants.AddressZero)
@@ -79,16 +78,35 @@ const useBuyGaslessListings = () => {
       const total = price.add(sigData.feeAmount);
       const buyContract = new Contract(chainConfig.contracts.gaslessListing, gaslessListingContract.abi, provider.signer);
       const gasEstimate = await buyContract.estimateGas.fillOrders(orderData, sigData, signature, { value: total });
-      const tx = await buyContract.fillOrders(orderData, sigData, signature, { value: total });
-      const receipt = await tx.wait()
-      toast.success(`${pluralize(pendingPurchases.length, 'NFT')} successfully purchased`);
 
-      setResponse({
-        ...response,
-        loading: false,
-        error: undefined,
-        tx: receipt
-      });
+
+      if (isPaymasterAvailable && isPaymasterTokenActive) {
+        await sendPaymasterTransaction({
+            contract: {
+              abi: gaslessListingContract.abi,
+              address: buyContract.address
+            },
+            parameters: {
+              methodName: 'fillOrders',
+              args: [orderData, sigData, signature],
+              value: BigInt(total.toString())
+            },
+            gas: BigInt(gasEstimate.toString())
+          },
+          address as Address
+        )
+      } else {
+        const tx = await buyContract.fillOrders(orderData, sigData, signature, { value: total });
+        const receipt = await tx.wait()
+        setResponse({
+          ...response,
+          loading: false,
+          error: undefined,
+          tx: receipt
+        });
+      }
+
+      toast.success(`${pluralize(pendingPurchases.length, 'NFT')} successfully purchased`);
 
       return true;
     } catch (error) {

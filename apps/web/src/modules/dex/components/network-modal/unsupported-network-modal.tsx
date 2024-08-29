@@ -19,6 +19,8 @@ import {
 } from "@chakra-ui/react";
 import {useUser, useUserTheme} from "@src/components-v2/useUser";
 import {viemClients} from "@eb-pancakeswap-web/utils/viem";
+import {DEFAULT_CHAIN_ID} from "@src/config/chains";
+import ImageService from "@src/core/services/image";
 
 // Where chain is not supported or page not supported
 export function UnsupportedNetworkModal({ pageSupportedChains }: { pageSupportedChains: number[] }) {
@@ -28,13 +30,21 @@ export function UnsupportedNetworkModal({ pageSupportedChains }: { pageSupported
   const chainId = useLocalNetworkChain() || ChainId.CRONOS
   const { isConnected } = useAccount()
   const { disconnect: logout } = useUser()
-  const { pathname } = useRouter()
+  // const { pathname } = useRouter()
 
-  const supportedMainnetChains = useMemo(
+  // const supportedMainnetChains = useMemo(
+  //   () =>
+  //     Object.values(viemClients)
+  //       .map((client) => client.chain)
+  //       .filter((chain) => chain && !chain.testnet && pageSupportedChains?.includes(chain.id)),
+  //   [pageSupportedChains],
+  // )
+
+  const supportedChains = useMemo(
     () =>
       Object.values(viemClients)
         .map((client) => client.chain)
-        .filter((chain) => chain && !chain.testnet && pageSupportedChains?.includes(chain.id)),
+        .filter((chain) => chain && pageSupportedChains?.includes(chain.id)),
     [pageSupportedChains],
   )
 
@@ -48,31 +58,32 @@ export function UnsupportedNetworkModal({ pageSupportedChains }: { pageSupported
         </Flex>
       </ModalHeader>
       <ModalBody>
-        <VStack align='stretch' spacing={4} pb={4}>
+        <VStack spacing={4} pb={4}>
           <Text>
             Currently this page only supported in{' '}
-            {supportedMainnetChains?.map((c) => c?.name).join(', ')}
+            {supportedChains?.map((c) => c?.name).join(', ')}
           </Text>
-          <div style={{ textAlign: 'center' }}>
+          <Box>
             <Image
               layout="fixed"
-              width={194}
+              width={175}
               height={175}
-              src="/images/check-your-network.png"
+              src={ImageService.translate('/img/check-your-network.webp').convert()}
               alt="check your network"
             />
-          </div>
+          </Box>
           <Text>
             Please switch your network to continue
           </Text>
           {canSwitch ? (
             <Button
+              w='full'
               isLoading={isLoading}
               onClick={() => {
-                if (supportedMainnetChains.map((c) => c?.id).includes(chainId)) {
+                if (supportedChains.map((c) => c?.id).includes(chainId)) {
                   switchNetworkAsync(chainId)
                 } else {
-                  switchNetworkAsync(ChainId.CRONOS)
+                  switchNetworkAsync(DEFAULT_CHAIN_ID)
                 }
               }}
             >

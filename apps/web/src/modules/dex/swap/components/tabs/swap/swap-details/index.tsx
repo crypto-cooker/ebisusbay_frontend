@@ -1,3 +1,4 @@
+import {ReactNode} from 'react';
 import { Currency, Trade, TradeType } from '@pancakeswap/sdk'
 import { useUserSlippage } from '@pancakeswap/utils/user'
 import {Field} from "@eb-pancakeswap-web/state/swap/actions";
@@ -7,13 +8,17 @@ import {computeSlippageAdjustedAmounts, computeTradePriceBreakdown} from "@eb-pa
 import FormattedPriceImpact from "@dex/swap/components/tabs/swap/formatted-price-impact";
 import SwapRoute from "@dex/swap/components/tabs/swap/swap-details/swap-route";
 import {LP_HOLDERS_FEE, TOTAL_FEE, TREASURY_FEE} from "@dex/swap/constants";
+import {usePaymaster} from "@eb-pancakeswap-web/hooks/usePaymaster";
+import {GasTokenSelector} from "@dex/swap/components/tabs/swap/paymaster/gas-token-selector";
 
 function TradeSummary({
   trade,
   allowedSlippage,
+  gasTokenSelector,
 }: {
   trade: Trade<Currency, Currency, TradeType>
-  allowedSlippage: number
+  allowedSlippage: number,
+  gasTokenSelector: ReactNode,
 }) {
   const { priceImpactWithoutFee, realizedLPFee } = computeTradePriceBreakdown(trade)
   const isExactIn = trade.tradeType === TradeType.EXACT_INPUT
@@ -25,6 +30,7 @@ function TradeSummary({
 
   return (
     <Box>
+      {gasTokenSelector}
       <Flex justify='space-between'>
         <HStack>
           <Text fontWeight='bold' fontSize='sm'>{isExactIn ? 'Minimum received' : 'Maximum sold'}</Text>
@@ -80,6 +86,7 @@ export interface AdvancedSwapDetailsProps {
 
 export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
   const [allowedSlippage] = useUserSlippage()
+  const { isPaymasterAvailable } = usePaymaster()
 
   const showRoute = Boolean(trade && trade.route.path.length > 1)
 
@@ -87,7 +94,11 @@ export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
     <Box>
       {trade && (
         <>
-          <TradeSummary trade={trade} allowedSlippage={allowedSlippage} />
+          <TradeSummary
+            trade={trade}
+            allowedSlippage={allowedSlippage}
+            gasTokenSelector={isPaymasterAvailable && <GasTokenSelector trade={trade} />}
+          />
           {showRoute && (
             <>
               <Flex justify='space-between'>

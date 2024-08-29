@@ -4,31 +4,34 @@ import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {FAST_INTERVAL, SLOW_INTERVAL} from "@dex/swap/constants";
 import {useBlockTimestamp, useInitialBlockNumber, useWatchBlock,
   useInitialBlockTimestamp as useInitBlockTimestamp} from "@pancakeswap/wagmi";
+import {isChainSupported} from "@src/wagmi";
 
 export const usePollBlockNumber = () => {
   const { chainId } = useActiveChainId()
 
+  const enabled = Boolean(chainId) && isChainSupported(chainId);
+
   useWatchBlock({
     chainId,
-    enabled: true,
+    enabled,
   })
 
   const { data: blockNumber } = useBlockNumber({
     chainId,
-    watch: true,
+    watch: enabled,
   })
 
   useQuery({
     queryKey: [FAST_INTERVAL, 'blockNumber', chainId],
     queryFn: async () => Number(blockNumber),
-    enabled: Boolean(chainId),
+    enabled: enabled,
     refetchInterval: FAST_INTERVAL,
   })
 
   useQuery({
     queryKey: [SLOW_INTERVAL, 'blockNumber', chainId],
     queryFn: async () => Number(blockNumber),
-    enabled: Boolean(chainId),
+    enabled: enabled,
     refetchInterval: SLOW_INTERVAL,
   })
 }
