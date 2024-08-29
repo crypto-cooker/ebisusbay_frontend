@@ -378,7 +378,6 @@ const columnHelper = createColumnHelper<DerivedFarm>();
 const columns: ColumnDef<DerivedFarm, any>[] = [
   columnHelper.accessor("derived.name", {
     cell: (info) => {
-      console.log('DoubleCurrencyLayeredLogo-1', info.row.original.derived.chainId)
       return (
         <HStack>
           {info.row.original.data.pair ? (

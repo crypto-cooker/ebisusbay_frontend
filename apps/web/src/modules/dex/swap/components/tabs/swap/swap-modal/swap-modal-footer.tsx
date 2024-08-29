@@ -37,7 +37,7 @@ export default function SwapModalFooter({
 
   const [gasToken] = useGasTokenByChain(supportedChainId)
   const { isPaymasterAvailable, isPaymasterTokenActive } = usePaymaster()
-  const gasTokenInfo = supportedPaymasterInfo[gasToken.isToken ? gasToken?.wrapped.address : '']
+  const gasTokenInfo = gasToken?.isToken ? supportedPaymasterInfo[gasToken.wrapped.address] : undefined;
 
   const gasTokenBadge = gasTokenInfo?.discount &&
     (gasTokenInfo.discount === 'FREE'
