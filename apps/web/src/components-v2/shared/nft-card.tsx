@@ -45,6 +45,7 @@ import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import useCart from "@market/hooks/use-cart";
 import {useAppDispatch} from "@market/state/redux/store/hooks";
 import {CurrencyLogoByAddress} from "@dex/components/logo";
+import {isOffersEnabledForChain} from "@src/global/utils/app";
 
 const Watermarked = styled.div<{ watermark: string }>`
   position: relative;
@@ -176,7 +177,8 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
       onRemoveFromCart: handleRemoveFromCart,
       onMakeOffer: handleMakeOffer,
       isInCart: isInCart,
-      canBuy: nft.market && canBuy
+      canBuy: nft.market && canBuy,
+      chainId: nft.chain
     });
 
   return (
@@ -309,7 +311,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
                         <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleAddToCart}>Add to Cart</Text>
                       )}
                     </>
-                  ) : (
+                  ) : isOffersEnabledForChain(nft.chain) && (
                     <Text fontSize="sm" fontWeight="bold" cursor="pointer" onClick={handleMakeOffer}>Make Offer</Text>
                   )}
                 </Box>
@@ -438,15 +440,18 @@ type PublicMenuProps = {
   onMakeOffer: () => void;
   isInCart: boolean;
   canBuy: boolean;
+  chainId: number;
 }
 const publicMenuOptions = (props: PublicMenuProps) => {
   const options = [];
 
-  options.push({
-    icon: faHand,
-    label: 'Make Offer',
-    handleClick: props.onMakeOffer,
-  });
+  if (isOffersEnabledForChain(props.chainId)) {
+    options.push({
+      icon: faHand,
+      label: 'Make Offer',
+      handleClick: props.onMakeOffer,
+    });
+  }
 
   if (props.canBuy) {
     if (props.isInCart) {

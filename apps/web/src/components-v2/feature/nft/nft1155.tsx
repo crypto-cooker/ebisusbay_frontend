@@ -44,7 +44,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Spinner,
+  Spinner, Tag,
   Text,
   useClipboard,
   useColorModeValue,
@@ -66,6 +66,8 @@ import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
 import {SecondaryButton} from "@src/components-v2/foundation/button";
 import {getBlockExplorerLink} from "@dex/utils";
+import {ChainLogo} from "@dex/components/logo";
+import {getChainByIdOrSlug} from "@src/helpers";
 
 const config = appConfig();
 const tabs = {
@@ -86,6 +88,8 @@ interface Nft721Props {
 
 const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
   const dispatch = useAppDispatch();
+  const chainConfig = getChainByIdOrSlug(chain);
+
   const { onCopy } = useClipboard(appUrl(`/collection/${chain}/${address}/${id}`).toString());
   const [runAuthedFunction] = useAuthedFunction();
   const borderColor = useColorModeValue('gray.300', 'white');
@@ -352,7 +356,7 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                   <Heading>{nft.name}</Heading>
 
                   {nft.description && (
-                    <Box mb={4}>
+                    <Box mb={2}>
                       <Text noOfLines={showFullDescription ? 0 : 2}>{nft.description}</Text>
                       {nft.description.length > 60 && (
                         <ChakraButton variant="link" onClick={() => setShowFullDescription(!showFullDescription)}>
@@ -362,6 +366,15 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                       )}
                     </Box>
                   )}
+
+                  <Box mb={2}>
+                    <Tag size='sm' colorScheme='teal' variant='subtle' cursor='pointer' py={1}>
+                      <HStack>
+                        <ChainLogo chainId={chainConfig?.chain.id} />
+                        <Box>{chainConfig?.chain.name}</Box>
+                      </HStack>
+                    </Tag>
+                  </Box>
 
                   {collection.listable && (
                     <PriceActionBar

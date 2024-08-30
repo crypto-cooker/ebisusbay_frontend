@@ -30,6 +30,7 @@ import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import useCart from "@market/hooks/use-cart";
 import {useAppDispatch} from "@market/state/redux/store/hooks";
 import {CurrencyLogoByAddress} from "@dex/components/logo";
+import {isOffersEnabledForChain} from "@src/global/utils/app";
 
 const Watermarked = styled.div`
   position: relative;
@@ -64,11 +65,13 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   const getOptions = () => {
     const options = [];
 
-    options.push({
-      icon: faHand,
-      label: 'Make Offer',
-      handleClick: handleMakeOffer,
-    });
+    if (isOffersEnabledForChain(listing.chain)) {
+      options.push({
+        icon: faHand,
+        label: 'Make Offer',
+        handleClick: handleMakeOffer,
+      });
+    }
 
     if (isInCart) {
       options.push({
