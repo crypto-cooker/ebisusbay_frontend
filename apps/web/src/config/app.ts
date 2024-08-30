@@ -298,9 +298,9 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
         deals: []
       },
       [ChainId.CRONOS_ZKEVM]: {
-        global: ['zkcro', 'frtn'],
+        global: ['zkcro', 'frtn', 'vusd', 'veth'],
         marketplace: {
-          available: ['zkcro', 'frtn'],
+          available: ['zkcro', 'frtn', 'vusd', 'veth'],
           nft: {
             '0x46055078a40358c27f7850d81f29ec857342318f': ['frtn'] // Moggy Money Brokers
           }
