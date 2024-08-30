@@ -38,6 +38,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBagShopping, faHand} from "@fortawesome/free-solid-svg-icons";
 import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
 import {CurrencyLogoByAddress} from "@dex/components/logo";
+import {isOffersEnabledForChain} from "@src/global/utils/app";
 
 interface PriceActionBarProps {
   offerType: string;
@@ -223,17 +224,21 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
               </ButtonGroup>
             ) : (
               <ButtonGroup w='full'>
-                {showSmallOfferButton && isActiveListing && canBuy ? (
-                  <IconButton
-                    variant='outline'
-                    aria-label={`${offerType === OFFER_TYPE.update ? 'Update' : 'Make'} Offer`}
-                    icon={<Icon as={FontAwesomeIcon} icon={faHand} />}
-                    onClick={onOfferSelected}
-                  />
-                ) : (
-                  <SecondaryButton w='full' onClick={onOfferSelected}>
-                    {offerType === OFFER_TYPE.update ? 'Update' : 'Make'} Offer
-                  </SecondaryButton>
+                {isOffersEnabledForChain(nft.chain) && (
+                  <>
+                    {showSmallOfferButton && isActiveListing && canBuy ? (
+                      <IconButton
+                        variant='outline'
+                        aria-label={`${offerType === OFFER_TYPE.update ? 'Update' : 'Make'} Offer`}
+                        icon={<Icon as={FontAwesomeIcon} icon={faHand} />}
+                        onClick={onOfferSelected}
+                      />
+                    ) : (
+                      <SecondaryButton w='full' onClick={onOfferSelected}>
+                        {offerType === OFFER_TYPE.update ? 'Update' : 'Make'} Offer
+                      </SecondaryButton>
+                    )}
+                  </>
                 )}
                 {isActiveListing && canBuy && (
                   <>

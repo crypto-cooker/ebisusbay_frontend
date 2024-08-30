@@ -18,6 +18,7 @@ import {isFoundingMemberCollection} from "@market/helpers/utils";
 import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 import {sortOptions} from "@src/Components/components/constants/collection-sort-options";
 import {ApiService} from "@src/core/services/api-service";
+import {isOffersEnabledForChain} from "@src/global/utils/app";
 
 interface ItemsProps {
   collection: any;
@@ -195,20 +196,24 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
         onHide={() => setMobileSortVisible(false)}
       />
 
-      {isOpenCollectionOfferDialog && (
-        <MakeCollectionOfferDialog
-          isOpen={isOpenCollectionOfferDialog}
-          onClose={onCloseCollectionOfferDialog}
-          collection={collection}
-        />
-      )}
+      {isOffersEnabledForChain(collection.chain) && (
+        <>
+          {isOpenCollectionOfferDialog && (
+            <MakeCollectionOfferDialog
+              isOpen={isOpenCollectionOfferDialog}
+              onClose={onCloseCollectionOfferDialog}
+              collection={collection}
+            />
+          )}
 
-      {isOpenInstantSellDialog && (
-        <ResponsiveInstantSellDialog
-          isOpen={isOpenInstantSellDialog}
-          onClose={onCloseInstantSellDialog}
-          collection={collection}
-        />
+          {isOpenInstantSellDialog && (
+            <ResponsiveInstantSellDialog
+              isOpen={isOpenInstantSellDialog}
+              onClose={onCloseInstantSellDialog}
+              collection={collection}
+            />
+          )}
+        </>
       )}
 
       {isOpenSweepDialog && (

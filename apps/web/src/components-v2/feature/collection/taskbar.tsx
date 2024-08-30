@@ -30,6 +30,7 @@ import {getTheme} from "@src/global/theme/theme";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {isBundle} from "@market/helpers/utils";
 import {useUser} from "@src/components-v2/useUser";
+import {isOffersEnabledForChain} from "@src/global/utils/app";
 
 interface TaskbarProps {
   collection: any;
@@ -165,16 +166,20 @@ const Taskbar = ({collection, onFilterToggle, onSortToggle, initialSearch, onSea
 
   const ActionButtons =  useMemo(() => (
     <ButtonGroup>
-      {!isBundle(collection.address) && (
-        <PrimaryButton onClick={onOpenCollectionOfferDialog}>
-          <Icon as={FontAwesomeIcon} icon={faHand} />
-          <Box as='span' ms={2}>Offer</Box>
-        </PrimaryButton>
+      {isOffersEnabledForChain(collection.chain) && (
+        <>
+          {!isBundle(collection.address) && (
+            <PrimaryButton onClick={onOpenCollectionOfferDialog}>
+              <Icon as={FontAwesomeIcon} icon={faHand} />
+              <Box as='span' ms={2}>Offer</Box>
+            </PrimaryButton>
+          )}
+          <PrimaryButton onClick={onOpenInstantSellDialog}>
+            <Icon as={FontAwesomeIcon} icon={faBoltLightning} />
+            <Box as='span' ms={2}>Sell Instantly</Box>
+          </PrimaryButton>
+        </>
       )}
-      <PrimaryButton onClick={onOpenInstantSellDialog}>
-        <Icon as={FontAwesomeIcon} icon={faBoltLightning} />
-        <Box as='span' ms={2}>Sell Instantly</Box>
-      </PrimaryButton>
       <PrimaryButton onClick={onOpenSweepDialog}>
         <Icon as={FontAwesomeIcon} icon={faBroom} />
         <Box as='span' ms={2}>Sweep</Box>
