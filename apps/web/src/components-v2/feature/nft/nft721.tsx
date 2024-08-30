@@ -63,6 +63,7 @@ import {
   Center,
   Flex,
   Heading,
+  HStack,
   MenuButton as MenuButtonCK,
   Spinner,
   Stack,
@@ -92,6 +93,8 @@ import DynamicNftImage from '@src/components-v2/shared/media/dynamic-nft-image';
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
 import {getBlockExplorerLink} from "@dex/utils";
+import {ChainLogo} from "@dex/components/logo";
+import {getChainByIdOrSlug} from "@src/helpers";
 
 const config = appConfig();
 const tabs = {
@@ -116,6 +119,8 @@ interface Nft721Props {
 const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props) => {
   const dispatch = useAppDispatch();
   const user = useUser();
+  const chainConfig = getChainByIdOrSlug(chain);
+
   const { refreshing, favorites, loading:isLoading } = useAppSelector((state) => state.nft);
   const { onCopy } = useClipboard(appUrl(`/collection/${chain}/${address}/${id}`).toString());
   const [runAuthedFunction] = useAuthedFunction();
@@ -803,7 +808,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                   )}
 
                   {(customProfile.description ?? nft.description) && (
-                    <Box mb={4}>
+                    <Box mb={2}>
                       <Text noOfLines={showFullDescription ? 0 : 2}>{customProfile.description ?? nft.description}</Text>
                       {(customProfile.description ?? nft.description).length > 60 && (
                         <ChakraButton variant="link" onClick={() => setShowFullDescription(!showFullDescription)}>
@@ -813,6 +818,15 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                       )}
                     </Box>
                   )}
+
+                  <Box mb={2}>
+                    <Tag size='sm' colorScheme='teal' variant='subtle' cursor='pointer' py={1}>
+                      <HStack>
+                        <ChainLogo chainId={chainConfig?.chain.id} />
+                        <Box>{chainConfig?.chain.name}</Box>
+                      </HStack>
+                    </Tag>
+                  </Box>
 
                   {isCroCrowCollection(address) && croCrowBreed && (
                     <div className="d-flex flex-row align-items-center mb-4">
