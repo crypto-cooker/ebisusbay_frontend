@@ -118,15 +118,10 @@ const Header = function () {
                   alt='ebisus bay logo'
                   w='44px'
                 />
-                {!shouldHideTitle && shouldUseMobileSearch ? (
+                {!shouldHideTitle && (
                   <Image
-                    src={ImageService.translate('/img/logos/eb-title-sm.png').convert()}
-                    maxH='40px'
-                  />
-                ) : !shouldHideTitle && (
-                  <Image
-                    src={ImageService.translate('/img/logos/eb-title-lg.png').convert()}
-                    maxH='40px'
+                    src={ImageService.translate('/img/logos/eb-title.png').custom({height: 17})}
+                    maxH='17px'
                   />
                 )}
               </HStack>
