@@ -28054,7 +28054,7 @@
       "is1155": false,
       "address": "0x582a5FAF1f6eAc517335E0654e2d97Cc59388eE6",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "1,000 exclusive and tradable NFTs designed for ARY fans, each featuring unique traits and expressions that make every piece truly one-of-a-kind.   Powered by:   - Thomas (Founder of ARY)   - Kevin (Artist) [@Vcmxss]   - Piero (Data Optimizer) [@PieroPasqiari88]",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/avatar.webp",
