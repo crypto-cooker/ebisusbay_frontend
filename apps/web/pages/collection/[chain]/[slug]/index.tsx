@@ -37,6 +37,11 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }: CollectionPr
 
   useEffect(() => {
     if (redirect && typeof window !== 'undefined') {
+      if (!ssrCollection?.slug || !query?.chain) {
+        // console.error('Redirection aborted due to missing slug or chain:', { slug: ssrCollection?.slug, chain: query?.chain });
+        return; // Abort redirection if slug or chain is undefined
+      }
+
       let hackedQuery = {} as any;
       if (tab) hackedQuery.tab = tab;
       if (remainingQuery) hackedQuery = { ...hackedQuery, ...remainingQuery };
