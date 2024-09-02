@@ -423,6 +423,28 @@
     "style": {}
   },
   {
+    "slug": "croginal",
+    "name": "Croginal",
+    "description": "Croginal Cats is a multi-chain community project. Our cute pixilated cats are full of personality and support the builders of web3.",
+    "images": {
+      "banner": "https://cdn-prod.ebisusbay.com/files/brand-images/croginal/banner.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/brand-images/croginal/preview.webp"
+    },
+    "collections": [
+      "0x5c3cf1a5f303bac6b32f92ef441f4f812afd642d",
+      "0x4b4e86585e1b136e3e360f9fe7a0d83dd0338d94"
+    ],
+    "socials": {
+      "website": "https://www.croginalcats.xyz/",
+      "twitter": "https://twitter.com/Croginal",
+      "discord": "https://discord.gg/croginalcats",
+      "telegram": "https://t.me/+oLldhGeTjrcwY2Ix"
+    },
+    "featured": true,
+    "categories": [],
+    "style": {}
+  },
+  {
     "slug": "cro-homes",
     "name": "CRO Homes",
     "description": "Your place in the Metaverse",
