@@ -64,6 +64,7 @@ import {appConfig} from "@src/config";
 import NextLink from "next/link";
 import {commify} from "ethers/lib/utils";
 import {ItemType} from "@market/hooks/use-create-order-signer";
+import {SupportedChainId} from "@src/config/chains";
 
 const config = appConfig();
 
@@ -196,6 +197,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
               state={deal.state}
               items={deal.maker_items}
               invalidIds={invalidIds.maker.invalid_items || []}
+              chainId={deal.chain as SupportedChainId}
             />
           </Box>
         </Flex>
@@ -212,6 +214,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
               state={deal.state}
               items={deal.taker_items}
               invalidIds={invalidIds.taker.invalid_items || []}
+              chainId={deal.chain}
             />
           </Box>
         </Flex>
@@ -302,9 +305,10 @@ interface DealSideProps {
   state: OrderState;
   items: DealItem[];
   invalidIds: string[];
+  chainId: SupportedChainId;
 }
 
-const DealSide = ({address, username, isOwner, estimatedValue, state, items, invalidIds}: DealSideProps) => {
+const DealSide = ({address, username, isOwner, estimatedValue, state, items, invalidIds, chainId}: DealSideProps) => {
   return (
     <Card bodyPadding={0}>
       <Stack direction='row' justify='space-between' mb={2} px={5} pt={5}>
@@ -348,6 +352,7 @@ const DealSide = ({address, username, isOwner, estimatedValue, state, items, inv
               key={index}
               item={item}
               invalid={invalidIds.includes(item.offer_item_id)}
+              chainId={chainId}
             />
           ))}
         </Accordion>
