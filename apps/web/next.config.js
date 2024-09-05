@@ -133,12 +133,12 @@ const nextConfig = {
       {
         source: `/collection/:slug((?!${chainPattern}).*)`,
         destination: '/collection/cronos/:slug',
-        permanent: true,
+        permanent: false,
       },
       {
         source: `/collection/:slug((?!${chainPattern}).*)/:id`,
         destination: '/collection/cronos/:slug/:id',
-        permanent: true,
+        permanent: false,
       },
       {
         source: '/sales_bot',

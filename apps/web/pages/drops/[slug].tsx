@@ -12,16 +12,16 @@ import {Drop} from "@src/core/models/drop";
 import LandDrop from "@src/components-v2/feature/drop/land-drop";
 import DutchAuction from "@src/components-v2/feature/drop/types/dutch";
 import Vip2Drop from "@src/components-v2/feature/drop/vip2-drop";
+import {ApiService} from "@src/core/services/api-service";
 
 export const drops = appConfig('drops');
-const config = appConfig();
 
 interface DropProps {
   ssrDrop: Drop;
   ssrCollection: any;
 }
 
-const Drop = ({ssrDrop, ssrCollection}: DropProps) => {
+const Page = ({ssrDrop, ssrCollection}: DropProps) => {
   const router = useRouter();
   const { slug } = router.query;
 
@@ -67,7 +67,7 @@ export const getServerSideProps = async ({ params }: {params: any}) => {
   }
 
   const collectionSlug = slug === 'ryoshi-clubs' ? 'ryoshi-playing-cards' : (drop.collection ?? slug);
-  let collection = config.collections.find((c: any) => c.slug === collectionSlug);
+  let collection = ApiService.withKey(process.env.EB_API_KEY as string).getCollections({slug: collectionSlug});
 
   // try {
   //   const res = await fetch(`${config.urls.api}collectioninfo?slug=${collectionSlug}`)
@@ -91,4 +91,4 @@ export const getServerSideProps = async ({ params }: {params: any}) => {
   };
 };
 
-export default Drop;
+export default Page;
