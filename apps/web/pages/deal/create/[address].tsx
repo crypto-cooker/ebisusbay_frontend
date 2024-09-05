@@ -37,9 +37,9 @@ const CreateDealPage = ({ address, profile, parentDeal }: PageProps) => {
   }
 
   const profilePicture = () => {
-    if (profile.banner) {
+    if (profile?.banner) {
       return ImageService.translate(profile.banner).convert();
-    } else if (profile.profilePicture) {
+    } else if (profile?.profilePicture) {
       return ImageService.translate(profile.profilePicture).custom({width: 200, height: 200});
     } else {
       return hostedImage('/img/profile-avatar.webp');
@@ -88,7 +88,7 @@ const CreateDealPage = ({ address, profile, parentDeal }: PageProps) => {
         <DefaultContainer fontSize='sm' fontStyle='italic'>
           <Icon as={FontAwesomeIcon} icon={faHandshake} me={2} />
           <AlertDescription >
-            Dealing with: <Link as={NextLink} href={`/account/${address}`} color='auto' fontWeight='bold' className='color'>{profile.username ?? address}</Link>
+            Dealing with: <Link as={NextLink} href={`/account/${address}`} color='auto' fontWeight='bold' className='color'>{profile?.username ?? address}</Link>
           </AlertDescription>
         </DefaultContainer>
       </Alert>

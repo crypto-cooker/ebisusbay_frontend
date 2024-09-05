@@ -211,7 +211,7 @@ export default function GasTokenSelectorDialog({isOpen, onClose, chainId}: GasTo
       <DialogBody px={0}>
         <Virtuoso
           style={{ height: 450 }}
-          data={supportedPaymasterTokens.toSorted(tokenListSortComparator)}
+          data={supportedPaymasterTokens.slice().sort(tokenListSortComparator)}
           itemContent={Row}
           totalCount={supportedPaymasterTokens.length}
         />
