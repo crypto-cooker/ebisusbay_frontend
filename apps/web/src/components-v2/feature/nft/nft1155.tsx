@@ -90,7 +90,7 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
   const dispatch = useAppDispatch();
   const chainConfig = getChainByIdOrSlug(chain);
 
-  const { onCopy } = useClipboard(appUrl(`/collection/${chain}/${address}/${id}`).toString());
+  const { onCopy } = useClipboard(appUrl(`/collection/${chainConfig?.slug ?? chain}/${address}/${id}`).toString());
   const [runAuthedFunction] = useAuthedFunction();
   const borderColor = useColorModeValue('gray.300', 'white');
   const [shareOptions, setShareOptions] = useState<any[]>([]);
@@ -393,7 +393,7 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                       avatar={collectionMetadata?.avatar ? ImageService.translate(collectionMetadata?.avatar).avatar() : undefined}
                       address={address}
                       verified={collection.verification?.verified}
-                      to={`/collection/${chain}/${collectionSlug}`}
+                      to={`/collection/${chainConfig?.slug ?? chain}/${collectionSlug}`}
                     />
 
                     {typeof nft.rank !== 'undefined' && nft.rank !== null && (

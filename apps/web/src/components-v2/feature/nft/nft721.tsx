@@ -122,7 +122,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
   const chainConfig = getChainByIdOrSlug(chain);
 
   const { refreshing, favorites, loading:isLoading } = useAppSelector((state) => state.nft);
-  const { onCopy } = useClipboard(appUrl(`/collection/${chain}/${address}/${id}`).toString());
+  const { onCopy } = useClipboard(appUrl(`/collection/${chainConfig?.slug ?? chain}/${address}/${id}`).toString());
   const [runAuthedFunction] = useAuthedFunction();
 
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
@@ -900,7 +900,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                       avatar={collectionMetadata?.avatar ? ImageService.translate(collectionMetadata?.avatar).avatar() : undefined}
                       address={address}
                       verified={collection.verification?.verified}
-                      to={`/collection/${chain}/${address}`}
+                      to={`/collection/${chainConfig?.slug ?? chain}/${address}`}
                     />
 
                     {typeof nft.rank !== 'undefined' && nft.rank !== null && (
@@ -1138,7 +1138,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                                 </Box>
                                 <Stack>
                                   {nft.collectionName && (
-                                    <Link href={`/collection/${chain}/${nft.collectionSlug ?? nft.nftAddress}`}>
+                                    <Link href={`/collection/${chainConfig?.slug ?? chain}/${nft.collectionSlug ?? nft.nftAddress}`}>
                                       <h6
                                         className="mt-auto fw-normal mb-0"
                                         style={{ fontSize: '12px', color: getTheme(user.theme).colors.textColor4 }}
@@ -1147,7 +1147,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                                       </h6>
                                     </Link>
                                   )}
-                                  <Link href={`/collection/${chain}/${nft.nftAddress}/${nft.nftId}`}>
+                                  <Link href={`/collection/${chainConfig?.slug ?? chain}/${nft.nftAddress}/${nft.nftId}`}>
                                     <Text fontWeight='bold'>{nft.name}</Text>
                                   </Link>
                                 </Stack>

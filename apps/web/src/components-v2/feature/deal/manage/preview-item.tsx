@@ -29,15 +29,19 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAward} from "@fortawesome/free-solid-svg-icons";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import Trait from "@src/components-v2/feature/nft/tabs/properties/trait";
+import {getChainById} from "@src/helpers";
+import {SupportedChainId} from "@src/config/chains";
 
 
 interface GetDealItemPreviewProps {
   item: DealItem;
   invalid: boolean;
+  chainId: SupportedChainId;
 }
 
-export const GetDealItemPreview = ({item, invalid}: GetDealItemPreviewProps) => {
+export const GetDealItemPreview = ({item, invalid, chainId}: GetDealItemPreviewProps) => {
   const { getByAddress  } = useCurrencyBroker();
+  const chainConfig = useMemo(() => getChainById(chainId), [chainId]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 
   const isToken = [ItemType.NATIVE, ItemType.ERC20].includes(item.item_type);
@@ -56,7 +60,7 @@ export const GetDealItemPreview = ({item, invalid}: GetDealItemPreviewProps) => 
         amount: parseInt(item.start_amount),
         category: item.collection?.name,
         categoryUrl: `/collection/${item.token}`,
-        itemUrl: `/collection/${item.chain}/${item.chain}/${item.token}/${item.identifier_or_criteria}`,
+        itemUrl: `/collection/${chainConfig?.slug ?? chainId}/${item.token}/${item.identifier_or_criteria}`,
         custom: false
       }
     } else if (isToken) {
