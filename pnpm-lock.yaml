@@ -312,6 +312,15 @@ importers:
         specifier: ^0.32.11
         version: 0.32.11
     devDependencies:
+      '@babel/core':
+        specifier: ^7.23.3
+        version: 7.24.9
+      '@babel/preset-env':
+        specifier: ^7.23.3
+        version: 7.25.0(@babel/core@7.24.9)
+      '@babel/preset-react':
+        specifier: ^7.23.3
+        version: 7.24.7(@babel/core@7.24.9)
       '@graphql-codegen/cli':
         specifier: ^5.0.2
         version: 5.0.2(@parcel/watcher@2.4.1)(@types/node@20.14.12)(bufferutil@4.0.8)(encoding@0.1.13)(graphql@16.9.0)(typescript@5.5.4)(utf-8-validate@5.0.10)
