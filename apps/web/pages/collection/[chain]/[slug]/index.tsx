@@ -93,11 +93,12 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
     }
   }
 
-  if (isLegacyNftRoute(chainSlugOrId)) {
+  const [isLegacy, legacyCollection] = isLegacyNftRoute(chainSlugOrId);
+  if (isLegacy) {
     return {
       redirect: {
         permanent: false,
-        destination: `/collection/cronos/${chainSlugOrId}/${collectionSlug}`
+        destination: `/collection/cronos/${legacyCollection.slug}/${collectionSlug}`
       }
     }
   }
@@ -193,12 +194,12 @@ const fetchCollection = async (address: string, chainId: number) => {
 // Don't need to check nft id as it can still be detected by chain/collection mismatch
 function isLegacyNftRoute(chainOrCollection: string) {
   const legacyCollections = appConfig('collections');
-  const matchesLegacyCollectionValue = legacyCollections.find((collection: any) => {
+  const legacyCollection = legacyCollections.find((collection: any) => {
     const matchesSlug = ciEquals(chainOrCollection, collection.slug);
     const matchesAddress = ciEquals(chainOrCollection, collection.address);
     const isLegacy = [collection.chain, collection.chainId].some(val => !val || val === ChainId.CRONOS);
     return (matchesSlug || matchesAddress) && isLegacy;
   });
 
-  return !!matchesLegacyCollectionValue;
+  return [!!legacyCollection, legacyCollection];
 }
