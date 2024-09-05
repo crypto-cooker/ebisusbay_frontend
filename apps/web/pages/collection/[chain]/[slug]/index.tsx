@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import Collection1155 from '@src/components-v2/feature/collection/collection-1155';
-// import Collection721 from '@src/components-v2/feature/collection/collection721';
 import Collection721 from '@src/components-v2/feature/collection/collection-721';
 import {appUrl, cacheBustingKey, ciEquals} from '@market/helpers/utils';
 import {appConfig} from "@src/config";
@@ -12,13 +11,13 @@ import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/qu
 import {getChainById, getChainBySlug} from "@src/helpers";
 import {ApiService} from "@src/core/services/api-service";
 import {QueryClient} from "@tanstack/react-query";
+import { ChainId } from '@pancakeswap/chains';
 
 const collectionTypes = {
   UNSET: -1,
   ERC721: 0,
   ERC1155: 1,
 };
-const config = appConfig();
 
 interface CollectionProps {
   ssrCollection: any;
@@ -85,11 +84,21 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }: CollectionPr
 };
 
 export const getServerSideProps = async ({ params, query }: GetServerSidePropsContext) => {
+  const chainSlugOrId = params?.chain as string;
   const collectionSlug = params?.slug as string;
-  const chainSlugOrId = params?.chain as string | undefined;
+
   if (!collectionSlug || !chainSlugOrId || Array.isArray(chainSlugOrId)) {
     return {
       notFound: true
+    }
+  }
+
+  if (isLegacyNftRoute(chainSlugOrId)) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/collection/cronos/${chainSlugOrId}/${collectionSlug}`
+      }
     }
   }
 
@@ -178,3 +187,18 @@ const fetchCollection = async (address: string, chainId: number) => {
   });
   return response.data[0] ?? null;
 };
+
+// Legacy route is /collection/[slug|address]/[id]
+// To be redirected to /collection/cronos/[slug|address]/[id] as they are all cronos
+// Don't need to check nft id as it can still be detected by chain/collection mismatch
+function isLegacyNftRoute(chainOrCollection: string) {
+  const legacyCollections = appConfig('collections');
+  const matchesLegacyCollectionValue = legacyCollections.find((collection: any) => {
+    const matchesSlug = ciEquals(chainOrCollection, collection.slug);
+    const matchesAddress = ciEquals(chainOrCollection, collection.address);
+    const isLegacy = [collection.chain, collection.chainId].some(val => !val || val === ChainId.CRONOS);
+    return (matchesSlug || matchesAddress) && isLegacy;
+  });
+
+  return !!matchesLegacyCollectionValue;
+}

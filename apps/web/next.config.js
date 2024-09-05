@@ -107,18 +107,6 @@ const nextConfig = {
     return config;
   },
   async redirects() {
-    const supportedChains = [
-      'cronos',
-      '25',
-      'cronos-testnet',
-      '338',
-      'cronos-zkevm',
-      '388',
-      'cronos-zkevm-testnet',
-      '282'
-    ];
-    const chainPattern = supportedChains.join('|');
-
     return [
       {
         source: '/deal/create',
@@ -129,16 +117,6 @@ const nextConfig = {
         source: '/brand/:slug',
         destination: '/brands/:slug',
         permanent: true,
-      },
-      {
-        source: `/collection/:slug((?!${chainPattern}).*)`,
-        destination: '/collection/cronos/:slug',
-        permanent: false,
-      },
-      {
-        source: `/collection/:slug((?!${chainPattern}).*)/:id`,
-        destination: '/collection/cronos/:slug/:id',
-        permanent: false,
       },
       {
         source: '/sales_bot',
