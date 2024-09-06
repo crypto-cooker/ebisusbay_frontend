@@ -82,7 +82,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
 
     return {
       props: {
-        initialDeal: deal
+        initialDeal: deal ?? null
       }
     };
   } catch (e) {
