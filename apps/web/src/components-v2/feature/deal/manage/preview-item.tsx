@@ -41,7 +41,7 @@ interface GetDealItemPreviewProps {
 
 export const GetDealItemPreview = ({item, invalid, chainId}: GetDealItemPreviewProps) => {
   const { getByAddress  } = useCurrencyBroker();
-  const { slug: chainSlug } = useMemo(() => getChainById(chainId), [chainId]);
+  const chainSlug = useChainSlugById(chainId);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 
   const isToken = [ItemType.NATIVE, ItemType.ERC20].includes(item.item_type);

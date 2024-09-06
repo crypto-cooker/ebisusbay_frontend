@@ -3,6 +3,7 @@ import appChainConfig, {isSupportedChainId, SupportedChainId} from './chains';
 import {useMemo} from "react";
 import {ChainId} from "@pancakeswap/chains";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {getChainById} from "@src/helpers";
 
 function getCurrentEnv() {
   const env = process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV ?? AppEnvironment.PRODUCTION;
@@ -97,4 +98,11 @@ function deepMerge<T extends object, U extends object>(target: T, source: U): T 
     }
   }
   return target as T & U;
+}
+
+export function useChainSlugById(chainId: number) {
+  return useMemo(() => {
+    const chainConfig = getChainById(chainId);
+    return chainConfig?.slug ?? chainId
+  }, [chainId]);
 }
