@@ -76,7 +76,7 @@ const NftPropertyLabel = ({label, value, avatar, address, verified, to, hover, p
         );
       } else {
         return (
-          <Link href={url} onClick={() => Sentry.captureMessage(`DEBUG: Clicked on URL ${url}`)}>
+          <Link href={url}>
             {AvatarElement}
           </Link>
         );
