@@ -6,6 +6,7 @@ import {faCheck, faCircle} from '@fortawesome/free-solid-svg-icons';
 
 import LayeredIcon from '../../../Components/components/LayeredIcon';
 import {Image} from "@chakra-ui/react";
+import * as Sentry from '@sentry/react';
 
 const VerifiedIcon = styled.span`
   font-size: 8px;
@@ -75,7 +76,7 @@ const NftPropertyLabel = ({label, value, avatar, address, verified, to, hover, p
         );
       } else {
         return (
-          <Link href={url}>
+          <Link href={url} onClick={() => Sentry.captureMessage(`DEBUG: Clicked on URL ${url}`)}>
             {AvatarElement}
           </Link>
         );
