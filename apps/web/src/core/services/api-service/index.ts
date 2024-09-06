@@ -52,7 +52,7 @@ export class ApiService implements Api {
     this.ryoshiDynasties = new RyoshiDynastiesGroup(apiKey);
   }
 
-  static withKey(apiKey: string) {
+  static withKey(apiKey?: string) {
     return new ApiService(apiKey);
   }
 

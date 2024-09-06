@@ -29,7 +29,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAward} from "@fortawesome/free-solid-svg-icons";
 import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import Trait from "@src/components-v2/feature/nft/tabs/properties/trait";
-import {getChainById} from "@src/helpers";
+import {useChainSlugById} from "@src/config/hooks";
 import {SupportedChainId} from "@src/config/chains";
 
 

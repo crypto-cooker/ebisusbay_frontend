@@ -7,12 +7,26 @@ import {DefaultContainer} from "@src/components-v2/shared/containers";
 import ManageDealView from "@src/components-v2/feature/deal/manage";
 import {Deal} from "@src/core/services/api-service/mapi/types";
 import ImageService from "@src/core/services/image";
+import {QueryClient, useQuery} from "@tanstack/react-query";
+import {getProfile} from "@src/core/cms/endpoints/profile";
+import {useParams} from "next/navigation";
+import {Center, Spinner, Text} from "@chakra-ui/react";
 
 interface ManageDealProps {
-  deal: Deal;
+  initialDeal?: Deal;
 }
 
-const ManageDeal = ({deal}: ManageDealProps) => {
+const ManageDeal = ({initialDeal}: ManageDealProps) => {
+  const params = useParams()
+
+  // Hack to fix hydration issues on subsequent page navigations
+  const dealId = initialDeal?.id || (params?.id as string);
+
+  const { data: deal, status, error } = useQuery({
+    queryKey: ['Deal', dealId],
+    queryFn: () => ApiService.withKey(process.env.EB_API_KEY).getDeal(dealId),
+    initialData: initialDeal ?? undefined,
+  });
 
   return (
     <>
@@ -24,10 +38,19 @@ const ManageDeal = ({deal}: ManageDealProps) => {
       <PageHeader
         title={'View Deal'}
       />
-
-      <DefaultContainer mt={4}>
-        <ManageDealView deal={deal} />
-      </DefaultContainer>
+      {status === 'pending' ? (
+        <Center>
+          <Spinner size='lg' />
+        </Center>
+      ) : status === 'error' ? (
+        <Center>
+          <Text>{(error as any).message}</Text>
+        </Center>
+      ) : (
+        <DefaultContainer mt={4}>
+          <ManageDealView deal={deal} />
+        </DefaultContainer>
+      )}
     </>
   );
 }
@@ -44,7 +67,12 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
   }
 
   try {
-    const deal = await ApiService.withoutKey().getDeal(dealId);
+
+    const queryClient = new QueryClient();
+    const deal = await queryClient.fetchQuery({
+      queryKey: ['Deal', dealId],
+      queryFn: () => ApiService.withKey(process.env.EB_API_KEY).getDeal(dealId),
+    });
 
     if (!deal) {
       return {
@@ -54,7 +82,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
 
     return {
       props: {
-        deal
+        initialDeal: deal
       }
     };
   } catch (e) {

@@ -58,12 +58,14 @@ const Collection = ({ ssrCollection, query, redirect, activeDrop }: CollectionPr
 
   return (
     <>
-      <PageHead
-        title={ssrCollection.name}
-        description={ssrCollection.metadata.description}
-        url={`/collection/${ssrCollection.slug}`}
-        image={appUrl(`api/collection/${ssrCollection.slug}/og?${cacheBustingKey()}`).toString()}
-      />
+      {ssrCollection && (
+        <PageHead
+          title={ssrCollection.name}
+          description={ssrCollection.metadata.description}
+          url={`/collection/${ssrCollection.slug}`}
+          image={appUrl(`api/collection/${ssrCollection.slug}/og?${cacheBustingKey()}`).toString()}
+        />
+      )}
       {initialized && ssrCollection && (
         <CollectionPageContext.Provider value={{ queryParams, setQueryParams}}>
           {type === collectionTypes.ERC1155 ? (
