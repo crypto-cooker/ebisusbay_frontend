@@ -41,7 +41,7 @@ interface GetDealItemPreviewProps {
 
 export const GetDealItemPreview = ({item, invalid, chainId}: GetDealItemPreviewProps) => {
   const { getByAddress  } = useCurrencyBroker();
-  const chainConfig = useMemo(() => getChainById(chainId), [chainId]);
+  const { slug: chainSlug } = useMemo(() => getChainById(chainId), [chainId]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 
   const isToken = [ItemType.NATIVE, ItemType.ERC20].includes(item.item_type);
@@ -60,7 +60,7 @@ export const GetDealItemPreview = ({item, invalid, chainId}: GetDealItemPreviewP
         amount: parseInt(item.start_amount),
         category: item.collection?.name,
         categoryUrl: `/collection/${item.token}`,
-        itemUrl: `/collection/${chainConfig?.slug ?? chainId}/${item.token}/${item.identifier_or_criteria}`,
+        itemUrl: `/collection/${chainSlug ?? chainId}/${item.token}/${item.identifier_or_criteria}`,
         custom: false
       }
     } else if (isToken) {
@@ -160,12 +160,14 @@ export const GetDealItemPreview = ({item, invalid, chainId}: GetDealItemPreviewP
           <Properties
             address={item.token}
             attributes={item.token_details?.metadata.attributes}
+            chainSlug={chainSlug}
           />
         ) : (isToken && normalizedItem!.custom) ? (
           <Flex justify='space-around'>
             <Trait
               title='Token Address'
               value={item.token}
+              chainSlug={chainSlug}
             />
           </Flex>
         ) : (

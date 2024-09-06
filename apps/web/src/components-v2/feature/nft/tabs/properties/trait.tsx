@@ -21,6 +21,7 @@ interface TraitProps {
   collectionAddress?: string;
   collectionSlug?: string;
   queryKey?: string;
+  chainSlug: string;
 }
 
 const Trait = ({
@@ -33,6 +34,7 @@ const Trait = ({
  collectionAddress,
  collectionSlug,
  queryKey,
+ chainSlug
 }: TraitProps) => {
   const Value = () => {
     return (
@@ -63,7 +65,7 @@ const Trait = ({
         {(collectionSlug || collectionAddress) && queryKey && value ? (
           <Link
             href={{
-              pathname: `/collection/${collectionSlug ?? collectionAddress}`,
+              pathname: `/collection/${chainSlug}/${collectionSlug ?? collectionAddress}`,
               query: { [queryKey]: JSON.stringify({ [title]: [value.toString()] }) },
             }}
           >

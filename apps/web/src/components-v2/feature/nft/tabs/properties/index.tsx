@@ -8,11 +8,12 @@ import {isEvoSkullCollection, isLazyHorseCollection, isLazyHorsePonyCollection, 
 interface PropertiesProps {
   address: string;
   slug?: string;
+  chainSlug: string;
   attributes: any;
   queryKey?: string;
 }
 
-const Properties = ({ address, slug, attributes, queryKey }: PropertiesProps) => {
+const Properties = ({ address, slug, chainSlug, attributes, queryKey }: PropertiesProps) => {
   const { data: collectionTraits } = useQuery({
     queryKey: ['CollectionTraits', address],
     queryFn: () => ApiService.withoutKey().getCollectionTraits(address),
@@ -37,6 +38,7 @@ const Properties = ({ address, slug, attributes, queryKey }: PropertiesProps) =>
                 value={data.value}
                 type={data.type}
                 collectionAddress={address}
+                chainSlug={chainSlug}
               />
             ) : queryKey === 'powertraits' && (isLazyHorseCollection(address) || isLazyHorsePonyCollection(address)) ? (
               <Trait
@@ -50,6 +52,7 @@ const Properties = ({ address, slug, attributes, queryKey }: PropertiesProps) =>
                 collectionAddress={address}
                 collectionSlug={slug}
                 queryKey={queryKey}
+                chainSlug={chainSlug}
               />
             ) : (
               <Trait
@@ -62,6 +65,7 @@ const Properties = ({ address, slug, attributes, queryKey }: PropertiesProps) =>
                 collectionAddress={address}
                 collectionSlug={slug}
                 queryKey={queryKey}
+                chainSlug={chainSlug}
               />
             )}
           </Box>
