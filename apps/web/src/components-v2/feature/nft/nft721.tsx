@@ -95,6 +95,8 @@ import {useUser} from "@src/components-v2/useUser";
 import {getBlockExplorerLink} from "@dex/utils";
 import {ChainLogo} from "@dex/components/logo";
 import {getChainByIdOrSlug} from "@src/helpers";
+import chainConfigs from "@src/config/chains";
+import {ChainId} from "@pancakeswap/chains";
 
 const config = appConfig();
 const tabs = {
@@ -900,7 +902,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                       avatar={collectionMetadata?.avatar ? ImageService.translate(collectionMetadata?.avatar).avatar() : undefined}
                       address={address}
                       verified={collection.verification?.verified}
-                      to={`/collection/${chainConfig?.slug ?? chain}/${address}`}
+                      to={`/collection/${chainConfig?.slug ?? chain}/${collection.slug}`}
                     />
 
                     {typeof nft.rank !== 'undefined' && nft.rank !== null && (
@@ -972,6 +974,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                                 <Properties
                                   address={address}
                                   slug={slug}
+                                  chainSlug={chainConfig?.slug ?? chainConfigs[ChainId.CRONOS].slug}
                                   attributes={nft.attributes}
                                   queryKey='traits'
                                 />
@@ -980,6 +983,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                                 <Properties
                                   address={address}
                                   slug={slug}
+                                  chainSlug={chainConfig?.slug ?? chainConfigs[ChainId.CRONOS].slug}
                                   attributes={nft.properties}
                                   queryKey='traits'
                                 />
@@ -1000,6 +1004,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                                 <Properties
                                   address={address}
                                   slug={slug}
+                                  chainSlug={chainConfig?.slug ?? chainConfigs[ChainId.CRONOS].slug}
                                   attributes={powertraits}
                                   queryKey='powertraits'
                                 />
@@ -1008,6 +1013,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                                 <Properties
                                   address={address}
                                   slug={slug}
+                                  chainSlug={chainConfig?.slug ?? chainConfigs[ChainId.CRONOS].slug}
                                   attributes={onChainPowertraits}
                                   queryKey='powertraits'
                                 />
@@ -1017,6 +1023,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                                   <Properties
                                     address={address}
                                     slug={slug}
+                                    chainSlug={chainConfig?.slug ?? chainConfigs[ChainId.CRONOS].slug}
                                     attributes={lazyHorseTraits}
                                     queryKey='powertraits'
                                   />

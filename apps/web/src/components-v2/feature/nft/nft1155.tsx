@@ -68,8 +68,9 @@ import {SecondaryButton} from "@src/components-v2/foundation/button";
 import {getBlockExplorerLink} from "@dex/utils";
 import {ChainLogo} from "@dex/components/logo";
 import {getChainByIdOrSlug} from "@src/helpers";
+import chainConfigs from "@src/config/chains";
+import {ChainId} from "@pancakeswap/chains";
 
-const config = appConfig();
 const tabs = {
   properties: 'properties',
   powertraits: 'powertraits',
@@ -446,6 +447,7 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                                 <Properties
                                   address={address}
                                   slug={nft.collectionSlug}
+                                  chainSlug={chainConfig?.slug ?? chainConfigs[ChainId.CRONOS].slug}
                                   attributes={nft.attributes}
                                   queryKey='traits'
                                 />
@@ -454,6 +456,7 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                                 <Properties
                                   address={address}
                                   slug={nft.collectionSlug}
+                                  chainSlug={chainConfig?.slug ?? chainConfigs[ChainId.CRONOS].slug}
                                   attributes={nft.properties}
                                   queryKey='traits'
                                 />
