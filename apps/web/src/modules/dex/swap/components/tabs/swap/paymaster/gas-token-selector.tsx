@@ -5,7 +5,20 @@ import {useConfig} from 'wagmi'
 import {SmartRouterTrade} from '@pancakeswap/smart-router'
 import {TradeType} from '@pancakeswap/swap-sdk-core'
 import {watchAccount} from '@wagmi/core'
-import {Badge, Box, Button, Flex, HStack, Text, Tooltip, useDisclosure, VStack} from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  Badge,
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Text,
+  Tooltip,
+  useDisclosure,
+  VStack
+} from "@chakra-ui/react";
 import {ChevronDownIcon, WarningIcon} from "@chakra-ui/icons";
 import {TradeEssentialForPriceBreakdown} from "@eb-pancakeswap-web/views/Swap/V3Swap/utils/exchange";
 import {DEFAULT_PAYMASTER_TOKEN, paymasterInfo, SupportedPaymasterChain} from '@src/config/paymaster'
@@ -18,20 +31,6 @@ import GasTokenSelectorDialog from "@dex/swap/components/tabs/swap/paymaster/gas
 // Selector Styles
 const GasTokenSelectButton = styled(Button).attrs({ variant: 'text', scale: 'xs' })`
   padding: 18px 0 18px 6px;
-`
-
-const SameTokenWarningBox = styled(Box)`
-  font-size: 13px;
-  background-color: #ffb2371a;
-  padding: 10px;
-  margin: 5px 0 8px;
-  color: ${({ theme }) => theme.colors.yellow};
-  border: 1px solid ${({ theme }) => theme.colors.yellow};
-  border-radius: ${({ theme }) => theme.radii['12px']};
-`
-
-const StyledWarningIcon = styled(WarningIcon)`
-  fill: ${({ theme }) => theme.colors.yellow};
 `
 
 type Trade = TradeEssentialForPriceBreakdown &
@@ -148,14 +147,12 @@ export const GasTokenSelector = ({ trade }: GasTokenSelectorProps) => {
       </Flex>
 
       {showSameTokenWarning && (
-        <SameTokenWarningBox>
-          <Flex>
-            <StyledWarningIcon marginRight={2} />
-            <span>
-              Please ensure you leave enough tokens for gas fees when selecting the same token for gas as the input token
-            </span>
-          </Flex>
-        </SameTokenWarningBox>
+        <Alert status='warning' mb={1}>
+          <AlertIcon />
+          <AlertDescription fontSize='sm'>
+            Please ensure you leave enough tokens for gas fees when selecting the same token for gas as the input token
+          </AlertDescription>
+        </Alert>
       )}
 
       <GasTokenSelectorDialog
