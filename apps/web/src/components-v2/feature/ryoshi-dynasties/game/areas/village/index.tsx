@@ -193,11 +193,11 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
       // Use timer to allow SEO bots to crawl the page before announcement board pops up.
       const timer = setTimeout(() => {
-        // if (!isRdAnnouncementDismissed()) {
+        if (!isRdAnnouncementDismissed()) {
           onOpenAnnouncementBoard();
           onFirstRun();
           persistRdAnnouncementDismissal();
-        // }
+        }
       }, 2000);
 
       return () => clearTimeout(timer);
