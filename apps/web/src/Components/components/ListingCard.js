@@ -1,4 +1,4 @@
-import React, {memo, useState} from 'react';
+import React, {memo, useMemo, useState} from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import {ethers} from 'ethers';
@@ -31,6 +31,7 @@ import useCart from "@market/hooks/use-cart";
 import {useAppDispatch} from "@market/state/redux/store/hooks";
 import {CurrencyLogoByAddress} from "@dex/components/logo";
 import {isOffersEnabledForChain} from "@src/global/utils/app";
+import {useChainSlugById} from "@src/config/hooks";
 
 const Watermarked = styled.div`
   position: relative;
@@ -51,7 +52,8 @@ const Watermarked = styled.div`
 `;
 
 const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
-  const nftUrl = appUrl(`/collection/${listing.chain}/${listing.nftAddress}/${listing.nftId}`);
+  const chainSlug = useChainSlugById(listing.chain);
+  const nftUrl = appUrl(`/collection/${chainSlug ?? listing.chain}/${listing.collection?.slug ?? nftAddress}/${listing.nftId}`);
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const dispatch = useAppDispatch();
   const user = useUser();
@@ -197,7 +199,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                       image={nftCardUrl(listing.nftAddress, listing.nft.image)}
                       className={`card-img-top ${imgClass}`}
                       title={listing.nft.name}
-                      url={`/collection/${listing.chain}/${listing.nftAddress}/${listing.nftId}`}
+                      url={`/collection/${chainSlug}/${listing.nftAddress}/${listing.nftId}`}
                       height={440}
                       width={440}
                     />
@@ -208,7 +210,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                       image={nftCardUrl(listing.nftAddress, listing.nft.image)}
                       className={`card-img-top ${imgClass}`}
                       title={listing.nft.name}
-                      url={`/collection/${listing.chain}/${listing.nftAddress}/${listing.nftId}`}
+                      url={`/collection/${chainSlug}/${listing.nftAddress}/${listing.nftId}`}
                       height={440}
                       width={440}
                       video={listing.nft.video ?? listing.nft.animationUrl ?? listing.nft.animation_url}
@@ -226,7 +228,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
             )}
             <Flex direction='column' justify='space-between' px={2} py={1}>
               {listing.collection && (
-                <Link href={`/collection/${listing.chain}/${listing.collection.slug}`}>
+                <Link href={`/collection/${chainSlug}/${listing.collection.slug}`}>
                   <Box
                     fontSize='xs'
                     color={getTheme(user.theme).colors.textColor4}
@@ -235,7 +237,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                   </Box>
                 </Link>
               )}
-              <Link href={`/collection/${listing.chain}/${listing.collection.slug}/${listing.nftId}`}>
+              <Link href={`/collection/${chainSlug}/${listing.collection.slug}/${listing.nftId}`}>
                 <Box fontSize="sm" fontWeight='semibold' className="mt-auto mb-1">{listing.nft.name}{listing.amount > 1 ? ` (x${listing.amount})` : ''}</Box>
               </Link>
 

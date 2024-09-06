@@ -23,7 +23,7 @@ import {
   useColorModeValue,
   VStack
 } from "@chakra-ui/react";
-import React, {useContext} from "react";
+import React, {ReactNode, useContext, useMemo} from "react";
 import {ciEquals, isBundle, timeSince} from "@market/helpers/utils";
 import {ListingState} from "@src/core/services/api-service/types";
 import {InfiniteData} from "@tanstack/query-core";
@@ -41,6 +41,7 @@ import {
 import {WarningIcon} from "@chakra-ui/icons";
 import {specialImageTransform} from "@market/helpers/hacks";
 import {CurrencyLogoByAddress} from "@dex/components/logo";
+import {useChainSlugById} from "@src/config/hooks";
 
 interface ResponsiveListingsTableProps {
   data: InfiniteData<IPaginatedList<OwnerListing>>;
@@ -174,9 +175,13 @@ const DataTable = ({data, onUpdate, onCancel, onSort, onCheck, onToggleAll}: Res
                     </Box>
                   </Td>
                   <Td fontWeight='bold'>
-                    <Link href={`/collection/${listing.nft.chain}/${listing.nft.nftAddress}/${listing.nft.nftId}`}>
+                    <NftPageLink
+                      chainId={listing.nft.chain}
+                      collectionSlug={listing.collection.slug ?? listing.nft.nftAddress}
+                      nftId={listing.nft.nftId}
+                    >
                       {listing.nft.name}
-                    </Link>
+                    </NftPageLink>
                   </Td>
                   <Td>
                     {listing.nft.rank}
@@ -293,9 +298,13 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel, onCheck, onToggleAll}:
                       </Box>
 
                       <Box flex='1' fontSize='sm'>
-                        <Link href={`/collection/${listing.chain}/${listing.nftAddress}/${listing.nftId}`}>
+                        <NftPageLink
+                          chainId={listing.nft.chain}
+                          collectionSlug={listing.collection.slug ?? listing.nft.nftAddress}
+                          nftId={listing.nftId}
+                        >
                           {listing.nft.name}
-                        </Link>
+                        </NftPageLink>
                       </Box>
                     </HStack>
                   </Box>
@@ -354,5 +363,14 @@ const DataAccordion = ({data, onSort, onUpdate, onCancel, onCheck, onToggleAll}:
   )
 };
 
+const NftPageLink = ({chainId, collectionSlug, nftId, children}: {chainId: number, collectionSlug: string, nftId: string, children: ReactNode}) => {
+  const chainSlug = useChainSlugById(chainId);
+
+  return (
+    <Link href={`/collection/${chainSlug}/${collectionSlug}/${nftId}`}>
+      {children}
+    </Link>
+  );
+}
 
 export default ResponsiveListingsTable;
