@@ -48,7 +48,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   useAccountEffect({
     onDisconnect() {
-      Sentry.captureMessage('disconnected captured from useAccountEffect')
+      // Sentry.captureMessage('disconnected captured from useAccountEffect')
       clearUser();
     }
   })
@@ -178,11 +178,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   const disconnect = async () => {
-    Sentry.captureMessage('Calling disconnect...');
+    // Sentry.captureMessage('Calling disconnect...');
     await disconnectWallet();
-    Sentry.captureMessage('Disconnect called. Clearing user...');
+    // Sentry.captureMessage('Disconnect called. Clearing user...');
     clearUser();
-    Sentry.captureMessage('clearUser complete');
+    // Sentry.captureMessage('clearUser complete');
   }
 
   const clearUser = () => {
