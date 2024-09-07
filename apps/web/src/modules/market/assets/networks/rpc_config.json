@@ -29168,6 +29168,11 @@
         "doxx": true,
         "kyc": true
       }
+    },{
+      "address": "0xa733ddf14949bf9a37063d8899eb7dac1994a408",
+      "listable":true,
+      "chain": 282,
+      "chainId": 282
     }
   ],
   "drops": [
