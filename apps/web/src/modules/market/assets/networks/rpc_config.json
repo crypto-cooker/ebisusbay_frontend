@@ -29171,6 +29171,7 @@
     },{
       "address": "0xa733ddf14949bf9a37063d8899eb7dac1994a408",
       "listable":true,
+      "slug":"zkcronies",
       "chain": 282,
       "chainId": 282
     }
