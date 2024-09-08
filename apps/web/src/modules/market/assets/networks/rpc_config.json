@@ -28997,7 +28997,8 @@
     {
       "name": "Moggy Money Brokers",
       "slug": "moggy-money-brokers",
-      "chain": 25,
+      "chain": 388,
+      "chainId": 388,
       "is1155": true,
       "address": "0x46055078a40358c27f7850d81f29ec857342318f",
       "tokens": [
@@ -29121,8 +29122,8 @@
     {
       "name": "Free The Gang",
       "slug": "free-the-gang",
-      "chain": 282,
-      "chainId": 282,
+      "chain": 388,
+      "chainId": 388,
       "is1155": false,
       "address": "0x980d8E26D5545A0F950C1550710329f8254193ad",
       "onChain": false,
@@ -29146,8 +29147,8 @@
     {
       "name": "ARY",
       "slug": "ary",
-      "chain": 282,
-      "chainId": 282,
+      "chain": 388,
+      "chainId": 388,
       "is1155": false,
       "address": "0x582a5FAF1f6eAc517335E0654e2d97Cc59388eE6",
       "onChain": false,
@@ -29168,12 +29169,34 @@
         "doxx": true,
         "kyc": true
       }
-    },{
+    },
+    {
+      "name": "zkCronies",
+      "slug": "zkcronies",
+      "chain": 388,
+      "chainId": 388,
+      "is1155": false,
       "address": "0xa733ddf14949bf9a37063d8899eb7dac1994a408",
-      "listable":true,
-      "slug":"zkcronies",
-      "chain": 282,
-      "chainId": 282
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Commemorating the launch of the Cronos ZK network",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/zkCronies/banner.png",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/dex/images/tokens/cronos-zkevm/0x62145e47e39e8a8323e4c568ef342dd496e3bd89.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/zkCronies/banner.png",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
+      }
     }
   ],
   "drops": [
