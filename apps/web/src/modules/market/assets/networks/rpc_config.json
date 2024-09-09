@@ -29197,6 +29197,13 @@
         "kyc": "hidden",
         "verified": true
       }
+    },{
+      "name":"Wealthy Wolfs",
+      "slug" : "wealthy_wolfs",
+      "chain": 25,
+      "chainId": 25,
+      "address" : "0xf9ece4d9888749e3ecbd7a6ec450e0b0299ca802",
+      "listable" : true
     }
   ],
   "drops": [
