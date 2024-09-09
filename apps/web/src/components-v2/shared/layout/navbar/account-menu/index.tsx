@@ -100,7 +100,7 @@ const AccountMenu = function () {
   );
   const isMobile = useBreakpointValue({ base: true, sm: false });
 
-  const { setValue:setClipboardValue, onCopy } = useClipboard(user.wallet.address ?? '');
+  const { setValue:setClipboardValue, onCopy } = useClipboard('');
 
   const closeMenu = () => {
     setShowMenu(false);
@@ -112,11 +112,11 @@ const AccountMenu = function () {
   };
 
   useEffect(() => {
-    if (user.wallet.address) {
+    if (user.wallet?.address) {
       setClipboardValue(user.wallet.address);
     }
     // eslint-disable-next-line
-  }, [user.wallet.address]);
+  }, [user.wallet?.address, setClipboardValue]);
 
   const handleCopy = () => {
     onCopy();
