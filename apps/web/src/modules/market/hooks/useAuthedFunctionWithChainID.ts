@@ -11,9 +11,12 @@ const useAuthedFunctionWithChainID = (id?: number) => {
   const { chainId: wagmiChainId } = useAccount();
   // const { chainId } = useActiveChainId()
 
-  const runAuthedFunction = async (fn: Function, targetChainId?: number) => {
-    const primaryTargetChain = targetChainId ?? id;
-    if (user.wallet.isConnected && user.wallet.address && wagmiChainId === primaryTargetChain) {
+  const runAuthedFunction = async (fn: Function, targetChainId?: number | number[]) => {
+    if (targetChainId && !Array.isArray(targetChainId)) targetChainId = [targetChainId];
+    const primaryTargetChains = [targetChainId ?? id];
+    const isCorrectChain = primaryTargetChains.includes(wagmiChainId);
+
+    if (user.wallet.isConnected && user.wallet.address && isCorrectChain) {
       try {
         await fn();
       } catch (error: any) {
@@ -21,7 +24,7 @@ const useAuthedFunctionWithChainID = (id?: number) => {
       }
     } else if (!user.wallet.isConnected || !user.wallet.address) {
       await open();
-    } else if (wagmiChainId !== primaryTargetChain) {
+    } else if (isCorrectChain) {
       await open({view: 'Networks'});
     }
   };

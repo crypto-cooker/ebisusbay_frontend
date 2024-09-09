@@ -42,6 +42,9 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faGem} from "@fortawesome/free-solid-svg-icons";
 import {useUser} from "@src/components-v2/useUser";
+import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
+import {SUPPORTED_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
+import {BankStakeTokenContext} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
 
 const config = appConfig();
 
@@ -50,14 +53,17 @@ interface StakePageProps {
   onCreateVault: (vaultIndex: number) => void;
   onWithdrawVault: (vault: FortuneStakingAccount) => void;
   onTokenizeVault: (vault: FortuneStakingAccount) => void;
+  initialChainId: SupportedChainId;
+  onUpdateChainContext: (chainId: SupportedChainId) => void;
 }
 
-const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault}: StakePageProps) => {
+const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault, initialChainId, onUpdateChainContext}: StakePageProps) => {
   const user = useUser();
+  const [currentTab, setCurrentTab] = useState<SupportedChainId>(initialChainId);
 
   const { data: account, status, error, refetch } = useQuery({
-    queryKey: ['UserStakeAccount', user.address],
-    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getBankStakingAccount(user.address!),
+    queryKey: ['UserStakeAccount', user.address, currentTab],
+    queryFn: () => ApiService.forChain(currentTab).ryoshiDynasties.getBankStakingAccount(user.address!),
     enabled: !!user.address,
   });
 
@@ -65,12 +71,26 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
     user.connect();
   }
 
+  const handleTabChange = useCallback((chainId: SupportedChainId) => {
+    setCurrentTab(chainId);
+    onUpdateChainContext(chainId);
+  }, []);
+
   return (
     <>
       <Box mx={1} pb={6}>
         {!!user.address ? (
           <>
-            <Text align='center' pt={2} px={2} fontSize='sm'>Stake & earn $Fortune and receive troops for battle. Stake more to receive more troops and higher APRs.</Text>
+            <Text align='center' pt={2} py={2} fontSize='sm'>Stake & earn $Fortune and receive troops for battle. Stake more to receive more troops and higher APRs.</Text>
+            <Flex direction='row' justify='center' mb={2}>
+              <SimpleGrid columns={2}>
+                {SUPPORTED_CHAIN_CONFIGS.map(({name, chain}) => (
+                  <RdTabButton key={chain.id} isActive={currentTab === chain.id} onClick={() => handleTabChange(chain.id)}>
+                    {name}
+                  </RdTabButton>
+                ))}
+              </SimpleGrid>
+            </Flex>
             <Box mt={4}>
               {status === 'pending' ? (
                 <Center>
