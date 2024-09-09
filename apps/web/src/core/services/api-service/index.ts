@@ -49,7 +49,7 @@ export class ApiService implements Api {
     this.mapi = new Mapi(apiKey);
     this.cms = new Cms(apiKey);
     this.graph = new Graph(apiKey, chain);
-    this.ryoshiDynasties = new RyoshiDynastiesGroup(apiKey);
+    this.ryoshiDynasties = new RyoshiDynastiesGroup(apiKey, chain);
   }
 
   static withKey(apiKey?: string) {
@@ -297,9 +297,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   private cms: Cms;
   private graph: Graph;
 
-  constructor(apiKey?: string) {
+  constructor(apiKey?: string, chainId?: number) {
+    const chain = chainId ?? ChainId.CRONOS;
     this.cms = new Cms(apiKey);
-    this.graph = new Graph(apiKey);
+    this.graph = new Graph(apiKey, chain);
   }
 
   async globalTotalPurchased() {
