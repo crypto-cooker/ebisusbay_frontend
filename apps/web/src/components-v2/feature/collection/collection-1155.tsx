@@ -57,6 +57,7 @@ const Collection1155 = ({ collection, tokenId, ssrTab, ssrQuery, activeDrop = nu
     setOpenMenu(key);
 
     pushQueryString(router, {
+      chain: router.query.chain,
       slug: router.query.slug,
       tab: key
     });
