@@ -9,6 +9,7 @@ import {useResponsiveDialog} from "@src/components-v2/foundation/responsive-dial
 import {Modal, ModalBody, ModalContent, ModalOverlay} from "@chakra-ui/react";
 import {UnsupportedNetworkModal} from "@dex/components/network-modal/unsupported-network-modal";
 import {PageNetworkSupportModal} from "@dex/components/network-modal/page-network-support-modal";
+import {useAccount} from "wagmi";
 
 export const hideWrongNetworkModalAtom = atom(false)
 
@@ -26,13 +27,11 @@ const WrongNetworkModal = dynamic(() => import('./wrong-network-modal').then((mo
 
 export const NetworkModal = ({ pageSupportedChains = [ChainId.CRONOS] }: { pageSupportedChains?: number[] }) => {
   const { chainId, chain, isWrongNetwork } = useActiveWeb3React()
+  const { chainId: walletChainId } = useAccount()
   const [dismissWrongNetwork, setDismissWrongNetwork] = useAtom(hideWrongNetworkModalAtom)
-  const {
-    DialogComponent
-  } = useResponsiveDialog()
 
   const isCronosOnlyPage = useMemo(() => {
-    return pageSupportedChains?.length === 1 && pageSupportedChains[0] === ChainId.BSC
+    return pageSupportedChains?.length === 1 && pageSupportedChains[0] === ChainId.CRONOS
   }, [pageSupportedChains])
 
   const isPageNotSupported = useMemo(
@@ -51,6 +50,15 @@ export const NetworkModal = ({ pageSupportedChains = [ChainId.CRONOS] }: { pageS
     )
   }
 
+  if ((chain?.unsupported ?? false) || isPageNotSupported || (walletChainId && !CHAIN_IDS.includes(walletChainId))) {
+    return (
+      <Modal isOpen onClose={() => {}} closeOnOverlayClick={false}>
+        <ModalOverlay />
+        <UnsupportedNetworkModal pageSupportedChains={pageSupportedChains?.length ? pageSupportedChains : CHAIN_IDS} />
+      </Modal>
+    )
+  }
+
   if (isWrongNetwork && !dismissWrongNetwork && !isPageNotSupported) {
     const currentChain = Object.values(viemClients)
       .map((client) => client.chain)
@@ -60,15 +68,6 @@ export const NetworkModal = ({ pageSupportedChains = [ChainId.CRONOS] }: { pageS
       <Modal isOpen={isWrongNetwork} closeOnOverlayClick={false} onClose={handleDismiss}>
         <ModalOverlay />
         <WrongNetworkModal currentChain={currentChain} onDismiss={handleDismiss} />
-      </Modal>
-    )
-  }
-
-  if ((chain?.unsupported ?? false) || isPageNotSupported) {
-    return (
-      <Modal isOpen onClose={() => {}} closeOnOverlayClick={false}>
-        <ModalOverlay />
-        <UnsupportedNetworkModal pageSupportedChains={pageSupportedChains?.length ? pageSupportedChains : CHAIN_IDS} />
       </Modal>
     )
   }

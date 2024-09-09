@@ -6,9 +6,7 @@ import {
   cronos as cronos_,
   cronoszkEVMTestnet as cronoszkEVMTestnet_,
   cronoszkEVM as cronoszkEVM_,
-  zkSync
 } from 'wagmi/chains'
-import {defineChain} from "viem";
 import {chainConfig} from "viem/zksync";
 
 export const CHAIN_QUERY_NAME = chainNames
@@ -98,6 +96,7 @@ export const L2_CHAIN_IDS: ChainId[] = [
 type HexString = `0x${string}` & string;
 
 export type AppChainConfig = {
+  name: string; // wagmi chain name is too verbose
   slug: string;
   chain: Chain;
   urls: {
@@ -141,6 +140,7 @@ export type AppChainConfig = {
 }
 
 const cronosConfig: AppChainConfig = {
+  name: 'Cronos',
   slug: 'cronos',
   chain: cronos,
   urls: {
@@ -184,6 +184,7 @@ const cronosConfig: AppChainConfig = {
 }
 
 const cronosTestnetConfig: AppChainConfig = {
+  name: 'Cronos Testnet',
   slug: 'cronos-testnet',
   chain: cronosTestnet,
   urls: {
@@ -227,12 +228,13 @@ const cronosTestnetConfig: AppChainConfig = {
 }
 
 const cronosZkEVMTestnetConfig: AppChainConfig = {
+  name: 'Cronos ZK Testnet',
   slug: 'cronos-zk-testnet',
   chain: cronosZkEVMTestnet,
   urls: {
     subgraph: {
       root: 'https://testcronos-zkevm-graph.ebisusbay.biz:18000/subgraphs/name/ebisusbay/zkcro/',
-      ryoshiDynasties: '',
+      ryoshiDynasties: 'ryoshi-dynasties',
       ryoshiPresale: '',
       stakedOwners: 'main',
       staking: '',
@@ -256,9 +258,9 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
     allianceCenter: ADDRESS_ZERO,
     battleField: ADDRESS_ZERO,
     resources: ADDRESS_ZERO,
-    bank: ADDRESS_ZERO,
+    bank: '0x2FaE7e00E8F7ec5f9CaF2B1CC006137c4d257E4c',
     barracks: ADDRESS_ZERO,
-    fortune: ADDRESS_ZERO,
+    fortune: '0x6f3ff3c76b6dd1d2b4cfc3846f6f1bcba757bf24',
     rewards: ADDRESS_ZERO,
     presaleVaults: ADDRESS_ZERO,
     seasonUnlocks: ADDRESS_ZERO,
@@ -271,6 +273,7 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
 }
 
 const cronosZkEVMConfig: AppChainConfig = {
+  name: 'Cronos ZK',
   slug: 'cronos-zk',
   chain: cronosZkEVM,
   urls: {
@@ -302,7 +305,7 @@ const cronosZkEVMConfig: AppChainConfig = {
     resources: ADDRESS_ZERO,
     bank: ADDRESS_ZERO,
     barracks: ADDRESS_ZERO,
-    fortune: ADDRESS_ZERO,
+    fortune: '0x96e03fa6c5ab3a7f2e7098dd07c8935493294e26',
     rewards: ADDRESS_ZERO,
     presaleVaults: ADDRESS_ZERO,
     seasonUnlocks: ADDRESS_ZERO,
@@ -330,6 +333,12 @@ const chainConfigs: Record<SupportedChainId, AppChainConfig> = {
   [ChainId.CRONOS_ZKEVM_TESTNET]: cronosZkEVMTestnetConfig
 }
 
+export const SUPPORTED_CHAIN_CONFIGS = Object.values(chainConfigs)
+  .filter(({chain}) => {
+    return (process.env.NEXT_PUBLIC_ENV === 'testnet' && isTestnetChainId(chain.id)) ||
+      (process.env.NEXT_PUBLIC_ENV !== 'testnet' && !isTestnetChainId(chain.id))
+  });
+
 // const wagmiChainConfigs = {
 //   [ChainId.CRONOS]: cronos,
 //   [ChainId.CRONOS_TESTNET]: cronosTestnet,
@@ -345,12 +354,7 @@ const chainConfigs: Record<SupportedChainId, AppChainConfig> = {
 export type ChainSlug = (typeof chainConfigs)[keyof typeof chainConfigs]['slug'];
 
 // This is currently used for various pancake configurations. Can consider refactoring
-export const CHAINS = Object.values(chainConfigs)
-  .filter(({chain}) => {
-      return (process.env.NEXT_PUBLIC_ENV === 'testnet' && isTestnetChainId(chain.id)) ||
-        (process.env.NEXT_PUBLIC_ENV !== 'testnet' && !isTestnetChainId(chain.id))
-  })
-  .map(({ chain }) => chain);
+export const CHAINS = SUPPORTED_CHAIN_CONFIGS.map(({ chain }) => chain);
 
 export const DEFAULT_CHAIN_ID = process.env.NEXT_PUBLIC_ENV === 'testnet' ? ChainId.CRONOS_TESTNET : ChainId.CRONOS;
 

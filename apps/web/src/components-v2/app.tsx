@@ -102,7 +102,7 @@ function App({ Component, ...pageProps }: AppProps) {
       <ExchangePricesContext.Provider value={{prices: exchangePrices.data ?? []}}>
         <GlobalAppHooks />
         <NetworkModal
-          pageSupportedChains={isDexRoute ? CHAIN_IDS : []}
+          pageSupportedChains={CHAIN_IDS}
         />
         <DefaultHead />
         <div className="wraper">
