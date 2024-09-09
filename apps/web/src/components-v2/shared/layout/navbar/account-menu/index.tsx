@@ -18,7 +18,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {toast} from 'react-toastify';
 import {ethers} from 'ethers';
-import {createSuccessfulTransactionToastContent, round, shortAddress, username} from '@market/helpers/utils';
+import {createSuccessfulTransactionToastContent, round, shortAddress, urlify, username} from '@market/helpers/utils';
 import styles from './accountmenu.module.scss';
 import {useWeb3Modal} from '@web3modal/wagmi/react'
 import {appConfig} from '@src/config';
@@ -71,12 +71,13 @@ import {useGasTokenByChain} from "@eb-pancakeswap-web/hooks/use-gas-token";
 import {SupportedPaymasterChain} from "@src/config/paymaster";
 import GasTokenSelectorDialog from "@dex/swap/components/tabs/swap/paymaster/gas-token-selector-dialog";
 import {Card} from "@src/components-v2/foundation/card";
-
-const config = appConfig();
+import {useAppChainConfig, useAppConfig} from "@src/config/hooks";
 
 const AccountMenu = function () {
   const user = useUser();
 
+  const { config: appConfig } = useAppConfig();
+  const { config: chainConfig } = useAppChainConfig();
   const { chainId } = useActiveChainId();
   const supportedChainId = chainId as SupportedPaymasterChain;
 
@@ -99,7 +100,7 @@ const AccountMenu = function () {
   );
   const isMobile = useBreakpointValue({ base: true, sm: false });
 
-  const { setValue:setClipboardValue, onCopy } = useClipboard(user.wallet.address ?? '');
+  const { setValue:setClipboardValue, onCopy } = useClipboard('');
 
   const closeMenu = () => {
     setShowMenu(false);
@@ -111,11 +112,11 @@ const AccountMenu = function () {
   };
 
   useEffect(() => {
-    if (user.wallet.address) {
+    if (user.wallet?.address) {
       setClipboardValue(user.wallet.address);
     }
     // eslint-disable-next-line
-  }, [user.wallet.address]);
+  }, [user.wallet?.address, setClipboardValue]);
 
   const handleCopy = () => {
     onCopy();
@@ -165,7 +166,7 @@ const AccountMenu = function () {
   };
 
   const handleBuyCro = () => {
-    const url = new URL(config.vendors.transak.url)
+    const url = new URL(appConfig.vendors.transak.url)
     url.searchParams.append('cryptoCurrencyCode', 'CRO');
     url.searchParams.append('walletAddress', user.wallet.address!);
     
@@ -173,9 +174,9 @@ const AccountMenu = function () {
   }
 
   const handleBuyFortune = () => {
-    const url = new URL('/dex/swap')
-    url.searchParams.append('outputCurrency', config.contracts.fortune);
-    url.searchParams.append('inputCurrency', config.contracts.usdc);
+    const url = new URL(urlify(appConfig.urls.app, '/dex/swap'));
+    url.searchParams.append('outputCurrency', chainConfig.contracts.fortune);
+    url.searchParams.append('inputCurrency', chainConfig.contracts.usdc);
 
     window.open(url, '_blank');
   }

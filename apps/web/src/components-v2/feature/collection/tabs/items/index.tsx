@@ -100,6 +100,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
     setQueryParams(newQueryParams);
     const { sortBy, direction, ...remainingQueryParams } = newQueryParams;
     pushQueryString(router, {
+      chain: router.query.chain,
       slug: router.query.slug,
       ...remainingQueryParams
     });
@@ -113,6 +114,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
     const newQueryParams = {...queryParams, ...filter}
     setQueryParams(newQueryParams);
     pushQueryString(router, {
+      chain: router.query.chain,
       slug: router.query.slug,
       ...Object.keys(newQueryParams).length > 0 ? newQueryParams : undefined
     });

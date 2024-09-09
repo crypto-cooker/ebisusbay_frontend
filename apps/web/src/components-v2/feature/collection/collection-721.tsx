@@ -87,6 +87,7 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
     setOpenMenu(key);
 
     pushQueryString(router, {
+      chain: router.query.chain,
       slug: router.query.slug,
       tab: key
     });

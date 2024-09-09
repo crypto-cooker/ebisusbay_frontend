@@ -30,7 +30,7 @@ import {
   useColorModeValue,
   VStack
 } from "@chakra-ui/react";
-import React from "react";
+import React, {ReactNode} from "react";
 import {AxiosResponse} from "axios";
 import {round, siPrefixedNumber} from "@market/helpers/utils";
 import {InfiniteData} from "@tanstack/query-core";
@@ -46,6 +46,7 @@ import LayeredIcon from "@src/Components/components/LayeredIcon";
 import {faCheck, faCircle} from "@fortawesome/free-solid-svg-icons";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
+import {useChainSlugById} from "@src/config/hooks";
 
 interface ResponsiveCollectionsTableProps {
   data: InfiniteData<AxiosResponse<IPaginatedList<any>>>;
@@ -134,9 +135,14 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
                     )}
                   </Td>
                   <Td fontWeight='bold'>
-                    <LinkOverlay href={`/collection/${collection.chain}/${collection.slug}`} _hover={{color:'inherit'}}>
+                    <CollectionPageLink
+                      component={LinkOverlay}
+                      chainId={collection.chain}
+                      collectionSlug={collection.slug}
+                      _hover={{color:'inherit'}}
+                    >
                       {collection?.name ?? 'Unknown'}
-                    </LinkOverlay>
+                    </CollectionPageLink>
                     {collection.verification?.verified && (
                       <Box as='span' ms={2}>
                         <BlueCheckIcon />
@@ -232,7 +238,7 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
       {data.pages.map((page: any, pageIndex: any) => (
         <React.Fragment key={pageIndex}>
           {page.map((collection: any, index: number) => (
-            <AccordionItem key={collection.listingId}>
+            <AccordionItem key={`${collection.address}${index}`}>
               <Flex w='100%' my={2}>
                 <Box my="auto" fontWeight="bold" fontSize="sm" me={2}>{(pageIndex * 50) + (index + 1)}</Box>
                 <Box flex='1' textAlign='left' fontWeight='bold' my='auto'>
@@ -259,9 +265,13 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                       </VerifiedIcon>
                     </Box>
                     <VStack align='start' spacing={0} flex='1' fontSize='sm'>
-                      <Link href={`/collection/${collection.chain}/${collection.slug}`}>
-                        {collection.name}
-                      </Link>
+                      <CollectionPageLink
+                        component={Link}
+                        chainId={collection.chain}
+                        collectionSlug={collection.slug}
+                      >
+                        {collection?.name ?? 'Unknown'}
+                      </CollectionPageLink>
                       {collection.listable && collection.numberActive > 0 && !!collection.floorPrice && (
                         <Text fontWeight='normal' fontSize='xs' className='text-muted'>
                           Floor: {`${siPrefixedNumber(Math.round(collection.floorPrice))} CRO`}
@@ -396,6 +406,31 @@ const RichDataTableCell = ({value, change, isCroValue, showChange}: {value?: num
     </Stat>
   )
 }
+
+interface CollectionPageLinkProps {
+  component: typeof Link | typeof LinkOverlay;
+  chainId: number;
+  collectionSlug: string;
+  children: ReactNode;
+  // Allow all other props that either Link or LinkOverlay would accept
+  [x: string]: any;
+}
+
+const CollectionPageLink = ({
+  component: Component,
+  chainId,
+  collectionSlug,
+  children,
+  ...rest
+}: CollectionPageLinkProps) => {
+  const chainSlug = useChainSlugById(chainId);
+
+  return (
+    <Component href={`/collection/${chainSlug}/${collectionSlug}`} {...rest}>
+      {children}
+    </Component>
+  );
+};
 
 const collectionVolume = (collection: any, timeFrame: string | null) => {
   if (timeFrame === null) return Math.round(collection.totalVolume);
