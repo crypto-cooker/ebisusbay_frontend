@@ -43,6 +43,15 @@ import {useQuery} from "@tanstack/react-query";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
+import {
+  BankStakeTokenContext,
+  BankStakeTokenContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
+import {useJsonRpcProviderForChain} from "@src/global/hooks/use-ethers-provider-for-chain";
+import {useContract} from "@eb-pancakeswap-web/hooks/useContract";
+import {erc721Abi} from "viem";
+import {useFrtnContract} from "@src/global/hooks/contracts";
+import {useAppChainConfig} from "@src/config/hooks";
 
 
 const config = appConfig();
@@ -62,6 +71,11 @@ interface CreateVaultPageProps {
 
 const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
   const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { config: chainConfig } = useAppChainConfig(bankChainId);
+  const readProvider = useJsonRpcProviderForChain(bankChainId);
+  const frtnContract = useFrtnContract(bankChainId);
+
   const user = useUser();
   const [runAuthedFunction] = useAuthedFunction();
 
@@ -91,9 +105,11 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
   }
 
   const checkForApproval = async () => {
-    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-    const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
-    const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), config.contracts.bank);
+    // const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+    // const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
+    console.log('APPOOOR1', frtnContract?.address, user.address?.toLowerCase(), chainConfig.contracts.bank)
+    const totalApproved = await frtnContract?.read.allowance([user.address?.toLowerCase(), chainConfig.contracts.bank]);
+    console.log('APPOOOR2', totalApproved)
     return totalApproved as BigNumber;
   }
 
