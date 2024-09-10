@@ -72,11 +72,8 @@ function App({ Component, ...pageProps }: AppProps) {
   const {theme: userTheme} = useUser();
 
   const isDexRoute = router.pathname.startsWith('/dex');
-  const isSupportedNetworkRoute = isDexRoute || router.pathname.includes('/drops/')
 
-  const GlobalAppHooks = isDexRoute ?
-    GlobalDexHooks :
-    (isSupportedNetworkRoute ? GlobalHooks : React.Fragment);
+  const GlobalAppHooks = isDexRoute ? GlobalDexHooks : GlobalHooks;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
