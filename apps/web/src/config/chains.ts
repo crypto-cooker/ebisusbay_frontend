@@ -324,6 +324,13 @@ export const SUPPORTED_CHAIN_IDS = [
   ChainId.CRONOS_ZKEVM_TESTNET
 ] as const
 
+export const SUPPORTED_RD_CHAIN_IDS = [
+  ChainId.CRONOS,
+  ChainId.CRONOS_TESTNET,
+  ChainId.CRONOS_ZKEVM,
+  ChainId.CRONOS_ZKEVM_TESTNET
+] as const
+
 export type SupportedChainId = (typeof SUPPORTED_CHAIN_IDS)[number]
 
 const chainConfigs: Record<SupportedChainId, AppChainConfig> = {
@@ -337,6 +344,11 @@ export const SUPPORTED_CHAIN_CONFIGS = Object.values(chainConfigs)
   .filter(({chain}) => {
     return (process.env.NEXT_PUBLIC_ENV === 'testnet' && isTestnetChainId(chain.id)) ||
       (process.env.NEXT_PUBLIC_ENV !== 'testnet' && !isTestnetChainId(chain.id))
+  });
+
+export const SUPPORTED_RD_CHAIN_CONFIGS =  SUPPORTED_CHAIN_CONFIGS
+  .filter(({chain}) => {
+    return SUPPORTED_RD_CHAIN_IDS.includes(chain.id)
   });
 
 // const wagmiChainConfigs = {
