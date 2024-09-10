@@ -8,7 +8,7 @@ import {useWeb3Modal} from "@web3modal/wagmi/react";
 import {useQueryClient} from "@tanstack/react-query";
 import * as Sentry from "@sentry/nextjs";
 import {shortAddress} from "@market/helpers/utils";
-import {Account, Chain, Client, Transport} from "viem";
+import {Account, Address, Chain, Client, Transport} from "viem";
 import {getTheme} from "@src/global/theme/theme";
 
 export const useUser = () => {
@@ -67,7 +67,7 @@ export const useUser = () => {
     displayName,
 
     // Legacy
-    address: context.user.wallet.address,
+    address: context.user.wallet.address as Address | undefined,
     provider: legacyProvider
   };
 }

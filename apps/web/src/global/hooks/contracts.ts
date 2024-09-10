@@ -12,8 +12,8 @@ export function useFrtnContract(chainId: SupportedChainId) {
   return useContract(config.contracts.fortune, erc20Abi, {chainId})
 }
 
-// export function useBankContract(chainId: SupportedChainId) {
-//   const {config} = useAppChainConfig(chainId);
-//
-//   return useContract(config.contracts.bank, Bank, {chainId})
-// }
+export function useBankContract(chainId: SupportedChainId) {
+  const {config} = useAppChainConfig(chainId);
+
+  return useContract(config.contracts.bank, Bank as any, {chainId})
+}

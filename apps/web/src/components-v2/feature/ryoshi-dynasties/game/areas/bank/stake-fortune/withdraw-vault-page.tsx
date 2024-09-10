@@ -17,6 +17,16 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useUser} from "@src/components-v2/useUser";
+import {
+  BankStakeTokenContext,
+  BankStakeTokenContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
+import {useAppChainConfig} from "@src/config/hooks";
+import {useWriteContract} from "wagmi";
+import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
+import {useBankContract} from "@src/global/hooks/contracts";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 
 const config = appConfig();
 
@@ -79,9 +89,16 @@ interface WithdrawFormProps {
   onComplete: () => void;
 }
 const WithdrawForm = ({vault, onComplete}: WithdrawFormProps) => {
+  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { config: chainConfig } = useAppChainConfig(bankChainId);
   const [isExecuting, setIsExecuting] = useState(false);
   const user = useUser();
+  const bankContract = useBankContract(bankChainId);
+  const { callWithGasPrice } = useCallWithGasPrice();
+  const { chainId: activeChainId} = useActiveChainId();
+  const { switchNetworkAsync } = useSwitchNetwork();
 
+  const { writeContractAsync } = useWriteContract();
   const [amountDeposited, setAmountDeposited] = useState(0);
   const [withdrawDate, setWithdrawDate] = useState<string>();
   const [executingLabel, setExecutingLabel] = useState('Staking...');
@@ -89,12 +106,29 @@ const WithdrawForm = ({vault, onComplete}: WithdrawFormProps) => {
 
   const handleEmergencyWithdraw = async () => {
     try {
+      if (activeChainId !== bankChainId) {
+        await switchNetworkAsync(bankChainId);
+        return;
+      }
+
       setIsExecuting(true);
       setExecutingLabel('Withdrawing...');
-      const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
-      const tx = await bank.emergencyClose(vault.index);
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      // const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
+      // const tx = await bank.emergencyClose(vault.index);
+      // const receipt = await tx.wait();
+      // toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash, bankChainId));
+
+      // const txHash = await writeContractAsync({
+      //   address: chainConfig.contracts.bank,
+      //   abi: Bank,
+      //   functionName: 'emergencyClose',
+      //   args: [vault.index],
+      // });
+      // toast.success(createSuccessfulTransactionToastContent(txHash, bankChainId));
+
+      const tx = await callWithGasPrice(bankContract, 'emergencyClose', [vault.index]);
+      toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
+
       onComplete();
     } catch (error: any) {
       console.log(error);

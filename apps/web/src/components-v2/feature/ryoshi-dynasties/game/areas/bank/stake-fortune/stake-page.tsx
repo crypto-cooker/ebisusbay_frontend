@@ -44,7 +44,16 @@ import {faGem} from "@fortawesome/free-solid-svg-icons";
 import {useUser} from "@src/components-v2/useUser";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {SUPPORTED_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
-import {BankStakeTokenContext} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
+import {
+  BankStakeTokenContext,
+  BankStakeTokenContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
+import {useAppChainConfig} from "@src/config/hooks";
+import {useWriteContract} from "wagmi";
+import {useBankContract} from "@src/global/hooks/contracts";
+import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 
 const config = appConfig();
 
@@ -165,6 +174,12 @@ interface VaultProps {
 const Vault = ({vault, index, onEditVault, onWithdrawVault, onTokenizeVault, onClosed}: VaultProps) => {
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useUser();
+  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { config: chainConfig } = useAppChainConfig(bankChainId);
+  const bankContract = useBankContract(bankChainId);
+  const { callWithGasPrice } = useCallWithGasPrice()
+  const { chainId: activeChainId} = useActiveChainId();
+  const { switchNetworkAsync } = useSwitchNetwork();
 
   const balance = Number(ethers.utils.formatEther(vault.balance));
   const daysToAdd = Number(vault.length / (86400));
@@ -179,11 +194,19 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onTokenizeVault, onC
 
   const handleCloseVault = useCallback(async () => {
     try {
+      if (activeChainId !== bankChainId) {
+        await switchNetworkAsync(bankChainId);
+        return;
+      }
+
       setIsExecutingClose(true);
-      const bank = new Contract(config.contracts.bank, Bank, user.provider.signer);
-      const tx = await bank.closeVault(vault.index);
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      // const bank = new Contract(config.contracts.bank, Bank, user.provider.signer);
+      // const tx = await bank.closeVault(vault.index);
+      // const receipt = await tx.wait();
+      // toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+
+      const tx = await callWithGasPrice(bankContract, 'closeVault', [vault.index]);
+      toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
       onClosed();
     } catch (error: any) {
       console.log(error)

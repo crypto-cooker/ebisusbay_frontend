@@ -45,13 +45,14 @@ import {
   BankStakeTokenContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
 import {Address, parseEther} from "viem";
-import {useFrtnContract} from "@src/global/hooks/contracts";
+import {useBankContract, useFrtnContract} from "@src/global/hooks/contracts";
 import {useAppChainConfig} from "@src/config/hooks";
 import {ChainLogo} from "@dex/components/logo";
-import {useWriteContract} from "wagmi";
+import {useAccount, useWriteContract} from "wagmi";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
+import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
 
 const steps = {
   choice: 'choice',
@@ -74,6 +75,8 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
   const { switchNetworkAsync } = useSwitchNetwork();
   const { chainId: activeChainId} = useActiveChainId();
   const { writeContractAsync } = useWriteContract();
+  const bankContract = useBankContract(bankChainId);
+  const { callWithGasPrice } = useCallWithGasPrice();
 
   const user = useUser();
   const [runAuthedFunction] = useAuthedFunctionWithChainID(bankChainId);
@@ -164,31 +167,32 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
       const desiredFortuneAmount = parseEther(Math.floor(fortuneToStake).toString());
 
       if (totalApproved < desiredFortuneAmount) {
-        const txHash = await frtnContract?.write.approve([chainConfig.contracts.bank as `0x${string}`, desiredFortuneAmount], {});
+        const txHash = await frtnContract?.write.approve(
+          [chainConfig.contracts.bank as `0x${string}`, desiredFortuneAmount],
+          {
+            account: user.address!,
+            chain: chainConfig.chain
+          }
+        );
         toast.success(createSuccessfulTransactionToastContent(txHash ?? '', bankChainId));
       }
 
       setExecutingLabel('Staking');
 
-      const txHash = await writeContractAsync({
-        address: chainConfig.contracts.bank,
-        abi: Bank,
-        functionName: 'openVault',
-        args: [desiredFortuneAmount, daysToStake*86400, vaultIndex],
-      });
+      // const txHash = await writeContractAsync({
+      //   address: chainConfig.contracts.bank,
+      //   abi: Bank,
+      //   functionName: 'openVault',
+      //   args: [desiredFortuneAmount, daysToStake*86400, vaultIndex],
+      // });
+      const tx = await callWithGasPrice(bankContract, 'openVault', [desiredFortuneAmount, 60, vaultIndex]);
 
-      toast.success(createSuccessfulTransactionToastContent(txHash, bankChainId));
+      toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
       setCurrentStep(steps.createVaultComplete);
       refreshUser();
     } catch (error: any) {
-      console.log(error)
-      if(error.response !== undefined) {
-        console.log(error)
-        toast.error(error.response.data.error.metadata.message)
-      }
-      else {
-        toast.error(error);
-      }
+      console.log(error);
+      toast.error(parseErrorMessage(error));
     } finally {
       setIsExecuting(false);
     }
