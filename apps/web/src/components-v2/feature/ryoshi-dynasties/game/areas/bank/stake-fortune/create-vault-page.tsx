@@ -185,7 +185,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
       //   functionName: 'openVault',
       //   args: [desiredFortuneAmount, daysToStake*86400, vaultIndex],
       // });
-      const tx = await callWithGasPrice(bankContract, 'openVault', [desiredFortuneAmount, 60, vaultIndex]);
+      const tx = await callWithGasPrice(bankContract, 'openVault', [desiredFortuneAmount, daysToStake*86400, vaultIndex]);
 
       toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
       setCurrentStep(steps.createVaultComplete);
