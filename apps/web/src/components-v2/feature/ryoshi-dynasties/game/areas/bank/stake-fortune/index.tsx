@@ -11,8 +11,10 @@ import WithdrawVaultPage
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/withdraw-vault-page";
 import TokenizeVaultPage
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/tokenize-vault-page";
-import {SUPPORTED_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
+import {DEFAULT_CHAIN_ID, SUPPORTED_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
 import { BankStakeTokenContext } from "./context";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 
 interface StakeFortuneProps {
   address: string;
@@ -24,8 +26,14 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
   const [page, setPage] = useState<ReactElement | null>(null);
   const [title, setTitle] = useState<string>('Stake Fortune');
   const [currentChainId, setCurrentChainId] = useState<SupportedChainId>(SUPPORTED_CHAIN_CONFIGS[0].chain.id);
+  const { chainId: activeChainId} = useActiveChainId();
+  const { switchNetworkAsync } = useSwitchNetwork();
 
-  const handleClose = () => {
+  const handleClose = async () => {
+    if (activeChainId !== DEFAULT_CHAIN_ID) {
+      await switchNetworkAsync(DEFAULT_CHAIN_ID);
+    }
+
     returnHome();
     onClose();
   };
