@@ -65,22 +65,22 @@ const nextConfig = {
       config.resolve.alias.fs = false;
     }
 
-    // config.module.rules.push({
-    //   test: /\.tsx?$/,
-    //   use: [
-    //     defaultLoaders.babel,
-    //     {
-    //       loader: 'ts-loader',
-    //       options: {
-    //         transpileOnly: true,
-    //       },
-    //     },
-    //   ],
-    //   include: [
-    //     path.resolve(__dirname, '../eb-pancake-frontend/packages'),
-    //   ],
-    //   exclude: /node_modules/,
-    // });
+    config.module.rules.push({
+      test: /\.tsx?$/,
+      use: [
+        defaultLoaders.babel,
+        {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+          },
+        },
+      ],
+      include: [
+        path.resolve(__dirname, '../eb-pancake-frontend/packages'),
+      ],
+      exclude: /node_modules/,
+    });
 
     config.resolve.alias['jotai'] = path.resolve(__dirname, 'node_modules/jotai');
 
