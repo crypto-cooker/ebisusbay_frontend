@@ -272,7 +272,7 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
     presaleVaults: ADDRESS_ZERO,
     seasonUnlocks: ADDRESS_ZERO,
     townHall: ADDRESS_ZERO,
-    vaultNft: ADDRESS_ZERO,
+    vaultNft: '0x05e693aED87234129840e8a776bEB47A49e8583E',
     ryoshiWithKnife: ADDRESS_ZERO,
     farms: '0x1f76a013a77371aeed10c47a04acbf2e719926ed'
   },

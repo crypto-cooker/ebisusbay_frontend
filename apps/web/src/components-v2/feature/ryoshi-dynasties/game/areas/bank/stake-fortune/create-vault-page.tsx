@@ -31,7 +31,7 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {toast} from "react-toastify";
-import {Contract, ethers} from "ethers";
+import {ethers} from "ethers";
 import Bank from "@src/global/contracts/Bank.json";
 import ImageService from "@src/core/services/image";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
@@ -71,9 +71,9 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
   const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const { config: chainConfig } = useAppChainConfig(bankChainId);
   const frtnContract = useFrtnContract(bankChainId);
-  const { isLoading, canSwitch, switchNetworkAsync } = useSwitchNetwork();
+  const { switchNetworkAsync } = useSwitchNetwork();
   const { chainId: activeChainId} = useActiveChainId();
-  const { data: hash, writeContractAsync } = useWriteContract()
+  const { writeContractAsync } = useWriteContract();
 
   const user = useUser();
   const [runAuthedFunction] = useAuthedFunctionWithChainID(bankChainId);
@@ -175,7 +175,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
         abi: Bank,
         functionName: 'openVault',
         args: [desiredFortuneAmount, daysToStake*86400, vaultIndex],
-      })
+      });
 
       toast.success(createSuccessfulTransactionToastContent(txHash, bankChainId));
       setCurrentStep(steps.createVaultComplete);
@@ -369,6 +369,12 @@ interface ImportVaultFormProps {
 
 const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { config: chainConfig } = useAppChainConfig(bankChainId);
+  
+  const { chainId: activeChainId} = useActiveChainId();
+  const { switchNetworkAsync } = useSwitchNetwork();
+  const { writeContractAsync } = useWriteContract();
   const [isExecuting, setIsExecuting] = useState(false);
   const user = useUser();
   const [selectedVaultId, setSelectedVaultId] = useState<string>();
@@ -426,16 +432,25 @@ const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
     }
 
     try {
-      
+      if (activeChainId !== bankChainId) {
+        await switchNetworkAsync(bankChainId);
+        return;
+      }
+
       const check = await ApiService.withoutKey().ryoshiDynasties.checkBlacklistStatus(user.address!);
       if (check.data.blacklisted === true) {
         return;
       };
       setIsExecuting(true);
-      const bank = new Contract(chainConfig.contracts.bank, Bank, user.provider.getSigner());
-      const tx = await bank.installBox(selectedVaultId);
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+
+      const txHash = await writeContractAsync({
+        address: chainConfig.contracts.bank,
+        abi: Bank,
+        functionName: 'installBox',
+        args: [selectedVaultId],
+      });
+
+      toast.success(createSuccessfulTransactionToastContent(txHash, bankChainId));
       onComplete();
     } catch (error: any) {
       console.log(error);
