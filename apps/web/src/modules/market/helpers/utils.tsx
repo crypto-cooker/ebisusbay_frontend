@@ -10,6 +10,8 @@ import {ethers} from "ethers";
 import {MouseEventHandler} from "react";
 import Decimal from 'decimal.js-light';
 import knownTokens from '@src/modules/dex/config/tokens.json';
+import {getBlockExplorerLink} from "@dex/utils";
+import { ChainId } from '@pancakeswap/chains';
 
 const config = appConfig();
 const drops = config.drops;
@@ -223,22 +225,23 @@ export function secondsToDhms(totalSeconds: number, abbreviated = false) {
 /**
  * @description create explorer url.
  * @param transactionHash 0x000
+ * @param chainId
  */
-export function openWithCronosExplorer(transactionHash = '') {
+export function openWithExplorer(transactionHash = '', chainId?: number) {
   if (typeof window === 'undefined') {
     return;
   }
-  window.open(`https://cronoscan.com/tx/${transactionHash}`, '_blank');
+  window.open(getBlockExplorerLink(transactionHash, 'transaction', chainId ?? ChainId.CRONOS))
 }
 
-export function createSuccessfulTransactionToastContent(transactionHash: string) {
+export function createSuccessfulTransactionToastContent(transactionHash: string, chainId?: number) {
   return (
     <span>
       Success!
       <span
         className="link-primary"
         style={{ paddingLeft: '1rem' }}
-        onClick={() => openWithCronosExplorer(transactionHash)}
+        onClick={() => openWithExplorer(transactionHash, chainId)}
       >
         See details
       </span>

@@ -33,6 +33,13 @@ export function isSupportedChainId(value: number | string): value is SupportedCh
 
 const cronos = {
   ...cronos_,
+  blockExplorers: {
+    default: {
+      name: 'Cronos Explorer',
+      url: 'https://cronoscan.com/',
+      apiUrl: 'https://api.cronoscan.com/api',
+    },
+  },
   rpcUrls: {
     ...cronos_.rpcUrls,
     public: {
