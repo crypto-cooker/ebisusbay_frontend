@@ -28975,7 +28975,7 @@
       "is1155": false,
       "address": "0xe7Bd009aE121A5215EC827910aDc3F9654e41dBD",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "A collection consisting of 2,500 NFT, 10 legends🔥 The main purpose of this collection is to increase Ryoshi Troops for Plush Army and the FRTN vault.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crazy-plush-army/avatar.webp",
@@ -29203,6 +29203,13 @@
       "chain": 25,
       "chainId": 25,
       "address" : "0xf9ece4d9888749e3ecbd7a6ec450e0b0299ca802",
+      "listable" : true
+    },{
+      "name":"Imposter Squad",
+      "slug" : "imposter-squad",
+      "chain": 25,
+      "chainId": 25,
+      "address" : "0x5ed58bd55b8a02f804ba1c8c107459022af40c23",
       "listable" : true
     }
   ],
