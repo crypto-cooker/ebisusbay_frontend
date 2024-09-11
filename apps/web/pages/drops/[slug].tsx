@@ -67,7 +67,7 @@ export const getServerSideProps = async ({ params }: {params: any}) => {
   }
 
   const collectionSlug = slug === 'ryoshi-clubs' ? 'ryoshi-playing-cards' : (drop.collection ?? slug);
-  let collection = ApiService.withKey(process.env.EB_API_KEY as string).getCollections({slug: collectionSlug});
+  let collection = await ApiService.withKey(process.env.EB_API_KEY as string).getCollections({slug: collectionSlug});
 
   // try {
   //   const res = await fetch(`${config.urls.api}collectioninfo?slug=${collectionSlug}`)
@@ -86,7 +86,7 @@ export const getServerSideProps = async ({ params }: {params: any}) => {
     props: {
       slug: drop.slug,
       ssrDrop: drop,
-      ssrCollection: collection ?? null
+      ssrCollection: collection.data[0] ?? null
     },
   };
 };

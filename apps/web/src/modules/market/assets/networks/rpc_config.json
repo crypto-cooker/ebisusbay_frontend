@@ -36968,6 +36968,45 @@
         "escrow": false,
         "verified": true
       }
+    }, {
+      "id": 196,
+      "chainId": 388,
+      "slug": "pixel-ryoshi-vip",
+      "title": "Pixelated Ryoshi Tales VIP",
+      "subtitle": "The Pixelated Ryoshi Tales VIP Collection is a special collaboration, reimagining our classic Ryoshi Tales VIP NFTs through a retro pixelated lens. Designed by a guest artist, each NFT captures the essence of the original collection, pixelating key traits for a fresh yet nostalgic twist.",
+      "description": "Introducing the Pixelated Ryoshi Tales VIP Collection, a unique collaboration that pays homage to the iconic Ryoshi Tales VIP NFTs with a creative pixelated makeover. Crafted by a talented guest artist, this limited-edition series reinterprets the familiar characters and traits from the original collection, infusing them with a retro, 8-bit pixel art style. Each piece blends the charm of classic gaming with the rich lore and stories of the Ryoshi universe, making this a must-have for collectors and fans alike. Celebrate the past and present of the Ryoshi Tales with this innovative artistic twist!",
+      "author": {
+        "name": "Ebisu's Bay",
+        "website": "https://www.ebisusbay.com",
+        "twitter": "https://x.com/ebisusbay",
+        "discord": "https://discord.gg/ebisusbay"
+      },
+      "address": "",
+      "maxMintPerTx": 1,
+      "maxMintPerAddress": 1724958000000,
+      "totalSupply": 300,
+      "foundersOnly": false,
+      "start": 1726254000000,
+      "end": null,
+      "referral": false,
+      "is1155": false,
+      "published": true,
+      "complete": false,
+      "erc20Cost": "2500",
+      "erc20Token": "frtn",
+      "erc20Only": true,
+      "images": {
+        "drop": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-pixel-vip/banner.jpg",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-pixel-vip/banner.jpg",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-pixel-vip/avatar.gif",
+        "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-pixel-vip/banner.jpg"
+      },
+      "verification": {
+        "doxx": true,
+        "kyc": true,
+        "escrow": false,
+        "verified": true
+      }
     }
   ]
 }
