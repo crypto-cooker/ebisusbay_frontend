@@ -29177,7 +29177,7 @@
       "chainId": 388,
       "is1155": false,
       "address": "0xa733ddf14949bf9a37063d8899eb7dac1994a408",
-      "onChain": false,
+      "onChain": true,
       "listable": true,
       "metadata": {
         "description": "Commemorating the launch of the Cronos ZK network",
@@ -29202,15 +29202,53 @@
       "slug" : "wealthy_wolfs",
       "chain": 25,
       "chainId": 25,
+      "is1155": false,
       "address" : "0xf9ece4d9888749e3ecbd7a6ec450e0b0299ca802",
-      "listable" : true
+      "onChain" : false,
+      "listable" : true,
+      "metadata" : {
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos/0xf9ece4d9888749e3ecbd7a6ec450e0b0299ca802/banner.png",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos/0xf9ece4d9888749e3ecbd7a6ec450e0b0299ca802/avatar.png",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos/0xf9ece4d9888749e3ecbd7a6ec450e0b0299ca802/banner.png",
+        "medium": "",
+        "discord": "https://discord.gg/QKvCqQW4",
+        "twitter": "https://x.com/thecryptophenom",
+        "website": "https://app.niftykit.com/collections/wealthy-wolfss?tab=items",
+        "telegram": "",
+        "instagram": "",
+        "categories": [],
+        "description": "Investors Coin/Clothing Brand"
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     },{
       "name":"Imposter Squad",
       "slug" : "imposter-squad",
       "chain": 25,
       "chainId": 25,
       "address" : "0x5ed58bd55b8a02f804ba1c8c107459022af40c23",
-      "listable" : true
+      "onChain" : false,
+      "listable" : true,
+      "metadata" : {
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos/0x5ed58bd55b8a02f804ba1c8c107459022af40c23/BANNER_e51c400e-8e17-4b25-bc2d-8490aa77f8b9.jpg",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos/0x5ed58bd55b8a02f804ba1c8c107459022af40c23/20240804_103750_cafd3a49-163e-498e-b299-e34c67d4fb0c.avif",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos/0x5ed58bd55b8a02f804ba1c8c107459022af40c23/BANNER_e51c400e-8e17-4b25-bc2d-8490aa77f8b9.jpg",
+        "medium": "",
+        "discord": "https://discord.com/invite/kNvheJ7z",
+        "twitter": "https://x.com/AmongUsCRO",
+        "website": "https://www.cro-launchpad.com/impostersquad",
+        "telegram": "",
+        "instagram": "",
+        "categories": [],
+        "description": "Imposter Squad brings the excitement of the game into the world of collectibles. We have put together a series of NFT's that capture the fun and mystery Among Us."
+      },"verification":{
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
