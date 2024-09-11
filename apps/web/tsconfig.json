@@ -31,6 +31,7 @@
       "@market/*": ["src/modules/market/*"],
       "@gamefi/*": ["src/modules/gamefi/*"],
       "@dex/*": ["src/modules/dex/*"],
+      "@edge/*": ["src/modules/edge/*"],
 
       "@eb-pancakeswap-web/*": ["src/modules/dex/swap/imported/pancakeswap/web/*"],
 
