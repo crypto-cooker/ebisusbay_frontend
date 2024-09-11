@@ -7,12 +7,12 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Button,
+  Button, ButtonGroup,
   Center,
   Flex,
   Grid,
   GridItem,
-  HStack,
+  HStack, IconButton,
   Image,
   SimpleGrid,
   Spacer,
@@ -54,6 +54,10 @@ import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnfor
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";
+import {AppChainConfig, SUPPORTED_RD_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
+import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
+import {ChainLogo} from "@dex/components/logo";
+import {getAppChainConfig, useAppChainConfig} from "@src/config/hooks";
 
 const config = appConfig();
 
@@ -241,6 +245,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
   const { isOpen: isConfirmationOpen, onOpen: onOpenConfirmation, onClose: onCloseConfirmation } = useDisclosure();
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
   const [existingAuthWarningOpenWithProps, setExistingAuthWarningOpenWithProps] = useState<{type: string, onCancel: () => void, onCancelComplete: () => void} | boolean>(false);
+  const { config: chainConfig } = useAppChainConfig();
 
   const isCurrentSeason = rdGameContext?.season.blockId === reward.blockId;
   const queryClient = useQueryClient();
@@ -398,6 +403,12 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
     }
   }
 
+  const [targetChainConfig, setTargetChainConfig] = useState<AppChainConfig>(chainConfig);
+  const handleChangeTargetChain = (chainId: SupportedChainId) => {
+    const _targetChainConfig = getAppChainConfig(chainId);
+    setTargetChainConfig(_targetChainConfig);
+  }
+
   return (
     <>
       <CurrentSeasonRecord
@@ -422,22 +433,45 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
         title='Confirm'
       >
         <RdModalAlert>
-          <Text>Warning: Claiming from the current season is subject to a {round(burnMalus)}% Karmic Debt <strong>burn</strong> of <strong>{round(Number(reward.currentRewards) * burnMalus / 100, 3)} FRTN</strong>. At this point in the season, you will only be able to claim <Text as='span' color='#FDAB1A' fontWeight='bold'>{round(Number(reward.currentRewards) * (1 - burnMalus / 100), 3)} FRTN</Text></Text>
+          {burnMalus > 0 ? (
+            <Text>Warning: Claiming from the current season is subject to a {round(burnMalus)}% Karmic Debt <strong>burn</strong> of <strong>{round(Number(reward.currentRewards) * burnMalus / 100, 3)} FRTN</strong>. At this point in the season, you will only be able to claim <Text as='span' color='#FDAB1A' fontWeight='bold'>{round(Number(reward.currentRewards) * (1 - burnMalus / 100), 3)} FRTN</Text></Text>
+          ) : (
+            <Text>You can now claim the full amount of <Text as='span' color='#FDAB1A' fontWeight='bold'>{commify(round(Number(reward.currentRewards) * (1 - burnMalus / 100), 3))} FRTN</Text></Text>
+          )}
         </RdModalAlert>
         <RdModalFooter>
-          <Stack justify='center' direction='row' spacing={6}>
-            <RdButton
-              onClick={onCloseConfirmation}
-              size='lg'
-            >
-              Cancel
-            </RdButton>
-            <RdButton
-              onClick={() => handleClaim(reward.currentRewards, Number(reward.seasonId))}
-              size='lg'
-            >
-              Confirm
-            </RdButton>
+          <Stack direction={{base: 'column', sm: 'row'}} justify='space-between'>
+            <HStack justify='center' mb={{base: 2, sm: 0}}>
+              <ButtonGroup isAttached variant='outline'>
+                {SUPPORTED_RD_CHAIN_CONFIGS.map(({name, chain}) => (
+                  <IconButton
+                    key={chain.id}
+                    aria-label={chain.name}
+                    icon={<ChainLogo chainId={chain.id} />}
+                    isActive={targetChainConfig.chain.id === chain.id}
+                    onClick={() => handleChangeTargetChain(chain.id)}
+                  />
+                ))}
+              </ButtonGroup>
+              <VStack fontSize='sm' align='start' spacing={0}>
+                <Box>Claim To</Box>
+                <Box fontWeight='semibold'>{targetChainConfig.name}</Box>
+              </VStack>
+            </HStack>
+            <Stack justify='center' direction='row' spacing={6}>
+              <RdButton
+                onClick={onCloseConfirmation}
+                size='md'
+              >
+                Cancel
+              </RdButton>
+              <RdButton
+                onClick={() => handleClaim(reward.currentRewards, Number(reward.seasonId))}
+                size='md'
+              >
+                Confirm
+              </RdButton>
+            </Stack>
           </Stack>
         </RdModalFooter>
       </RdModal>

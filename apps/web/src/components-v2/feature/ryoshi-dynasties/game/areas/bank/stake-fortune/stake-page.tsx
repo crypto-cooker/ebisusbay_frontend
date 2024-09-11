@@ -43,7 +43,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faGem} from "@fortawesome/free-solid-svg-icons";
 import {useUser} from "@src/components-v2/useUser";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {SUPPORTED_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
+import {SUPPORTED_CHAIN_CONFIGS, SUPPORTED_RD_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
 import {
   BankStakeTokenContext,
   BankStakeTokenContextProps
@@ -93,7 +93,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
             <Text align='center' pt={2} py={2} fontSize='sm'>Stake & earn $Fortune and receive troops for battle. Stake more to receive more troops and higher APRs.</Text>
             <Flex direction='row' justify='center' mb={2}>
               <SimpleGrid columns={2}>
-                {SUPPORTED_CHAIN_CONFIGS.map(({name, chain}) => (
+                {SUPPORTED_RD_CHAIN_CONFIGS.map(({name, chain}) => (
                   <RdTabButton key={chain.id} isActive={currentTab === chain.id} onClick={() => handleTabChange(chain.id)}>
                     {name}
                   </RdTabButton>
