@@ -1,4 +1,3 @@
-import {cleanUrl} from "@market/helpers/utils";
 import {getAddress} from "viem";
 
 /*
@@ -6,6 +5,14 @@ import {getAddress} from "viem";
  * typically copied from other parts of the stack but without dependency baggage
  */
 
+/**
+ * Removes extra slashes from url path
+ *
+ * @param url
+ */
+export function cleanUrl(url: string) {
+  return url.replace(/([^:])(\/\/+)/g, '$1/');
+}
 
 /**
  * Combines url components and cleans it
