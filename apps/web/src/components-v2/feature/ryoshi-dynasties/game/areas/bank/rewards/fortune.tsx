@@ -343,11 +343,14 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
     }
   }
 
-  const handleCompound = async (vault: FortuneStakingAccount, seasonId: number, force = false) => {
+  const handleCompound = async (vault: FortuneStakingAccount, seasonId: number, force = false, chainId: SupportedChainId) => {
     try {
       setExecutingCompound(true);
 
-      await handleSyncNetwork();
+      if (activeChainId !== chainId) {
+        await switchNetworkAsync(chainId);
+        return;
+      }
 
       const flooredAmount = convertToNumberAndRoundDown(reward.currentRewards);
 
@@ -366,13 +369,13 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
           },
           onCancelComplete: () => {
             setExistingAuthWarningOpenWithProps(false);
-            handleCompound(vault, seasonId, true);
+            handleCompound(vault, seasonId, true, chainId);
           }
         });
         return;
       }
 
-      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vault.index, signature, targetChainConfig.chain.id)
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vault.index, signature, chainId)
       const tx = await callWithGasPrice(rewardsContract, 'compound', [auth.data.reward, auth.data.signature]);
 
       queryClient.setQueryData(
@@ -391,7 +394,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
         }
       );
 
-      toast.success(createSuccessfulTransactionToastContent(tx?.hash, targetChainConfig.chain.id));
+      toast.success(createSuccessfulTransactionToastContent(tx?.hash, chainId));
     } catch (e) {
       console.log(e);
       Sentry.captureException(e);
@@ -410,7 +413,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vaultIndex, signature, chainId)
       if (auth) {
         const tx = await callWithGasPrice(rewardsContract, 'cancelCompound', [auth.data.reward, auth.data.signature]);
-        toast.success(createSuccessfulTransactionToastContent(tx?.hash, targetChainConfig.chain.id));
+        toast.success(createSuccessfulTransactionToastContent(tx?.hash, chainId));
       }
     }
     // catch (e) {
@@ -574,9 +577,9 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
     setIsExpanded(true);
   }, [isExpanded]);
 
-  const handleSelectVault = useCallback(async (vault: any) => {
+  const handleSelectVault = useCallback(async (vault: any, chainId: SupportedChainId) => {
     setSelectedVaultIndex(vault.index);
-    onCompound(vault, Number(reward.seasonId));
+    onCompound(vault, Number(reward.seasonId), false, chainId);
   }, [onCompound]);
 
   // useEffect(() => {
@@ -696,7 +699,7 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
                               mt={1}
                               w='full'
                               variant='outline'
-                              onClick={() => handleSelectVault(vault)}
+                              onClick={() => handleSelectVault(vault, account.chain.id)}
                               isLoading={isExecutingCompound && selectedVaultIndex === vault.index}
                               isDisabled={(isExecutingCompound && selectedVaultIndex === vault.index) || reward.currentRewards < 1}
                             >
@@ -729,7 +732,7 @@ interface SeasonRecordProps {
   reward: any;
   onClaim: () => void;
   isExecutingClaim: boolean;
-  onCompound: (vault: FortuneStakingAccount, seasonId: number) => void;
+  onCompound: (vault: FortuneStakingAccount, seasonId: number, force: boolean, chainId: SupportedChainId) => void;
   isExecutingCompound?: boolean;
 }
 
