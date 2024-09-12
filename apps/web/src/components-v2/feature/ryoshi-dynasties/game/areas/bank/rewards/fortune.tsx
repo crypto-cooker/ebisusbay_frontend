@@ -50,7 +50,7 @@ import {toast} from "react-toastify";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {ethers} from "ethers";
 import {commify} from "ethers/lib/utils";
-import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
+import {FortuneStakingAccount, StakingAccount} from "@src/core/services/api-service/graph/types";
 import moment from 'moment';
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
@@ -542,24 +542,29 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
   const { data: accounts, status, error, refetch } = useQuery({
     queryKey: ['UserStakeAccount', user.address],
     queryFn: async () => {
-      let accountsByChain: Record<number, any> = {};
+      const accountsByChain = [];
       for (const chainConfig of SUPPORTED_RD_CHAIN_CONFIGS) {
         const account = await ApiService.forChain(chainConfig.chain.id).ryoshiDynasties.getBankStakingAccount(user.address!);
         if (!account) continue;
 
-        accountsByChain[chainConfig.chain.id] = account.vaults.filter((vault) => {
-          const endTime = vault.endTime * 1000;
-          const now = Date.now();
-          const threshold = 60*60*24*90*1000; // 90 days
-          return vault.open && endTime - now >= threshold;
-        }).sort(sortRule);
+        accountsByChain.push({
+          chain: {
+            id: chainConfig.chain.id as SupportedChainId,
+            name: chainConfig.name
+          },
+          vaults: account.vaults.filter((vault) => {
+            const endTime = vault.endTime * 1000;
+            const now = Date.now();
+            const threshold = 60*60*24*90*1000; // 90 days
+            return vault.open && endTime - now >= threshold;
+          }).sort(sortRule)
+        });
       }
 
       return accountsByChain;
     },
     enabled: !!user.address,
   });
-  console.log('ACCOUNTSAA',  accounts)
 
   const handleExpandCompound = useCallback(async () => {
     if (isExpanded) {
@@ -637,22 +642,22 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
           </Flex>
         </Flex>
         <AccordionPanel>
-          {!!accounts && Object.keys(accounts).length > 0 && reward.canCompound ? (
+          {!!accounts && accounts.length > 0 && reward.canCompound ? (
             <>
               <Box mb={2}>
                 <Box fontWeight='bold'>Compound to Vault</Box>
                 <Box fontSize='sm' color="#aaa">Only vaults that expire later than 90 days are eligible for compounding and will cost zero Karmic Debt</Box>
               </Box>
               <VStack align='stretch'>
-                {Object.entries(accounts).map(([chainId, vaults]) => (
+                {accounts.map((account) => (
                   <>
-                    <Box>
-                      {chainId}
-                      {/*<ChainLogo chainId={chainId} width={24} height={24} />*/}
-                    </Box>
-                    {vaults.length > 0 ? (
+                    <HStack mt={2}>
+                      <ChainLogo chainId={account.chain.id} width={24} height={24} />
+                      <Box>{account.chain.name}</Box>
+                    </HStack>
+                    {account.vaults.length > 0 ? (
                       <SimpleGrid columns={{base: 2, sm: 3, md: 4}} gap={4}>
-                        {vaults.map((vault) => (
+                        {account.vaults.map((vault) => (
                           <Box
                             key={vault.index}
                             height='full'
@@ -707,6 +712,8 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
                 ))}
               </VStack>
             </>
+          ) : !reward.canCompound && +reward.currentRewards < 1 ? (
+            <Text align='center'>No rewards to compound</Text>
           ) : !reward.canCompound ? (
             <Text align='center'>Compound cooldown reached. Compound again in {timeSince(reward.nextCompound * 1000)}</Text>
           ) : (

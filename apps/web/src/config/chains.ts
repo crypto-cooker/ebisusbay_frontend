@@ -353,7 +353,7 @@ export const SUPPORTED_CHAIN_CONFIGS = Object.values(chainConfigs)
       (process.env.NEXT_PUBLIC_ENV !== 'testnet' && !isTestnetChainId(chain.id))
   });
 
-export const SUPPORTED_RD_CHAIN_CONFIGS =  SUPPORTED_CHAIN_CONFIGS
+export const SUPPORTED_RD_CHAIN_CONFIGS = SUPPORTED_CHAIN_CONFIGS
   .filter(({chain}) => {
     return SUPPORTED_RD_CHAIN_IDS.includes(chain.id)
   });
