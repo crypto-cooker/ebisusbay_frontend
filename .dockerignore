@@ -16,6 +16,7 @@ out
 .DS_Store
 bitbucket-pipelines.yml
 docker-compose.yml
+run-local-docker-compose.sh
 public
 README.md
 .nvmrc
