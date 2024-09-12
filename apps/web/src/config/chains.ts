@@ -268,7 +268,7 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
     bank: '0x2FaE7e00E8F7ec5f9CaF2B1CC006137c4d257E4c',
     barracks: ADDRESS_ZERO,
     fortune: '0x6f3ff3c76b6dd1d2b4cfc3846f6f1bcba757bf24',
-    rewards: ADDRESS_ZERO,
+    rewards: '0x72fFE8EA7512c96Ba0c5b868A62eEfb054F0fe38',
     presaleVaults: ADDRESS_ZERO,
     seasonUnlocks: ADDRESS_ZERO,
     townHall: ADDRESS_ZERO,
