@@ -192,11 +192,12 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string) {
+  async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string, chainId: number) {
     const response = await this.cms.post(
       `ryoshi-dynasties/fortune-rewards/withdraw`,
       {
         amount,
+        chainId
       },
       {
         params: {

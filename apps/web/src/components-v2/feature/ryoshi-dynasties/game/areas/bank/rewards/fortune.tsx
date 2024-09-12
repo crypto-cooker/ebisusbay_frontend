@@ -247,6 +247,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
   const [existingAuthWarningOpenWithProps, setExistingAuthWarningOpenWithProps] = useState<{type: string, onCancel: () => void, onCancelComplete: () => void} | boolean>(false);
   const { config: chainConfig } = useAppChainConfig();
 
+  const [targetChainConfig, setTargetChainConfig] = useState<AppChainConfig>(chainConfig);
   const isCurrentSeason = rdGameContext?.season.blockId === reward.blockId;
   const queryClient = useQueryClient();
   const {requestSignature} = useEnforceSignature();
@@ -278,7 +279,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
         return;
       }
 
-      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signature)
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signature, targetChainConfig.chain.id)
       const tx = await contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
       await tx.wait();
 
@@ -314,7 +315,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       const flooredAmount = Math.floor(Number(reward.currentRewards));
 
       const signature = await requestSignature();
-      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signature)
+      const auth = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signature)
       const tx = await contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
       await tx.wait();
       toast.success('Previous request cancelled');
@@ -403,7 +404,6 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
     }
   }
 
-  const [targetChainConfig, setTargetChainConfig] = useState<AppChainConfig>(chainConfig);
   const handleChangeTargetChain = (chainId: SupportedChainId) => {
     const _targetChainConfig = getAppChainConfig(chainId);
     setTargetChainConfig(_targetChainConfig);

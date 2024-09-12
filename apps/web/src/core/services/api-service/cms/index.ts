@@ -89,8 +89,8 @@ class Cms {
     return this.ryoshiDynasties.requestResourcesWithdrawalAuthorization(tokenId, amount, address, signature);
   }
 
-  async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string) {
-    return this.ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(address, amount, signature);
+  async requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string, chainId: number) {
+    return this.ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(address, amount, signature, chainId);
   }
 
   async requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string) {
