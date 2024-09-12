@@ -58,6 +58,7 @@ import {AppChainConfig, SUPPORTED_RD_CHAIN_CONFIGS, SupportedChainId} from "@src
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 import {ChainLogo} from "@dex/components/logo";
 import {getAppChainConfig, useAppChainConfig} from "@src/config/hooks";
+import {usePlatformRewardsContract} from "@src/global/hooks/contracts";
 
 const config = appConfig();
 
@@ -246,8 +247,8 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
   const [existingAuthWarningOpenWithProps, setExistingAuthWarningOpenWithProps] = useState<{type: string, onCancel: () => void, onCancelComplete: () => void} | boolean>(false);
   const { config: chainConfig } = useAppChainConfig();
-
   const [targetChainConfig, setTargetChainConfig] = useState<AppChainConfig>(chainConfig);
+  const rewardsContract = usePlatformRewardsContract(targetChainConfig.chain.id);
   const isCurrentSeason = rdGameContext?.season.blockId === reward.blockId;
   const queryClient = useQueryClient();
   const {requestSignature} = useEnforceSignature();
@@ -280,8 +281,13 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
       }
 
       const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(user.address!, flooredAmount, signature, targetChainConfig.chain.id)
-      const tx = await contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
-      await tx.wait();
+      const txHash = await rewardsContract?.write.withdraw(
+        [auth.data.reward, auth.data.signature],
+        {
+          account: user.address!,
+          chain: targetChainConfig.chain
+        }
+      );
 
       queryClient.setQueryData(
         ['BankSeasonalRewards', user.address],
@@ -312,12 +318,15 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
   const handleCancelClaim = async (seasonId: number) => {
     try {
       setExecutingClaim(true);
-      const flooredAmount = Math.floor(Number(reward.currentRewards));
-
       const signature = await requestSignature();
       const auth = await ApiService.withoutKey().ryoshiDynasties.getPendingFortuneAuthorizations(user.address!, signature)
-      const tx = await contractService?.ryoshiPlatformRewards.withdraw(auth.data.reward, auth.data.signature);
-      await tx.wait();
+      const txHash = await rewardsContract?.write.cancelWithdraw(
+        [auth.data.reward, auth.data.signature],
+        {
+          account: user.address!,
+          chain: targetChainConfig.chain
+        }
+      );
       toast.success('Previous request cancelled');
     }
     // catch (e) {
