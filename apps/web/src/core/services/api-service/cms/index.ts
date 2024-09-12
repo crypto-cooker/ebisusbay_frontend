@@ -93,8 +93,8 @@ class Cms {
     return this.ryoshiDynasties.requestSeasonalRewardsClaimAuthorization(address, amount, signature, chainId);
   }
 
-  async requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string) {
-    return this.ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(address, amount, vaultIndex, signature);
+  async requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string, chainId: number) {
+    return this.ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(address, amount, vaultIndex, signature, chainId);
   }
 
   async checkBlacklistStatus(address: string) {

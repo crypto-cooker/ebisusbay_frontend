@@ -5,6 +5,11 @@ export const deepValidation = (prevProps: any, nextProps: any) => JSON.stringify
 export const parseErrorMessage = (error: any, defaultError?: string) => {
   if (!error) return 'Unknown Error';
 
+  // Viem contract error
+  if (error.name === 'ContractFunctionExecutionError') {
+    return error.shortMessage ?? error.details;
+  }
+
   if (error.name === 'AxiosError') {
     if (error.response?.data?.error?.metadata?.message) {
       return error.response.data.error.metadata.message;
