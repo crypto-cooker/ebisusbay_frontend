@@ -81,6 +81,8 @@ pipelines:
                         --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
                         --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
                         --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES \
+                        --build-arg NEXT_PUBLIC_TRANSAK_ENV=$NEXT_PUBLIC_TRANSAK_ENV \
                         --build-arg TURBO_API=${TURBO_API} \
                         --build-arg TURBO_TEAM=${TURBO_TEAM} \
                         --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
@@ -146,6 +148,8 @@ pipelines:
     #                     --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
     #                     --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
     #                     --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+    #                     --build-arg NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES \
+    #                     --build-arg NEXT_PUBLIC_TRANSAK_ENV=$NEXT_PUBLIC_TRANSAK_ENV \
     #                     --build-arg TURBO_API=${TURBO_API} \
     #                     --build-arg TURBO_TEAM=${TURBO_TEAM} \
     #                     --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
@@ -222,6 +226,8 @@ pipelines:
     #                     --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
     #                     --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
     #                     --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+    #                     --build-arg NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES \
+    #                     --build-arg NEXT_PUBLIC_TRANSAK_ENV=$NEXT_PUBLIC_TRANSAK_ENV \
     #                     --build-arg TURBO_API=${TURBO_API} \
     #                     --build-arg TURBO_TEAM=${TURBO_TEAM} \
     #                     --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
@@ -296,6 +302,8 @@ pipelines:
                         --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
                         --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
                         --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES \
+                        --build-arg NEXT_PUBLIC_TRANSAK_ENV=$NEXT_PUBLIC_TRANSAK_ENV \
                         --build-arg TURBO_API=${TURBO_API} \
                         --build-arg TURBO_TEAM=${TURBO_TEAM} \
                         --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
@@ -370,6 +378,8 @@ pipelines:
                         --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
                         --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
                         --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES \
+                        --build-arg NEXT_PUBLIC_TRANSAK_ENV=$NEXT_PUBLIC_TRANSAK_ENV \
                         --build-arg TURBO_API=${TURBO_API} \
                         --build-arg TURBO_TEAM=${TURBO_TEAM} \
                         --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
@@ -445,6 +455,8 @@ pipelines:
                         --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
                         --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
                         --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES \
+                        --build-arg NEXT_PUBLIC_TRANSAK_ENV=$NEXT_PUBLIC_TRANSAK_ENV \
                         --build-arg TURBO_API=${TURBO_API} \
                         --build-arg TURBO_TEAM=${TURBO_TEAM} \
                         --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
@@ -519,6 +531,8 @@ pipelines:
                         --build-arg NEXT_PUBLIC_SENTRY_ENVIRONMENT=${NEXT_PUBLIC_SENTRY_ENVIRONMENT} \
                         --build-arg SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN} \
                         --build-arg NEXT_PUBLIC_WEB3MODAL_API_KEY=${NEXT_PUBLIC_WEB3MODAL_API_KEY} \
+                        --build-arg NEXT_FORCE_EDGE_IMAGES=$NEXT_FORCE_EDGE_IMAGES \
+                        --build-arg NEXT_PUBLIC_TRANSAK_ENV=$NEXT_PUBLIC_TRANSAK_ENV \
                         --build-arg TURBO_API=${TURBO_API} \
                         --build-arg TURBO_TEAM=${TURBO_TEAM} \
                         --build-arg TURBO_TOKEN=${TURBO_TOKEN} \
