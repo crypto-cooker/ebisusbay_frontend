@@ -30,6 +30,8 @@ cd /<pathtorepository>/eb_web
 ### MacOS
 #### Build and run
 
+NOTE: Make sure that your Docker "Memory limit" is over 20GB as it will consume a lot of memory during the build!
+
 ```
 # Fetch submodule(s)
 git submodule update --init --recursive
