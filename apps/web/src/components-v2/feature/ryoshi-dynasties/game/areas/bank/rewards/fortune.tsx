@@ -56,13 +56,19 @@ import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnfor
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";
-import {AppChainConfig, SUPPORTED_RD_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
+import {
+  AppChainConfig,
+  SUPPORTED_CHAIN_CONFIGS,
+  SUPPORTED_RD_CHAIN_CONFIGS,
+  SupportedChainId
+} from "@src/config/chains";
 import {ChainLogo} from "@dex/components/logo";
 import {getAppChainConfig, useAppChainConfig} from "@src/config/hooks";
 import {usePlatformRewardsContract} from "@src/global/hooks/contracts";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
+import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 
 const config = appConfig();
 
@@ -249,7 +255,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
   const [executingCancelCompound, setExecutingCancelCompound] = useState(false);
   const { isOpen: isConfirmationOpen, onOpen: onOpenConfirmation, onClose: onCloseConfirmation } = useDisclosure();
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
-  const [existingAuthWarningOpenWithProps, setExistingAuthWarningOpenWithProps] = useState<{type: string, onCancel: () => void, onCancelComplete: () => void} | boolean>(false);
+  const [existingAuthWarningOpenWithProps, setExistingAuthWarningOpenWithProps] = useState<{type: string, onCancel: () => void, onCancelComplete: () => void, targetChainId: SupportedChainId} | boolean>(false);
   const { config: chainConfig } = useAppChainConfig();
   const [targetChainConfig, setTargetChainConfig] = useState<AppChainConfig>(chainConfig);
   const rewardsContract = usePlatformRewardsContract(targetChainConfig.chain.id);
@@ -282,12 +288,13 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
           type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
           onCancel: async () => {
             if (pendingClaim) await handleCancelClaim(pendingClaim.chainId);
-            else await handleCancelCompound(Number(pendingCompound.vaultIndex), pendingCompound.chainId);
+            else await handleCancelCompound(Number(pendingCompound.vaultIndex));
           },
           onCancelComplete: () => {
             setExistingAuthWarningOpenWithProps(false);
             handleClaim(amountAsString, seasonId, true);
-          }
+          },
+          targetChainId: !!pendingClaim ? pendingClaim.chainId : pendingCompound.chainId
         });
         return;
       }
@@ -343,14 +350,11 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
     }
   }
 
-  const handleCompound = async (vault: FortuneStakingAccount, seasonId: number, force = false, chainId: SupportedChainId) => {
+  const handleCompound = async (vault: FortuneStakingAccount, seasonId: number, force = false) => {
     try {
       setExecutingCompound(true);
 
-      if (activeChainId !== chainId) {
-        await switchNetworkAsync(chainId);
-        return;
-      }
+      await handleSyncNetwork();
 
       const flooredAmount = convertToNumberAndRoundDown(reward.currentRewards);
 
@@ -365,17 +369,18 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
           type: !!pendingClaim ? 'CLAIM' : 'COMPOUND',
           onCancel: async () => {
             if (pendingClaim) await handleCancelClaim(pendingClaim.chainId);
-            else await handleCancelCompound(vault.index, pendingCompound.chainId);
+            else await handleCancelCompound(vault.index);
           },
           onCancelComplete: () => {
             setExistingAuthWarningOpenWithProps(false);
-            handleCompound(vault, seasonId, true, chainId);
-          }
+            handleCompound(vault, seasonId, true);
+          },
+          targetChainId: !!pendingClaim ? pendingClaim.chainId : pendingCompound.chainId
         });
         return;
       }
 
-      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vault.index, signature, chainId)
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vault.index, signature, targetChainConfig.chain.id)
       const tx = await callWithGasPrice(rewardsContract, 'compound', [auth.data.reward, auth.data.signature]);
 
       queryClient.setQueryData(
@@ -394,7 +399,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
         }
       );
 
-      toast.success(createSuccessfulTransactionToastContent(tx?.hash, chainId));
+      toast.success(createSuccessfulTransactionToastContent(tx?.hash, targetChainConfig.chain.id));
     } catch (e) {
       console.log(e);
       Sentry.captureException(e);
@@ -404,16 +409,16 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
     }
   }
 
-  const handleCancelCompound = async (vaultIndex: number, chainId: number) => {
+  const handleCancelCompound = async (vaultIndex: number) => {
     try {
       setExecutingCancelCompound(true);
       const flooredAmount = convertToNumberAndRoundDown(reward.currentRewards);
 
       const signature = await requestSignature();
-      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vaultIndex, signature, chainId)
+      const auth = await ApiService.withoutKey().ryoshiDynasties.requestSeasonalRewardsCompoundAuthorization(user.address!, flooredAmount, vaultIndex, signature, targetChainConfig.chain.id)
       if (auth) {
         const tx = await callWithGasPrice(rewardsContract, 'cancelCompound', [auth.data.reward, auth.data.signature]);
-        toast.success(createSuccessfulTransactionToastContent(tx?.hash, chainId));
+        toast.success(createSuccessfulTransactionToastContent(tx?.hash));
       }
     }
     // catch (e) {
@@ -444,6 +449,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
         isExecutingClaim={executingClaim}
         onCompound={handleCompound}
         isExecutingCompound={executingCompound || executingCancelCompound}
+        onChangeTargetChain={handleChangeTargetChain}
       />
 
       <PendingAuthorizationWarningDialog
@@ -452,6 +458,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
         type={(existingAuthWarningOpenWithProps as any)!.type}
         onExecuteCancel={(existingAuthWarningOpenWithProps as any)!.onCancel}
         onCancelComplete={(existingAuthWarningOpenWithProps as any)!.onCancelComplete}
+        targetChainId={(existingAuthWarningOpenWithProps as any)!.targetChainId}
       />
 
       <RdModal
@@ -531,7 +538,7 @@ const ClaimRow = ({reward, burnMalus, onRefresh}: {reward: any, burnMalus: numbe
 }
 export default FortuneRewardsTab;
 
-const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isExecutingCompound}: SeasonRecordProps) => {
+const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isExecutingCompound, onChangeTargetChain}: SeasonRecordProps) => {
   const user = useUser();
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
@@ -581,6 +588,14 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
     setSelectedVaultIndex(vault.index);
     onCompound(vault, Number(reward.seasonId), false, chainId);
   }, [onCompound]);
+
+  const [chainTab, setChainTab] = useState<SupportedChainId>(SUPPORTED_RD_CHAIN_CONFIGS[0].chain.id);
+  const selectedChainAccount = accounts?.find((account) => account.chain.id === chainTab);
+
+  const handleChainTabChange = useCallback(async (chainId: SupportedChainId) => {
+    setChainTab(chainId);
+    onChangeTargetChain(chainId);
+  }, []);
 
   // useEffect(() => {
   //   const sortRule = (a: FortuneStakingAccount, b: FortuneStakingAccount) => Number(b.endTime) - Number(a.endTime);
@@ -651,16 +666,22 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
                 <Box fontWeight='bold'>Compound to Vault</Box>
                 <Box fontSize='sm' color="#aaa">Only vaults that expire later than 90 days are eligible for compounding and will cost zero Karmic Debt</Box>
               </Box>
+
+
+              <Flex direction='row' justify='center' mb={2}>
+                {SUPPORTED_RD_CHAIN_CONFIGS.map(({name, chain}) => (
+                  <RdTabButton size='sm' key={chain.id} isActive={chainTab === chain.id} onClick={() => handleChainTabChange(chain.id)}>
+                    {name}
+                  </RdTabButton>
+                ))}
+              </Flex>
+
               <VStack align='stretch'>
-                {accounts.map((account) => (
+                {selectedChainAccount ? (
                   <>
-                    <HStack mt={2}>
-                      <ChainLogo chainId={account.chain.id} width={24} height={24} />
-                      <Box>{account.chain.name}</Box>
-                    </HStack>
-                    {account.vaults.length > 0 ? (
+                    {selectedChainAccount.vaults.length > 0 ? (
                       <SimpleGrid columns={{base: 2, sm: 3, md: 4}} gap={4}>
-                        {account.vaults.map((vault) => (
+                        {selectedChainAccount.vaults.map((vault) => (
                           <Box
                             key={vault.index}
                             height='full'
@@ -699,7 +720,7 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
                               mt={1}
                               w='full'
                               variant='outline'
-                              onClick={() => handleSelectVault(vault, account.chain.id)}
+                              onClick={() => handleSelectVault(vault, selectedChainAccount.chain.id)}
                               isLoading={isExecutingCompound && selectedVaultIndex === vault.index}
                               isDisabled={(isExecutingCompound && selectedVaultIndex === vault.index) || reward.currentRewards < 1}
                             >
@@ -712,7 +733,9 @@ const CurrentSeasonRecord = ({reward, onClaim, isExecutingClaim, onCompound, isE
                       <Text align='center' color='#aaa'>No vaults found</Text>
                     )}
                   </>
-                ))}
+                ) : (
+                  <Text align='center' color='#aaa'>Please choose a chain</Text>
+                )}
               </VStack>
             </>
           ) : !reward.canCompound && +reward.currentRewards < 1 ? (
@@ -734,6 +757,7 @@ interface SeasonRecordProps {
   isExecutingClaim: boolean;
   onCompound: (vault: FortuneStakingAccount, seasonId: number, force: boolean, chainId: SupportedChainId) => void;
   isExecutingCompound?: boolean;
+  onChangeTargetChain: (chainId: SupportedChainId) => void;
 }
 
 interface VaultIndexWarningDialogProps {

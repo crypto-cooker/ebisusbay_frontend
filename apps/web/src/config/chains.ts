@@ -351,6 +351,14 @@ export const SUPPORTED_CHAIN_CONFIGS = Object.values(chainConfigs)
   .filter(({chain}) => {
     return (process.env.NEXT_PUBLIC_ENV === 'testnet' && isTestnetChainId(chain.id)) ||
       (process.env.NEXT_PUBLIC_ENV !== 'testnet' && !isTestnetChainId(chain.id))
+  })
+  .sort((a, b) => {
+    // Check if either chain is CRONOS or CRONOS_TESTNET and give them priority
+    if (a.chain.id === ChainId.CRONOS || a.chain.id === ChainId.CRONOS_TESTNET) return -1;
+    if (b.chain.id === ChainId.CRONOS || b.chain.id === ChainId.CRONOS_TESTNET) return 1;
+
+    // Keep their original order if neither is CRONOS or CRONOS_TESTNET
+    return 0;
   });
 
 export const SUPPORTED_RD_CHAIN_CONFIGS = SUPPORTED_CHAIN_CONFIGS
