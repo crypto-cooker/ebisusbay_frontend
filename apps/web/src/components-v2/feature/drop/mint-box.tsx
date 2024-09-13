@@ -28,12 +28,12 @@ import {ApiService} from "@src/core/services/api-service";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useContractService, useUser} from "@src/components-v2/useUser";
-import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import Bank from "@src/global/contracts/Bank.json";
 import {ChainLogo, CurrencyLogoByAddress} from "@dex/components/logo";
-import { ChainId } from "@pancakeswap/chains";
+import {ChainId} from "@pancakeswap/chains";
 import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
 import {useAppChainConfig} from "@src/config/hooks";
+import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
 
 const config = appConfig();
 
@@ -67,6 +67,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   const [runAuthedFunction] = useAuthedFunctionWithChainID(drop.chainId);
   const { config: appChainConfig } = useAppChainConfig(drop.chainId)
   const readProvider = new ethers.providers.JsonRpcProvider(appChainConfig.chain.rpcUrls.default.http[0]);
+  const { getByAddress } = useMultichainCurrencyBroker(drop.chainId)
 
   const [mintingWithType, setMintingWithType] = useState<FundingType>();
   const [numToMint, setNumToMint] = useState(1);
@@ -105,7 +106,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     const regCost = ethers.utils.parseEther(regularCost.toString() ?? '0');
     const mbrCost = ethers.utils.parseEther(memberCost?.toString() ?? '0');
 
-    if (drop.memberMitama && [338, 25].includes(chainId)) {
+    if (drop.memberMitama && [ChainId.CRONOS, ChainId.CRONOS_TESTNET].includes(drop.chainId)) {
       if (fundingType === FundingType.REWARDS) {
         return ethers.utils.parseEther(drop.rewardCost?.toString() ?? '5000');
       }
@@ -206,7 +207,11 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   }
 
   const mintWithErc20 = async (finalCost: number) => {
-    const erc20Token = config.tokens[drop.erc20Token as string];
+    if (!erc20Token) {
+      toast.error('Token error')
+      return;
+    }
+
     const erc20Contract = contractService!.erc20(erc20Token.address);
 
     const allowance = await erc20Contract.allowance(user.address, drop.address);
@@ -253,10 +258,21 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
   useEffect(() => {
     const tokenKey = drop.erc20Token?.toLowerCase();
-    const tokenValue = config.tokens[tokenKey ?? ''];
+    if (tokenKey?.startsWith('0x')) {
+      const tokenValue = getByAddress(tokenKey);
+      if (tokenValue) {
+        setErc20Token({
+          name: tokenValue.name!,
+          symbol: tokenValue.symbol,
+          address: tokenValue.address
+        });
+      }
+    } else {
+      const tokenValue = config.tokens[tokenKey ?? ''];
 
-    if (tokenValue) {
-      setErc20Token(tokenValue);
+      if (tokenValue) {
+        setErc20Token(tokenValue);
+      }
     }
   }, [drop]);
 
@@ -269,6 +285,12 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       <div className="card-body d-flex flex-column">
         {isReady ? (
           <>
+            <Box fontSize='sm' fontWeight='semibold'>
+              <HStack alignItems='center'>
+                <ChainLogo chainId={Number(drop.chainId ?? ChainId.CRONOS)} />
+                <span className="ms-2">{appChainConfig.chain.name}</span>
+              </HStack>
+            </Box>
             <Flex justify='center'>
               <HStack spacing={4}>
                 <Box textAlign="center">
@@ -291,7 +313,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       {drop.erc20Cost && drop.erc20Token && erc20Token && (
                         <Heading as="h5" size="md" mt={1}>
                           <Flex alignItems='center'>
-                            <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(config.chain.id)} size='24px' />
+                            <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(drop.chainId ?? ChainId.CRONOS)} size='24px' />
                             <span className="ms-2">{ethers.utils.commify(round(drop.erc20Cost))}</span>
                           </Flex>
                         </Heading>
@@ -320,7 +342,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                         </Heading>
                         <Heading as="h5" size="md" mt={1}>
                           <Flex alignItems='center'>
-                            <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(config.chain.id)} size='24px' />
+                            <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(drop.chainId ?? ChainId.CRONOS)} size='24px' />
                             <span className="ms-2">{ethers.utils.commify(round(drop.erc20MemberCost))}</span>
                           </Flex>
                         </Heading>
@@ -335,7 +357,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                     </Heading>
                     <Heading as="h5" size="md">
                       <Flex alignItems='center'>
-                        <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(config.chain.id)} size='24px' />
+                        <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(drop.chainId ?? ChainId.CRONOS)} size='24px' />
                         <span className="ms-2">{ethers.utils.commify(round(drop.rewardCost))}</span>
                       </Flex>
                     </Heading>
@@ -354,7 +376,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                     {!!drop.erc20Token && !!drop.erc20WhitelistCost && drop.erc20Cost !== drop.erc20WhitelistCost && erc20Token && (
                       <Heading as="h5" size="md" mt={1}>
                         <Flex alignItems='center'>
-                          <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(config.chain.id)} size='24px' />
+                          <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(drop.chainId ?? ChainId.CRONOS)} size='24px' />
                           <span className="ms-2">{ethers.utils.commify(round(drop.erc20WhitelistCost))}</span>
                         </Flex>
                       </Heading>
@@ -432,16 +454,16 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                         Mint
                       </PrimaryButton>
                     )}
-                    {!!drop.erc20Cost && !!drop.erc20Token && (!mintingWithType || mintingWithType === FundingType.ERC20) && (
+                    {!!drop.erc20Cost && !!drop.erc20Token && !!erc20Token && (!mintingWithType || mintingWithType === FundingType.ERC20) && (
                       <PrimaryButton
                         w='full'
                         onClick={() => mintNow(FundingType.ERC20)}
                         disabled={mintingWithType === FundingType.ERC20}
                         isLoading={mintingWithType === FundingType.ERC20}
-                        loadingText={`Minting with ${config.tokens[drop.erc20Token!].symbol}`}
+                        loadingText={`Minting with ${erc20Token.symbol}`}
                         whiteSpace='initial'
                       >
-                        Mint with {config.tokens[drop.erc20Token!].symbol}
+                        Mint with {erc20Token.symbol}
                       </PrimaryButton>
                     )}
                     {drop.abi === 'mint-from-rewards.json' && (!mintingWithType || mintingWithType === FundingType.REWARDS) && (

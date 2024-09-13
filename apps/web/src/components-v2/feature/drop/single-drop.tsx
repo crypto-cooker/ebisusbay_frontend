@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ethers} from 'ethers';
+import {BigNumber, ethers} from 'ethers';
 import Countdown from 'react-countdown';
 import {keyframes} from '@emotion/react';
 import Reveal from 'react-awesome-reveal';
@@ -22,8 +22,6 @@ import ImageService from "@src/core/services/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import {useUser} from "@src/components-v2/useUser";
-import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
-import {useChainId} from "wagmi";
 import {useAppChainConfig} from "@src/config/hooks";
 
 const Markdown= dynamic(() => import('react-markdown'),{ ssr: false });
@@ -168,8 +166,18 @@ const SingleDrop = ({drop}: SingleDropProps) => {
         let readContract = await new ethers.Contract(currentDrop.address, abi!, readProvider);
         const infos = await readContract.getInfo();
         const canMint = user.address ? await readContract.canMint(user.address) : 0;
-        setDropInfoFromContract(infos, canMint);
-        calculateStatus(currentDrop, infos.totalSupply, infos.maxSupply);
+        if (drop.slug === 'pixel-ryoshi-vip') {
+          let newInfos = {...infos}
+          newInfos.maxSupply = BigNumber.from(currentDrop.totalSupply);
+          newInfos.totalSupply = BigNumber.from(currentDrop.totalSupply - infos.totalSupply)
+          newInfos.memberCost = BigNumber.from(0)
+          newInfos.whitelistCost = BigNumber.from(0)
+          setDropInfoFromContract(newInfos, canMint);
+          calculateStatus(currentDrop, newInfos.totalSupply, newInfos.maxSupply);
+        } else {
+          setDropInfoFromContract(infos, canMint);
+          calculateStatus(currentDrop, infos.totalSupply, infos.maxSupply);
+        }
       } else {
         let readContract = await new ethers.Contract(currentDrop.address, abi!, readProvider);
         const currentSupply = await readContract.totalSupply();
