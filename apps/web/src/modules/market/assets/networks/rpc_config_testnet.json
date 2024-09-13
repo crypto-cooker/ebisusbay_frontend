@@ -9748,10 +9748,10 @@
         "twitter": "https://x.com/ebisusbay",
         "discord": "https://discord.gg/ebisusbay"
       },
-      "address": "0xE3fC29346072f64057252585d77C4Ad90A99818B",
+      "address": "0x72AF7C8DE2d3c9Ccb568C180412519d851B05C82",
       "maxMintPerTx": 1,
       "maxMintPerAddress": 10,
-      "totalSupply": 300,
+      "totalSupply": 30,
       "foundersOnly": false,
       "start": 1726212020000,
       "end": null,
@@ -9760,7 +9760,7 @@
       "published": true,
       "complete": false,
       "erc20Cost": "2500",
-      "erc20Token": "frtn",
+      "erc20Token": "0x6f3ff3c76b6dd1d2b4cfc3846f6f1bcba757bf24",
       "erc20Only": true,
       "images": {
         "drop": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-pixel-vip/banner.jpg",

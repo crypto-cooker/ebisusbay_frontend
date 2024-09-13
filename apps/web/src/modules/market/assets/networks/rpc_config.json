@@ -29252,6 +29252,34 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Pixelated Ryoshi Tales VIP",
+      "slug": "pixel-ryoshi-vip",
+      "chain": 388,
+      "chainId": 388,
+      "is1155": false,
+      "address": "0xe1f306e5053663A5F8127d1240dd7e3D22de7313",
+      "onChain": true,
+      "listable": true,
+      "metadata": {
+        "description": "The Pixelated Ryoshi Tales VIP Collection is a special collaboration, reimagining our classic Ryoshi Tales VIP NFTs through a retro pixelated lens. Designed by a guest artist, each NFT captures the essence of the original collection, pixelating key traits for a fresh yet nostalgic twist.",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-pixel-vip/banner.jpg",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-pixel-vip/avatar.gif",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-pixel-vip/banner.jpg",
+        "website": "https://app.ebisusbay.com/",
+        "twitter": "https://twitter.com/EbisusBay",
+        "discord": "https://discord.gg/ebisusbay",
+        "medium": "https://blog.ebisusbay.com/",
+        "instagram": "https://www.instagram.com/ebisusbayofficial",
+        "telegram": "https://t.me/ebisusbay",
+        "categories": []
+      },
+      "verification": {
+        "doxx": "public",
+        "kyc": "hidden",
+        "verified": true
+      }
     }
   ],
   "drops": [
@@ -36985,10 +37013,10 @@
         "twitter": "https://x.com/ebisusbay",
         "discord": "https://discord.gg/ebisusbay"
       },
-      "address": "",
+      "address": "0x6179f7F41eF4Ce0A9573b1b5cD71ddA42Cf273F7",
       "maxMintPerTx": 1,
       "maxMintPerAddress": 10,
-      "totalSupply": 300,
+      "totalSupply": 150,
       "foundersOnly": false,
       "start": 1726254000000,
       "end": null,
@@ -36997,7 +37025,7 @@
       "published": true,
       "complete": false,
       "erc20Cost": "2500",
-      "erc20Token": "frtn",
+      "erc20Token": "0x96e03fa6c5ab3a7f2e7098dd07c8935493294e26",
       "erc20Only": true,
       "images": {
         "drop": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-pixel-vip/banner.jpg",
