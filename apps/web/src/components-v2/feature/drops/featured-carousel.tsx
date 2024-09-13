@@ -22,6 +22,7 @@ import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import LocalDataService from "@src/core/services/local-data-service";
 import {millisecondTimestamp} from "@market/helpers/utils";
 import {ChainId} from "@pancakeswap/chains";
+import {CurrencyLogoByAddress} from "@dex/components/logo";
 
 const tokens = appConfig('tokens')
 const drops: Drop[] = appConfig('drops').map((drop: any) => mapDrop(drop));
@@ -295,14 +296,26 @@ const FeaturedDrops = () => {
                                       ))}
                                     {drop.memberMitama && !!drop.erc20MemberCost && !!drop.erc20Token ? (
                                       <HStack mt={2} mb={4}>
-                                        {drop.erc20Token === 'frtn' ? <FortuneIcon boxSize={10} /> : <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />}
+                                        {drop.erc20Token === 'frtn' ? (
+                                          <FortuneIcon boxSize={10} />
+                                        ) : drop.erc20Token.startsWith('0x') ? (
+                                          <CurrencyLogoByAddress address={drop.erc20Token} chainId={drop.chainId ?? ChainId.CRONOS} size='40px' />
+                                        ) : (
+                                          <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />
+                                        )}
                                         <Text fontSize="4xl" fontWeight="bold" lineHeight={1}>
                                           {ethers.utils.commify(drop.erc20MemberCost)}
                                         </Text>
                                       </HStack>
                                     ) : !!drop.erc20Cost && !!drop.erc20Token && (
                                       <HStack mt={2} mb={4}>
-                                        {drop.erc20Token === 'frtn' ? <FortuneIcon boxSize={10} /> : <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />}
+                                        {drop.erc20Token === 'frtn' ? (
+                                          <FortuneIcon boxSize={10} />
+                                        ) : drop.erc20Token.startsWith('0x') ? (
+                                          <CurrencyLogoByAddress address={drop.erc20Token} chainId={drop.chainId ?? ChainId.CRONOS} size='40px' />
+                                        ) : (
+                                          <Image src={hostedImage(`/img/tokens/${drop.erc20Token}.svg`)} width={40} height={40} alt='ERC20' />
+                                        )}
                                         <Text fontSize="4xl" fontWeight="bold" lineHeight={1}>
                                           {ethers.utils.commify(drop.erc20Cost)}
                                         </Text>
