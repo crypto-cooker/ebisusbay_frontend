@@ -38,7 +38,7 @@ import {refreshMetadata} from "@market/state/redux/slices/nftSlice";
 import {specialImageTransform} from "@market/helpers/hacks";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
-import {useExchangeRate} from "@market/hooks/useGlobalPrices";
+import {useTokenExchangeRate} from "@market/hooks/useGlobalPrices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
@@ -80,12 +80,12 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { onCopy } = useClipboard(nftUrl.toString());
-  const {usdValueForToken} = useExchangeRate();
+  const {tokenToUsdValue} = useTokenExchangeRate(nft.market?.currency ?? nft.currency, nft.chain);
   const [runAuthedFunction] = useAuthedFunction();
 
   const getListing = (): any => {
     if (nft.market?.price) {
-      const usdPrice = usdValueForToken(nft.market.price, nft.market.currency);
+      const usdPrice = tokenToUsdValue(nft.market.price);
       return {
         id: nft.market.id,
         price: nft.market.price,
@@ -96,7 +96,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
       };
     }
     if (nft.listed) {
-      const usdPrice = usdValueForToken(nft.price, nft.currency);
+      const usdPrice = tokenToUsdValue(nft.price);
       return {
         id: nft.listingId,
         price: nft.price,
