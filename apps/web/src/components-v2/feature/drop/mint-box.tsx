@@ -403,7 +403,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
               </Text>
             ) : (!!maxMintPerAddress && maxMintPerAddress < 20) && (
               <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
-                Limit: {maxMintPerAddress} per wallet
+                Limit: {maxMintPerAddress} per wallet per 5 minutes
               </Text>
             )}
             {drop.memberMitama > 0 && (
