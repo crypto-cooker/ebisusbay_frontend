@@ -33,7 +33,7 @@ export interface Api {
     getWallet(address: string, query?: WalletsQueryParams): Promise<PagedList<WalletNft>>;
     getUserUnfilteredListings(address: string, query?: ListingsQueryParams): Promise<PagedList<Listing>>;
     // ryoshiDynasties: RyoshiDynastiesApi;
-    getCollectionTraits(address: string): Promise<any>;
+    getCollectionTraits(address: string, chainId: number): Promise<any>;
 }
 
 export interface RyoshiDynastiesApi {

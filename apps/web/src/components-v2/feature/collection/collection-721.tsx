@@ -380,7 +380,7 @@ export const getStats = async (collection: any, id = null, extraAddresses = null
         ]
       };
     }
-    const traits = await getCollectionTraits(collection.address);
+    const traits = await getCollectionTraits(collection.address, collection.chain);
     const powertraits = collection.powertraits ? await getCollectionPowertraits(collection.address) : null;
 
     let remainingStats: {traits: any, powertraits: any, totalSupply?: number} = {
