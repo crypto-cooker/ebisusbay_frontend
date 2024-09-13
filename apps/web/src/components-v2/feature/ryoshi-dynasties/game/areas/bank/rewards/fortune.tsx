@@ -742,20 +742,31 @@ interface VaultIndexWarningDialogProps {
   onExecuteCancel: () => Promise<void>;
   onCancelComplete: () => void;
   type: 'CLAIM' | 'COMPOUND';
+  targetChainId: SupportedChainId;
 }
 
-const PendingAuthorizationWarningDialog = ({isOpen, onClose, onExecuteCancel, onCancelComplete, type}: VaultIndexWarningDialogProps) => {
+const PendingAuthorizationWarningDialog = ({isOpen, onClose, onExecuteCancel, onCancelComplete, type, targetChainId}: VaultIndexWarningDialogProps) => {
   const [executingCancel, setExecutingCancel] = useState(false);
-
-  const handleExecuteCancel = async () => {
-    try {
-      setExecutingCancel(true);
-      await onExecuteCancel();
-      onCancelComplete();
-    } finally {
-      setExecutingCancel(false);
-    }
-  }
+  // const { chainId: activeChainId} = useActiveChainId();
+  // const { switchNetworkAsync } = useSwitchNetwork();
+  // const { config: targetChainConfig } = useAppChainConfig(targetChainId);
+  // const needsNetworkChange = activeChainId !== targetChainConfig.chain.id;
+  //
+  // const handleExecuteCancel = async () => {
+  //   try {
+  //     setExecutingCancel(true);
+  //     await onExecuteCancel();
+  //     onCancelComplete();
+  //   } finally {
+  //     setExecutingCancel(false);
+  //   }
+  // }
+  //
+  // const handleSyncNetwork = async () => {
+  //   if (needsNetworkChange) {
+  //     await switchNetworkAsync(targetChainConfig.chain.id);
+  //   }
+  // }
 
   return (
     <RdModal
@@ -764,8 +775,11 @@ const PendingAuthorizationWarningDialog = ({isOpen, onClose, onExecuteCancel, on
       title='Confirm'
     >
       <RdModalAlert>
-        <Text>There is currently a pending {type === 'CLAIM' ? 'claim' : 'compound'}. This must be cancelled before proceeding. Press the <strong>Confirm</strong> button below to continue.</Text>
-        <Text mt={2}>Alternatively, you can close this dialog and wait 5 minutes before requesting again.</Text>
+        <Text>There is currently a pending {type === 'CLAIM' ? 'claim' : 'compound'}. Please close this dialog and wait 5 minutes before requesting again.</Text>
+        {/*<Text>There is currently a pending {type === 'CLAIM' ? 'claim' : 'compound'}. This must be cancelled before proceeding. Alternatively, you can close this dialog and wait 5 minutes before requesting again.</Text>*/}
+        {/*{needsNetworkChange && (*/}
+        {/*  <Text mt={2}>Please switch to {targetChainConfig.chain.name} to cancel.</Text>*/}
+        {/*)}*/}
       </RdModalAlert>
       <RdModalFooter>
         <Stack justify='center' direction='row' spacing={6}>
@@ -774,18 +788,29 @@ const PendingAuthorizationWarningDialog = ({isOpen, onClose, onExecuteCancel, on
               onClick={onClose}
               size='lg'
             >
-              Cancel
+              Close
             </RdButton>
           )}
-          <RdButton
-            onClick={handleExecuteCancel}
-            size='lg'
-            isLoading={executingCancel}
-            isDisabled={executingCancel}
-            loadingText='Confirming'
-          >
-            Confirm
-          </RdButton>
+          {/*{needsNetworkChange ? (*/}
+          {/*  <RdButton*/}
+          {/*    onClick={handleSyncNetwork}*/}
+          {/*    size='md'*/}
+          {/*  >*/}
+          {/*    Switch Network*/}
+          {/*  </RdButton>*/}
+          {/*) : (*/}
+          {/*  <>*/}
+          {/*    <RdButton*/}
+          {/*      onClick={handleExecuteCancel}*/}
+          {/*      size='lg'*/}
+          {/*      isLoading={executingCancel}*/}
+          {/*      isDisabled={executingCancel}*/}
+          {/*      loadingText='Confirming'*/}
+          {/*    >*/}
+          {/*      Confirm*/}
+          {/*    </RdButton>*/}
+          {/*  </>*/}
+          {/*)}*/}
         </Stack>
       </RdModalFooter>
     </RdModal>
