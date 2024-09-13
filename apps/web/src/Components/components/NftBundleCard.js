@@ -4,7 +4,14 @@ import Link from 'next/link';
 import {ethers} from 'ethers';
 
 import MakeOfferDialog from '@src/components-v2/shared/dialogs/make-offer';
-import {appUrl, createSuccessfulAddCartContent, isNftBlacklisted, round, siPrefixedNumber, timeSince} from '@market/helpers/utils';
+import {
+  appUrl,
+  createSuccessfulAddCartContent,
+  isNftBlacklisted,
+  round,
+  siPrefixedNumber,
+  timeSince
+} from '@market/helpers/utils';
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {convertGateway, nftCardUrl} from '@src/helpers/image';
 import {Box, Flex, Heading, HStack, Spacer, Text, Tooltip, useClipboard, useColorModeValue} from "@chakra-ui/react";
@@ -25,7 +32,7 @@ import {specialImageTransform} from "@market/helpers/hacks";
 import Slider from '../Account/Profile/Inventory/components/Slider';
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
-import {useExchangeRate} from "@market/hooks/useGlobalPrices";
+import {useTokenExchangeRate} from "@market/hooks/useGlobalPrices";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import useCart from "@market/hooks/use-cart";
 import {useAppDispatch} from "@market/state/redux/store/hooks";
@@ -56,12 +63,12 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = cart.isItemInCart(nft.market.id);
   const { onCopy } = useClipboard(nftUrl.toString());
-  const {usdValueForToken} = useExchangeRate();
+  const {tokenToUsdValue} = useTokenExchangeRate(nft.market?.currency ?? nft.currency, nft.chain);
   const [runAuthedFunction] = useAuthedFunction();
 
   const marketUsdValue = () => {
     if (nft.market?.price) {
-      return usdValueForToken(nft.market.price, nft.market.currency);
+      return tokenToUsdValue(nft.market.price);
     }
     return 0;
   };

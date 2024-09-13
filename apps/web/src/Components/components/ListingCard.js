@@ -62,7 +62,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   const isInCart = cart.isItemInCart(listing.listingId);
   const { onCopy } = useClipboard(nftUrl.toString());
   const [runAuthedFunction] = useAuthedFunction();
-  const {tokenUsdRate, tokenToUsdValue} = useTokenExchangeRate(listing.currency);
+  const {tokenUsdRate, tokenToUsdValue} = useTokenExchangeRate(listing.currency, listing.chain);
 
   const getOptions = () => {
     const options = [];

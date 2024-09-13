@@ -38,7 +38,7 @@ import {useSelector} from "react-redux";
 import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
 import ImageService from "@src/core/services/image";
 import CronosIconBlue from "@src/components-v2/shared/icons/cronos-blue";
-import {useExchangeRate} from "@market/hooks/useGlobalPrices";
+import {useTokenExchangeRate} from "@market/hooks/useGlobalPrices";
 import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image";
 import {CurrencyLogoByAddress} from "@dex/components/logo";
 
@@ -64,11 +64,11 @@ const MyNftCard = ({
   const [isHovered, setIsHovered] = useState(false);
   const batchListingCart = useSelector((state) => state.batchListing);
   const { onCopy } = useClipboard(nftUrl.toString());
-  const {usdValueForToken} = useExchangeRate();
+  const {tokenToUsdValue} = useTokenExchangeRate(nft.market?.currency ?? nft.currency, nft.chain);
 
   const marketUsdValue = () => {
     if (nft.market?.price) {
-      return usdValueForToken(nft.market.price, nft.market.currency);
+      return tokenToUsdValue(nft.market.price);
     }
     return 0;
   };
