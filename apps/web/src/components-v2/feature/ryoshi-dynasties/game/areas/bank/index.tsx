@@ -149,14 +149,14 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faCoins} />
               ) : (
-                <>Stake $Fortune </>
+                <>Stake Tokens</>
               )}
             </RdButton>
             <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faImage} />
               ) : (
-                <>Stake NFTs </>
+                <>Stake NFTs</>
               )}
             </RdButton>
             <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenWithdraw)}>

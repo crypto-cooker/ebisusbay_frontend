@@ -7,6 +7,7 @@ import {
   AccordionPanel,
   Box,
   Button,
+  ButtonGroup,
   Center,
   Flex,
   HStack,
@@ -24,10 +25,9 @@ import {commify} from "ethers/lib/utils";
 import moment from 'moment';
 
 //contracts
-import {Contract, ethers} from "ethers";
+import {ethers} from "ethers";
 import {appConfig} from "@src/config";
 import {toast} from "react-toastify";
-import Bank from "@src/global/contracts/Bank.json";
 import {createSuccessfulTransactionToastContent, findNextLowestNumber, round} from '@market/helpers/utils';
 import ImageService from "@src/core/services/image";
 import {
@@ -43,32 +43,36 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faGem} from "@fortawesome/free-solid-svg-icons";
 import {useUser} from "@src/components-v2/useUser";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {SUPPORTED_CHAIN_CONFIGS, SUPPORTED_RD_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
+import {SUPPORTED_RD_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
 import {
   BankStakeTokenContext,
-  BankStakeTokenContextProps
+  BankStakeTokenContextProps,
+  VaultType
 } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
 import {useAppChainConfig} from "@src/config/hooks";
-import {useWriteContract} from "wagmi";
 import {useBankContract} from "@src/global/hooks/contracts";
 import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
+import {ChainId} from "@pancakeswap/chains";
 
 const config = appConfig();
 
 interface StakePageProps {
   onEditVault: (vault: FortuneStakingAccount, type: string) => void;
-  onCreateVault: (vaultIndex: number) => void;
+  onCreateVault: (vaultIndex: number, vaultType: VaultType) => void;
   onWithdrawVault: (vault: FortuneStakingAccount) => void;
   onTokenizeVault: (vault: FortuneStakingAccount) => void;
   initialChainId: SupportedChainId;
   onUpdateChainContext: (chainId: SupportedChainId) => void;
+  onUpdateVaultContext: (vaultType: VaultType) => void;
 }
 
-const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault, initialChainId, onUpdateChainContext}: StakePageProps) => {
+const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault, initialChainId, onUpdateChainContext, onUpdateVaultContext}: StakePageProps) => {
   const user = useUser();
   const [currentTab, setCurrentTab] = useState<SupportedChainId>(initialChainId);
+  const [currentVaultType, setCurrentVaultType] = useState<VaultType>(VaultType.TOKEN);
+  const isZk = [ChainId.CRONOS_ZKEVM, ChainId.CRONOS_ZKEVM_TESTNET].includes(currentTab);
 
   const { data: account, status, error, refetch } = useQuery({
     queryKey: ['UserStakeAccount', user.address, currentTab],
@@ -76,13 +80,31 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
     enabled: !!user.address,
   });
 
+  const [vaultGroup, setVaultGroup] = useState<any>(account?.vaults);
+
   const handleConnect = async () => {
     user.connect();
   }
 
   const handleTabChange = useCallback((chainId: SupportedChainId) => {
     setCurrentTab(chainId);
+    handleVaultTypeChange(VaultType.TOKEN);
     onUpdateChainContext(chainId);
+  }, [isZk]);
+
+  const handleVaultTypeChange = useCallback((vaultType: VaultType) => {
+    if (isZk) {
+      setVaultGroup(vaultType === VaultType.LP ? account?.lpVaults : account?.vaults);
+      setCurrentVaultType(vaultType);
+    } else {
+      setVaultGroup(account?.vaults);
+      setCurrentVaultType(VaultType.TOKEN);
+    }
+    onUpdateVaultContext(vaultType)
+  }, [account]);
+
+  const handleCreateVault = useCallback((vaultIndex: number, vaultType: VaultType) => {
+    onCreateVault(vaultIndex, vaultType);
   }, []);
 
   return (
@@ -90,7 +112,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
       <Box mx={1} pb={6}>
         {!!user.address ? (
           <>
-            <Text align='center' pt={2} py={2} fontSize='sm'>Stake & earn $Fortune and receive troops for battle. Stake more to receive more troops and higher APRs.</Text>
+            <Text align='center' pt={2} py={2} fontSize='sm'>Stake Fortune and Fortune LPs to earn $FRTN and receive troops for battle. Stake more to receive more troops and higher APRs.</Text>
             <Flex direction='row' justify='center' mb={2}>
               <SimpleGrid columns={2}>
                 {SUPPORTED_RD_CHAIN_CONFIGS.map(({name, chain}) => (
@@ -111,35 +133,63 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
                 </Center>
               ) : (
                 <>
-                  {!!account && account.vaults.length > 0 && (
-                    <Accordion defaultIndex={[0]} allowToggle>
-                      {account.vaults.map((vault, index) => (
-                        <Box key={vault.vaultId} mt={2}>
-                          <Vault
-                            vault={vault}
-                            index={index}
-                            onEditVault={(type: string) => onEditVault(vault, type)}
-                            onWithdrawVault={() => onWithdrawVault(vault)}
-                            onTokenizeVault={() => onTokenizeVault(vault)}
-                            onClosed={refetch}
-                          />
-                        </Box>
-                      ))}
-                    </Accordion>
+                  <HStack justify='end' align='center' fontSize='sm'>
+                    <Box>Vault Type</Box>
+                    <ButtonGroup isAttached variant='outline' size='sm'>
+                      <Button
+                        aria-label='Fortune Token Vaults'
+                        isActive={currentVaultType === VaultType.TOKEN}
+                        onClick={() => handleVaultTypeChange(VaultType.TOKEN)}
+                      >
+                        Token
+                      </Button>
+                      {isZk && (
+                        <Button
+                          aria-label='Fortune LP Vaults'
+                          isActive={currentVaultType === VaultType.LP}
+                          onClick={() => handleVaultTypeChange(VaultType.LP)}
+                        >
+                          LP
+                        </Button>
+                      )}
+                    </ButtonGroup>
+                  </HStack>
+                  {!!vaultGroup && vaultGroup.length > 0 ? (
+                    <>
+                      <Accordion defaultIndex={[0]} allowToggle>
+                        {vaultGroup.map((vault, index) => (
+                          <Box key={vault.vaultId} mt={2}>
+                            <Vault
+                              vault={vault}
+                              index={index}
+                              onEditVault={(type: string) => onEditVault(vault, type)}
+                              onWithdrawVault={() => onWithdrawVault(vault)}
+                              onTokenizeVault={() => onTokenizeVault(vault)}
+                              onClosed={refetch}
+                            />
+                          </Box>
+                        ))}
+                      </Accordion>
+                    </>
+                  ) : (
+                    <Box mt={4} textAlign='center'>No {currentVaultType} vaults found</Box>
                   )}
                 </>
               )}
             </Box>
-            <Flex alignContent={'center'} justifyContent={'center'} mt={8}>
-              <Box ps='20px'>
-                <RdButton
-                  fontSize={{base: 'xl', sm: '2xl'}}
-                  stickyIcon={true}
-                  onClick={() => onCreateVault(!!account ? account.vaults.length : 0)}
-                >
-                  + New Vault
-                </RdButton>
-              </Box>
+            <Flex justifyContent='space-around' mt={8}>
+              <RdButton
+                fontSize={{base: 'xl', sm: '2xl'}}
+                onClick={() => handleCreateVault(!!account ? account.vaults.length : 0, VaultType.TOKEN)}
+              >
+                + New FRTN Vault
+              </RdButton>
+              <RdButton
+                fontSize={{base: 'xl', sm: '2xl'}}
+                onClick={() => handleCreateVault(!!account ? account.vaults.length : 0, VaultType.LP)}
+              >
+                + New LP Vault
+              </RdButton>
             </Flex>
           </>
         ) : (
@@ -159,6 +209,40 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
     
   )
 }
+
+
+// interface VaultGroupProps {
+//   vaults: any;
+//   onEditVault: (vault: FortuneStakingAccount, type: string) => void;
+//   onWithdrawVault: (vault: FortuneStakingAccount) => void;
+//   onTokenizeVault: (vault: FortuneStakingAccount) => void;
+//   onClose: () => void;
+// }
+//
+// const VaultGroup = ({vaults, onEditVault, onWithdrawVault, onTokenizeVault, onClose}: VaultGroupProps) => {
+//   return (
+//     <>
+//       {!!vaults && vaults.length > 0 && (
+//         <>
+//           <Accordion defaultIndex={[0]} allowToggle>
+//             {vaults.map((vault, index) => (
+//               <Box key={vault.vaultId} mt={2}>
+//                 <Vault
+//                   vault={vault}
+//                   index={index}
+//                   onEditVault={(type: string) => onEditVault(vault, type)}
+//                   onWithdrawVault={() => onWithdrawVault(vault)}
+//                   onTokenizeVault={() => onTokenizeVault(vault)}
+//                   onClosed={onClose}
+//                 />
+//               </Box>
+//             ))}
+//           </Accordion>
+//         </>
+//       )}
+//     </>
+//   )
+// }
 
 export default StakePage;
 

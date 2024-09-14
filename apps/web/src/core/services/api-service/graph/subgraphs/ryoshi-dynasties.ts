@@ -9,9 +9,11 @@ const config = appConfig();
 
 class RyoshiDynasties {
   private apollo;
+  private chainId;
 
   constructor(chainId: number) {
     const config = getAppChainConfig(chainId ?? ChainId.CRONOS);
+    this.chainId = chainId;
     this.apollo = new ApolloClient({
       uri: urlify(config.urls.subgraph.root, config.urls.subgraph.ryoshiDynasties),
       cache: new InMemoryCache()
@@ -90,6 +92,7 @@ class RyoshiDynasties {
   }
 
   async stakingAccounts(walletAddress: string) {
+    const isZk = [ChainId.CRONOS_ZKEVM, ChainId.CRONOS_ZKEVM].includes(this.chainId);
     const query = `
       query StakingAccountsQuery($address: String) {
         stakingAccounts(where: {id: $address}) {
@@ -105,6 +108,19 @@ class RyoshiDynasties {
             endTime
             vaultId
           }
+          ${isZk ? `
+          lpVaults(where: {open: true}, first: 50, orderBy: startTime, orderDirection: desc) {
+            balance
+            id
+            index
+            length
+            open
+            pool
+            startTime
+            endTime
+            vaultId
+          }
+          ` : ''}
         }
       }
     `;
