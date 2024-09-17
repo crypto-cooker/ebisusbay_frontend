@@ -27970,6 +27970,32 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "WOLF",
+      "slug": "wolf-1",
+      "is1155": false,
+      "address": "0x75ef6ce785c660e3f52446664a61eb41a31dc4a2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "",
+        "card": "",
+        "banner": "",
+        "website": "https://wolfswap.app",
+        "twitter": "",
+        "discord": "",
+        "telegram": "",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
