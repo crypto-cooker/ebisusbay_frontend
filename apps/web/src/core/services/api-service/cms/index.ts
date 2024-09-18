@@ -143,6 +143,10 @@ class Cms {
     return this.ryoshiDynasties.getStakedTokenTotals(type);
   }
 
+  async getBankUserStaked(address: string) {
+    return this.ryoshiDynasties.getBankUserStaked(address);
+  }
+
   async getTownHallUserStaked(collectionAddress: string, collection: string, signature: string) {
     return this.ryoshiDynasties.getTownHallUserStaked(collectionAddress, collection, signature);
   }

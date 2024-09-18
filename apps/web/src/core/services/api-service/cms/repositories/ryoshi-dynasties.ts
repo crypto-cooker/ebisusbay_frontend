@@ -314,6 +314,15 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data.data;
   }
 
+  async getBankUserStaked(address: string) {
+    const response = await this.cms.get(`ryoshi-dynasties/staking/bank/staked`, {
+      params: {
+        address
+      }
+    });
+    return response.data.data;
+  }
+
   async getTownHallUserStaked(address: string, collection: string, signature: string) {
     const response = await this.cms.get(`ryoshi-dynasties/staking/town-hall/staked`, {
       params: {

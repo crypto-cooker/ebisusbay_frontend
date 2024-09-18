@@ -9,14 +9,14 @@ import {
   Api,
   BankStakeNft,
   BarracksStakeNft,
+  PokerCollection,
   RyoshiDynastiesApi,
-  StakedTokenType, TownHallStakeNft
+  StakedTokenType
 } from "@src/core/services/api-service/types";
 import {Offer} from "@src/core/models/offer";
 import {WalletsQueryParams} from "./mapi/queries/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
 import Graph from "@src/core/services/api-service/graph";
-import RdGame7Winners from "@src/core/data/rd-game7-winners.json";
 import {ciEquals} from "@market/helpers/utils";
 import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
 import {getOwners} from "@src/core/subgraph"
@@ -24,7 +24,6 @@ import {Player, RankPlayers, RankPlayersByWorst} from "@src/core/poker-rank-play
 import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
 import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
-import {PokerCollection} from "@src/core/services/api-service/types";
 import {
   TownHallStakeRequest,
   TownHallUnstakeRequest
@@ -36,6 +35,7 @@ import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
 import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
 import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
 import {ChainId} from "@pancakeswap/chains";
+import {DEFAULT_CHAIN_ID} from "@src/config/chains";
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -45,7 +45,7 @@ export class ApiService implements Api {
   public ryoshiDynasties: RyoshiDynastiesApi;
 
   constructor(apiKey?: string, chainId?: number) {
-    const chain = chainId ?? ChainId.CRONOS;
+    const chain = chainId ?? DEFAULT_CHAIN_ID;
     this.mapi = new Mapi(apiKey);
     this.cms = new Cms(apiKey);
     this.graph = new Graph(apiKey, chain);
@@ -323,6 +323,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   }
 
   async getStakedTokens(address: string, type: StakedTokenType) {
+    if (type === StakedTokenType.BANK) {
+      return this.cms.getBankUserStaked(address);
+    }
+
     return this.graph.getStakedTokens(address, type);
   }
 
