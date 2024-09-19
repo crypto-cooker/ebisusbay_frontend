@@ -236,10 +236,10 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
       queryKey: ['BankStakedNfts', user.address],
       queryFn: () => ApiService.withoutKey().ryoshiDynasties.getStakedTokens(user.address!, StakedTokenType.BANK)
     }).then(async (data) => {
-      setStakedNfts(data);
+      setStakedNfts(data.staked);
 
       const nfts: PendingNft[] = [];
-      for (const token of data) {
+      for (const token of data.staked) {
         const nft = await getNft(token.contractAddress, token.tokenId, appConfig.defaultChainId);
         if (nft) {
           const stakeConfigs = rdContext.config.bank.staking.nft.collections.filter((c) => ciEquals(c.address, nft.collection.address));
