@@ -495,4 +495,8 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async requestBattleCardsWithdrawalAuthorization(address: string, signature: string) {
     return this.cms.requestBattleCardsWithdrawalAuthorization(address, signature);
   }
+
+  async requestSlotUnlockAuthorization(type: number, chainId: number, address: string, signature: string) {
+    return this.cms.requestSlotUnlockAuthorization(type, chainId, address, signature);
+  }
 }

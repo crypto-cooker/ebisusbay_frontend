@@ -213,6 +213,10 @@ class Cms {
     return this.ryoshiDynasties.requestBattleCardsWithdrawalAuthorization(address, signature);
   }
 
+  async requestSlotUnlockAuthorization(type: number, chainId: number, address: string, signature: string) {
+    return this.ryoshiDynasties.requestSlotUnlockAuthorization(type, chainId, address, signature);
+  }
+
   async createDeal(request: any, address: string, signature: string) {
     return await this.orders.createDeal(request, address, signature);
   }

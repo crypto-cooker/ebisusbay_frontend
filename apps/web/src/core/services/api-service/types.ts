@@ -84,6 +84,7 @@ export interface RyoshiDynastiesApi {
     attack(request: AttackRequest, address: string, signature: string): Promise<any>;
     getBattleCardsByWallet(address: string, signature: string): Promise<Array<{tokenId: number, amount: number}>>;
     requestBattleCardsWithdrawalAuthorization(address: string, signature: string): Promise<any>;
+    requestSlotUnlockAuthorization(type: number, chainId: number, address: string, signature: string): Promise<any>;
 }
 
 // @deprecated move to OrderState once MAPI migrated

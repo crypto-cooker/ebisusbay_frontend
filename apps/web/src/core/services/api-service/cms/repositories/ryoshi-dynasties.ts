@@ -544,6 +544,23 @@ class RyoshiDynastiesRepository extends CmsRepository {
     );
     return response.data.data;
   }
+
+  async requestSlotUnlockAuthorization(type: number, chainId: number, address: string, signature: string) {
+    const response = await this.cms.post(
+      `ryoshi-dynasties/staking/authorize/bank/unlock-slot`,
+      {
+        type,
+        chainId
+      },
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+    return response.data.data;
+  }
 }
 
 export default RyoshiDynastiesRepository;
