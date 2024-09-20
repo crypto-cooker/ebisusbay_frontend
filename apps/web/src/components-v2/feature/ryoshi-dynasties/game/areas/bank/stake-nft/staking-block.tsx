@@ -122,10 +122,10 @@ const StakingBlock = ({onRemove, onStaked, refetchSlotUnlockContext}: StakingBlo
 
   const checkForApproval = async () => {
     const fortuneContract = new Contract(appChainConfig.contracts.fortune, Fortune, readProvider);
-    const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), appChainConfig.contracts.seasonUnlocks);
+    const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), appChainConfig.contracts.resources);
 
     const resourcesContract = new Contract(appChainConfig.contracts.resources, ERC1155, readProvider);
-    const isResourcesApproved = await resourcesContract.isApprovedForAll(user.address, appChainConfig.contracts.seasonUnlocks);
+    const isResourcesApproved = await resourcesContract.isApprovedForAll(user.address, appChainConfig.contracts.resources);
 
     setUnlockApprovalState([totalApproved, isResourcesApproved]);
   }
