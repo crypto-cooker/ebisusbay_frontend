@@ -106,3 +106,10 @@ export function useChainSlugById(chainId: number) {
     return chainConfig?.slug ?? chainId
   }, [chainId]);
 }
+
+export function useChainById(chainId: number) {
+  return useMemo(() => {
+    const chainConfig = getChainById(chainId);
+    return chainConfig?.chain ?? chainId
+  }, [chainId]);
+}

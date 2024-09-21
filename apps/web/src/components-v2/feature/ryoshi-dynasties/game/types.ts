@@ -65,9 +65,15 @@ interface RyoshiConfigBankStakingFortune {
 }
 
 interface RyoshiConfigBankStakingNFT {
-  maxSlots: number;
+  slots: RyoshiConfigStakingSlots;
   maxMultiplier: number;
   collections: RyoshiConfigBankStakingNFTCollection[];
+}
+
+interface RyoshiConfigStakingSlots {
+  max: number;
+  included: number;
+  cost: Array<{frtn: number, koban: number}>;
 }
 
 export interface RyoshiConfigBankStakingNFTCollection extends RyoshiConfigCollections {
@@ -173,8 +179,10 @@ export enum RyoshiConfigTraitInclusionType {
 }
 
 export interface RyoshiConfigCollections {
+  name: string;
   slug: string;
   address: string;
+  chainId: number;
 }
 
 interface RyoshiConfigCheckinRewards {

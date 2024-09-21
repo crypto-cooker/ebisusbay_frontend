@@ -1,6 +1,18 @@
-import {Box, Center, Flex, SimpleGrid, Spinner, Text} from "@chakra-ui/react"
+import {
+  Box,
+  ButtonGroup,
+  Center,
+  Flex,
+  IconButton,
+  Select,
+  SimpleGrid,
+  Spacer,
+  Spinner,
+  Stack,
+  Text
+} from "@chakra-ui/react"
 
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {ChangeEvent, useCallback, useContext, useEffect, useMemo, useState} from 'react';
 import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
 import nextApiService from "@src/core/services/api-service/next";
@@ -25,6 +37,9 @@ import {useUser} from "@src/components-v2/useUser";
 import {useAppConfig} from "@src/config/hooks";
 import {NextSlot, PendingNft} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/types";
 import StakingBlock from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/staking-block";
+import UnstakedNfts from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/unstaked-nfts";
+import {DEFAULT_CHAIN_ID, SUPPORTED_RD_CHAIN_CONFIGS} from "@src/config/chains";
+import {ChainLogo} from "@dex/components/logo";
 
 const config = appConfig();
 
@@ -47,23 +62,45 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { config: appConfig } = useAppConfig();
 
-  const [currentTab, setCurrentTab] = useState(tabs.ryoshiVip);
-  const [currentCollection, setCurrentCollection] = useState<any>();
+  const [currentCollectionChain, setCurrentCollectionChain] = useState(DEFAULT_CHAIN_ID);
   const [stakedNfts, setStakedNfts] = useState<StakedToken[]>([]);
   const [pendingNfts, setPendingNfts] = useState<PendingNft[]>([]);
   const [nextSlot, setNextSlot] = useState<NextSlot>();
   const [page, setPage] = useState<string>();
 
-  const addressForTab = config.collections.find((c: any) => c.slug === currentTab)?.address;
+  const uniqueCollections = useMemo(() => {
+    return Array.from(
+      new Map(
+        rdContext.config.bank.staking.nft.collections
+          .map((collection) => ({
+            address: collection.address,
+            slug: collection.slug,
+            name: collection.name,
+            chainId: collection.chainId
+          }))
+          .map((collection) => [collection.slug, collection])
+      ).values()
+    );
+  }, [rdContext.config.bank.staking.nft.collections]);
+  const initialCollection = uniqueCollections.find((c) => c.chainId === currentCollectionChain);
+  const [currentCollection, setCurrentCollection] = useState(initialCollection);
 
-  const handleBtnClick = (key: string) => (e: any) => {
-    setCurrentTab(key);
+  const handleCollectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const collection = uniqueCollections.find((c) => c.chainId === currentCollectionChain && c.slug === e.target.value);
+    setCurrentCollection(collection);
   };
+
+  const handleChainChange = (chainId: number) => {
+    setCurrentCollectionChain(chainId);
+
+    const collection = uniqueCollections.find((c) => c.chainId === chainId);
+    setCurrentCollection(collection);
+  }
 
   const handleAddNft = useCallback((nft: WalletNft) => {
     const pendingCount = pendingNfts.filter((sNft) => sNft.nftId === nft.nftId && ciEquals(sNft.nftAddress, nft.nftAddress)).length;
     const withinUnlockedRange = nextSlot && pendingNfts.length <= nextSlot.index;
-    const withinMaxSlotRange = pendingNfts.length < rdContext.config.bank.staking.nft.maxSlots;
+    const withinMaxSlotRange = pendingNfts.length < rdContext.config.bank.staking.nft.slots.max;
     const stakedCount = stakedNfts.reduce((acc, sNft) => {
       if (sNft.tokenId === nft.nftId && ciEquals(sNft.contractAddress, nft.nftAddress)) {
         return acc + parseInt(sNft.amount);
@@ -119,6 +156,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
         isAlreadyStaked: stakedCount > pendingCount,
         isActive: stakeConfig!.active,
         refBalance: nft.balance ?? 1,
+        chainId: nft.chain
       }]);
     }
   }, [pendingNfts]);
@@ -158,8 +196,6 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const handleClose = () => {
     setPendingNfts([]);
     setStakedNfts([]);
-    setCurrentCollection(addressForTab);
-    setCurrentTab(tabs.ryoshiVip);
     onClose();
   }
 
@@ -236,6 +272,7 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
               isAlreadyStaked: true,
               isActive: stakeConfig!.active,
               refBalance: 0,
+              chainId: nft.chain
             })
           }
         }
@@ -245,10 +282,6 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
 
 
   }, [isOpen, user.address]);
-
-  useEffect(() => {
-    setCurrentCollection(addressForTab);
-  }, [currentTab]);
 
   useEffect(() => {
     if (!user.address) {
@@ -277,33 +310,34 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
             refetchSlotUnlockContext={handleRefetchSlotInfo}
           />
           <Box p={4}>
-            <Flex direction='row' justify='center' mb={2}>
-              <SimpleGrid columns={{base: 2, sm: 3, md: 5}}>
-                <RdTabButton isActive={currentTab === tabs.ryoshiVip} onClick={handleBtnClick(tabs.ryoshiVip)}>
-                  VIP
-                </RdTabButton>
-                <RdTabButton isActive={currentTab === tabs.fortuneTellers} onClick={handleBtnClick(tabs.fortuneTellers)}>
-                  Tellers
-                </RdTabButton>
-                <RdTabButton isActive={currentTab === tabs.ryoshiHalloween} onClick={handleBtnClick(tabs.ryoshiHalloween)}>
-                  Halloween
-                </RdTabButton>
-                <RdTabButton isActive={currentTab === tabs.ryoshiTales} onClick={handleBtnClick(tabs.ryoshiTales)}>
-                  Ryoshi Tales
-                </RdTabButton>
-                <RdTabButton isActive={currentTab === tabs.ryoshiChristmas} onClick={handleBtnClick(tabs.ryoshiChristmas)}>
-                  Christmas
-                </RdTabButton>
-              </SimpleGrid>
-            </Flex>
+            <Stack direction='row' justify='space-between' mb={2}>
+              <ButtonGroup isAttached variant='outline'>
+                {SUPPORTED_RD_CHAIN_CONFIGS.map(({name, chain}) => (
+                  <IconButton
+                    key={chain.id}
+                    aria-label={chain.name}
+                    icon={<ChainLogo chainId={chain.id} />}
+                    isActive={currentCollectionChain === chain.id}
+                    onClick={() => handleChainChange(chain.id)}
+                  />
+                ))}
+              </ButtonGroup>
+              <Select onChange={handleCollectionChange} maxW='250px' value={currentCollection?.slug}>
+                {uniqueCollections.filter((c) => c.chainId === currentCollectionChain).map((collection) => (
+                  <option key={collection.slug} value={collection.slug}>{collection.name}</option>
+                ))}
+              </Select>
+            </Stack>
             <Box>
-              <UnstakedNfts
-                isReady={isOpen}
-                collection={currentCollection}
-                address={user.address ?? undefined}
-                onAdd={handleAddNft}
-                onRemove={handleRemoveNft}
-              />
+              {currentCollection && (
+                <UnstakedNfts
+                  isReady={isOpen}
+                  collection={currentCollection?.address}
+                  address={user.address ?? undefined}
+                  onAdd={handleAddNft}
+                  onRemove={handleRemoveNft}
+                />
+              )}
             </Box>
           </Box>
         </BankStakeNftContext.Provider>
@@ -316,75 +350,4 @@ export default StakeNfts;
 
 
 
-interface UnstakedNftsProps {
-  isReady: boolean;
-  address?: string;
-  collection: string;
-  onAdd: (nft: WalletNft) => void;
-  onRemove: (nftAddress: string, nftId: string) => void;
-}
-
-const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedNftsProps) => {
-  const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: ['BankUnstakedNfts', address, collection],
-    queryFn: () => nextApiService.getWallet(address!, {
-      collection: [collection],
-      sortBy: 'rank',
-      direction: 'asc'
-    }),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, pages) => {
-      return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
-    },
-    refetchOnWindowFocus: false,
-    enabled: !!address && isReady && !!collection
-  });
-
-  return (
-    <>
-      <InfiniteScroll
-        dataLength={data?.pages ? data.pages.flat().length : 0}
-        next={fetchNextPage}
-        hasMore={hasNextPage ?? false}
-        style={{ overflow: 'hidden' }}
-        loader={
-          <Center>
-            <Spinner />
-          </Center>
-        }
-      >
-        {status === 'pending' ? (
-          <Center>
-            <Spinner />
-          </Center>
-        ) : status === "error" ? (
-          <p>Error: {(error as any).message}</p>
-        ) : data?.pages.map((page) => page.data).flat().length > 0 ? (
-          <SimpleGrid
-            columns={{base: 2, sm: 3, md: 4}}
-            gap={3}
-          >
-            {data.pages.map((items, pageIndex) => (
-              <React.Fragment key={pageIndex}>
-                {items.data.map((nft, itemIndex) => (
-                  <StakingNftCard
-                    key={nft.name}
-                    nft={nft}
-                    onAdd={() => onAdd(nft)}
-                    onRemove={() => onRemove(nft.nftAddress, nft.nftId)}
-                  />
-                ))}
-              </React.Fragment>
-            ))}
-          </SimpleGrid>
-        ) : (
-          <Box textAlign='center' mt={8}>
-            <Text>No NFTs available. <br />Can't find your NFT? Check the FAQ at the top left for eligibility requirements</Text>
-          </Box>
-        )}
-      </InfiniteScroll>
-
-    </>
-  )
-}
 
