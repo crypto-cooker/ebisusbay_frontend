@@ -8,6 +8,7 @@ import {ciEquals} from "@market/helpers/utils";
 import Constants from "@src/constants";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";
+import {DEFAULT_CHAIN_ID} from "@src/config/chains";
 
 const config = appConfig();
 
@@ -61,14 +62,15 @@ const useBarracksStakeNfts = () => {
             amount: Number(nft.amount),
           })),
           user.address,
-          signature
+          signature,
+          DEFAULT_CHAIN_ID
         );
         const withdrawTx = await barracks.endStake(approval.data.unstakeApproval, approval.data.signature);
         await withdrawTx.wait();
       }
 
       if (newNfts.length > 0) {
-        const approval = await ApiService.withoutKey().ryoshiDynasties.requestBarracksStakeAuthorization(newNfts, user.address, signature);
+        const approval = await ApiService.withoutKey().ryoshiDynasties.requestBarracksStakeAuthorization(newNfts, user.address, signature, DEFAULT_CHAIN_ID);
         const stakeTx = await barracks.startStake(approval.data.stakeApproval, approval.data.signature);
         await stakeTx.wait();
       }

@@ -25,13 +25,14 @@ import {AttackRequest, attackRequestSchema} from "@src/core/services/api-service
 
 class RyoshiDynastiesRepository extends CmsRepository {
 
-  async requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string) {
+  async requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string, chainId: number) {
     const response = await this.cms.get('ryoshi-dynasties/staking/authorize/bank', {
       params: {
         user: address,
         contractAddress: nfts.map(nft => nft.nftAddress),
         tokenId: nfts.map(nft => nft.nftId),
         amount: nfts.map(nft => nft.amount),
+        chainId,
         address,
         signature
       }
@@ -39,13 +40,14 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string) {
+  async requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string, chainId: number) {
     const response = await this.cms.get('ryoshi-dynasties/staking/authorize/bank/withdraw', {
       params: {
         user: address,
         contractAddress: nfts.map(nft => nft.nftAddress),
         tokenId: nfts.map(nft => nft.nftId),
         amount: nfts.map(nft => nft.amount),
+        chainId,
         address,
         signature
       }
@@ -53,7 +55,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
+  async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string, chainId: number) {
     const response = await this.cms.get('ryoshi-dynasties/staking/authorize/barracks', {
       params: {
         user: address,
@@ -67,7 +69,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
+  async requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string, chainId: number) {
     const response = await this.cms.get('ryoshi-dynasties/staking/authorize/barracks/withdraw', {
       params: {
         user: address,
@@ -81,7 +83,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string) {
+  async requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string, chainId: number) {
     await townHallStakeRequestSchema.validate(request);
 
     const response = await this.cms.get('ryoshi-dynasties/staking/authorize/town-hall', {
@@ -98,7 +100,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
-  async requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string) {
+  async requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string, chainId: number) {
     await townHallUnstakeRequestSchema.validate(request);
 
     const response = await this.cms.get('ryoshi-dynasties/staking/authorize/town-hall/withdraw', {

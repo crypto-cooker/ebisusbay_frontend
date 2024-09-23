@@ -46,12 +46,12 @@ export interface RyoshiDynastiesApi {
     getTownHallUserStaked(address: string, collection: string, signature: string): Promise<StakedToken[]>;
     getTownHallUserInvalidStaked(address: string, signature: string): Promise<StakedToken[]>;
     getStakedTokenTotals(type: StakedTokenType): Promise<{[key: string]: number}>;
-    requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
-    requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
-    requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
-    requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
-    requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string): Promise<any>;
-    requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string): Promise<any>;
+    requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string, chainId: number): Promise<any>;
+    requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string, chainId: number): Promise<any>;
+    requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string, chainId: number): Promise<any>;
+    requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string, chainId: number): Promise<any>;
+    requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string, chainId: number): Promise<any>;
+    requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string, chainId: number): Promise<any>;
     requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string): Promise<any>;
     getDailyRewards(address: string): Promise<any>
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>

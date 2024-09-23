@@ -1,21 +1,23 @@
-import WalletNft from "@src/core/models/wallet-nft";
 import {useInfiniteQuery} from "@tanstack/react-query";
-import nextApiService from "@src/core/services/api-service/next";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Box, Center, SimpleGrid, Spinner, Text} from "@chakra-ui/react";
 import React from "react";
-import StakingNftCard from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/staking-nft-card";
+import StakingNftCard
+  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/staking-nft-card";
 import {ApiService} from "@src/core/services/api-service";
+import {
+  useBankNftStakingHandlers
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/hooks";
 
 interface UnstakedNftsProps {
   isReady: boolean;
   address?: string;
   collection: string;
-  onAdd: (nft: WalletNft) => void;
-  onRemove: (nftAddress: string, nftId: string) => void;
 }
 
-const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedNftsProps) => {
+const UnstakedNfts = ({isReady, address, collection}: UnstakedNftsProps) => {
+  const {addNft, removeNft} = useBankNftStakingHandlers();
+
   const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['BankUnstakedNfts', address, collection],
     queryFn: () => ApiService.withoutKey().getWallet(address!, {
@@ -61,8 +63,8 @@ const UnstakedNfts = ({isReady, address, collection, onAdd, onRemove}: UnstakedN
                   <StakingNftCard
                     key={nft.name}
                     nft={nft}
-                    onAdd={() => onAdd(nft)}
-                    onRemove={() => onRemove(nft.nftAddress, nft.nftId)}
+                    onAdd={() => addNft(nft)}
+                    onRemove={() => removeNft(nft.nftAddress, nft.nftId)}
                   />
                 ))}
               </React.Fragment>

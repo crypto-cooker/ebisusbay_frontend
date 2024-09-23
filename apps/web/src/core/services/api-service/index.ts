@@ -342,32 +342,32 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.cms.getStakedTokenTotals(type);
   }
 
-  async requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string) {
-    return this.cms.requestBankStakeAuthorization(nfts, address, signature);
+  async requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string, chainId: number) {
+    return this.cms.requestBankStakeAuthorization(nfts, address, signature, chainId);
   }
 
   async checkBlacklistStatus(address: string) {
     return this.cms.checkBlacklistStatus(address);
   };
 
-  async requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string) {
-    return this.cms.requestBankUnstakeAuthorization(nfts, address, signature);
+  async requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string, chainId: number) {
+    return this.cms.requestBankUnstakeAuthorization(nfts, address, signature, chainId);
   }
 
-  async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
-    return this.cms.requestBarracksStakeAuthorization(nfts, address, signature);
+  async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string, chainId: number) {
+    return this.cms.requestBarracksStakeAuthorization(nfts, address, signature, chainId);
   }
 
-  async requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string) {
-    return this.cms.requestBarracksUnstakeAuthorization(nfts, address, signature);
+  async requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string, chainId: number) {
+    return this.cms.requestBarracksUnstakeAuthorization(nfts, address, signature, chainId);
   }
 
-  async requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string) {
-    return this.cms.requestTownHallStakeAuthorization(request, address, signature);
+  async requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string, chainId: number) {
+    return this.cms.requestTownHallStakeAuthorization(request, address, signature, chainId);
   }
 
-  async requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string) {
-    return this.cms.requestTownHallUnstakeAuthorization(request, address, signature);
+  async requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string, chainId: number) {
+    return this.cms.requestTownHallUnstakeAuthorization(request, address, signature, chainId);
   }
 
   async requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string) {

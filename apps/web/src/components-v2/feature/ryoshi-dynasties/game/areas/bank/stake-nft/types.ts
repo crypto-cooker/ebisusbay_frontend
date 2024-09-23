@@ -1,14 +1,15 @@
+import WalletNft from "@src/core/models/wallet-nft";
+
 export interface PendingNft {
-  nftAddress: string;
-  nftId: string;
-  image: string;
-  rank: number;
-  multiplier: number;
-  adder: number;
-  troops: number;
-  isAlreadyStaked: boolean;
-  isActive: boolean;
-  refBalance: number;
+  nft: WalletNft;
+  stake: {
+    multiplier: number;
+    adder: number;
+    troops: number;
+    isAlreadyStaked: boolean;
+    isActive: boolean;
+    refBalance: number;
+  }
   chainId: number;
 }
 

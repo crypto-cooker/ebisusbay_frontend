@@ -5,6 +5,7 @@ import {appConfig} from "@src/config";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";
 import {ERC721} from "@src/global/contracts/Abis";
+import {DEFAULT_CHAIN_ID} from "@src/config/chains";
 
 const config = appConfig();
 
@@ -53,7 +54,8 @@ const useTownHallStakeNfts = () => {
           isAll: isAll ?? false
         },
         user.address,
-        signature
+        signature,
+        DEFAULT_CHAIN_ID
       );
 
       const stakeTx = await townHall.startStake(approval.data.stakeApproval, approval.data.signature);
@@ -80,7 +82,8 @@ const useTownHallStakeNfts = () => {
           invalidOnly: invalidOnly ?? false
         },
         user.address,
-        signature
+        signature,
+        DEFAULT_CHAIN_ID
       );
       const withdrawTx = await townHall.endStake(approval.data.unstakeApproval, approval.data.signature);
       await withdrawTx.wait();
