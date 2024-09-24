@@ -28310,7 +28310,7 @@
       "is1155": false,
       "address": "0x32659aF8C200Fe5E7BE52BC575a4A1212a26B077",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Crohounds is a unique NFT collection featuring 2,000 digitally generated hounds, each with over 55 distinct traits. These one-of-a-kind hounds offer a rich variety of characteristics, making every piece special. Owners can earn $cro in the project's Discord , combining the excitement of digital collectibles with cryptocurrency rewards. Join the Crohounds community to collect, trade, and earn while enjoying exclusive benefits and engaging with fellow enthusiasts.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crohounds/avatar.webp",
