@@ -63,7 +63,8 @@ class RyoshiDynastiesRepository extends CmsRepository {
         tokenId: nfts.map(nft => nft.nftId),
         amount: nfts.map(nft => nft.amount),
         address,
-        signature
+        signature,
+        chainId
       }
     })
     return response.data;
@@ -77,7 +78,8 @@ class RyoshiDynastiesRepository extends CmsRepository {
         tokenId: nfts.map(nft => nft.nftId),
         amount: nfts.map(nft => nft.amount),
         address,
-        signature
+        signature,
+        chainId
       }
     })
     return response.data;
@@ -318,6 +320,15 @@ class RyoshiDynastiesRepository extends CmsRepository {
 
   async getBankUserStaked(address: string) {
     const response = await this.cms.get(`ryoshi-dynasties/staking/bank/staked`, {
+      params: {
+        address
+      }
+    });
+    return response.data.data;
+  }
+
+  async getBarracksUserStaked(address: string) {
+    const response = await this.cms.get(`ryoshi-dynasties/staking/barracks/staked`, {
       params: {
         address
       }

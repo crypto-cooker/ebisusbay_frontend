@@ -325,9 +325,11 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async getStakedTokens(address: string, type: StakedTokenType) {
     if (type === StakedTokenType.BANK) {
       return this.cms.getBankUserStaked(address);
+    } else if (type === StakedTokenType.BARRACKS) {
+      return this.cms.getBarracksUserStaked(address);
     }
 
-    return this.graph.getStakedTokens(address, type);
+    return [];
   }
 
   async getTownHallUserStaked(address: string, collection: string, signature: string) {

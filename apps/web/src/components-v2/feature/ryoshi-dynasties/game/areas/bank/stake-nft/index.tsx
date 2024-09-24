@@ -12,7 +12,6 @@ interface StakeNftsProps {
 
 const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const user = useUser();
-
   const [page, setPage] = useState<string>();
 
   const handleClose = () => {

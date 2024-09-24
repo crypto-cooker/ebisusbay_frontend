@@ -117,7 +117,7 @@ interface RyoshiConfigBarracksStaking {
 }
 
 interface RyoshiConfigBarracksStakingNFT {
-  maxSlots: number;
+  slots: RyoshiConfigStakingSlots;
   collections: RyoshiConfigBarracksStakingNFTCollection[];
 }
 

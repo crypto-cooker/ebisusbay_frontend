@@ -1,24 +1,11 @@
 import {BigNumber, Contract, ethers} from "ethers";
 import {useUser} from "@src/components-v2/useUser";
-import {useAppChainConfig} from "@src/config/hooks";
 import React, {useContext, useEffect, useState} from "react";
-import {
-  BankStakeNftContext,
-  BankStakeNftContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context";
-import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {
-  RyoshiDynastiesContext,
-  RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import Fortune from "@src/global/contracts/Fortune.json";
-import {toast} from "react-toastify";
-import {parseErrorMessage} from "@src/helpers/validator";
 import {ERC1155} from "@src/global/contracts/Abis";
 import Resources from "@src/global/contracts/Resources.json";
-import {ApiService} from "@src/core/services/api-service";
-import {queryKeys} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/constants";
+import {toast} from "react-toastify";
+import {parseErrorMessage} from "@src/helpers/validator";
 import {
   Box,
   Button,
@@ -39,8 +26,22 @@ import {
 } from "@chakra-ui/react";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import ImageService from "@src/core/services/image";
+import {useAppChainConfig} from "@src/config/hooks";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {
+  queryKeys
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/constants";
+import {
+  BarracksStakeNftContext,
+  BarracksStakeNftContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context";
+import {ApiService} from "@src/core/services/api-service";
 import localFont from "next/font/local";
-
 
 const gothamBook = localFont({ src: '../../../../../../../../../src/global/assets/fonts/Gotham-Book.woff2' });
 
@@ -53,7 +54,7 @@ interface SlotUnlockDialogProps {
 const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState}: SlotUnlockDialogProps) => {
   const user = useUser();
   const { config: appChainConfig } = useAppChainConfig();
-  const { nextSlot } = useContext(BankStakeNftContext) as BankStakeNftContextProps;
+  const { nextSlot } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
   const [executingFortuneApproval, setExecutingFortuneApproval] = useState(false);
   const [executingResourcesApproval, setExecutingResourcesApproval] = useState(false);
   const [unlockApprovalState, setUnlockApprovalState] = useState(initialApprovalState);
@@ -62,6 +63,7 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState}: SlotUnlockDia
   const {requestSignature} = useEnforceSignature();
   const queryClient = useQueryClient();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+
 
   const handleEnableFortune = async () => {
     try {
@@ -125,7 +127,7 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState}: SlotUnlockDia
 
     const signature = await requestSignature();
     const authorization = await ApiService.withoutKey().ryoshiDynasties.requestSlotUnlockAuthorization(
-      1,
+      2,
       appChainConfig.chain.id,
       user.address!,
       signature
@@ -138,11 +140,11 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState}: SlotUnlockDia
   const mutation = useMutation({
     mutationFn: unlockSlot,
     onSuccess: (data) => {
-      queryClient.setQueryData(queryKeys.bankStakedNfts(user.address!), (oldData: any) => ({
+      queryClient.setQueryData(queryKeys.barracksStakedNfts(user.address!), (oldData: any) => ({
         ...oldData,
         nextSlot: {
           index: oldData.nextSlot.index + 1,
-          cost: rdContext.config.bank.staking.nft.slots.cost[oldData.nextSlot.index + 1]
+          cost: rdContext.config.barracks.staking.nft.slots.cost[oldData.nextSlot.index + 1]
         },  // Update the nextSlot after unlocking
       }));
 
@@ -185,7 +187,7 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState}: SlotUnlockDia
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody color='white'>
-          <Text>Unlock staking slots to allow additional NFTs to earn more APR in the bank.</Text>
+          <Text>Unlock staking slots to allow additional NFTs to earn more troops in the barracks.</Text>
           <Box
             bg='#453e3b'
             rounded='lg'

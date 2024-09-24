@@ -1,14 +1,21 @@
 import {useInfiniteQuery} from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Box, Center, SimpleGrid, Spinner, Text} from "@chakra-ui/react";
-import React from "react";
+import React, {useContext} from "react";
 import StakingNftCard
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/staking-nft-card";
+  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/staking-nft-card";
 import {ApiService} from "@src/core/services/api-service";
 import {
-  useBankNftStakingHandlers
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/hooks";
-import {queryKeys} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/constants";
+  useBarracksNftStakingHandlers
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/hooks";
+import {
+  queryKeys
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/constants";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {ciEquals} from "@market/helpers/utils";
 
 interface UnstakedNftsProps {
   isReady: boolean;
@@ -17,10 +24,11 @@ interface UnstakedNftsProps {
 }
 
 const UnstakedNfts = ({isReady, address, collection}: UnstakedNftsProps) => {
-  const {addNft, removeNft} = useBankNftStakingHandlers();
+  const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const {addNft, removeNft} = useBarracksNftStakingHandlers();
 
   const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: queryKeys.bankUnstakedNfts(address!, collection),
+    queryKey: queryKeys.barracksUnstakedNfts(address!, collection),
     queryFn: () => ApiService.withoutKey().getWallet(address!, {
       collection: [collection],
       sortBy: 'rank',
@@ -31,7 +39,42 @@ const UnstakedNfts = ({isReady, address, collection}: UnstakedNftsProps) => {
       return pages[pages.length - 1].hasNextPage ? pages.length + 1 : undefined;
     },
     refetchOnWindowFocus: false,
-    enabled: !!address && isReady && !!collection
+    enabled: !!address && isReady && !!collection,
+    select: (data) => {
+      data.pages = data.pages.map((page) => {
+        return {
+          ...page,
+          data: page.data.filter((item) => {
+            return item.attributes?.some((attr: any) => {
+              const stakeConfigs = rdContext.config.barracks.staking.nft.collections.filter((c) => ciEquals(c.address, item.nftAddress));
+              const eligibility = stakeConfigs.length < 2
+                ? stakeConfigs[0]
+                : stakeConfigs.find(c => c.minId && c.maxId && c.minId <= Number(item.nftId) && c.maxId >= Number(item.nftId));
+
+              if (!eligibility) return false;
+              const traitType = attr.trait_type.toLowerCase();
+              const value = attr.value.toString().toLowerCase();
+
+              let found = eligibility.traits.length === 0;
+              for (let traitRule of eligibility.traits) {
+                if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
+                  found = true;
+                  break;
+                } else if (traitRule.inclusion === 'exclude' && traitRule.type === traitType && !traitRule.values.includes(value)) {
+                  found = true;
+                  break;
+                }
+              }
+
+              return found;
+            })
+
+          }),
+        };
+      });
+
+      return data;
+    }
   });
 
   return (
@@ -77,6 +120,7 @@ const UnstakedNfts = ({isReady, address, collection}: UnstakedNftsProps) => {
           </Box>
         )}
       </InfiniteScroll>
+
     </>
   )
 }
