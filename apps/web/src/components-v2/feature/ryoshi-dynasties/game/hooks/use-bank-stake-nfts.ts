@@ -31,9 +31,6 @@ const useBankStakeNfts = () => {
 
   const stakeNfts = async (pendingNfts: StakablePendingNft[], stakedNfts: StakedToken[], chainId: number) => {
     if (!user.address) throw new Error('User is not logged in');
-    if (pendingNfts.some((nft) => nft.chainId !== chainId)) {
-      throw new Error('Only one chain allowed at a time');
-    }
 
     try {
       const chainConfig = getChainById(chainId);
@@ -44,14 +41,24 @@ const useBankStakeNfts = () => {
       // i.e. multiple entries for the same nft in pendingNfts will consolidate into one entry in stakedNfts with an amount
       let withdrawNfts = [];
       for (const stakedNft of stakedNfts) {
-        const pendingAmount = pendingNfts.filter((nft) => ciEquals(nft.nft.nftAddress, stakedNft.contractAddress) && nft.nft.nftId === stakedNft.tokenId).length;
+        const pendingsMatched = pendingNfts.filter((nft) => ciEquals(nft.nft.nftAddress, stakedNft.contractAddress) && nft.nft.nftId === stakedNft.tokenId);
+        const pendingAmount = pendingsMatched.length;
+
         if (Number(stakedNft.amount) > pendingAmount) {
+
+          if (pendingsMatched.some(nft => nft.chainId !== chainId)) {
+            throw new Error('can only unstake from one chain at a time');
+          }
+
           const amountToWithdraw = Number(stakedNft.amount) - pendingAmount;
           withdrawNfts.push({...stakedNft, amount: amountToWithdraw});
         }
       }
 
       const newNfts = pendingNfts.filter((nft) => !nft.stake.isAlreadyStaked);
+      if (newNfts.some(nft => nft.chainId !== chainId)) {
+        throw new Error('can only stake from one chain at a time');
+      }
 
       if (withdrawNfts.length > 0) {
         const approval = await ApiService.withoutKey().ryoshiDynasties.requestBankUnstakeAuthorization(
