@@ -10,14 +10,11 @@ import {ERC1155, ERC721} from "@src/global/contracts/Abis";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import Fortune from "@src/global/contracts/Fortune.json";
-import {Alert, AlertDescription, AlertIcon, Box, Flex, SimpleGrid, Stack, VStack} from "@chakra-ui/react";
+import {Box, Flex, SimpleGrid, Stack, VStack} from "@chakra-ui/react";
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useAppChainConfig} from "@src/config/hooks";
 import {useJsonRpcProviderForChain} from "@src/global/hooks/use-ethers-provider-for-chain";
 import {useMutation} from "@tanstack/react-query";
-import {
-  useBankNftStakingHandlers
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/hooks";
 import StakingSlot from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/staking-slot";
 import SlotUnlockDialog
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/slot-unlock-dialog";
@@ -51,8 +48,12 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
     }
     setIsExecutingStake(true);
     setExecutingLabel('Approving');
+
+    // Only check those on selected chain
+    const filteredPendingNfts = pendingNfts.filter(nft => nft.chainId === selectedChainId);
+
     const approvedCollections: string[] = [];
-    for (let nft of pendingNfts) {
+    for (let nft of filteredPendingNfts) {
       if (approvedCollections.includes(nft.nft.nftAddress)) continue;
 
       const nftContract = new Contract(nft.nft.nftAddress, ERC721, user.provider.getSigner());
