@@ -216,16 +216,40 @@ export interface ExperienceEvent {
 }
 
 export interface RyoshiConfigExperience {
-  DAILY_CHECK_IN: ExperienceEvent;
-  DEPLOY_TROOPS: ExperienceEvent;
-  TROOP_KILLED: ExperienceEvent;
-  STAKE_VIP: ExperienceEvent;
-  STAKE_MITAMA: ExperienceEvent;
-  ITEM_SOLD_SELLER: ExperienceEvent;
-  OFFER_ACCEPTED_SELLER: ExperienceEvent;
-  ITEM_SOLD_BUYER: ExperienceEvent;
-  CLAIM_PLATFORM_REWARD: ExperienceEvent;
-  COMPOUND_PLATFORM_REWARD: ExperienceEvent;
-  CLAIM_MARKET_STAKING_REWARD: ExperienceEvent;
-  VERIFY_EMAIL: ExperienceEvent;
+  [ExperienceEventType.DAILY_CHECK_IN]: ExperienceEvent;
+  [ExperienceEventType.DAILY_CHECK_IN_WITH_TASKS]: ExperienceEvent;
+  [ExperienceEventType.DEX_SWAP_TASK]: ExperienceEvent;
+  [ExperienceEventType.PURCHASE_NFT_TASK]: ExperienceEvent;
+  [ExperienceEventType.FARM_ACTION_TASK]: ExperienceEvent;
+  [ExperienceEventType.DEPLOY_TROOPS]: ExperienceEvent;
+  [ExperienceEventType.TROOP_KILLED]: ExperienceEvent;
+  [ExperienceEventType.STAKE_VIP]: ExperienceEvent;
+  [ExperienceEventType.STAKE_MITAMA]: ExperienceEvent;
+  [ExperienceEventType.ITEM_SOLD_SELLER]: ExperienceEvent;
+  [ExperienceEventType.OFFER_ACCEPTED_SELLER]: ExperienceEvent;
+  [ExperienceEventType.ITEM_SOLD_BUYER]: ExperienceEvent;
+  [ExperienceEventType.CLAIM_PLATFORM_REWARD]: ExperienceEvent;
+  [ExperienceEventType.COMPOUND_PLATFORM_REWARD]: ExperienceEvent;
+  [ExperienceEventType.CLAIM_MARKET_STAKING_REWARD]: ExperienceEvent;
+  [ExperienceEventType.VERIFY_EMAIL]: ExperienceEvent;
+}
+
+export enum ExperienceEventType {
+  DAILY_CHECK_IN,
+  CHECK_IN_STREAK,
+  DAILY_CHECK_IN_WITH_TASKS,
+  DEX_SWAP_TASK,
+  PURCHASE_NFT_TASK,
+  FARM_ACTION_TASK,
+  DEPLOY_TROOPS,
+  TROOP_KILLED,
+  STAKE_VIP,
+  STAKE_MITAMA,
+  VERIFY_EMAIL,
+  ITEM_SOLD_BUYER,
+  ITEM_SOLD_SELLER,
+  OFFER_ACCEPTED_SELLER,
+  CLAIM_PLATFORM_REWARD,
+  COMPOUND_PLATFORM_REWARD,
+  CLAIM_MARKET_STAKING_REWARD
 }
