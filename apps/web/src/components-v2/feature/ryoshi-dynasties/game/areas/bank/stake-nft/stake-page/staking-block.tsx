@@ -130,7 +130,7 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
               <StakingSlot
                 key={index}
                 pendingNft={pendingNfts[index]}
-                isUnlocked={!!nextSlot && index <= nextSlot.index}
+                isUnlocked={!!nextSlot && index < nextSlot.index}
                 onSelect={() => setSelectedLockedSlot(index)}
                 isInDialog={selectedLockedSlot === index}
               />
