@@ -67,7 +67,8 @@ const StakePage = () => {
   const mapStakedTokensToPending = async (stakedTokens: StakedToken[]) => {
     const nfts: PendingNft[] = [];
     for (const token of stakedTokens) {
-      const nft = await getNft(token.contractAddress, token.tokenId, appConfig.defaultChainId);
+      const nft = await getNft(token.contractAddress, token.tokenId, token.chainId);
+
       if (nft) {
         const stakeConfigs = rdContext.config.barracks.staking.nft.collections.filter((c) => ciEquals(c.address, nft.collection.address));
         const stakeConfig = stakeConfigs.length < 2

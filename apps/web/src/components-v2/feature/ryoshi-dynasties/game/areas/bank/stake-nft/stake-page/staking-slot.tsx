@@ -64,13 +64,13 @@ const StakingSlot = ({pendingNft, isUnlocked, onSelect, isInDialog}: StakingSlot
                 <Flex fontSize='xs' justify='space-between' mt={1}>
                   {pendingNft.stake.isActive ? (
                     <VStack align='start' spacing={1}>
+                      <ChainLogo chainId={pendingNft.chainId} width={15} height={15} />
                       {pendingNft.nft.rank && (
                         <HStack spacing={1}>
                           <Icon as={FontAwesomeIcon} icon={faAward} />
                           <Box as='span'>{pendingNft.nft.rank ?? ''}</Box>
                         </HStack>
                       )}
-                      <ChainLogo chainId={pendingNft.chainId} width={15} height={15} />
                     </VStack>
                   ): (
                     <>Inactive</>
@@ -91,7 +91,6 @@ const StakingSlot = ({pendingNft, isUnlocked, onSelect, isInDialog}: StakingSlot
                   </VStack>
                 </Flex>
               </Box>
-
 
               {!isNftOnWrongChain && (
                 <Box

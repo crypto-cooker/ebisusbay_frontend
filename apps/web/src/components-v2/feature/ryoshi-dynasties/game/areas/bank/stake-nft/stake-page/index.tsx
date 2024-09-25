@@ -67,7 +67,7 @@ const StakePage = () => {
     const nfts: PendingNft[] = [];
 
     for (const token of stakedTokens) {
-      const nft = await getNft(token.contractAddress, token.tokenId, appConfig.defaultChainId);
+      const nft = await getNft(token.contractAddress, token.tokenId, token.chainId);
 
       if (nft) {
         const stakeConfigs = rdContext.config.bank.staking.nft.collections.filter((c) =>
