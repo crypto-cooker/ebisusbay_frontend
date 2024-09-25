@@ -244,8 +244,8 @@ export class ApiService implements Api {
     });
   }
 
-  async getCollectionTraits(address: string) {
-    return await this.mapi.getCollectionTraits(address);
+  async getCollectionTraits(address: string, chainId: number) {
+    return await this.mapi.getCollectionTraits(address, chainId);
   }
 
   async getCollections(query?: CollectionInfoQueryParams) {
