@@ -29247,7 +29247,7 @@
         "categories": [],
         "description": "Imposter Squad brings the excitement of the game into the world of collectibles. We have put together a series of NFT's that capture the fun and mystery Among Us."
       },
-      "verification":{
+      "verification": {
         "verified": false,
         "doxx": false,
         "kyc": false
@@ -37095,7 +37095,8 @@
         "escrow": false,
         "verified": true
       }
-    }, {
+    },
+    {
       "id": 196,
       "chainId": 388,
       "slug": "pixel-ryoshi-vip",

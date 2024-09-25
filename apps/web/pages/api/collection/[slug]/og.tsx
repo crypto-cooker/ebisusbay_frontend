@@ -1,6 +1,6 @@
 import {NextRequest} from "next/server";
 import {ImageResponse} from "next/og";
-import {ciEquals, isAddress, round, siPrefixedNumber, urlify} from "@market/helpers/utils";
+import {ciEquals, isAddress, round, siPrefixedNumber, urlify} from "@edge/utils";
 import {appConfig} from "@src/config";
 import imageSize from "image-size";
 

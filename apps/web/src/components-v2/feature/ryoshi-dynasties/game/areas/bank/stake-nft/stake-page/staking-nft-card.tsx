@@ -85,7 +85,7 @@ const StakingNftCard = ({
   };
 
   const cartCount = () => {
-    return bankStakeNftContext.pendingNfts.filter((o) => o.nftId === nft.nftId && ciEquals(o.nftAddress, nft.nftAddress)).length;
+    return bankStakeNftContext.pendingNfts.filter((o) => o.nft.nftId === nft.nftId && ciEquals(o.nft.nftAddress, nft.nftAddress)).length;
   };
 
   const stakedCount = () => {

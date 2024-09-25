@@ -23,7 +23,7 @@ import {
   Wrap
 } from "@chakra-ui/react";
 import {createSuccessfulTransactionToastContent, findNextLowestNumber, pluralize, round} from "@market/helpers/utils";
-import {commify} from "ethers/lib/utils";
+import {commify, formatEther} from "ethers/lib/utils";
 import RdButton from "../../../../components/rd-button";
 import React, {ChangeEvent, useContext, useEffect, useState} from "react";
 import {
@@ -31,21 +31,28 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {toast} from "react-toastify";
-import {BigNumber, Contract, ethers} from "ethers";
-import Fortune from "@src/global/contracts/Fortune.json";
+import {ethers} from "ethers";
 import Bank from "@src/global/contracts/Bank.json";
-import {appConfig} from "@src/config";
 import ImageService from "@src/core/services/image";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {ApiService} from "@src/core/services/api-service";
 import {useQuery} from "@tanstack/react-query";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
-
-
-const config = appConfig();
+import {
+  BankStakeTokenContext,
+  BankStakeTokenContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
+import {Address, parseEther} from "viem";
+import {useBankContract, useFrtnContract} from "@src/global/hooks/contracts";
+import {useAppChainConfig} from "@src/config/hooks";
+import {ChainLogo} from "@dex/components/logo";
+import {useAccount, useWriteContract} from "wagmi";
+import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
+import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
 
 const steps = {
   choice: 'choice',
@@ -62,8 +69,17 @@ interface CreateVaultPageProps {
 
 const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
   const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { config: chainConfig } = useAppChainConfig(bankChainId);
+  const frtnContract = useFrtnContract(bankChainId);
+  const { switchNetworkAsync } = useSwitchNetwork();
+  const { chainId: activeChainId} = useActiveChainId();
+  const { writeContractAsync } = useWriteContract();
+  const bankContract = useBankContract(bankChainId);
+  const { callWithGasPrice } = useCallWithGasPrice();
+
   const user = useUser();
-  const [runAuthedFunction] = useAuthedFunction();
+  const [runAuthedFunction] = useAuthedFunctionWithChainID(bankChainId);
 
   const [currentStep, setCurrentStep] = useState(steps.choice);
   const [isExecuting, setIsExecuting] = useState(false);
@@ -91,19 +107,15 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
   }
 
   const checkForApproval = async () => {
-    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-    const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
-    const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), config.contracts.bank);
-    return totalApproved as BigNumber;
+    const totalApproved = await frtnContract?.read.allowance([user.address as Address, chainConfig.contracts.bank]);
+    return totalApproved as bigint;
   }
 
   const checkForFortune = async () => {
     try {
       setIsRetrievingFortune(true);
-      const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-      const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
-      const totalFortune = await fortuneContract.balanceOf(user.address?.toLowerCase());
-      const formatedFortune = Number(ethers.utils.hexValue(BigNumber.from(totalFortune)))/1000000000000000000;
+      const totalFortune = await frtnContract?.read.balanceOf([user.address as Address]);
+      const formatedFortune = +formatEther(totalFortune as bigint);
       setUserFortune(formatedFortune);
     } finally {
       setIsRetrievingFortune(false);
@@ -144,35 +156,43 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
     try {
       setIsExecuting(true);
       setExecutingLabel('Approving');
+
+      if (activeChainId !== bankChainId) {
+        await switchNetworkAsync(bankChainId);
+        return;
+      }
+
       //check for approval
       const totalApproved = await checkForApproval();
-      const desiredFortuneAmount = ethers.utils.parseEther(Math.floor(fortuneToStake).toString());
+      const desiredFortuneAmount = parseEther(Math.floor(fortuneToStake).toString());
 
-      if(totalApproved.lt(desiredFortuneAmount)){
-        const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
-        const tx = await fortuneContract.approve(config.contracts.bank, desiredFortuneAmount);
-        const receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      if (totalApproved < desiredFortuneAmount) {
+        const txHash = await frtnContract?.write.approve(
+          [chainConfig.contracts.bank as `0x${string}`, desiredFortuneAmount],
+          {
+            account: user.address!,
+            chain: chainConfig.chain
+          }
+        );
+        toast.success(createSuccessfulTransactionToastContent(txHash ?? '', bankChainId));
       }
 
       setExecutingLabel('Staking');
-      const bankContract = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
 
-      const tx = await bankContract.openVault(desiredFortuneAmount, daysToStake*86400, vaultIndex);
-      const receipt = await tx.wait();
+      // const txHash = await writeContractAsync({
+      //   address: chainConfig.contracts.bank,
+      //   abi: Bank,
+      //   functionName: 'openVault',
+      //   args: [desiredFortuneAmount, daysToStake*86400, vaultIndex],
+      // });
+      const tx = await callWithGasPrice(bankContract, 'openVault', [desiredFortuneAmount, daysToStake*86400, vaultIndex]);
 
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
       setCurrentStep(steps.createVaultComplete);
       refreshUser();
     } catch (error: any) {
-      console.log(error)
-      if(error.response !== undefined) {
-        console.log(error)
-        toast.error(error.response.data.error.metadata.message)
-      }
-      else {
-        toast.error(error);
-      }
+      console.log(error);
+      toast.error(parseErrorMessage(error));
     } finally {
       setIsExecuting(false);
     }
@@ -228,16 +248,18 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
         <>
           <Box bg='#272523' p={2} roundedBottom='md'>
             <Box textAlign='center' w='full'>
-              <Flex>
-                <Spacer />
+              <Flex justify='space-between'>
                 <HStack>
-                  <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>Your</Text>
+                  <ChainLogo chainId={bankChainId} />
+                  <Text fontSize='sm'>{chainConfig.name}</Text>
+                </HStack>
+                <HStack>
+                  <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>Balance: </Text>
                   <FortuneIcon boxSize={6} />
                   <Text fontWeight='bold' fontSize={{base: 'sm', sm: 'md'}}>
-                    $Fortune: {isRetrievingFortune ? <Spinner size='sm'/> : commify(round(userFortune))}
+                    {isRetrievingFortune ? <Spinner size='sm'/> : commify(round(userFortune))}
                   </Text>
                 </HStack>
-                <Spacer />
               </Flex>
             </Box>
           </Box>
@@ -295,13 +317,13 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
                     <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={6}/>
                     <Text>Troops</Text>
                     <Text fontSize={24} fontWeight='bold'>{commify(round(newTroops))}</Text>
-                    <Text fontSize={12} color='#aaa'>{commify(fortuneToStake)} $Fortune stake</Text>
+                    <Text fontSize={12} color='#aaa'>{commify(fortuneToStake)} $FRTN stake</Text>
                   </VStack>
                   <VStack spacing={0}>
                     <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/mitama.png').convert()} alt="troopsIcon" boxSize={6}/>
                     <Text>Mitama</Text>
                     <Text fontSize={24} fontWeight='bold'>{commify(newMitama)}</Text>
-                    <Text fontSize={12} color='#aaa'>{commify(fortuneToStake)} $Fortune stake</Text>
+                    <Text fontSize={12} color='#aaa'>{commify(fortuneToStake)} $FRTN stake</Text>
                   </VStack>
 
                 </SimpleGrid>
@@ -320,7 +342,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
                     loadingText={executingLabel}
                   >
                     {user.address ? (
-                      <>Stake $Fortune</>
+                      <>Stake $FRTN</>
                     ) : (
                       <>Connect</>
                     )}
@@ -351,6 +373,12 @@ interface ImportVaultFormProps {
 
 const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { config: chainConfig } = useAppChainConfig(bankChainId);
+  
+  const { chainId: activeChainId} = useActiveChainId();
+  const { switchNetworkAsync } = useSwitchNetwork();
+  const { writeContractAsync } = useWriteContract();
   const [isExecuting, setIsExecuting] = useState(false);
   const user = useUser();
   const [selectedVaultId, setSelectedVaultId] = useState<string>();
@@ -362,7 +390,7 @@ const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
     queryFn: async () => {
       const nfts = await ApiService.withoutKey().getWallet(user.address!, {
         wallet: user.address!,
-        collection: [config.contracts.vaultNft]
+        collection: [chainConfig.contracts.vaultNft]
       });
 
       return nfts.data.map((nft) => {
@@ -408,16 +436,25 @@ const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
     }
 
     try {
-      
+      if (activeChainId !== bankChainId) {
+        await switchNetworkAsync(bankChainId);
+        return;
+      }
+
       const check = await ApiService.withoutKey().ryoshiDynasties.checkBlacklistStatus(user.address!);
       if (check.data.blacklisted === true) {
         return;
       };
       setIsExecuting(true);
-      const bank = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
-      const tx = await bank.installBox(selectedVaultId);
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+
+      const txHash = await writeContractAsync({
+        address: chainConfig.contracts.bank,
+        abi: Bank,
+        functionName: 'installBox',
+        args: [selectedVaultId],
+      });
+
+      toast.success(createSuccessfulTransactionToastContent(txHash, bankChainId));
       onComplete();
     } catch (error: any) {
       console.log(error);
@@ -526,7 +563,7 @@ const StakeComplete = ({amount, duration, onReturn}: StakeCompleteProps) => {
   return (
     <Box py={4}>
       <Box textAlign='center' mt={2}>
-        {amount} $Fortune has now been staked for {duration} days!
+        {amount} $FRTN has now been staked for {duration} days!
       </Box>
       <Box textAlign='center' mt={8} mx={2}>
         <Box ps='20px'>

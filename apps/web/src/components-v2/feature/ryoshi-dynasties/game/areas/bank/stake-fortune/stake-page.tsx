@@ -42,6 +42,18 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faGem} from "@fortawesome/free-solid-svg-icons";
 import {useUser} from "@src/components-v2/useUser";
+import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
+import {SUPPORTED_CHAIN_CONFIGS, SUPPORTED_RD_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
+import {
+  BankStakeTokenContext,
+  BankStakeTokenContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
+import {useAppChainConfig} from "@src/config/hooks";
+import {useWriteContract} from "wagmi";
+import {useBankContract} from "@src/global/hooks/contracts";
+import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 
 const config = appConfig();
 
@@ -50,14 +62,17 @@ interface StakePageProps {
   onCreateVault: (vaultIndex: number) => void;
   onWithdrawVault: (vault: FortuneStakingAccount) => void;
   onTokenizeVault: (vault: FortuneStakingAccount) => void;
+  initialChainId: SupportedChainId;
+  onUpdateChainContext: (chainId: SupportedChainId) => void;
 }
 
-const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault}: StakePageProps) => {
+const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault, initialChainId, onUpdateChainContext}: StakePageProps) => {
   const user = useUser();
+  const [currentTab, setCurrentTab] = useState<SupportedChainId>(initialChainId);
 
   const { data: account, status, error, refetch } = useQuery({
-    queryKey: ['UserStakeAccount', user.address],
-    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getBankStakingAccount(user.address!),
+    queryKey: ['UserStakeAccount', user.address, currentTab],
+    queryFn: () => ApiService.forChain(currentTab).ryoshiDynasties.getBankStakingAccount(user.address!),
     enabled: !!user.address,
   });
 
@@ -65,12 +80,26 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
     user.connect();
   }
 
+  const handleTabChange = useCallback((chainId: SupportedChainId) => {
+    setCurrentTab(chainId);
+    onUpdateChainContext(chainId);
+  }, []);
+
   return (
     <>
       <Box mx={1} pb={6}>
         {!!user.address ? (
           <>
-            <Text align='center' pt={2} px={2} fontSize='sm'>Stake & earn $Fortune and receive troops for battle. Stake more to receive more troops and higher APRs.</Text>
+            <Text align='center' pt={2} py={2} fontSize='sm'>Stake & earn $Fortune and receive troops for battle. Stake more to receive more troops and higher APRs.</Text>
+            <Flex direction='row' justify='center' mb={2}>
+              <SimpleGrid columns={2}>
+                {SUPPORTED_RD_CHAIN_CONFIGS.map(({name, chain}) => (
+                  <RdTabButton key={chain.id} isActive={currentTab === chain.id} onClick={() => handleTabChange(chain.id)}>
+                    {name}
+                  </RdTabButton>
+                ))}
+              </SimpleGrid>
+            </Flex>
             <Box mt={4}>
               {status === 'pending' ? (
                 <Center>
@@ -145,6 +174,12 @@ interface VaultProps {
 const Vault = ({vault, index, onEditVault, onWithdrawVault, onTokenizeVault, onClosed}: VaultProps) => {
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useUser();
+  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { config: chainConfig } = useAppChainConfig(bankChainId);
+  const bankContract = useBankContract(bankChainId);
+  const { callWithGasPrice } = useCallWithGasPrice()
+  const { chainId: activeChainId} = useActiveChainId();
+  const { switchNetworkAsync } = useSwitchNetwork();
 
   const balance = Number(ethers.utils.formatEther(vault.balance));
   const daysToAdd = Number(vault.length / (86400));
@@ -159,11 +194,19 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onTokenizeVault, onC
 
   const handleCloseVault = useCallback(async () => {
     try {
+      if (activeChainId !== bankChainId) {
+        await switchNetworkAsync(bankChainId);
+        return;
+      }
+
       setIsExecutingClose(true);
-      const bank = new Contract(config.contracts.bank, Bank, user.provider.signer);
-      const tx = await bank.closeVault(vault.index);
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      // const bank = new Contract(config.contracts.bank, Bank, user.provider.signer);
+      // const tx = await bank.closeVault(vault.index);
+      // const receipt = await tx.wait();
+      // toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+
+      const tx = await callWithGasPrice(bankContract, 'closeVault', [vault.index]);
+      toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
       onClosed();
     } catch (error: any) {
       console.log(error)

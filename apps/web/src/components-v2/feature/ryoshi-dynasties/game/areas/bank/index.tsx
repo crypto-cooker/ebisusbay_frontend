@@ -17,6 +17,8 @@ import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/componen
 import {motion} from "framer-motion";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
+import {SUPPORTED_RD_CHAIN_CONFIGS} from "@src/config/chains";
 
 interface BankerSceneProps {
   address: string;
@@ -29,7 +31,7 @@ const bankerImages = {
 };
 
 const Bank = ({address, onBack} : BankerSceneProps) => {
-  const [runAuthedFunction] = useAuthedFunction();
+  const [runAuthedFunction] = useAuthedFunctionWithChainID(SUPPORTED_RD_CHAIN_CONFIGS.map(({chain}) => chain.id));
 
   const { isOpen: isOpenStakeFortune, onOpen: onOpenStakeFortune, onClose: onCloseStakeFortune} = useDisclosure();
   const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
@@ -41,7 +43,6 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
   const windowSize = useWindowSize();
   const [shouldAbbreviateHorizontal] = useMediaQuery('(max-width: 800px)');
   const [abbreviateButtonText, setAbbreviateButtonText] = useState(false);
-  const { isOpen:isOpenOverlay, onToggle } = useDisclosure()
 
   useEffect(() => {
     const shouldAbbreviateVertical = !!windowSize.height && windowSize.height < 800;

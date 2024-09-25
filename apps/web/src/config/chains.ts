@@ -6,9 +6,7 @@ import {
   cronos as cronos_,
   cronoszkEVMTestnet as cronoszkEVMTestnet_,
   cronoszkEVM as cronoszkEVM_,
-  zkSync
 } from 'wagmi/chains'
-import {defineChain} from "viem";
 import {chainConfig} from "viem/zksync";
 
 export const CHAIN_QUERY_NAME = chainNames
@@ -35,6 +33,13 @@ export function isSupportedChainId(value: number | string): value is SupportedCh
 
 const cronos = {
   ...cronos_,
+  blockExplorers: {
+    default: {
+      name: 'Cronos Explorer',
+      url: 'https://cronoscan.com/',
+      apiUrl: 'https://api.cronoscan.com/api',
+    },
+  },
   rpcUrls: {
     ...cronos_.rpcUrls,
     public: {
@@ -98,6 +103,7 @@ export const L2_CHAIN_IDS: ChainId[] = [
 type HexString = `0x${string}` & string;
 
 export type AppChainConfig = {
+  name: string; // wagmi chain name is too verbose
   slug: string;
   chain: Chain;
   urls: {
@@ -141,6 +147,7 @@ export type AppChainConfig = {
 }
 
 const cronosConfig: AppChainConfig = {
+  name: 'Cronos',
   slug: 'cronos',
   chain: cronos,
   urls: {
@@ -184,6 +191,7 @@ const cronosConfig: AppChainConfig = {
 }
 
 const cronosTestnetConfig: AppChainConfig = {
+  name: 'Cronos Testnet',
   slug: 'cronos-testnet',
   chain: cronosTestnet,
   urls: {
@@ -227,12 +235,13 @@ const cronosTestnetConfig: AppChainConfig = {
 }
 
 const cronosZkEVMTestnetConfig: AppChainConfig = {
+  name: 'Cronos ZK Testnet',
   slug: 'cronos-zk-testnet',
   chain: cronosZkEVMTestnet,
   urls: {
     subgraph: {
       root: 'https://testcronos-zkevm-graph.ebisusbay.biz:18000/subgraphs/name/ebisusbay/zkcro/',
-      ryoshiDynasties: '',
+      ryoshiDynasties: 'ryoshi-dynasties',
       ryoshiPresale: '',
       stakedOwners: 'main',
       staking: '',
@@ -253,17 +262,17 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
     gdc: ADDRESS_ZERO,
     usdc: ADDRESS_ZERO,
     purchaseFortune: ADDRESS_ZERO,
-    allianceCenter: ADDRESS_ZERO,
-    battleField: ADDRESS_ZERO,
-    resources: ADDRESS_ZERO,
-    bank: ADDRESS_ZERO,
-    barracks: ADDRESS_ZERO,
+    allianceCenter: '0x7DE09B2A259d59C21D184af6Bda00117Ee0b83d5',
+    battleField: '0x3d01a0CcFD1E232A238676dc765740Ecd2aA42b0',
+    resources: '0x8D72E7E434Dab2c1e579BE596c248E19bB70e624',
+    bank: '0x2FaE7e00E8F7ec5f9CaF2B1CC006137c4d257E4c',
+    barracks: '0xe835007c10330a2dd2a60ed5c59753c7211afb23',
     fortune: '0x6f3ff3c76b6dd1d2b4cfc3846f6f1bcba757bf24',
-    rewards: ADDRESS_ZERO,
+    rewards: '0x72fFE8EA7512c96Ba0c5b868A62eEfb054F0fe38',
     presaleVaults: ADDRESS_ZERO,
     seasonUnlocks: ADDRESS_ZERO,
-    townHall: ADDRESS_ZERO,
-    vaultNft: ADDRESS_ZERO,
+    townHall: '0x5694977D6c90138B93C6FBf127Af5766A84159Cb',
+    vaultNft: '0x05e693aED87234129840e8a776bEB47A49e8583E',
     ryoshiWithKnife: ADDRESS_ZERO,
     farms: '0x1f76a013a77371aeed10c47a04acbf2e719926ed'
   },
@@ -271,6 +280,7 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
 }
 
 const cronosZkEVMConfig: AppChainConfig = {
+  name: 'Cronos ZK',
   slug: 'cronos-zk',
   chain: cronosZkEVM,
   urls: {
@@ -297,17 +307,17 @@ const cronosZkEVMConfig: AppChainConfig = {
     gdc: ADDRESS_ZERO,
     usdc: ADDRESS_ZERO,
     purchaseFortune: ADDRESS_ZERO,
-    allianceCenter: ADDRESS_ZERO,
-    battleField: ADDRESS_ZERO,
-    resources: ADDRESS_ZERO,
-    bank: ADDRESS_ZERO,
-    barracks: ADDRESS_ZERO,
+    allianceCenter: '0x38F82EFA6BB840c2e4EF838F729CE736Df5da118',
+    battleField: '0x18c640c37de95999E8E1b74B2881D378fd984F6B',
+    resources: '0x542F3d6aA5609a97bbFB56a4C430b3F37e5fA12F',
+    bank: '0x53af20897522E233dC7a00B4a24AB724d507f321',
+    barracks: '0x13c7409A2A987410461310A3C34F30d6dcacBe36',
     fortune: '0x96e03fa6c5ab3a7f2e7098dd07c8935493294e26',
-    rewards: ADDRESS_ZERO,
+    rewards: '0x0dd71A640F026Ba7bF96f2792246Ff3f3249845B',
     presaleVaults: ADDRESS_ZERO,
     seasonUnlocks: ADDRESS_ZERO,
-    townHall: ADDRESS_ZERO,
-    vaultNft: ADDRESS_ZERO,
+    townHall: '0xB7EAD5007CfA0dbCF573439780F66be31392824D',
+    vaultNft: '0xE99b17eb4Ddb3efC6AFF08aFe83D1F80278FeC7e',
     ryoshiWithKnife: ADDRESS_ZERO,
     farms: '0xbcE43dabc90E475D3c203603782962B85aDC32d4'
   },
@@ -315,6 +325,13 @@ const cronosZkEVMConfig: AppChainConfig = {
 }
 
 export const SUPPORTED_CHAIN_IDS = [
+  ChainId.CRONOS,
+  ChainId.CRONOS_TESTNET,
+  ChainId.CRONOS_ZKEVM,
+  ChainId.CRONOS_ZKEVM_TESTNET
+] as const
+
+export const SUPPORTED_RD_CHAIN_IDS = [
   ChainId.CRONOS,
   ChainId.CRONOS_TESTNET,
   ChainId.CRONOS_ZKEVM,
@@ -329,6 +346,25 @@ const chainConfigs: Record<SupportedChainId, AppChainConfig> = {
   [ChainId.CRONOS_ZKEVM]: cronosZkEVMConfig,
   [ChainId.CRONOS_ZKEVM_TESTNET]: cronosZkEVMTestnetConfig
 }
+
+export const SUPPORTED_CHAIN_CONFIGS = Object.values(chainConfigs)
+  .filter(({chain}) => {
+    return (process.env.NEXT_PUBLIC_ENV === 'testnet' && isTestnetChainId(chain.id)) ||
+      (process.env.NEXT_PUBLIC_ENV !== 'testnet' && !isTestnetChainId(chain.id))
+  })
+  .sort((a, b) => {
+    // Check if either chain is CRONOS or CRONOS_TESTNET and give them priority
+    if (a.chain.id === ChainId.CRONOS || a.chain.id === ChainId.CRONOS_TESTNET) return -1;
+    if (b.chain.id === ChainId.CRONOS || b.chain.id === ChainId.CRONOS_TESTNET) return 1;
+
+    // Keep their original order if neither is CRONOS or CRONOS_TESTNET
+    return 0;
+  });
+
+export const SUPPORTED_RD_CHAIN_CONFIGS = SUPPORTED_CHAIN_CONFIGS
+  .filter(({chain}) => {
+    return SUPPORTED_RD_CHAIN_IDS.includes(chain.id)
+  });
 
 // const wagmiChainConfigs = {
 //   [ChainId.CRONOS]: cronos,
@@ -345,12 +381,7 @@ const chainConfigs: Record<SupportedChainId, AppChainConfig> = {
 export type ChainSlug = (typeof chainConfigs)[keyof typeof chainConfigs]['slug'];
 
 // This is currently used for various pancake configurations. Can consider refactoring
-export const CHAINS = Object.values(chainConfigs)
-  .filter(({chain}) => {
-      return (process.env.NEXT_PUBLIC_ENV === 'testnet' && isTestnetChainId(chain.id)) ||
-        (process.env.NEXT_PUBLIC_ENV !== 'testnet' && !isTestnetChainId(chain.id))
-  })
-  .map(({ chain }) => chain);
+export const CHAINS = SUPPORTED_CHAIN_CONFIGS.map(({ chain }) => chain);
 
 export const DEFAULT_CHAIN_ID = process.env.NEXT_PUBLIC_ENV === 'testnet' ? ChainId.CRONOS_TESTNET : ChainId.CRONOS;
 

@@ -364,15 +364,17 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                   </Box>
                 )}
 
-                {whitelistCost > 0 && (
+                {whitelistCost > 0 || (!!drop.erc20WhitelistCost) && (
                   <Box>
                     <Heading as="h6" size="sm" className="mb-1">Whitelist Price</Heading>
-                    <Heading as="h5" size="md">
-                      <Flex alignItems='center'>
-                        <ChainLogo chainId={drop.chainId ?? ChainId.CRONOS} />
-                        <span className="ms-2">{ethers.utils.commify(round(whitelistCost))}</span>
-                      </Flex>
-                    </Heading>
+                    {!drop.erc20Only && (
+                      <Heading as="h5" size="md">
+                        <Flex alignItems='center'>
+                          <ChainLogo chainId={drop.chainId ?? ChainId.CRONOS} />
+                          <span className="ms-2">{ethers.utils.commify(round(whitelistCost))}</span>
+                        </Flex>
+                      </Heading>
+                    )}
                     {!!drop.erc20Token && !!drop.erc20WhitelistCost && drop.erc20Cost !== drop.erc20WhitelistCost && erc20Token && (
                       <Heading as="h5" size="md" mt={1}>
                         <Flex alignItems='center'>

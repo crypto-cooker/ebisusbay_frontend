@@ -42,24 +42,24 @@ export interface RyoshiDynastiesApi {
     presaleVault(address: string): Promise<PresaleVault | null>
     getUserStakedFortune(address: string): Promise<FortuneStakingAccount | null>;
     getErc20Account(address: string): Promise<Erc20Account | null>;
-    getStakedTokens(address: string, type: StakedTokenType): Promise<StakedToken[]>;
+    getStakedTokens(address: string, type: StakedTokenType): Promise<{ staked: StakedToken[], nextSlot?: {index: number, cost: {frtn: number, koban: number}} }>;
     getTownHallUserStaked(address: string, collection: string, signature: string): Promise<StakedToken[]>;
     getTownHallUserInvalidStaked(address: string, signature: string): Promise<StakedToken[]>;
     getStakedTokenTotals(type: StakedTokenType): Promise<{[key: string]: number}>;
-    requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
-    requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string): Promise<any>;
-    requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
-    requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string): Promise<any>;
-    requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string): Promise<any>;
-    requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string): Promise<any>;
+    requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string, chainId: number): Promise<any>;
+    requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string, chainId: number): Promise<any>;
+    requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string, chainId: number): Promise<any>;
+    requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string, chainId: number): Promise<any>;
+    requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string, chainId: number): Promise<any>;
+    requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string, chainId: number): Promise<any>;
     requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string): Promise<any>;
     getDailyRewards(address: string): Promise<any>
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>
     claimDailyRewards(address: string, signature: string): Promise<any>
     getResourcesBalances(address: string, signature: string): Promise<Array<{tokenId: number, amount: number}>>;
     requestResourcesWithdrawalAuthorization(tokenId: number, amount: number, address: string, signature: string): Promise<any>;
-    requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string): Promise<any>;
-    requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string): Promise<any>;
+    requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string, chainId: number): Promise<any>;
+    requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string, chainId: number): Promise<any>;
     checkBlacklistStatus(address: string): Promise<any>;
     getPendingFortuneAuthorizations(address: string, signature: string): Promise<any>;
     getGlobalContext(): Promise<RyoshiConfig>;
@@ -84,6 +84,7 @@ export interface RyoshiDynastiesApi {
     attack(request: AttackRequest, address: string, signature: string): Promise<any>;
     getBattleCardsByWallet(address: string, signature: string): Promise<Array<{tokenId: number, amount: number}>>;
     requestBattleCardsWithdrawalAuthorization(address: string, signature: string): Promise<any>;
+    requestSlotUnlockAuthorization(type: number, chainId: number, address: string, signature: string): Promise<any>;
 }
 
 // @deprecated move to OrderState once MAPI migrated

@@ -20,7 +20,7 @@ class Graph {
   constructor(apiKey?: string, chainId?: number) {
     const chain = chainId ?? ChainId.CRONOS
     this.ryoshiPresale = new RyoshiPresale();
-    this.ryoshiDynasties = new RyoshiDynasties();
+    this.ryoshiDynasties = new RyoshiDynasties(chain);
     this.staking = new Staking();
     this.farms = new Farms(chain);
   }

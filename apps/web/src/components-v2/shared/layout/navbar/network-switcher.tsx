@@ -184,7 +184,7 @@ export const NetworkSwitcher = () => {
     }
   }, []);
 
-  if (!chainId || (!pathname?.includes('/dex/') && !pathname?.includes('/drops/'))) {
+  if (!chainId) {
     return null
   }
 

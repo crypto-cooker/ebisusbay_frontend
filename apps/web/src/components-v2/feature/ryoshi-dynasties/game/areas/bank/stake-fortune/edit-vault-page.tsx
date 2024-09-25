@@ -22,21 +22,28 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import RdButton from "../../../../components/rd-button";
-import {BigNumber, Contract, ethers} from "ethers";
-import Fortune from "@src/global/contracts/Fortune.json";
+import {ethers} from "ethers";
 import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, findNextLowestNumber, pluralize, round} from "@market/helpers/utils";
 import Bank from "@src/global/contracts/Bank.json";
-import {appConfig} from "@src/config";
 import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
-import {commify} from "ethers/lib/utils";
+import {commify, formatEther} from "ethers/lib/utils";
 import moment from "moment/moment";
-import {useQueryClient} from "@tanstack/react-query";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
+import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
+import {
+  BankStakeTokenContext,
+  BankStakeTokenContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
+import {useAppChainConfig} from "@src/config/hooks";
+import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {useWriteContract} from "wagmi";
+import {useFrtnContract} from "@src/global/hooks/contracts";
+import {Address, parseEther} from "viem";
+import {parseErrorMessage} from "@src/helpers/validator";
 
-const config = appConfig();
 
 const steps = {
   form: 'form',
@@ -50,10 +57,16 @@ interface EditVaultPageProps {
 }
 
 const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
-  const user = useUser();
   const {config: rdConfig, refreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const queryClient = useQueryClient();
-  const [runAuthedFunction] = useAuthedFunction();
+  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { config: chainConfig } = useAppChainConfig(bankChainId);
+  const frtnContract = useFrtnContract(bankChainId);
+  const { switchNetworkAsync } = useSwitchNetwork();
+  const { chainId: activeChainId} = useActiveChainId();
+  const { writeContractAsync } = useWriteContract();
+
+  const user = useUser();
+  const [runAuthedFunction] = useAuthedFunctionWithChainID(bankChainId);
 
   const [currentStep, setCurrentStep] = useState(steps.form);
   const [isExecuting, setIsExecuting] = useState(false);
@@ -84,19 +97,15 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
   }
 
   const checkForApproval = async () => {
-    const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-    const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
-    const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), config.contracts.bank);
-    return totalApproved as BigNumber;
+    const totalApproved = await frtnContract?.read.allowance([user.address as Address, chainConfig.contracts.bank]);
+    return totalApproved as bigint;
   }
 
   const checkForFortune = async () => {
     try {
       setIsRetrievingFortune(true);
-      const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-      const fortuneContract = new Contract(config.contracts.fortune, Fortune, readProvider);
-      const totalFortune = await fortuneContract.balanceOf(user.address?.toLowerCase());
-      const formatedFortune = Number(ethers.utils.hexValue(BigNumber.from(totalFortune)))/1000000000000000000;
+      const totalFortune = await frtnContract?.read.balanceOf([user.address as Address]);
+      const formatedFortune = +formatEther(totalFortune as bigint);
       setUserFortune(formatedFortune);
     } finally {
       setIsRetrievingFortune(false);
@@ -144,38 +153,48 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
       setIsExecuting(true);
       setExecutingLabel('Staking');
 
-      const bankContract = new Contract(config.contracts.bank, Bank, user.provider.getSigner());
+      if (activeChainId !== bankChainId) {
+        await switchNetworkAsync(bankChainId);
+        return;
+      }
 
       if (type === 'duration') {
-        const tx = await bankContract.increaseLengthForVault(daysToStake * 86400, vault.index);
-        const receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        const txHash = await writeContractAsync({
+          address: chainConfig.contracts.bank,
+          abi: Bank,
+          functionName: 'increaseLengthForVault',
+          args: [daysToStake * 86400, vault.index],
+        });
+        toast.success(createSuccessfulTransactionToastContent(txHash, bankChainId));
       } else {
         const totalApproved = await checkForApproval();
-        const desiredFortuneAmount = ethers.utils.parseEther(Math.floor(fortuneToStake).toString());
+        const desiredFortuneAmount = parseEther(Math.floor(fortuneToStake).toString());
 
-        if(totalApproved.lt(desiredFortuneAmount)){
-          const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
-          const tx = await fortuneContract.approve(config.contracts.bank, desiredFortuneAmount);
-          const receipt = await tx.wait();
-          toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        if (totalApproved < desiredFortuneAmount) {
+          const txHash = await frtnContract?.write.approve(
+            [chainConfig.contracts.bank as `0x${string}`, desiredFortuneAmount],
+            {
+              account: user.address!,
+              chain: chainConfig.chain
+            }
+          );
+          toast.success(createSuccessfulTransactionToastContent(txHash ?? '', bankChainId));
         }
 
-        const tx = await bankContract.increaseDepositForVault(ethers.utils.parseEther(String(fortuneToStake)), vault.index);
-        const receipt = await tx.wait();
-        toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+        const txHash = await writeContractAsync({
+          address: chainConfig.contracts.bank,
+          abi: Bank,
+          functionName: 'increaseDepositForVault',
+          args: [parseEther(String(fortuneToStake)), vault.index],
+        });
+
+        toast.success(createSuccessfulTransactionToastContent(txHash, bankChainId));
       }
       refreshUser();
       setCurrentStep(steps.complete);
     } catch (error: any) {
       console.log(error)
-      if(error.response !== undefined) {
-        console.log(error)
-        toast.error(error.response.data.error.metadata.message)
-      }
-      else {
-        toast.error(error);
-      }
+      toast.error(parseErrorMessage(error));
     } finally {
       setIsExecuting(false);
     }
@@ -313,7 +332,7 @@ const EditVaultPage = ({vault, type, onReturn}: EditVaultPageProps) => {
                   <Box fontSize='sm' fontWeight='bold'>Balance: {isRetrievingFortune ? <Spinner size='sm'/> : commify(round(userFortune))}</Box>
                   <Flex justify='end' align='center'>
                     <FortuneIcon boxSize={6} />
-                    <Box ms={1}>$Fortune</Box>
+                    <Box ms={1}>$FRTN</Box>
                   </Flex>
                 </VStack>
               )}
@@ -379,7 +398,7 @@ const StakeComplete = ({amount, duration, onReturn}: StakeCompleteProps) => {
     <Box py={4}>
       {!!amount && amount > 0 && (
         <Box textAlign='center' mt={2}>
-          An extra {amount} $Fortune has now been staked to this vault!
+          An extra {amount} $FRTN has now been staked to this vault!
         </Box>
       )}
       {!!duration && duration > 0 && (

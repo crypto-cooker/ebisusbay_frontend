@@ -21,6 +21,7 @@ import {useUser, useUserTheme} from "@src/components-v2/useUser";
 import {viemClients} from "@eb-pancakeswap-web/utils/viem";
 import {DEFAULT_CHAIN_ID} from "@src/config/chains";
 import ImageService from "@src/core/services/image";
+import {PrimaryButton} from "@src/components-v2/foundation/button";
 
 // Where chain is not supported or page not supported
 export function UnsupportedNetworkModal({ pageSupportedChains }: { pageSupportedChains: number[] }) {
@@ -76,8 +77,9 @@ export function UnsupportedNetworkModal({ pageSupportedChains }: { pageSupported
             Please switch your network to continue
           </Text>
           {canSwitch ? (
-            <Button
+            <PrimaryButton
               w='full'
+              fontSize='md'
               isLoading={isLoading}
               onClick={() => {
                 if (supportedChains.map((c) => c?.id).includes(chainId)) {
@@ -94,7 +96,7 @@ export function UnsupportedNetworkModal({ pageSupportedChains }: { pageSupported
               ) : (
                 'Switch network'
               )}
-            </Button>
+            </PrimaryButton>
           ) : (
             <Text>
               Unable to switch network. Please try it on your wallet
