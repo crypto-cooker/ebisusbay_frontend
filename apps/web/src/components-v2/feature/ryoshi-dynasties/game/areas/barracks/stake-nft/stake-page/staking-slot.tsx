@@ -29,6 +29,8 @@ import {
   useBarracksNftStakingHandlers
 } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/hooks";
 import {ChainLogo} from "@dex/components/logo";
+import {toast} from "react-toastify";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 
 interface StakingSlotProps {
   pendingNft?: PendingNft;
@@ -39,9 +41,20 @@ interface StakingSlotProps {
 
 const StakingSlot = ({pendingNft, isUnlocked, onSelect, isInDialog}: StakingSlotProps) => {
   const {selectedChainId} = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
+  const { chainId: activeChainId} = useActiveChainId();
   const {removeNft} = useBarracksNftStakingHandlers();
 
   const isNftOnWrongChain = pendingNft && pendingNft.chainId !== selectedChainId;
+
+  const handleClick = () => {
+    if (activeChainId !== selectedChainId) {
+      toast.error('Please switch network to unlock slot');
+      return;
+    }
+
+    onSelect();
+  };
+
   return (
     <Box w='120px'>
       {!!pendingNft ? (
@@ -152,7 +165,7 @@ const StakingSlot = ({pendingNft, isUnlocked, onSelect, isInDialog}: StakingSlot
                   justify='center'
                   fontWeight='semibold'
                   textAlign='center'
-                  onClick={onSelect}
+                  onClick={handleClick}
                 >
                   <Center>
                     {isInDialog ? (
