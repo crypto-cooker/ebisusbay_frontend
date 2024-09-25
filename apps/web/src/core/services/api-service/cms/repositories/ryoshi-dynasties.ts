@@ -559,8 +559,15 @@ class RyoshiDynastiesRepository extends CmsRepository {
   }
 
   async requestSlotUnlockAuthorization(type: number, chainId: number, address: string, signature: string) {
+    let area = 'bank';
+    if (type === 1) {
+      area = 'bank'
+    } else if (type === 2) {
+      area = 'barracks'
+    }
+
     const response = await this.cms.post(
-      `ryoshi-dynasties/staking/authorize/bank/unlock-slot`,
+      `ryoshi-dynasties/staking/authorize/${area}/unlock-slot`,
       {
         type,
         chainId
