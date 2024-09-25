@@ -6,7 +6,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {useAppConfig} from "@src/config/hooks";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {DEFAULT_CHAIN_ID} from "@src/config/chains";
+import {DEFAULT_CHAIN_ID, SUPPORTED_RD_CHAIN_CONFIGS} from "@src/config/chains";
 import {NextSlot, PendingNft} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/types";
 import {StakedToken} from "@src/core/services/api-service/graph/types";
 import {ApiService} from "@src/core/services/api-service";
@@ -18,11 +18,12 @@ import {getNft} from "@src/core/api/endpoints/nft";
 import {ciEquals} from "@market/helpers/utils";
 import {BarracksStakeNftContext} from "../context";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import {Box, Select, Stack} from "@chakra-ui/react";
+import {Box, Flex, Select, Stack} from "@chakra-ui/react";
 import StakingBlock
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/staking-block";
 import UnstakedNfts
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/unstaked-nfts";
+import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
 
 const StakePage = () => {
   const user = useUser();
@@ -167,18 +168,18 @@ const StakePage = () => {
       <RdModalBox mx={1} textAlign='center'>
         Ryoshi Tales NFTs can be staked to earn extra battle units per slot. Some NFTs may require a weapon trait. Staked NFTs remain staked for the duration of the game while troops have been deployed or delegated.
       </RdModalBox>
-      {/*<Box px={1} mt={2}>*/}
-      {/*  <Flex direction='row' justify='center' mb={2}>*/}
-      {/*    {SUPPORTED_RD_CHAIN_CONFIGS.map(({name, chain}) => (*/}
-      {/*      <RdTabButton*/}
-      {/*        isActive={selectedChainId === chain.id}*/}
-      {/*        onClick={() => handleChainChange(chain.id)}*/}
-      {/*      >*/}
-      {/*        {name}*/}
-      {/*      </RdTabButton>*/}
-      {/*    ))}*/}
-      {/*  </Flex>*/}
-      {/*</Box>*/}
+      <Box px={1} mt={2}>
+        <Flex direction='row' justify='center' mb={2}>
+          {SUPPORTED_RD_CHAIN_CONFIGS.map(({name, chain}) => (
+            <RdTabButton
+              isActive={selectedChainId === chain.id}
+              onClick={() => handleChainChange(chain.id)}
+            >
+              {name}
+            </RdTabButton>
+          ))}
+        </Flex>
+      </Box>
       <StakingBlock refetchSlotUnlockContext={refetch} />
       <Box p={4}>
         <Stack direction='row' justify='space-between' mb={2}>

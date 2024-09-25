@@ -266,7 +266,7 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
     battleField: '0x3d01a0CcFD1E232A238676dc765740Ecd2aA42b0',
     resources: '0x8D72E7E434Dab2c1e579BE596c248E19bB70e624',
     bank: '0x2FaE7e00E8F7ec5f9CaF2B1CC006137c4d257E4c',
-    barracks: '0x612eAE69d2A8911c8A37a64f8016cB7490b3D5Eb',
+    barracks: '0xe835007c10330a2dd2a60ed5c59753c7211afb23',
     fortune: '0x6f3ff3c76b6dd1d2b4cfc3846f6f1bcba757bf24',
     rewards: '0x72fFE8EA7512c96Ba0c5b868A62eEfb054F0fe38',
     presaleVaults: ADDRESS_ZERO,

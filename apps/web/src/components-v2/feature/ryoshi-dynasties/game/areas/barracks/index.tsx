@@ -10,6 +10,8 @@ import ImageService from "@src/core/services/image";
 
 import StakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft";
 import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/claim-rewards';
+import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
+import {SUPPORTED_RD_CHAIN_CONFIGS} from "@src/config/chains";
 
 const gothamBook = localFont({
   src: '../../../../../../global/assets/fonts/Gotham-Book.woff2',
@@ -21,7 +23,8 @@ interface BarracksProps {
 }
 
 const Barracks = ({onBack}: BarracksProps) => {
-  const [handleAuthedNavigation] = useAuthedFunction();
+  const [handleDefaultAuthedNavigation] = useAuthedFunction();
+  const [handleChainAuthedNavigation] = useAuthedFunctionWithChainID(SUPPORTED_RD_CHAIN_CONFIGS.map(({chain}) => chain.id));
 
   const onClaimedRewards = () => {
     onCloseClaimRewards();
@@ -103,8 +106,8 @@ const Barracks = ({onBack}: BarracksProps) => {
 
             <Flex align={'center'} minH={'calc(100vh - 175px)'} justifyContent={'center'}>
               <VStack spacing={4} align='stretch'>
-                <RdButton onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
-                <RdButton fontSize='md' onClick={() => handleAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
+                <RdButton onClick={() => handleChainAuthedNavigation(onOpenStakeNFTs)}>Stake NFTs</RdButton>
+                <RdButton fontSize='md' onClick={() => handleDefaultAuthedNavigation(onOpenClaimRewards)}>Claim Battle Rewards</RdButton>
               </VStack>
             </Flex>
           </Flex>
