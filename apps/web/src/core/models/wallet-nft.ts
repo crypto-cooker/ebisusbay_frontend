@@ -32,7 +32,7 @@ class WalletNft {
   listable?: boolean = false;
   listed?: boolean = false;
   listingId?: string;
-  chain: string;
+  chain: number;
   hidden?: boolean = false;
 
   constructor(props: WalletNft) {

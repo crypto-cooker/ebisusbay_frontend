@@ -18370,7 +18370,7 @@
       "is1155": false,
       "address": "0xB494b51a76E9b95708c9Fa9D1477FE5e3eFAf281",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Hi! Meet the Rebel Kangas, the bad guys on the chain! Calling out scams, pumps, and dumps and taking no nonsense. We're a force for good but labeled the bad guys.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/rebel-kangas/avatar.webp",
@@ -25087,7 +25087,7 @@
       "is1155": false,
       "address": "0xfD9B820f09B1f1f11b1537274e20FE257Dc0d3E4",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Crikey! Have you heard about Battle Roo, our fair dinkum NFT collection from Roo Finance? Here's why you should take the leap and hop on board! With our collection boasting over a thousand AI backgrounds, 30+ outback-inspired skins, 70+ bush-style outfits, and 30 true-blue weapons, we've got more unique combos than kangaroos at a watering hole! Now, let's get down to the nitty-gritty. We're not just about looking good; we're about doing good too. Our entire Battle Roo collection is backed by a whopping 24 million $Weedcoin for staking. ",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/battle-roos/avatar.webp",
@@ -25114,7 +25114,7 @@
       "is1155": false,
       "address": "0x1406904e110f9f51d3101a96627dddc80660780d",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "Roo Finance OG",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/roo-og/avatar.webp",
@@ -25141,7 +25141,7 @@
       "is1155": false,
       "address": "0xd94898C23C13341c4E5B5a054D07c400c8718E17",
       "onChain": false,
-      "listable": true,
+      "listable": false,
       "metadata": {
         "description": "NFT Booster collection for Roo Finance",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/bored-punk-roo/avatar.webp",
@@ -26443,7 +26443,7 @@
       "slug": "y-plush-nft",
       "chain": 25,
       "is1155": false,
-      "address": "0xCEb4fD89842A39a55840492a2E5013207Aef62e1",
+      "address": "0xEA9dB8983f3F7E6e25F0Ca01A9Ba5F4A462B9718",
       "onChain": false,
       "listable": false,
       "metadata": {
@@ -28310,7 +28310,7 @@
       "is1155": false,
       "address": "0x32659aF8C200Fe5E7BE52BC575a4A1212a26B077",
       "onChain": false,
-      "listable": false,
+      "listable": true,
       "metadata": {
         "description": "Crohounds is a unique NFT collection featuring 2,000 digitally generated hounds, each with over 55 distinct traits. These one-of-a-kind hounds offer a rich variety of characteristics, making every piece special. Owners can earn $cro in the project's Discord , combining the excitement of digital collectibles with cryptocurrency rewards. Join the Crohounds community to collect, trade, and earn while enjoying exclusive benefits and engaging with fellow enthusiasts.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crohounds/avatar.webp",
@@ -29279,6 +29279,102 @@
         "doxx": "public",
         "kyc": "hidden",
         "verified": true
+      }
+    },
+    {
+      "name": "WOLF",
+      "slug": "wolf-1",
+      "is1155": false,
+      "address": "0x75ef6ce785c660e3f52446664a61eb41a31dc4a2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "avatar": "",
+        "card": "",
+        "banner": "",
+        "website": "https://wolfswap.app",
+        "twitter": "",
+        "discord": "",
+        "telegram": "",
+        "categories": [
+          "collectibles"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "90 Bears",
+      "slug": "90-bears",
+      "is1155": false,
+      "address": "0xb22713d8681f454a2d826528D3deb9d3681f97A2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "These bears are fight to earn! Staking available and holders earn various tokens weekly for holding.",
+        "website": "https://ninetiestoken.xyz/",
+        "twitter": "https://x.com/99BottlesofBear",
+        "discord": "https://discord.gg/UCKDa7fQ",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Moonshine Bears Collection",
+      "slug": "moonshine-bears-collection",
+      "is1155": false,
+      "address": "0x0407549a03240A7E978d900a13388a5f70DB89b2",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "",
+        "website": "https://ninetiestoken.xyz/",
+        "twitter": "https://x.com/99BottlesofBear",
+        "discord": "https://discord.gg/UCKDa7fQ",
+        "categories": [
+          "utility"
+        ]
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
+    },
+    {
+      "name": "Euro Pigron 2024",
+      "slug": "ary",
+      "chain": 388,
+      "chainId": 388,
+      "is1155": false,
+      "address": "0x0f08346F6a9F6Dc9e6D39a4Bdd5C731A7873db5C",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "1,000 exclusive and tradable NFTs designed for ARY fans, each featuring unique traits and expressions that make every piece truly one-of-a-kind.   Powered by:   - Thomas (Founder of ARY)   - Kevin (Artist) [@Vcmxss]   - Piero (Data Optimizer) [@PieroPasqiari88]",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/avatar.webp",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/card.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ary/banner.webp",
+        "website": "https://www.aryoshin.com/",
+        "twitter": "https://twitter.com/CronosAry",
+        "discord": "https://discord.gg/KatxH57WYU",
+        "telegram": "https://t.me/ARY_FAM",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": true,
+        "kyc": true
       }
     }
   ],

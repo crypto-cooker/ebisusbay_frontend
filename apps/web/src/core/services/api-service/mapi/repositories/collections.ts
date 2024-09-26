@@ -29,9 +29,12 @@ class CollectionsRepository extends MapiRepository {
   //   });
   // }
 
-  async getCollectionTraits(address: string) {
+  async getCollectionTraits(address: string, chainId: number) {
     return await this.api.get(`collectionrarity`, {
-      params: {address}
+      params: {
+        address,
+        chain: chainId
+      }
     });
   }
 

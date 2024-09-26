@@ -71,9 +71,9 @@ export async function getCollectionMetadata(contractAddress, sort, filter) {
   return data.data;
 }
 
-export async function getCollectionTraits(contractAddress) {
+export async function getCollectionTraits(contractAddress, chainId) {
   try {
-    const result = await ApiService.withoutKey().getCollectionTraits(contractAddress);
+    const result = await ApiService.withoutKey().getCollectionTraits(contractAddress, chainId);
     if (Object.keys(result).length > 0) {
       return result;
     }

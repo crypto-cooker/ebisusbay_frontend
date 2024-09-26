@@ -5,12 +5,12 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box,
+  Box, HStack,
   Icon,
   ListItem,
   Stack,
   Text,
-  UnorderedList,
+  UnorderedList, VStack,
 } from "@chakra-ui/react"
 import localFont from 'next/font/local';
 import {
@@ -25,6 +25,9 @@ import {
   RyoshiConfigTraitInclusionType
 } from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import {titleCase} from "@market/helpers/utils";
+import {useChainId} from "wagmi";
+import {useChainById} from "@src/config/hooks";
+import {ChainLogo} from "@dex/components/logo";
 
 const gothamBook = localFont({ src: '../../../../../../../global/assets/fonts/Gotham-Book.woff2' })
 
@@ -77,6 +80,8 @@ const FaqPage = () => {
           <EligibilityCriteriaItem name='Fortune Teller' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'fortuneteller')!} />
           <EligibilityCriteriaItem name='Ryoshi Tales (Goblin Gala)' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales' && c.minId === 1 && c.maxId === 500)!} />
           <EligibilityCriteriaItem name='Ryoshi Tales (Celestial Celebration)' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales' && c.minId === 501 && c.maxId === 700)!} />
+          <EligibilityCriteriaItem name='Pixel Ryoshi' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'pixel-ryoshi')!} />
+          <EligibilityCriteriaItem name='Moggy Money Brokers' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'moggy-money-brokers')!} />
         </Accordion>
       </Box>
     </Stack>
@@ -86,72 +91,79 @@ const FaqPage = () => {
 export default FaqPage;
 
 const EligibilityCriteriaItem = ({ name, collectionStakingConfig }: { name: string, collectionStakingConfig: RyoshiConfigBankStakingNFTCollection }) => {
+  const chain = useChainById(collectionStakingConfig.chainId);
 
   return (
     <AccordionItem>
       <AccordionButton fontSize='sm' fontWeight='bold'>
         <Box as="span" flex='1' textAlign='left' fontSize='sm'>
-          {name} Information
+          Information: {name}
         </Box>
         <AccordionIcon />
       </AccordionButton>
       <AccordionPanel pb={4}>
-        {collectionStakingConfig.apr.multipliers.length > 0 && (
-          <>
-            <Text>{name} NFTs use the following rank-based <strong>multipliers</strong>:</Text>
-            <UnorderedList>
-              {collectionStakingConfig.apr.multipliers.map((multiplier, i) => (
-                <ListItem key={i}>{multiplier.percentile}th percentile: x{commify(multiplier.value)}%</ListItem>
-              ))}
-            </UnorderedList>
-          </>
-        )}
-        {collectionStakingConfig.apr.adders.length > 0 && (
-          <>
-            <Text>{name} NFTs use the following rank-based <strong>adders</strong>:</Text>
-            <UnorderedList>
-              {collectionStakingConfig.apr.adders.map((adder, i) => (
-                <ListItem key={i}>{adder.percentile}th percentile: +{commify(adder.value)}%</ListItem>
-              ))}
-            </UnorderedList>
-          </>
-        )}
-        {collectionStakingConfig.apr.ids.length > 0 && (
-          <>
-            <Text>Bonus for {name} NFTs are <strong>additive</strong> and based on the NFT ID:</Text>
-            <UnorderedList>
-              {collectionStakingConfig.apr.ids.map((id, i) => (
-                <ListItem key={i}>ID {id.id}: +{commify(id.bonus)}%</ListItem>
-              ))}
-            </UnorderedList>
-          </>
-        )}
-        {!!collectionStakingConfig.troops && collectionStakingConfig.troops.values.length > 0 && (
-          <Box mt={2}>
-            <Text>Troops for {name} NFTs use the following rank-based <strong>values</strong>:</Text>
-            <UnorderedList>
-              {collectionStakingConfig.troops.values.map((multiplier, i) => (
-                <ListItem key={i}>{multiplier.percentile}th percentile: x{commify(multiplier.value)}</ListItem>
-              ))}
-            </UnorderedList>
-
-            {collectionStakingConfig.troops.bonus.traits.length > 0 && (
-              <Box mt={2}>
-                <Text>NFTs adhering to the following specific trait specifications will gain an additional <strong>{collectionStakingConfig.troops.bonus.value}</strong> troops:</Text>
-                {collectionStakingConfig!.troops.bonus.traits.map((trait) => (
-                  <Box mt={2}>
-                    <Text>For the "{titleCase(trait.type)}" trait, NFTs must {trait.inclusion === RyoshiConfigTraitInclusionType.EXCLUDE && <>NOT</>} contain any of the following:</Text>
-                    <UnorderedList>
-                      {trait.values.map((value) => (
-                        <ListItem key={`${trait.type}${value}`}>{titleCase(value.toUpperCase())}</ListItem>
-                      ))}
-                    </UnorderedList>
-                  </Box>
+        <VStack align='stretch'>
+          <HStack>
+            <ChainLogo chainId={chain.id} />
+            <Box>This collection is on <strong>{chain.name}</strong></Box>
+          </HStack>
+          {collectionStakingConfig.apr.multipliers.length > 0 && (
+            <>
+              <Text>{name} NFTs use the following rank-based <strong>multipliers</strong>:</Text>
+              <UnorderedList>
+                {collectionStakingConfig.apr.multipliers.map((multiplier, i) => (
+                  <ListItem key={i}>{multiplier.percentile}th percentile: x{commify(multiplier.value)}%</ListItem>
                 ))}
-              </Box>
-            )}
-          </Box>
-        )}
+              </UnorderedList>
+            </>
+          )}
+          {collectionStakingConfig.apr.adders.length > 0 && (
+            <>
+              <Text>{name} NFTs use the following rank-based <strong>adders</strong>:</Text>
+              <UnorderedList>
+                {collectionStakingConfig.apr.adders.map((adder, i) => (
+                  <ListItem key={i}>{adder.percentile}th percentile: +{commify(adder.value)}%</ListItem>
+                ))}
+              </UnorderedList>
+            </>
+          )}
+          {collectionStakingConfig.apr.ids.length > 0 && (
+            <>
+              <Text>Bonus for {name} NFTs are <strong>additive</strong> and based on the NFT ID:</Text>
+              <UnorderedList>
+                {collectionStakingConfig.apr.ids.map((id, i) => (
+                  <ListItem key={i}>ID {id.id}: +{commify(id.bonus)}%</ListItem>
+                ))}
+              </UnorderedList>
+            </>
+          )}
+          {!!collectionStakingConfig.troops && collectionStakingConfig.troops.values.length > 0 && (
+            <Box mt={2}>
+              <Text>Troops for {name} NFTs use the following rank-based <strong>values</strong>:</Text>
+              <UnorderedList>
+                {collectionStakingConfig.troops.values.map((multiplier, i) => (
+                  <ListItem key={i}>{multiplier.percentile}th percentile: x{commify(multiplier.value)}</ListItem>
+                ))}
+              </UnorderedList>
+
+              {collectionStakingConfig.troops.bonus.traits.length > 0 && (
+                <Box mt={2}>
+                  <Text>NFTs adhering to the following specific trait specifications will gain an additional <strong>{collectionStakingConfig.troops.bonus.value}</strong> troops:</Text>
+                  {collectionStakingConfig!.troops.bonus.traits.map((trait) => (
+                    <Box mt={2}>
+                      <Text>For the "{titleCase(trait.type)}" trait, NFTs must {trait.inclusion === RyoshiConfigTraitInclusionType.EXCLUDE && <>NOT</>} contain any of the following:</Text>
+                      <UnorderedList>
+                        {trait.values.map((value) => (
+                          <ListItem key={`${trait.type}${value}`}>{titleCase(value.toUpperCase())}</ListItem>
+                        ))}
+                      </UnorderedList>
+                    </Box>
+                  ))}
+                </Box>
+              )}
+            </Box>
+          )}
+        </VStack>
       </AccordionPanel>
     </AccordionItem>
   )

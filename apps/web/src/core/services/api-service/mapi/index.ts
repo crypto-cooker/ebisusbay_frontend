@@ -171,8 +171,8 @@ class Mapi {
     )
   }
 
-  async getCollectionTraits(address: string) {
-    const response = await this.collections.getCollectionTraits(address);
+  async getCollectionTraits(address: string, chainId: number) {
+    const response = await this.collections.getCollectionTraits(address, chainId);
 
     if (response.data.collections.length > 0 && response.data.collections[0].rarity) {
       const {['_meta']: _, ...filteredRarity} = response.data.collections[0].rarity;
