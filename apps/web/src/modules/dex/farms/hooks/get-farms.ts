@@ -3,7 +3,7 @@ import {BigNumber, ethers} from "ethers";
 import {DerivedFarm, FarmState, MapiFarm, MapiPairFarm} from "@dex/farms/constants/types";
 import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
 import {ApiService} from "@src/core/services/api-service";
-import {round} from "@market/helpers/utils";
+import {hasDatePassedSeconds, round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
 import {Address} from "viem";
@@ -26,8 +26,17 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
         const derivedUSDBigNumber = ethers.utils.parseUnits(derivedUSD, 18);
         const totalDollarValue = lpBalance.mul(derivedUSDBigNumber).div(ethers.constants.WeiPerEther);
         const stakedLiquidity = ethers.utils.formatUnits(totalDollarValue, 18);
-        const totalAllocPoints = pairFarm.rewarders.reduce((acc, rewarder) => acc + rewarder.allocPoint, 0);
-        const farmState = totalAllocPoints > 0 ? FarmState.ACTIVE : FarmState.FINISHED;
+
+        const activity = pairFarm.rewarders.reduce((acc, rewarder) =>  {
+          if (!rewarder.id.toString().startsWith('0x') && rewarder.allocPoint > 0) {
+            acc.native = true;
+          } else if (rewarder.rewardEnd && !hasDatePassedSeconds(rewarder.rewardEnd)) {
+            acc.tokens = true;
+          }
+
+          acc.state = acc.native || acc.tokens ? FarmState.ACTIVE : FarmState.FINISHED;
+          return acc;
+        }, {native: false, tokens: false, state: FarmState.FINISHED});
 
         const dailyRewards = await Promise.all(
           pairFarm.rewarders
@@ -65,7 +74,7 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
             dailyRewards: dailyRewards,
             stakedLiquidity: `$${commify(round(stakedLiquidity))}`,
             apr: `${['Infinity', 'NaN'].includes(pairFarm.apr) ? '-' : `${commify(round(pairFarm.apr, 2))}%`}`,
-            state: farmState,
+            state: activity.state,
             chainId: queryParams.chain
           }
         }
