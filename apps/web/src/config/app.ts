@@ -219,8 +219,7 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
             '0xA9448e3e496f75488306195F34e49a7fCE5cbD0c': ['cro'],
             '0x0977Ee79F7f6BedE288DD0264C77B4A1b32C48e8': ['cro'],
             '0x400e237c4F88e5728E0D6088315DeCD856a10EDd': ['cro'], // CroSkill Brand End
-            '0xabae2fd87bdc719165dc31a5b22316f974df5bdf': ['icy'], // ICY Brand
-            '0x0Ea3bE4Ca12b7B43e974264a210f4de0e273A027': ['icy'],
+            '0x0Ea3bE4Ca12b7B43e974264a210f4de0e273A027': ['icy'], // ICY Brand
             '0xbEa2F7082ad9B5e1138D5e94E00fbc63d7EC8612': ['icy'],
             '0x07174D2B657b2243E5C11Df2Cd3D4afD1E45DBBb': ['icy'],
             '0x4F68b2F90091B6C6012b487Faa7D267FC0Db86dE': ['icy'],

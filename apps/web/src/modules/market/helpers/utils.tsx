@@ -812,3 +812,11 @@ export const chunkArray = <T,>(array: T[], size: number): T[][] => {
     return array.slice(index * size, index * size + size);
   });
 };
+
+export const getUnixTimestamp = (): number => {
+  return Math.floor(Date.now() / 1000);
+}
+
+export const hasDatePassedSeconds = (unixTimestamp: number) => {
+  return getUnixTimestamp() > unixTimestamp;
+}
