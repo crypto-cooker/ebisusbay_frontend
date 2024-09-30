@@ -184,12 +184,14 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
               >
                 + New FRTN Vault
               </RdButton>
-              <RdButton
-                fontSize={{base: 'xl', sm: '2xl'}}
-                onClick={() => handleCreateVault(!!account ? account.vaults.length : 0, VaultType.LP)}
-              >
-                + New LP Vault
-              </RdButton>
+              {isZk && (
+                <RdButton
+                  fontSize={{base: 'xl', sm: '2xl'}}
+                  onClick={() => handleCreateVault(!!account ? account.lpVaults.length : 0, VaultType.LP)}
+                >
+                  + New LP Vault
+                </RdButton>
+              )}
             </Flex>
           </>
         ) : (

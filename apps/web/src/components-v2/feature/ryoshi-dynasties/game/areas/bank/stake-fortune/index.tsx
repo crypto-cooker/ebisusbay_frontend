@@ -24,7 +24,7 @@ interface StakeFortuneProps {
 
 const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
   const [page, setPage] = useState<ReactElement | null>(null);
-  const [title, setTitle] = useState<string>('Stake Fortune');
+  const [title, setTitle] = useState<string>('Stake Tokens');
   const [currentChainId, setCurrentChainId] = useState<SupportedChainId>(SUPPORTED_CHAIN_CONFIGS[0].chain.id);
   const [currentVaultType, setCurrentVaultType] = useState<VaultType>(VaultType.TOKEN);
   const { chainId: activeChainId} = useActiveChainId();

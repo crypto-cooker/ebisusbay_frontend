@@ -92,7 +92,8 @@ class RyoshiDynasties {
   }
 
   async stakingAccounts(walletAddress: string) {
-    const isZk = [ChainId.CRONOS_ZKEVM, ChainId.CRONOS_ZKEVM].includes(this.chainId);
+    const isZk = [ChainId.CRONOS_ZKEVM, ChainId.CRONOS_ZKEVM_TESTNET].includes(this.chainId);
+
     const query = `
       query StakingAccountsQuery($address: String) {
         stakingAccounts(where: {id: $address}) {
