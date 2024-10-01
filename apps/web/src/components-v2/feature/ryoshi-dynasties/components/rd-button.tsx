@@ -62,7 +62,7 @@ const RdButton = ({size = 'lg', stickyIcon, hoverIcon, loadingSpinner = true, ..
         borderColor: '#FFFFFF'
       }}
       bgColor='transparent !important'
-      {...props as BoxProps}
+      {...props as ButtonProps}
     >
       {(hoverIcon || stickyIcon || loadingSpinner) && (
         <Image

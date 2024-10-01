@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useMemo, useState} from "react";
 import {
   Accordion,
   AccordionButton,
@@ -55,6 +55,7 @@ import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 import {ChainId} from "@pancakeswap/chains";
+import VaultSummary from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/vault-summary";
 
 const config = appConfig();
 
@@ -77,9 +78,9 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
   const { data: account, status, error, refetch } = useQuery({
     queryKey: ['UserStakeAccount', user.address, currentTab],
     queryFn: () => ApiService.forChain(currentTab).ryoshiDynasties.getBankStakingAccount(user.address!),
-    enabled: !!user.address,
+    enabled: !!user.address && !!currentTab,
   });
-
+  console.log('INITIAL CHA', initialChainId, account)
   const [vaultGroup, setVaultGroup] = useState<any>(account?.vaults);
 
   const handleConnect = async () => {
@@ -106,6 +107,13 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
   const handleCreateVault = useCallback((vaultIndex: number, vaultType: VaultType) => {
     onCreateVault(vaultIndex, vaultType);
   }, []);
+
+  // Set initial vaultGroup state if account query initially returns undefined
+  useEffect(() => {
+    if (!vaultGroup && !!account) {
+      setVaultGroup(account.vaults)
+    }
+  }, [account]);
 
   return (
     <>
@@ -158,9 +166,10 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
                     <>
                       <Accordion defaultIndex={[0]} allowToggle>
                         {vaultGroup.map((vault, index) => (
-                          <Box key={vault.vaultId} mt={2}>
-                            <Vault
+                          <Box key={`${currentTab}${vault.vaultId}`} mt={2}>
+                            <VaultSummary
                               vault={vault}
+                              vaultType={currentVaultType}
                               index={index}
                               onEditVault={(type: string) => onEditVault(vault, type)}
                               onWithdrawVault={() => onWithdrawVault(vault)}
@@ -250,6 +259,7 @@ export default StakePage;
 
 interface VaultProps {
   vault: FortuneStakingAccount;
+  vaultType: VaultType;
   index: number;
   onEditVault: (type: string) => void;
   onWithdrawVault: () => void;
@@ -257,7 +267,7 @@ interface VaultProps {
   onClosed: () => void;
 }
 
-const Vault = ({vault, index, onEditVault, onWithdrawVault, onTokenizeVault, onClosed}: VaultProps) => {
+const Vault = ({vault, vaultType, index, onEditVault, onWithdrawVault, onTokenizeVault, onClosed}: VaultProps) => {
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useUser();
   const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
@@ -331,106 +341,108 @@ const Vault = ({vault, index, onEditVault, onWithdrawVault, onTokenizeVault, onC
     setMitama(mitama);
   }, [balance, daysToAdd, rdConfig]);
 
+  const tokenIcon = useMemo(() => {
+    return vaultType === VaultType.LP ? <>LP</> : <FortuneIcon boxSize={6} />
+  }, [vaultType]);
+
   return (
-    <Box>
-        <AccordionItem bgColor='#292626' rounded='md'>
-          <AccordionButton w='full' py={4}>
-            <Flex direction='column' w='full' align='start'>
-              <Flex w='full' align='center'>
-                <Box flex='1' textAlign='left' my='auto'>
-                  <Text fontSize='xs' color="#aaa">Vault {Number(vault.index) + 1}</Text>
-                  <Box fontWeight='bold'>{daysToAdd} days</Box>
-                </Box>
-                <Box>
-                  <VStack align='end' spacing={2} fontSize='sm'>
-                    <HStack fontWeight='bold'>
-                      <FortuneIcon boxSize={6} />
-                      <Box>{commify(round(balance))}</Box>
-                    </HStack>
-                    <Flex>
-                      <Tag variant='outline'>
-                        {round(totalApr, 2)}%
-                      </Tag>
-                      <Tag ms={2} variant='outline'>
-                        <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}
-                               alt="troopsIcon" boxSize={4}/>
-                        <Box ms={1}>
-                          {commify(troops)}
-                        </Box>
-                      </Tag>
-                    </Flex>
-                  </VStack>
-                </Box>
-                <Box ms={4}>
-                  <AccordionIcon/>
-                </Box>
-              </Flex>
-            </Flex>
-          </AccordionButton>
-          <AccordionPanel pb={0}>
-            <SimpleGrid columns={2}>
-              <Box>APR</Box>
-              <Box textAlign='end'>
-                <VStack align='end' spacing={0}>
-                  <Box fontWeight='bold'>{round(totalApr, 2)}%</Box>
-                  <Box fontSize='xs'>{baseApr}% Fortune stake + {round(bonusApr, 2)}% NFT stake</Box>
-                </VStack>
-              </Box>
-              <Box>Troops</Box>
-              <Box textAlign='end' fontWeight='bold'>{commify(troops)}</Box>
-              <Box>Mitama</Box>
-              <Box textAlign='end' fontWeight='bold'>{commify(mitama)}</Box>
-              <Box>End Date</Box>
-              <Box textAlign='end' fontWeight='bold'>{endDate}</Box>
-            </SimpleGrid>
-            {(Date.now() < vault.endTime * 1000) ? (
-              <>
-                <Center>
-                  <Stack direction={{base: 'column', sm: 'row'}} mt={4}>
-                    <Button onClick={() => onEditVault('amount')}>
-                      + Add Fortune
-                    </Button>
-                    {canIncreaseDuration && (
-                      <Button onClick={() => onEditVault('duration')}>
-                        + Increase Duration
-                      </Button>
-                    )}
-                    <Button
-                      leftIcon={<Icon as={FontAwesomeIcon} icon={faGem} />}
-                      onClick={onTokenizeVault}
-                    >
-                      Tokenize Vault
-                    </Button>
-                  </Stack>
-                </Center>
-                <Center mt={4}>
-                  <Button
-                    variant='unstyled'
-                    size='sm'
-                    fontWeight='normal'
-                    onClick={onWithdrawVault}
-                  >
-                    Emergency Withdraw
-                  </Button>
-                </Center>
-              </>
-            ) : (
-              <VStack mb={2} mt={4}>
-                <Text textAlign='center'>Vault staking term is complete! Close this vault to return the staked Fortune back to your account.</Text>
-                <RdButton
-                  w='200px'
-                  hoverIcon={false}
-                  onClick={handleCloseVault}
-                  isLoading={isExecutingClose}
-                  isDisabled={isExecutingClose}
-                  loadingText='Closing'
-                >
-                  Close Vault
-                </RdButton>
+    <AccordionItem bgColor='#292626' rounded='md'>
+      <AccordionButton w='full' py={4}>
+        <Flex direction='column' w='full' align='start'>
+          <Flex w='full' align='center'>
+            <Box flex='1' textAlign='left' my='auto'>
+              <Text fontSize='xs' color="#aaa">Vault {Number(vault.index) + 1}</Text>
+              <Box fontWeight='bold'>{daysToAdd} days</Box>
+            </Box>
+            <Box>
+              <VStack align='end' spacing={2} fontSize='sm'>
+                <HStack fontWeight='bold'>
+                  {tokenIcon}
+                  <Box>{commify(round(balance))}</Box>
+                </HStack>
+                <Flex>
+                  <Tag variant='outline'>
+                    {round(totalApr, 2)}%
+                  </Tag>
+                  <Tag ms={2} variant='outline'>
+                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()}
+                           alt="troopsIcon" boxSize={4}/>
+                    <Box ms={1}>
+                      {commify(troops)}
+                    </Box>
+                  </Tag>
+                </Flex>
               </VStack>
-            )}
-          </AccordionPanel>
-        </AccordionItem>
-    </Box>
+            </Box>
+            <Box ms={4}>
+              <AccordionIcon/>
+            </Box>
+          </Flex>
+        </Flex>
+      </AccordionButton>
+      <AccordionPanel pb={0}>
+        <SimpleGrid columns={2}>
+          <Box>APR</Box>
+          <Box textAlign='end'>
+            <VStack align='end' spacing={0}>
+              <Box fontWeight='bold'>{round(totalApr, 2)}%</Box>
+              <Box fontSize='xs'>{baseApr}% Fortune stake + {round(bonusApr, 2)}% NFT stake</Box>
+            </VStack>
+          </Box>
+          <Box>Troops</Box>
+          <Box textAlign='end' fontWeight='bold'>{commify(troops)}</Box>
+          <Box>Mitama</Box>
+          <Box textAlign='end' fontWeight='bold'>{commify(mitama)}</Box>
+          <Box>End Date</Box>
+          <Box textAlign='end' fontWeight='bold'>{endDate}</Box>
+        </SimpleGrid>
+        {(Date.now() < vault.endTime * 1000) ? (
+          <>
+            <Center>
+              <Stack direction={{base: 'column', sm: 'row'}} mt={4}>
+                <Button onClick={() => onEditVault('amount')}>
+                  + Add Fortune
+                </Button>
+                {canIncreaseDuration && (
+                  <Button onClick={() => onEditVault('duration')}>
+                    + Increase Duration
+                  </Button>
+                )}
+                <Button
+                  leftIcon={<Icon as={FontAwesomeIcon} icon={faGem} />}
+                  onClick={onTokenizeVault}
+                >
+                  Tokenize Vault
+                </Button>
+              </Stack>
+            </Center>
+            <Center mt={4}>
+              <Button
+                variant='unstyled'
+                size='sm'
+                fontWeight='normal'
+                onClick={onWithdrawVault}
+              >
+                Emergency Withdraw
+              </Button>
+            </Center>
+          </>
+        ) : (
+          <VStack mb={2} mt={4}>
+            <Text textAlign='center'>Vault staking term is complete! Close this vault to return the staked Fortune back to your account.</Text>
+            <RdButton
+              w='200px'
+              hoverIcon={false}
+              onClick={handleCloseVault}
+              isLoading={isExecutingClose}
+              isDisabled={isExecutingClose}
+              loadingText='Closing'
+            >
+              Close Vault
+            </RdButton>
+          </VStack>
+        )}
+      </AccordionPanel>
+    </AccordionItem>
   );
 }
