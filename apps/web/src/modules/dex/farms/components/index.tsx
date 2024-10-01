@@ -203,6 +203,9 @@ export default function FarmsPage() {
               <Switch isChecked={stakedOnly} onChange={() => setStakedOnly(!stakedOnly)}/>
               <Box fontSize={{base: 'sm', sm: 'md'}} fontWeight={{base: 'bold', sm: 'normal'}}>Staked only</Box>
             </Stack>
+            <Stack direction={{base: 'column-reverse', sm: 'row'}}>
+              <Button>Havest All</Button>
+            </Stack>
           </Stack>
           <Stack direction='row' align='center' mt={2}>
             <Box>
