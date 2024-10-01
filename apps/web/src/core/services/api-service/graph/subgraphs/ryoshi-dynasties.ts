@@ -92,8 +92,6 @@ class RyoshiDynasties {
   }
 
   async stakingAccounts(walletAddress: string) {
-    const isZk = [ChainId.CRONOS_ZKEVM, ChainId.CRONOS_ZKEVM_TESTNET].includes(this.chainId);
-
     const query = `
       query StakingAccountsQuery($address: String) {
         stakingAccounts(where: {id: $address}) {
@@ -109,7 +107,6 @@ class RyoshiDynasties {
             endTime
             vaultId
           }
-          ${isZk ? `
           lpVaults(where: {open: true}, first: 50, orderBy: startTime, orderDirection: desc) {
             balance
             id
@@ -121,7 +118,6 @@ class RyoshiDynasties {
             endTime
             vaultId
           }
-          ` : ''}
         }
       }
     `;

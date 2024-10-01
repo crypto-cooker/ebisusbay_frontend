@@ -145,7 +145,7 @@ export type AppChainConfig = {
     ryoshiWithKnife: HexString;
     farms: HexString;
   };
-  lpVaults: Array<{name: string, address1: Address, address2: Address}>
+  lpVaults: Array<{name: string, pair: Address, address1: Address, address2: Address}>
 }
 
 const cronosConfig: AppChainConfig = {
@@ -155,7 +155,7 @@ const cronosConfig: AppChainConfig = {
   urls: {
     subgraph: {
       root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
-      ryoshiDynasties: 'ryoshi-dynasties-meeple',
+      ryoshiDynasties: 'ryoshi-dynasties-lp-staking',
       ryoshiPresale: 'ryoshi-presale',
       stakedOwners: 'staked-owners-2',
       staking: 'staking',
@@ -191,8 +191,18 @@ const cronosConfig: AppChainConfig = {
     farms: '0x62eAEe24A848bEB06B8112D5A37587b3CF21F44D'
   },
   lpVaults: [
-    { name: 'FRTN/CRO', address1: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21', address2: '0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23' },
-    { name: 'FRTN/USDC', address1: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21', address2: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59'}
+    {
+      name: 'FRTN/CRO',
+      pair: '0xFc0A8Be90566e5329caeC3d9630a603453ac7E44',
+      address1: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
+      address2: '0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23'
+    },
+    {
+      name: 'FRTN/USDC',
+      pair: '0xAf56DF060Ca167361c66831801E0E17bB05bb313',
+      address1: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
+      address2: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
+    }
   ]
 }
 
@@ -203,7 +213,7 @@ const cronosTestnetConfig: AppChainConfig = {
   urls: {
     subgraph: {
       root: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
-      ryoshiDynasties: 'ryoshi-dynasties',
+      ryoshiDynasties: 'ryoshi-dynasties-lp-staking',
       ryoshiPresale: 'ryoshi-presale',
       stakedOwners: 'staked-owners',
       staking: 'staking',
@@ -239,7 +249,12 @@ const cronosTestnetConfig: AppChainConfig = {
     farms: '0xef5E16A3849E76eF44012EEdfDF40fFeFffcdC68'
   },
   lpVaults: [
-    { name: 'FRTN/CRO', address1: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071', address2: '0x467604E174c87042fcc4412c5BC70AaBc8733016' }
+    {
+      name: 'FRTN/CRO',
+      pair: '0x7c80f7062F8Caaf3DC6Baf3CE4e6e2162cB99503',
+      address1: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
+      address2: '0x467604E174c87042fcc4412c5BC70AaBc8733016'
+    }
   ]
 }
 
@@ -286,7 +301,12 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
     farms: '0x1f76a013a77371aeed10c47a04acbf2e719926ed'
   },
   lpVaults: [
-    { name: 'FRTN/CRO', address1: '0x6f3ff3c76b6dd1d2b4cfc3846f6f1bcba757bf24', address2: '0xf9Bb37013de8Cd3f89b3623Af9EE1b1B32D872C9' }
+    {
+      name: 'FRTN/CRO',
+      pair: '0x31b0acF3f70d664B2b70f3eF48DE95913CF13677',
+      address1: '0x6f3ff3c76b6dd1d2b4cfc3846f6f1bcba757bf24',
+      address2: '0xf9Bb37013de8Cd3f89b3623Af9EE1b1B32D872C9'
+    }
   ]
 }
 
@@ -333,7 +353,12 @@ const cronosZkEVMConfig: AppChainConfig = {
     farms: '0xbcE43dabc90E475D3c203603782962B85aDC32d4'
   },
   lpVaults: [
-    { name: 'FRTN/zkCRO', address1: '0x96e03FA6c5aB3a7F2e7098Dd07c8935493294E26', address2: '0xC1bF55EE54E16229d9b369a5502Bfe5fC9F20b6d' }
+    {
+      name: 'FRTN/zkCRO',
+      pair: '0xe3bc309431b15e8fa822643b716faf2146ccb122',
+      address1: '0x96e03FA6c5aB3a7F2e7098Dd07c8935493294E26',
+      address2: '0xC1bF55EE54E16229d9b369a5502Bfe5fC9F20b6d'
+    }
   ]
 }
 

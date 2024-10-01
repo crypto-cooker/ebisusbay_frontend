@@ -73,14 +73,13 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
   const user = useUser();
   const [currentTab, setCurrentTab] = useState<SupportedChainId>(initialChainId);
   const [currentVaultType, setCurrentVaultType] = useState<VaultType>(VaultType.TOKEN);
-  const isZk = [ChainId.CRONOS_ZKEVM, ChainId.CRONOS_ZKEVM_TESTNET].includes(currentTab);
 
   const { data: account, status, error, refetch } = useQuery({
     queryKey: ['UserStakeAccount', user.address, currentTab],
     queryFn: () => ApiService.forChain(currentTab).ryoshiDynasties.getBankStakingAccount(user.address!),
     enabled: !!user.address && !!currentTab,
   });
-  console.log('INITIAL CHA', initialChainId, account)
+
   const [vaultGroup, setVaultGroup] = useState<any>(account?.vaults);
 
   const handleConnect = async () => {
@@ -91,16 +90,11 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
     setCurrentTab(chainId);
     handleVaultTypeChange(VaultType.TOKEN);
     onUpdateChainContext(chainId);
-  }, [isZk]);
+  }, []);
 
   const handleVaultTypeChange = useCallback((vaultType: VaultType) => {
-    if (isZk) {
-      setVaultGroup(vaultType === VaultType.LP ? account?.lpVaults : account?.vaults);
-      setCurrentVaultType(vaultType);
-    } else {
-      setVaultGroup(account?.vaults);
-      setCurrentVaultType(VaultType.TOKEN);
-    }
+    setVaultGroup(vaultType === VaultType.LP ? account?.lpVaults : account?.vaults);
+    setCurrentVaultType(vaultType);
     onUpdateVaultContext(vaultType)
   }, [account]);
 
@@ -151,15 +145,13 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
                       >
                         Token
                       </Button>
-                      {isZk && (
-                        <Button
-                          aria-label='Fortune LP Vaults'
-                          isActive={currentVaultType === VaultType.LP}
-                          onClick={() => handleVaultTypeChange(VaultType.LP)}
-                        >
-                          LP
-                        </Button>
-                      )}
+                      <Button
+                        aria-label='Fortune LP Vaults'
+                        isActive={currentVaultType === VaultType.LP}
+                        onClick={() => handleVaultTypeChange(VaultType.LP)}
+                      >
+                        LP
+                      </Button>
                     </ButtonGroup>
                   </HStack>
                   {!!vaultGroup && vaultGroup.length > 0 ? (
@@ -193,14 +185,12 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
               >
                 + New FRTN Vault
               </RdButton>
-              {isZk && (
-                <RdButton
-                  fontSize={{base: 'xl', sm: '2xl'}}
-                  onClick={() => handleCreateVault(!!account ? account.lpVaults.length : 0, VaultType.LP)}
-                >
-                  + New LP Vault
-                </RdButton>
-              )}
+              <RdButton
+                fontSize={{base: 'xl', sm: '2xl'}}
+                onClick={() => handleCreateVault(!!account ? account.lpVaults.length : 0, VaultType.LP)}
+              >
+                + New LP Vault
+              </RdButton>
             </Flex>
           </>
         ) : (
