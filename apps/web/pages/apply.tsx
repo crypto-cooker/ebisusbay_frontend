@@ -175,7 +175,7 @@ const Application = ({type}: { type: string }) => {
                   <Heading as="h3" size="md" className="text-center">NFT Listing Request</Heading>
                   <iframe
                     height="1660px"
-                    src="https://noteforms.com/forms/listing-requests-silnni"
+                    src="https://ebisusbay.retool.com/form/843597a5-1052-423c-96b9-626838d86093"
                     style={{width: '100%', border:'none'}}
                   >
                   </iframe>
@@ -186,7 +186,7 @@ const Application = ({type}: { type: string }) => {
                   <Heading as="h3" size="md" className="text-center">DEX Listing Request</Heading>
                   <iframe
                     height="1660px"
-                    src="https://noteforms.com/forms/whitelist-requests-ow549o"
+                    src="https://ebisusbay.retool.com/form/23c3d0fc-f3ce-4060-a66c-2fe0240cb68a"
                     style={{width: '100%', border:'none'}}
                   >
                   </iframe>
