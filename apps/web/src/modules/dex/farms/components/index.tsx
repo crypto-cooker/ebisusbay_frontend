@@ -151,6 +151,10 @@ export default function FarmsPage() {
     )
   }, [filteredData, farmsStatus, userFarms, viewType, localQueryParams, chainId]);
 
+  const harvestAll = () => {
+
+  }
+  
   useEffect(() => {
     setQueryParams({...queryParams, chain: chainId});
   }, [chainId]);
@@ -223,7 +227,7 @@ export default function FarmsPage() {
                 onChange={handleSearch}
               />
             </Box>
-            <PrimaryButton aria-label='Harvest All'>Harvest All</PrimaryButton>
+            <PrimaryButton aria-label='Harvest All' onClick={() =>{harvestAll()}}>Harvest All</PrimaryButton>
           </Stack>
         </Flex>
         {status === FarmState.ACTIVE && [ChainId.CRONOS, ChainId.CRONOS_TESTNET].includes(chainId) && (
