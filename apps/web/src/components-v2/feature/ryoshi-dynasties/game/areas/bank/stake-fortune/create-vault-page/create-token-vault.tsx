@@ -51,7 +51,7 @@ interface CreateTokenVaultProps {
 
 const CreateTokenVault = ({vaultIndex, onSuccess}: CreateTokenVaultProps) => {
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { chainId: bankChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const { config: chainConfig } = useAppChainConfig(bankChainId);
   const frtnContract = useFrtnContract(bankChainId);
   const { switchNetworkAsync } = useSwitchNetwork();
@@ -236,6 +236,7 @@ const CreateTokenVault = ({vaultIndex, onSuccess}: CreateTokenVaultProps) => {
           <StakePreview
             fortuneToStake={fortuneToStake}
             daysToStake={daysToStake}
+            vaultType={vaultType}
           />
 
           <Spacer h='8'/>

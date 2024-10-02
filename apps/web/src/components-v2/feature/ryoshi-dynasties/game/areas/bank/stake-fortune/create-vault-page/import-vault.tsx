@@ -7,7 +7,8 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {
   BankStakeTokenContext,
-  BankStakeTokenContextProps
+  BankStakeTokenContextProps,
+  VaultType
 } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
 import {useAppChainConfig} from "@src/config/hooks";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
@@ -32,7 +33,7 @@ interface ImportVaultFormProps {
 
 export const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { chainId: bankChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const { config: chainConfig } = useAppChainConfig(bankChainId);
 
   const { chainId: activeChainId} = useActiveChainId();
@@ -41,7 +42,9 @@ export const ImportVaultForm = ({onComplete}: ImportVaultFormProps) => {
   const [isExecuting, setIsExecuting] = useState(false);
   const user = useUser();
   const [selectedVaultId, setSelectedVaultId] = useState<string>();
-  const availableAprs = rdConfig.bank.staking.fortune.apr as any;
+  const availableAprs = (vaultType === VaultType.LP ?
+    rdConfig.bank.staking.fortune.apr :
+    rdConfig.bank.staking.fortune.lpApr) as any;
 
 
   const { data: vaultNfts, isLoading, isError, error } = useQuery({

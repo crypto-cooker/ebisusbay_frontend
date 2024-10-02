@@ -8,13 +8,15 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import {VaultType} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
 
 interface StakeFormProps {
   fortuneToStake: number;
   daysToStake: number;
+  vaultType: VaultType;
 }
 
-const StakePreview = ({fortuneToStake, daysToStake}: StakeFormProps) => {
+const StakePreview = ({fortuneToStake, daysToStake, vaultType}: StakeFormProps) => {
   const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const [newApr, setNewApr] = useState(0);
@@ -23,7 +25,9 @@ const StakePreview = ({fortuneToStake, daysToStake}: StakeFormProps) => {
 
   useEffect(() => {
     const numTerms = Math.floor(daysToStake / rdConfig.bank.staking.fortune.termLength);
-    const availableAprs = rdConfig.bank.staking.fortune.apr as any;
+    const availableAprs = (vaultType === VaultType.LP ?
+      rdConfig.bank.staking.fortune.lpApr :
+      rdConfig.bank.staking.fortune.apr) as any;
     const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
     setNewApr(availableAprs[aprKey] ?? availableAprs[1]);
 

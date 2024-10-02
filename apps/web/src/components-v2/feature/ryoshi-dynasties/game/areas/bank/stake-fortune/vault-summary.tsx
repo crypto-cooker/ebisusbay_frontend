@@ -136,7 +136,7 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
   const lpBalance = Number(ethers.utils.formatEther(vault.balance));
   const daysToAdd = Number(vault.length / (86400));
   const numTerms = Math.floor(daysToAdd / rdConfig.bank.staking.fortune.termLength);
-  const availableAprs = rdConfig.bank.staking.fortune.apr as any;
+  const availableAprs = rdConfig.bank.staking.fortune.lpApr as any;
   const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
   const baseApr = (availableAprs[aprKey] ?? availableAprs[1]) * 100;
 

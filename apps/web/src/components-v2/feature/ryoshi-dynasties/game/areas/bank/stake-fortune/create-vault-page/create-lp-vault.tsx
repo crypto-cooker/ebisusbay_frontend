@@ -318,6 +318,7 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
               <StakePreview
                 fortuneToStake={Number(derivedFrtnAmount)}
                 daysToStake={daysToStake}
+                vaultType={vaultType}
               />
 
               <Spacer h='8'/>
