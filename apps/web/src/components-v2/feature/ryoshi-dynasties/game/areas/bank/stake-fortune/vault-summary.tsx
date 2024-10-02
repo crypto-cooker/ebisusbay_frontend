@@ -43,6 +43,7 @@ import ImageService from "@src/core/services/image";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faGem} from "@fortawesome/free-solid-svg-icons";
 import RdButton from "../../../../components/rd-button";
+import useStakingPair from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/use-staking-pair";
 
 interface VaultSummaryProps {
   vault: FortuneStakingAccount;
@@ -121,6 +122,7 @@ const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVaul
           onWithdrawVault={onWithdrawVault}
           onTokenizeVault={onTokenizeVault}
           onVaultClosed={onClosed}
+          canTokenize={true}
         />
       </AccordionPanel>
     </AccordionItem>
@@ -129,8 +131,9 @@ const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVaul
 
 const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onClosed }: VaultSummaryProps) => {
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
 
-  const balance = Number(ethers.utils.formatEther(vault.balance));
+  const lpBalance = Number(ethers.utils.formatEther(vault.balance));
   const daysToAdd = Number(vault.length / (86400));
   const numTerms = Math.floor(daysToAdd / rdConfig.bank.staking.fortune.termLength);
   const availableAprs = rdConfig.bank.staking.fortune.apr as any;
@@ -141,6 +144,9 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
   const [bonusApr, setBonusApr] = useState(0);
   const [troops, setTroops] = useState(0);
   const [mitama, setMitama] = useState(0);
+
+  const stakingPair = useStakingPair({pairAddress: vault.pool, chainId: bankChainId});
+  const derivedfrtnAmount = stakingPair.frtnReserve ? Number(stakingPair.frtnReserve?.toExact()) : 0;
 
   useEffect(() => {
     let totalApr = 0;
@@ -155,13 +161,13 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
 
   useEffect(() => {
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    const mitama = Math.floor((balance * daysToAdd) / 1080);
+    const mitama = Math.floor((derivedfrtnAmount * daysToAdd) / 1080);
 
     let newTroops = Math.floor(mitama / mitamaTroopsRatio);
-    if (newTroops < 1 && balance > 0) newTroops = 1;
+    if (newTroops < 1 && derivedfrtnAmount > 0) newTroops = 1;
     setTroops(newTroops);
     setMitama(mitama);
-  }, [balance, daysToAdd, rdConfig]);
+  }, [derivedfrtnAmount, daysToAdd, rdConfig]);
 
   return (
     <AccordionItem bgColor='#292626' rounded='md'>
@@ -169,7 +175,7 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
         index={vault.index}
         tokenIcon={<>LP</>}
         duration={daysToAdd}
-        balance={balance}
+        balance={lpBalance}
         apr={totalApr}
         troops={troops}
       />
@@ -181,6 +187,7 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
           troops={troops}
           mitama={mitama}
           endTime={vault.endTime}
+          isEstimate
         />
         <VaultActionButtons
           vault={vault}
@@ -188,6 +195,7 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
           onWithdrawVault={onWithdrawVault}
           onTokenizeVault={onTokenizeVault}
           onVaultClosed={onClosed}
+          canTokenize={false}
         />
       </AccordionPanel>
     </AccordionItem>
@@ -248,9 +256,10 @@ interface VaultBodyProps {
   troops: number;
   mitama: number;
   endTime: number;
+  isEstimate?: boolean;
 }
 
-const VaultBody = ({ totalApr, baseApr, bonusApr, troops, mitama, endTime}: VaultBodyProps) => {
+const VaultBody = ({ totalApr, baseApr, bonusApr, troops, mitama, endTime, isEstimate}: VaultBodyProps) => {
   const endDate = moment(endTime * 1000).format("MMM D yyyy");
 
   return (
@@ -262,9 +271,9 @@ const VaultBody = ({ totalApr, baseApr, bonusApr, troops, mitama, endTime}: Vaul
           <Box fontSize='xs'>{baseApr}% Fortune stake + {round(bonusApr, 2)}% NFT stake</Box>
         </VStack>
       </Box>
-      <Box>Troops</Box>
+      <Box>Troops{isEstimate && <Text as='span' fontSize='xs' color='#aaa'> (estimated)</Text>}</Box>
       <Box textAlign='end' fontWeight='bold'>{commify(troops)}</Box>
-      <Box>Mitama</Box>
+      <Box>Mitama{isEstimate && <Text as='span' fontSize='xs' color='#aaa'> (estimated)</Text>}</Box>
       <Box textAlign='end' fontWeight='bold'>{commify(mitama)}</Box>
       <Box>End Date</Box>
       <Box textAlign='end' fontWeight='bold'>{endDate}</Box>
@@ -278,9 +287,10 @@ interface VaultActionButtonsProps {
   onWithdrawVault: () => void;
   onTokenizeVault: () => void;
   onVaultClosed: () => void;
+  canTokenize: boolean;
 }
 
-const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onVaultClosed }: VaultActionButtonsProps) => {
+const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onVaultClosed, canTokenize }: VaultActionButtonsProps) => {
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useUser();
   const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
@@ -336,12 +346,14 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
                   + Increase Duration
                 </Button>
               )}
-              <Button
-                leftIcon={<Icon as={FontAwesomeIcon} icon={faGem} />}
-                onClick={onTokenizeVault}
-              >
-                Tokenize Vault
-              </Button>
+              {canTokenize && (
+                <Button
+                  leftIcon={<Icon as={FontAwesomeIcon} icon={faGem} />}
+                  onClick={onTokenizeVault}
+                >
+                  Tokenize Vault
+                </Button>
+              )}
             </Stack>
           </Center>
           <Center mt={4}>

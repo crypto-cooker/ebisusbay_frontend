@@ -56,6 +56,7 @@ import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 import {ChainId} from "@pancakeswap/chains";
 import VaultSummary from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/vault-summary";
+import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 
 const config = appConfig();
 
@@ -178,6 +179,11 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
                 </>
               )}
             </Box>
+            {currentVaultType === VaultType.LP && (
+              <RdModalBox mt={2} textAlign='center'>
+                <strong>Note:</strong> Values for APR, Mitama, and Troops are approximate and may change often to match the current supply of FRTN in the LP
+              </RdModalBox>
+            )}
             <Flex justifyContent='space-around' mt={8}>
               <RdButton
                 fontSize={{base: 'xl', sm: '2xl'}}
