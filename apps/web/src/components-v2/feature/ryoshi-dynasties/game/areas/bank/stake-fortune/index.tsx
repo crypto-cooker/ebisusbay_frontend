@@ -53,8 +53,8 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
     setTitle('Stake Tokens');
   };
 
-  const handleEditVault = useCallback((vault: FortuneStakingAccount, type: string) => {
-    setPage(<EditVaultPage vault={vault} type={type} onReturn={returnHome} />);
+  const handleEditVault = useCallback((vault: FortuneStakingAccount, vaultType: VaultType, targetField: string) => {
+    setPage(<EditVaultPage vault={vault} vaultType={vaultType} targetField={targetField} onReturn={returnHome} />);
     setTitle('Update Stake');
   }, [returnHome]);
 

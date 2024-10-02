@@ -61,7 +61,7 @@ import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components
 const config = appConfig();
 
 interface StakePageProps {
-  onEditVault: (vault: FortuneStakingAccount, type: string) => void;
+  onEditVault: (vault: FortuneStakingAccount, vaultType: VaultType, targetField: string) => void;
   onCreateVault: (vaultIndex: number, vaultType: VaultType) => void;
   onWithdrawVault: (vault: FortuneStakingAccount) => void;
   onTokenizeVault: (vault: FortuneStakingAccount) => void;
@@ -164,7 +164,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
                               vault={vault}
                               vaultType={currentVaultType}
                               index={index}
-                              onEditVault={(type: string) => onEditVault(vault, type)}
+                              onEditVault={(type: string) => onEditVault(vault, currentVaultType, type)}
                               onWithdrawVault={() => onWithdrawVault(vault)}
                               onTokenizeVault={() => onTokenizeVault(vault)}
                               onClosed={refetch}
@@ -181,7 +181,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
             </Box>
             {currentVaultType === VaultType.LP && (
               <RdModalBox mt={2} textAlign='center'>
-                <strong>Note:</strong> Values for APR, Mitama, and Troops are approximate and may change often to match the current supply of FRTN in the LP
+                <strong>Note:</strong> Values for Mitama and Troops are approximate and may change often to match the current supply of FRTN in the LP
               </RdModalBox>
             )}
             <Flex justifyContent='space-around' mt={8}>

@@ -11,7 +11,7 @@ import {ciEquals} from "@market/helpers/utils";
 
 const useStakingPair = ({ pairAddress, chainId }: {pairAddress: Address, chainId: number}) => {
   const { config: chainConfig } = useAppChainConfig(chainId);
-  const lpConfig = chainConfig.lpVaults.find((v) => ciEquals(v.pair, pairAddress)) ?? {};
+  const lpConfig = chainConfig.lpVaults.find((v) => ciEquals(v.pair, pairAddress));
 
   const frtnCurrency = useToken(lpConfig?.address1) as ERC20Token;
   const otherCurrency = useToken(lpConfig?.address2) as ERC20Token;
@@ -36,16 +36,19 @@ const useStakingPair = ({ pairAddress, chainId }: {pairAddress: Address, chainId
   const liquidityToken = pair?.liquidityToken;
   const tokenContract = useTokenContract(liquidityToken?.address, chainId);
   const totalSupply = useTotalSupply(liquidityToken);
-  const frtnReserve = pair?.reserve0;
 
   return useMemo(() => {
+    const frtnReserve = pair?.reserve0;
+    const derivedFrtn = frtnReserve ? Number(frtnReserve.toExact()) : 0;
+
     return {
       pair,
       tokenContract,
       totalSupply,
-      frtnReserve
+      frtnReserve,
+      derivedFrtn
     }
-  }, [pair, tokenContract, totalSupply, frtnReserve]);
+  }, [pair, chainId, liquidityToken, tokenContract, totalSupply]);
 }
 
 export default useStakingPair;

@@ -115,7 +115,12 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
       ) : currentStep === steps.importVaultComplete ? (
         <ImportVaultComplete onReturn={onReturn} />
       ) : currentStep === steps.createVaultComplete && (
-        <StakeComplete amount={fortuneToStake} duration={daysToStake} onReturn={onReturn} />
+        <StakeComplete
+          amount={fortuneToStake}
+          duration={daysToStake}
+          onReturn={onReturn}
+          vaultType={vaultType}
+        />
       )}
     </Box>
   )
@@ -125,13 +130,14 @@ interface StakeCompleteProps {
   amount: number;
   duration: number;
   onReturn: () => void;
+  vaultType: VaultType;
 }
 
-const StakeComplete = ({amount, duration, onReturn}: StakeCompleteProps) => {
+const StakeComplete = ({amount, duration, onReturn, vaultType}: StakeCompleteProps) => {
   return (
     <Box py={4}>
       <Box textAlign='center' mt={2}>
-        {amount} $FRTN has now been staked for {duration} days!
+        {amount} {vaultType === VaultType.LP ? 'LP' : 'FRTN'} has now been staked for {duration} days!
       </Box>
       <Box textAlign='center' mt={8} mx={2}>
         <Box ps='20px'>

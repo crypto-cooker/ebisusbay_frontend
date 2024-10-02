@@ -11,7 +11,6 @@ import {useAppChainConfig} from "@src/config/hooks";
 import {useBankContract, useFrtnContract} from "@src/global/hooks/contracts";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
-import {useWriteContract} from "wagmi";
 import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
 import {useUser} from "@src/components-v2/useUser";
 import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
@@ -21,15 +20,21 @@ import {toast} from "react-toastify";
 import {createSuccessfulTransactionToastContent, pluralize, round} from "@market/helpers/utils";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {
-  Box, Button,
+  Box,
+  Button,
   Flex,
-  FormControl, FormErrorMessage, GridItem,
-  HStack, NumberDecrementStepper, NumberIncrementStepper,
+  FormControl,
+  FormErrorMessage,
+  HStack,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
   NumberInput,
-  NumberInputField, NumberInputStepper, Select,
-  SimpleGrid, Spacer,
+  NumberInputField,
+  NumberInputStepper,
+  Select,
+  SimpleGrid,
+  Spacer,
   Spinner,
-  Stack,
   Text,
   VStack
 } from "@chakra-ui/react";
@@ -38,10 +43,6 @@ import {ChainLogo} from "@dex/components/logo";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import StakePreview
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/create-vault-page/stake-preview";
-import {
-  ImportVaultComplete,
-  ImportVaultForm
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/create-vault-page/import-vault";
 
 interface CreateTokenVaultProps {
   vaultIndex: number;
@@ -49,13 +50,12 @@ interface CreateTokenVaultProps {
 }
 
 const CreateTokenVault = ({vaultIndex, onSuccess}: CreateTokenVaultProps) => {
-  const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const { chainId: bankChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const { config: chainConfig } = useAppChainConfig(bankChainId);
   const frtnContract = useFrtnContract(bankChainId);
   const { switchNetworkAsync } = useSwitchNetwork();
   const { chainId: activeChainId} = useActiveChainId();
-  const { writeContractAsync } = useWriteContract();
   const bankContract = useBankContract(bankChainId);
   const { callWithGasPrice } = useCallWithGasPrice();
 
@@ -155,14 +155,7 @@ const CreateTokenVault = ({vaultIndex, onSuccess}: CreateTokenVaultProps) => {
 
       setExecutingLabel('Staking');
 
-      // const txHash = await writeContractAsync({
-      //   address: chainConfig.contracts.bank,
-      //   abi: Bank,
-      //   functionName: 'openVault',
-      //   args: [desiredFortuneAmount, daysToStake*86400, vaultIndex],
-      // });
       const tx = await callWithGasPrice(bankContract, 'openVault', [desiredFortuneAmount, daysToStake*86400, vaultIndex]);
-
       toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
       onSuccess(fortuneToStake, daysToStake);
     } catch (error: any) {
