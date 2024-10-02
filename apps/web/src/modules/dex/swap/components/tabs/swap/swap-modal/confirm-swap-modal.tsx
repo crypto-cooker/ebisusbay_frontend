@@ -81,7 +81,7 @@ export default function ConfirmSwapModal({
       onClose={onClose}
       title='Confirm Swap'
       attemptingTxn={attemptingTxn}
-      currencyToAdd={trade?.inputAmount?.currency}
+      currencyToAdd={trade?.outputAmount?.currency}
       errorMessage={swapErrorMessage}
       hash={txHash}
       content={confirmationContent}
