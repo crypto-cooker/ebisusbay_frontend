@@ -6,7 +6,7 @@ import { useUser } from "@src/components-v2/useUser";
 import FarmsAbi from "@src/global/contracts/Farms.json";
 import LpAbi from "@src/global/contracts/LP.json";
 import { useUserFarmsRefetch } from "@dex/farms/hooks/user-farms";
-import { useWriteContract } from "wagmi";
+import { useConfig, useWriteContract } from "wagmi";
 import { useActiveChainId } from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import { Address } from "viem";
 import { useAppChainConfig } from "@src/config/hooks";
@@ -82,8 +82,8 @@ export function useHavestAll() {
   const { chainId } = useActiveChainId();
   const { refetchApprovals } = useUserFarmsRefetch();
   const [executing, setExecuting] = useState(false);
-  const { writeContractAsync } = useWriteContract();
   const { config } = useAppChainConfig();
+  const wagmiConfig = useConfig()
 
   const enable = async (pairAddresses: string[]) => {
     if (!user.address) {
@@ -91,19 +91,18 @@ export function useHavestAll() {
       return;
     }
 
-    const contracts: any = pairAddresses.map(() => {
+    const contracts: any = pairAddresses.map((pairAddress) => {
       return {
         address: config.contracts.farms,
         abi: FarmsAbi,
         functionName: "withdraw",
-        args:[]
+        args: []
       }
     })
 
-
     try {
       setExecuting(true);
-      const data = await multicall(config, {
+      await multicall(wagmiConfig, {
         contracts
       })
       refetchApprovals();
