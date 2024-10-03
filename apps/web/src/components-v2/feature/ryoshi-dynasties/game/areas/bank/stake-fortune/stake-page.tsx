@@ -41,7 +41,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
   const [currentVaultType, setCurrentVaultType] = useState<VaultType>(VaultType.TOKEN);
 
   const { data: account, status, error, refetch } = useQuery({
-    queryKey: ['UserStakeAccount', user.address, currentTab],
+    queryKey: ['UserStakeAccount', user.address, currentTab, currentVaultType],
     queryFn: () => ApiService.forChain(currentTab).ryoshiDynasties.getBankStakingAccount(user.address!),
     enabled: !!user.address && !!currentTab,
   });
