@@ -235,7 +235,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
     const sumDays = Number(vault.length / (86400)) + (type === 'duration' ? daysToStake : 0);
     const sumAmount = Number(ethers.utils.formatEther(vault.balance)) + (type === 'amount' ? Number(amountToStake) : 0);
     const mitama = (sumAmount * sumDays) / 1080;
-    const multipliedLpMitama = Math.floor(mitama * 2.5);
+    const multipliedLpMitama = Math.floor(mitama * 2.5 * 0.98); // 2% slippage
 
     let newTroops = Math.floor(mitama / mitamaTroopsRatio);
     if (newTroops < 1 && sumAmount > 0) newTroops = 1;
@@ -377,6 +377,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
       <Box bgColor='#292626' rounded='md' p={4} fontSize='sm'>
         <Text>You will not be able to withdraw your tokens before the period end date.</Text>
         <Text mt={4}>APR figures are estimates provided for your convenience only, and by no means represent guaranteed returns.</Text>
+        <Text mt={4}>Flucuations of the price may cause the awarded amount of Mitama to change. This is the minimum amount to be accepted once the vault is created the amount of Mitama will not change.</Text>
       </Box>
 
       <Box mt={8} textAlign='center'>

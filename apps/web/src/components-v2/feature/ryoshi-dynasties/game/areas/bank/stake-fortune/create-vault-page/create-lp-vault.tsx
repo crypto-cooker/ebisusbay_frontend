@@ -5,7 +5,8 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {
   BankStakeTokenContext,
-  BankStakeTokenContextProps, VaultType
+  BankStakeTokenContextProps,
+  VaultType
 } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
 import {useAppChainConfig} from "@src/config/hooks";
 import {useBankContract, useTokenContract} from "@src/global/hooks/contracts";
@@ -47,8 +48,9 @@ import StakePreview
 import {useToken} from "@eb-pancakeswap-web/hooks/tokens";
 import {ERC20Token} from "@pancakeswap/swap-sdk-evm";
 import useTotalSupply from "@eb-pancakeswap-web/hooks/useTotalSupply";
-import {CurrencyAmount} from "@pancakeswap/swap-sdk-core";
+import {CurrencyAmount, MaxUint256} from "@pancakeswap/swap-sdk-core";
 import {Pair, pancakePairV2ABI} from '@pancakeswap/sdk'
+import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 
 interface CreateLpVaultProps {
   vaultIndex: number;
@@ -83,13 +85,12 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
   const [lengthError, setLengthError] = useState('');
   const [inputError, setInputError] = useState('');
 
-  const [frtnAddress, setFrtnAddress] = useState<Address>(chainConfig.lpVaults[0].address1);
-  const [otherAddress, setOtherAddress] = useState<Address>(chainConfig.lpVaults[0].address2);
-  const frtnCurrency = useToken(frtnAddress) as ERC20Token;
-  const otherCurrency = useToken(otherAddress) as ERC20Token;
+  const [pairConfig, setPairConfig] = useState(chainConfig.lpVaults[0]);
+  const frtnCurrency = useToken(pairConfig.address1) as ERC20Token;
+  const otherCurrency = useToken(pairConfig.address2) as ERC20Token;
 
   const { data: pairData } = useReadContract({
-    address: Pair.getAddress(frtnCurrency, otherCurrency),
+    address: pairConfig.pair,
     abi: pancakePairV2ABI,
     functionName: 'getReserves',
     // chainId: bankChainId,
@@ -131,11 +132,10 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
   }, [frtnReserve, totalSupply, amountToStake]);
 
   const handleChangeToken = (e: ChangeEvent<HTMLSelectElement>) => {
-    const vaultConfig = chainConfig.lpVaults.find((v) => v.name === e.target.value);
-    if (!vaultConfig) return;
+    const _pairConfig = chainConfig.lpVaults.find((v) => v.pair === e.target.value);
+    if (!_pairConfig) return;
 
-    setFrtnAddress(vaultConfig.address1);
-    setOtherAddress(vaultConfig.address2);
+    setPairConfig(_pairConfig);
   }
 
   const handleChangeTokenAmount = (valueAsString: string, valueAsNumber: number) => {
@@ -172,7 +172,7 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
     }
 
     if(Number(derivedFrtnAmount) < rdConfig.bank.staking.fortune.minimum) {
-      setInputError(`At least ${rdConfig.bank.staking.fortune.minimum} required`);
+      setInputError(`At least ${rdConfig.bank.staking.fortune.minimum} in FRTN required`);
       return false;
     }
     setInputError('');
@@ -207,9 +207,9 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
       const totalApproved = await checkForApproval();
       const desiredLpAmount = parseEther(amountToStake.toString());
 
-      if (totalApproved < desiredLpAmount) {
+      if (totalApproved < MaxUint256) {
         const txHash = await lpContract?.write.approve(
-          [chainConfig.contracts.bank as `0x${string}`, desiredLpAmount],
+          [chainConfig.contracts.bank as `0x${string}`, MaxUint256],
           {
             account: user.address!,
             chain: chainConfig.chain
@@ -250,7 +250,7 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
     const mitama = (Number(derivedFrtnAmount) * daysToStake) / 1080;
-    const multipliedLpMitama = Math.floor(mitama * 2.5);
+    const multipliedLpMitama = Math.floor(mitama * 2.5 * 0.98); // 2% slippage
 
     let newTroops = Math.floor(mitama / mitamaTroopsRatio);
     if (newTroops < 1 && Number(derivedFrtnAmount) > 0) newTroops = 1;
@@ -283,7 +283,7 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
               <FormControl maxW='250px' isInvalid={!!lengthError}>
                 <Select onChange={handleChangeToken} value={daysToStake} bg='none'>
                   {chainConfig.lpVaults.map((vaultConfig) => (
-                    <option key={vaultConfig.name} value={vaultConfig.name}>{vaultConfig.name}</option>
+                    <option key={vaultConfig.pair} value={vaultConfig.pair}>{vaultConfig.name}</option>
                   ))}
                 </Select>
               </FormControl>
@@ -347,7 +347,9 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
                 mitama={newMitama}
                 troops={newTroops}
               />
-
+              <RdModalBox mt={2}>
+                Flucuations of the price may cause the awarded amount of Mitama to change. This is the minimum amount to be accepted once the vault is created the amount of Mitama will not change.
+              </RdModalBox>
               <Spacer h='8'/>
               <Flex alignContent={'center'} justifyContent={'center'}>
                 <Box ps='20px'>
