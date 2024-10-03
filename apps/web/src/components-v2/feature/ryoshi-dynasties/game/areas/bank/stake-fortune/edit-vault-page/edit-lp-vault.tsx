@@ -366,7 +366,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
       <SimpleGrid columns={2} my={4} px={1}>
         <Box>APR</Box>
         <Box textAlign='end' fontWeight='bold'>{newApr * 100}%</Box>
-        <Box>Troops></Box>
+        <Box>Troops</Box>
         <Box textAlign='end' fontWeight='bold'>{commify(newTroops)}</Box>
         <Box>Mitama</Box>
         <Box textAlign='end' fontWeight='bold'>{commify(newMitama)}</Box>
