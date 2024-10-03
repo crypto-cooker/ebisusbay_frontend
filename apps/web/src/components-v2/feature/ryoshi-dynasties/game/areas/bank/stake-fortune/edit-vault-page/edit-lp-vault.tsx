@@ -235,10 +235,12 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
     const sumDays = Number(vault.length / (86400)) + (type === 'duration' ? daysToStake : 0);
     const sumAmount = Number(ethers.utils.formatEther(vault.balance)) + (type === 'amount' ? Number(amountToStake) : 0);
     const mitama = Math.floor((sumAmount * sumDays) / 1080);
+    const multipliedLpMitama = mitama * 2.5;
+
     let newTroops = Math.floor(mitama / mitamaTroopsRatio);
     if (newTroops < 1 && sumAmount > 0) newTroops = 1;
     setNewTroops(newTroops);
-    setNewMitama(mitama);
+    setNewMitama(multipliedLpMitama);
 
     if (isAddingDuration) {
       setNewWithdrawDate((Number(vault.endTime) + (daysToStake * 86400)) * 1000);

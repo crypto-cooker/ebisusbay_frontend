@@ -144,11 +144,6 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
                 </>
               )}
             </Box>
-            {currentVaultType === VaultType.LP && (
-              <RdModalBox mt={2} textAlign='center'>
-                <strong>Note:</strong> Values for Mitama and Troops are approximate and may change often to match the current supply of FRTN in the LP
-              </RdModalBox>
-            )}
             <Flex justifyContent='space-around' mt={8}>
               <RdButton
                 fontSize={{base: 'xl', sm: '2xl'}}

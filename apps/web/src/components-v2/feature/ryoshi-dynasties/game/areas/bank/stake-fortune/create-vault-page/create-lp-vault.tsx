@@ -250,10 +250,12 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
     const mitama = Math.floor((Number(derivedFrtnAmount) * daysToStake) / 1080);
+    const multipliedLpMitama = mitama * 2.5;
+
     let newTroops = Math.floor(mitama / mitamaTroopsRatio);
     if (newTroops < 1 && Number(derivedFrtnAmount) > 0) newTroops = 1;
     setNewTroops(newTroops);
-    setNewMitama(mitama);
+    setNewMitama(multipliedLpMitama);
   }, [daysToStake, derivedFrtnAmount]);
 
   useEffect(() => {

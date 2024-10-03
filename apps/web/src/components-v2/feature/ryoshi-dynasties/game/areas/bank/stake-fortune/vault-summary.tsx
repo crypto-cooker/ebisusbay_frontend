@@ -293,7 +293,7 @@ interface VaultActionButtonsProps {
 const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onVaultClosed, canTokenize }: VaultActionButtonsProps) => {
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useUser();
-  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { chainId: bankChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const bankContract = useBankContract(bankChainId);
   const { callWithGasPrice } = useCallWithGasPrice()
   const { chainId: activeChainId} = useActiveChainId();
@@ -339,7 +339,7 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
           <Center>
             <Stack direction={{base: 'column', sm: 'row'}} mt={4}>
               <Button onClick={() => onEditVault('amount')}>
-                + Add Fortune
+                + Add {vaultType === VaultType.LP ? 'LP' : 'FRTN'}
               </Button>
               {canIncreaseDuration && (
                 <Button onClick={() => onEditVault('duration')}>
