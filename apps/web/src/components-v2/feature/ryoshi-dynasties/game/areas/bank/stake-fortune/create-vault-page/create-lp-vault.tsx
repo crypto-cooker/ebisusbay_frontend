@@ -107,7 +107,7 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
   }, [frtnCurrency, otherCurrency, pairData]);
 
   const liquidityToken = pair?.liquidityToken;
-  const tokenContract = useTokenContract(liquidityToken?.address, bankChainId);
+  const lpContract = useTokenContract(liquidityToken?.address, bankChainId);
   const totalSupply = useTotalSupply(liquidityToken);
   const frtnReserve = pair?.reserve0;
 
@@ -147,14 +147,14 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
   }
 
   const checkForApproval = async () => {
-    const totalApproved = await tokenContract?.read.allowance([user.address as Address, chainConfig.contracts.bank]);
+    const totalApproved = await lpContract?.read.allowance([user.address as Address, chainConfig.contracts.bank]);
     return totalApproved as bigint;
   }
 
   const checkTokenBalance = async () => {
     try {
       setIsRetrievingToken(true);
-      const tokenBalance = await tokenContract?.read.balanceOf([user.address as Address]);
+      const tokenBalance = await lpContract?.read.balanceOf([user.address as Address]);
       const formattedAmount = formatEther(tokenBalance as bigint);
       setTokenBalance(formattedAmount);
       setTokenBalanceWei(tokenBalance ?? 0n);
@@ -208,7 +208,7 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
       const desiredLpAmount = parseEther(amountToStake.toString());
 
       if (totalApproved < desiredLpAmount) {
-        const txHash = await tokenContract?.write.approve(
+        const txHash = await lpContract?.write.approve(
           [chainConfig.contracts.bank as `0x${string}`, desiredLpAmount],
           {
             account: user.address!,
@@ -249,8 +249,8 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
     setNewApr(availableAprs[aprKey] ?? availableAprs[1]);
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    const mitama = Math.floor((Number(derivedFrtnAmount) * daysToStake) / 1080);
-    const multipliedLpMitama = mitama * 2.5;
+    const mitama = (Number(derivedFrtnAmount) * daysToStake) / 1080;
+    const multipliedLpMitama = Math.floor(mitama * 2.5);
 
     let newTroops = Math.floor(mitama / mitamaTroopsRatio);
     if (newTroops < 1 && Number(derivedFrtnAmount) > 0) newTroops = 1;
@@ -259,10 +259,10 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
   }, [daysToStake, derivedFrtnAmount]);
 
   useEffect(() => {
-    if (!!user.address  && !!tokenContract) {
+    if (!!user.address && !!lpContract) {
       checkTokenBalance();
     }
-  }, [user.address, tokenContract]);
+  }, [user.address, lpContract]);
 
   return (
     <>

@@ -271,9 +271,9 @@ const VaultBody = ({ totalApr, baseApr, bonusApr, troops, mitama, endTime, isEst
           <Box fontSize='xs'>{baseApr}% Fortune stake + {round(bonusApr, 2)}% NFT stake</Box>
         </VStack>
       </Box>
-      <Box>Troops{isEstimate && <Text as='span' fontSize='xs' color='#aaa'> (estimated)</Text>}</Box>
+      <Box>Troops</Box>
       <Box textAlign='end' fontWeight='bold'>{commify(troops)}</Box>
-      <Box>Mitama{isEstimate && <Text as='span' fontSize='xs' color='#aaa'> (estimated)</Text>}</Box>
+      <Box>Mitama</Box>
       <Box textAlign='end' fontWeight='bold'>{commify(mitama)}</Box>
       <Box>End Date</Box>
       <Box textAlign='end' fontWeight='bold'>{endDate}</Box>

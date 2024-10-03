@@ -92,7 +92,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
   const stakingPair = useStakingPair({pairAddress: vaultConfig!.pair, chainId: bankChainId});
 
   const derivedFrtnAmount = useMemo(() => {
-    if (!stakingPair || stakingPair.totalSupply?.equalTo(0)) {
+    if (!stakingPair || !stakingPair.totalSupply || stakingPair.totalSupply.equalTo(0)) {
       return '0'
     }
 
@@ -115,10 +115,10 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
   const checkTokenBalance = async () => {
     try {
       setIsRetrievingToken(true);
-      const fortuneBalance = await stakingPair.tokenContract?.read.balanceOf([user.address as Address]);
-      const formattedAmount = formatEther(fortuneBalance as bigint);
+      const tokenBalance = await stakingPair.tokenContract?.read.balanceOf([user.address as Address]);
+      const formattedAmount = formatEther(tokenBalance as bigint);
       setTokenBalance(formattedAmount);
-      setTokenBalanceWei(fortuneBalance ?? 0n);
+      setTokenBalanceWei(tokenBalance ?? 0n);
     } finally {
       setIsRetrievingToken(false);
     }
@@ -234,8 +234,8 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
     const sumDays = Number(vault.length / (86400)) + (type === 'duration' ? daysToStake : 0);
     const sumAmount = Number(ethers.utils.formatEther(vault.balance)) + (type === 'amount' ? Number(amountToStake) : 0);
-    const mitama = Math.floor((sumAmount * sumDays) / 1080);
-    const multipliedLpMitama = mitama * 2.5;
+    const mitama = (sumAmount * sumDays) / 1080;
+    const multipliedLpMitama = Math.floor(mitama * 2.5);
 
     let newTroops = Math.floor(mitama / mitamaTroopsRatio);
     if (newTroops < 1 && sumAmount > 0) newTroops = 1;
@@ -266,10 +266,10 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
 
   // Check for fortune on load
   useEffect(() => {
-    if (!!user.address) {
+    if (!!user.address && !!stakingPair.tokenContract) {
       checkTokenBalance();
     }
-  }, [user.address]);
+  }, [user.address, stakingPair.tokenContract]);
 
   // Set max duration increase
   useEffect(() => {
@@ -366,9 +366,9 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
       <SimpleGrid columns={2} my={4} px={1}>
         <Box>APR</Box>
         <Box textAlign='end' fontWeight='bold'>{newApr * 100}%</Box>
-        <Box>Troops <Text as='span' fontSize='xs' >(estimated)</Text></Box>
+        <Box>Troops></Box>
         <Box textAlign='end' fontWeight='bold'>{commify(newTroops)}</Box>
-        <Box>Mitama <Text as='span' fontSize='xs' >(estimated)</Text></Box>
+        <Box>Mitama</Box>
         <Box textAlign='end' fontWeight='bold'>{commify(newMitama)}</Box>
         <Box>End Date</Box>
         <Box textAlign='end' fontWeight='bold'>{moment(newWithdrawDate).format("MMM D yyyy")}</Box>
