@@ -260,7 +260,7 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
     if (!!user.address  && !!tokenContract) {
       checkTokenBalance();
     }
-  }, [user.address]);
+  }, [user.address, tokenContract]);
 
   return (
     <>
