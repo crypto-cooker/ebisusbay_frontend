@@ -5,7 +5,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {
   BankStakeTokenContext,
-  BankStakeTokenContextProps
+  BankStakeTokenContextProps, VaultType
 } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
 import {useAppChainConfig} from "@src/config/hooks";
 import {useBankContract, useTokenContract} from "@src/global/hooks/contracts";
@@ -15,10 +15,10 @@ import {useReadContract} from "wagmi";
 import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
 import {useUser} from "@src/components-v2/useUser";
 import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
-import {Address, parseEther} from "viem";
-import {commify, formatEther} from "ethers/lib/utils";
+import {Address, formatEther, parseEther} from "viem";
+import {commify} from "ethers/lib/utils";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, pluralize, round} from "@market/helpers/utils";
+import {createSuccessfulTransactionToastContent, findNextLowestNumber, pluralize, round} from "@market/helpers/utils";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {
   Box,
@@ -73,7 +73,12 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
 
   const [amountToStake, setAmountToStake] = useState('');
   const [daysToStake, setDaysToStake] = useState(rdConfig.bank.staking.fortune.termLength)
-  const [tokenBalance, setTokenBalance] = useState(0)
+  const [tokenBalance, setTokenBalance] = useState('0')
+  const [tokenBalanceWei, setTokenBalanceWei] = useState<bigint>(0n)
+
+  const [newApr, setNewApr] = useState(0);
+  const [newMitama, setNewMitama] = useState(0);
+  const [newTroops, setNewTroops] = useState(0);
 
   const [lengthError, setLengthError] = useState('');
   const [inputError, setInputError] = useState('');
@@ -149,9 +154,10 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
   const checkTokenBalance = async () => {
     try {
       setIsRetrievingToken(true);
-      const totalFortune = await tokenContract?.read.balanceOf([user.address as Address]);
-      const formatedFortune = +formatEther(totalFortune as bigint);
-      setTokenBalance(formatedFortune);
+      const tokenBalance = await tokenContract?.read.balanceOf([user.address as Address]);
+      const formattedAmount = formatEther(tokenBalance as bigint);
+      setTokenBalance(formattedAmount);
+      setTokenBalanceWei(tokenBalance ?? 0n);
     } finally {
       setIsRetrievingToken(false);
     }
@@ -160,7 +166,7 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
   const validateInput = async () => {
     setExecutingLabel('Validating');
 
-    if (tokenBalance < Number(amountToStake)) {
+    if (tokenBalanceWei < parseEther(amountToStake)) {
       toast.error("Not enough LP");
       return;
     }
@@ -199,11 +205,11 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
 
       //check for approval
       const totalApproved = await checkForApproval();
-      const desiredFortuneAmount = parseEther(amountToStake.toString());
+      const desiredLpAmount = parseEther(amountToStake.toString());
 
-      if (totalApproved < desiredFortuneAmount) {
+      if (totalApproved < desiredLpAmount) {
         const txHash = await tokenContract?.write.approve(
-          [chainConfig.contracts.bank as `0x${string}`, desiredFortuneAmount],
+          [chainConfig.contracts.bank as `0x${string}`, desiredLpAmount],
           {
             account: user.address!,
             chain: chainConfig.chain
@@ -214,14 +220,14 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
 
       setExecutingLabel('Staking');
 
-      const expectedMitama = await bankContract?.read.mitamaForLp([parseEther(amountToStake), liquidityToken?.address, daysToStake*86400])
+      // const mitamaForLp = await bankContract?.read.mitamaForLp([parseEther(amountToStake), liquidityToken?.address, daysToStake*86400])
 
       const tx = await callWithGasPrice(bankContract, 'openLPVault', [
-        desiredFortuneAmount,
+        desiredLpAmount,
         daysToStake*86400,
         liquidityToken?.address,
         vaultIndex,
-        expectedMitama
+        newMitama
       ]);
 
       toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
@@ -233,6 +239,22 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
       setIsExecuting(false);
     }
   }
+
+  useEffect(() => {
+    const numTerms = Math.floor(daysToStake / rdConfig.bank.staking.fortune.termLength);
+    const availableAprs = (vaultType === VaultType.LP ?
+      rdConfig.bank.staking.fortune.lpApr :
+      rdConfig.bank.staking.fortune.apr) as any;
+    const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
+    setNewApr(availableAprs[aprKey] ?? availableAprs[1]);
+
+    const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
+    const mitama = Math.floor((Number(derivedFrtnAmount) * daysToStake) / 1080);
+    let newTroops = Math.floor(mitama / mitamaTroopsRatio);
+    if (newTroops < 1 && Number(derivedFrtnAmount) > 0) newTroops = 1;
+    setNewTroops(newTroops);
+    setNewMitama(mitama);
+  }, [daysToStake, derivedFrtnAmount]);
 
   useEffect(() => {
     if (!!user.address  && !!tokenContract) {
@@ -313,12 +335,15 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
             </VStack>
           </SimpleGrid>
 
-          {tokenBalance > 0 && (
+          {Number(tokenBalance) > 0 && (
             <>
               <StakePreview
                 fortuneToStake={Number(derivedFrtnAmount)}
                 daysToStake={daysToStake}
                 vaultType={vaultType}
+                apr={newApr}
+                mitama={newMitama}
+                troops={newTroops}
               />
 
               <Spacer h='8'/>
@@ -344,7 +369,7 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
           )}
         </Box>
 
-      {tokenBalance <= 0 && (
+      {Number(tokenBalance) <= 0 && (
         <Box textAlign='center' mt={4}>
           <Text>You currently have no LP in your wallet.</Text>
         </Box>

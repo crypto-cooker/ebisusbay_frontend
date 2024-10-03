@@ -5,7 +5,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import {
   BankStakeTokenContext,
-  BankStakeTokenContextProps
+  BankStakeTokenContextProps, VaultType
 } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
 import {useAppChainConfig} from "@src/config/hooks";
 import {useBankContract, useFrtnContract} from "@src/global/hooks/contracts";
@@ -17,7 +17,7 @@ import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithCha
 import {Address, parseEther} from "viem";
 import {commify, formatEther} from "ethers/lib/utils";
 import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, pluralize, round} from "@market/helpers/utils";
+import {createSuccessfulTransactionToastContent, findNextLowestNumber, pluralize, round} from "@market/helpers/utils";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {
   Box,
@@ -69,6 +69,10 @@ const CreateTokenVault = ({vaultIndex, onSuccess}: CreateTokenVaultProps) => {
   const [fortuneToStake, setFortuneToStake] = useState(1250);
   const [daysToStake, setDaysToStake] = useState(rdConfig.bank.staking.fortune.termLength)
   const [userFortune, setUserFortune] = useState(0)
+
+  const [newApr, setNewApr] = useState(0);
+  const [newMitama, setNewMitama] = useState(0);
+  const [newTroops, setNewTroops] = useState(0);
 
   const [lengthError, setLengthError] = useState('');
   const [inputError, setInputError] = useState('');
@@ -167,6 +171,22 @@ const CreateTokenVault = ({vaultIndex, onSuccess}: CreateTokenVaultProps) => {
   }
 
   useEffect(() => {
+    const numTerms = Math.floor(daysToStake / rdConfig.bank.staking.fortune.termLength);
+    const availableAprs = (vaultType === VaultType.LP ?
+      rdConfig.bank.staking.fortune.lpApr :
+      rdConfig.bank.staking.fortune.apr) as any;
+    const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
+    setNewApr(availableAprs[aprKey] ?? availableAprs[1]);
+
+    const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
+    const mitama = Math.floor((fortuneToStake * daysToStake) / 1080);
+    let newTroops = Math.floor(mitama / mitamaTroopsRatio);
+    if (newTroops < 1 && fortuneToStake > 0) newTroops = 1;
+    setNewTroops(newTroops);
+    setNewMitama(mitama);
+  }, [daysToStake, fortuneToStake]);
+
+  useEffect(() => {
     if (!!user.address) {
       checkForFortune();
     }
@@ -237,6 +257,9 @@ const CreateTokenVault = ({vaultIndex, onSuccess}: CreateTokenVaultProps) => {
             fortuneToStake={fortuneToStake}
             daysToStake={daysToStake}
             vaultType={vaultType}
+            apr={newApr}
+            mitama={newMitama}
+            troops={newTroops}
           />
 
           <Spacer h='8'/>

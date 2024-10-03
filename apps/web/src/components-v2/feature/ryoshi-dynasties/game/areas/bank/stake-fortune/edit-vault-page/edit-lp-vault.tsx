@@ -17,7 +17,7 @@ import {
   Text,
   VStack
 } from "@chakra-ui/react";
-import {commify, formatEther} from "ethers/lib/utils";
+import {commify} from "ethers/lib/utils";
 import {
   ciEquals,
   createSuccessfulTransactionToastContent,
@@ -42,7 +42,7 @@ import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useUser} from "@src/components-v2/useUser";
 import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
-import {Address, parseEther} from "viem";
+import {Address, formatEther, parseEther} from "viem";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
@@ -74,9 +74,10 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
   const [isRetrievingToken, setIsRetrievingToken] = useState(false);
   const [maxDurationIncrease, setMaxDurationIncrease] = useState(rdConfig.bank.staking.fortune.maxTerms);
 
-  const [amountToStake, setAmountToStake] = useState(1000);
+  const [amountToStake, setAmountToStake] = useState('');
   const [daysToStake, setDaysToStake] = useState(rdConfig.bank.staking.fortune.termLength)
-  const [tokenBalance, setTokenBalance] = useState(0);
+  const [tokenBalance, setTokenBalance] = useState('0');
+  const [tokenBalanceWei, setTokenBalanceWei] = useState<bigint>(0n);
 
   const [lengthError, setLengthError] = useState('');
   const [inputError, setInputError] = useState('');
@@ -99,7 +100,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
   }, [stakingPair, amountToStake]);
 
   const handleChangeFortuneAmount = (valueAsString: string, valueAsNumber: number) => {
-    setAmountToStake(!isNaN(valueAsNumber) ? Math.floor(valueAsNumber) : 0);
+    setAmountToStake(valueAsString);
   }
 
   const handleChangeDays = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -114,25 +115,28 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
   const checkTokenBalance = async () => {
     try {
       setIsRetrievingToken(true);
-      const totalFortune = await stakingPair.tokenContract?.read.balanceOf([user.address as Address]);
-      console.log('TOTALF', totalFortune);
-      const formatedFortune = +formatEther(totalFortune as bigint);
-      setTokenBalance(formatedFortune);
+      const fortuneBalance = await stakingPair.tokenContract?.read.balanceOf([user.address as Address]);
+      const formattedAmount = formatEther(fortuneBalance as bigint);
+      setTokenBalance(formattedAmount);
+      setTokenBalanceWei(fortuneBalance ?? 0n);
     } finally {
       setIsRetrievingToken(false);
     }
   }
 
   const handleDepositPct = useCallback((pct: number) => {
-    setAmountToStake(Math.floor(tokenBalance * (pct / 100)));
+    const percentageBigInt = BigInt(pct);
+    const result = (parseEther(tokenBalance) * percentageBigInt) / BigInt(100);
+    setAmountToStake(formatEther(result));
   }, [tokenBalance]);
+
 
   const validateInput = async () => {
     setExecutingLabel('Validating');
 
     const isAddingDuration = type === 'duration';
 
-    if (!isAddingDuration && tokenBalance < amountToStake) {
+    if (!isAddingDuration && tokenBalanceWei < parseEther(amountToStake)) {
       toast.error("Not enough LP");
       return;
     }
@@ -178,7 +182,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
         toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
       } else {
         const totalApproved = await checkForApproval();
-        const desiredFortuneAmount = parseEther(Math.floor(amountToStake).toString());
+        const desiredFortuneAmount = parseEther(amountToStake.toString());
 
         if (totalApproved < desiredFortuneAmount) {
           const txHash = await frtnContract?.write.approve(
@@ -191,21 +195,21 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
           toast.success(createSuccessfulTransactionToastContent(txHash ?? '', bankChainId));
         }
 
-        const expectedMitama = await bankContract?.read.mitamaForLp([
-          parseEther(`${amountToStake}`),
-          vaultConfig?.pair,
-          daysToStake*86400
-        ])
+        // const expectedMitama = await bankContract?.read.mitamaForLp([
+        //   parseEther(`${amountToStake}`),
+        //   vaultConfig?.pair,
+        //   daysToStake*86400
+        // ])
 
         const tx = await callWithGasPrice(bankContract, 'increaseDepositForLPVault', [
           parseEther(String(amountToStake)),
           vault.index,
           vault.pool,
-          expectedMitama
+          newMitama
         ]);
         toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
       }
-      onSuccess(amountToStake, daysToStake);
+      onSuccess(Number(amountToStake), daysToStake);
     } catch (error: any) {
       console.log(error)
       toast.error(parseErrorMessage(error));
@@ -229,7 +233,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
     const sumDays = Number(vault.length / (86400)) + (type === 'duration' ? daysToStake : 0);
-    const sumAmount = Number(ethers.utils.formatEther(vault.balance)) + (type === 'amount' ? amountToStake : 0);
+    const sumAmount = Number(ethers.utils.formatEther(vault.balance)) + (type === 'amount' ? Number(amountToStake) : 0);
     const mitama = Math.floor((sumAmount * sumDays) / 1080);
     let newTroops = Math.floor(mitama / mitamaTroopsRatio);
     if (newTroops < 1 && sumAmount > 0) newTroops = 1;
@@ -338,7 +342,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
           )}
           {type === 'amount' && (
             <VStack align='end' textAlign='end'>
-              <Box fontSize='sm' fontWeight='bold'>Balance: {isRetrievingToken ? <Spinner size='sm'/> : commify(round(tokenBalance))}</Box>
+              <Box fontSize='sm' fontWeight='bold'>Balance: {isRetrievingToken ? <Spinner size='sm'/> : commify(round(tokenBalance, 3))}</Box>
               <Flex justify='end' align='center'>
                 <Box ms={1} fontSize='sm'>{vaultConfig?.name} LP</Box>
               </Flex>
