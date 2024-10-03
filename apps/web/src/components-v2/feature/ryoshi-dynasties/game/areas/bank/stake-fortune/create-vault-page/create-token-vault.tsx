@@ -159,7 +159,11 @@ const CreateTokenVault = ({vaultIndex, onSuccess}: CreateTokenVaultProps) => {
 
       setExecutingLabel('Staking');
 
-      const tx = await callWithGasPrice(bankContract, 'openVault', [desiredFortuneAmount, daysToStake*86400, vaultIndex]);
+      const tx = await callWithGasPrice(bankContract, 'openVault', [
+        desiredFortuneAmount,
+        daysToStake*86400,
+        vaultIndex
+      ]);
       toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
       onSuccess(fortuneToStake, daysToStake);
     } catch (error: any) {

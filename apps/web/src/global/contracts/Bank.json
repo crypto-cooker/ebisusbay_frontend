@@ -1,5 +1,135 @@
 [
   {
+    "inputs": [],
+    "name": "BankVaultNotSet",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "DepositNotMature",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "DepositTimeTooLong",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "DepositTimeTooShort",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "DepositTooSmall",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "EmergencyCloseNotAvailable",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ExpectingMoreMitama",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "FortuneTokenNotFound",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidAmount",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidArrayLengths",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidCaller",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidContract",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidIndex",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidNonce",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidOperator",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidPair",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidSignature",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidUser",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NoContracts",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NoDepositFound",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotImplemented",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PairAlreadyAdded",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PoolNotRegistered",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "StakeAlreadyExists",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "StakeExpired",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "VaultAlreadyExists",
+    "type": "error"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
