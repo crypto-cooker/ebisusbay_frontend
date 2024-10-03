@@ -623,7 +623,6 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
           const numTerms = Math.floor(totalStakingDays / rdConfig.bank.staking.fortune.termLength);
           const availableAprs = rdConfig.bank.staking.fortune.apr as any;
           let apr = 'N/A';
-          console.log('availableAprs', availableAprs)
           if (availableAprs && Object.keys(availableAprs).length > 0) {
             const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
             apr = `${(availableAprs[aprKey] ?? availableAprs[1]) * 100}%`;

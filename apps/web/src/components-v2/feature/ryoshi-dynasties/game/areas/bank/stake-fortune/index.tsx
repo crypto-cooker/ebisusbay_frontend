@@ -12,7 +12,7 @@ import WithdrawVaultPage
 import TokenizeVaultPage
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/tokenize-vault-page";
 import {DEFAULT_CHAIN_ID, SUPPORTED_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
-import { BankStakeTokenContext } from "./context";
+import {BankStakeTokenContext, VaultType} from "./context";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 
@@ -24,8 +24,9 @@ interface StakeFortuneProps {
 
 const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
   const [page, setPage] = useState<ReactElement | null>(null);
-  const [title, setTitle] = useState<string>('Stake Fortune');
+  const [title, setTitle] = useState<string>('Stake Tokens');
   const [currentChainId, setCurrentChainId] = useState<SupportedChainId>(SUPPORTED_CHAIN_CONFIGS[0].chain.id);
+  const [currentVaultType, setCurrentVaultType] = useState<VaultType>(VaultType.TOKEN);
   const { chainId: activeChainId} = useActiveChainId();
   const { switchNetworkAsync } = useSwitchNetwork();
 
@@ -49,17 +50,19 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
 
   const returnHome = () => {
     setPage(null);
-    setTitle('Stake Fortune');
+    setTitle('Stake Tokens');
   };
 
-  const handleEditVault = useCallback((vault: FortuneStakingAccount, type: string) => {
-    setPage(<EditVaultPage vault={vault} type={type} onReturn={returnHome} />);
+  const handleEditVault = useCallback((vault: FortuneStakingAccount, vaultType: VaultType, targetField: string) => {
+    setPage(<EditVaultPage vault={vault} vaultType={vaultType} targetField={targetField} onReturn={returnHome} />);
     setTitle('Update Stake');
   }, [returnHome]);
 
-  const handleCreateVault = useCallback((vaultIndex: number) => {
+  const handleCreateVault = useCallback((vaultIndex: number, vaultType: VaultType) => {
+    handleUpdateVaultContext(vaultType);
     setPage(<CreateVaultPage vaultIndex={vaultIndex} onReturn={returnHome} />)
-  }, [returnHome]);
+    setTitle(`Stake ${vaultType === VaultType.TOKEN ? 'Tokens' : 'LP'}`);
+  }, [returnHome, currentVaultType]);
 
   const handleWithdrawVault = useCallback((vault: FortuneStakingAccount) => {
     setPage(<WithdrawVaultPage vault={vault} onReturn={returnHome} />);
@@ -75,6 +78,10 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
     setCurrentChainId(chainId);
   }, []);
 
+  const handleUpdateVaultContext = useCallback((vaultType: VaultType) => {
+    setCurrentVaultType(vaultType);
+  }, []);
+
   return (
     <RdModal
       isOpen={isOpen}
@@ -84,7 +91,7 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
       utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
       onUtilBtnClick={handleBack}
     >
-      <BankStakeTokenContext.Provider value={{chainId: currentChainId}}>
+      <BankStakeTokenContext.Provider value={{chainId: currentChainId, vaultType: currentVaultType}}>
         {!!page ? (
           <>{page}</>
         ) : (
@@ -95,6 +102,7 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
             onTokenizeVault={handleTokenizeVault}
             initialChainId={currentChainId}
             onUpdateChainContext={handleUpdateChainContext}
+            onUpdateVaultContext={handleUpdateVaultContext}
           />
         )}
       </BankStakeTokenContext.Provider>

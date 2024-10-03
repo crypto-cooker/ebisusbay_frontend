@@ -62,6 +62,7 @@ interface RyoshiConfigBankStakingFortune {
   mitamaTroopsRatio: number;
   startingDebt: number;
   apr: {[key: number]: number};
+  lpApr : { [key: number]: number };
 }
 
 interface RyoshiConfigBankStakingNFT {
