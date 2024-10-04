@@ -1,13 +1,13 @@
 import { Currency, CurrencyAmount, Token } from '@pancakeswap/sdk'
 import { useMemo } from 'react'
 import { useSingleCallResult } from '../state/multicall/hooks'
-import { useTokenContract } from '@eb-pancakeswap-web/hooks/useContract'
+import {useTokenContract, useTokenContractByChainId} from '@eb-pancakeswap-web/hooks/useContract'
 import {useConfig, useReadContract} from "wagmi";
 
 // returns undefined if input token is undefined, or fails to get token contract,
 // or contract total supply cannot be fetched
-export function useTotalSupply(token?: Currency): CurrencyAmount<Token> | undefined {
-  const contract = useTokenContract(token?.isToken ? token.address : undefined);
+export function useTotalSupply(token?: Currency, chainId?: number): CurrencyAmount<Token> | undefined {
+  const contract = useTokenContract(token?.isToken ? token.address : undefined, chainId);
 
   const shouldReadContract = !!(contract && contract.abi && contract.address);
   const result = useReadContract({

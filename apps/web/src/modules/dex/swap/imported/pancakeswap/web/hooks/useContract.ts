@@ -54,8 +54,8 @@ export function usePairContract(pairAddress?: Address, options?: UseContractOpti
   return useContract(pairAddress, pancakePairV2ABI, options)
 }
 
-export function useTokenContract(tokenAddress?: Address) {
-  return useContract(tokenAddress, erc20Abi)
+export function useTokenContract(tokenAddress?: Address, chainId?: number) {
+  return useContract(tokenAddress, erc20Abi, {chainId})
 }
 
 export function useWNativeContract() {

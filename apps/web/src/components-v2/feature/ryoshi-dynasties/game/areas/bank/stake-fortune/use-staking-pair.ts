@@ -36,7 +36,7 @@ const useStakingPair = ({ pairAddress, chainId }: {pairAddress: Address, chainId
 
   const liquidityToken = pair?.liquidityToken;
   const tokenContract = useTokenContract(liquidityToken?.address, chainId);
-  const totalSupply = useTotalSupply(liquidityToken);
+  const totalSupply = useTotalSupply(liquidityToken, chainId);
 
   return useMemo(() => {
     const frtnReserve = pair?.reserve0;
