@@ -13,6 +13,7 @@ import {readContracts} from "@wagmi/core";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {getAppChainConfig} from "@src/config/hooks";
 import {ChainId} from "@pancakeswap/chains";
+import {timeSince} from "@market/helpers/utils";
 
 export const useUserFarms = () => {
   const [userFarms] = useAtom(userFarmsAtom);
@@ -220,10 +221,12 @@ export const userUserFarmBoost = (pid: number) => {
     const existingBoost = boosts.find((boost) => boost.farmId === pid);
 
     const isBoostClaimable = existingBoost && new Date(existingBoost.claimAt) < new Date();
+    const timeRemaining = existingBoost && timeSince(new Date(existingBoost.claimAt));
 
     return {
       boost: existingBoost,
-      claimable: isBoostClaimable
+      claimable: isBoostClaimable,
+      timeRemaining
     }
   }, [pid, boosts]);
 }

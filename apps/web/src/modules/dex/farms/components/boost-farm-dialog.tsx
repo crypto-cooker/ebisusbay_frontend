@@ -49,7 +49,7 @@ const SECONDS_PER_TROOP = 60;
 const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialogProps) => {
   const user = useUser();
   const { config: appChainConfig } = useAppChainConfig();
-  const { boost: existingBoost, claimable: isBoostClaimable } = userUserFarmBoost(farm.data.pid);
+  const { boost: existingBoost, claimable: isBoostClaimable, timeRemaining } = userUserFarmBoost(farm.data.pid);
 
   const {signature, isSignedIn, requestSignature} = useEnforceSignature();
 
@@ -149,7 +149,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
               ) : (
                 <Alert status='info'>
                   <Spinner boxSize={4} />
-                  <Box ms={1}>A boost is currently in progress</Box>
+                  <Box ms={1}>A boost is currently in progress ({existingBoost.troops} troops). Can be claimed in {timeRemaining}</Box>
                 </Alert>
               )}
             </Box>
