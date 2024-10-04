@@ -181,8 +181,12 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
             </FormControl>
             <VStack align='stretch' mt={4}>
               <Flex justify='space-between' fontSize='sm'>
-                <Box>APR Boost</Box>
+                <Box>XP Boost</Box>
                 <Box>{xpLevelBoost}% (level {xpLevel})</Box>
+              </Flex>
+              <Flex justify='space-between' fontSize='sm'>
+                <Box>Boosted APR</Box>
+                <Box>{parseFloat(farm.derived.apr.slice(0, -1)) + xpLevelBoost}%</Box>
               </Flex>
               <Flex justify='space-between' fontSize='sm'>
                 <Box>Duration</Box>

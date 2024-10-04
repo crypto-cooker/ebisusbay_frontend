@@ -155,7 +155,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
           </Flex>
           <SimpleGrid columns={2}>
             <Box fontWeight='bold'>APR</Box>
-            <Box fontWeight='bold' textAlign='end'>{farm.derived.apr}</Box>
+            <Box fontWeight='bold' textAlign='end'>{farm.derived.apr} (max {parseFloat(farm.derived.apr.slice(0, -1)) + 300}%)</Box>
             <Box fontWeight='bold'>Rewards / Day</Box>
             <Wrap spacing={2} justify='end'>
               {farm.derived.dailyRewards.map((reward, i) => (

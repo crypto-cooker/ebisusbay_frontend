@@ -555,7 +555,7 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
         <Box>
           <Box fontSize='xs' fontWeight='bold'>APR</Box>
           <HStack>
-            <Box>{info.getValue()}</Box>
+            <Box>{info.getValue()} (max {parseFloat(info.getValue().slice(0, -1)) + 300}%)</Box>
             {info.getValue() !== '-' && false && (
               <Box>
                 <IconButton
