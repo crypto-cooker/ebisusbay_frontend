@@ -144,7 +144,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
               {isBoostClaimable ? (
                 <Alert status='success' variant='solid'>
                   <CheckIcon />
-                  <Box ms={1}>Your boost rewards of {existingBoost.claimAmount} FRTN are ready to claim!</Box>
+                  <Box ms={1}>Your boost is complete! {existingBoost.claimAmount} FRTN rewards earned and will be sent to the Bank after claiming below.</Box>
                 </Alert>
               ) : (
                 <Alert status='info'>
