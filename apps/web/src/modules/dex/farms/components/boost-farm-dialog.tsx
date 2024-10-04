@@ -166,7 +166,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
               <HStack align='stretch'>
                 <NumberInput
                   value={quantity}
-                  min={MIN_TROOPS}
+                  min={0}
                   max={MAX_TROOPS}
                   step={1}
                   onChange={(valueString) => handleQuantityChange(valueString)}
