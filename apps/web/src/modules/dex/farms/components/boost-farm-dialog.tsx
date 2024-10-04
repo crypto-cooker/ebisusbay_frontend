@@ -29,7 +29,7 @@ import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnfor
 import {useUser} from "@src/components-v2/useUser";
 import {useAppChainConfig} from "@src/config/hooks";
 import {useQuery} from "@tanstack/react-query";
-import {getLengthOfTime} from "@market/helpers/utils";
+import {getLengthOfTime, pluralize} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import {useAtom} from "jotai";
 import {CheckIcon, SpinnerIcon} from "@chakra-ui/icons";
@@ -43,6 +43,7 @@ interface StakeLpTokensDialogProps {
 }
 
 const MAX_TROOPS = 360;
+const MIN_TROOPS = 60;
 const SECONDS_PER_TROOP = 60;
 
 const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialogProps) => {
@@ -84,6 +85,18 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
   const handleConfirmBoost = async () => {
     try {
       setExecuting(true);
+
+      const quantityInt = +quantity;
+      if (quantityInt < MIN_TROOPS) {
+        toast.error(`Must add more than ${pluralize(MIN_TROOPS, 'troop')}`);
+        return;
+      }
+
+      if (quantityInt > MAX_TROOPS) {
+        toast.error(`Cannot add more than ${pluralize(MAX_TROOPS, 'troop')}`);
+        return;
+      }
+
       const signature = await requestSignature();
       await ApiService.withoutKey().ryoshiDynasties.sendTroopsToFarm(
         farm.data.pid,
@@ -153,7 +166,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
               <HStack align='stretch'>
                 <NumberInput
                   value={quantity}
-                  min={0}
+                  min={MIN_TROOPS}
                   max={MAX_TROOPS}
                   step={1}
                   onChange={(valueString) => handleQuantityChange(valueString)}
@@ -163,7 +176,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                 </NumberInput>
                 <Button onClick={() => handlePresetQuantityChange(100)}>MAX</Button>
               </HStack>
-              <FormHelperText fontSize='sm'>Max: {MAX_TROOPS}. Quest time increases 1 minute per troop sent</FormHelperText>
+              <FormHelperText fontSize='sm'>Min: {MIN_TROOPS}, Max: {MAX_TROOPS}. Quest time increases 1 minute per troop sent</FormHelperText>
               <FormErrorMessage fontSize='sm'>Error</FormErrorMessage>
             </FormControl>
             <VStack align='stretch' mt={4}>

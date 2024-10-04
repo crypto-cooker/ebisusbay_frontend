@@ -128,7 +128,7 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
   const [harvestRewards, harvestingRewards] = useHarvestRewards();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const text2Color = useColorModeValue('#1A202C', 'whiteAlpha.600');
-  const {signature, isSignedIn, requestSignature} = useEnforceSignature();
+  const {requestSignature} = useEnforceSignature();
   const { boost, claimable } = userUserFarmBoost(row.original.data.pid);
 
   const [rowFocused, setRowFocused] = useState(false);

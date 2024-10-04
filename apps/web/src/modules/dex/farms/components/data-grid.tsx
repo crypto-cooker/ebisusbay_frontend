@@ -35,7 +35,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLinkAlt, faMinus, faPlus, faStopwatch} from "@fortawesome/free-solid-svg-icons";
 import StakeLpTokensDialog from "@dex/farms/components/stake-lp-tokens";
 import UnstakeLpTokensDialog from "@dex/farms/components/unstake-lp-tokens-dialog";
-import {useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
+import {userUserFarmBoost, useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
 import {useUser} from "@src/components-v2/useUser";
 import {getTheme} from "@src/global/theme/theme";
 import {useExchangeRate} from "@market/hooks/useGlobalPrices";
@@ -43,6 +43,10 @@ import {useAppChainConfig} from "@src/config/hooks";
 import {getBlockExplorerLink} from "@dex/utils";
 import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
 import {DoubleCurrencyLayeredLogo} from "@dex/components/logo";
+import {SpinnerIcon, StarIcon} from "@chakra-ui/icons";
+import {toast} from "react-toastify";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import BoostFarmDialog from "@dex/farms/components/boost-farm-dialog";
 
 export type DataGridProps = {
   data: DerivedFarm[];
@@ -66,19 +70,37 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
 
   const {getByAddress} = useMultichainCurrencyBroker(appChainConfig.chain.id);
   const [enableFarm, enablingFarm] = useEnableFarm();
-  const { refetchBalances } = useUserFarmsRefetch();
+  const { refetchBalances, refetchBoosts } = useUserFarmsRefetch();
   const borderColor = useColorModeValue('#bbb', '#ffffff33');
   const [harvestRewards, harvestingRewards] = useHarvestRewards();
   const text2Color = useColorModeValue('#1A202C', 'whiteAlpha.600');
+  const {requestSignature} = useEnforceSignature();
+  const { boost, claimable } = userUserFarmBoost(farm.data.pid);
 
   const { isOpen: isOpenUnstake, onOpen: onOpenUnstake, onClose:  onCloseUnstake } = useDisclosure();
   const { isOpen: isOpenStake, onOpen: onOpenStake, onClose:  onCloseStake } = useDisclosure();
+  const { isOpen: isOpenBoost, onOpen: onOpenBoost, onClose:  onCloseBoost } = useDisclosure();
 
   const handleStakeSuccess = async () => {
     onCloseStake();
     onCloseUnstake();
     await new Promise(r => setTimeout(r, 2000));
     refetchBalances();
+  }
+
+  const handleBoostSuccess = async () => {
+    onCloseBoost();
+    await new Promise(r => setTimeout(r, 2000));
+    refetchBoosts();
+  }
+
+  const handleOpenBoost = async () => {
+    const signature = await requestSignature();
+    if (signature) {
+      onOpenBoost();
+    }  else {
+      toast.error('Unable to retrieve signature');
+    }
   }
 
   const stakedDollarValue = useMemo(() => {
@@ -184,6 +206,14 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                 ) : <></>
               })}
               <PrimaryButton
+                isDisabled={harvestingRewards || !user.address}
+                isLoading={harvestingRewards}
+                onClick={handleOpenBoost}
+                leftIcon={boost && claimable ? <StarIcon /> : !!boost ? <SpinnerIcon /> : undefined}
+              >
+                {boost && claimable ? <>Claim Boost</> : !!boost ? <>Boosting</> : <>Boost</>}
+              </PrimaryButton>
+              <PrimaryButton
                 isDisabled={harvestingRewards || totalEarned === 0n || !userData?.approved || !user.address}
                 isLoading={harvestingRewards}
                 onClick={() => harvestRewards(farm.data.pid)}
@@ -280,6 +310,12 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
             farm={farm}
             userData={userData}
             onSuccess={handleStakeSuccess}
+          />
+          <BoostFarmDialog
+            isOpen={isOpenBoost}
+            onClose={onCloseBoost}
+            farm={farm}
+            onSuccess={handleBoostSuccess}
           />
         </>
       )}
