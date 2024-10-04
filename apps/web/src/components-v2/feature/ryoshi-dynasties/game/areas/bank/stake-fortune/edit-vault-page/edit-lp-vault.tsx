@@ -91,13 +91,13 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
 
   const stakingPair = useStakingPair({pairAddress: vaultConfig!.pair, chainId: bankChainId});
 
-  const derivedFrtnAmount = useMemo(() => {
+  const derivedFrtnAmount = (amount: number | string) => {
     if (!stakingPair || !stakingPair.totalSupply || stakingPair.totalSupply.equalTo(0)) {
       return '0'
     }
 
-    return stakingPair.frtnReserve?.multiply(parseEther(`${amountToStake}`)).divide(stakingPair.totalSupply ?? 0).toExact();
-  }, [stakingPair, amountToStake]);
+    return stakingPair.frtnReserve?.multiply(parseEther(`${amount}`)).divide(stakingPair.totalSupply ?? 0).toExact() ?? '0';
+  };
 
   const handleChangeFortuneAmount = (valueAsString: string, valueAsNumber: number) => {
     setAmountToStake(valueAsString);
@@ -141,7 +141,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
       return;
     }
 
-    if(!isAddingDuration && Number(derivedFrtnAmount) < 1){
+    if(!isAddingDuration && Number(derivedFrtnAmount(amountToStake)) < 1){
       setInputError(`At least 1 LP token required`);
       return false;
     }
@@ -233,11 +233,11 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
     const sumDays = Number(vault.length / (86400)) + (type === 'duration' ? daysToStake : 0);
-    const sumAmount = Number(ethers.utils.formatEther(vault.balance)) + (type === 'amount' ? Number(amountToStake) : 0);
+    const sumAmount = Number(derivedFrtnAmount(formatEther(vault.balance))) + (type === 'amount' ? Number(derivedFrtnAmount(amountToStake)) : 0);
     const mitama = (sumAmount * sumDays) / 1080;
     const multipliedLpMitama = Math.floor(mitama * 2.5 * 0.98); // 2% slippage
 
-    let newTroops = Math.floor(mitama / mitamaTroopsRatio);
+    let newTroops = Math.floor(multipliedLpMitama / mitamaTroopsRatio);
     if (newTroops < 1 && sumAmount > 0) newTroops = 1;
     setNewTroops(newTroops);
     setNewMitama(multipliedLpMitama);

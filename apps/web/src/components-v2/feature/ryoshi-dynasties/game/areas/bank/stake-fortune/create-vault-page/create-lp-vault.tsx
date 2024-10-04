@@ -252,7 +252,7 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
     const mitama = (Number(derivedFrtnAmount) * daysToStake) / 1080;
     const multipliedLpMitama = Math.floor(mitama * 2.5 * 0.98); // 2% slippage
 
-    let newTroops = Math.floor(mitama / mitamaTroopsRatio);
+    let newTroops = Math.floor(multipliedLpMitama / mitamaTroopsRatio);
     if (newTroops < 1 && Number(derivedFrtnAmount) > 0) newTroops = 1;
     setNewTroops(newTroops);
     setNewMitama(multipliedLpMitama);
