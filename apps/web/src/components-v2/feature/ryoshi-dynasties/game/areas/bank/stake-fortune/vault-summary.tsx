@@ -1,25 +1,3 @@
-import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
-import {
-  BankStakeTokenContext,
-  BankStakeTokenContextProps,
-  VaultType
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
-import React, {ReactNode, useCallback, useContext, useEffect, useMemo, useState} from "react";
-import {
-  RyoshiDynastiesContext,
-  RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {useUser} from "@src/components-v2/useUser";
-import {useBankContract} from "@src/global/hooks/contracts";
-import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
-import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
-import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
-import {ethers} from "ethers";
-import {createSuccessfulTransactionToastContent, findNextLowestNumber, round} from "@market/helpers/utils";
-import moment from "moment/moment";
-import {toast} from "react-toastify";
-import {parseErrorMessage} from "@src/helpers/validator";
-import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {
   AccordionButton,
   AccordionIcon,
@@ -38,13 +16,35 @@ import {
   Text,
   VStack
 } from "@chakra-ui/react";
-import {commify} from "ethers/lib/utils";
-import ImageService from "@src/core/services/image";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faGem} from "@fortawesome/free-solid-svg-icons";
-import RdButton from "../../../../components/rd-button";
+import { useActiveChainId } from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import { useCallWithGasPrice } from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
+import { useSwitchNetwork } from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
+import { faGem } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { createSuccessfulTransactionToastContent, findNextLowestNumber, round } from "@market/helpers/utils";
+import {
+  BankStakeTokenContext,
+  BankStakeTokenContextProps,
+  VaultType
+} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
 import useStakingPair from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/use-staking-pair";
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
+import FortuneIcon from "@src/components-v2/shared/icons/fortune";
+import { useUser } from "@src/components-v2/useUser";
+import { FortuneStakingAccount } from "@src/core/services/api-service/graph/types";
+import ImageService from "@src/core/services/image";
+import { useBankContract } from "@src/global/hooks/contracts";
+import { parseErrorMessage } from "@src/helpers/validator";
+import { ethers } from "ethers";
+import { commify } from "ethers/lib/utils";
+import moment from "moment/moment";
+import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 import { parseEther } from "viem";
+import RdButton from "../../../../components/rd-button";
 
 interface VaultSummaryProps {
   vault: FortuneStakingAccount;
@@ -277,7 +277,7 @@ const VaultBody = ({ totalApr, baseApr, bonusApr, troops, mitama, endTime, isEst
       <Box textAlign='end'>
         <VStack align='end' spacing={0}>
           <Box fontWeight='bold'>{round(totalApr, 2)}%</Box>
-          <Box fontSize='xs'>{baseApr}% Fortune stake + {round(bonusApr, 2)}% NFT stake</Box>
+          <Box fontSize='xs'>{round(baseApr, 2)}% Fortune stake + {round(bonusApr, 2)}% NFT stake</Box>
         </VStack>
       </Box>
       <Box>Troops</Box>

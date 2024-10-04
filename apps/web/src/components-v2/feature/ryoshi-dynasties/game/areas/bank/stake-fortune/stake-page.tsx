@@ -1,4 +1,3 @@
-import React, {useCallback, useEffect, useState} from "react";
 import {
   Accordion,
   Box,
@@ -11,19 +10,19 @@ import {
   Spinner,
   Text,
   VStack
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
+import { useCallback, useEffect, useState } from "react";
 
 //contracts
-import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
-import {ApiService} from "@src/core/services/api-service";
-import {useQuery} from "@tanstack/react-query";
-import {useUser} from "@src/components-v2/useUser";
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {SUPPORTED_RD_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
-import {VaultType} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
+import { VaultType } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
 import VaultSummary from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/vault-summary";
-import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import { useUser } from "@src/components-v2/useUser";
+import { SUPPORTED_RD_CHAIN_CONFIGS, SupportedChainId } from "@src/config/chains";
+import { ApiService } from "@src/core/services/api-service";
+import { FortuneStakingAccount } from "@src/core/services/api-service/graph/types";
+import { useQuery } from "@tanstack/react-query";
 
 interface StakePageProps {
   onEditVault: (vault: FortuneStakingAccount, vaultType: VaultType, targetField: string) => void;
@@ -46,7 +45,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
     enabled: !!user.address && !!currentTab,
   });
 
-  const [vaultGroup, setVaultGroup] = useState<any>(account?.vaults);
+  const [vaultGroup, setVaultGroup] = useState(account?.vaults);
 
   const handleConnect = async () => {
     user.connect();
