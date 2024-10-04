@@ -16,12 +16,12 @@ import {
   Text,
   VStack
 } from "@chakra-ui/react";
-import { useActiveChainId } from "@eb-pancakeswap-web/hooks/useActiveChainId";
-import { useCallWithGasPrice } from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
-import { useSwitchNetwork } from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
-import { faGem } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { createSuccessfulTransactionToastContent, findNextLowestNumber, round } from "@market/helpers/utils";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
+import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
+import {faGem} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {createSuccessfulTransactionToastContent, findNextLowestNumber, round} from "@market/helpers/utils";
 import {
   BankStakeTokenContext,
   BankStakeTokenContextProps,
@@ -33,17 +33,17 @@ import {
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-import { useUser } from "@src/components-v2/useUser";
-import { FortuneStakingAccount } from "@src/core/services/api-service/graph/types";
+import {useUser} from "@src/components-v2/useUser";
+import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
 import ImageService from "@src/core/services/image";
-import { useBankContract } from "@src/global/hooks/contracts";
-import { parseErrorMessage } from "@src/helpers/validator";
-import { ethers } from "ethers";
-import { commify } from "ethers/lib/utils";
+import {useBankContract} from "@src/global/hooks/contracts";
+import {parseErrorMessage} from "@src/helpers/validator";
+import {ethers} from "ethers";
+import {commify} from "ethers/lib/utils";
 import moment from "moment/moment";
-import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { toast } from "react-toastify";
-import { parseEther } from "viem";
+import {ReactNode, useCallback, useContext, useEffect, useMemo, useState} from "react";
+import {toast} from "react-toastify";
+import {parseEther} from "viem";
 import RdButton from "../../../../components/rd-button";
 
 interface VaultSummaryProps {
@@ -365,16 +365,18 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
               )}
             </Stack>
           </Center>
-          <Center mt={4}>
-            <Button
-              variant='unstyled'
-              size='sm'
-              fontWeight='normal'
-              onClick={onWithdrawVault}
-            >
-              Emergency Withdraw
-            </Button>
-          </Center>
+          {vaultType !== VaultType.LP && (
+            <Center mt={4}>
+              <Button
+                variant='unstyled'
+                size='sm'
+                fontWeight='normal'
+                onClick={onWithdrawVault}
+              >
+                Emergency Withdraw
+              </Button>
+            </Center>
+          )}
         </>
       ) : (
         <VStack mb={2} mt={4}>
