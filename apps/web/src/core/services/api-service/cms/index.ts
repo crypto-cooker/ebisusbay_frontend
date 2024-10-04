@@ -244,6 +244,18 @@ class Cms {
   async validateDeal(id: string) {
     return await this.orders.validateDeal(id);
   }
+
+  async sendTroopsToFarm(farmId: number, chainId: number, troops: string, address: string, signature: string) {
+    return this.ryoshiDynasties.sendTroopsToFarm(farmId, chainId, troops, address, signature);
+  }
+
+  async getFarmBoosts(address: string, active: boolean) {
+    return this.ryoshiDynasties.getFarmBoosts(address, active);
+  }
+
+  async claimFarmBoost(farmId: number, address: string, signature: string) {
+    return this.ryoshiDynasties.claimFarmBoost(farmId, address, signature);
+  }
 }
 
 export default Cms;

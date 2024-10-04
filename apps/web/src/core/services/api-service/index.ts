@@ -501,4 +501,16 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async requestSlotUnlockAuthorization(type: number, chainId: number, address: string, signature: string) {
     return this.cms.requestSlotUnlockAuthorization(type, chainId, address, signature);
   }
+
+  async sendTroopsToFarm(farmId: number, chainId: number, troops: string, address: string, signature: string) {
+    return this.cms.sendTroopsToFarm(farmId, chainId, troops, address, signature);
+  }
+
+  async getFarmBoosts(address: string, active: boolean) {
+    return this.cms.getFarmBoosts(address, active);
+  }
+
+  async claimFarmBoost(farmId: number, address: string, signature: string) {
+    return this.cms.claimFarmBoost(farmId, address, signature);
+  }
 }

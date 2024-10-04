@@ -24,6 +24,23 @@ export interface FarmEmissionToken {
   amount: bigint;
 }
 
+export interface UserFarmBoost {
+  boost: string;
+  chainId: number;
+  claimAmount: string;
+  claimAt: string;
+  createdAt: string;
+  farmApr: string;
+  farmId: number;
+  heroBoost: string;
+  id: number;
+  profileId: number;
+  status: string;
+  troops: number;
+  updatedAt: string;
+  usdDeposit: number;
+}
+
 export interface UserFarms {
   [address: string]: UserFarmState;
 }
@@ -31,10 +48,12 @@ export interface UserFarms {
 // Initial states
 const initialApprovals: { [address: string]: boolean } = {};
 const initialBalances: MappedUserFarmBalances = {};
+const initialBoosts: UserFarmBoost[] = [];
 
 // Atoms for individual data pieces
 export const approvalsAtom = atomWithReset<{ [address: string]: boolean }>(initialApprovals);
 export const balancesAtom = atomWithReset<MappedUserFarmBalances>(initialBalances);
+export const boostsAtom = atom<UserFarmBoost[]>(initialBoosts);
 
 // Refetch trigger atoms
 export const refetchApprovalsAtom = atomWithReset<number>(0);

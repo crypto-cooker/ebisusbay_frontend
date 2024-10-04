@@ -1,6 +1,6 @@
 import {useAtom, useSetAtom} from "jotai";
-import {approvalsAtom, balancesAtom, userFarmsAtom} from "@dex/farms/state/user";
-import {useContext} from "react";
+import {approvalsAtom, balancesAtom, boostsAtom, userFarmsAtom} from "@dex/farms/state/user";
+import {useContext, useMemo} from "react";
 import {Contract, ethers} from "ethers";
 import FarmsAbi from "@src/global/contracts/Farms.json";
 import LpAbi from "@src/global/contracts/LP.json";
@@ -212,3 +212,18 @@ export const useUserFarmsRefetch = () => {
   }
   return context;
 };
+
+export const userUserFarmBoost = (pid: number) => {
+  const [boosts] = useAtom(boostsAtom);
+
+  return useMemo(() => {
+    const existingBoost = boosts.find((boost) => boost.farmId === pid);
+
+    const isBoostClaimable = existingBoost && new Date(existingBoost.claimAt) < new Date();
+
+    return {
+      boost: existingBoost,
+      claimable: isBoostClaimable
+    }
+  }, [pid, boosts]);
+}

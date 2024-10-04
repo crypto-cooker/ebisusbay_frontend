@@ -24,7 +24,7 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
-  SimpleGrid,
+  SimpleGrid, Spinner,
   Stack,
   Table,
   Tbody,
@@ -36,7 +36,7 @@ import {
   VStack,
   Wrap
 } from '@chakra-ui/react';
-import {ChevronDownIcon, ChevronUpIcon, QuestionOutlineIcon} from '@chakra-ui/icons';
+import {ChevronDownIcon, ChevronUpIcon, QuestionOutlineIcon, SpinnerIcon, StarIcon} from '@chakra-ui/icons';
 import {getTheme} from '@src/global/theme/theme';
 import {useUser} from '@src/components-v2/useUser';
 import {Card} from '@src/components-v2/foundation/card';
@@ -51,12 +51,15 @@ import {UserFarms, UserFarmState} from '@dex/farms/state/user';
 import {ethers} from 'ethers';
 import {ciEquals, millisecondTimestamp, round} from '@market/helpers/utils';
 import {commify} from 'ethers/lib/utils';
-import {useUserFarmsRefetch} from '@dex/farms/hooks/user-farms';
+import {userUserFarmBoost, useUserFarmsRefetch} from '@dex/farms/hooks/user-farms';
 import {useExchangeRate} from '@market/hooks/useGlobalPrices';
 import {useAppChainConfig} from "@src/config/hooks";
 import {getBlockExplorerLink} from "@dex/utils";
 import {CurrencyLogo, DoubleCurrencyLayeredLogo} from "@dex/components/logo";
 import useMultichainCurrencyBroker, {MultichainBrokerCurrency} from "@market/hooks/use-multichain-currency-broker";
+import BoostFarmDialog from "@dex/farms/components/boost-farm-dialog";
+import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
+import {toast} from "react-toastify";
 
 export type DataTableProps = {
   data: DerivedFarm[];
@@ -121,20 +124,38 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
   const {config: appChainConfig} = useAppChainConfig();
   const {getByAddress} = useMultichainCurrencyBroker(appChainConfig.chain.id);
   const [enableFarm, enablingFarm] = useEnableFarm();
-  const { refetchBalances } = useUserFarmsRefetch();
+  const { refetchBalances, refetchBoosts } = useUserFarmsRefetch();
   const [harvestRewards, harvestingRewards] = useHarvestRewards();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const text2Color = useColorModeValue('#1A202C', 'whiteAlpha.600');
+  const {signature, isSignedIn, requestSignature} = useEnforceSignature();
+  const { boost, claimable } = userUserFarmBoost(row.original.data.pid);
 
   const [rowFocused, setRowFocused] = useState(false);
   const { isOpen: isOpenUnstake, onOpen: onOpenUnstake, onClose:  onCloseUnstake } = useDisclosure();
   const { isOpen: isOpenStake, onOpen: onOpenStake, onClose:  onCloseStake } = useDisclosure();
+  const { isOpen: isOpenBoost, onOpen: onOpenBoost, onClose:  onCloseBoost } = useDisclosure();
 
   const handleStakeSuccess = async () => {
     onCloseStake();
     onCloseUnstake();
     await new Promise(r => setTimeout(r, 2000));
     refetchBalances();
+  }
+
+  const handleBoostSuccess = async () => {
+    onCloseBoost();
+    await new Promise(r => setTimeout(r, 2000));
+    refetchBoosts();
+  }
+
+  const handleOpenBoost = async () => {
+    const signature = await requestSignature();
+    if (signature) {
+      onOpenBoost();
+    }  else {
+      toast.error('Unable to retrieve signature');
+    }
   }
 
   const stakedDollarValue = useMemo(() => {
@@ -298,6 +319,14 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                       ) : <></>
                     })}
                     <PrimaryButton
+                      isDisabled={harvestingRewards || !user.address}
+                      isLoading={harvestingRewards}
+                      onClick={handleOpenBoost}
+                      leftIcon={boost && claimable ? <StarIcon /> : !!boost ? <SpinnerIcon /> : undefined}
+                    >
+                      {boost && claimable ? <>Claim Boost</> : !!boost ? <>Boosting</> : <>Boost</>}
+                    </PrimaryButton>
+                    <PrimaryButton
                       isDisabled={harvestingRewards || totalEarned === 0n || !userData?.approved || !user.address}
                       isLoading={harvestingRewards}
                       onClick={() => harvestRewards(row.original.data.pid)}
@@ -367,6 +396,12 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
             farm={row.original}
             userData={userData}
             onSuccess={handleStakeSuccess}
+          />
+          <BoostFarmDialog
+            isOpen={isOpenBoost}
+            onClose={onCloseBoost}
+            farm={row.original}
+            onSuccess={handleBoostSuccess}
           />
         </>
       )}

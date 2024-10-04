@@ -85,6 +85,9 @@ export interface RyoshiDynastiesApi {
     getBattleCardsByWallet(address: string, signature: string): Promise<Array<{tokenId: number, amount: number}>>;
     requestBattleCardsWithdrawalAuthorization(address: string, signature: string): Promise<any>;
     requestSlotUnlockAuthorization(type: number, chainId: number, address: string, signature: string): Promise<any>;
+    sendTroopsToFarm(farmId: number, chainId: number, troops: string, address: string, signature: string): Promise<any>;
+    getFarmBoosts(address: string, active: boolean): Promise<any>;
+    claimFarmBoost(farmId: number, address: string, signature: string): Promise<any>;
 }
 
 // @deprecated move to OrderState once MAPI migrated
