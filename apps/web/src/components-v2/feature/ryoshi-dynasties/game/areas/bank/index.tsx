@@ -18,7 +18,9 @@ import {motion} from "framer-motion";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 import {useUser} from "@src/components-v2/useUser";
 import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
-import {SUPPORTED_RD_CHAIN_CONFIGS} from "@src/config/chains";
+import {DEFAULT_CHAIN_ID, SUPPORTED_RD_CHAIN_CONFIGS} from "@src/config/chains";
+import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 
 interface BankerSceneProps {
   address: string;
@@ -43,14 +45,19 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
   const windowSize = useWindowSize();
   const [shouldAbbreviateHorizontal] = useMediaQuery('(max-width: 800px)');
   const [abbreviateButtonText, setAbbreviateButtonText] = useState(false);
+  const { chainId: activeChainId} = useActiveChainId();
+  const { switchNetworkAsync } = useSwitchNetwork();
 
   useEffect(() => {
     const shouldAbbreviateVertical = !!windowSize.height && windowSize.height < 800;
     setAbbreviateButtonText(shouldAbbreviateVertical && shouldAbbreviateHorizontal);
   }, [windowSize, shouldAbbreviateHorizontal]);
 
-  const handleExit = useCallback(() => {
-    setBankerImage(bankerImages.talking);
+  const handleExit = useCallback(async () => {
+    if (activeChainId !== DEFAULT_CHAIN_ID) {
+      await switchNetworkAsync(DEFAULT_CHAIN_ID);
+    }
+
     onBack();
   }, []);
 
@@ -149,14 +156,14 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faCoins} />
               ) : (
-                <>Stake $Fortune </>
+                <>Stake Tokens</>
               )}
             </RdButton>
             <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenStakeNFTs)}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faImage} />
               ) : (
-                <>Stake NFTs </>
+                <>Stake NFTs</>
               )}
             </RdButton>
             <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenWithdraw)}>
@@ -166,7 +173,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
                 <>Accounts</>
               )}
             </RdButton>
-            <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
+            <RdButton w='full' hoverIcon={!abbreviateButtonText} onClick={handleExit}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
               ) : (

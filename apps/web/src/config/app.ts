@@ -502,8 +502,8 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
     urls: {
       api: 'https://testapi.ebisusbay.biz/',
       app: 'https://testapp.ebisusbay.biz/',
-      // cms: 'https://testcms.ebisusbay.biz/api/',
-      cms: "http://localhost:4000/api/",
+      cms: 'https://testcms.ebisusbay.biz/api/',
+      // cms: "http://localhost:4000/api/",
       cmsSocket: 'wss://testcms.ebisusbay.biz/socket/',
       // cmsSocket: 'ws://localhost:4000/socket/',
       explorer: 'https://testnet.cronoscan.com/',

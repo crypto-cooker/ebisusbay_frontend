@@ -41,7 +41,7 @@ const configData: AppConfigMap = {
       },
       subgraph: {
         root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
-        ryoshiDynasties: 'ryoshi-dynasties-meeple',
+        ryoshiDynasties: 'ryoshi-dynasties-lp-staking',
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners-2',
         staking: 'staking',
@@ -865,7 +865,7 @@ const configData: AppConfigMap = {
       },
       subgraph: {
         root: 'https://testcronos-graph.ebisusbay.biz:8000/subgraphs/name/ebisusbay/',
-        ryoshiDynasties: 'ryoshi-dynasties',
+        ryoshiDynasties: 'ryoshi-dynasties-lp-staking',
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners',
         staking: 'staking',
