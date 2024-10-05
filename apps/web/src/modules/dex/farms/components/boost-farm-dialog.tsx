@@ -86,12 +86,12 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
 
       const quantityInt = +quantity;
       if (quantityInt < MIN_TROOPS) {
-        toast.error(`Must add more than ${pluralize(MIN_TROOPS, 'troop')}`);
+        toast.error(`Must add more than ${MIN_TROOPS} ${pluralize(MIN_TROOPS, 'troop')}`);
         return;
       }
 
       if (quantityInt > MAX_TROOPS) {
-        toast.error(`Cannot add more than ${pluralize(MAX_TROOPS, 'troop')}`);
+        toast.error(`Cannot add more than ${MAX_TROOPS} ${pluralize(MAX_TROOPS, 'troop')}`);
         return;
       }
 
@@ -215,7 +215,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                   flex={1}
                   onClick={handleConfirmBoost}
                   isLoading={executing}
-                  isDisabled={executing || !quantity || Number(quantity) === 0 || Number(quantity) > MAX_TROOPS}
+                  isDisabled={executing || !quantity || Number(quantity) === 0 || Number(quantity) > MAX_TROOPS || !availableTroops}
                 >
                   Confirm
                 </PrimaryButton>
