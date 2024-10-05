@@ -277,6 +277,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   // Initialize if freshly connected or wallet switched
   useEffect(() => {
     const hasSwitchedUser = address !== user.wallet.address;
+    if (hasSwitchedUser) {
+      localStorage.removeItem('eb.auth-signature');
+    }
+
     if (isConnected && (!user.initializing && !user.initialized || hasSwitchedUser)) {
       initialize();
     }

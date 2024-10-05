@@ -20,7 +20,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {ApiService} from "@src/core/services/api-service";
@@ -50,7 +50,6 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
   const { boost: existingBoost, claimable: isBoostClaimable, timeRemaining } = userUserFarmBoost(farm.data.pid);
 
   const {signature, isSignedIn, requestSignature} = useEnforceSignature();
-
   const [quantity, setQuantity] = useState<string>('');
   const [executing, setExecuting] = useState<boolean>(false);
 
@@ -63,7 +62,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
       throw 'Please sign message in wallet to continue'
     },
     refetchOnWindowFocus: false,
-    enabled: !!user.address && isSignedIn,
+    enabled: isOpen && !!user.address && isSignedIn,
   });
   const availableTroops = rdUserContext?.game.troops.user.available.total;
   const xpLevel = rdUserContext?.experience.level ?? 1;
@@ -132,6 +131,16 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
     }
   }
 
+  // If user switches wallet while in dialog, immediately request new signature for context request
+  useEffect(() => {
+    async function func() {
+      await requestSignature();
+    }
+    if (isOpen && !!user.address) {
+      func();
+    }
+  }, [user.address, isOpen]);
+
   return (
     <ModalDialog isOpen={isOpen} onClose={onClose} title='Farm Quest'>
       <ModalBody>
@@ -158,7 +167,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
               <FormLabel me={0}>
                 <Flex justify='space-between'>
                   <Box>Troops to send</Box>
-                  <Tag colorScheme='blue' variant='solid'>Available: {availableTroops ? commify(availableTroops) : 'N/A'}</Tag>
+                  <Tag colorScheme='blue' variant='solid'>Available: {availableTroops !== undefined ? commify(availableTroops) : 'N/A'}</Tag>
                 </Flex>
               </FormLabel>
               <HStack align='stretch'>
