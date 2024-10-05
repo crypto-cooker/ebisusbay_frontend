@@ -52,7 +52,6 @@ import {ethers} from 'ethers';
 import {ciEquals, millisecondTimestamp, round} from '@market/helpers/utils';
 import {commify} from 'ethers/lib/utils';
 import {userUserFarmBoost, useUserFarmsRefetch} from '@dex/farms/hooks/user-farms';
-import {useExchangeRate} from '@market/hooks/useGlobalPrices';
 import {useAppChainConfig} from "@src/config/hooks";
 import {getBlockExplorerLink} from "@dex/utils";
 import {CurrencyLogo, DoubleCurrencyLayeredLogo} from "@dex/components/logo";
@@ -135,6 +134,8 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
   const { isOpen: isOpenUnstake, onOpen: onOpenUnstake, onClose:  onCloseUnstake } = useDisclosure();
   const { isOpen: isOpenStake, onOpen: onOpenStake, onClose:  onCloseStake } = useDisclosure();
   const { isOpen: isOpenBoost, onOpen: onOpenBoost, onClose:  onCloseBoost } = useDisclosure();
+
+  const hasClaimableAmount = boost && Number(boost.claimAmount) > 0;
 
   const handleStakeSuccess = async () => {
     onCloseStake();
@@ -318,14 +319,16 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                         </Stack>
                       ) : <></>
                     })}
-                    <PrimaryButton
-                      isDisabled={harvestingRewards || !user.address}
-                      isLoading={harvestingRewards}
-                      onClick={handleOpenBoost}
-                      leftIcon={boost && claimable ? <StarIcon /> : !!boost ? <SpinnerIcon /> : undefined}
-                    >
-                      {boost && claimable ? <>Claim Boost</> : !!boost ? <>Boosting</> : <>Boost</>}
-                    </PrimaryButton>
+                    {((row.original.derived.state === FarmState.ACTIVE && row.original.derived.hasActiveBoost) || hasClaimableAmount) && (
+                      <PrimaryButton
+                        isDisabled={harvestingRewards || !user.address}
+                        isLoading={harvestingRewards}
+                        onClick={handleOpenBoost}
+                        leftIcon={boost && claimable ? <StarIcon /> : !!boost ? <SpinnerIcon /> : undefined}
+                      >
+                        {boost && claimable ? <>Claim Boost</> : !!boost ? <>Boosting</> : <>Boost</>}
+                      </PrimaryButton>
+                    )}
                     <PrimaryButton
                       isDisabled={harvestingRewards || totalEarned === 0n || !userData?.approved || !user.address}
                       isLoading={harvestingRewards}
@@ -545,6 +548,7 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
   columnHelper.accessor("derived.apr", {
     cell: (info) => {
       const { isOpen: isOpenRoiCalc, onOpen: onOpenRoiCalc, onClose: onCloseRoiCalc } = useDisclosure();
+      const { boost: existingBoost, claimable: isBoostClaimable } = userUserFarmBoost(info.row.original.data.pid);
 
       const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
@@ -555,7 +559,11 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
         <Box>
           <Box fontSize='xs' fontWeight='bold'>APR</Box>
           <HStack>
-            <Box>{info.getValue()} (max {parseFloat(info.getValue().slice(0, -1)) + 300}%)</Box>
+            {info.row.original.derived.state === FarmState.ACTIVE && info.row.original.derived.hasActiveBoost ? (
+              <Box>{info.getValue()} (max {parseFloat(info.getValue().slice(0, -1)) + 300}%)</Box>
+            ) : (
+              <Box>{info.getValue()}</Box>
+            )}
             {info.getValue() !== '-' && false && (
               <Box>
                 <IconButton

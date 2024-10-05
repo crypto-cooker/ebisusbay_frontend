@@ -144,6 +144,7 @@ export type AppChainConfig = {
     vaultNft: HexString;
     ryoshiWithKnife: HexString;
     farms: HexString;
+    frtnRewarder: HexString;
   };
   lpVaults: Array<{name: string, pair: Address, address1: Address, address2: Address}>
 }
@@ -188,7 +189,8 @@ const cronosConfig: AppChainConfig = {
     townHall: '0xf25AA7B9393450C97693876AfbCD84607437a1C8',
     vaultNft: '0xb2925FFC01907170493F94c1efb2Fac107a83b9F',
     ryoshiWithKnife: '0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C',
-    farms: '0x62eAEe24A848bEB06B8112D5A37587b3CF21F44D'
+    farms: '0x62eAEe24A848bEB06B8112D5A37587b3CF21F44D',
+    frtnRewarder: ADDRESS_ZERO
   },
   lpVaults: [
     {
@@ -246,7 +248,8 @@ const cronosTestnetConfig: AppChainConfig = {
     townHall: '0xEe68452B79653298Af5109Dae5cD4ABA3c4E1934',
     vaultNft: '0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74',
     ryoshiWithKnife: '0x149F2017b1C4a206d0F8684563C2F9aa519e3f64',
-    farms: '0xef5E16A3849E76eF44012EEdfDF40fFeFffcdC68'
+    farms: '0xef5E16A3849E76eF44012EEdfDF40fFeFffcdC68',
+    frtnRewarder: ADDRESS_ZERO
   },
   lpVaults: [
     {
@@ -298,7 +301,8 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
     townHall: '0x5694977D6c90138B93C6FBf127Af5766A84159Cb',
     vaultNft: '0x05e693aED87234129840e8a776bEB47A49e8583E',
     ryoshiWithKnife: ADDRESS_ZERO,
-    farms: '0x1f76a013a77371aeed10c47a04acbf2e719926ed'
+    farms: '0x1f76a013a77371aeed10c47a04acbf2e719926ed',
+    frtnRewarder: ADDRESS_ZERO
   },
   lpVaults: [
     {
@@ -350,7 +354,8 @@ const cronosZkEVMConfig: AppChainConfig = {
     townHall: '0xB7EAD5007CfA0dbCF573439780F66be31392824D',
     vaultNft: '0xE99b17eb4Ddb3efC6AFF08aFe83D1F80278FeC7e',
     ryoshiWithKnife: ADDRESS_ZERO,
-    farms: '0xbcE43dabc90E475D3c203603782962B85aDC32d4'
+    farms: '0xbcE43dabc90E475D3c203603782962B85aDC32d4',
+    frtnRewarder: '0x918a1CF72E80bB23b8CdCe6Db31CF625c5535E70'
   },
   lpVaults: [
     {

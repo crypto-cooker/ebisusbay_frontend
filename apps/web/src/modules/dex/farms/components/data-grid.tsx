@@ -81,6 +81,8 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
   const { isOpen: isOpenStake, onOpen: onOpenStake, onClose:  onCloseStake } = useDisclosure();
   const { isOpen: isOpenBoost, onOpen: onOpenBoost, onClose:  onCloseBoost } = useDisclosure();
 
+  const hasClaimableAmount = boost && Number(boost.claimAmount) > 0;
+
   const handleStakeSuccess = async () => {
     onCloseStake();
     onCloseUnstake();
@@ -155,7 +157,11 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
           </Flex>
           <SimpleGrid columns={2}>
             <Box fontWeight='bold'>APR</Box>
-            <Box fontWeight='bold' textAlign='end'>{farm.derived.apr} (max {parseFloat(farm.derived.apr.slice(0, -1)) + 300}%)</Box>
+            {farm.derived.state === FarmState.ACTIVE && farm.derived.hasActiveBoost ? (
+              <Box fontWeight='bold' textAlign='end'>{farm.derived.apr} (max {parseFloat(farm.derived.apr.slice(0, -1)) + 300}%)</Box>
+            ) : (
+              <Box fontWeight='bold' textAlign='end'>{farm.derived.apr}</Box>
+            )}
             <Box fontWeight='bold'>Rewards / Day</Box>
             <Wrap spacing={2} justify='end'>
               {farm.derived.dailyRewards.map((reward, i) => (
@@ -205,14 +211,16 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
                   </Stack>
                 ) : <></>
               })}
-              <PrimaryButton
-                isDisabled={harvestingRewards || !user.address}
-                isLoading={harvestingRewards}
-                onClick={handleOpenBoost}
-                leftIcon={boost && claimable ? <StarIcon /> : !!boost ? <SpinnerIcon /> : undefined}
-              >
-                {boost && claimable ? <>Claim Boost</> : !!boost ? <>Boosting</> : <>Boost</>}
-              </PrimaryButton>
+              {((farm.derived.state === FarmState.ACTIVE && farm.derived.hasActiveBoost) || hasClaimableAmount) && (
+                <PrimaryButton
+                  isDisabled={harvestingRewards || !user.address}
+                  isLoading={harvestingRewards}
+                  onClick={handleOpenBoost}
+                  leftIcon={boost && claimable ? <StarIcon /> : !!boost ? <SpinnerIcon /> : undefined}
+                >
+                  {boost && claimable ? <>Claim Boost</> : !!boost ? <>Boosting</> : <>Boost</>}
+                </PrimaryButton>
+              )}
               <PrimaryButton
                 isDisabled={harvestingRewards || totalEarned === 0n || !userData?.approved || !user.address}
                 isLoading={harvestingRewards}
