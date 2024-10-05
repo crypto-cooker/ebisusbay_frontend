@@ -1,12 +1,12 @@
-import { Container, Box, Card, IconButton, VStack, Flex, Wrap, Button, Text, Skeleton } from "@chakra-ui/react";
+import { Container, Box, Card, IconButton, VStack, HStack, ButtonGroup, Flex, Wrap, Button, Text, Skeleton, Select } from "@chakra-ui/react";
 import { PrimaryButton } from "@src/components-v2/foundation/button";
 import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
 import { SettingsIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/react";
-import { useApproveCallback } from "@dex/swap/imported/pancakeswap/web/hooks/useApproveCallback";
+import { useApproveCallback, ApprovalState } from "@dex/swap/imported/pancakeswap/web/hooks/useApproveCallback";
 import useAccountActiveChain from "@dex/swap/imported/pancakeswap/web/hooks/useAccountActiveChain";
-import { BRIDGE } from "@src/config/chains";
-
+import chainConfigs, { BRIDGE, SUPPORTED_CHAIN_CONFIGS } from "@src/config/chains";
+import { NetworkSelector } from "./networkSelector";
 
 export default function BridgeForm() {
     const { isOpen: isOpenConfirmSwap, onOpen: onOpenConfirmSwap, onClose: onCloseConfirmSwap } = useDisclosure();
@@ -15,25 +15,20 @@ export default function BridgeForm() {
 
 
     const {
-        approvalState: approvalA,
+        approvalState: approval,
         approveCallback: approveACallback,
         revokeCallback: revokeACallback,
         currentAllowance: currentAllowanceA,
     } = useApproveCallback(
-        parsedAmounts[Field.INPUT],
+        // parsedAmounts[Field.INPUT],
+        100,
         chainId ? BRIDGE[chainId].fortune : undefined,
         { enablePaymaster: true }
     )
 
-    const isValid = !inputError && approvalA === ApprovalState.APPROVED;
-
     // show approve flow when: no error on inputs, not approved or pending, or approved in current session
     // never show if price impact is above threshold in non expert mode
-    const showApproveFlow =
-        !derivedSwapInfo.inputError &&
-        (approvalA === ApprovalState.NOT_APPROVED ||
-            approvalA === ApprovalState.PENDING) &&
-        !(priceImpactSeverity > 3 && !isExpertMode);
+    const showApproveFlow = (approval === ApprovalState.NOT_APPROVED || approval === ApprovalState.PENDING)
 
     return (
         <>
@@ -50,9 +45,9 @@ export default function BridgeForm() {
                             />
                         </Box>
                     </Flex>
-                    <VStack w='full' align='stretch'>
-
-                    </VStack>
+                    <HStack w='full' align='stretch'>
+                        <NetworkSelector/>
+                    </HStack>
                     <AuthenticationGuard>
                         {({ isConnected, connect }) => (
                             <>
