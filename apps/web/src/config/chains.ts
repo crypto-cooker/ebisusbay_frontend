@@ -1,4 +1,4 @@
-import {ChainId, chainNames, isTestnetChainId} from '@pancakeswap/chains'
+import { ChainId, chainNames, isTestnetChainId } from '@pancakeswap/chains'
 import memoize from 'lodash/memoize'
 import {
   Chain,
@@ -7,7 +7,7 @@ import {
   cronoszkEVMTestnet as cronoszkEVMTestnet_,
   cronoszkEVM as cronoszkEVM_,
 } from 'wagmi/chains'
-import {chainConfig} from "viem/zksync";
+import { chainConfig } from "viem/zksync";
 
 export const CHAIN_QUERY_NAME = chainNames
 
@@ -319,7 +319,7 @@ const cronosZkEVMConfig: AppChainConfig = {
     townHall: '0xB7EAD5007CfA0dbCF573439780F66be31392824D',
     vaultNft: '0xE99b17eb4Ddb3efC6AFF08aFe83D1F80278FeC7e',
     ryoshiWithKnife: ADDRESS_ZERO,
-    farms: '0xbcE43dabc90E475D3c203603782962B85aDC32d4'
+    farms: '0xbcE43dabc90E475D3c203603782962B85aDC32d4',
   },
   // tokens: supportedTokens,
 }
@@ -348,7 +348,7 @@ const chainConfigs: Record<SupportedChainId, AppChainConfig> = {
 }
 
 export const SUPPORTED_CHAIN_CONFIGS = Object.values(chainConfigs)
-  .filter(({chain}) => {
+  .filter(({ chain }) => {
     return (process.env.NEXT_PUBLIC_ENV === 'testnet' && isTestnetChainId(chain.id)) ||
       (process.env.NEXT_PUBLIC_ENV !== 'testnet' && !isTestnetChainId(chain.id))
   })
@@ -362,7 +362,7 @@ export const SUPPORTED_CHAIN_CONFIGS = Object.values(chainConfigs)
   });
 
 export const SUPPORTED_RD_CHAIN_CONFIGS = SUPPORTED_CHAIN_CONFIGS
-  .filter(({chain}) => {
+  .filter(({ chain }) => {
     return SUPPORTED_RD_CHAIN_IDS.includes(chain.id)
   });
 
@@ -386,3 +386,20 @@ export const CHAINS = SUPPORTED_CHAIN_CONFIGS.map(({ chain }) => chain);
 export const DEFAULT_CHAIN_ID = process.env.NEXT_PUBLIC_ENV === 'testnet' ? ChainId.CRONOS_TESTNET : ChainId.CRONOS;
 
 export default chainConfigs;
+
+export const BRIDGE = {
+  [ChainId.CRONOS]: {
+    fortune: "0x632FdbC1Fd2e81b44CF00da182984d9F6c2bB2B3"
+  },
+  [ChainId.CRONOS_TESTNET]: {
+    fortune: "0x4B09F5d044e5Cf23DEF1c20cF668a0bAD9837faC"
+  },
+  [ChainId.CRONOS_ZKEVM]: {
+    fortune: "0x7C306fc3B6Cd7A5A9A798695abe8690D29495065"
+  },
+  [ChainId.CRONOS_ZKEVM_TESTNET]: {
+    fortune: "0x5BFa2B69D5EF18CefBF5CD471126DE5efc1460Fa"
+  },
+}
+
+export const BRIDGE_TOKEN = ["fortune"]

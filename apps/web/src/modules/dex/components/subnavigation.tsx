@@ -6,6 +6,7 @@ import {StandardContainer} from "@src/components-v2/shared/containers";
 enum TabIndex {
   Swap,
   Liquidity,
+  Bridge,
 }
 
 interface SubnavigationProps {
@@ -24,6 +25,8 @@ export default function Subnavigation({ primaryTabKey }: SubnavigationProps) {
       router.push('/dex/swap');
     } else if (index === TabIndex.Liquidity) {
       router.push('/dex/liquidity');
+    } else if (index === TabIndex.Bridge) {
+      router.push('/dex/bridge');
     }
     setTabIndex(index);
   };
