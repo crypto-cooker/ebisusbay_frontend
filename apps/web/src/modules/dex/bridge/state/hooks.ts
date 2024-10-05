@@ -1,14 +1,15 @@
 import { useAtomValue } from "jotai"
 import { bridgeReducerAtom } from "./reducer"
-import { useState } from "react"
+import React, { FC, useState } from "react"
+import { Box } from "@chakra-ui/react"
 
 export function useBridgeState() {
-    return useAtomValue(bridgeReducerAtom)
-  }
+  return useAtomValue(bridgeReducerAtom)
+}
 
-export function useNetworkSelectorModal () {
+export function useNetworkSelectorModal() {
 
-  const[isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
     setIsOpen(true)
@@ -23,5 +24,3 @@ export function useNetworkSelectorModal () {
     closeModal,
   }
 }
-
-export function NetworkSelectorModal () {}
