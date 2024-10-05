@@ -1,27 +1,26 @@
 import {DerivedFarm, FarmState} from "@dex/farms/constants/types";
-import {boostsAtom, UserFarmState} from "@dex/farms/state/user";
 import {ModalDialog} from "@src/components-v2/foundation/modal";
 import {
   Alert,
-  Avatar,
   Box,
   Button,
   Flex,
   FormControl,
-  FormErrorMessage, FormHelperText,
+  FormErrorMessage,
+  FormHelperText,
   FormLabel,
   HStack,
   ModalBody,
   ModalFooter,
   NumberInput,
-  NumberInputField, Spinner,
-  Stack, Tag, VStack,
-  Wrap
+  NumberInputField,
+  Spinner,
+  Stack,
+  Tag,
+  VStack
 } from "@chakra-ui/react";
-import {BigNumber, ethers} from "ethers";
-import {DoubleCurrencyLayeredLogo} from "@dex/components/logo";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
-import React, {useMemo, useState} from "react";
+import React, {useState} from "react";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {ApiService} from "@src/core/services/api-service";
@@ -31,8 +30,7 @@ import {useAppChainConfig} from "@src/config/hooks";
 import {useQuery} from "@tanstack/react-query";
 import {getLengthOfTime, pluralize} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
-import {useAtom} from "jotai";
-import {CheckIcon, SpinnerIcon} from "@chakra-ui/icons";
+import {CheckIcon} from "@chakra-ui/icons";
 import {userUserFarmBoost} from "@dex/farms/hooks/user-farms";
 
 interface StakeLpTokensDialogProps {
@@ -197,29 +195,37 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
         )}
       </ModalBody>
       <ModalFooter>
-        {existingBoost && isBoostClaimable ? (
-          <Stack direction='row' w='full'>
-            <PrimaryButton
-              flex={1}
-              onClick={handleClaimBoost}
-              isLoading={executing}
-              isDisabled={executing}
-            >
-              Claim Rewards
-            </PrimaryButton>
-          </Stack>
-        ) : !existingBoost && (
-          <Stack direction='row' w='full'>
-            <SecondaryButton flex={1} onClick={onClose}>Cancel</SecondaryButton>
-            <PrimaryButton
-              flex={1}
-              onClick={handleConfirmBoost}
-              isLoading={executing}
-              isDisabled={executing || !quantity || Number(quantity) === 0 || Number(quantity) > MAX_TROOPS}
-            >
-              Confirm
-            </PrimaryButton>
-          </Stack>
+        {(farm.derived.state === FarmState.ACTIVE || (existingBoost && isBoostClaimable)) ? (
+          <>
+            {existingBoost && isBoostClaimable ? (
+              <Stack direction='row' w='full'>
+                <PrimaryButton
+                  flex={1}
+                  onClick={handleClaimBoost}
+                  isLoading={executing}
+                  isDisabled={executing}
+                >
+                  Claim Rewards
+                </PrimaryButton>
+              </Stack>
+            ) : !existingBoost && (
+              <Stack direction='row' w='full'>
+                <SecondaryButton flex={1} onClick={onClose}>Cancel</SecondaryButton>
+                <PrimaryButton
+                  flex={1}
+                  onClick={handleConfirmBoost}
+                  isLoading={executing}
+                  isDisabled={executing || !quantity || Number(quantity) === 0 || Number(quantity) > MAX_TROOPS}
+                >
+                  Confirm
+                </PrimaryButton>
+              </Stack>
+            )}
+          </>
+        ) : (
+          <Box textAlign='center'>
+            Farm has ended and cannot receive new boosts
+          </Box>
         )}
       </ModalFooter>
     </ModalDialog>
