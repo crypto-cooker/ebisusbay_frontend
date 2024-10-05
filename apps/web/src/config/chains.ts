@@ -302,7 +302,7 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
     vaultNft: '0x05e693aED87234129840e8a776bEB47A49e8583E',
     ryoshiWithKnife: ADDRESS_ZERO,
     farms: '0x1f76a013a77371aeed10c47a04acbf2e719926ed',
-    frtnRewarder: ADDRESS_ZERO
+    frtnRewarder: '0x891343470d4c3b1d50adcff5527365b75874f30a'
   },
   lpVaults: [
     {
