@@ -41,7 +41,7 @@ const configData: AppConfigMap = {
       },
       subgraph: {
         root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
-        ryoshiDynasties: 'ryoshi-dynasties-lp-staking',
+        ryoshiDynasties: 'ryoshi-dynasties-lp-staking-fixed',
         ryoshiPresale: 'ryoshi-presale',
         stakedOwners: 'staked-owners-2',
         staking: 'staking',
