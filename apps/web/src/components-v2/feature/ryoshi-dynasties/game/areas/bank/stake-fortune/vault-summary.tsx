@@ -345,15 +345,13 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
     <>
       {(Date.now() < vault.endTime * 1000) ? (
         <>
-          <Center mb={4}>
+          {vaultType !== VaultType.LP && (
+            <Center mb={4}>
             <Stack direction={{base: 'column', sm: 'row'}} mt={4}>
               <Button onClick={() => onEditVault('amount')}>
                 + Add {vaultType === VaultType.LP ? 'LP' : 'FRTN'}
               </Button>
             </Stack>
-          </Center>
-          {vaultType !== VaultType.LP && (
-            <Center>
               <Button
                 variant='unstyled'
                 size='sm'
