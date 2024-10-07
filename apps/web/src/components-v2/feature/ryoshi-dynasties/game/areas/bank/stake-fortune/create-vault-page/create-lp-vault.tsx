@@ -297,7 +297,7 @@ const CreateLpVault = ({vaultIndex, vaults, onSuccess}: CreateLpVaultProps) => {
             <VStack align='stretch'>
               <Text>Balance</Text>
               <Text fontSize={{base: 'sm', sm: 'md'}} my='auto'>
-                {isRetrievingToken ? <Spinner size='sm'/> : commify(round(tokenBalance, 3))}
+                {isRetrievingToken ? <Spinner size='sm'/> : commify(round(tokenBalance, 7))}
               </Text>
             </VStack>
             <VStack align='stretch'>
@@ -310,8 +310,8 @@ const CreateLpVault = ({vaultIndex, vaults, onSuccess}: CreateLpVaultProps) => {
                     name="quantity"
                     onChange={handleChangeTokenAmount}
                     value={amountToStake}
-                    step={1000}
-                    precision={3}
+                    step={10}
+                    precision={7}
                   >
                     <NumberInputField />
                     <NumberInputStepper>
