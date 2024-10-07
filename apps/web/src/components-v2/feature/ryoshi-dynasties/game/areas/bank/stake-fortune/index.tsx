@@ -12,7 +12,7 @@ import WithdrawVaultPage
 import TokenizeVaultPage
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/tokenize-vault-page";
 import {SUPPORTED_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
-import {BankStakeTokenContext, VaultType} from "./context";
+import {BankStakeTokenContext, Vault, VaultType} from "./context";
 
 interface StakeFortuneProps {
   address: string;
@@ -50,9 +50,9 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
     setTitle('Update Stake');
   }, [returnHome]);
 
-  const handleCreateVault = useCallback((vaultIndex: number, vaultType: VaultType) => {
+  const handleCreateVault = useCallback((vaultIndex: number, vaults: FortuneStakingAccount[], vaultType: VaultType) => {
     handleUpdateVaultContext(vaultType);
-    setPage(<CreateVaultPage vaultIndex={vaultIndex} onReturn={returnHome} />)
+    setPage(<CreateVaultPage vaultIndex={vaultIndex} vaults={vaults} onReturn={returnHome} />)
     setTitle(`Stake ${vaultType === VaultType.TOKEN ? 'Tokens' : 'LP'}`);
   }, [returnHome, currentVaultType]);
 

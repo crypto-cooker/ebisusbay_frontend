@@ -4092,6 +4092,7 @@ export type FortuneStakingAccount = {
   startTime?: Maybe<Scalars['BigInt']['output']>;
   user: StakingAccount;
   vaultId: Scalars['BigInt']['output'];
+  pool?: Maybe<Scalars['String']['output']>;
 };
 
 export type FortuneStakingAccount_Filter = {
@@ -9074,6 +9075,7 @@ export type StakingAccount = {
   totalStaked: Scalars['BigInt']['output'];
   totalStakedString: Scalars['String']['output'];
   vaults: Array<FortuneStakingAccount>;
+  lpVaults: Array<FortuneStakingAccount>;
 };
 
 

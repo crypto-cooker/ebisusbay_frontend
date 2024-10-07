@@ -16,7 +16,7 @@ import { useCallback, useEffect, useState } from "react";
 
 //contracts
 import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import { VaultType } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
+import { Vault, VaultType } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
 import VaultSummary from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/vault-summary";
 import { useUser } from "@src/components-v2/useUser";
 import { SUPPORTED_RD_CHAIN_CONFIGS, SupportedChainId } from "@src/config/chains";
@@ -26,7 +26,7 @@ import { useQuery } from "@tanstack/react-query";
 
 interface StakePageProps {
   onEditVault: (vault: FortuneStakingAccount, vaultType: VaultType, targetField: string) => void;
-  onCreateVault: (vaultIndex: number, vaultType: VaultType) => void;
+  onCreateVault: (vaultIndex: number, vaults: FortuneStakingAccount[], vaultType: VaultType) => void;
   onWithdrawVault: (vault: FortuneStakingAccount) => void;
   onTokenizeVault: (vault: FortuneStakingAccount) => void;
   initialChainId: SupportedChainId;
@@ -63,8 +63,8 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
     onUpdateVaultContext(vaultType)
   }, [account]);
 
-  const handleCreateVault = useCallback((vaultIndex: number, vaultType: VaultType) => {
-    onCreateVault(vaultIndex, vaultType);
+  const handleCreateVault = useCallback((vaultIndex: number, vaults: FortuneStakingAccount[], vaultType: VaultType) => {
+    onCreateVault(vaultIndex, vaults, vaultType);
   }, []);
 
   // Set initial vaultGroup state if account query initially returns undefined
@@ -146,13 +146,13 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
             <Flex justifyContent='space-around' mt={8}>
               <RdButton
                 fontSize={{base: 'xl', sm: '2xl'}}
-                onClick={() => handleCreateVault(!!account ? account.vaults.length : 0, VaultType.TOKEN)}
+                onClick={() => handleCreateVault(!!account ? account.vaults.length : 0, !!account ? account?.vaults : [], VaultType.TOKEN)}
               >
                 + New FRTN Vault
               </RdButton>
               <RdButton
                 fontSize={{base: 'xl', sm: '2xl'}}
-                onClick={() => handleCreateVault(!!account ? account.lpVaults.length : 0, VaultType.LP)}
+                onClick={() => handleCreateVault(!!account ? account.lpVaults.length : 0, !! account ? account?.lpVaults : [], VaultType.LP)}
               >
                 + New LP Vault
               </RdButton>

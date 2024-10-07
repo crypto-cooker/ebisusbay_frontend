@@ -51,13 +51,19 @@ import useTotalSupply from "@eb-pancakeswap-web/hooks/useTotalSupply";
 import {CurrencyAmount, MaxUint256} from "@pancakeswap/swap-sdk-core";
 import {Pair, pancakePairV2ABI} from '@pancakeswap/sdk'
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import { FortuneStakingAccount } from "@src/core/services/api-service/graph/types";
+
+interface Vault {
+  pool: string
+}
 
 interface CreateLpVaultProps {
   vaultIndex: number;
+  vaults: FortuneStakingAccount[];
   onSuccess: (amount: number, days: number) => void;
 }
 
-const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
+const CreateLpVault = ({vaultIndex, vaults, onSuccess}: CreateLpVaultProps) => {
   const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { chainId: bankChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const { config: chainConfig } = useAppChainConfig(bankChainId);
@@ -226,7 +232,7 @@ const CreateLpVault = ({vaultIndex, onSuccess}: CreateLpVaultProps) => {
         desiredLpAmount,
         daysToStake*86400,
         liquidityToken?.address,
-        vaultIndex,
+        vaults.filter(element => element?.pool?.toLowerCase() == liquidityToken?.address.toLowerCase()).length,
         newMitama
       ]);
 

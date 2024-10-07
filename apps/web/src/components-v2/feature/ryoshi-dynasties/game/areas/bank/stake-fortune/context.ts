@@ -6,6 +6,10 @@ export enum VaultType {
   LP = 'LP'
 }
 
+export interface Vault {
+  pool: string
+}
+
 export interface BankStakeTokenContextProps {
   chainId: SupportedChainId;
   vaultType: VaultType
