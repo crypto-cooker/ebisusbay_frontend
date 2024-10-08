@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 import { Field, selectChain, switchChain, selectCurrency, setRecipient, typeInput, replaceBridgeState } from './actions'
 import { useSetAtom, WritableAtom } from 'jotai'
 import { bridgeReducerAtom, BridgeState } from './reducer'
+import { Currency } from '@pancakeswap/sdk'
 type BridgeActions =
     | ReturnType<typeof selectChain>
     | ReturnType<typeof switchChain>
@@ -13,11 +14,12 @@ type BridgeActions =
 
 type BridgeReducerAtomType = WritableAtom<BridgeState, [BridgeActions], void>
 
-export function useSwapActionHandlers(): {
+export function useBridgeActionHandlers(): {
     onChainSelection: (field: Field, chainId: number) => void
     onSwitchChain: () => void
     onChangeRecipient: (recipient: string | null) => void
     onTypeInput: (typedValue: string) => void
+    onSelectCurrency: (currency: Currency) => void
     dispatch: (action: BridgeActions) => void
 } {
     const dispatch = useSetAtom(bridgeReducerAtom as BridgeReducerAtomType);
@@ -38,9 +40,14 @@ export function useSwapActionHandlers(): {
         dispatch(typeInput({ typedValue }))
     }, [])
 
+    const onSelectCurrency = useCallback((currency: Currency) => {
+        dispatch(selectCurrency({currencyId: currency?.isToken ? currency.address : currency?.isNative ? currency.symbol : ''}))
+    },[])
+
 
     return {
         onChainSelection,
+        onSelectCurrency,
         onSwitchChain,
         onChangeRecipient,
         onTypeInput,

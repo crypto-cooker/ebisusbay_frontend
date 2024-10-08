@@ -3,24 +3,24 @@ import { atomWithReducer } from 'jotai/utils'
 import { Field, selectChain, switchChain, selectCurrency, setRecipient, typeInput, replaceBridgeState } from './actions'
 
 export interface BridgeState {
-    readonly currencyId: number | null
+    readonly currencyId: string | undefined
     readonly typedValue: string
-    readonly [Field.FROM]: {
+    readonly [Field.INPUT]: {
         readonly chainId: number | null
     }
-    readonly [Field.TO]: {
+    readonly [Field.OUTPUT]: {
         readonly chainId: number | null
     }
     readonly recipient: string | null
 }
 
 const initialState: BridgeState = {
-    currencyId: null,
+    currencyId: '',
     typedValue: '',
-    [Field.FROM]: {
+    [Field.INPUT]: {
         chainId: null
     },
-    [Field.TO]: {
+    [Field.OUTPUT]: {
         chainId: null
     },
     recipient: null
@@ -41,8 +41,8 @@ const reducer = createReducer<BridgeState>(initialState, (builder) =>
             (state) => {
                 return {
                     ...state,
-                    [Field.FROM]: { chainId: state[Field.TO].chainId },
-                    [Field.TO]: { chainId: state[Field.FROM].chainId }
+                    [Field.INPUT]: { chainId: state[Field.OUTPUT].chainId },
+                    [Field.OUTPUT]: { chainId: state[Field.INPUT].chainId }
                 }
             }
         ).addCase(
