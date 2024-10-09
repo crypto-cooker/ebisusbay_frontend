@@ -2,12 +2,12 @@ import { Container, Box, IconButton, VStack, HStack, ButtonGroup, Flex, Wrap, Bu
 import { Card } from "@src/components-v2/foundation/card";
 import { PrimaryButton } from "@src/components-v2/foundation/button";
 import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
-import { SettingsIcon } from "@chakra-ui/icons";
+import { ArrowLeftIcon, ArrowRightIcon, SettingsIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/react";
 import { useApproveCallback, ApprovalState } from "@dex/swap/imported/pancakeswap/web/hooks/useApproveCallback";
 import useAccountActiveChain from "@dex/swap/imported/pancakeswap/web/hooks/useAccountActiveChain";
 import chainConfigs, { BRIDGE, SUPPORTED_CHAIN_CONFIGS } from "@src/config/chains";
-import { NetworkSelector } from "./networkSelector";
+import { ChainSelector } from "././chainSelector"
 import CurrencyInputPanel from "@dex/components/currency-input-panel";
 import { useBridgeActionHandlers } from "@dex/bridge/state/useBridgeActionHandler";
 import { useBridgeState } from "@dex/bridge/state/hooks";
@@ -33,7 +33,7 @@ export default function BridgeForm() {
     } = useBridgeState()
 
     const {
-        onChainSelection,
+        onSelectChain,
         onSelectCurrency,
         onSwitchChain,
         onChangeRecipient,
@@ -47,9 +47,9 @@ export default function BridgeForm() {
     }
 
     useEffect(() => {
-        console.log({typedValue})
-        console.log({currencyId})
-        console.log({currency})
+        console.log({ typedValue })
+        console.log({ currencyId })
+        console.log({ currency })
     }, [typedValue, currency, currencyId])
 
 
@@ -85,22 +85,18 @@ export default function BridgeForm() {
                         </Box>
                     </Flex>
                     <Card mb={4}>
-                        <HStack w='full' align='stretch' justify="space-between">
-                            <NetworkSelector />
-                            <NetworkSelector />
+                        <HStack w='full' align="end" justify="space-between">
+                            <VStack flexGrow={2}>
+                                <label>From</label>
+                                <ChainSelector onSelectChain={onSelectChain} onSwitchChain={onSwitchChain} chainId={fromChainId} field={Field.INPUT}/>
+                            </VStack>
+                            <HStack align="end" pb={3}><ArrowRightIcon /></HStack>
+                            <VStack flexGrow={2}>
+                                <label>To</label>
+                                <ChainSelector onSelectChain={onSelectChain} onSwitchChain={onSwitchChain} chainId={toChainId} field={Field.OUTPUT}/>
+                            </VStack>
                         </HStack>
                     </Card>
-                    {/* <HStack>
-                        <Box w="50%">
-                            <Input />
-                        </Box>
-                        <Box w="50%">
-                            <HStack>
-                                <Input />
-                                <Button>Max</Button>
-                            </HStack>
-                        </Box>
-                    </HStack> */}
                     <CurrencyInputPanel
                         label='Token'
                         currency={currency}
@@ -109,6 +105,7 @@ export default function BridgeForm() {
                         onUserInput={onTypeInput}
                         onMax={() => { }}
                     />
+                    <HStack mb={2}>Output Amount:</HStack>
                     <Box mb={4} />
                     <AuthenticationGuard>
                         {({ isConnected, connect }) => (

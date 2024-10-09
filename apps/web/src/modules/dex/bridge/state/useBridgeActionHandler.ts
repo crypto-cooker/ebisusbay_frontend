@@ -15,7 +15,7 @@ type BridgeActions =
 type BridgeReducerAtomType = WritableAtom<BridgeState, [BridgeActions], void>
 
 export function useBridgeActionHandlers(): {
-    onChainSelection: (field: Field, chainId: number) => void
+    onSelectChain: (field: Field, chainId: number) => void
     onSwitchChain: () => void
     onChangeRecipient: (recipient: string | null) => void
     onTypeInput: (typedValue: string) => void
@@ -24,7 +24,7 @@ export function useBridgeActionHandlers(): {
 } {
     const dispatch = useSetAtom(bridgeReducerAtom as BridgeReducerAtomType);
 
-    const onChainSelection = useCallback((field: Field, chainId: number) => {
+    const onSelectChain = useCallback((field: Field, chainId: number) => {
         dispatch(selectChain({ field, chainId }));
     }, [])
 
@@ -46,7 +46,7 @@ export function useBridgeActionHandlers(): {
 
 
     return {
-        onChainSelection,
+        onSelectChain,
         onSelectCurrency,
         onSwitchChain,
         onChangeRecipient,
