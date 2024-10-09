@@ -359,7 +359,6 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
               <Button onClick={() => onEditVault('amount')}>
                 + Add {vaultType === VaultType.LP ? 'LP' : 'FRTN'}
               </Button>
-            </Stack>
               {canIncreaseDuration && (
                 <Button onClick={() => onEditVault('duration')}>
                   + Increase Duration
@@ -373,8 +372,20 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
                   Tokenize Vault
                 </Button>
               )}
+            </Stack>
+          </Center>
+        )}
+          {vaultType !== VaultType.LP && (
+            <Center>
+              <Button
+                variant='unstyled'
+                size='sm'
+                fontWeight='normal'
+                onClick={onWithdrawVault}
+              >
+                Emergency Withdraw
+              </Button>
             </Center>
-            
           )}
           <Center>
           <Button

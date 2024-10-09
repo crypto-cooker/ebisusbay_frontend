@@ -330,7 +330,6 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
               </Flex>
             </VStack>
           )}
-          
           {type === 'duration' && (
             <VStack align='start'>
               <Text>Increase duration by</Text>
@@ -345,7 +344,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
                 <FormErrorMessage>{lengthError}</FormErrorMessage>
               </FormControl>
             </VStack>
-          )} 
+          )}
           {type === 'amount' && (
             <VStack align='end' textAlign='end'>
               <Box fontSize='sm' fontWeight='bold'>Balance: {isRetrievingToken ? <Spinner size='sm'/> : commify(round(Number(ethers.utils.formatEther(vault.balance)), 7))}</Box>
