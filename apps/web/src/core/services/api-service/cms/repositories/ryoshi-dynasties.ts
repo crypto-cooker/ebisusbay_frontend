@@ -581,6 +581,55 @@ class RyoshiDynastiesRepository extends CmsRepository {
     );
     return response.data.data;
   }
+
+
+  async sendTroopsToFarm(farmId: number, chainId: number, troops: string, address: string, signature: string) {
+    const response = await this.cms.post(
+      `ryoshi-dynasties/armies/send/farm`,
+      {
+        farmId,
+        chainId,
+        troops
+      },
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+    return response.data.data;
+  }
+
+  async getFarmBoosts(address: string, active: boolean) {
+    const response = await this.cms.get(
+      'ryoshi-dynasties/fortune-rewards/farm-boost',
+      {
+        params: {
+          address,
+          active
+        }
+      }
+    );
+
+    return response.data.data;
+  }
+
+  async claimFarmBoost(farmId: number, address: string, signature: string) {
+    const response = await this.cms.post(
+      `ryoshi-dynasties/fortune-rewards/farm-boost/claim`,
+      {
+        farmBoostId: farmId
+      },
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+    return response.data.data;
+  }
 }
 
 export default RyoshiDynastiesRepository;

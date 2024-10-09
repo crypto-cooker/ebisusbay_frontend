@@ -3,18 +3,18 @@ import {BigNumber, ethers} from "ethers";
 import {DerivedFarm, FarmState, MapiFarm, MapiPairFarm} from "@dex/farms/constants/types";
 import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
 import {ApiService} from "@src/core/services/api-service";
-import {hasDatePassedSeconds, round} from "@market/helpers/utils";
+import {ciEquals, hasDatePassedSeconds, round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
 import {Address} from "viem";
-import { ChainId } from "@pancakeswap/chains";
+import {getAppChainConfig} from "@src/config/hooks";
 
 export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
   const { getByAddress } = useMultichainCurrencyBroker(queryParams.chain);
 
   const query = async () => {
     let data = await ApiService.withoutKey().getFarms(queryParams);
-    // if (queryParams.chain === ChainId.CRONOS_ZKEVM) data = [];
+    const chainConfig = getAppChainConfig(queryParams.chain);
 
     return await Promise.all(data
       .filter((farm: MapiFarm) => farm.pid !== 0 || (farm.pair !== undefined && farm.pair !== null)) 
@@ -67,6 +67,18 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
             })
         );
 
+        let hasActiveBoost = false;
+        for (const rewarder of pairFarm.rewarders) {
+          const isFrtnZk = ciEquals(chainConfig.contracts.frtnRewarder, rewarder.id.toString());
+
+          const isActiveFrtnZk = isFrtnZk && rewarder.rewardEnd && !hasDatePassedSeconds(rewarder.rewardEnd);
+          const isActiveBaiter = rewarder.isMain && rewarder.allocPoint > 0;
+
+          if (isActiveFrtnZk || isActiveBaiter) {
+            hasActiveBoost = true;
+          }
+        }
+
         return {
           data: pairFarm,
           derived: {
@@ -75,7 +87,8 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
             stakedLiquidity: `$${commify(round(stakedLiquidity))}`,
             apr: `${['Infinity', 'NaN'].includes(pairFarm.apr) ? '-' : `${commify(round(pairFarm.apr, 2))}%`}`,
             state: activity.state,
-            chainId: queryParams.chain
+            chainId: queryParams.chain,
+            hasActiveBoost,
           }
         }
     }));

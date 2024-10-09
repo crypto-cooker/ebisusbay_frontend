@@ -8,6 +8,7 @@ import {
 import {
   BankStakeTokenContext,
   BankStakeTokenContextProps,
+  Vault,
   VaultType
 } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
@@ -20,6 +21,7 @@ import CreateTokenVault
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/create-vault-page/create-token-vault";
 import CreateLpVault
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/create-vault-page/create-lp-vault";
+import { FortuneStakingAccount } from "@src/core/services/api-service/graph/types";
 
 const steps = {
   choice: 'choice',
@@ -29,12 +31,14 @@ const steps = {
   importVaultComplete: 'importVaultComplete'
 };
 
+
 interface CreateVaultPageProps {
   vaultIndex: number;
+  vaults: FortuneStakingAccount[];
   onReturn: () => void;
 }
 
-const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
+const CreateVaultPage = ({vaultIndex, vaults, onReturn}: CreateVaultPageProps) => {
   const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { chainId: selectedChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const { switchNetworkAsync } = useSwitchNetwork();
@@ -105,7 +109,7 @@ const CreateVaultPage = ({vaultIndex, onReturn}: CreateVaultPageProps) => {
       ) : currentStep === steps.createVaultForm ? (
         <>
           {vaultType === VaultType.LP ? (
-            <CreateLpVault vaultIndex={vaultIndex} onSuccess={handleCreateVaultSuccess} />
+            <CreateLpVault vaultIndex={vaultIndex} vaults={vaults} onSuccess={handleCreateVaultSuccess} />
           ) : (
             <CreateTokenVault vaultIndex={vaultIndex} onSuccess={handleCreateVaultSuccess} />
           )}

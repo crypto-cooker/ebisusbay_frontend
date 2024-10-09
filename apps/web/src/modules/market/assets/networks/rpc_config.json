@@ -29376,6 +29376,32 @@
         "doxx": true,
         "kyc": true
       }
+    },
+    {
+      "name": "JAFC - PiZKel Panthers",
+      "slug": "jafc-pizkel-panthers",
+      "chain": 388,
+      "chainId": 388,
+      "is1155": false,
+      "address": "0x8f71dd40dd1173ce7ed417ffc87810e5c621b963",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "The PiZKel Panthers is an ezklusive collection by JAFC. 500 zkilled fighters, each zkrafted with vibrant colors and rare traits.",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos-zkevm/0x8f71dd40dd1173ce7ed417ffc87810e5c621b963/avatar-ac8dbbca-12c9-4e83-b799-99701e31cb6f.png",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos-zkevm/0x8f71dd40dd1173ce7ed417ffc87810e5c621b963/preview-4324b9a5-b38a-4600-87a8-48a169e7060e.jpeg",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos-zkevm/0x8f71dd40dd1173ce7ed417ffc87810e5c621b963/banner-13dcd191-5225-47c5-a27c-c56322a190a2.jpeg",
+        "website": "",
+        "discord": "http://discord.gg/W3HwbZUwfr",
+        "twitter": "https://x.com/JAFC_nft",
+        "telegram": "",
+        "categories": []
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
+      }
     }
   ],
   "drops": [

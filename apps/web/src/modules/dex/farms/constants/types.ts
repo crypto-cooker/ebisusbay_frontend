@@ -84,6 +84,7 @@ export interface FarmRow {
   apr: string;
   state: FarmState;
   chainId: number;
+  hasActiveBoost: boolean;
 }
 
 export enum FarmState {

@@ -78,7 +78,7 @@ const useEnforceSignature = () => {
     refreshSignin();
   }, [signer, user.address]);
 
-  return {isSignedIn, isSigningIn, signin, requestSignature, signature: signer.signature} as const;
+  return {isSignedIn, isSigningIn, signin, requestSignature, signature: signer.signature, address: signer.address} as const;
 };
 
 export default useEnforceSignature;
