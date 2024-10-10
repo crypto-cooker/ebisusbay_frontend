@@ -302,7 +302,8 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
       </Box>
       <Box bgColor='#292626' rounded='md' mt={1} p={4}>
         <SimpleGrid columns={type === 'amount' ? 2 : 1}>
-          {type === 'amount' && (
+          
+          {/* {type === 'amount' && (
             <VStack align='start'>
               <Box fontSize='sm' fontWeight='bold'>Deposit LP Amount</Box>
               <FormControl maxW='200px' isInvalid={!!inputError}>
@@ -326,7 +327,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
                 FRTN: <>{round(derivedFrtnAmount, 3)}</>
               </Flex>
             </VStack>
-          )}
+          )} */}
           
           {/* {type === 'duration' && (
             <VStack align='start'>
