@@ -1,10 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { atomWithReducer } from 'jotai/utils'
-import { Field, selectChain, switchChain, selectCurrency, setRecipient, typeInput, replaceBridgeState } from './actions'
+import { Field, selectChain, switchChain, selectCurrency, setRecipient, typeInput, changeOutput, replaceBridgeState } from './actions'
 
 export interface BridgeState {
     readonly currencyId: string | undefined
     readonly typedValue: string
+    readonly outputValue: string
     readonly [Field.INPUT]: {
         readonly chainId: number | null
     }
@@ -17,6 +18,7 @@ export interface BridgeState {
 const initialState: BridgeState = {
     currencyId: '',
     typedValue: '',
+    outputValue: '',
     [Field.INPUT]: {
         chainId: null
     },
@@ -67,6 +69,14 @@ const reducer = createReducer<BridgeState>(initialState, (builder) =>
                 return {
                     ...state,
                     typedValue
+                }
+            }
+        ).addCase(
+            changeOutput,
+            (state, { payload: { outputValue } }) => {
+                return {
+                    ...state,
+                    outputValue
                 }
             }
         )

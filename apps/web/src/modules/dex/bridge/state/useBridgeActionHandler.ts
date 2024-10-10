@@ -1,14 +1,16 @@
 import { useCallback } from 'react'
-import { Field, selectChain, switchChain, selectCurrency, setRecipient, typeInput, replaceBridgeState } from './actions'
+import { Field, selectChain, switchChain, selectCurrency, setRecipient, typeInput, changeOutput, replaceBridgeState } from './actions'
 import { useSetAtom, WritableAtom } from 'jotai'
 import { bridgeReducerAtom, BridgeState } from './reducer'
 import { Currency } from '@pancakeswap/sdk'
+import { useBridge } from './hooks'
 type BridgeActions =
     | ReturnType<typeof selectChain>
     | ReturnType<typeof switchChain>
     | ReturnType<typeof selectCurrency>
     | ReturnType<typeof setRecipient>
     | ReturnType<typeof typeInput>
+    | ReturnType<typeof changeOutput>
     | ReturnType<typeof replaceBridgeState>
 
 
@@ -19,10 +21,12 @@ export function useBridgeActionHandlers(): {
     onSwitchChain: () => void
     onChangeRecipient: (recipient: string | null) => void
     onTypeInput: (typedValue: string) => void
+    onChangeOutput: (outputValue: string) => void
     onSelectCurrency: (currency: Currency) => void
     dispatch: (action: BridgeActions) => void
 } {
     const dispatch = useSetAtom(bridgeReducerAtom as BridgeReducerAtomType);
+    const [bridge, isExecuting] = useBridge();
 
     const onSelectChain = useCallback((field: Field, chainId: number) => {
         dispatch(selectChain({ field, chainId }));
@@ -40,9 +44,16 @@ export function useBridgeActionHandlers(): {
         dispatch(typeInput({ typedValue }))
     }, [])
 
+    const onChangeOutput = useCallback((outputValue: string) => {
+        dispatch(changeOutput({ outputValue }))
+    }, [])
+
     const onSelectCurrency = useCallback((currency: Currency) => {
-        dispatch(selectCurrency({currencyId: currency?.isToken ? currency.address : currency?.isNative ? currency.symbol : ''}))
-    },[])
+        console.log({ currency })
+        const currencyId = currency?.isToken ? currency.address : currency?.isNative ? currency.symbol : '';
+        console.log({ currencyId })
+        dispatch(selectCurrency({ currencyId }))
+    }, [])
 
 
     return {
@@ -51,6 +62,7 @@ export function useBridgeActionHandlers(): {
         onSwitchChain,
         onChangeRecipient,
         onTypeInput,
+        onChangeOutput,
         dispatch
     }
 }

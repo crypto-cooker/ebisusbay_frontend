@@ -16,4 +16,5 @@ export const replaceBridgeState = createAction<{
     recipient: string | null
 }>('bridge/replaceBridgeState')
 export const setRecipient = createAction<{ recipient: string | null }>('bridge/setRecipient')
-export const typeInput = createAction<{typedValue: string }>('bridge/typeInput')
+export const typeInput = createAction<{typedValue: string}>('bridge/typeInput')
+export const changeOutput = createAction<{outputValue: string}>('bridge/changeOutput');

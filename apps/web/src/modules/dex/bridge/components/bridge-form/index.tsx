@@ -6,7 +6,7 @@ import { ArrowLeftIcon, ArrowRightIcon, SettingsIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/react";
 import { useApproveCallback, ApprovalState } from "@dex/swap/imported/pancakeswap/web/hooks/useApproveCallback";
 import useAccountActiveChain from "@dex/swap/imported/pancakeswap/web/hooks/useAccountActiveChain";
-import chainConfigs, { BRIDGE, SUPPORTED_CHAIN_CONFIGS } from "@src/config/chains";
+import chainConfigs, { SUPPORTED_CHAIN_CONFIGS } from "@src/config/chains";
 import { ChainSelector } from "././chainSelector"
 import CurrencyInputPanel from "@dex/components/currency-input-panel";
 import { useBridgeActionHandlers } from "@dex/bridge/state/useBridgeActionHandler";
@@ -15,6 +15,7 @@ import { Field } from "@dex/swap/constants";
 import { useCurrency } from "@dex/swap/imported/pancakeswap/web/hooks/tokens";
 import getCurrencyId from "@dex/swap/imported/pancakeswap/web/utils/currencyId";
 import { useEffect } from "react";
+import { useAppChainConfig } from "@src/config/hooks";
 
 export default function BridgeForm() {
     const { isOpen: isOpenConfirmSwap, onOpen: onOpenConfirmSwap, onClose: onCloseConfirmSwap } = useDisclosure();
@@ -46,6 +47,8 @@ export default function BridgeForm() {
         onSelectCurrency(currency)
     }
 
+    const { config } = useAppChainConfig();
+
     useEffect(() => {
         console.log({ typedValue })
         console.log({ currencyId })
@@ -61,7 +64,7 @@ export default function BridgeForm() {
     } = useApproveCallback(
         // parsedAmounts[Field.INPUT],
         typedValue,
-        chainId ? BRIDGE[chainId].fortune : undefined,
+        currencyId ? config.bridges[currencyId] : undefined,
         { enablePaymaster: true }
     )
 
@@ -88,12 +91,12 @@ export default function BridgeForm() {
                         <HStack w='full' align="end" justify="space-between">
                             <VStack flexGrow={2}>
                                 <label>From</label>
-                                <ChainSelector onSelectChain={onSelectChain} onSwitchChain={onSwitchChain} chainId={fromChainId} field={Field.INPUT}/>
+                                <ChainSelector onSelectChain={onSelectChain} onSwitchChain={onSwitchChain} chainId={fromChainId} field={Field.INPUT} />
                             </VStack>
                             <HStack align="end" pb={3}><ArrowRightIcon /></HStack>
                             <VStack flexGrow={2}>
                                 <label>To</label>
-                                <ChainSelector onSelectChain={onSelectChain} onSwitchChain={onSwitchChain} chainId={toChainId} field={Field.OUTPUT}/>
+                                <ChainSelector onSelectChain={onSelectChain} onSwitchChain={onSwitchChain} chainId={toChainId} field={Field.OUTPUT} />
                             </VStack>
                         </HStack>
                     </Card>
@@ -105,8 +108,9 @@ export default function BridgeForm() {
                         onUserInput={onTypeInput}
                         onMax={() => { }}
                     />
-                    <HStack mb={2}>Output Amount:</HStack>
-                    <Box mb={4} />
+                    <Card my={4}>
+                        <Box>Output Amount:</Box>
+                    </Card>
                     <AuthenticationGuard>
                         {({ isConnected, connect }) => (
                             <>
@@ -130,7 +134,7 @@ export default function BridgeForm() {
                                     </PrimaryButton>) : <PrimaryButton
                                         w='full'
                                         size='lg'
-                                        onClick={() => { }}>
+                                        onClick={() => { approveACallback }}>
                                     Approve
                                 </PrimaryButton>
                                 }
