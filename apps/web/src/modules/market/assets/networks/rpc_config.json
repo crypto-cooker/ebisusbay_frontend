@@ -29402,6 +29402,32 @@
         "doxx": false,
         "kyc": true
       }
+    },
+    {
+      "name": "DBD Fantasy Football Season 1",
+      "slug": "dbd-fantasy-football-season-1",
+      "chain": 25,
+      "is1155": false,
+      "address": "0x369f27b939a4eb1f7b124a7948a435a3aa1e6cd6",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+        "description": "Dead Beat Dads (DBD) Fantasy Football, a fictional, fantasy football league with Dead Beat Dads. Each season mint player and defense cards with various positions, stats, team names, and player names. Collect the best players, submit your lineups each week, and compete to win the Championship pot!",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos/0x369f27b939a4eb1f7b124a7948a435a3aa1e6cd6/avatar-7d067585-4de1-4665-83c0-e2dd327bdefc.gif",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos/0x369f27b939a4eb1f7b124a7948a435a3aa1e6cd6/preview-d5004843-68c6-4f6c-8326-d89781709f55.jpeg",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos/0x369f27b939a4eb1f7b124a7948a435a3aa1e6cd6/banner-abb56f94-b9e7-4ed7-aeed-717859629039.jpeg",
+        "website": "https://dbdff.deadbeatdadscronos.com/",
+        "twitter": "https://x.com/zolape01/",
+        "discord": "https://discord.gg/JKtcaHZMvd",
+        "instagram": "",
+        "medium": "https://medium.com/@deadbeatdadscro/dead-beat-dads-fantasy-football-b8dc90efe237",
+        "telegram": ""
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
