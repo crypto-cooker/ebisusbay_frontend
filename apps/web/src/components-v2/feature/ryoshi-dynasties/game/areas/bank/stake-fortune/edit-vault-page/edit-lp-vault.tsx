@@ -86,6 +86,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
   const [currentTroops, setCurrentTroops] = useState(0);
   const [newApr, setNewApr] = useState(0);
   const [newTroops, setNewTroops] = useState(0);
+  const [additionalMitama, setAdditionalMitama] = useState(0);
   const [newMitama, setNewMitama] = useState(0);
   const [newWithdrawDate, setNewWithdrawDate] = useState(vault.endTime);
 
@@ -187,6 +188,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
         const totalApproved = await checkForApproval();
         const desiredFortuneAmount = parseEther(amountToStake.toString());
 
+
         if (totalApproved < desiredFortuneAmount) {
           const txHash = await lpContract?.write.approve(
             [chainConfig.contracts.bank as `0x${string}`, desiredFortuneAmount],
@@ -198,17 +200,20 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
           toast.success(createSuccessfulTransactionToastContent(txHash ?? '', bankChainId));
         }
 
+
+        // console.log( parseEther(`${amountToStake}`), vaultConfig?.pair, daysToStake*86400);
         // const expectedMitama = await bankContract?.read.mitamaForLp([
         //   parseEther(`${amountToStake}`),
         //   vaultConfig?.pair,
-        //   daysToStake*86400
-        // ])
+        //   vault.length,
+        // ]);
+        // console.log(expectedMitama, newMitama);
 
         const tx = await callWithGasPrice(bankContract, 'increaseDepositForLPVault', [
           parseEther(String(amountToStake)),
           vault.index,
           vault.pool,
-          newMitama
+          additionalMitama
         ]);
         toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
       }
@@ -239,6 +244,11 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
     const sumAmount = Number(derivedFrtnAmount(formatEther(vault.balance))) + (type === 'amount' ? Number(derivedFrtnAmount(amountToStake)) : 0);
     const mitama = (sumAmount * sumDays) / 1080;
     const multipliedLpMitama = Math.floor(mitama * 2.5 * 0.98); // 2% slippage
+
+    const additionalAmount = (type === 'amount') ? Number(derivedFrtnAmount(amountToStake)) : 0;
+    const additionalMitama = (additionalAmount * daysToStake) / 1080;
+    const multipliedAdditionalLpMitama = Math.floor(additionalMitama * 2.5 * 0.98); // 2% slippage;
+    setAdditionalMitama(multipliedAdditionalLpMitama);
 
     let newTroops = Math.floor(multipliedLpMitama / mitamaTroopsRatio);
     if (newTroops < 1 && sumAmount > 0) newTroops = 1;
@@ -347,7 +357,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
           )}
           {type === 'amount' && (
             <VStack align='end' textAlign='end'>
-              <Box fontSize='sm' fontWeight='bold'>Balance: {isRetrievingToken ? <Spinner size='sm'/> : commify(round(Number(ethers.utils.formatEther(vault.balance)), 7))}</Box>
+              <Box fontSize='sm' fontWeight='bold'>Balance: {isRetrievingToken ? <Spinner size='sm'/> : commify(round(Number(tokenBalance), 7))}</Box>
               <Flex justify='end' align='center'>
                 <Box ms={1} fontSize='sm'>{vaultConfig?.name} LP</Box>
               </Flex>
