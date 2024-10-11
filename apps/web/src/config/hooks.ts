@@ -1,9 +1,9 @@
-import config, {AppEnvironment} from './app';
-import appChainConfig, {isSupportedChainId, SupportedChainId} from './chains';
-import {useMemo} from "react";
-import {ChainId} from "@pancakeswap/chains";
-import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
-import {getChainById} from "@src/helpers";
+import config, { AppEnvironment } from './app';
+import appChainConfig, { isSupportedChainId, SupportedChainId } from './chains';
+import { useEffect, useMemo, useState } from "react";
+import { ChainId } from "@pancakeswap/chains";
+import { useActiveChainId } from "@eb-pancakeswap-web/hooks/useActiveChainId";
+import { getChainById } from "@src/helpers";
 
 function getCurrentEnv() {
   const env = process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV ?? AppEnvironment.PRODUCTION;
@@ -60,7 +60,7 @@ export function useAppConfig() {
 }
 
 export function useAppChainConfig(chainId?: ChainId) {
-  const {chainId: activeChainId} = useActiveChainId();
+  const { chainId: activeChainId } = useActiveChainId();
 
   const config = useMemo(() => {
     if (!chainId) chainId = activeChainId;
@@ -75,6 +75,13 @@ export function useAppChainConfig(chainId?: ChainId) {
     config,
     chainId: activeChainId
   }
+}
+
+export function useBridgeContract(currencyId: string | undefined) {
+  const { config } = useAppChainConfig();
+  const [bridge, setBridge] = useState<null | undefined>(null);
+  const currentBridge = config.bridges.find((bridge) => bridge.currencyId == currencyId)
+  return currentBridge?.address
 }
 
 export function getAppChainConfig(chainId?: SupportedChainId) {

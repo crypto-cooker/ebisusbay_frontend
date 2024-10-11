@@ -10,12 +10,12 @@ import chainConfigs, { SUPPORTED_CHAIN_CONFIGS } from "@src/config/chains";
 import { ChainSelector } from "././chainSelector"
 import CurrencyInputPanel from "@dex/components/currency-input-panel";
 import { useBridgeActionHandlers } from "@dex/bridge/state/useBridgeActionHandler";
-import { useBridgeState } from "@dex/bridge/state/hooks";
+import { useBridgeState, useQuote } from "@dex/bridge/state/hooks";
 import { Field } from "@dex/swap/constants";
 import { useCurrency } from "@dex/swap/imported/pancakeswap/web/hooks/tokens";
 import getCurrencyId from "@dex/swap/imported/pancakeswap/web/utils/currencyId";
 import { useEffect } from "react";
-import { useAppChainConfig } from "@src/config/hooks";
+import { getBridgeContract, useAppChainConfig } from "@src/config/hooks";
 
 export default function BridgeForm() {
     const { isOpen: isOpenConfirmSwap, onOpen: onOpenConfirmSwap, onClose: onCloseConfirmSwap } = useDisclosure();
@@ -47,15 +47,6 @@ export default function BridgeForm() {
         onSelectCurrency(currency)
     }
 
-    const { config } = useAppChainConfig();
-
-    useEffect(() => {
-        console.log({ typedValue })
-        console.log({ currencyId })
-        console.log({ currency })
-    }, [typedValue, currency, currencyId])
-
-
     const {
         approvalState: approval,
         approveCallback: approveACallback,
@@ -64,9 +55,15 @@ export default function BridgeForm() {
     } = useApproveCallback(
         // parsedAmounts[Field.INPUT],
         typedValue,
-        currencyId ? config.bridges[currencyId] : undefined,
+        currencyId ? "" : undefined,
         { enablePaymaster: true }
     )
+
+    const outputValue = useQuote()
+
+    useEffect(() => {
+        console.log({ outputValue })
+    }, [outputValue])
 
     // show approve flow when: no error on inputs, not approved or pending, or approved in current session
     // never show if price impact is above threshold in non expert mode
@@ -109,7 +106,7 @@ export default function BridgeForm() {
                         onMax={() => { }}
                     />
                     <Card my={4}>
-                        <Box>Output Amount:</Box>
+                        <Box>Output Amount: {outputValue}</Box>
                     </Card>
                     <AuthenticationGuard>
                         {({ isConnected, connect }) => (
