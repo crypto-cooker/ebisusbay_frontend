@@ -109,7 +109,8 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
             'coom',
             'fftb',
             'mery',
-            'lwv'
+            'lwv',
+            'daddy'
           ],
           nft: {
             '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -262,9 +263,17 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
             '0x0521217B36a1482E6798692687f836c68c7F3837': ['cro', 'frtn', 'fftb'], // Sp00kies
             '0x7C144DBF04cf991d932bf6DC404C8B37c8807946': ['cro', 'frtn', 'fftb'], // Elf Citizens
             '0x7aEBFd662494299CE53feb533BFE80a749e656BC': ['cro', 'frtn', 'lwv'], // Degen Ape Cronos Club
-            '0x25ea0f16e3a52db95e31f8514917a0610270e7cd': ['cro', 'frtn', 'lwv'], // TeenDACC
+            '0x25ea0f16e3a52db95e31f8514917a0610270e7cd': ['cro', 'frtn', 'lwv'], // TeenDACCxf
             '0x3fe29ffa527d712a5b202ddaeff714c12cb6aff5': ['cro', 'frtn', 'lwv'], // Snap!
             '0x4Ffca5C2790ef342c1EF25d48D1FFc8a2B4b1D9A': ['cro', 'frtn', 'lwv'], // Lightwave Booster
+            '0xe971838ced4949e5c51dd7baa6d2d0188ed772f0': ['cro', 'frtn', 'daddy'], // Dead Beat Dads
+            '0x96adF7839A133da31824113a23e223D02e97c53A': ['cro', 'frtn', 'daddy'], // Trophy Wives
+            '0xBC49267179d67050619CEB59a9870b14c9255C6e': ['cro', 'frtn', 'daddy'], // Dead Beat Dads Birth Certificates
+            '0xb2a5Fc03533d397943c9Eae3183e409208DDaab3': ['cro', 'frtn', 'daddy'], // Teenage Dirtbags
+            '0xd265D2fd5BbBbFF42BF226c360c48C17bc24f49b': ['cro', 'frtn', 'daddy'], // National Fat Guy League (NFGL) 2023 Season
+            '0x14769cebC0479e192A465A685844261F16109495': ['cro', 'frtn', 'daddy'], // Battle DBDs
+            '0x369F27b939A4eB1f7b124A7948A435a3aA1e6CD6': ['cro', 'frtn', 'daddy'], // DBD Fantasy Football Season 1
+
           },
         },
         deals: [
