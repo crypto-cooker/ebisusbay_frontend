@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ChainId } from "@pancakeswap/chains";
 import { useActiveChainId } from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import { getChainById } from "@src/helpers";
+import { Bridge } from '@dex/bridge/constants/types';
 
 function getCurrentEnv() {
   const env = process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV ?? AppEnvironment.PRODUCTION;
@@ -79,9 +80,17 @@ export function useAppChainConfig(chainId?: ChainId) {
 
 export function useBridgeContract(currencyId: string | undefined) {
   const { config } = useAppChainConfig();
-  const [bridge, setBridge] = useState<null | undefined>(null);
-  const currentBridge = config.bridges.find((bridge) => bridge.currencyId == currencyId)
-  return currentBridge?.address
+  const bridge = useMemo<Bridge | undefined>(() => {
+    if (typeof currencyId != "undefined") {
+      const bridge: Bridge | undefined = config.bridges.find((bridge) => bridge.currencyId.toLocaleLowerCase().includes(currencyId?.toLocaleLowerCase()));
+      console.log(bridge, "sfsfsf")
+      return bridge
+    } else {
+      return undefined
+    }
+  }, [currencyId])
+
+  return bridge
 }
 
 export function getAppChainConfig(chainId?: SupportedChainId) {

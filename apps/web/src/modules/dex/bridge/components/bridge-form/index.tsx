@@ -10,12 +10,14 @@ import chainConfigs, { SUPPORTED_CHAIN_CONFIGS } from "@src/config/chains";
 import { ChainSelector } from "././chainSelector"
 import CurrencyInputPanel from "@dex/components/currency-input-panel";
 import { useBridgeActionHandlers } from "@dex/bridge/state/useBridgeActionHandler";
-import { useBridgeState, useQuote } from "@dex/bridge/state/hooks";
+import { useBridgeState } from "@dex/bridge/state/hooks";
 import { Field } from "@dex/swap/constants";
 import { useCurrency } from "@dex/swap/imported/pancakeswap/web/hooks/tokens";
 import getCurrencyId from "@dex/swap/imported/pancakeswap/web/utils/currencyId";
-import { useEffect } from "react";
-import { getBridgeContract, useAppChainConfig } from "@src/config/hooks";
+import { useEffect, useMemo } from "react";
+import { useAppChainConfig, useBridgeContract } from "@src/config/hooks";
+import { useDerivedBridgeInfo } from "@dex/bridge/state/hooks";
+import { CommitButton } from "@dex/swap/components/tabs/swap/commit-button";
 
 export default function BridgeForm() {
     const { isOpen: isOpenConfirmSwap, onOpen: onOpenConfirmSwap, onClose: onCloseConfirmSwap } = useDisclosure();
@@ -46,6 +48,15 @@ export default function BridgeForm() {
     const handleSelectCurrency = (currency: any) => {
         onSelectCurrency(currency)
     }
+    const bridge = useBridgeContract(currencyId);
+    console.log(bridge?.address)
+    const { inputError, ...derivedBridgeInfo } = useDerivedBridgeInfo(
+        typedValue,
+        currency,
+        account ?? '',
+    );
+
+    const parsedCurrency = useMemo(() => derivedBridgeInfo.parsedAmount, [derivedBridgeInfo.parsedAmount])
 
     const {
         approvalState: approval,
@@ -53,21 +64,19 @@ export default function BridgeForm() {
         revokeCallback: revokeACallback,
         currentAllowance: currentAllowanceA,
     } = useApproveCallback(
-        // parsedAmounts[Field.INPUT],
-        typedValue,
-        currencyId ? "" : undefined,
+        parsedCurrency,
+        currencyId ? bridge?.address : undefined,
         { enablePaymaster: true }
     )
 
-    const outputValue = useQuote()
-
     useEffect(() => {
-        console.log({ outputValue })
-    }, [outputValue])
+        console.log({ approval })
+    }, [approval])
 
     // show approve flow when: no error on inputs, not approved or pending, or approved in current session
     // never show if price impact is above threshold in non expert mode
-    const showApproveFlow = (approval === ApprovalState.NOT_APPROVED || approval === ApprovalState.PENDING)
+    const showApproveFlow = (approval === ApprovalState.NOT_APPROVED || approval === ApprovalState.PENDING);
+    const isValid = !inputError && approval === ApprovalState.APPROVED;
 
     return (
         <>
@@ -105,9 +114,7 @@ export default function BridgeForm() {
                         onUserInput={onTypeInput}
                         onMax={() => { }}
                     />
-                    <Card my={4}>
-                        <Box>Output Amount: {outputValue}</Box>
-                    </Card>
+                    <Box mb={4}></Box>
                     <AuthenticationGuard>
                         {({ isConnected, connect }) => (
                             <>
@@ -119,26 +126,36 @@ export default function BridgeForm() {
                                     >
                                         Connect Wallet
                                     </PrimaryButton>
-                                ) : approval ? (
-                                    <PrimaryButton
-                                        onClick={approveACallback}
-                                        isDisabled={approval === ApprovalState.PENDING}
-                                        w='full'
-                                        loadingText={`Approving ${currency?.symbol}`}
-                                        isLoading={approval === ApprovalState.PENDING}
-                                    >
-                                        Approve {currency?.symbol}
-                                    </PrimaryButton>) : <PrimaryButton
-                                        w='full'
-                                        size='lg'
-                                        onClick={() => { approveACallback }}>
-                                    Approve
-                                </PrimaryButton>
+                                ) : (
+                                    <VStack align='stretch'>
+                                        {showApproveFlow && (
+                                            <PrimaryButton
+                                                onClick={approveACallback}
+                                                isDisabled={approval === ApprovalState.PENDING}
+                                                w='full'
+                                                loadingText={`Approving ${currency?.symbol}`}
+                                                isLoading={approval === ApprovalState.PENDING}
+                                            >
+                                                Approve {currency?.symbol}
+                                            </PrimaryButton>
+                                        )}
+                                        <CommitButton
+                                            width="100%"
+                                            colorScheme={!inputError ? 'red' : undefined}
+                                            variant={!inputError ? 'solid' : 'primary'}
+                                            isDisabled={!isValid}
+                                            onClick={() => { onOpenConfirmSwap() }}
+                                        >
+                                            Bridge
+                                        </CommitButton>
+                                    </VStack>
+                                )
                                 }
                             </>
                         )}
                     </AuthenticationGuard>
                 </Card>
-            </Container></>
+            </Container>
+        </>
     )
 }
