@@ -29428,6 +29428,33 @@
         "doxx": false,
         "kyc": false
       }
+    },
+    {
+      "name": "Zombie Kitty's",
+      "slug": "zombie-kittys",
+      "chain": 388,
+      "is1155": false,
+      "address": "0xd17bdd27f4c505b857ec3d020d4b541efd128ab3",
+      "onChain": false,
+      "listable": true,
+      "metadata": {
+          "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos-zkevm/0xd17bdd27f4c505b857ec3d020d4b541efd128ab3/avatar-f7d843df-635f-45c6-bb3c-6e08e5457507.png",
+          "card": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos-zkevm/0xd17bdd27f4c505b857ec3d020d4b541efd128ab3/preview-5602b66a-4ddb-467c-a776-ee8fa33e1726.jpeg",
+          "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos-zkevm/0xd17bdd27f4c505b857ec3d020d4b541efd128ab3/banner-c0ed2367-15fc-4f93-8869-9a7622bf764f.jpeg",
+          "medium": "",
+          "discord": "https://discord.gg/J7yqRZ4EZG",
+          "twitter": "https://x.com/kittycatcromeow?s=21&t=dIVyb7DvE_A5RZLzo2t3ew",
+          "website": "https://kittycatcromeow.weebly.com/",
+          "telegram": "http://t.me/+ZuIo2jKsos01ODBl",
+          "instagram": "",
+          "categories": [],
+          "description": "The Zombie Apocalypse has started! The Zombie Kitty's are running rampant! Get them before they get you! Earn royalties just from capturing them: https://zombie-kitty.netlify.app/ "
+      },
+      "verification": {
+        "verified": false,
+        "doxx": false,
+        "kyc": false
+      }
     }
   ],
   "drops": [
