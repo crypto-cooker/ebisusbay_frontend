@@ -77,10 +77,10 @@ export function useHarvestRewards() {
   return [enable, executing] as const;
 }
 
-export function useHavestAll() {
+export function useHarvestAll() {
   const user = useUser();
   const { chainId } = useActiveChainId();
-  const { refetchApprovals } = useUserFarmsRefetch();
+  // const { refetchApprovals } = useUserFarmsRefetch();
   const [executing, setExecuting] = useState(false);
   const { config } = useAppChainConfig();
   const wagmiConfig = useConfig()
@@ -105,7 +105,7 @@ export function useHavestAll() {
       await multicall(wagmiConfig, {
         contracts
       })
-      refetchApprovals();
+      // refetchApprovals();
     } catch (e) {
       console.log(e);
       toast.error(parseErrorMessage(e));
@@ -114,4 +114,5 @@ export function useHavestAll() {
     }
   }
 
+  return [enable, executing] as const;
 }

@@ -32,6 +32,7 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import Link from "next/link";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import { ChainId } from "@pancakeswap/chains";
+import { useHarvestAll } from "../hooks/farm-actions";
 
 enum ViewType {
   GRID,
@@ -57,6 +58,7 @@ export default function FarmsPage() {
   const [viewType, setViewType] = useState<ViewType>(ViewType.TABLE);
   const { data: farms, status: farmsStatus, error: farmsError } = getFarmsUsingMapi(queryParams);
   const userFarms = useUserFarms();
+  const [harvestAll, isHarvestingAll] = useHarvestAll();
 
   const [localQueryParams, setLocalQueryParams] = useState<LocalQuery>({});
 
@@ -151,8 +153,8 @@ export default function FarmsPage() {
     )
   }, [filteredData, farmsStatus, userFarms, viewType, localQueryParams, chainId]);
 
-  const harvestAll = () => {
-
+  const handleHarvestAll = async () => {
+    console.log('not implemented')
   }
   
   useEffect(() => {
@@ -227,7 +229,7 @@ export default function FarmsPage() {
                 onChange={handleSearch}
               />
             </Box>
-            <PrimaryButton aria-label='Harvest All' onClick={() =>{harvestAll()}}>Harvest All</PrimaryButton>
+            {/* <PrimaryButton aria-label='Harvest All' onClick={handleHarvestAll}>Harvest All</PrimaryButton> */}
           </Stack>
         </Flex>
         {status === FarmState.ACTIVE && [ChainId.CRONOS, ChainId.CRONOS_TESTNET].includes(chainId) && (
