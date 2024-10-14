@@ -218,7 +218,7 @@ export const userUserFarmBoost = (pid: number) => {
   const [boosts] = useAtom(boostsAtom);
 
   return useMemo(() => {
-    const existingBoost = boosts?.find((boost) => boost.farmId === pid);
+    const existingBoost = boosts?.find((boost) => boost.farmId === pid && boost.chainId === useActiveChainId().chainId);
 
     const isBoostClaimable = existingBoost && new Date(existingBoost.claimAt) < new Date();
     const timeRemaining = existingBoost && timeSince(new Date(existingBoost.claimAt));

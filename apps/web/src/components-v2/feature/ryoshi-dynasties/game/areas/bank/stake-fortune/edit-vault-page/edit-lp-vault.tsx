@@ -48,6 +48,7 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
 import useStakingPair from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/use-staking-pair";
+import { useTokenContract } from "@dex/swap/imported/pancakeswap/web/hooks/useContract";
 
 interface EditVaultPageProps {
   vault: FortuneStakingAccount;
@@ -59,7 +60,6 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
   const {config: rdConfig} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const { config: chainConfig } = useAppChainConfig(bankChainId);
-  const frtnContract = useFrtnContract(bankChainId);
   const { switchNetworkAsync } = useSwitchNetwork();
   const { chainId: activeChainId} = useActiveChainId();
   const bankContract = useBankContract(bankChainId);
@@ -86,18 +86,22 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
   const [currentTroops, setCurrentTroops] = useState(0);
   const [newApr, setNewApr] = useState(0);
   const [newTroops, setNewTroops] = useState(0);
+  const [additionalMitama, setAdditionalMitama] = useState(0);
   const [newMitama, setNewMitama] = useState(0);
   const [newWithdrawDate, setNewWithdrawDate] = useState(vault.endTime);
 
   const stakingPair = useStakingPair({pairAddress: vaultConfig!.pair, chainId: bankChainId});
 
+  const lpContract = useTokenContract(vaultConfig!.pair, bankChainId);
+
   const derivedFrtnAmount = (amount: number | string) => {
     if (!stakingPair || !stakingPair.totalSupply || stakingPair.totalSupply.equalTo(0)) {
       return '0'
     }
-
     return stakingPair.frtnReserve?.multiply(parseEther(`${amount}`)).divide(stakingPair.totalSupply ?? 0).toExact() ?? '0';
   };
+
+  
 
   const handleChangeFortuneAmount = (valueAsString: string, valueAsNumber: number) => {
     setAmountToStake(valueAsString);
@@ -108,7 +112,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
   }
 
   const checkForApproval = async () => {
-    const totalApproved = await frtnContract?.read.allowance([user.address as Address, chainConfig.contracts.bank]);
+    const totalApproved = await lpContract?.read.allowance([user.address as Address, chainConfig.contracts.bank]);
     return totalApproved as bigint;
   }
 
@@ -184,8 +188,9 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
         const totalApproved = await checkForApproval();
         const desiredFortuneAmount = parseEther(amountToStake.toString());
 
+
         if (totalApproved < desiredFortuneAmount) {
-          const txHash = await frtnContract?.write.approve(
+          const txHash = await lpContract?.write.approve(
             [chainConfig.contracts.bank as `0x${string}`, desiredFortuneAmount],
             {
               account: user.address!,
@@ -195,17 +200,20 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
           toast.success(createSuccessfulTransactionToastContent(txHash ?? '', bankChainId));
         }
 
+
+        // console.log( parseEther(`${amountToStake}`), vaultConfig?.pair, daysToStake*86400);
         // const expectedMitama = await bankContract?.read.mitamaForLp([
         //   parseEther(`${amountToStake}`),
         //   vaultConfig?.pair,
-        //   daysToStake*86400
-        // ])
+        //   vault.length,
+        // ]);
+        // console.log(expectedMitama, newMitama);
 
         const tx = await callWithGasPrice(bankContract, 'increaseDepositForLPVault', [
           parseEther(String(amountToStake)),
           vault.index,
           vault.pool,
-          newMitama
+          additionalMitama
         ]);
         toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
       }
@@ -236,6 +244,11 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
     const sumAmount = Number(derivedFrtnAmount(formatEther(vault.balance))) + (type === 'amount' ? Number(derivedFrtnAmount(amountToStake)) : 0);
     const mitama = (sumAmount * sumDays) / 1080;
     const multipliedLpMitama = Math.floor(mitama * 2.5 * 0.98); // 2% slippage
+
+    const additionalAmount = (type === 'amount') ? Number(derivedFrtnAmount(amountToStake)) : 0;
+    const additionalMitama = (additionalAmount * daysToStake) / 1080;
+    const multipliedAdditionalLpMitama = Math.floor(additionalMitama * 2.5 * 0.98); // 2% slippage;
+    setAdditionalMitama(multipliedAdditionalLpMitama);
 
     let newTroops = Math.floor(multipliedLpMitama / mitamaTroopsRatio);
     if (newTroops < 1 && sumAmount > 0) newTroops = 1;
@@ -284,7 +297,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
         <SimpleGrid columns={{base: 2, sm: 4}} gap={2}>
           <Box>
             <Text fontSize='sm'>Staked</Text>
-            <Text fontWeight='bold'>{commify(round(Number(ethers.utils.formatEther(vault.balance))))}</Text>
+            <Text fontWeight='bold'>{commify(round(Number(ethers.utils.formatEther(vault.balance)), 7))}</Text>
           </Box>
           <Box>
             <Text fontSize='sm'>APR</Text>
@@ -302,18 +315,17 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
       </Box>
       <Box bgColor='#292626' rounded='md' mt={1} p={4}>
         <SimpleGrid columns={type === 'amount' ? 2 : 1}>
-          
-          {/* {type === 'amount' && (
+          {type === 'amount' && (
             <VStack align='start'>
               <Box fontSize='sm' fontWeight='bold'>Deposit LP Amount</Box>
               <FormControl maxW='200px' isInvalid={!!inputError}>
                 <NumberInput
                   defaultValue={rdConfig.bank.staking.fortune.minimum}
-                  min={1}
+                  min={0.000000001}
                   name="quantity"
                   onChange={handleChangeFortuneAmount}
                   value={amountToStake}
-                  step={1000}
+                  step={10}
                 >
                   <NumberInputField />
                   <NumberInputStepper>
@@ -324,12 +336,11 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
                 <FormErrorMessage>{inputError}</FormErrorMessage>
               </FormControl>
               <Flex fontSize='sm'>
-                FRTN: <>{round(derivedFrtnAmount, 3)}</>
+                FRTN: <>{commify(round(+derivedFrtnAmount(amountToStake), 3))}</>
               </Flex>
             </VStack>
-          )} */}
-          
-          {/* {type === 'duration' && (
+          )}
+          {type === 'duration' && (
             <VStack align='start'>
               <Text>Increase duration by</Text>
               <FormControl maxW='250px' isInvalid={!!lengthError}>
@@ -343,10 +354,10 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
                 <FormErrorMessage>{lengthError}</FormErrorMessage>
               </FormControl>
             </VStack>
-          )} */}
+          )}
           {type === 'amount' && (
             <VStack align='end' textAlign='end'>
-              <Box fontSize='sm' fontWeight='bold'>Balance: {isRetrievingToken ? <Spinner size='sm'/> : commify(round(tokenBalance, 3))}</Box>
+              <Box fontSize='sm' fontWeight='bold'>Balance: {isRetrievingToken ? <Spinner size='sm'/> : commify(round(Number(tokenBalance), 7))}</Box>
               <Flex justify='end' align='center'>
                 <Box ms={1} fontSize='sm'>{vaultConfig?.name} LP</Box>
               </Flex>
