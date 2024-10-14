@@ -78,40 +78,40 @@ export function useHarvestRewards() {
 }
 
 export function useHarvestAll() {
-  const user = useUser();
-  const { chainId } = useActiveChainId();
+  // const user = useUser();
+  // const { chainId } = useActiveChainId();
   // const { refetchApprovals } = useUserFarmsRefetch();
   const [executing, setExecuting] = useState(false);
-  const { config } = useAppChainConfig();
-  const wagmiConfig = useConfig()
+  // const { config } = useAppChainConfig();
+  // const wagmiConfig = useConfig()
 
   const enable = async (pairAddresses: string[]) => {
-    if (!user.address) {
-      user.connect();
-      return;
-    }
+    // if (!user.address) {
+    //   user.connect();
+    //   return;
+    // }
 
-    const contracts: any = pairAddresses.map((pairAddress) => {
-      return {
-        address: config.contracts.farms,
-        abi: FarmsAbi,
-        functionName: "withdraw",
-        args: []
-      }
-    })
+    // const contracts: any = pairAddresses.map((pairAddress) => {
+    //   return {
+    //     address: config.contracts.farms,
+    //     abi: FarmsAbi,
+    //     functionName: "withdraw",
+    //     args: []
+    //   }
+    // })
 
-    try {
-      setExecuting(true);
-      await multicall(wagmiConfig, {
-        contracts
-      })
-      // refetchApprovals();
-    } catch (e) {
-      console.log(e);
-      toast.error(parseErrorMessage(e));
-    } finally {
-      setExecuting(false);
-    }
+    // try {
+    //   setExecuting(true);
+    //   await multicall(wagmiConfig, {
+    //     contracts
+    //   })
+    //   // refetchApprovals();
+    // } catch (e) {
+    //   console.log(e);
+    //   toast.error(parseErrorMessage(e));
+    // } finally {
+    //   setExecuting(false);
+    // }
   }
 
   return [enable, executing] as const;
