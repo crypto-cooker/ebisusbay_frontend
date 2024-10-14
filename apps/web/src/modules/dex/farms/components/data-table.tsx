@@ -51,7 +51,7 @@ import {UserFarms, UserFarmState} from '@dex/farms/state/user';
 import {ethers} from 'ethers';
 import {ciEquals, millisecondTimestamp, round} from '@market/helpers/utils';
 import {commify} from 'ethers/lib/utils';
-import {userUserFarmBoost, useUserFarmsRefetch} from '@dex/farms/hooks/user-farms';
+import {useUserFarmBoost, useUserFarmsRefetch} from '@dex/farms/hooks/user-farms';
 import {useAppChainConfig} from "@src/config/hooks";
 import {getBlockExplorerLink} from "@dex/utils";
 import {CurrencyLogo, DoubleCurrencyLayeredLogo} from "@dex/components/logo";
@@ -59,6 +59,7 @@ import useMultichainCurrencyBroker, {MultichainBrokerCurrency} from "@market/hoo
 import BoostFarmDialog from "@dex/farms/components/boost-farm-dialog";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {toast} from "react-toastify";
+import { parseErrorMessage } from '@src/helpers/validator';
 
 export type DataTableProps = {
   data: DerivedFarm[];
@@ -128,7 +129,7 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const text2Color = useColorModeValue('#1A202C', 'whiteAlpha.600');
   const {requestSignature} = useEnforceSignature();
-  const { boost, claimable } = userUserFarmBoost(row.original.data.pid);
+  const { boost, claimable } = useUserFarmBoost(row.original.data.pid);
 
   const [rowFocused, setRowFocused] = useState(false);
   const { isOpen: isOpenUnstake, onOpen: onOpenUnstake, onClose:  onCloseUnstake } = useDisclosure();
@@ -151,11 +152,16 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
   }
 
   const handleOpenBoost = async () => {
-    const signature = await requestSignature();
-    if (signature) {
-      onOpenBoost();
-    }  else {
-      toast.error('Unable to retrieve signature');
+    try {
+      const signature = await requestSignature();
+      if (signature) {
+        onOpenBoost();
+      } else {
+        toast.error('Unable to retrieve signature');
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error(parseErrorMessage(e));
     }
   }
 
@@ -548,7 +554,7 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
   columnHelper.accessor("derived.apr", {
     cell: (info) => {
       const { isOpen: isOpenRoiCalc, onOpen: onOpenRoiCalc, onClose: onCloseRoiCalc } = useDisclosure();
-      const { boost: existingBoost, claimable: isBoostClaimable } = userUserFarmBoost(info.row.original.data.pid);
+      const { boost: existingBoost, claimable: isBoostClaimable } = useUserFarmBoost(info.row.original.data.pid);
 
       const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();

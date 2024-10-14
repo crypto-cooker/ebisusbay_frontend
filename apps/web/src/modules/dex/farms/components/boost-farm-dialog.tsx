@@ -31,7 +31,7 @@ import {useQuery} from "@tanstack/react-query";
 import {getLengthOfTime, pluralize} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import {CheckIcon} from "@chakra-ui/icons";
-import {userUserFarmBoost} from "@dex/farms/hooks/user-farms";
+import {useUserFarmBoost} from "@dex/farms/hooks/user-farms";
 
 interface StakeLpTokensDialogProps {
   isOpen: boolean;
@@ -47,7 +47,7 @@ const SECONDS_PER_TROOP = 60;
 const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialogProps) => {
   const user = useUser();
   const { config: appChainConfig } = useAppChainConfig();
-  const { boost: existingBoost, claimable: isBoostClaimable, timeRemaining } = userUserFarmBoost(farm.data.pid);
+  const { boost: existingBoost, claimable: isBoostClaimable, timeRemaining } = useUserFarmBoost(farm.data.pid);
 
   const {signature, isSignedIn, requestSignature} = useEnforceSignature();
   const [quantity, setQuantity] = useState<string>('');

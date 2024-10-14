@@ -35,7 +35,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExternalLinkAlt, faMinus, faPlus, faStopwatch} from "@fortawesome/free-solid-svg-icons";
 import StakeLpTokensDialog from "@dex/farms/components/stake-lp-tokens";
 import UnstakeLpTokensDialog from "@dex/farms/components/unstake-lp-tokens-dialog";
-import {userUserFarmBoost, useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
+import {useUserFarmBoost, useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
 import {useUser} from "@src/components-v2/useUser";
 import {getTheme} from "@src/global/theme/theme";
 import {useExchangeRate} from "@market/hooks/useGlobalPrices";
@@ -47,6 +47,7 @@ import {SpinnerIcon, StarIcon} from "@chakra-ui/icons";
 import {toast} from "react-toastify";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import BoostFarmDialog from "@dex/farms/components/boost-farm-dialog";
+import { parseErrorMessage } from "@src/helpers/validator";
 
 export type DataGridProps = {
   data: DerivedFarm[];
@@ -75,7 +76,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
   const [harvestRewards, harvestingRewards] = useHarvestRewards();
   const text2Color = useColorModeValue('#1A202C', 'whiteAlpha.600');
   const {requestSignature} = useEnforceSignature();
-  const { boost, claimable } = userUserFarmBoost(farm.data.pid);
+  const { boost, claimable } = useUserFarmBoost(farm.data.pid);
 
   const { isOpen: isOpenUnstake, onOpen: onOpenUnstake, onClose:  onCloseUnstake } = useDisclosure();
   const { isOpen: isOpenStake, onOpen: onOpenStake, onClose:  onCloseStake } = useDisclosure();
@@ -97,11 +98,16 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
   }
 
   const handleOpenBoost = async () => {
-    const signature = await requestSignature();
-    if (signature) {
-      onOpenBoost();
-    }  else {
-      toast.error('Unable to retrieve signature');
+    try {
+      const signature = await requestSignature();
+      if (signature) {
+        onOpenBoost();
+      } else {
+        toast.error('Unable to retrieve signature');
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error(parseErrorMessage(e));
     }
   }
 

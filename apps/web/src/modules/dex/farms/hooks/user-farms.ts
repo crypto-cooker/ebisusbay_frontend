@@ -214,11 +214,12 @@ export const useUserFarmsRefetch = () => {
   return context;
 };
 
-export const userUserFarmBoost = (pid: number) => {
+export const useUserFarmBoost = (pid: number) => {
+  const { chainId: activeChainId } = useActiveChainId();
   const [boosts] = useAtom(boostsAtom);
 
   return useMemo(() => {
-    const existingBoost = boosts?.find((boost) => boost.farmId === pid && boost.chainId === useActiveChainId().chainId);
+    const existingBoost = boosts?.find((boost) => boost.farmId === pid && boost.chainId === activeChainId);
 
     const isBoostClaimable = existingBoost && new Date(existingBoost.claimAt) < new Date();
     const timeRemaining = existingBoost && timeSince(new Date(existingBoost.claimAt));
@@ -228,5 +229,5 @@ export const userUserFarmBoost = (pid: number) => {
       claimable: isBoostClaimable,
       timeRemaining
     }
-  }, [pid, boosts]);
+  }, [pid, boosts, activeChainId]);
 }
