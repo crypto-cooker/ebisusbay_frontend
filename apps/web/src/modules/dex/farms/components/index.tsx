@@ -151,6 +151,10 @@ export default function FarmsPage() {
     )
   }, [filteredData, farmsStatus, userFarms, viewType, localQueryParams, chainId]);
 
+  const harvestAll = () => {
+
+  }
+  
   useEffect(() => {
     setQueryParams({...queryParams, chain: chainId});
   }, [chainId]);
@@ -202,9 +206,9 @@ export default function FarmsPage() {
             <Stack pb={2} direction={{base: 'column-reverse', sm: 'row'}}>
               <Switch isChecked={stakedOnly} onChange={() => setStakedOnly(!stakedOnly)}/>
               <Box fontSize={{base: 'sm', sm: 'md'}} fontWeight={{base: 'bold', sm: 'normal'}}>Staked only</Box>
-            </Stack>
+            </Stack>        
           </Stack>
-          <Stack direction='row' align='center' mt={2}>
+          <Stack direction='row' align='end' mt={2}>
             <Box>
               <Box fontWeight='bold' fontSize='sm'>Sort By</Box>
               <Select onChange={handleSort}>
@@ -223,6 +227,7 @@ export default function FarmsPage() {
                 onChange={handleSearch}
               />
             </Box>
+            <PrimaryButton aria-label='Harvest All' onClick={() =>{harvestAll()}}>Harvest All</PrimaryButton>
           </Stack>
         </Flex>
         {status === FarmState.ACTIVE && [ChainId.CRONOS, ChainId.CRONOS_TESTNET].includes(chainId) && (
