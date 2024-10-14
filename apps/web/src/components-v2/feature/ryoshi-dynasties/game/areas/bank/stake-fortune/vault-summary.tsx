@@ -353,8 +353,7 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
     <>
       {(Date.now() < vault.endTime * 1000) ? (
         <>
-        {vaultType == VaultType.LP && (
-            <Center mb={4}>
+          <Center mb={4}>
             <Stack direction={{base: 'column', sm: 'row'}} mt={4}>
               <Button onClick={() => onEditVault('amount')}>
                 + Add {vaultType === VaultType.LP ? 'LP' : 'FRTN'}
@@ -374,28 +373,15 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
               )}
             </Stack>
           </Center>
-        )}
-          {vaultType !== VaultType.LP && (
-            <Center>
-              <Button
-                variant='unstyled'
-                size='sm'
-                fontWeight='normal'
-                onClick={onWithdrawVault}
-              >
-                Emergency Withdraw
-              </Button>
-            </Center>
-          )}
           <Center>
-          <Button
+            <Button
                 variant='unstyled'
                 size='sm'
                 fontWeight='normal'
                 onClick={onWithdrawVault}
               >
                 Emergency Withdraw
-              </Button>
+            </Button>
           </Center>
         </>
       ) : (
