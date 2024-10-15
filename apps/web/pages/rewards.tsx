@@ -13,18 +13,27 @@ import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import {useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
-const currentGameId = 728;
 
 const Rewards = () => {
   const user = useUser();
   const { data: fortunePrice, isLoading: isFortunePriceLoading } = useFortunePrice(config.chain.id);
 
+  const { data: rdGameContext } = useQuery({
+    queryKey: ['RyoshiDynastiesGameContext'],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getGameContext(),
+    staleTime: 1000 * 60 * 60,
+    gcTime: 1000 * 60 * 61,
+    refetchOnWindowFocus: false
+  });
+  const currentGameId = rdGameContext?.history.previousGameId;
+
   const {data, error, status,} = useQuery({
     queryKey: ['RewardsCollections', currentGameId],
-    queryFn: () => ApiService.withoutKey().getRewardedEntities(currentGameId),
+    queryFn: () => ApiService.withoutKey().getRewardedEntities(currentGameId!),
     staleTime: 1000 * 60 * 30,
     gcTime: 1000 * 60 * 35,
     refetchOnWindowFocus: false,
+    enabled: !!currentGameId
   });
 
   const { data: rewards, isLoading: isRewardsLoading, isError: isRewardsError } = useQuery({
