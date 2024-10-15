@@ -173,7 +173,6 @@ export default function BridgeForm() {
                                 {/* <NetworkSwitcher/> */}
                                 <ToChainSelector onSelectChain={onSelectChain} onSwitchChain={onSwitchChain} chainId={toChainId} field={Field.OUTPUT} />
                             </VStack>
-                            <NetworkSwitcher/>
                         </HStack>
                     </Card>
                     <CurrencyInputPanel
