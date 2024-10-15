@@ -6,8 +6,6 @@ import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/faq-page";
 import {Box, Button, Flex, Image, Spinner, Stack, Text} from "@chakra-ui/react";
 import RdTabButton, {RdTabGroup} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {appConfig} from "@src/config";
-import {ciEquals} from "@market/helpers/utils";
 import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import ImageService from "@src/core/services/image";
 import {UnstakedNfts} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall/stake-nft/unstaked-nfts";
@@ -19,8 +17,6 @@ import {useUser} from "@src/components-v2/useUser";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
 
-const config = appConfig();
-
 interface StakeNftsProps {
   isOpen: boolean;
   onClose: () => void;
@@ -29,7 +25,7 @@ interface StakeNftsProps {
 const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const [page, setPage] = useState<string>();
   const [selectedAddress, setSelectedAddress] = useState<string>();
-  const selectedCollection = config.legacyCollections.find((collection: any) => ciEquals(collection.address, selectedAddress));
+  // const selectedCollection = config.legacyCollections.find((collection: any) => ciEquals(collection.address, selectedAddress));
 
   const { data: winningFaction, status, error } = useQuery({
     queryKey: ['ryoshi-dynasties', 'winning-faction'],
@@ -123,11 +119,11 @@ const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
                   connectText='Connect and sign-in to manage your staked NFTs'
                   signinText='Connect and sign-in to manage your staked NFTs'
                 >
-                  {!!selectedCollection && (
-                    <StakeNftsContent
-                      collectionAddress={selectedAddress!}
-                    />
-                  )}
+                  {/* {!!selectedCollection && ( */}
+                  <StakeNftsContent
+                    collectionAddress={selectedAddress!}
+                  />
+                  {/* )} */}
                 </AuthenticationRdButton>
               </>
             ) : (
