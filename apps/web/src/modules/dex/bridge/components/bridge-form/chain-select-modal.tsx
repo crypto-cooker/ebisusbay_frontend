@@ -11,7 +11,7 @@ type ChainSelectModalProps = {
     isOpen: boolean;
     field: Field;
     onClose: () => void;
-    onSelectChain: ( value: number) => void;
+    onSelectChain: ( field:Field, value: number) => void;
     modalProps?: Pick<ModalProps, 'size' | 'isCentered'>;
 }
 
@@ -23,7 +23,7 @@ export default function ChainSelectModal({ isOpen, onClose, onSelectChain, field
 
     const handleSelect = (chainId: number) => {
         console.log("chain selection")
-        onSelectChain(chainId);
+        onSelectChain(field, chainId);
         onClose()
     }
     return (
