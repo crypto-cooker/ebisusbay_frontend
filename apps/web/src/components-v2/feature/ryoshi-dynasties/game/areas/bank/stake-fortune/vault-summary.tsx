@@ -107,6 +107,7 @@ const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVaul
         balance={vaultBalance}
         apr={totalApr}
         troops={troops}
+        type={VaultType.TOKEN}
       />
       <AccordionPanel pb={0}>
         <VaultBody
@@ -187,6 +188,7 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
         balance={vaultBalance}
         apr={totalApr}
         troops={troops}
+        type={VaultType.LP}
       />
       <AccordionPanel pb={0}>
         <VaultBody
@@ -218,9 +220,10 @@ interface VaultHeadingProps {
   balance: number;
   apr: number;
   troops: number;
+  type: VaultType;
 }
 
-const VaultHeading = ({ index, tokenIcon, duration, balance, apr, troops}: VaultHeadingProps) => {
+const VaultHeading = ({ index, tokenIcon, duration, balance, apr, troops, type}: VaultHeadingProps) => {
   return (
     <AccordionButton w='full' py={4}>
       <Flex direction='column' w='full' align='start'>
@@ -233,7 +236,12 @@ const VaultHeading = ({ index, tokenIcon, duration, balance, apr, troops}: Vault
             <VStack align='end' spacing={2} fontSize='sm'>
               <HStack fontWeight='bold'>
                 {tokenIcon}
-                <Box>{commify(round(balance))}</Box>
+                {type === VaultType.LP && (
+                  <Box>{commify(round(balance, 7))}</Box>
+                )}
+                {type === VaultType.TOKEN && (
+                  <Box>{commify(round(balance))}</Box>
+                )}
               </HStack>
               <Flex>
                 <Tag variant='outline'>
@@ -345,23 +353,11 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
     <>
       {(Date.now() < vault.endTime * 1000) ? (
         <>
-          <Center>
-          <Button
-                variant='unstyled'
-                size='sm'
-                fontWeight='normal'
-                onClick={onWithdrawVault}
-              >
-                Emergency Withdraw
-              </Button>
-          </Center>
-          {vaultType !== VaultType.LP && (
-            <Center mb={4}>
+          <Center mb={4}>
             <Stack direction={{base: 'column', sm: 'row'}} mt={4}>
               <Button onClick={() => onEditVault('amount')}>
                 + Add {vaultType === VaultType.LP ? 'LP' : 'FRTN'}
               </Button>
-            </Stack>
               {canIncreaseDuration && (
                 <Button onClick={() => onEditVault('duration')}>
                   + Increase Duration
@@ -375,9 +371,18 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
                   Tokenize Vault
                 </Button>
               )}
-            </Center>
-            
-          )}
+            </Stack>
+          </Center>
+          <Center>
+            <Button
+                variant='unstyled'
+                size='sm'
+                fontWeight='normal'
+                onClick={onWithdrawVault}
+              >
+                Emergency Withdraw
+            </Button>
+          </Center>
         </>
       ) : (
         <VStack mb={2} mt={4}>

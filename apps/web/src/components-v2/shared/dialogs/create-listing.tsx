@@ -227,10 +227,9 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
         setFloorPrice(floor ? round(floor) : 0);
       }
 
-      const royalties = await collectionRoyaltyPercent(nftAddress, nftId);
+      const royalties = await collectionRoyaltyPercent(nftAddress, nftId, nft.chain);
       setRoyalty(royalties);
 
-      console.log('CHECK1', nft, wagConfig);
       // const transferEnabled = await readContract(wagConfig as any, {
       //   abi: erc721Abi,
       //   address: nft.nftAddress,
@@ -241,7 +240,6 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       // const contract = new Contract(nftAddress, ERC721, user.provider.getSigner());
       const transferEnabled = await nftContract?.read.isApprovedForAll([user.address! as Address, marketContractAddress]);
 
-      console.log('CHECK2', transferEnabled);
       if (transferEnabled) {
         setIsTransferApproved(true);
       } else {

@@ -32,6 +32,7 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import Link from "next/link";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import { ChainId } from "@pancakeswap/chains";
+import { useHarvestAll } from "../hooks/farm-actions";
 
 enum ViewType {
   GRID,
@@ -57,6 +58,7 @@ export default function FarmsPage() {
   const [viewType, setViewType] = useState<ViewType>(ViewType.TABLE);
   const { data: farms, status: farmsStatus, error: farmsError } = getFarmsUsingMapi(queryParams);
   const userFarms = useUserFarms();
+  const [harvestAll, isHarvestingAll] = useHarvestAll();
 
   const [localQueryParams, setLocalQueryParams] = useState<LocalQuery>({});
 
@@ -151,6 +153,10 @@ export default function FarmsPage() {
     )
   }, [filteredData, farmsStatus, userFarms, viewType, localQueryParams, chainId]);
 
+  const handleHarvestAll = async () => {
+    console.log('not implemented')
+  }
+  
   useEffect(() => {
     setQueryParams({...queryParams, chain: chainId});
   }, [chainId]);
@@ -202,9 +208,9 @@ export default function FarmsPage() {
             <Stack pb={2} direction={{base: 'column-reverse', sm: 'row'}}>
               <Switch isChecked={stakedOnly} onChange={() => setStakedOnly(!stakedOnly)}/>
               <Box fontSize={{base: 'sm', sm: 'md'}} fontWeight={{base: 'bold', sm: 'normal'}}>Staked only</Box>
-            </Stack>
+            </Stack>        
           </Stack>
-          <Stack direction='row' align='center' mt={2}>
+          <Stack direction='row' align='end' mt={2}>
             <Box>
               <Box fontWeight='bold' fontSize='sm'>Sort By</Box>
               <Select onChange={handleSort}>
@@ -223,6 +229,7 @@ export default function FarmsPage() {
                 onChange={handleSearch}
               />
             </Box>
+            {/* <PrimaryButton aria-label='Harvest All' onClick={handleHarvestAll}>Harvest All</PrimaryButton> */}
           </Stack>
         </Flex>
         {status === FarmState.ACTIVE && [ChainId.CRONOS, ChainId.CRONOS_TESTNET].includes(chainId) && (
