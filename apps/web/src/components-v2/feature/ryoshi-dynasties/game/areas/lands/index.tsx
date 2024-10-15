@@ -50,7 +50,7 @@ const DynastiesLands = ({onBack, showBackButton}: BattleMapProps) => {
   const [traitTypes, setTraitTypes] = useState<string[]>([]);
   const [resetMap, setResetMap] = useState(false);
   const [plots, setPlots] = useState<MapPlot[]>([]);
-  const collectionAddress = config.collections.find((c: any) => c.slug === 'izanamis-cradle-land-deeds')!.address;
+  const collectionAddress = config.legacyCollections.find((c: any) => c.slug === 'izanamis-cradle-land-deeds')!.address;
 
   const {data: listings} = useQuery({
     queryKey: ['IzanamiMapListings', collectionAddress],

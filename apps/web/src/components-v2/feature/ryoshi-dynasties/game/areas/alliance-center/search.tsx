@@ -17,11 +17,9 @@ import {
 import React, {ChangeEvent, RefObject, useCallback, useEffect, useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
-import {ciEquals} from "@market/helpers/utils";
 import {useRouter} from "next/router";
 import {ChevronDownIcon, SearchIcon} from "@chakra-ui/icons";
 import useDebounce from "@src/core/hooks/useDebounce";
-import {appConfig} from "@src/config";
 import ResultCollection from "@src/components-v2/shared/layout/navbar/search/row";
 import Scrollbars from "react-custom-scrollbars-2";
 import useSearch from "@market/hooks/use-search";
@@ -31,9 +29,6 @@ const searchRegex = /^\w+([\s-_]\w+)*$/;
   const minChars = 3;
   const defaultMaxVisible = 5;
   const maxVisible = 25;
-  
-  // @todo remove for autolistings
-  const knownContracts = appConfig('collections');
 
   interface SearchProps {
     handleSelectCollectionCallback: (address:string) => void;
@@ -67,16 +62,7 @@ const searchRegex = /^\w+([\s-_]\w+)*$/;
       queryKey: ['Search', debouncedSearch],
       queryFn: () => search(debouncedSearch),
       enabled: !!debouncedSearch && debouncedSearch.length >= minChars,
-      refetchOnWindowFocus: false,
-      select: (d) => {
-        return d.data.collections
-          .filter((collection: any) =>{
-            const knownContract = knownContracts.find((c: any) => ciEquals(c.address, collection.address));
-            if (!knownContract) return false;
-            return !knownContract.mergedWith;
-          })
-          .sort((a: any, b: any) => b.verification?.verified - a.verification?.verified)
-      }
+      refetchOnWindowFocus: false
     });
 
     const hasDisplayableContent = searchVisits.length > 0 || (data && data.length > 0);

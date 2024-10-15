@@ -15,7 +15,7 @@ import {ApiService} from "@src/core/services/api-service";
 import {useUser} from "@src/components-v2/useUser";
 import {useAppDispatch} from "@market/state/redux/store/hooks";
 
-const ryoshiCollectionAddress = appConfig('collections').find((c: any) => c.slug === 'ryoshi-tales-vip').address;
+const ryoshiCollectionAddress = appConfig('legacyCollections').find((c: any) => c.slug === 'ryoshi-tales-vip').address;
 const displayTypes = {
   staked: 'staked',
   unstaked: 'unstaked'

@@ -26,7 +26,7 @@ import Button from "@src/Components/components/Button";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 
 const config = appConfig();
-const knownContracts = config.collections;
+const knownContracts = config.legacyCollections;
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 const GreyscaleImg = styled.img`

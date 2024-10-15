@@ -263,7 +263,7 @@ const configData: AppConfigMap = {
         decimals: 18
       }
     },
-    collections: rpcConfig.known_contracts,
+    legacyCollections: rpcConfig.known_contracts,
     drops: rpcConfig.drops,
     auctions: [],
     vendors: {
@@ -683,7 +683,7 @@ const configData: AppConfigMap = {
         decimals: 18
       }
     },
-    collections: rpcConfigDev.known_contracts,
+    legacyCollections: rpcConfigDev.known_contracts,
     drops: rpcConfigDev.drops,
     auctions: [],
     vendors: {
@@ -960,7 +960,7 @@ const configData: AppConfigMap = {
         decimals: 6
       }
     },
-    collections: rpcConfigTestnet.known_contracts,
+    legacyCollections: rpcConfigTestnet.known_contracts,
     drops: rpcConfigTestnet.drops,
     auctions: [],
     vendors: {
@@ -1193,7 +1193,7 @@ export interface AppConfig {
     address: HexString,
     decimals: number
   }}
-  collections: any[],
+  legacyCollections: any[],
   drops: any[],
   auctions: any[],
   vendors: {

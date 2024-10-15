@@ -23,10 +23,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import {useQuery} from "@tanstack/react-query";
 import {search} from "@src/core/api/next/search";
-import {ciEquals} from "@market/helpers/utils";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {CloseIcon, SearchIcon} from "@chakra-ui/icons";
-import {appConfig} from "@src/config";
 import {useRouter} from "next/navigation";
 import ResultCollection from "@src/components-v2/shared/layout/navbar/search/row";
 import {useUser} from "@src/components-v2/useUser";
@@ -34,9 +32,6 @@ import useSearch from "@market/hooks/use-search";
 import {SearchHistoryItem} from "@market/state/jotai/atoms/search";
 
 const minChars = 3;
-
-// @todo remove for autolistings
-const knownContracts = appConfig('collections');
 
 const MobileSearchDrawer = () => {
   const router = useRouter();
@@ -53,18 +48,7 @@ const MobileSearchDrawer = () => {
     queryKey: ['Search', debouncedSearch],
     queryFn: () => search(debouncedSearch),
     enabled: !!debouncedSearch && debouncedSearch.length >= minChars,
-    refetchOnWindowFocus: false,
-    select: (d) => {
-      // console.log(d);
-      return d.data.collections
-        .filter((collection: any) =>{
-          let validTokenCount = true;
-          // if (collection.tokens) {
-          //   validTokenCount = collection.tokens.filter((t) => Object.keys(t).length > 1).length > 0;
-          // }
-          return knownContracts.find((c: any) => ciEquals(c.address, collection.address)) && validTokenCount;
-        })
-    }
+    refetchOnWindowFocus: false
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

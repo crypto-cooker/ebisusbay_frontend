@@ -35,8 +35,8 @@ import {useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";
 
 const config = appConfig();
-const guardsAddress = config.collections.find((c: any) => c.slug === 'fortune-guards').address;
-const heroesAddress = config.collections.find((c: any) => c.slug === 'ryoshi-heroes').address;
+const guardsAddress = config.legacyCollections.find((c: any) => c.slug === 'fortune-guards').address;
+const heroesAddress = config.legacyCollections.find((c: any) => c.slug === 'ryoshi-heroes').address;
 let abi = require(`@market/assets/abis/ryoshi-tales-heroes.json`);
 const tabs = {
   mint: 'mint',

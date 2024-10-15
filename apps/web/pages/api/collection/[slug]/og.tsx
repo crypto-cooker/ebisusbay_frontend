@@ -23,7 +23,7 @@ const boldFont = fetch(
 
 const defaultBanner = `${appConfig('urls').app}img/background/banner-default.webp`;
 
-const collections = appConfig('collections');
+const collections = appConfig('legacyCollections');
 
 const getBanner = (collection: any) => {
   let banner = defaultBanner;

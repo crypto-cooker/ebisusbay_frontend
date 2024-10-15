@@ -38,7 +38,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
 // Legacy route is /collection/[slug|address]
 // To be redirected to /collection/cronos/[slug|address] as they are all cronos
 function isLegacyCollectionRoute(chainOrCollection: string) {
-  const legacyCollections = appConfig('collections');
+  const legacyCollections = appConfig('legacyCollections');
   const legacyCollection = legacyCollections.find((collection: any) => {
     const matchesSlug = ciEquals(chainOrCollection, collection.slug);
     const matchesAddress = ciEquals(chainOrCollection, collection.address);

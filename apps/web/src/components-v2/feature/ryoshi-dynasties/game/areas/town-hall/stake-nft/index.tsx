@@ -29,7 +29,7 @@ interface StakeNftsProps {
 const StakeNfts = ({isOpen, onClose}: StakeNftsProps) => {
   const [page, setPage] = useState<string>();
   const [selectedAddress, setSelectedAddress] = useState<string>();
-  const selectedCollection = config.collections.find((collection: any) => ciEquals(collection.address, selectedAddress));
+  const selectedCollection = config.legacyCollections.find((collection: any) => ciEquals(collection.address, selectedAddress));
 
   const { data: winningFaction, status, error } = useQuery({
     queryKey: ['ryoshi-dynasties', 'winning-faction'],

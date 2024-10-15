@@ -41,7 +41,7 @@ import {useUser} from "@src/components-v2/useUser";
 import useAuthedFunction from "@market/hooks/useAuthedFunction";
 
 const config = appConfig();
-const collections = config.collections;
+const collections = config.legacyCollections;
 
 const fadeInUp = keyframes`
   0% {
