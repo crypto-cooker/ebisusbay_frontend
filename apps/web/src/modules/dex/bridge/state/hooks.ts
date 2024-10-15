@@ -8,20 +8,24 @@ import { Contract, utils } from "ethers"
 import { Field } from "./actions"
 import { toast } from "react-toastify"
 import { parseErrorMessage } from "@src/helpers/validator"
-import { Bridge } from "../constants/types"
+import { BridgeContract } from "../constants/types"
 import { useAccount } from "wagmi"
 import { useGetENSAddressByName } from "@dex/swap/imported/pancakeswap/web/hooks/useGetENSAddressByName"
 import { safeGetAddress } from "@dex/swap/imported/pancakeswap/web/utils"
 import { useCurrencyBalances, useCurrencyBalance } from "@dex/swap/imported/pancakeswap/web/state/wallet/hooks"
 import tryParseAmount from "@pancakeswap/utils/tryParseAmount"
 import { BAD_RECIPIENT_ADDRESSES } from "@dex/swap/imported/pancakeswap/web/state/swap/hooks"
-import { Currency, CurrencyAmount, Native, Token } from '@pancakeswap/sdk'
+import { Currency, CurrencyAmount, Native, Token, Trade, TradeType } from '@pancakeswap/sdk'
+import { ChainId } from '@pancakeswap/chains'
+
 
 
 export function useBridgeState() {
   return useAtomValue(bridgeReducerAtom)
 }
 export function useDerivedBridgeInfo(
+  fromChainId: ChainId,
+  toChainId: ChainId,
   typedValue: string,
   currency: Currency | undefined,
   recipient: string,
@@ -29,6 +33,7 @@ export function useDerivedBridgeInfo(
   currency: { [field in Field]?: Currency }
   currencyBalance: { [field in Field]?: CurrencyAmount<Currency> }
   parsedAmount: CurrencyAmount<Currency> | undefined
+  bridge: Trade<Currency, Currency, TradeType> | undefined
   inputError?: string
 } {
   const { address: account } = useAccount()
@@ -42,7 +47,17 @@ export function useDerivedBridgeInfo(
     useMemo(() => [currency ?? undefined], [currency]),
   )
 
-  const parsedAmount = tryParseAmount(typedValue, currency ?? undefined)
+  const parsedAmount = tryParseAmount(typedValue, currency ?? undefined);
+
+  const fee = useBridgeFee();
+
+  const bridge = {
+    fee,
+    fromChainId,
+    toChainId,
+    currency,
+    amount: parsedAmount
+  }
 
   let inputError: string | undefined
   if (!account) {
@@ -69,6 +84,7 @@ export function useDerivedBridgeInfo(
   }
 
   return {
+    bridge,
     currency,
     currencyBalance,
     parsedAmount,
@@ -76,42 +92,18 @@ export function useDerivedBridgeInfo(
   }
 }
 
-
-export function useBridge() {
-  const user = useUser();
+export async function useBridgeFee() {
+  const { currencyId } = useBridgeState();
   const { config } = useAppChainConfig();
-  const [executing, setExecuting] = useState(false);
-  const {
-    currencyId,
-    typedValue,
-    [Field.INPUT]: {
-      chainId: fromChainId
-    },
-    [Field.OUTPUT]: {
-      chainId: toChainId
-    },
-    recipient } = useBridgeState();
+  const user = useUser();
+  const fee = useMemo(async () => {
+    if (typeof currencyId == "undefined") return 0
+    const bridge: BridgeContract | undefined = config.bridges.find((bridge) => bridge.currencyId.toLocaleLowerCase().includes(currencyId.toLocaleLowerCase()));
+    if (typeof bridge?.address == "undefined") return 0
+    const contract = new Contract(bridge?.address, BridgeAbi, user.provider.signer);
+    const fee: BigInt = await contract.fee();
+    return fee;
+  }, [currencyId, user])
 
-
-  const excute = async (amount: number) => {
-    try {
-      setExecuting(true);
-      if (typeof currencyId == "undefined") return
-      const bridge: Bridge | undefined = config.bridges.find((bridge) => bridge.currencyId.includes(currencyId?.toLocaleLowerCase()));
-      if (typeof bridge?.address == "undefined") return
-      const contract = new Contract(bridge?.address, BridgeAbi, user.provider.signer);
-      const fee: BigInt = await contract.fee();
-      const tx = await contract.bridge(toChainId, user.address, amount, {
-        value: utils.parseEther(fee.toString())
-      })
-      await tx.wait();
-    } catch (e) {
-      console.log(e);
-      toast.error(parseErrorMessage(e));
-    } finally {
-      setExecuting(false);
-    }
-  }
-
-  return [excute, executing] as const;
+  return fee
 }

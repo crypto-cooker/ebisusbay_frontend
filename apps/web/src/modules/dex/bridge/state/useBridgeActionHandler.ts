@@ -3,7 +3,6 @@ import { Field, selectChain, switchChain, selectCurrency, setRecipient, typeInpu
 import { useSetAtom, WritableAtom } from 'jotai'
 import { bridgeReducerAtom, BridgeState } from './reducer'
 import { Currency } from '@pancakeswap/sdk'
-import { useBridge } from './hooks'
 type BridgeActions =
     | ReturnType<typeof selectChain>
     | ReturnType<typeof switchChain>
@@ -26,7 +25,6 @@ export function useBridgeActionHandlers(): {
     dispatch: (action: BridgeActions) => void
 } {
     const dispatch = useSetAtom(bridgeReducerAtom as BridgeReducerAtomType);
-    const [bridge, isExecuting] = useBridge();
 
     const onSelectChain = useCallback((field: Field, chainId: number) => {
         dispatch(selectChain({ field, chainId }));

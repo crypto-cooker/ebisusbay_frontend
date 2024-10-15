@@ -7,20 +7,28 @@ import { useDisclosure } from "@chakra-ui/react";
 import { useApproveCallback, ApprovalState } from "@dex/swap/imported/pancakeswap/web/hooks/useApproveCallback";
 import useAccountActiveChain from "@dex/swap/imported/pancakeswap/web/hooks/useAccountActiveChain";
 import chainConfigs, { SUPPORTED_CHAIN_CONFIGS } from "@src/config/chains";
-import { ChainSelector } from "././chainSelector"
+import { ToChainSelector } from "./toChainSelector"
+import { FromChainSelector } from "./fromChainSelector"
 import CurrencyInputPanel from "@dex/components/currency-input-panel";
 import { useBridgeActionHandlers } from "@dex/bridge/state/useBridgeActionHandler";
 import { useBridgeState } from "@dex/bridge/state/hooks";
 import { Field } from "@dex/swap/constants";
 import { useCurrency } from "@dex/swap/imported/pancakeswap/web/hooks/tokens";
 import getCurrencyId from "@dex/swap/imported/pancakeswap/web/utils/currencyId";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useCallback, useState } from "react";
 import { useAppChainConfig, useBridgeContract } from "@src/config/hooks";
 import { useDerivedBridgeInfo } from "@dex/bridge/state/hooks";
 import { CommitButton } from "@dex/swap/components/tabs/swap/commit-button";
+import ConfirmBridgeModal from "../bridge-modal/confirm-bridge-modal";
+import { typeInput } from "@dex/bridge/state/actions";
+import useWrapCallback from "@dex/swap/imported/pancakeswap/web/hooks/useWrapCallback";
+import { useIsWrapping } from "@dex/swap/imported/pancakeswap/web/hooks/useIsWrapping";
+import { WrapType } from "@dex/swap/imported/pancakeswap/web/hooks/useWrapCallback";
+import { useBridgeCallback } from "@dex/bridge/hooks/useBridgeCallback";
+import { NetworkSwitcher } from "@src/components-v2/shared/layout/navbar/network-switcher";
 
 export default function BridgeForm() {
-    const { isOpen: isOpenConfirmSwap, onOpen: onOpenConfirmSwap, onClose: onCloseConfirmSwap } = useDisclosure();
+    const { isOpen: isOpenConfirmBridge, onOpen: onOpenConfirmBridge, onClose: onCloseConfirmBridge } = useDisclosure();
     const { isOpen: isOpenSettings, onOpen: onOpenSettings, onClose: onCloseSettings } = useDisclosure();
     const { account, chainId } = useAccountActiveChain();
     const {
@@ -48,13 +56,49 @@ export default function BridgeForm() {
     const handleSelectCurrency = (currency: any) => {
         onSelectCurrency(currency)
     }
-    const bridge = useBridgeContract(currencyId);
-    console.log(bridge?.address)
-    const { inputError, ...derivedBridgeInfo } = useDerivedBridgeInfo(
+    const bridgeContract = useBridgeContract(currencyId);
+
+    const { bridge, inputError, currencyBalance, ...derivedBridgeInfo } = useDerivedBridgeInfo(
+        fromChainId,
+        toChainId,
         typedValue,
         currency,
         account ?? '',
     );
+
+    const {
+        wrapType,
+        execute: onWrap,
+        inputError: wrapInputError,
+    } = useWrapCallback(derivedBridgeInfo.currency, derivedBridgeInfo.currency, typedValue);
+
+    const isWrapping = useIsWrapping()
+    const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE;
+    const trade = showWrap ? undefined : bridge;
+
+    const [{ tradeToConfirm, bridgeErrorMessage, attemptingTxn, txHash }, setBridgeState] = useState<{
+        tradeToConfirm: Trade<Currency, Currency, TradeType> | undefined
+        attemptingTxn: boolean
+        bridgeErrorMessage: string | undefined
+        txHash: string | undefined
+    }>({
+        tradeToConfirm: undefined,
+        attemptingTxn: false,
+        bridgeErrorMessage: undefined,
+        txHash: undefined,
+    })
+
+    const handleAcceptChanges = useCallback(() => {
+        setBridgeState({ tradeToConfirm: trade ?? undefined, bridgeErrorMessage, txHash, attemptingTxn })
+    }, [attemptingTxn, bridgeErrorMessage, trade, txHash, setBridgeState])
+
+    const handleConfirmDismiss = useCallback(() => {
+        setBridgeState({ tradeToConfirm, attemptingTxn, bridgeErrorMessage, txHash })
+        // if there was a tx hash, we want to clear the input
+        if (txHash) {
+            dispatch(typeInput({ typedValue: '' }))
+        }
+    }, [tradeToConfirm, attemptingTxn, bridgeErrorMessage, txHash, dispatch])
 
     const parsedCurrency = useMemo(() => derivedBridgeInfo.parsedAmount, [derivedBridgeInfo.parsedAmount])
 
@@ -65,7 +109,7 @@ export default function BridgeForm() {
         currentAllowance: currentAllowanceA,
     } = useApproveCallback(
         parsedCurrency,
-        currencyId ? bridge?.address : undefined,
+        currencyId ? bridgeContract?.address : undefined,
         { enablePaymaster: true }
     )
 
@@ -77,6 +121,30 @@ export default function BridgeForm() {
     // never show if price impact is above threshold in non expert mode
     const showApproveFlow = (approval === ApprovalState.NOT_APPROVED || approval === ApprovalState.PENDING);
     const isValid = !inputError && approval === ApprovalState.APPROVED;
+    const { callback: bridgeCallback, executing: executingBridge } = useBridgeCallback();
+
+
+    const handleBridge = useCallback(() => {
+        // if (priceImpactWithoutFee && !confirmPriceImpactWithoutFee(priceImpactWithoutFee)) {
+        //   return;
+        // }
+        if (!bridgeCallback) {
+            return;
+        }
+        setBridgeState({ attemptingTxn: true, tradeToConfirm, bridgeErrorMessage: undefined, txHash: undefined });
+        bridgeCallback()
+            .then((hash: any) => {
+                setBridgeState({ attemptingTxn: false, tradeToConfirm, bridgeErrorMessage: undefined, txHash: hash });
+            })
+            .catch((error: any) => {
+                setBridgeState({
+                    attemptingTxn: false,
+                    tradeToConfirm,
+                    bridgeErrorMessage: error.message,
+                    txHash: undefined,
+                });
+            });
+    }, [bridgeCallback, tradeToConfirm]);
 
     return (
         <>
@@ -97,13 +165,15 @@ export default function BridgeForm() {
                         <HStack w='full' align="end" justify="space-between">
                             <VStack flexGrow={2}>
                                 <label>From</label>
-                                <ChainSelector onSelectChain={onSelectChain} onSwitchChain={onSwitchChain} chainId={fromChainId} field={Field.INPUT} />
+                                <FromChainSelector onSelectChain={onSelectChain} onSwitchChain={onSwitchChain} chainId={fromChainId} field={Field.INPUT} />
                             </VStack>
                             <HStack align="end" pb={3}><ArrowRightIcon /></HStack>
                             <VStack flexGrow={2}>
                                 <label>To</label>
-                                <ChainSelector onSelectChain={onSelectChain} onSwitchChain={onSwitchChain} chainId={toChainId} field={Field.OUTPUT} />
+                                {/* <NetworkSwitcher/> */}
+                                <ToChainSelector onSelectChain={onSelectChain} onSwitchChain={onSwitchChain} chainId={toChainId} field={Field.OUTPUT} />
                             </VStack>
+                            <NetworkSwitcher/>
                         </HStack>
                     </Card>
                     <CurrencyInputPanel
@@ -128,7 +198,7 @@ export default function BridgeForm() {
                                     </PrimaryButton>
                                 ) : (
                                     <VStack align='stretch'>
-                                        {showApproveFlow && (
+                                        {showApproveFlow ? (
                                             <PrimaryButton
                                                 onClick={approveACallback}
                                                 isDisabled={approval === ApprovalState.PENDING}
@@ -138,16 +208,16 @@ export default function BridgeForm() {
                                             >
                                                 Approve {currency?.symbol}
                                             </PrimaryButton>
-                                        )}
-                                        <CommitButton
-                                            width="100%"
-                                            colorScheme={!inputError ? 'red' : undefined}
-                                            variant={!inputError ? 'solid' : 'primary'}
-                                            isDisabled={!isValid}
-                                            onClick={() => { onOpenConfirmSwap() }}
-                                        >
-                                            Bridge
-                                        </CommitButton>
+                                        ) : (
+                                            <CommitButton
+                                                width="100%"
+                                                colorScheme={!inputError ? 'red' : undefined}
+                                                variant={!inputError ? 'primary' : 'solid'}
+                                                isDisabled={!isValid}
+                                                onClick={handleBridge}
+                                            >
+                                                Bridge
+                                            </CommitButton>)}
                                     </VStack>
                                 )
                                 }
@@ -156,6 +226,18 @@ export default function BridgeForm() {
                     </AuthenticationGuard>
                 </Card>
             </Container>
+            {/* <ConfirmBridgeModal
+                isOpen={isOpenConfirmBridge}
+                onClose={onCloseConfirmBridge}
+                currencyBalance={currencyBalance}
+                onAcceptChanges={handleAcceptChanges}
+                attemptingTxn={attemptingTxn}
+                txHash={txHash}
+                recipient={recipient}
+                onConfirm={handleBridge}
+                bridgeErrorMessage={bridgeErrorMessage}
+                customOnDismiss={handleConfirmDismiss}
+            /> */}
         </>
     )
 }

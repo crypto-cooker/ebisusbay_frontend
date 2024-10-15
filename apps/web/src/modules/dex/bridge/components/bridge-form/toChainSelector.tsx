@@ -5,7 +5,7 @@ import { ChainLogo } from "@dex/components/logo";
 import { chains } from "@src/wagmi";
 
 
-export const ChainSelector = (props: any) => {
+export const ToChainSelector = (props: any) => {
     const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
     const { onSelectChain, chainId, field } = props;
     const chain = chains.filter((chain) => chain.id == chainId)[0];

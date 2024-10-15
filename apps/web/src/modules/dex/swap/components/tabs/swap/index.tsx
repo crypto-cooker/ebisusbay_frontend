@@ -2,7 +2,7 @@ import {Box, Button, Container, Flex, IconButton, Skeleton, Text, useDisclosure,
 import {Card} from "@src/components-v2/foundation/card";
 import {ArrowDownIcon, SettingsIcon} from "@chakra-ui/icons";
 import {Field, INITIAL_ALLOWED_SLIPPAGE} from "src/modules/dex/swap/constants";
-import React, {useCallback, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import CurrencyInputPanel from "@dex/components/currency-input-panel";
 import {Currency, Percent, Trade, TradeType} from "@pancakeswap/sdk";
 import {useCurrency} from "@eb-pancakeswap-web/hooks/tokens";
@@ -79,6 +79,8 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
     outputCurrency!,
     account ?? ''
   );
+
+  useEffect(() => {console.log(v2Trade)},[v2Trade])
   const {
     wrapType,
     execute: onWrap,
