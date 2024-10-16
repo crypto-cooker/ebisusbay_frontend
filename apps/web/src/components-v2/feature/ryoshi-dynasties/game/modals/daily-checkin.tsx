@@ -157,7 +157,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
               ) : (
                 <Box as='span'>
                   You must be at least level 1 to perform this action. Levels can be unlocked earning XP by using Ebisu's Bay. Details can be found {''}
-                  <Link href='https://ebisusbay.notion.site/Levels-and-Experience-Points-91658dcfd1b64fcf93b7f5b3af8c069c?pvs=4' color='#FDAB1A' fontWeight='bold' target='_blank'>
+                  <Link href='https://docs.ebisusbay.com/Levels-and-Experience-Points-91658dcfd1b64fcf93b7f5b3af8c069c?pvs=4' color='#FDAB1A' fontWeight='bold' target='_blank'>
                     here
                   </Link>
                 </Box>
