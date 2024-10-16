@@ -1,7 +1,7 @@
 import {
   ciEquals,
   convertIpfsResource,
-  findCollectionByAddress,
+  findCollectionByAddress as findLegacyCollectionByAddress,
   isAntMintPassCollection,
   isBundle, isCroSwapQuartermastersCollection,
   isNftBlacklisted,
@@ -18,6 +18,7 @@ import WalletNft from "@src/core/models/wallet-nft";
 import axios from "axios";
 import {Listing, OwnerListing} from "@src/core/models/listing";
 import {InvalidState} from "@src/core/services/api-service/types";
+import { MapiCollectionBlacklist } from "./types";
 
 export async function enrichWalletNft(nft: WalletNft): Promise<WalletNft> {
   if(isBundle(nft.nftAddress)) {
@@ -35,8 +36,6 @@ export async function enrichWalletNft(nft: WalletNft): Promise<WalletNft> {
       listable: true,
     }
   } else {
-    const knownContract = findCollectionByAddress(nft.nftAddress, nft.nftId);
-
     const listing = nft.market;
     const listingId = listing.id;
     const listed = !!listingId;
@@ -97,9 +96,12 @@ export async function enrichWalletNft(nft: WalletNft): Promise<WalletNft> {
       canSell = false;
     }
 
+    // "pending" state is for degen mode
+    const listableStates = [MapiCollectionBlacklist.LISTABLE, MapiCollectionBlacklist.PENDING];
+
     return {
       ...nft,
-      listable: knownContract?.listable ?? false,
+      listable: listableStates.includes(nft.collection.blacklist),
       listed,
       listingId,
       isStaked: isStaked,

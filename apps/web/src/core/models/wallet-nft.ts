@@ -1,3 +1,5 @@
+import { MapiWalletCollection } from "../services/api-service/mapi/types";
+
 class WalletNft {
   attributes: any[];
   collectionName: string;
@@ -35,6 +37,8 @@ class WalletNft {
   chain: number;
   hidden?: boolean = false;
 
+  collection: MapiWalletCollection;
+
   constructor(props: WalletNft) {
     this.attributes = props.attributes;
     this.collectionName = props.collectionName;
@@ -55,9 +59,13 @@ class WalletNft {
     this.rank = props.rank;
     this.tokenUri = props.tokenUri;
     this.chain = props.chain;
+    this.collection = props.collection;
   }
 
   static fromMapi(props: any) {
+    // type castings
+    props.collection = {...props.collection, blacklist: +props.collection.blacklist};
+
     const nft = new WalletNft({
       attributes: props.attributes,
       collectionName: props.collectionName,
@@ -77,7 +85,8 @@ class WalletNft {
       owner: props.owner,
       rank: props.rank,
       tokenUri: props.token_uri,
-      chain: props.chain
+      chain: props.chain,
+      collection: props.collection
     });
 
     if (!!props.nfts) nft.nfts = props.nfts;
@@ -88,5 +97,6 @@ class WalletNft {
     return nft;
   }
 }
+
 
 export default WalletNft;

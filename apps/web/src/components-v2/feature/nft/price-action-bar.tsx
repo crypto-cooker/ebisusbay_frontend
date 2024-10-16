@@ -39,6 +39,8 @@ import {faBagShopping, faHand} from "@fortawesome/free-solid-svg-icons";
 import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
 import {CurrencyLogoByAddress} from "@dex/components/logo";
 import {isOffersEnabledForChain} from "@src/global/utils/app";
+import PurchaseUnverifiedConfirmationDialog from '@src/components-v2/shared/dialogs/purchase-unverified-confirmation';
+import { MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/types';
 
 interface PriceActionBarProps {
   offerType: string;
@@ -53,10 +55,11 @@ interface PriceActionBarProps {
 const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isVerified, isOwner, collectionStats }: PriceActionBarProps) => {
    const cart = useCart();
 
-  const { currentListing: listing, nft } = useAppSelector((state) => state.nft);
+  const { currentListing: listing, nft, blacklisted, collection } = useAppSelector((state) => state.nft);
   const [canBuy, setCanBuy] = useState(false);
   const [isSellDialogOpen, setIsSellDialogOpen] = useState(false);
   const [isPurchaseDialogOpen, setIsPurchaseDialogOpen] = useState(false);
+  const [isPurchaseUnverifiedDialogOpen, setIsPurchaseUnverifiedDialogOpen] = useState(false);
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
   const { tokenToUsdValue, tokenToCroValue } = useTokenExchangeRate(listing?.currency, listing?.chain);
   const showSmallOfferButton = useBreakpointValue(
@@ -64,10 +67,20 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
     {fallback: 'sm'},
   );
   const [runAuthedFunction] = useAuthedFunctionWithChainID(nft.chain);
+  const requiresUnverifiedConfirmation = blacklisted === MapiCollectionBlacklist.PENDING;
 
   const handlePurchaseSelected = async () => {
+    if (requiresUnverifiedConfirmation) {
+      setIsPurchaseUnverifiedDialogOpen(true);
+      return;
+    }
     await runAuthedFunction(() => setIsPurchaseDialogOpen(true), nft.chain);
   };
+
+  const handleAcknowledgedUnverifiedCollection = async () => {
+    setIsPurchaseUnverifiedDialogOpen(false);
+    await runAuthedFunction(() => setIsPurchaseDialogOpen(true), nft.chain);
+  }
 
   const handleSellSelected = () => {
     setIsSellDialogOpen(true);
@@ -280,9 +293,12 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
           onClose={() => setIsCancelDialogOpen(false)}
         />
       )}
-      {/*<div className='nftSaleForm'>*/}
-      {/*  <Modal isCentered title={'This is an unverified collection'} body={ModalBody()} dialogActions={ModalFooter()} isOpen={isOpen} onClose={onClose} />*/}
-      {/*</div>*/}
+      <PurchaseUnverifiedConfirmationDialog
+        isOpen={isPurchaseUnverifiedDialogOpen}
+        onClose={() => setIsPurchaseUnverifiedDialogOpen(false)}
+        collections={[collection]}
+        onConfirm={handleAcknowledgedUnverifiedCollection}
+      />
     </Box>
   );
 };

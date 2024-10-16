@@ -97,6 +97,7 @@ import {ChainLogo} from "@dex/components/logo";
 import {getChainByIdOrSlug} from "@src/helpers";
 import chainConfigs from "@src/config/chains";
 import {ChainId} from "@pancakeswap/chains";
+import { MapiCollection, MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/types';
 
 const config = appConfig();
 const tabs = {
@@ -140,7 +141,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
     queryFn: () => getCollections({address})
   });
 
-  const [collection, setCollection] = useState<any>(null);
+  const [collection, setCollection] = useState<MapiCollection>();
   const izanamiImageSize = useBreakpointValue(
     {base: 250, sm: 368, lg: 500},
     {fallback: 'md'}
@@ -167,7 +168,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
 
   useEffect(() => {
     if (!isLoadingCollection && data) {
-      setCollection(data.data.collections[0])
+      setCollection(data.data.collections[0] as MapiCollection)
     }
   }, [isLoadingCollection, data])
 
@@ -878,7 +879,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                     </div>
                   )}
                   
-                  {collection.listable && !nft.burnt && (
+                  {collectionName && [MapiCollectionBlacklist.LISTABLE, MapiCollectionBlacklist.PENDING].includes(collection.blacklisted) && !nft.burnt && (
                     <PriceActionBar
                       offerType={offerType}
                       collectionName={collectionName}
