@@ -9,7 +9,7 @@ import {useAccount} from "wagmi";
 // helper that can take a ethers library transaction response and add it to the list of transactions
 export function useTransactionAdder(): (
   response: any,
-  customData?: { summary?: string; approval?: { tokenAddress: string; spender: string }; claim?: { recipient: string } }
+  customData?: { summary?: string; approval?: { tokenAddress: string; spender: string, amount:string }; claim?: { recipient: string } }
 ) => void {
   const { chainId, address: account} = useAccount();
 

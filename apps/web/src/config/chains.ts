@@ -1,4 +1,4 @@
-import {ChainId, chainNames, isTestnetChainId} from '@pancakeswap/chains'
+import { ChainId, chainNames, isTestnetChainId } from '@pancakeswap/chains'
 import memoize from 'lodash/memoize'
 import {
   Chain,
@@ -147,6 +147,7 @@ export type AppChainConfig = {
     frtnRewarder: HexString;
   };
   lpVaults: Array<{name: string, pair: Address, address1: Address, address2: Address}>
+  bridges: Array<{currencyId: string, address: Address}>
 }
 
 const cronosConfig: AppChainConfig = {
@@ -205,6 +206,12 @@ const cronosConfig: AppChainConfig = {
       address1: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       address2: '0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
     }
+  ],
+  bridges: [
+    {
+      currencyId: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
+      address: '0x632FdbC1Fd2e81b44CF00da182984d9F6c2bB2B3'
+    }
   ]
 }
 
@@ -257,6 +264,12 @@ const cronosTestnetConfig: AppChainConfig = {
       pair: '0x7c80f7062F8Caaf3DC6Baf3CE4e6e2162cB99503',
       address1: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
       address2: '0x467604E174c87042fcc4412c5BC70AaBc8733016'
+    }
+  ],
+  bridges: [
+    {
+      currencyId: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
+      address: '0x4B09F5d044e5Cf23DEF1c20cF668a0bAD9837faC'
     }
   ]
 }
@@ -311,6 +324,12 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
       address1: '0x6f3ff3c76b6dd1d2b4cfc3846f6f1bcba757bf24',
       address2: '0xf9Bb37013de8Cd3f89b3623Af9EE1b1B32D872C9'
     }
+  ],
+  bridges: [
+    {
+      currencyId: '0x6f3ff3c76b6dd1d2b4cfc3846f6f1bcba757bf24',
+      address: '0x5BFa2B69D5EF18CefBF5CD471126DE5efc1460Fa'
+    }
   ]
 }
 
@@ -364,6 +383,12 @@ const cronosZkEVMConfig: AppChainConfig = {
       address1: '0x96e03FA6c5aB3a7F2e7098Dd07c8935493294E26',
       address2: '0xC1bF55EE54E16229d9b369a5502Bfe5fC9F20b6d'
     }
+  ],
+  bridges: [
+    {
+      currencyId: '0x96e03fa6c5ab3a7f2e7098dd07c8935493294e26',
+      address: '0x7C306fc3B6Cd7A5A9A798695abe8690D29495065'
+    }
   ]
 }
 
@@ -391,7 +416,7 @@ const chainConfigs: Record<SupportedChainId, AppChainConfig> = {
 }
 
 export const SUPPORTED_CHAIN_CONFIGS = Object.values(chainConfigs)
-  .filter(({chain}) => {
+  .filter(({ chain }) => {
     return (process.env.NEXT_PUBLIC_ENV === 'testnet' && isTestnetChainId(chain.id)) ||
       (process.env.NEXT_PUBLIC_ENV !== 'testnet' && !isTestnetChainId(chain.id))
   })
@@ -405,7 +430,7 @@ export const SUPPORTED_CHAIN_CONFIGS = Object.values(chainConfigs)
   });
 
 export const SUPPORTED_RD_CHAIN_CONFIGS = SUPPORTED_CHAIN_CONFIGS
-  .filter(({chain}) => {
+  .filter(({ chain }) => {
     return SUPPORTED_RD_CHAIN_IDS.includes(chain.id)
   });
 

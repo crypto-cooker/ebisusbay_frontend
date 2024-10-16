@@ -53,6 +53,7 @@ import {VillageMerchant} from "@src/components-v2/feature/ryoshi-dynasties/game/
 import {ShakeTreeDialog} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/christmas";
 import {ValentinesDayDialog} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/valentines";
 
+
 const config = appConfig();
 const xmasCutoffDate = new Date(Date.UTC(2024, 0, 8, 0, 0, 0));
 const currentDate = new Date();
@@ -384,6 +385,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         id='moongate'
                         position={{x: buildings.moongate.left, y: buildings.moongate.top}}
                         image={ImageService.translate(`/img/battle-bay/mapImages/moongate${xmasTheme}.apng`).convert()}
+                        onClick={handleEnterScene}
                       />
                       <Sprite
                         id='torii'
