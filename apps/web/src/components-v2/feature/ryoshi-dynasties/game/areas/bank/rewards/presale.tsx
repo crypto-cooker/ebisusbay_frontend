@@ -127,7 +127,7 @@ const PresaleVaultTab = () => {
         }
       }
 
-      const fortuneTellerCollection = config.collections.find((collection: any) => collection.slug === 'fortuneteller');
+      const fortuneTellerCollection = config.legacyCollections.find((collection: any) => collection.slug === 'fortuneteller');
       const fortuneTellers = await ApiService.withoutKey().getCollectionItems({
         address: fortuneTellerCollection.address,
         sortBy: 'id',
@@ -145,7 +145,7 @@ const PresaleVaultTab = () => {
   });
 
   const setApprovalForAll = async () => {
-    const fortuneTellerCollection = config.collections.find((collection: any) => collection.slug === 'fortuneteller');
+    const fortuneTellerCollection = config.legacyCollections.find((collection: any) => collection.slug === 'fortuneteller');
 
     const fortuneTellerContract = new Contract(fortuneTellerCollection.address, ERC1155, user.provider.getSigner());
 

@@ -31,9 +31,6 @@ const minChars = 3;
 const defaultMaxVisible = 5;
 const maxVisible = 25;
 
-// @todo remove for autolistings
-const knownContracts = appConfig('collections');
-
 const Search = () => {
   const router = useRouter();
   const searchHistory = useSearch();
@@ -62,16 +59,7 @@ const Search = () => {
     queryKey: ['Search', debouncedSearch],
     queryFn: () => search(debouncedSearch),
     enabled: !!debouncedSearch && debouncedSearch.length >= minChars,
-    refetchOnWindowFocus: false,
-    select: (d) => {
-      return d.data.collections
-        .filter((collection: any) =>{
-          const knownContract = knownContracts.find((c: any) => ciEquals(c.address, collection.address));
-          if (!knownContract) return false;
-          return !knownContract.mergedWith;
-        })
-        .sort((a: any, b: any) => b.verification?.verified - a.verification?.verified)
-    }
+    refetchOnWindowFocus: false
   });
 
   const hasDisplayableContent = searchVisits.length > 0 || (data && data.length > 0);

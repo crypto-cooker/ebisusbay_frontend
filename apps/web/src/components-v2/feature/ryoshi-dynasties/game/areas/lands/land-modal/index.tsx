@@ -80,7 +80,7 @@ const LandModal = ({ isOpen, onClose, plot}: LandModalFormProps) => {
   };
   
   const GetNftImages = async () => {
-    const izCollection = config.collections.find((collection: any) => collection.slug === 'izanamis-cradle-land-deeds');
+    const izCollection = config.legacyCollections.find((collection: any) => collection.slug === 'izanamis-cradle-land-deeds');
     setNftImage(izCollection.metadata.avatar)
   }
   const GoToNFTPage = () => {

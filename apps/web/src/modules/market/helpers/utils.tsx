@@ -15,7 +15,7 @@ import { ChainId } from '@pancakeswap/chains';
 
 const config = appConfig();
 const drops = config.drops;
-const collections = config.collections;
+const legacyCollections = config.legacyCollections;
 
 const gateway = config.urls.cdn.ipfs;
 
@@ -409,14 +409,14 @@ export const isArgonautsBrandCollection = (address: string) => {
 };
 
 export const isEbVipCollection = (address: string, id?: string | number) => {
-  const collection = collections.find((c) => c.slug === 'founding-member');
+  const collection = legacyCollections.find((c) => c.slug === 'founding-member');
   return collection &&
     ciEquals(collection.address, address) &&
     id?.toString() === '2';
 };
 
 export const isFoundingMemberCollection = (address: string) => {
-  const collection = collections.find((c) => c.slug === 'founding-member');
+  const collection = legacyCollections.find((c) => c.slug === 'founding-member');
   return collection &&
     ciEquals(collection.address, address);
 };
@@ -500,7 +500,7 @@ export const relativePrecision = (num: number, minDecimals = 1) => {
  * @returns {*}
  */
 export const findCollectionByAddress = (address: string, tokenId?: string) => {
-  return collections.find((c) => {
+  return legacyCollections.find((c) => {
     // const matchesAddress = ciEquals(c.address, address);
     // if (!tokenId) return matchesAddress;
     //

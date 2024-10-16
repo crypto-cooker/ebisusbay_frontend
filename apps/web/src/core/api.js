@@ -20,7 +20,7 @@ const config = appConfig();
 let gatewayTools = new IPFSGatewayTools();
 const gateway = config.urls.cdn.ipfs;
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
-const knownContracts = config.collections;
+const knownContracts = config.legacyCollections;
 
 const api = {
   baseUrl: config.urls.api,

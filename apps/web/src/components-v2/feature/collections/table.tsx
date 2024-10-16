@@ -24,8 +24,8 @@ const Table = ({ timeFrame, searchTerms, onlyVerified, showMobileSort }: TablePr
 
   const fetcher = async ({ pageParam = 1 }) => {
     const result = await getCollections(pageParam);
-    const knownContracts = config.collections.map((c: any) => c.address.toLowerCase());
-    return result.filter((collection: any) => knownContracts.includes(collection.collection.toLowerCase()));
+    // const knownContracts = config.legacyCollections.map((c: any) => c.address.toLowerCase());
+    return result;//.filter((collection: any) => knownContracts.includes(collection.collection.toLowerCase()));
   };
 
   const {data, error, fetchNextPage, hasNextPage, status} = useInfiniteQuery({

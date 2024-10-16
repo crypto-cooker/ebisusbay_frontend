@@ -40,7 +40,7 @@ const Nft = ({ initialSlug, initialId, initialNftData, initialCollection, initia
 
   const chainMatchCondition = (_chainId: number) => !_chainId || _chainId === chainConfig?.chain.id;
 
-  let collection = initialCollection ?? config.collections.find((c: any) => {
+  let collection = initialCollection ?? config.legacyCollections.find((c: any) => {
     return (isAddress(slug) && ciEquals(c.address, slug)) || ciEquals(c.slug, slug) && chainMatchCondition(c.chainId)
   });
 
@@ -152,7 +152,8 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
   const queryClient = new QueryClient();
 
   let isDegen = false;
-  let collection = appConfig('collections').find((c: any) => {
+  const legacyConfig = appConfig();
+  let collection = legacyConfig.legacyCollections.find((c: any) => {
     return (isAddress(collectionSlug) && ciEquals(c.address, collectionSlug)) || ciEquals(c.slug, collectionSlug) && chainMatchCondition(c.chainId)
   });
 

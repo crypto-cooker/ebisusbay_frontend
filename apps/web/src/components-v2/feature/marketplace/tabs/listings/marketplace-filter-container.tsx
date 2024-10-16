@@ -17,7 +17,7 @@ import {ChainLogo} from "@dex/components/logo";
 
 const config = appConfig();
 
-const collections = config.collections
+const collections = config.legacyCollections
   .filter((c: any) => c.listable)
   .sort((a: any, b: any) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
   .map((x: any) => ({avatar: x.metadata.avatar, name: x.name, address: x.address}));
@@ -141,7 +141,7 @@ const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, on
     if (queryParams.collection) {
       const collections = Array.isArray(queryParams.collection) ? queryParams.collection : [queryParams.collection];
       for (const collectionAddress of collections) {
-        const collection = config.collections.find((c: any) => ciEquals(c.address, collectionAddress));
+        const collection = config.legacyCollections.find((c: any) => ciEquals(c.address, collectionAddress));
         if (collection) ret.push({key: `collection-${collection.address}`, label: collection.name});
       }
     }

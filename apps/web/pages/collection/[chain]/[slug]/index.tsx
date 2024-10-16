@@ -127,7 +127,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
   }
 
   let isDegen = false;
-  let collection = appConfig('collections')
+  let collection = appConfig('legacyCollections')
     .find((c: any) => ciEquals(c.slug, collectionSlug) || ciEquals(c.address, collectionSlug));
 
   if (!collection) {
@@ -195,7 +195,7 @@ const fetchCollection = async (address: string, chainId: number) => {
 // To be redirected to /collection/cronos/[slug|address]/[id] as they are all cronos
 // Don't need to check nft id as it can still be detected by chain/collection mismatch
 function isLegacyNftRoute(chainOrCollection: string) {
-  const legacyCollections = appConfig('collections');
+  const legacyCollections = appConfig('legacyCollections');
   const legacyCollection = legacyCollections.find((collection: any) => {
     const matchesSlug = ciEquals(chainOrCollection, collection.slug);
     const matchesAddress = ciEquals(chainOrCollection, collection.address);

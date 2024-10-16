@@ -6,7 +6,7 @@ export const limitSizeOptions = {
   lg: 50
 }
 
-export const marketPlaceCollectionFilterOptions = appConfig('collections')
+export const marketPlaceCollectionFilterOptions = appConfig('legacyCollections')
   .filter((c) => c.listable)
   .sort((a, b) => (a.name > b.name ? 1 : -1))
   .map((x) => new MarketFilterCollection(x.name, x.is1155 && x.split ? `${x.address}-${x.id}` : x.address));

@@ -6,7 +6,8 @@ const api = axios.create({
 
 export const search = async (query) => {
   try{
-    return await api.get(`search`, {params: {query}});
+    const response = await api.get(`search`, {params: {query}});
+    return response.data.collections.sort((a, b) => b.verification?.verified - a.verification?.verified);
   }
   catch(error){
     throw error;
