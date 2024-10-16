@@ -160,7 +160,7 @@ const MainPageOld = ({handleShowLeaderboard, onOpenDailyCheckin}: Props) => {
               _hover={{ bg: "yellow.900" }}
               _focus={{ boxShadow: "outline" }}
               onClick={() => {
-                window.open('https://ebisusbay.notion.site/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6','_blank');
+                window.open('https://docs.ebisusbay.com/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6','_blank');
               }}
             >
               Whitepaper

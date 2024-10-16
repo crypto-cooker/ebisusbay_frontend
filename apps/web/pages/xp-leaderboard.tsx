@@ -185,7 +185,7 @@ const XPLeaderboard = () => {
             <Text fontSize='26px' fontWeight='bold'>Leading Players</Text>
             <Box fontSize='sm'>
               <Text as='span'>Users with the highest amount of Experience.{' '}</Text>
-              <Text as='span' fontWeight='bold' className='color'><Link href='https://ebisusbay.notion.site/Levels-and-Experience-Points-91658dcfd1b64fcf93b7f5b3af8c069c' isExternal>Learn more</Link></Text>
+              <Text as='span' fontWeight='bold' className='color'><Link href='https://docs.ebisusbay.com/Levels-and-Experience-Points-91658dcfd1b64fcf93b7f5b3af8c069c' isExternal>Learn more</Link></Text>
             </Box>
           </Flex>
         </Box>

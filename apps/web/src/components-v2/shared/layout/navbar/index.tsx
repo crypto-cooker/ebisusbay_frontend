@@ -194,6 +194,7 @@ const Header = function () {
                     <MenuItem as={Link} href='/collection/ryoshi-playing-cards?tab=pokerRanks' _hover={{color: 'inherit'}} justifyContent='end'>Ryoshi Playing Cards</MenuItem>
                     <MenuItem as={Link} href='/xp-leaderboard' _hover={{color: 'inherit'}} justifyContent='end'>XP Leaderboard</MenuItem>
                     <MenuItem as={Link} href='/rewards' _hover={{color: 'inherit'}} justifyContent='end'>Rewards</MenuItem>
+                    <MenuItem as={Link} href='https://www.ebisusbay.com' _hover={{color: 'inherit'}} justifyContent='end'>Docs</MenuItem>
                   </MenuList>
                 </Menu>
               </HStack>
@@ -246,6 +247,7 @@ const Header = function () {
                     <NavLink name='Ryoshi Playing Cards' to='/collection/ryoshi-playing-cards?tab=pokerRanks' onClick={onClose} />
                     <NavLink name='XP Leaderboard' to='/xp-leaderboard' onClick={onClose} />
                     <NavLink name='Rewards' to='/rewards' onClick={onClose} />
+                    <NavLink name='Docs' to='https://www.ebisusbay.com' onClick={onClose} />
                   </VStack>
                 </Box>
               </SimpleGrid>

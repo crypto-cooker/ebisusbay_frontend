@@ -674,7 +674,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       <>
                         {isRyoshiToken && (
                           <div className="alert alert-warning my-auto mb-2 fw-bold text-center">
-                            Note that listing validity is subject to your Ryoshi's current upkeep status. <Link href='https://www.notion.so/ebisusbay/Ryoshi-9284eb03b01e4162bcd3169d9baf4b41?pvs=4#5579dceb311a4806ba59e8481eddf920' target='_blank' color='#0078CB'>Learn More</Link>
+                            Note that listing validity is subject to your Ryoshi's current upkeep status. <Link href='https://docs.ebisusbay.com/ebisusbay/Ryoshi-9284eb03b01e4162bcd3169d9baf4b41?pvs=4#5579dceb311a4806ba59e8481eddf920' target='_blank' color='#0078CB'>Learn More</Link>
                           </div>
                         )}
                         {showConfirmButton ? (
