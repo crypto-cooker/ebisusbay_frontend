@@ -12,7 +12,7 @@ import {CurrencySearchModal} from "@dex/components/search-modal";
 import {CurrencyLogo} from "@dex/components/logo";
 
 interface CurrencyInputPanelProps {
-  value: string;
+  value: string | undefined;
   onUserInput: (value: string) => void;
   label: string;
   onCurrencySelect: (currency: Currency) => void

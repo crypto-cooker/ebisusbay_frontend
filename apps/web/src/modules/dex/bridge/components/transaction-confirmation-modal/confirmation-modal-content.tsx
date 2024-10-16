@@ -9,12 +9,16 @@ import { ConfirmationModalContent } from "@dex/components/transaction-confirmati
 import { Box, HStack, VStack } from '@chakra-ui/react';
 import { Bridge } from '@dex/bridge/constants/types';
 import { PrimaryButton } from '@src/components-v2/foundation/button';
+import useNativeCurrency from '@dex/swap/imported/pancakeswap/web/hooks/useNativeCurrency';
+import { NativeCurrency } from '@pancakeswap/swap-sdk-core';
+import { CurrencyLogo } from '@dex/components/logo';
 
 export interface ParsedBridge {
   symbol: string,
   amount: string | undefined,
   fromChain: string | undefined,
-  toChain: string | undefined
+  toChain: string | undefined,
+  fee: string
 }
 
 interface TransactionConfirmBridgeContentProps {
@@ -30,12 +34,26 @@ const TransactionConfirmBridgeContent = ({
   onAcceptChanges,
   onConfirm,
 }: TransactionConfirmBridgeContentProps) => {
+  const nativeCurrency = useNativeCurrency(bridge?.fromChainId)
+  console.log(nativeCurrency, bridge?.fromChainId, "GGGGGG")
+
+  let disabled = false;
+  if (parsedBridge?.amount) disabled = true;
   return (
     <Box>
       <VStack>
         <HStack w={"full"} justify={"space-between"}>
           <Box>{parsedBridge?.symbol}</Box>
-          <Box>{parsedBridge?.amount}</Box>
+          <HStack>
+            <Box>{parsedBridge?.amount}</Box>
+            <Box>
+              <CurrencyLogo currency={bridge?.currency} />
+            </Box>
+          </HStack>
+        </HStack>
+        <HStack w={"full"} justify={"space-between"}>
+          <Box>Fee</Box>
+          <Box>{`${parsedBridge.fee} ${nativeCurrency.symbol}`}</Box>
         </HStack>
         <HStack w={"full"} justify={"space-between"}>
           <Box>Current Chain</Box>
@@ -46,8 +64,8 @@ const TransactionConfirmBridgeContent = ({
           <Box>{parsedBridge?.toChain}</Box>
         </HStack>
       </VStack>
-      <HStack justify={"center"} my={2}><Box>Click the botton below</Box></HStack>
-      <HStack justify={"center"}><PrimaryButton onClick={onConfirm}>Confirm Bridge</PrimaryButton></HStack>
+      <HStack justify={"center"} my={2}><Box>Click the button below</Box></HStack>
+      <HStack justify={"center"}><PrimaryButton disabled={disabled} onClick={onConfirm}>Confirm Bridge</PrimaryButton></HStack>
     </Box>
   )
 }

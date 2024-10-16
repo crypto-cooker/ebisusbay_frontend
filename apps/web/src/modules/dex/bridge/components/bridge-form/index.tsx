@@ -12,7 +12,7 @@ import { useBridgeActionHandlers } from "@dex/bridge/state/useBridgeActionHandle
 import { useBridgeState, useDefaultCurrency } from "@dex/bridge/state/hooks";
 import { Field } from "@dex/swap/constants";
 import { useCurrency } from "@dex/swap/imported/pancakeswap/web/hooks/tokens";
-import { useEffect, useMemo, useCallback, useState } from "react";
+import { useMemo, useCallback, useState } from "react";
 import { useAppChainConfig, useBridgeContract } from "@src/config/hooks";
 import { useDerivedBridgeInfo } from "@dex/bridge/state/hooks";
 import { CommitButton } from "@dex/swap/components/tabs/swap/commit-button";
@@ -28,7 +28,6 @@ import { Currency, CurrencyAmount, Trade, TradeType } from '@pancakeswap/sdk'
 
 export default function BridgeForm() {
     const { isOpen: isOpenConfirmBridge, onOpen: onOpenConfirmBridge, onClose: onCloseConfirmBridge } = useDisclosure();
-    const { account, chainId } = useAccountActiveChain();
     const {
         currencyId,
         typedValue,
@@ -45,7 +44,6 @@ export default function BridgeForm() {
         onSelectChain,
         onSelectCurrency,
         onSwitchChain,
-        onChangeRecipient,
         onTypeInput,
         dispatch
     } = useBridgeActionHandlers()
@@ -112,10 +110,6 @@ export default function BridgeForm() {
         { enablePaymaster: true }
     )
 
-    useEffect(() => {
-        console.log({ approval })
-    }, [approval])
-
     // show approve flow when: no error on inputs, not approved or pending, or approved in current session
     // never show if price impact is above threshold in non expert mode
     const showApproveFlow = (approval === ApprovalState.NOT_APPROVED || approval === ApprovalState.PENDING);
@@ -144,6 +138,7 @@ export default function BridgeForm() {
                 });
             });
     }, [bridgeCallback, tradeToConfirm]);
+    console.log(bridge, "GGGGGG")
 
     return (
         <>

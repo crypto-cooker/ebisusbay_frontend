@@ -6,31 +6,19 @@ import { useUser } from "@src/components-v2/useUser"
 import BridgeAbi from "@src/global/contracts/Bridge.json";
 import { BigNumber, Contract, utils } from "ethers"
 import { Field } from "./actions"
-import { toast } from "react-toastify"
-import { parseErrorMessage } from "@src/helpers/validator"
-import { BridgeContract } from "../constants/types"
 import { useAccount } from "wagmi"
-import { useGetENSAddressByName } from "@dex/swap/imported/pancakeswap/web/hooks/useGetENSAddressByName"
 import { safeGetAddress } from "@dex/swap/imported/pancakeswap/web/utils"
-import { useCurrencyBalances, useCurrencyBalance } from "@dex/swap/imported/pancakeswap/web/state/wallet/hooks"
+import { useCurrencyBalance } from "@dex/swap/imported/pancakeswap/web/state/wallet/hooks"
 import tryParseAmount from "@pancakeswap/utils/tryParseAmount"
-import { BAD_RECIPIENT_ADDRESSES } from "@dex/swap/imported/pancakeswap/web/state/swap/hooks"
 import { Currency, CurrencyAmount, Native, Token, Trade, TradeType } from '@pancakeswap/sdk'
-import { ChainId } from '@pancakeswap/chains'
 import { useActiveChainId } from "@dex/swap/imported/pancakeswap/web/hooks/useActiveChainId"
 import useNativeCurrency from "@dex/swap/imported/pancakeswap/web/hooks/useNativeCurrency"
 import { useRouter } from "next/router"
 import { FRTN, STABLE_COIN, USDC, USDT } from '@pancakeswap/tokens'
 import { replaceBridgeState } from "./actions"
-import chainConfigs from "@src/config/chains"
 import { chains } from "@src/wagmi"
-import { BridgeState } from "./reducer"
 import { DEFAULT_INPUT_CURRENCY } from "@dex/swap/constants/exchange"
 import { ParsedUrlQuery } from "querystring"
-
-
-
-
 
 export function useBridgeState() {
   return useAtomValue(bridgeReducerAtom)
@@ -56,7 +44,7 @@ export function useDerivedBridgeInfo(
 
   const parsedAmount = tryParseAmount(typedValue, currency ?? undefined);
 
-  const fee = useBridgeFee();
+  const { fee } = useBridgeFee()
 
   const bridge = {
     fee,
@@ -92,30 +80,46 @@ export function useDerivedBridgeInfo(
   }
 }
 
-export async function useBridgeFee() {
+export function useBridgeFee() {
   const { currencyId } = useBridgeState();
   const { config } = useAppChainConfig();
-  const [fee, setFee] = useState(0);
-
+  const [fee, setFee] = useState<BigNumber | undefined>(undefined);
+  const [loading, setLoading] = useState<boolean>(false);
   const user = useUser();
 
-  useEffect(() => {
-    feeCallback;
-  }, [currencyId, user])
+  // Memoize bridge to avoid recalculating unless currencyId changes
+  const bridge = useMemo(() => {
+    if (!currencyId) return undefined;
+    return config.bridges.find((bridge) =>
+      bridge.currencyId.toLowerCase().includes(currencyId.toLowerCase())
+    );
+  }, [currencyId, config.bridges]);
 
-  const feeCallback = useCallback(async () => {
-    if (typeof currencyId == "undefined") return 0
-    const bridge: BridgeContract | undefined = config.bridges.find((bridge) => bridge.currencyId.toLocaleLowerCase().includes(currencyId.toLocaleLowerCase()));
-    if (typeof bridge?.address == "undefined") return 0
-    const contract = new Contract(bridge?.address, BridgeAbi, user.provider.signer);
-    let fee = 0;
-    if(contract) {
-      fee = await contract.fee();
-      setFee(fee);
+  // Fetch fee only when required
+  const getFee = useCallback(async () => {
+    if (!bridge || !bridge.address || !user?.provider?.signer) return;
+    setLoading(true);
+
+    try {
+      const contract = new Contract(bridge.address, BridgeAbi, user.provider.signer);
+      const fetchedFee = await contract.fee(); // Assuming this is the correct function
+      setFee(fetchedFee);
+    } catch (error) {
+      console.error("Error fetching bridge fee:", error);
+      setFee(undefined); // Reset fee on error
+    } finally {
+      setLoading(false);
     }
-  }, [currencyId, user])
+  }, [bridge, user]);
 
-  return fee;
+  // Only fetch the fee when necessary (currencyId, user, or bridge changes)
+  useEffect(() => {
+    if (bridge && user?.provider?.signer) {
+      getFee();
+    }
+  }, [bridge]);
+
+  return { fee, loading };
 }
 
 

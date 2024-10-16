@@ -8,6 +8,7 @@ import TransactionConfirmBridgeContent, { ParsedBridge } from "@dex/bridge/compo
 import TransactionConfirmationModal from "@dex/bridge/components/transaction-confirmation-modal/index";
 import { Bridge } from "@dex/bridge/constants/types";
 import { chains } from "@src/wagmi";
+import { formatEther } from "ethers/lib/utils";
 
 interface ConfirmBridgeModalProps {
   isOpen: boolean;
@@ -45,7 +46,10 @@ export default function ConfirmBridgeModal({
     const amount = formatAmountDisplay(bridge?.amount)
     const fromChain = formatChainDisplay(bridge?.fromChainId)
     const toChain = formatChainDisplay(bridge?.toChainId)
-    return {symbol, amount, fromChain, toChain}
+    let fee;
+    if(bridge.fee) fee = formatEther(bridge?.fee);
+    else fee = ""
+    return {symbol, amount, fromChain, toChain, fee}
   }, [bridge])
 
   const confirmationContent = useCallback(() => (
