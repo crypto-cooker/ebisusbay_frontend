@@ -2,19 +2,16 @@ import { Container, Box, IconButton, VStack, HStack, ButtonGroup, Flex, Wrap, Bu
 import { Card } from "@src/components-v2/foundation/card";
 import { PrimaryButton } from "@src/components-v2/foundation/button";
 import AuthenticationGuard from "@src/components-v2/shared/authentication-guard";
-import { ArrowLeftIcon, ArrowRightIcon, SettingsIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/react";
 import { useApproveCallback, ApprovalState } from "@dex/swap/imported/pancakeswap/web/hooks/useApproveCallback";
 import useAccountActiveChain from "@dex/swap/imported/pancakeswap/web/hooks/useAccountActiveChain";
-import chainConfigs, { SUPPORTED_CHAIN_CONFIGS } from "@src/config/chains";
 import { ToChainSelector } from "./toChainSelector"
 import { FromChainSelector } from "./fromChainSelector"
 import CurrencyInputPanel from "@dex/components/currency-input-panel";
 import { useBridgeActionHandlers } from "@dex/bridge/state/useBridgeActionHandler";
-import { useBridgeState } from "@dex/bridge/state/hooks";
+import { useBridgeState, useDefaultCurrency } from "@dex/bridge/state/hooks";
 import { Field } from "@dex/swap/constants";
 import { useCurrency } from "@dex/swap/imported/pancakeswap/web/hooks/tokens";
-import getCurrencyId from "@dex/swap/imported/pancakeswap/web/utils/currencyId";
 import { useEffect, useMemo, useCallback, useState } from "react";
 import { useAppChainConfig, useBridgeContract } from "@src/config/hooks";
 import { useDerivedBridgeInfo } from "@dex/bridge/state/hooks";
@@ -25,11 +22,12 @@ import useWrapCallback from "@dex/swap/imported/pancakeswap/web/hooks/useWrapCal
 import { useIsWrapping } from "@dex/swap/imported/pancakeswap/web/hooks/useIsWrapping";
 import { WrapType } from "@dex/swap/imported/pancakeswap/web/hooks/useWrapCallback";
 import { useBridgeCallback } from "@dex/bridge/hooks/useBridgeCallback";
-import { NetworkSwitcher } from "@src/components-v2/shared/layout/navbar/network-switcher";
+import { ArrowLeftIcon, ArrowRightIcon, SettingsIcon } from "@chakra-ui/icons";
+import { Currency, CurrencyAmount, Trade, TradeType } from '@pancakeswap/sdk'
+
 
 export default function BridgeForm() {
     const { isOpen: isOpenConfirmBridge, onOpen: onOpenConfirmBridge, onClose: onCloseConfirmBridge } = useDisclosure();
-    const { isOpen: isOpenSettings, onOpen: onOpenSettings, onClose: onCloseSettings } = useDisclosure();
     const { account, chainId } = useAccountActiveChain();
     const {
         currencyId,
@@ -63,7 +61,6 @@ export default function BridgeForm() {
         toChainId,
         typedValue,
         currency,
-        account ?? '',
     );
 
     const {
@@ -88,6 +85,8 @@ export default function BridgeForm() {
         txHash: undefined,
     })
 
+    const defaultCurrency = useDefaultCurrency()
+
     const handleAcceptChanges = useCallback(() => {
         setBridgeState({ tradeToConfirm: trade ?? undefined, bridgeErrorMessage, txHash, attemptingTxn })
     }, [attemptingTxn, bridgeErrorMessage, trade, txHash, setBridgeState])
@@ -100,7 +99,7 @@ export default function BridgeForm() {
         }
     }, [tradeToConfirm, attemptingTxn, bridgeErrorMessage, txHash, dispatch])
 
-    const parsedCurrency = useMemo(() => derivedBridgeInfo.parsedAmount, [derivedBridgeInfo.parsedAmount])
+    const parsedCurrency: CurrencyAmount = useMemo(() => derivedBridgeInfo.parsedAmount, [derivedBridgeInfo.parsedAmount])
 
     const {
         approvalState: approval,
@@ -121,7 +120,7 @@ export default function BridgeForm() {
     // never show if price impact is above threshold in non expert mode
     const showApproveFlow = (approval === ApprovalState.NOT_APPROVED || approval === ApprovalState.PENDING);
     const isValid = !inputError && approval === ApprovalState.APPROVED;
-    const { callback: bridgeCallback, executing: executingBridge } = useBridgeCallback();
+    const { callback: bridgeCallback, executing: executingBridge } = useBridgeCallback(parsedCurrency);
 
 
     const handleBridge = useCallback(() => {
@@ -152,14 +151,6 @@ export default function BridgeForm() {
                 <Card>
                     <Flex justify='space-between' mb={4}>
                         <Box fontSize='xl' fontWeight='bold'>Bridge</Box>
-                        <Box>
-                            <IconButton
-                                aria-label='Settings'
-                                variant='ghost'
-                                icon={<SettingsIcon />}
-                                onClick={onOpenSettings}
-                            />
-                        </Box>
                     </Flex>
                     <Card mb={4}>
                         <HStack w='full' align="end" justify="space-between">
@@ -170,7 +161,6 @@ export default function BridgeForm() {
                             <HStack align="end" pb={3}><ArrowRightIcon /></HStack>
                             <VStack flexGrow={2}>
                                 <label>To</label>
-                                {/* <NetworkSwitcher/> */}
                                 <ToChainSelector onSelectChain={onSelectChain} onSwitchChain={onSwitchChain} chainId={toChainId} field={Field.OUTPUT} />
                             </VStack>
                         </HStack>
@@ -213,9 +203,19 @@ export default function BridgeForm() {
                                                 colorScheme={!inputError ? 'red' : undefined}
                                                 variant={!inputError ? 'primary' : 'solid'}
                                                 isDisabled={!isValid}
-                                                onClick={handleBridge}
+                                                onClick={() => {
+                                                    if (trade) {
+                                                        setBridgeState({
+                                                            tradeToConfirm: trade,
+                                                            attemptingTxn: false,
+                                                            bridgeErrorMessage: undefined,
+                                                            txHash: undefined,
+                                                        })
+                                                    }
+                                                    onOpenConfirmBridge()
+                                                }}
                                             >
-                                                Bridge
+                                                {inputError || "Bridge"}
                                             </CommitButton>)}
                                     </VStack>
                                 )
@@ -225,7 +225,8 @@ export default function BridgeForm() {
                     </AuthenticationGuard>
                 </Card>
             </Container>
-            {/* <ConfirmBridgeModal
+            <ConfirmBridgeModal
+                bridge={bridge}
                 isOpen={isOpenConfirmBridge}
                 onClose={onCloseConfirmBridge}
                 currencyBalance={currencyBalance}
@@ -236,7 +237,7 @@ export default function BridgeForm() {
                 onConfirm={handleBridge}
                 bridgeErrorMessage={bridgeErrorMessage}
                 customOnDismiss={handleConfirmDismiss}
-            /> */}
+            />
         </>
     )
 }

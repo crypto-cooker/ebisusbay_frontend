@@ -9,18 +9,22 @@ export const ToChainSelector = (props: any) => {
     const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
     const { onSelectChain, chainId, field } = props;
     const chain = chains.filter((chain) => chain.id == chainId)[0];
+
+    const handleSelectChain = (chainId:number) => {
+        onSelectChain(field, chainId)
+    }
     return (
         <>
             <Box w="full">
                 <Button w="full" onClick={onModalOpen}>
                     <HStack>
                         <ChainLogo chainId={chainId} width={30} height={30}/>
-                        <Box>{chain?.name}</Box>
+                        <Box display={{base:"none", sm:"none", md:"block"}}>{chain?.name}</Box>
                     </HStack>
                 </Button>
             </Box>
             {isModalOpen &&
-                <ChainSelectModal isOpen={isModalOpen} onClose={onModalClose} onSelectChain={onSelectChain} field={field}/>
+                <ChainSelectModal isOpen={isModalOpen} onClose={onModalClose} onSelectChain={handleSelectChain} field={field}/>
             }
         </>
     )

@@ -10,11 +10,12 @@ export const selectChain = createAction<{ field: Field; chainId: number }>('brid
 export const switchChain = createAction<void>('bridge/switchChain');
 export const selectCurrency = createAction<{ currencyId: string }>("bridge/selectCurrency")
 export const replaceBridgeState = createAction<{
-    field: Field
-    typedValue: string
+    typedValue?: string
+    fromChainId?: number,
+    toChainId?: number,
     currencyId?: string
     recipient: string | null
 }>('bridge/replaceBridgeState')
-export const setRecipient = createAction<{ recipient: string | null }>('bridge/setRecipient')
+export const setRecipient = createAction<{ recipient: string }>('bridge/setRecipient')
 export const typeInput = createAction<{typedValue: string}>('bridge/typeInput')
 export const changeOutput = createAction<{outputValue: string}>('bridge/changeOutput');

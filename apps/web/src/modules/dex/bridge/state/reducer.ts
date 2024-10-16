@@ -1,16 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { atomWithReducer } from 'jotai/utils'
 import { Field, selectChain, switchChain, selectCurrency, setRecipient, typeInput, changeOutput, replaceBridgeState } from './actions'
+import { toast } from 'react-toastify'
 
 export interface BridgeState {
     readonly currencyId: string | undefined
-    readonly typedValue: string
-    readonly outputValue: string
+    readonly typedValue: string | undefined
+    readonly outputValue?: string
     readonly [Field.INPUT]: {
-        readonly chainId: number | null
+        readonly chainId: number | undefined
     }
     readonly [Field.OUTPUT]: {
-        readonly chainId: number | null
+        readonly chainId: number | undefined
     }
     readonly recipient: string | null
 }
@@ -20,12 +21,12 @@ const initialState: BridgeState = {
     typedValue: '',
     outputValue: '',
     [Field.INPUT]: {
-        chainId: null
+        chainId: undefined
     },
     [Field.OUTPUT]: {
-        chainId: null
+        chainId: undefined
     },
-    recipient: null
+    recipient: ''
 }
 
 const reducer = createReducer<BridgeState>(initialState, (builder) =>
@@ -33,6 +34,16 @@ const reducer = createReducer<BridgeState>(initialState, (builder) =>
         .addCase(
             selectChain,
             (state, { payload: { field, chainId } }) => {
+                if (field === Field.INPUT && chainId === state[Field.OUTPUT].chainId) {
+                    return {
+                        ...state,
+                        [field]: { chainId },
+                        [Field.OUTPUT]: { chainId: state[Field.INPUT].chainId }
+                    }
+                } else if (field === Field.OUTPUT && chainId === state[Field.INPUT].chainId) {
+                    toast.error("Select other chain")
+                    return state
+                }
                 return {
                     ...state,
                     [field]: { chainId }
@@ -77,6 +88,18 @@ const reducer = createReducer<BridgeState>(initialState, (builder) =>
                 return {
                     ...state,
                     outputValue
+                }
+            }
+        ).addCase(
+            replaceBridgeState,
+            (state, { payload: { currencyId, typedValue, fromChainId, toChainId, recipient } }) => {
+                return {
+                    ...state,
+                    currencyId,
+                    typedValue,
+                    [Field.INPUT]: { chainId: fromChainId },
+                    [Field.OUTPUT]: { chainId: toChainId },
+                    recipient
                 }
             }
         )

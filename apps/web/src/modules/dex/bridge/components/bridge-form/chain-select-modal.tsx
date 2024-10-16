@@ -11,7 +11,7 @@ type ChainSelectModalProps = {
     isOpen: boolean;
     field: Field;
     onClose: () => void;
-    onSelectChain: ( field:Field, value: number) => void;
+    onSelectChain: ( value: number) => void;
     modalProps?: Pick<ModalProps, 'size' | 'isCentered'>;
 }
 
@@ -23,7 +23,7 @@ export default function ChainSelectModal({ isOpen, onClose, onSelectChain, field
 
     const handleSelect = (chainId: number) => {
         console.log("chain selection")
-        onSelectChain(field, chainId);
+        onSelectChain(chainId);
         onClose()
     }
     return (
@@ -33,7 +33,7 @@ export default function ChainSelectModal({ isOpen, onClose, onSelectChain, field
                 <VStack justify="flex-start">
                     {chains.map((chain, index) => {
                         return (
-                            <HStack key={index} w="full" _hover={{ cursor: "pointer" }} onClick={() => { handleSelect(chain.id) }}>
+                            <HStack key={index} w="full" _hover={{ cursor: "pointer", backgroundColor:"" }} onClick={() => { handleSelect(chain.id) }}>
                                 <ChainLogo chainId={chain.id} width={40} height={40} />
                                 <Box>{chain?.name}</Box>
                             </HStack>

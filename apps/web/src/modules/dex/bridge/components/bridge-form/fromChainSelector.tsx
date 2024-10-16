@@ -181,7 +181,7 @@ export const FromChainSelector = (props: any) => {
                 <Button w="full" onClick={onModalOpen}>
                     <HStack>
                         <ChainLogo chainId={foundChain?.id} width={30} height={30} />
-                        <Box>{foundChain?.name}</Box>
+                        <Box display={{base:"none", sm:"none", md:"block"}}>{foundChain?.name}</Box>
                     </HStack>
                 </Button>
             </Box>

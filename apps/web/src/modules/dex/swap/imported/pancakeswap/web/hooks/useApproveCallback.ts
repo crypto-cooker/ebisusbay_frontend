@@ -43,7 +43,6 @@ export function useApproveCallback(
   const { callWithGasPrice } = useCallWithGasPrice()
   const token = amountToApprove?.currency?.isToken ? amountToApprove.currency : undefined
   const { allowance: currentAllowance, refetch } = useTokenAllowance(token, account ?? undefined, spender)
-  console.log({token, account, spender})
   const pendingApproval = useHasPendingApproval(token?.address, spender)
   const { isPaymasterAvailable, isPaymasterTokenActive, sendPaymasterTransaction } = usePaymaster()
 

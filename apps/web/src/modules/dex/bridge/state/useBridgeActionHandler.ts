@@ -47,9 +47,7 @@ export function useBridgeActionHandlers(): {
     }, [])
 
     const onSelectCurrency = useCallback((currency: Currency) => {
-        console.log({ currency })
         const currencyId = currency?.isToken ? currency.address : currency?.isNative ? currency.symbol : '';
-        console.log({ currencyId })
         dispatch(selectCurrency({ currencyId }))
     }, [])
 

@@ -11,7 +11,7 @@ export type BridgeContract = {
 
 export type Bridge = {
     currency: Currency;
-    currencyAmount: CurrencyAmount<Currency>;
+    amount: CurrencyAmount<Currency>;
     fromChainId: ChainId;
     toChainId: ChainId;
     fee: BigInt;
