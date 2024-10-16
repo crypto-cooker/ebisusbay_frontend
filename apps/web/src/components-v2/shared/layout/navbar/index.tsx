@@ -166,6 +166,7 @@ const Header = function () {
                   </MenuButton>
                   <MenuList>
                     <MenuItem as={Link} href='/dex/swap' _hover={{color: 'inherit'}} justifyContent='end'>Swap</MenuItem>
+                    <MenuItem as={Link} href='/dex/bridge' _hover={{color: 'inherit'}} justifyContent='end'>Bridge</MenuItem>
                     <MenuItem as={Link} href='/dex/farms' _hover={{color: 'inherit'}} justifyContent='end'>Farms</MenuItem>
                   </MenuList>
                 </Menu>
@@ -263,6 +264,20 @@ const Header = function () {
                       leftIcon={<Icon as={FontAwesomeIcon} icon={faCoins} />}
                     >
                       Swap
+                    </Button>
+                  </Link>
+                  <Link href='/dex/bridge'>
+                    <Button
+                      variant='outline'
+                      onClick={onClose}
+                      size='sm'
+                      color='white'
+                      fontWeight='bold'
+                      w='full'
+                      colorScheme='none'
+                      leftIcon={<Icon as={FontAwesomeIcon} icon={faCoins} />}
+                    >
+                      Bridge
                     </Button>
                   </Link>
                   <Link href='/dex/farms'>
