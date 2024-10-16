@@ -79,22 +79,18 @@ const gothamBook = localFont({ src: '../../../../../../global/assets/fonts/Gotha
             <ArrowBackIcon boxSize={8} />
           </Button>
         </Box>
-        <Box textAlign='end' ms={2}>
-          <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} fontWeight='bold'>Moon Gate</Text>
-          <Text textColor='#ffffffeb' fontSize='sm' fontStyle='italic'>Join in the quest for sea treasures on Seashrine!</Text>
-        </Box>
+        {/* <Box textAlign='end' ms={2}>
+          <Text textColor='#ffffffeb' fontSize={{ base: '28px', md: '32px' }} fontWeight='bold'>Portal</Text>
+          <Text textColor='#ffffffeb' fontSize='sm' fontStyle='italic'></Text>
+        </Box> */}
       </Flex>
 
       <Flex align={'center'} minH={'calc(100vh - 175px)'} justifyContent={'center'}>
         <VStack spacing={4} align='stretch' >
         <RdButton onClick={(e) => {
-            window.open('https://seashrine.ebisusbay.com/','_blank');
+            window.open('https://app.ebisusbay.com/dex/bridge','_blank');
             }}
-            >Visit Seashrine</RdButton>
-        {/*<RdButton onClick={(e) => {*/}
-        {/*  window.open('https://seashrine.ebisusbay.com/portal?tab=cronos','_blank');*/}
-        {/*    }}*/}
-        {/*    >Bridge VIPs</RdButton>*/}
+            >Bridge</RdButton>
         </VStack>
       </Flex>
 
