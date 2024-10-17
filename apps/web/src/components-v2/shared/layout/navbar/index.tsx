@@ -31,7 +31,7 @@ import {
   VStack
 } from '@chakra-ui/react';
 import Cart from './cart/cart';
-import { ChevronDownIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon, CloseIcon, ExternalLinkIcon, HamburgerIcon } from '@chakra-ui/icons';
 import Search from '@src/components-v2/shared/layout/navbar/search';
 import MobileSearchDrawer from '@src/components-v2/shared/layout/navbar/search/drawer';
 import { useTokenExchangeRate } from '@market/hooks/useGlobalPrices';
@@ -42,6 +42,7 @@ import ImageService from '@src/core/services/image';
 import { useUser } from '@src/components-v2/useUser';
 import {NetworkSwitcher} from "@src/components-v2/shared/layout/navbar/network-switcher";
 import {useRouter} from "next/router";
+import NavMenu from './nav-menu';
 
 const config = appConfig();
 
@@ -74,11 +75,11 @@ const Header = function () {
   const [currentFrtnPrice, setCurrentFrtnPrice] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
 
-  const ref: RefObject<HTMLDivElement> = React.useRef(null)
-  useOutsideClick({
-    ref: ref,
-    handler: onClose,
-  });
+  // const ref: RefObject<HTMLDivElement> = React.useRef(null)
+  // useOutsideClick({
+  //   ref: ref,
+  //   handler: onClose,
+  // });
 
   const handleToggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -106,10 +107,10 @@ const Header = function () {
   // }, [isMounted, router.isReady]);
 
   return (
-    <>
+    <Box>
       <GlobalStyles />
       <Box px={{base:2, md:4}} as="header" position="fixed" w="100%" zIndex={200} id="myHeader" className="navbar2">
-        <Box maxW="2560px" ref={ref}>
+        <Box maxW="2560px">
           <Flex h={16} alignItems={'center'}>
             <Link href="/">
               <HStack spacing={2}>
@@ -154,51 +155,7 @@ const Header = function () {
                 </Link>
               )}
 
-              <HStack
-                as={'nav'}
-                spacing={3}
-                display={{base: 'none', md: 'flex'}}
-                me={4}
-              >
-                <Menu placement='bottom-end'>
-                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size='sm' variant='unstyled' color='white'>
-                    DEX
-                  </MenuButton>
-                  <MenuList>
-                    <MenuItem as={Link} href='/dex/swap' _hover={{color: 'inherit'}} justifyContent='end'>Swap</MenuItem>
-                    <MenuItem as={Link} href='/dex/bridge' _hover={{color: 'inherit'}} justifyContent='end'>Bridge</MenuItem>
-                    <MenuItem as={Link} href='/dex/farms' _hover={{color: 'inherit'}} justifyContent='end'>Farms</MenuItem>
-                  </MenuList>
-                </Menu>
-                <Menu placement='bottom-end'>
-                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size='sm' variant='unstyled' color='white'>
-                    Marketplace
-                  </MenuButton>
-                  <MenuList>
-                    <MenuItem as={Link} href='/marketplace' _hover={{color: 'inherit'}} justifyContent='end'>Explore</MenuItem>
-                    <MenuItem as={Link} href='/collections' _hover={{color: 'inherit'}} justifyContent='end'>Collections</MenuItem>
-                    <MenuItem as={Link} href='/deal' _hover={{color: 'inherit'}} justifyContent='end'>Deals</MenuItem>
-                    <MenuItem as={Link} href='/brands' _hover={{color: 'inherit'}} justifyContent='end'>Brands</MenuItem>
-                    <MenuItem as={Link} href='/drops' _hover={{color: 'inherit'}} justifyContent='end'>Drops</MenuItem>
-                    <MenuItem as={Link} href='/apply' _hover={{color: 'inherit'}} justifyContent='end'>Listing Requests</MenuItem>
-                    {/*<MenuItem as='a' href='/stats'>Stats</MenuItem>*/}
-                    {/*<MenuItem as='a' href='/auctions'>Auction</MenuItem>*/}
-                  </MenuList>
-                </Menu>
-                <Menu placement='bottom-end'>
-                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size='sm' variant='unstyled' color='white'>
-                    GameFi
-                  </MenuButton>
-                  <MenuList>
-                    <MenuItem as={Link} href='/ryoshi' _hover={{color: 'inherit'}} justifyContent='end'>Ryoshi Dynasties</MenuItem>
-                    <MenuItem as={Link} href='/collection/izanamis-cradle-land-deeds?tab=dynastiesMap' _hover={{color: 'inherit'}} justifyContent='end'>Realm Registry</MenuItem>
-                    <MenuItem as={Link} href='/collection/ryoshi-playing-cards?tab=pokerRanks' _hover={{color: 'inherit'}} justifyContent='end'>Ryoshi Playing Cards</MenuItem>
-                    <MenuItem as={Link} href='/xp-leaderboard' _hover={{color: 'inherit'}} justifyContent='end'>XP Leaderboard</MenuItem>
-                    <MenuItem as={Link} href='/rewards' _hover={{color: 'inherit'}} justifyContent='end'>Rewards</MenuItem>
-                    <MenuItem as={Link} href='https://www.ebisusbay.com' _hover={{color: 'inherit'}} justifyContent='end'>Docs</MenuItem>
-                  </MenuList>
-                </Menu>
-              </HStack>
+              <NavMenu display={{ base: 'none', md: 'flex' }}/>
 
               {shouldUseMobileSearch && <MobileSearchDrawer />}
               <Cart />
@@ -207,114 +164,12 @@ const Header = function () {
               <span className="my-auto">
                 <AccountMenu />
               </span>
-              <IconButton
-                size={'md'}
-                icon={isOpen ? <CloseIcon/> : <HamburgerIcon boxSize={6}/>}
-                aria-label={'Open Menu'}
-                display={{md: 'none'}}
-                onClick={isOpen ? onClose : onOpen}
-                color="white"
-                variant="unstyled"
-                ms={2}
-              />
             </Flex>
           </Flex>
-
-          {isOpen ? (
-            <Box pb={2} display={{md: 'none'}}>
-              <SimpleGrid columns={2} p={2}>
-                <Box>
-                  <VStack align='start' spacing={0} mb={2}>
-                    <Heading size='md' className='col-white'>Marketplace</Heading>
-                    <Divider borderColor='white' w='150px' mb={2} mt={1} />
-                  </VStack>
-                  <VStack align='start'>
-                    <NavLink name='Explore' to='/marketplace' onClick={onClose} />
-                    <NavLink name='Collections' to='/collections' onClick={onClose} />
-                    <NavLink name='Deals' to='/deal' onClick={onClose} />
-                    <NavLink name='Brands' to='/brands' onClick={onClose} />
-                    <NavLink name='Drops' to='/drops' onClick={onClose} />
-                    <NavLink name='Listing Requests' to='/apply' onClick={onClose} />
-                  </VStack>
-                </Box>
-                <Box>
-                  <VStack align='end' spacing={0} mb={2}>
-                    <Heading size='md' className='col-white'>GameFi</Heading>
-                    <Divider borderColor='white' w='150px' mb={2} mt={1} />
-                  </VStack>
-                  <VStack align='end'>
-                    <NavLink name='Ryoshi Dynasties' to='/ryoshi' onClick={onClose} />
-                    <NavLink name='Realm Registry' to='/collection/izanamis-cradle-land-deeds?tab=dynastiesMap' onClick={onClose} />
-                    <NavLink name='Ryoshi Playing Cards' to='/collection/ryoshi-playing-cards?tab=pokerRanks' onClick={onClose} />
-                    <NavLink name='XP Leaderboard' to='/xp-leaderboard' onClick={onClose} />
-                    <NavLink name='Rewards' to='/rewards' onClick={onClose} />
-                    <NavLink name='Docs' to='https://www.ebisusbay.com' onClick={onClose} />
-                  </VStack>
-                </Box>
-              </SimpleGrid>
-              <Stack spacing={2} justify='stretch' maxW='375px' mx='auto'>
-                <SimpleGrid columns={2} spacing={2}>
-                  <Link href='/dex/swap'>
-                    <Button
-                      variant='outline'
-                      onClick={onClose}
-                      size='sm'
-                      color='white'
-                      fontWeight='bold'
-                      w='full'
-                      colorScheme='none'
-                      leftIcon={<Icon as={FontAwesomeIcon} icon={faCoins} />}
-                    >
-                      Swap
-                    </Button>
-                  </Link>
-                  <Link href='/dex/bridge'>
-                    <Button
-                      variant='outline'
-                      onClick={onClose}
-                      size='sm'
-                      color='white'
-                      fontWeight='bold'
-                      w='full'
-                      colorScheme='none'
-                      leftIcon={<Icon as={FontAwesomeIcon} icon={faCoins} />}
-                    >
-                      Bridge
-                    </Button>
-                  </Link>
-                  <Link href='/dex/farms'>
-                    <Button
-                      variant='outline'
-                      onClick={onClose}
-                      size='sm'
-                      color='white'
-                      fontWeight='bold'
-                      w='full'
-                      colorScheme='none'
-                      leftIcon={<Icon as={FontAwesomeIcon} icon={faSackDollar} />}
-                    >
-                      Farms
-                    </Button>
-                  </Link>
-                  <Button
-                    variant='outline'
-                    size='sm'
-                    color='white'
-                    fontWeight='bold'
-                    w='full'
-                    leftIcon={<Icon as={FontAwesomeIcon} icon={theme === 'dark' ? faMoon : faSun} />}
-                    colorScheme='none'
-                    onClick={handleToggleTheme}
-                  >
-                    Dark mode
-                  </Button>
-                </SimpleGrid>
-              </Stack>
-            </Box>
-          ) : null}
         </Box>
       </Box>
-    </>
+      <NavMenu position={"fixed"} bottom={0} display={{base: 'flex', md: 'none'}} justifyContent={'space-around'} className="mobile-navbar"/>
+    </Box>
   );
 };
 export default Header;
