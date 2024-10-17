@@ -1,19 +1,17 @@
-import { Address } from "viem";
-import { Currency, CurrencyAmount } from '@pancakeswap/sdk'
-import { ChainId } from "@pancakeswap/chains";
-import { BigNumber } from "ethers";
-
-
+import { Address } from 'viem';
+import { Currency, CurrencyAmount } from '@pancakeswap/sdk';
+import { ChainId } from '@pancakeswap/chains';
+import { BigNumber } from 'ethers';
 
 export type BridgeContract = {
-    address: Address;
-    currencyId: string;
-}
+  address: Address;
+  currencyId: string;
+};
 
 export type Bridge = {
-    currency: Currency;
-    amount: CurrencyAmount<Currency>;
-    fromChainId: ChainId;
-    toChainId: ChainId;
-    fee: BigNumber;
-}
+  currency: Currency;
+  amount: CurrencyAmount<Currency>;
+  fromChainId: ChainId;
+  toChainId: ChainId;
+  fee: BigNumber;
+};
