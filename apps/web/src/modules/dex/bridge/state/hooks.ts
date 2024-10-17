@@ -53,7 +53,6 @@ export function useDerivedBridgeInfo(
     currency,
     amount: parsedAmount
   }
-
   let inputError: string | undefined
   if (!account) {
     inputError = 'Connect Wallet'
@@ -81,11 +80,12 @@ export function useDerivedBridgeInfo(
 }
 
 export function useBridgeFee() {
-  const { currencyId } = useBridgeState();
+  const { currencyId, [Field.INPUT]: { chainId: fromChainId } } = useBridgeState()
   const { config } = useAppChainConfig();
   const [fee, setFee] = useState<BigNumber | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
   const user = useUser();
+  const chainId =  useActiveChainId()
 
   // Memoize bridge to avoid recalculating unless currencyId changes
   const bridge = useMemo(() => {
@@ -93,13 +93,12 @@ export function useBridgeFee() {
     return config.bridges.find((bridge) =>
       bridge.currencyId.toLowerCase().includes(currencyId.toLowerCase())
     );
-  }, [currencyId, config.bridges]);
+  }, [currencyId, config]);
 
   // Fetch fee only when required
   const getFee = useCallback(async () => {
     if (!bridge || !bridge.address || !user?.provider?.signer) return;
     setLoading(true);
-
     try {
       const contract = new Contract(bridge.address, BridgeAbi, user.provider.signer);
       const fetchedFee = await contract.fee(); // Assuming this is the correct function
@@ -110,15 +109,15 @@ export function useBridgeFee() {
     } finally {
       setLoading(false);
     }
-  }, [bridge, user]);
+  }, [bridge, user, fromChainId, currencyId]);
 
   // Only fetch the fee when necessary (currencyId, user, or bridge changes)
   useEffect(() => {
-    if (bridge && user?.provider?.signer) {
+    console.log(chainId, "GGGGGGGG")
+    if (bridge) {
       getFee();
     }
-  }, [bridge]);
-
+  }, [bridge, currencyId, chainId]);
   return { fee, loading };
 }
 

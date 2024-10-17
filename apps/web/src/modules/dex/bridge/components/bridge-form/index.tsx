@@ -12,7 +12,7 @@ import { useBridgeActionHandlers } from "@dex/bridge/state/useBridgeActionHandle
 import { useBridgeState, useDefaultCurrency } from "@dex/bridge/state/hooks";
 import { Field } from "@dex/swap/constants";
 import { useCurrency } from "@dex/swap/imported/pancakeswap/web/hooks/tokens";
-import { useMemo, useCallback, useState } from "react";
+import { useMemo, useCallback, useState, useEffect } from "react";
 import { useAppChainConfig, useBridgeContract } from "@src/config/hooks";
 import { useDerivedBridgeInfo } from "@dex/bridge/state/hooks";
 import { CommitButton } from "@dex/swap/components/tabs/swap/commit-button";
@@ -138,7 +138,14 @@ export default function BridgeForm() {
                 });
             });
     }, [bridgeCallback, tradeToConfirm]);
-    console.log(bridge, "GGGGGG")
+
+    useEffect(() => {
+        console.log(bridge, "GGGGGG")
+    },[bridge])
+
+    useEffect(() => {
+        console.log(fromChainId, "GGGGGG")
+    },[fromChainId])
 
     return (
         <>

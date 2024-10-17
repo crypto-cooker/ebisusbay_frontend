@@ -68,7 +68,6 @@ export function useBridgeCallback(parsedAmount: CurrencyAmount): { callback: (()
       const tx = await contract.bridge(toChainId, user.address, amount, { value: fee });
 
       const hash = await tx.wait(); // Wait for the transaction to be confirmed
-      console.log({ hash }, "GGGGGG")
 
       return hash?.transactionHash
 

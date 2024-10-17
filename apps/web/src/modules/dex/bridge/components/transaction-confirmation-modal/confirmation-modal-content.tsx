@@ -35,8 +35,6 @@ const TransactionConfirmBridgeContent = ({
   onConfirm,
 }: TransactionConfirmBridgeContentProps) => {
   const nativeCurrency = useNativeCurrency(bridge?.fromChainId)
-  console.log(nativeCurrency, bridge?.fromChainId, "GGGGGG")
-
   let disabled = false;
   if (parsedBridge?.amount) disabled = true;
   return (

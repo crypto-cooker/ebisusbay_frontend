@@ -50,7 +50,7 @@ export default function ConfirmBridgeModal({
     if(bridge.fee) fee = formatEther(bridge?.fee);
     else fee = ""
     return {symbol, amount, fromChain, toChain, fee}
-  }, [bridge])
+  }, [bridge, chainId])
 
   const confirmationContent = useCallback(() => (
     <TransactionConfirmBridgeContent
@@ -66,10 +66,6 @@ export default function ConfirmBridgeModal({
       currencyBalance,
     ],
   )
-
-  useEffect(() => {
-    console.log({ chainId, bridge, isOpen }, "DDDDD")
-  }, [isOpen])
 
   if (!chainId || !bridge) return null
 
