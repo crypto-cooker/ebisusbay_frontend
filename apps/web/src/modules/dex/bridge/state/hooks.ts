@@ -113,7 +113,6 @@ export function useBridgeFee() {
 
   // Only fetch the fee when necessary (currencyId, user, or bridge changes)
   useEffect(() => {
-    console.log(chainId, "GGGGGGGG")
     if (bridge) {
       getFee();
     }

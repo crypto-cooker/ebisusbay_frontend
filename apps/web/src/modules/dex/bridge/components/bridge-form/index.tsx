@@ -139,14 +139,6 @@ export default function BridgeForm() {
             });
     }, [bridgeCallback, tradeToConfirm]);
 
-    useEffect(() => {
-        console.log(bridge, "GGGGGG")
-    },[bridge])
-
-    useEffect(() => {
-        console.log(fromChainId, "GGGGGG")
-    },[fromChainId])
-
     return (
         <>
             <Container mt={4}>
