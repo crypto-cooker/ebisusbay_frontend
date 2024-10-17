@@ -20,6 +20,7 @@ interface CurrencyInputPanelProps {
   otherCurrency?: Currency | null
   onMax?: () => void
   disabled?: boolean
+  disableCurrencySelect?: boolean
 }
 
 export default function CurrencyInputPanel({
@@ -31,6 +32,7 @@ export default function CurrencyInputPanel({
  otherCurrency,
  onMax,
  disabled,
+ disableCurrencySelect
 }: CurrencyInputPanelProps) {
 
   const {address: account} = useUser();
@@ -69,7 +71,7 @@ export default function CurrencyInputPanel({
             />
           </NumberInput>
 
-          <Button onClick={onModalOpen}>
+          <Button onClick={() => !disableCurrencySelect ? onModalOpen() : undefined}>
             <HStack>
               {!!currency && (
                 <Box as='span' minW='30px'>
@@ -79,7 +81,7 @@ export default function CurrencyInputPanel({
               <span>
                 {currency ? currency?.symbol : 'Select token'}
               </span>
-              <ChevronDownIcon />
+              {!disableCurrencySelect && <ChevronDownIcon />}
             </HStack>
           </Button>
         </HStack>

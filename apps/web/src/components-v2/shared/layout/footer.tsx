@@ -31,7 +31,7 @@ const Footer = () => {
                   <ListItem><Link href="/marketplace">Explore</Link></ListItem>
                   <ListItem><Link href="/collections">Collections</Link></ListItem>
                   <ListItem><Link href="/drops">Drops</Link></ListItem>
-                  <ListItem><Link href="https://ebisusbay.notion.site/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6">Ryoshi Dynasties</Link></ListItem>
+                  <ListItem><Link href="https://docs.ebisusbay.com/ebisusbay/Ryoshi-Dynasties-8cb0bb21ad194af092cf1e1f8a8846c6">Ryoshi Dynasties</Link></ListItem>
                   <ListItem><Link href="/apply?type=listing">Listing Application</Link></ListItem>
                   <ListItem><Link href="/apply?type=launchpad">Launchpad Application</Link></ListItem>
                 </UnorderedList>
