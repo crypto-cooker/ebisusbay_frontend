@@ -1,9 +1,9 @@
-import ChainSelectModal from "./chain-select-modal";
-import { ChainLogo } from "@dex/components/logo";
-import { chains } from "@src/wagmi";
-import { useActiveChainId, useLocalNetworkChain } from "@eb-pancakeswap-web/hooks/useActiveChainId";
-import { useSwitchNetwork } from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
-import {ChainId} from '@pancakeswap/chains'
+import ChainSelectModal from './chain-select-modal';
+import { ChainLogo } from '@dex/components/logo';
+import { chains } from '@src/wagmi';
+import { useActiveChainId, useLocalNetworkChain } from '@eb-pancakeswap-web/hooks/useActiveChainId';
+import { useSwitchNetwork } from '@eb-pancakeswap-web/hooks/useSwitchNetwork';
+import { ChainId } from '@pancakeswap/chains';
 import {
   Box,
   Button,
@@ -21,18 +21,18 @@ import {
   PopoverTrigger,
   Text,
   useDisclosure,
-} from '@chakra-ui/react'
-import React, {useEffect, useMemo} from 'react'
-import {useAccount} from 'wagmi'
-import {ArrowDownIcon, InfoIcon} from "@chakra-ui/icons";
-import {useUserShowTestnet} from "@eb-pancakeswap-web/state/user/hooks/useUserShowTestnet";
-import {useSessionChainId} from "@eb-pancakeswap-web/hooks/useSessionChainId";
-import {toast} from "react-toastify";
-import {useUser} from "@src/components-v2/useUser";
-import {chainNameConverter} from "@eb-pancakeswap-web/utils/chainNameConverter";
-import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {useNetworkConnectorUpdater} from "@eb-pancakeswap-web/hooks/useActiveWeb3React";
-import {usePathname} from "next/navigation";
+} from '@chakra-ui/react';
+import React, { useEffect, useMemo } from 'react';
+import { useAccount } from 'wagmi';
+import { ArrowDownIcon, InfoIcon } from '@chakra-ui/icons';
+import { useUserShowTestnet } from '@eb-pancakeswap-web/state/user/hooks/useUserShowTestnet';
+import { useSessionChainId } from '@eb-pancakeswap-web/hooks/useSessionChainId';
+import { toast } from 'react-toastify';
+import { useUser } from '@src/components-v2/useUser';
+import { chainNameConverter } from '@eb-pancakeswap-web/utils/chainNameConverter';
+import { PrimaryButton } from '@src/components-v2/foundation/button';
+import { useNetworkConnectorUpdater } from '@eb-pancakeswap-web/hooks/useActiveWeb3React';
+import { usePathname } from 'next/navigation';
 
 interface NetworkSelectProps {
   switchNetwork: (chainId: ChainId) => void;
@@ -41,7 +41,7 @@ interface NetworkSelectProps {
 }
 
 const NetworkSelect = ({ switchNetwork, chainId, isWrongNetwork }: NetworkSelectProps) => {
-  const [showTestnet] = useUserShowTestnet()
+  const [showTestnet] = useUserShowTestnet();
 
   return (
     <MenuList>
@@ -53,17 +53,14 @@ const NetworkSelect = ({ switchNetwork, chainId, isWrongNetwork }: NetworkSelect
       </Box>
       {chains
         .filter((chain) => {
-          if (chain.id === chainId) return true
+          if (chain.id === chainId) return true;
           if ('testnet' in chain && chain.testnet) {
-            return showTestnet
+            return showTestnet;
           }
-          return true
+          return true;
         })
         .map((chain) => (
-          <MenuItem
-            key={chain.id}
-            onClick={() => (chain.id !== chainId || isWrongNetwork) && switchNetwork(chain.id)}
-          >
+          <MenuItem key={chain.id} onClick={() => (chain.id !== chainId || isWrongNetwork) && switchNetwork(chain.id)}>
             <HStack>
               <ChainLogo chainId={chain.id} />
               <Text
@@ -77,8 +74,8 @@ const NetworkSelect = ({ switchNetwork, chainId, isWrongNetwork }: NetworkSelect
           </MenuItem>
         ))}
     </MenuList>
-  )
-}
+  );
+};
 
 interface WrongNetworkSelectProps {
   switchNetwork: (chainId: ChainId) => void;
@@ -86,16 +83,16 @@ interface WrongNetworkSelectProps {
 }
 
 const WrongNetworkSelect = ({ switchNetwork, chainId }: WrongNetworkSelectProps) => {
-  const { chain } = useAccount()
-  const localChainId = useLocalNetworkChain() || ChainId.CRONOS
-  const [, setSessionChainId] = useSessionChainId()
+  const { chain } = useAccount();
+  const localChainId = useLocalNetworkChain() || ChainId.CRONOS;
+  const [, setSessionChainId] = useSessionChainId();
 
-  const localChainName = chains.find((c) => c.id === localChainId)?.name ?? 'CRO'
+  const localChainName = chains.find((c) => c.id === localChainId)?.name ?? 'CRO';
 
   return (
     <MenuList>
       <Flex alignItems="center" px={4} pb={2} pt={1}>
-        <Popover placement='auto-start'>
+        <Popover placement="auto-start">
           <PopoverTrigger>
             <HStack>
               <InfoIcon />
@@ -107,7 +104,11 @@ const WrongNetworkSelect = ({ switchNetwork, chainId }: WrongNetworkSelectProps)
           <PopoverContent>
             <PopoverArrow />
             <PopoverCloseButton />
-            <PopoverBody>The URL you are accessing (Chain id: {chainId}) belongs to {chains.find((c) => c.id === chainId)?.name ?? 'Unknown network'}; mismatching your wallet’s network. Please switch the network to continue.</PopoverBody>
+            <PopoverBody>
+              The URL you are accessing (Chain id: {chainId}) belongs to{' '}
+              {chains.find((c) => c.id === chainId)?.name ?? 'Unknown network'}; mismatching your wallet’s network.
+              Please switch the network to continue.
+            </PopoverBody>
           </PopoverContent>
         </Popover>
       </Flex>
@@ -117,7 +118,7 @@ const WrongNetworkSelect = ({ switchNetwork, chainId }: WrongNetworkSelectProps)
       {chain && (
         <MenuItem onClick={() => setSessionChainId(chain.id)} style={{ justifyContent: 'flex-start' }}>
           <ChainLogo chainId={chain.id} />
-          <Text color="secondary" fontWeight='bold' pl="12px">
+          <Text color="secondary" fontWeight="bold" pl="12px">
             {chainNameConverter(chain.name)}
           </Text>
         </MenuItem>
@@ -133,8 +134,8 @@ const WrongNetworkSelect = ({ switchNetwork, chainId }: WrongNetworkSelectProps)
         Switch network in wallet
       </PrimaryButton>
     </MenuList>
-  )
-}
+  );
+};
 
 const SHORT_SYMBOL = {
   [ChainId.ETHEREUM]: 'ETH',
@@ -161,40 +162,44 @@ const SHORT_SYMBOL = {
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.BASE_SEPOLIA]: 'Base Sepolia',
   [ChainId.ARBITRUM_SEPOLIA]: 'Arb Sepolia',
-} as const satisfies Record<ChainId, string>
-
+} as const satisfies Record<ChainId, string>;
 
 export const FromChainSelector = (props: any) => {
-    const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
-    const { onSelectChain, field } = props;
-    const { chainId, isWrongNetwork, isNotMatched } = useActiveChainId()
-    const { isLoading, canSwitch, switchNetworkAsync } = useSwitchNetwork()
+  const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
+  const { onSelectChain, field } = props;
+  const { chainId, isWrongNetwork, isNotMatched } = useActiveChainId();
+  const { isLoading, canSwitch, switchNetworkAsync } = useSwitchNetwork();
 
-    const handleSwitchNetWork = (chainId:number) => {
-        switchNetworkAsync(chainId);
-        onSelectChain(field, chainId);
-    }
-    const foundChain = useMemo(() => chains.find((c) => c.id === chainId), [chainId])
-    return (
-        <>
-            <Box w="full">
-                <Button w="full" onClick={onModalOpen}>
-                    <HStack>
-                        <ChainLogo chainId={foundChain?.id} width={30} height={30} />
-                        <Box display={{base:"none", sm:"none", md:"block"}}>{foundChain?.name}</Box>
-                    </HStack>
-                </Button>
-            </Box>
-            {isModalOpen &&
-                <ChainSelectModal isOpen={isModalOpen} onClose={onModalClose} onSelectChain={handleSwitchNetWork} field={field} />
-            }
+  const handleSwitchNetWork = (chainId: number) => {
+    switchNetworkAsync(chainId);
+    onSelectChain(field, chainId);
+  };
+  const foundChain = useMemo(() => chains.find((c) => c.id === chainId), [chainId]);
+  return (
+    <>
+      <Box w="full">
+        <Button w="full" onClick={onModalOpen}>
+          <HStack>
+            <ChainLogo chainId={foundChain?.id} width={30} height={30} />
+            <Box display={{ base: 'none', sm: 'none', md: 'block' }}>{foundChain?.name}</Box>
+          </HStack>
+        </Button>
+      </Box>
+      {isModalOpen && (
+        <ChainSelectModal
+          isOpen={isModalOpen}
+          onClose={onModalClose}
+          onSelectChain={handleSwitchNetWork}
+          field={field}
+        />
+      )}
 
-            {/* {isNotMatched ? (
+      {/* {isNotMatched ? (
                 <WrongNetworkSelect switchNetwork={switchNetworkAsync} chainId={chainId} />
             ) : (
                 <NetworkSelect switchNetwork={switchNetworkAsync} chainId={chainId} isWrongNetwork={isWrongNetwork} />
             )
             } */}
-        </>
-    )
-}
+    </>
+  );
+};

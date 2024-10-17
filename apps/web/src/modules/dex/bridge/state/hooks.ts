@@ -1,27 +1,27 @@
-import { useAtomValue, useAtom } from "jotai"
-import { bridgeReducerAtom } from "./reducer"
-import { useState, useMemo, useEffect, useCallback } from "react"
-import { useAppChainConfig } from "@src/config/hooks"
-import { useUser } from "@src/components-v2/useUser"
-import BridgeAbi from "@src/global/contracts/Bridge.json";
-import { BigNumber, Contract, utils } from "ethers"
-import { Field } from "./actions"
-import { useAccount } from "wagmi"
-import { safeGetAddress } from "@dex/swap/imported/pancakeswap/web/utils"
-import { useCurrencyBalance } from "@dex/swap/imported/pancakeswap/web/state/wallet/hooks"
-import tryParseAmount from "@pancakeswap/utils/tryParseAmount"
-import { Currency, CurrencyAmount, Native, Token, Trade, TradeType } from '@pancakeswap/sdk'
-import { useActiveChainId } from "@dex/swap/imported/pancakeswap/web/hooks/useActiveChainId"
-import useNativeCurrency from "@dex/swap/imported/pancakeswap/web/hooks/useNativeCurrency"
-import { useRouter } from "next/router"
-import { FRTN, STABLE_COIN, USDC, USDT } from '@pancakeswap/tokens'
-import { replaceBridgeState } from "./actions"
-import { chains } from "@src/wagmi"
-import { DEFAULT_INPUT_CURRENCY } from "@dex/swap/constants/exchange"
-import { ParsedUrlQuery } from "querystring"
+import { useAtomValue, useAtom } from 'jotai';
+import { bridgeReducerAtom } from './reducer';
+import { useState, useMemo, useEffect, useCallback } from 'react';
+import { useAppChainConfig } from '@src/config/hooks';
+import { useUser } from '@src/components-v2/useUser';
+import BridgeAbi from '@src/global/contracts/Bridge.json';
+import { BigNumber, Contract, utils } from 'ethers';
+import { Field } from './actions';
+import { useAccount } from 'wagmi';
+import { safeGetAddress } from '@dex/swap/imported/pancakeswap/web/utils';
+import { useCurrencyBalance } from '@dex/swap/imported/pancakeswap/web/state/wallet/hooks';
+import tryParseAmount from '@pancakeswap/utils/tryParseAmount';
+import { Currency, CurrencyAmount, Native, Token, Trade, TradeType } from '@pancakeswap/sdk';
+import { useActiveChainId } from '@dex/swap/imported/pancakeswap/web/hooks/useActiveChainId';
+import useNativeCurrency from '@dex/swap/imported/pancakeswap/web/hooks/useNativeCurrency';
+import { useRouter } from 'next/router';
+import { FRTN, STABLE_COIN, USDC, USDT } from '@pancakeswap/tokens';
+import { replaceBridgeState } from './actions';
+import { chains } from '@src/wagmi';
+import { DEFAULT_INPUT_CURRENCY } from '@dex/swap/constants/exchange';
+import { ParsedUrlQuery } from 'querystring';
 
 export function useBridgeState() {
-  return useAtomValue(bridgeReducerAtom)
+  return useAtomValue(bridgeReducerAtom);
 }
 export function useDerivedBridgeInfo(
   fromChainId: ChainId,
@@ -29,45 +29,42 @@ export function useDerivedBridgeInfo(
   typedValue: string | undefined,
   currency: Currency | undefined,
 ): {
-  currency: { [field in Field]?: Currency }
-  currencyBalance: { [field in Field]?: CurrencyAmount<Currency> }
-  parsedAmount: CurrencyAmount<Currency> | undefined
-  bridge: Trade<Currency, Currency, TradeType> | undefined
-  inputError?: string
+  currency: { [field in Field]?: Currency };
+  currencyBalance: { [field in Field]?: CurrencyAmount<Currency> };
+  parsedAmount: CurrencyAmount<Currency> | undefined;
+  bridge: Trade<Currency, Currency, TradeType> | undefined;
+  inputError?: string;
 } {
-  const { address: account } = useAccount()
+  const { address: account } = useAccount();
 
-  const currencyBalance = useCurrencyBalance(
-    account ?? undefined,
-    currency ?? undefined
-  )
+  const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined);
 
   const parsedAmount = tryParseAmount(typedValue, currency ?? undefined);
 
-  const { fee } = useBridgeFee()
+  const { fee } = useBridgeFee();
 
   const bridge = {
     fee,
     fromChainId,
     toChainId,
     currency,
-    amount: parsedAmount
-  }
-  let inputError: string | undefined
+    amount: parsedAmount,
+  };
+  let inputError: string | undefined;
   if (!account) {
-    inputError = 'Connect Wallet'
+    inputError = 'Connect Wallet';
   }
 
   if (!parsedAmount) {
-    inputError = inputError ?? 'Enter an amount'
+    inputError = inputError ?? 'Enter an amount';
   }
 
   if (!currency) {
-    inputError = inputError ?? 'Select a token'
+    inputError = inputError ?? 'Select a token';
   }
 
   if (currencyBalance && parsedAmount && currencyBalance.lessThan(parsedAmount)) {
-    inputError = `Insufficient ${currency.symbol} balance`
+    inputError = `Insufficient ${currency.symbol} balance`;
   }
 
   return {
@@ -76,23 +73,24 @@ export function useDerivedBridgeInfo(
     currencyBalance,
     parsedAmount,
     inputError,
-  }
+  };
 }
 
 export function useBridgeFee() {
-  const { currencyId, [Field.INPUT]: { chainId: fromChainId } } = useBridgeState()
+  const {
+    currencyId,
+    [Field.INPUT]: { chainId: fromChainId },
+  } = useBridgeState();
   const { config } = useAppChainConfig();
   const [fee, setFee] = useState<BigNumber | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
   const user = useUser();
-  const chainId =  useActiveChainId()
+  const chainId = useActiveChainId();
 
   // Memoize bridge to avoid recalculating unless currencyId changes
   const bridge = useMemo(() => {
     if (!currencyId) return undefined;
-    return config.bridges.find((bridge) =>
-      bridge.currencyId.toLowerCase().includes(currencyId.toLowerCase())
-    );
+    return config.bridges.find((bridge) => bridge.currencyId.toLowerCase().includes(currencyId.toLowerCase()));
   }, [currencyId, config]);
 
   // Fetch fee only when required
@@ -104,7 +102,7 @@ export function useBridgeFee() {
       const fetchedFee = await contract.fee(); // Assuming this is the correct function
       setFee(fetchedFee);
     } catch (error) {
-      console.error("Error fetching bridge fee:", error);
+      console.error('Error fetching bridge fee:', error);
       setFee(undefined); // Reset fee on error
     } finally {
       setLoading(false);
@@ -120,59 +118,59 @@ export function useBridgeFee() {
   return { fee, loading };
 }
 
-
 function parseTokenAmountURLParameter(urlParam: any): string {
-  return typeof urlParam === 'string' && !Number.isNaN(parseFloat(urlParam)) ? urlParam : ''
+  return typeof urlParam === 'string' && !Number.isNaN(parseFloat(urlParam)) ? urlParam : '';
 }
 
 function parseIndependentFieldURLParameter(urlParam: any): Field {
-  return typeof urlParam === 'string' && urlParam.toLowerCase() === 'output' ? Field.OUTPUT : Field.INPUT
+  return typeof urlParam === 'string' && urlParam.toLowerCase() === 'output' ? Field.OUTPUT : Field.INPUT;
 }
 
-const ENS_NAME_REGEX = /^[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)?$/
+const ENS_NAME_REGEX = /^[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)?$/;
 
-const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/
+const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
 function validatedRecipient(recipient: any): string | null {
-  if (typeof recipient !== 'string') return null
-  const address = safeGetAddress(recipient)
-  if (address) return address
-  if (ENS_NAME_REGEX.test(recipient)) return recipient
-  if (ADDRESS_REGEX.test(recipient)) return recipient
-  return null
+  if (typeof recipient !== 'string') return null;
+  const address = safeGetAddress(recipient);
+  if (address) return address;
+  if (ENS_NAME_REGEX.test(recipient)) return recipient;
+  if (ADDRESS_REGEX.test(recipient)) return recipient;
+  return null;
 }
 
 export function queryParameterstoBridgeState(
   parsedQs: ParsedUrlQuery,
   nativeSymbol?: string,
-  defaultCurrency?: string
+  defaultCurrency?: string,
 ) {
-  let currencyId = defaultCurrency || (nativeSymbol ?? DEFAULT_INPUT_CURRENCY)
+  let currencyId = defaultCurrency || (nativeSymbol ?? DEFAULT_INPUT_CURRENCY);
 
-  const recipient = validatedRecipient(parsedQs.recipient)
+  const recipient = validatedRecipient(parsedQs.recipient);
 
   return {
     currencyId,
     typedValue: parseTokenAmountURLParameter(parsedQs.exactAmount),
     recipient,
-  }
+  };
 }
 
-export function useDefaultCurrency(): { currencyId: string | undefined; } | undefined {
-  const { chainId } = useActiveChainId()
-  const [, dispatch] = useAtom(bridgeReducerAtom)
-  const native = useNativeCurrency()
-  const { query, isReady } = useRouter()
-  const [result, setResult] = useState<{ currencyId: string | undefined } | undefined>()
+export function useDefaultCurrency(): { currencyId: string | undefined } | undefined {
+  const { chainId } = useActiveChainId();
+  const [, dispatch] = useAtom(bridgeReducerAtom);
+  const native = useNativeCurrency();
+  const { query, isReady } = useRouter();
+  const [result, setResult] = useState<{ currencyId: string | undefined } | undefined>();
 
   useEffect(() => {
-    if (!chainId || !native || !isReady) return
+    if (!chainId || !native || !isReady) return;
     const parsed = queryParameterstoBridgeState(
       query,
       native.symbol,
       FRTN[chainId as keyof typeof FRTN]?.address ??
-      STABLE_COIN[chainId]?.address ?? USDC[chainId as keyof typeof USDC]?.address ??
-      USDT[chainId as keyof typeof USDT]?.address,
-    )
+        STABLE_COIN[chainId]?.address ??
+        USDC[chainId as keyof typeof USDC]?.address ??
+        USDT[chainId as keyof typeof USDT]?.address,
+    );
 
     const toChain = chains.find((chain) => chain.id != chainId);
 
@@ -184,9 +182,9 @@ export function useDefaultCurrency(): { currencyId: string | undefined; } | unde
         toChainId: toChain?.id,
         recipient: '',
       }),
-    )
-    setResult({ currencyId: parsed.currencyId })
-  }, [dispatch, chainId, query, native, isReady])
+    );
+    setResult({ currencyId: parsed.currencyId });
+  }, [dispatch, chainId, query, native, isReady]);
 
-  return result
+  return result;
 }
