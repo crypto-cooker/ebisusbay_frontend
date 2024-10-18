@@ -42,7 +42,7 @@ import ImageService from '@src/core/services/image';
 import { useUser } from '@src/components-v2/useUser';
 import {NetworkSwitcher} from "@src/components-v2/shared/layout/navbar/network-switcher";
 import {useRouter} from "next/router";
-import NavMenu from './nav-menu';
+import NavMenu from './nav-menu/nav-menu';
 
 const config = appConfig();
 

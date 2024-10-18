@@ -1,13 +1,16 @@
 import { HStack, Menu, MenuButton, MenuList, MenuItem, Link, Button, Box } from '@chakra-ui/react';
-import { ChevronDownIcon, ExternalLinkIcon } from '@chakra-ui/icons';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoins } from '@fortawesome/free-solid-svg-icons';
 import { memo } from 'react';
 
 const NavMenu = (props: any) => {
   return (
     <HStack as={'nav'} spacing={3} me={4} {...props}>
       <Menu placement="bottom-end">
-        <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size="sm" variant="unstyled" color="white">
-          TRADE
+        <MenuButton as={Button} px={2} size="sm" variant="unstyled" color="white">
+          <FontAwesomeIcon icon={faCoins}/>
+          Trade
         </MenuButton>
         <MenuList>
           <MenuItem as={Link} href="/marketplace" _hover={{ color: 'inherit' }} justifyContent="space-between">
@@ -31,8 +34,8 @@ const NavMenu = (props: any) => {
         </MenuList>
       </Menu>
       <Menu placement="bottom-end">
-        <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size="sm" variant="unstyled" color="white">
-          EARN
+        <MenuButton as={Button} px={2} size="sm" variant="unstyled" color="white">
+          Earn
         </MenuButton>
         <MenuList>
           <MenuItem as={Link} href="/dex/liquidity" _hover={{ color: 'inherit' }} justifyContent="space-between">
@@ -53,7 +56,7 @@ const NavMenu = (props: any) => {
         </MenuList>
       </Menu>
       <Menu placement="bottom-end">
-        <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size="sm" variant="unstyled" color="white">
+        <MenuButton as={Button} px={2} size="sm" variant="unstyled" color="white">
           GameFi
         </MenuButton>
         <MenuList>
@@ -82,7 +85,7 @@ const NavMenu = (props: any) => {
         </MenuList>
       </Menu>
       <Menu placement="bottom-end">
-        <MenuButton as={Button} rightIcon={<ChevronDownIcon />} size="sm" variant="unstyled" color="white">
+        <MenuButton as={Button} px={2} size="sm" variant="unstyled" color="white">
           •••
         </MenuButton>
         <MenuList>
