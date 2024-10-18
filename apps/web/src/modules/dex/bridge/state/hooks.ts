@@ -48,7 +48,7 @@ export function useDerivedBridgeInfo(
   const toBridgeAddress = useMemo(() => {
     if (!currency) return;
     const bridge = toChainConfig.bridges.find((bridge) => {
-      return bridge.currencyId.toLowerCase().includes(toTokenAddress.toLowerCase());
+      return bridge.currencyId.toLowerCase().includes(toTokenAddress?.toLowerCase());
     });
     return bridge?.address
   }, [toTokenAddress, toChainConfig]);
