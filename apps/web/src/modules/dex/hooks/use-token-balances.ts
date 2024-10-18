@@ -1,10 +1,59 @@
-import useSupportedTokens from "@dex/hooks/use-supported-tokens";
-import {useUser} from "@src/components-v2/useUser";
-import {Address, ContractFunctionParameters, erc20Abi} from "viem";
-import {useBlockNumber, useContractReads} from "wagmi";
-import {useMemo} from "react";
-import {isAddress} from "@market/helpers/utils";
-import {CurrencyAmount, Token} from "@pancakeswap/sdk";
+import useSupportedTokens from '@dex/hooks/use-supported-tokens';
+import { useUser } from '@src/components-v2/useUser';
+import { Address, ContractFunctionParameters, erc20Abi } from 'viem';
+import { useBlockNumber, useContractReads } from 'wagmi';
+import { isAddress } from '@market/helpers/utils';
+import { CurrencyAmount, Token } from '@pancakeswap/sdk';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useAppChainConfig } from '@src/config/hooks';
+import { wagmiConfigs } from '@src/config/chains';
+import { multicall } from '@wagmi/core';
+import { utils } from 'ethers';
+
+export const useTokenBalanceOnCertainChain = (
+  tokenAddress: string,
+  chainId: 338 | 388 | 25 | 282 | undefined,
+  account: string,
+): { balance: string; isLoading: boolean } => {
+  const { config } = useAppChainConfig(chainId);
+  const [balance, setBalance] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const execute = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const [balance, decimals] = await multicall(wagmiConfigs, {
+        chainId,
+        contracts: [
+          {
+            abi: erc20Abi,
+            address: tokenAddress as Address,
+            functionName: 'balanceOf',
+            args: [account as Address],
+          },
+          {
+            abi: erc20Abi,
+            address: tokenAddress as Address,
+            functionName: 'decimals',
+            args: [],
+          },
+        ],
+      });
+      let formattedBalance;
+      if (!balance.error) formattedBalance = utils.formatUnits(balance.result, decimals.result);
+      if (formattedBalance) setBalance(formattedBalance);
+      else setBalance('');
+    } catch (error) {
+      console.log(error);
+      setBalance('');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [config, tokenAddress, chainId, account]);
+  useEffect(() => {
+    execute();
+  }, [execute]);
+  return { balance, isLoading };
+};
 
 export function useAllTokenBalances(): { [tokenAddress: string]: CurrencyAmount<Token> | undefined } {
   const user = useUser();
@@ -35,14 +84,17 @@ export function useAllTokenBalances(): { [tokenAddress: string]: CurrencyAmount<
 }
 
 // This will be replaced with subgraph call
-export function useTokenBalances(address?: string, tokens?: Token[]): { [tokenAddress: string]: CurrencyAmount<Token> | undefined } {
+export function useTokenBalances(
+  address?: string,
+  tokens?: Token[],
+): { [tokenAddress: string]: CurrencyAmount<Token> | undefined } {
   // const [value, setValue] = useState<CurrencyAmount<Token>[]>([]);
   if (!address || !tokens) return {};
   const { data: blockNumber } = useBlockNumber();
 
   const validatedTokens: Token[] = useMemo(
     () => tokens?.filter((t?: Token): t is Token => isAddress(t?.address) !== false) ?? [],
-    [tokens]
+    [tokens],
   );
 
   const contracts: ContractFunctionParameters[] = tokens.map((token: any) => {
@@ -53,8 +105,6 @@ export function useTokenBalances(address?: string, tokens?: Token[]): { [tokenAd
       args: [address],
     };
   });
-
-
 
   // const fetchBalances = useMemo(
   //   () =>
@@ -79,25 +129,28 @@ export function useTokenBalances(address?: string, tokens?: Token[]): { [tokenAd
   //   enabled: !!contracts
   // });
 
-  const { data, isLoading: anyLoading, error } = useContractReads({
-    contracts
+  const {
+    data,
+    isLoading: anyLoading,
+    error,
+  } = useContractReads({
+    contracts,
   });
 
   return useMemo(
     () =>
       address && validatedTokens.length > 0
         ? validatedTokens.reduce<{ [tokenAddress: string]: CurrencyAmount<Token> | undefined }>((memo, token, i) => {
-          const value = data?.[i]?.result as any;
-          const amount = value ? BigInt(value.toString()) : undefined;
-          if (amount) {
-            memo[token.address] = CurrencyAmount.fromRawAmount(token, amount);
-          }
-          return memo;
-        }, {})
+            const value = data?.[i]?.result as any;
+            const amount = value ? BigInt(value.toString()) : undefined;
+            if (amount) {
+              memo[token.address] = CurrencyAmount.fromRawAmount(token, amount);
+            }
+            return memo;
+          }, {})
         : {},
-    [address, validatedTokens, data]
-  )
-
+    [address, validatedTokens, data],
+  );
 
   // useEffect(() => {
   //   async function fetch() {

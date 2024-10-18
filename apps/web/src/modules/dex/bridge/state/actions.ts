@@ -1,5 +1,4 @@
 import { createAction } from '@reduxjs/toolkit';
-import { createTable } from '@tanstack/react-table';
 
 export enum Field {
   INPUT = 'INPUT',
