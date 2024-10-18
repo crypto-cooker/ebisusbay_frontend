@@ -19,6 +19,7 @@ import { replaceBridgeState } from './actions';
 import { chains } from '@src/wagmi';
 import { DEFAULT_INPUT_CURRENCY } from '@dex/swap/constants/exchange';
 import { ParsedUrlQuery } from 'querystring';
+import useTokenBalanceOnCertainChain from '@dex/swap/imported/pancakeswap/web/hooks/useTokenBalancetOnCertainChain';
 
 export function useBridgeState() {
   return useAtomValue(bridgeReducerAtom);
@@ -40,6 +41,23 @@ export function useDerivedBridgeInfo(
   const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined);
 
   const parsedAmount = tryParseAmount(typedValue, currency ?? undefined);
+
+  const { config: toChainConfig } = useAppChainConfig(toChainId);
+  const toTokenAddress: string = findToTokenAddress(toChainConfig.contracts, currency?.name);
+
+  const toBridgeAddress = useMemo(() => {
+    if (!currency) return;
+    const bridge = toChainConfig.bridges.find((bridge) => {
+      return bridge.currencyId.toLowerCase().includes(toTokenAddress.toLowerCase());
+    });
+    return bridge?.address
+  }, [toTokenAddress, toChainConfig]);
+
+
+  const toBridgeBalance = useTokenBalanceOnCertainChain(toTokenAddress, toChainId, toBridgeAddress as string);
+  const balanceToWarn = parseFloat(parseFloat(toBridgeBalance).toFixed(4)).toString();
+
+  const parsedToBridgeBalance = tryParseAmount(toBridgeBalance, currency);
 
   const { fee } = useBridgeFee();
 
@@ -65,6 +83,10 @@ export function useDerivedBridgeInfo(
 
   if (currencyBalance && parsedAmount && currencyBalance.lessThan(parsedAmount)) {
     inputError = `Insufficient ${currency.symbol} balance`;
+  }
+
+  if (parsedToBridgeBalance && parsedAmount && parsedToBridgeBalance.lessThan(parsedAmount)) {
+    inputError = `Set below ${balanceToWarn} ${currency.symbol}`;
   }
 
   return {
@@ -188,3 +210,10 @@ export function useDefaultCurrency(): { currencyId: string | undefined } | undef
 
   return result;
 }
+
+export const findToTokenAddress = (contracts: any, tokenName: string) => {
+  const properties = Object.keys(contracts);
+  const values: string[] = Object.values(contracts);
+
+  return values[properties.indexOf(tokenName?.toLowerCase())];
+};

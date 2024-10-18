@@ -1,24 +1,15 @@
 import {
   Container,
   Box,
-  IconButton,
   VStack,
   HStack,
-  ButtonGroup,
   Flex,
-  Wrap,
-  Button,
-  Text,
-  Skeleton,
-  Select,
-  Input,
 } from '@chakra-ui/react';
 import { Card } from '@src/components-v2/foundation/card';
 import { PrimaryButton } from '@src/components-v2/foundation/button';
 import AuthenticationGuard from '@src/components-v2/shared/authentication-guard';
 import { useDisclosure } from '@chakra-ui/react';
 import { useApproveCallback, ApprovalState } from '@dex/swap/imported/pancakeswap/web/hooks/useApproveCallback';
-import useAccountActiveChain from '@dex/swap/imported/pancakeswap/web/hooks/useAccountActiveChain';
 import { ToChainSelector } from './toChainSelector';
 import { FromChainSelector } from './fromChainSelector';
 import CurrencyInputPanel from '@dex/components/currency-input-panel';
@@ -26,8 +17,8 @@ import { useBridgeActionHandlers } from '@dex/bridge/state/useBridgeActionHandle
 import { useBridgeState, useDefaultCurrency } from '@dex/bridge/state/hooks';
 import { Field } from '@dex/swap/constants';
 import { useCurrency } from '@dex/swap/imported/pancakeswap/web/hooks/tokens';
-import { useMemo, useCallback, useState, useEffect } from 'react';
-import { useAppChainConfig, useBridgeContract } from '@src/config/hooks';
+import { useMemo, useCallback, useState } from 'react';
+import { useBridgeContract } from '@src/config/hooks';
 import { useDerivedBridgeInfo } from '@dex/bridge/state/hooks';
 import { CommitButton } from '@dex/swap/components/tabs/swap/commit-button';
 import ConfirmBridgeModal from '../bridge-modal/confirm-bridge-modal';
@@ -36,7 +27,7 @@ import useWrapCallback from '@dex/swap/imported/pancakeswap/web/hooks/useWrapCal
 import { useIsWrapping } from '@dex/swap/imported/pancakeswap/web/hooks/useIsWrapping';
 import { WrapType } from '@dex/swap/imported/pancakeswap/web/hooks/useWrapCallback';
 import { useBridgeCallback } from '@dex/bridge/hooks/useBridgeCallback';
-import { ArrowLeftIcon, ArrowRightIcon, SettingsIcon } from '@chakra-ui/icons';
+import { ArrowRightIcon } from '@chakra-ui/icons';
 import { Currency, CurrencyAmount, Trade, TradeType } from '@pancakeswap/sdk';
 
 export default function BridgeForm() {

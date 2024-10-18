@@ -13,5 +13,5 @@ export type Bridge = {
   amount: CurrencyAmount<Currency>;
   fromChainId: ChainId;
   toChainId: ChainId;
-  fee: BigNumber;
+  fee: BigNumber | undefined;
 };
