@@ -32,11 +32,10 @@ import {
 } from "@chakra-ui/react";
 import React, {ReactNode} from "react";
 import {AxiosResponse} from "axios";
-import {round, siPrefixedNumber} from "@market/helpers/utils";
+import {isCollectionListable, round, siPrefixedNumber} from "@market/helpers/utils";
 import {InfiniteData} from "@tanstack/query-core";
 import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
 import {commify} from "ethers/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
 import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
 import Blockies from "react-blockies";
@@ -167,7 +166,7 @@ const DataTable = ({data, timeFrame, onSort}: Pick<ResponsiveCollectionsTablePro
                   </Td>
                   <Td valign={timeframeHasDelta(timeFrame) ? 'top' : 'middle'} isNumeric>
                     <RichDataTableCell
-                      value={collection.listable && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice ?? 0)) : 0}
+                      value={isCollectionListable(collection) && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice ?? 0)) : 0}
                       change={0}
                       isCroValue={true}
                       showChange={false}
@@ -217,8 +216,8 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
     },
     totalfloorprice: {
       field: 'Floor',
-      value: collection.listable && collection.numberActive > 0 ? Math.round(collection.floorPrice ?? 0) : 0,
-      displayValue: collection.listable && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice ?? 0)) : 'N/A'
+      value: isCollectionListable(collection) && collection.numberActive > 0 ? Math.round(collection.floorPrice ?? 0) : 0,
+      displayValue: isCollectionListable(collection) && collection.numberActive > 0 ? siPrefixedNumber(Math.round(collection.floorPrice ?? 0)) : 'N/A'
     },
     totalaveragesaleprice: {
       field: 'Avg',
@@ -272,7 +271,7 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                       >
                         {collection?.name ?? 'Unknown'}
                       </CollectionPageLink>
-                      {collection.listable && collection.numberActive > 0 && !!collection.floorPrice && (
+                      {isCollectionListable(collection) && collection.numberActive > 0 && !!collection.floorPrice && (
                         <Text fontWeight='normal' fontSize='xs' className='text-muted'>
                           Floor: {`${siPrefixedNumber(Math.round(collection.floorPrice))} CRO`}
                         </Text>
@@ -337,7 +336,7 @@ const DataAccordion = ({data, timeFrame, primarySort}: Pick<ResponsiveCollection
                   {primarySort !== 'totalfloorprice' && (
                     <Stack spacing={0}>
                       <Text fontWeight='bold'>Floor</Text>
-                      {collection.listable && collection.numberActive > 0 && !!collection.floorPrice ? (
+                      {isCollectionListable(collection) && collection.numberActive > 0 && !!collection.floorPrice ? (
                         <HStack spacing={1} w="full" justify="center">
                           <CronosIconBlue boxSize={4} />
                           <Box>{siPrefixedNumber(Math.round(collection.floorPrice))}</Box>

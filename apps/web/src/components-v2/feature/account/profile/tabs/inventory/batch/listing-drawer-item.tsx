@@ -41,7 +41,7 @@ import {
 import {Contract, ethers} from "ethers";
 import {ERC721} from "@src/global/contracts/Abis";
 import {toast} from "react-toastify";
-import {ciEquals, createSuccessfulTransactionToastContent, isBundle, isKoban, round} from "@market/helpers/utils";
+import {ciEquals, createSuccessfulTransactionToastContent, isBundle, isCollectionListable, isKoban, round} from "@market/helpers/utils";
 import {getCollectionMetadata} from "@src/core/api";
 import {collectionRoyaltyPercent} from "@src/core/chain";
 import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
@@ -254,7 +254,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
         }
 
         newExtras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId, item.nft.chain);
-        newExtras.canList = item.nft.listable && !item.nft.isStaked && (!isBundling || !isKoban(item.nft.nftAddress, item.nft.nftId));
+        newExtras.canList = isCollectionListable(item.nft.collection) && !item.nft.isStaked && (!isBundling || !isKoban(item.nft.nftAddress, item.nft.nftId));
         newExtras.availableCurrencies = currenciesByCollection(item.nft.nftAddress);
 
         setCurrency(newExtras.availableCurrencies[0].symbol);
