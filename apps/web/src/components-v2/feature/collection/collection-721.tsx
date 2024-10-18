@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useQuery} from "@tanstack/react-query";
 import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
-import {AspectRatio, Avatar, Box, Button, Flex, Heading, Image, Text, useBreakpointValue} from "@chakra-ui/react";
+import {AspectRatio, Avatar, Box, Button, Flex, Heading, IconButton, Image, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, Text, useBreakpointValue} from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import Blockies from "react-blockies";
 import MintingButton from "@src/Components/Collection/MintingButton";
 import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
+import {ChevronDownIcon, ChevronUpIcon, Icon, WarningIcon} from "@chakra-ui/icons";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
 import {useRouter} from "next/router";
 import CollectionInfoBar from "@src/Components/components/CollectionInfoBar";
@@ -34,6 +34,7 @@ import {PokerCollection} from "@src/core/services/api-service/types";
 import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
 import {BlueCheckIcon} from "@src/components-v2/shared/icons/blue-check";
+import { MapiCollectionBlacklist } from "@src/core/services/api-service/mapi/types";
 
 const tabs = {
   items: 'items',
@@ -133,7 +134,19 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
             ) : (
               <Blockies seed={collection.address.toLowerCase()} size={15} scale={10} />
             )}
-            {collection.verification.verified && (
+            {collection.blacklisted === MapiCollectionBlacklist.PENDING ? (
+              <Popover>
+                <PopoverTrigger>
+                  <Box position='absolute' bottom={2} right={2} cursor='pointer'>
+                    <WarningIcon boxSize={6}/>
+                  </Box>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverBody>This collection is unverified. Trade at your own risk!</PopoverBody>
+                </PopoverContent>
+              </Popover>
+            ) : collection.verification.verified && (
               <Box position='absolute' bottom={2} right={2}>
                 <BlueCheckIcon boxSize={6}/>
               </Box>

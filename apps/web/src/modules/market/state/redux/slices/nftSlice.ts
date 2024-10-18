@@ -4,6 +4,7 @@ import {refreshToken} from "@src/core/api/endpoints/refresh";
 import {toast} from "react-toastify";
 import {getNft} from "@src/core/api/endpoints/nft";
 import {getNftFavorites} from "@src/core/cms/next/favorites";
+import { MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/types';
 
 type NftSliceState = {
   loading: boolean;
@@ -14,6 +15,8 @@ type NftSliceState = {
   currentListing?: any;
   refreshing: boolean;
   favorites: number;
+  collection: any;
+  blacklisted: MapiCollectionBlacklist;
 }
 
 const nftSlice = createSlice({
@@ -26,7 +29,9 @@ const nftSlice = createSlice({
     powertraits: [],
     currentListing: null,
     refreshing: false,
-    favorites: 0
+    favorites: 0,
+    collection: null,
+    blacklisted: MapiCollectionBlacklist.LISTABLE
   } as NftSliceState,
   reducers: {
     nftLoading: (state) => {
@@ -41,6 +46,8 @@ const nftSlice = createSlice({
       state.powertraits = action.payload.powertraits ?? [];
       state.currentListing = action.payload.currentListing;
       state.favorites = action.payload.favorites;
+      state.collection = action.payload.collection;
+      state.blacklisted = action.payload.blacklisted;
     },
     nftRefreshing: (state) => {
       state.refreshing = true;

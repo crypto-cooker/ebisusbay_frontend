@@ -48,6 +48,8 @@ import {ApiService} from "@src/core/services/api-service";
 import GasTokenSelectorDialog from "@dex/swap/components/tabs/swap/paymaster/gas-token-selector-dialog";
 import {GasTokenSelector} from "@src/components-v2/shared/layout/navbar/cart/gas-token-selector";
 import {useMarketPaymaster} from "@market/hooks/useMarketPaymaster";
+import PurchaseUnverifiedConfirmationDialog from '@src/components-v2/shared/dialogs/purchase-unverified-confirmation';
+import { MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/types';
 
 const Cart = function () {
   const user = useUser();
@@ -57,6 +59,7 @@ const Cart = function () {
   const [invalidItems, setInvalidItems] = useState<string[]>([]);
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const { isOpen: isOpenGasToken, onOpen: onOpenGasToken, onClose: onCloseGasToken } = useDisclosure()
+  const [openUnverifiedCollectionDialog, setOpenUnverifiedCollectionDialog] = useState<any[]>([]);
 
   const handleTabsChange = (index: number) => {
     setSelectedChain(cartChains[index]);
@@ -132,6 +135,27 @@ const Cart = function () {
   };
 
   const preparePurchase = async () => {
+    if (!selectedChain) return;
+
+    if(cart.items.length === 0) return;
+
+    const collectionAddresses = [...new Set(cart.items.map((item) => item.address.toLowerCase()))];
+    const collections = await ApiService.withoutKey().getCollections({address: collectionAddresses});
+    const unverifiedCollections = collections.data.filter((collection) => collection.blacklisted === MapiCollectionBlacklist.PENDING);
+    if (unverifiedCollections.length > 0) {
+      setOpenUnverifiedCollectionDialog(unverifiedCollections);
+      return;
+    }
+
+    await purchase();
+  }
+
+  const handleAcknowledgedUnverifiedCollection = async () => {
+    setOpenUnverifiedCollectionDialog([]);
+    await purchase();
+  }
+
+  const purchase = async () => {
     if (!selectedChain) return;
 
     if(cart.items.length === 0) return;
@@ -435,6 +459,13 @@ const Cart = function () {
           chainId={selectedChain?.id}
         />
       )}
+      
+      <PurchaseUnverifiedConfirmationDialog
+        isOpen={openUnverifiedCollectionDialog.length > 0}
+        onClose={() => setOpenUnverifiedCollectionDialog([])}
+        collections={openUnverifiedCollectionDialog}
+        onConfirm={handleAcknowledgedUnverifiedCollection}
+      />
     </div>
   );
 };
