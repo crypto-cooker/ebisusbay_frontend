@@ -37,37 +37,36 @@ export function useDerivedBridgeInfo(
   inputError?: string;
 } {
   const { address: account } = useAccount();
-
+  const { config: toChainConfig } = useAppChainConfig(toChainId);
   const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined);
-
   const parsedAmount = tryParseAmount(typedValue, currency ?? undefined);
 
-  const { config: toChainConfig } = useAppChainConfig(toChainId);
   const toTokenAddress: string = findToTokenAddress(toChainConfig.contracts, currency?.name);
-
   const toBridgeAddress = useMemo(() => {
     if (!currency) return;
     const bridge = toChainConfig.bridges.find((bridge) => {
       return bridge.currencyId.toLowerCase().includes(toTokenAddress?.toLowerCase());
     });
-    return bridge?.address
+    return bridge?.address;
   }, [toTokenAddress, toChainConfig]);
-
-
-  const toBridgeBalance = useTokenBalanceOnCertainChain(toTokenAddress, toChainId, toBridgeAddress as string);
+  const { balance: toBridgeBalance, isLoading } = useTokenBalanceOnCertainChain(
+    toTokenAddress,
+    toChainId,
+    toBridgeAddress as string,
+  );
   const balanceToWarn = parseFloat(parseFloat(toBridgeBalance).toFixed(4)).toString();
-
   const parsedToBridgeBalance = tryParseAmount(toBridgeBalance, currency);
 
   const { fee } = useBridgeFee();
-
-  const bridge = {
-    fee,
-    fromChainId,
-    toChainId,
-    currency,
-    amount: parsedAmount,
-  };
+  const bridge = useMemo(() => {
+    return {
+      fee,
+      fromChainId,
+      toChainId,
+      currency,
+      amount: parsedAmount,
+    };
+  }, [fee, fromChainId, toChainId, currency, parsedAmount]);
   let inputError: string | undefined;
   if (!account) {
     inputError = 'Connect Wallet';
@@ -84,6 +83,8 @@ export function useDerivedBridgeInfo(
   if (currencyBalance && parsedAmount && currencyBalance.lessThan(parsedAmount)) {
     inputError = `Insufficient ${currency.symbol} balance`;
   }
+
+  if (isLoading) inputError = 'Waiting ...';
 
   if (parsedToBridgeBalance && parsedAmount && parsedToBridgeBalance.lessThan(parsedAmount)) {
     inputError = `Set below ${balanceToWarn} ${currency.symbol}`;
@@ -102,6 +103,7 @@ export function useBridgeFee() {
   const {
     currencyId,
     [Field.INPUT]: { chainId: fromChainId },
+    [Field.OUTPUT]: { chainId: toChainId },
   } = useBridgeState();
   const { config } = useAppChainConfig();
   const [fee, setFee] = useState<BigNumber | undefined>(undefined);
@@ -109,32 +111,29 @@ export function useBridgeFee() {
   const user = useUser();
   const chainId = useActiveChainId();
 
-  // Memoize bridge to avoid recalculating unless currencyId changes
   const bridge = useMemo(() => {
     if (!currencyId) return undefined;
     return config.bridges.find((bridge) => bridge.currencyId.toLowerCase().includes(currencyId.toLowerCase()));
   }, [currencyId, config]);
 
-  // Fetch fee only when required
   const getFee = useCallback(async () => {
     if (!bridge || !bridge.address || !user?.provider?.signer) return;
     setLoading(true);
     try {
       const contract = new Contract(bridge.address, BridgeAbi, user.provider.signer);
-      const fetchedFee = await contract.fee(); // Assuming this is the correct function
+      const fetchedFee = await contract.fee();
       setFee(fetchedFee);
     } catch (error) {
       console.error('Error fetching bridge fee:', error);
-      setFee(undefined); // Reset fee on error
+      setFee(undefined);
     } finally {
       setLoading(false);
     }
-  }, [bridge, user, fromChainId, currencyId]);
+  }, [user, fromChainId, currencyId, bridge]);
 
-  // Only fetch the fee when necessary (currencyId, user, or bridge changes)
   useEffect(() => {
     if (bridge) {
-      getFee();
+      getFee()
     }
   }, [bridge, currencyId, chainId]);
   return { fee, loading };
