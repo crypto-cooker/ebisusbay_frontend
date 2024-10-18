@@ -168,7 +168,7 @@ const Header = function () {
           </Flex>
         </Box>
       </Box>
-      <NavMenu position={"fixed"} bottom={0} display={{base: 'flex', md: 'none'}} justifyContent={'space-around'} className="mobile-navbar"/>
+      <NavMenu position={"fixed"} bottom={0} display={{base: 'flex', md: 'none'}} justifyContent={'space-around'} className="mobile-navbar" isMobile={true}/>
     </Box>
   );
 };
