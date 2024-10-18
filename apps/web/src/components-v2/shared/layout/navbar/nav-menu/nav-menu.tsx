@@ -5,12 +5,12 @@ import { faArrowRightArrowLeft, faGamepad, faSackDollar } from '@fortawesome/fre
 import { memo } from 'react';
 
 const NavMenu = (props: any) => {
-  const {isMobile} = props
+  const { isMobile } = props;
   return (
     <Box>
-      <HStack as={'nav'} spacing={3} me={4} {...props}>
+      <HStack as={'nav'} spacing={3} me={4} {...props} id="navbar">
         <Menu placement="bottom-end">
-          <MenuButton as={Button} height='fit-content' px={2} size="sm" variant="unstyled" color="white">
+          <MenuButton as={Button} height="fit-content" px={2} size="sm" variant="unstyled" color="white">
             <VStack gap={0}>
               {isMobile && <Icon as={FontAwesomeIcon} pt={2} icon={faArrowRightArrowLeft} />}
               <Box>Trade</Box>
@@ -38,7 +38,7 @@ const NavMenu = (props: any) => {
           </MenuList>
         </Menu>
         <Menu placement="bottom-end">
-          <MenuButton as={Button} height='fit-content' px={2} size="sm" variant="unstyled" color="white">
+          <MenuButton as={Button} height="fit-content" px={2} size="sm" variant="unstyled" color="white">
             <VStack gap={0}>
               {isMobile && <Icon as={FontAwesomeIcon} pt={2} icon={faSackDollar} />}
               <Box>Earn</Box>
@@ -63,7 +63,7 @@ const NavMenu = (props: any) => {
           </MenuList>
         </Menu>
         <Menu placement="bottom-end">
-          <MenuButton as={Button} height='fit-content' px={2} size="sm" variant="unstyled" color="white">
+          <MenuButton as={Button} height="fit-content" px={2} size="sm" variant="unstyled" color="white">
             <VStack gap={0}>
               {isMobile && <Icon as={FontAwesomeIcon} pt={2} icon={faGamepad} />}
               <Box>GameFi</Box>
@@ -95,7 +95,7 @@ const NavMenu = (props: any) => {
           </MenuList>
         </Menu>
         <Menu placement="bottom-end">
-          <MenuButton as={Button} height='fit-content' px={2} size="sm" variant="unstyled" color="white">
+          <MenuButton as={Button} height="fit-content" px={2} size="sm" variant="unstyled" color="white">
             <VStack gap={0}>
               <Box>•••</Box>
             </VStack>

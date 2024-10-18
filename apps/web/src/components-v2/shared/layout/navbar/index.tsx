@@ -52,6 +52,9 @@ const GlobalStyles = createGlobalStyle`
     border-bottom: 0;
     box-shadow: 0 4px 20px 0 rgba(10,10,10, .8);
   }
+  #navbar{
+    background: ${({ theme }: { theme: any }) => theme.colors.bgColor4};
+  }
 `;
 
 const Header = function () {
