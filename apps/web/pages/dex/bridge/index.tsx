@@ -10,12 +10,12 @@ export default function Page() {
   return (
     <>
       <PageHead
-        title='Ryoshi Swap'
-        description='Trade tokens instantly with low fees'
+        title='Ryoshi Bridge'
+        description='Bridge tokens instantly with low fees'
       />
       <PageHeader
-        title='Ryoshi Swap'
-        subtitle='Trade tokens instantly with low fees'
+        title='Ryoshi Bridge'
+        subtitle='Bridge tokens instantly with low fees'
       />
       <Subnavigation primaryTabKey='Bridge' />
       <StandardContainer mt={4} maxW='container.md'>
