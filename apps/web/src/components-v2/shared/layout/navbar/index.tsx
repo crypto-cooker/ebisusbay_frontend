@@ -28,7 +28,7 @@ import {
   useDisclosure,
   useMediaQuery,
   useOutsideClick,
-  VStack
+  VStack,
 } from '@chakra-ui/react';
 import Cart from './cart/cart';
 import { ChevronDownIcon, CloseIcon, ExternalLinkIcon, HamburgerIcon } from '@chakra-ui/icons';
@@ -40,35 +40,24 @@ import FortuneIcon from '@src/components-v2/shared/icons/fortune';
 import { round } from '@market/helpers/utils';
 import ImageService from '@src/core/services/image';
 import { useUser } from '@src/components-v2/useUser';
-import {NetworkSwitcher} from "@src/components-v2/shared/layout/navbar/network-switcher";
-import {useRouter} from "next/router";
+import { NetworkSwitcher } from '@src/components-v2/shared/layout/navbar/network-switcher';
+import { useRouter } from 'next/router';
 import NavMenu from './nav-menu/nav-menu';
 
 const config = appConfig();
 
 const GlobalStyles = createGlobalStyle`
   header#myHeader {
-    background: ${({ theme }: {theme: any}) => theme.colors.bgColor4};
+    background: ${({ theme }: { theme: any }) => theme.colors.bgColor4};
     border-bottom: 0;
     box-shadow: 0 4px 20px 0 rgba(10,10,10, .8);
   }
 `;
 
-const NavLink = ({name, to, onClick}: {name: string, to: string, onClick?: any}) => {
-  return (
-    <Link href={to} className='single-link' onClick={onClick}>
-      {name}
-    </Link>
-  );
-}
-
 const Header = function () {
-  const {isOpen, onOpen, onClose} = useDisclosure();
-  const {theme, profile, toggleTheme} = useUser();
-  const shouldUseMobileSearch = useBreakpointValue(
-    { base: true, lg: false },
-    { fallback: 'lg'},
-  );
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { theme, profile, toggleTheme } = useUser();
+  const shouldUseMobileSearch = useBreakpointValue({ base: true, lg: false }, { fallback: 'lg' });
   const [shouldHideTitle] = useMediaQuery('(max-width: 1080px)');
   const [shouldHideFrtn] = useMediaQuery('(max-width: 410px)');
   const { tokenUsdRate } = useTokenExchangeRate(config.tokens.frtn.address, Number(config.chain.id));
@@ -109,21 +98,18 @@ const Header = function () {
   return (
     <Box>
       <GlobalStyles />
-      <Box px={{base:2, md:4}} as="header" position="fixed" w="100%" zIndex={200} id="myHeader" className="navbar2">
+      <Box px={{ base: 2, md: 4 }} as="header" position="fixed" w="100%" zIndex={200} id="myHeader" className="navbar2">
         <Box maxW="2560px">
           <Flex h={16} alignItems={'center'}>
             <Link href="/">
               <HStack spacing={2}>
                 <Image
                   src={theme === 'light' ? '/img/logo-light.svg' : '/img/logo-dark.svg'}
-                  alt='ebisus bay logo'
-                  w='44px'
+                  alt="ebisus bay logo"
+                  w="44px"
                 />
                 {!shouldHideTitle && (
-                  <Image
-                    src={ImageService.translate('/img/logos/eb-title.png').custom({height: 17})}
-                    maxH='17px'
-                  />
+                  <Image src={ImageService.translate('/img/logos/eb-title.png').custom({ height: 17 })} maxH="17px" />
                 )}
               </HStack>
             </Link>
@@ -137,29 +123,46 @@ const Header = function () {
 
             <Flex alignItems={'center'} className="mainside">
               <Box me={2}>
-                <Link href='/dex/swap?outputCurrency=0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C'>
+                <Link href="/dex/swap?outputCurrency=0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C">
                   <Image
                     src={ImageService.translate(`/img/ryoshi-with-knife/coin-logo.png`).convert()}
-                    h='35px'
-                    w='35px'
+                    h="35px"
+                    w="35px"
                   />
                 </Link>
               </Box>
 
               {!!currentFrtnPrice && !shouldHideFrtn && (
-                <Link href='/dex/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21' target='_blank'>
-                  <HStack fontSize='sm' fontWeight='bold' me={{base: 1, sm: 4}} spacing={1}>
-                    <FortuneIcon boxSize={{base: 4, md: 6}} />
-                    <Text as='span' className='col-white'>${currentFrtnPrice}</Text>
+                <Link href="/dex/swap?outputCurrency=0xaF02D78F39C0002D14b95A3bE272DA02379AfF21" target="_blank">
+                  <HStack fontSize="sm" fontWeight="bold" me={{ base: 1, sm: 4 }} spacing={1}>
+                    <FortuneIcon boxSize={{ base: 4, md: 6 }} />
+                    <Text as="span" className="col-white">
+                      ${currentFrtnPrice}
+                    </Text>
                   </HStack>
                 </Link>
               )}
 
-              <NavMenu display={{ base: 'none', md: 'flex' }}/>
+              <NavMenu display={{ base: 'none', md: 'flex' }} />
 
               {shouldUseMobileSearch && <MobileSearchDrawer />}
               <Cart />
               {profile && <NotificationMenu />}
+              <Button
+                as={Flex}
+                w="38px"
+                h="38px"
+                bg="white"
+                alignItems="center"
+                justifyContent="center"
+                rounded="full"
+                mx={1}
+                cursor="pointer"
+                color="black"
+                onClick={handleToggleTheme}
+              >
+                <Icon as={FontAwesomeIcon} icon={theme === 'dark' ? faMoon : faSun} />
+              </Button>
               {isMounted && <NetworkSwitcher />}
               <span className="my-auto">
                 <AccountMenu />
@@ -168,7 +171,14 @@ const Header = function () {
           </Flex>
         </Box>
       </Box>
-      <NavMenu position={"fixed"} bottom={0} display={{base: 'flex', md: 'none'}} justifyContent={'space-around'} className="mobile-navbar" isMobile={true}/>
+      <NavMenu
+        position={'fixed'}
+        bottom={0}
+        display={{ base: 'flex', md: 'none' }}
+        justifyContent={'space-around'}
+        className="mobile-navbar"
+        isMobile={true}
+      />
     </Box>
   );
 };
