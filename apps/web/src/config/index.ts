@@ -1,6 +1,8 @@
 import rpcConfig from '../modules/market/assets/networks/rpc_config.json';
 import rpcConfigDev from '../modules/market/assets/networks/rpc_config_dev.json';
 import rpcConfigTestnet from '../modules/market/assets/networks/rpc_config_testnet.json';
+import dropsProduction from '../modules/market/assets/drops/drops.json';
+import dropsTestnet from '../modules/market/assets/drops/drops_testnet.json';
 import Constants from '../constants';
 import {Transak} from "@transak/transak-sdk";
 const { Features } = Constants;
@@ -264,7 +266,7 @@ const configData: AppConfigMap = {
       }
     },
     legacyCollections: rpcConfig.known_contracts,
-    drops: rpcConfig.drops,
+    drops: dropsProduction,
     auctions: [],
     vendors: {
       transak: {
@@ -684,7 +686,7 @@ const configData: AppConfigMap = {
       }
     },
     legacyCollections: rpcConfigDev.known_contracts,
-    drops: rpcConfigDev.drops,
+    drops: dropsProduction,
     auctions: [],
     vendors: {
       transak: {
@@ -961,7 +963,7 @@ const configData: AppConfigMap = {
       }
     },
     legacyCollections: rpcConfigTestnet.known_contracts,
-    drops: rpcConfigTestnet.drops,
+    drops: dropsTestnet,
     auctions: [],
     vendors: {
       transak: {
