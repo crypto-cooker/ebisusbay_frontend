@@ -13,6 +13,7 @@ import NftPropertyLabel from '@src/components-v2/feature/nft/property-label';
 import {
   appUrl,
   ciEquals,
+  isCollectionListable,
   isEbVipCollection,
   isEmptyObj,
   rankingsLinkForCollection,
@@ -377,7 +378,7 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                     </Tag>
                   </Box>
 
-                  {collection.listable && (
+                  {isCollectionListable(collection) && (
                     <PriceActionBar
                       offerType={offerType}
                       onOfferSelected={() => handleMakeOffer()}
@@ -424,7 +425,7 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                       <li className={`tab ${currentTab === tabs.history ? 'active' : ''}`}>
                         <span onClick={() => handleTabChange(tabs.history)}>History</span>
                       </li>
-                      {collection.listable && (
+                      {isCollectionListable(collection) && (
                         <li className={`tab ${currentTab === tabs.listings ? 'active' : ''}`}>
                           <span onClick={() => handleTabChange(tabs.listings)}>Listings</span>
                         </li>

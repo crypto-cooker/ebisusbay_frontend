@@ -3,7 +3,7 @@ import {
   convertIpfsResource,
   findCollectionByAddress as findLegacyCollectionByAddress,
   isAntMintPassCollection,
-  isBundle, isCroSwapQuartermastersCollection,
+  isBundle, isCollectionListable, isCroSwapQuartermastersCollection,
   isNftBlacklisted,
   isUserBlacklisted,
   isWeirdApesCollection
@@ -96,12 +96,9 @@ export async function enrichWalletNft(nft: WalletNft): Promise<WalletNft> {
       canSell = false;
     }
 
-    // "pending" state is for degen mode
-    const listableStates = [MapiCollectionBlacklist.LISTABLE, MapiCollectionBlacklist.PENDING];
-
     return {
       ...nft,
-      listable: listableStates.includes(nft.collection.blacklist),
+      listable: isCollectionListable(nft.collection),
       listed,
       listingId,
       isStaked: isStaked,

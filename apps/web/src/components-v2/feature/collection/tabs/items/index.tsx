@@ -14,7 +14,7 @@ import MakeCollectionOfferDialog from "@src/components-v2/shared/dialogs/make-co
 import {ResponsiveInstantSellDialog} from "@src/components-v2/shared/dialogs/instant-sell";
 import SweepFloorDialog from "@src/Components/Collection/CollectionTaskBar/SweepFloorDialog";
 import {CollectionPageContext, CollectionPageContextProps} from "@src/components-v2/feature/collection/context";
-import {isFoundingMemberCollection} from "@market/helpers/utils";
+import {isCollectionListable, isFoundingMemberCollection} from "@market/helpers/utils";
 import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 import {sortOptions} from "@src/Components/components/constants/collection-sort-options";
 import {ApiService} from "@src/core/services/api-service";
@@ -135,7 +135,7 @@ const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
         canLoadMore={hasNextPage ?? false}
         loadMore={fetchNextPage}
         fullWidth={!filtersVisible || (useMobileMenu ?? false)}
-        listable={collection.listable}
+        listable={isCollectionListable(collection)}
         is1155={collection.is1155}
         viewType={viewType}
       />

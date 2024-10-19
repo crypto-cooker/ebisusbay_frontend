@@ -26,6 +26,7 @@ import {
   isAnyWeirdApesCollection,
   isArgonautsBrandCollection,
   isBabyWeirdApesCollection,
+  isCollectionListable,
   isCroCrowCollection,
   isCrognomidesCollection,
   isCroSkullPetsCollection,
@@ -879,7 +880,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                     </div>
                   )}
                   
-                  {collectionName && [MapiCollectionBlacklist.LISTABLE, MapiCollectionBlacklist.PENDING].includes(collection.blacklisted) && !nft.burnt && (
+                  {collectionName && isCollectionListable(collection) && !nft.burnt && (
                     <PriceActionBar
                       offerType={offerType}
                       collectionName={collectionName}
@@ -892,7 +893,7 @@ const Nft721 = ({ address, id, chain, slug, nft, isBundle = false }: Nft721Props
                   <div className="row" style={{ gap: '2rem 0' }}>
                     {nft.owner ? (
                       <NftProfilePreview address={nft.owner} title='Owner' />
-                    ) : (currentListing && collection.listable) && (
+                    ) : (currentListing && isCollectionListable(collection)) && (
                       <NftProfilePreview address={currentListing.seller} title='Owner' />
                     )}
 
