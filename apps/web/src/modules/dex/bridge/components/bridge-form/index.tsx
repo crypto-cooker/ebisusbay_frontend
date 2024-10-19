@@ -167,6 +167,7 @@ export default function BridgeForm() {
             onCurrencySelect={handleSelectCurrency}
             onUserInput={onTypeInput}
             onMax={() => {}}
+            disableCurrencySelect
           />
           <Box mb={4}></Box>
           <AuthenticationGuard>
