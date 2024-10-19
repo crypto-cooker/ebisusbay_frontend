@@ -26,7 +26,7 @@ type BridgeReducerAtomType = WritableAtom<BridgeState, [BridgeActions], void>;
 export function useBridgeActionHandlers(): {
   onSelectChain: (field: Field, chainId: number) => void;
   onSwitchChain: () => void;
-  onChangeRecipient: (recipient: string | null) => void;
+  onChangeRecipient: (recipient: string) => void;
   onTypeInput: (typedValue: string) => void;
   onChangeOutput: (outputValue: string) => void;
   onSelectCurrency: (currency: Currency) => void;
