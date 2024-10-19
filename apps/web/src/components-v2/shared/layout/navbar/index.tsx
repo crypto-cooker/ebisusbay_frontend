@@ -1,37 +1,25 @@
-import React, { RefObject, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { createGlobalStyle } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoins, faMoon, faSackDollar, faSun, faWater } from '@fortawesome/free-solid-svg-icons';
+import {  faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
 import AccountMenu from './account-menu';
 import NotificationMenu from './notification-menu';
 import {
   Box,
   Button,
-  Divider,
   Flex,
-  Heading,
   HStack,
   Icon,
-  IconButton,
   Image,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  SimpleGrid,
   Spacer,
-  Stack,
   Text,
   useBreakpointValue,
   useDisclosure,
   useMediaQuery,
-  useOutsideClick,
-  VStack,
 } from '@chakra-ui/react';
 import Cart from './cart/cart';
-import { ChevronDownIcon, CloseIcon, ExternalLinkIcon, HamburgerIcon } from '@chakra-ui/icons';
 import Search from '@src/components-v2/shared/layout/navbar/search';
 import MobileSearchDrawer from '@src/components-v2/shared/layout/navbar/search/drawer';
 import { useTokenExchangeRate } from '@market/hooks/useGlobalPrices';
@@ -41,7 +29,6 @@ import { round } from '@market/helpers/utils';
 import ImageService from '@src/core/services/image';
 import { useUser } from '@src/components-v2/useUser';
 import { NetworkSwitcher } from '@src/components-v2/shared/layout/navbar/network-switcher';
-import { useRouter } from 'next/router';
 import NavMenu from './nav-menu/nav-menu';
 
 const config = appConfig();
@@ -58,7 +45,6 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 const Header = function () {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const { theme, profile, toggleTheme } = useUser();
   const shouldUseMobileSearch = useBreakpointValue({ base: true, lg: false }, { fallback: 'lg' });
   const [shouldHideTitle] = useMediaQuery('(max-width: 1080px)');
@@ -151,7 +137,7 @@ const Header = function () {
               {shouldUseMobileSearch && <MobileSearchDrawer />}
               <Cart />
               {profile && <NotificationMenu />}
-              <Button
+              {/*<Button
                 as={Flex}
                 w="38px"
                 h="38px"
@@ -165,7 +151,7 @@ const Header = function () {
                 onClick={handleToggleTheme}
               >
                 <Icon as={FontAwesomeIcon} icon={theme === 'dark' ? faMoon : faSun} />
-              </Button>
+              </Button>*/}
               {isMounted && <NetworkSwitcher />}
               <span className="my-auto">
                 <AccountMenu />
