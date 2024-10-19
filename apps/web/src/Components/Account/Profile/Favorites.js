@@ -2,7 +2,7 @@ import {getUserFavorites} from "@src/core/cms/next/favorites";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {useQuery} from "@tanstack/react-query";
-import {isNftBlacklisted} from "@market/helpers/utils";
+import {isCollectionListable, isNftBlacklisted} from "@market/helpers/utils";
 import {NftCard} from "@src/components-v2/shared/nft-card";
 import {Center, Spinner} from "@chakra-ui/react";
 
@@ -47,7 +47,7 @@ export default function Favorites({ address }) {
                 <NftCard
                   nft={nft}
                   imgClass="collection"
-                  canBuy={!isNftBlacklisted(nft.address, nft.id) && nft.collection.listable}
+                  canBuy={!isNftBlacklisted(nft.address, nft.id) && isCollectionListable(nft.collection)}
                 />
               </div>
             ))}

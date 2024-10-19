@@ -5,6 +5,7 @@ import {
   ciEquals,
   findCollectionByAddress,
   isBundle,
+  isCollectionListable,
   isNftBlacklisted,
   isVaultCollection
 } from "@market/helpers/utils";
@@ -199,9 +200,9 @@ export default function Inventory({ address }: InventoryProps) {
                         <MyBundleCard
                           nft={nft}
                           canTransfer={nft.canTransfer}
-                          canSell={nft.listable && !nft.listed && nft.canSell}
+                          canSell={isCollectionListable(nft.collection) && !nft.listed && nft.canSell}
                           canCancel={nft.listed && !!nft.listingId}
-                          canUpdate={nft.listable && nft.listed}
+                          canUpdate={isCollectionListable(nft.collection) && nft.listed}
                           onTransferButtonPressed={() => setTransferDialogNft(nft)}
                           onSellButtonPressed={() => setCreateListingNft(nft)}
                           onUpdateButtonPressed={() => setCreateListingNft(nft)}
@@ -226,10 +227,10 @@ export default function Inventory({ address }: InventoryProps) {
                         <MyNftCard
                           nft={nft}
                           canTransfer={nft.canTransfer}
-                          canSell={nft.listable && (!nft.listed || nft.is1155) && nft.canSell}
+                          canSell={isCollectionListable(nft.collection) && (!nft.listed || nft.is1155) && nft.canSell}
                           isStaked={nft.isStaked}
                           canCancel={nft.listed && !!nft.listingId}
-                          canUpdate={nft.listable && nft.listed && !nft.is1155}
+                          canUpdate={isCollectionListable(nft.collection) && nft.listed && !nft.is1155}
                           isVault={isVaultCollection(nft.nftAddress)}
                           onTransferButtonPressed={() => setTransferDialogNft(nft)}
                           onSellButtonPressed={() => setCreateListingNft(nft)}

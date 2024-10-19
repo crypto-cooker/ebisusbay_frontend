@@ -9,7 +9,7 @@ import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 import {MarketplacePageContext, MarketplacePageContextProps} from "@src/components-v2/feature/marketplace/context";
 import {CollectionFilter} from "@src/components-v2/shared/filter-container/filters/collection-filter";
-import {ciEquals} from "@market/helpers/utils";
+import {ciEquals, isCollectionListable} from "@market/helpers/utils";
 import {chains} from "@src/wagmi";
 import {useUserShowTestnet} from "@eb-pancakeswap-web/state/user/hooks/useUserShowTestnet";
 import useCurrencyBroker from '@market/hooks/use-currency-broker';
@@ -18,7 +18,7 @@ import {ChainLogo} from "@dex/components/logo";
 const config = appConfig();
 
 const collections = config.legacyCollections
-  .filter((c: any) => c.listable)
+  .filter((c: any) => isCollectionListable(c))
   .sort((a: any, b: any) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
   .map((x: any) => ({avatar: x.metadata.avatar, name: x.name, address: x.address}));
 

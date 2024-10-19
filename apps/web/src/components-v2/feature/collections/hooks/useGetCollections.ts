@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import {appConfig} from "@src/config";
 import mergedCollections from "@src/core/data/merged-collections.json";
-import {ciEquals, isWeirdApesCollection} from "@market/helpers/utils";
+import {ciEquals, isCollectionListable, isWeirdApesCollection} from "@market/helpers/utils";
 
 const config = appConfig();
 const api = axios.create({
@@ -41,6 +41,8 @@ const useGetCollections = () => {
           totalVolume = (Number(totalVolume) + 679536.64).toString();
         }
 
+        const listable = isCollectionListable(collection);
+
         return {
           averageSalePrice: collection.stats?.total?.avgSalePrice,
           averageSalePrice1d: collection.stats?.total?.avgSalePrice1d,
@@ -50,7 +52,7 @@ const useGetCollections = () => {
           averageSalePrice7dIncrease: collection.stats?.total?.avgSalePrice7d_increase,
           collection: collection.address,
           floorPrice: collection.stats?.total?.floorPrice,
-          listable: collection.listable,
+          listable: listable,
           metadata: collection.metadata,
           name: collection.name,
           numberActive: collection.stats?.total?.active,
