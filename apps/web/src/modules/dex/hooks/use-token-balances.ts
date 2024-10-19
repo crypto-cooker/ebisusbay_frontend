@@ -1,10 +1,40 @@
-import useSupportedTokens from "@dex/hooks/use-supported-tokens";
-import {useUser} from "@src/components-v2/useUser";
-import {Address, ContractFunctionParameters, erc20Abi} from "viem";
-import {useBlockNumber, useContractReads} from "wagmi";
-import {useMemo} from "react";
-import {isAddress} from "@market/helpers/utils";
-import {CurrencyAmount, Token} from "@pancakeswap/sdk";
+import useSupportedTokens from '@dex/hooks/use-supported-tokens';
+import { useUser } from '@src/components-v2/useUser';
+import { Address, ContractFunctionParameters, erc20Abi } from 'viem';
+import { useBlockNumber, useContractReads } from 'wagmi';
+import { isAddress } from '@market/helpers/utils';
+import { CurrencyAmount, Token } from '@pancakeswap/sdk';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { getTokenBalanceOnCertainChain } from '@dex/utils';
+import { useAppChainConfig } from '@src/config/hooks';
+
+export const useTokenBalanceOnCertainChain = (
+  tokenAddress: string,
+  chainId: number,
+  account: string,
+): { balance: string; isLoading: boolean } => {
+  const { config } = useAppChainConfig(chainId);
+  const [balance, setBalance] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const execute = useCallback(async () => {
+    const rpcUrl = config.chain.rpcUrls.default.http[0];
+    setIsLoading(true);
+    try {
+      const balance = await getTokenBalanceOnCertainChain(tokenAddress, rpcUrl, account);
+      if (balance) setBalance(balance);
+      else setBalance('');
+    } catch (error) {
+      console.log(error);
+      setBalance('');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [config, tokenAddress, chainId, account]);
+  useEffect(() => {
+    execute();
+  }, [execute]);
+  return { balance, isLoading };
+};
 
 export function useAllTokenBalances(): { [tokenAddress: string]: CurrencyAmount<Token> | undefined } {
   const user = useUser();
@@ -35,14 +65,17 @@ export function useAllTokenBalances(): { [tokenAddress: string]: CurrencyAmount<
 }
 
 // This will be replaced with subgraph call
-export function useTokenBalances(address?: string, tokens?: Token[]): { [tokenAddress: string]: CurrencyAmount<Token> | undefined } {
+export function useTokenBalances(
+  address?: string,
+  tokens?: Token[],
+): { [tokenAddress: string]: CurrencyAmount<Token> | undefined } {
   // const [value, setValue] = useState<CurrencyAmount<Token>[]>([]);
   if (!address || !tokens) return {};
   const { data: blockNumber } = useBlockNumber();
 
   const validatedTokens: Token[] = useMemo(
     () => tokens?.filter((t?: Token): t is Token => isAddress(t?.address) !== false) ?? [],
-    [tokens]
+    [tokens],
   );
 
   const contracts: ContractFunctionParameters[] = tokens.map((token: any) => {
@@ -53,8 +86,6 @@ export function useTokenBalances(address?: string, tokens?: Token[]): { [tokenAd
       args: [address],
     };
   });
-
-
 
   // const fetchBalances = useMemo(
   //   () =>
@@ -79,25 +110,28 @@ export function useTokenBalances(address?: string, tokens?: Token[]): { [tokenAd
   //   enabled: !!contracts
   // });
 
-  const { data, isLoading: anyLoading, error } = useContractReads({
-    contracts
+  const {
+    data,
+    isLoading: anyLoading,
+    error,
+  } = useContractReads({
+    contracts,
   });
 
   return useMemo(
     () =>
       address && validatedTokens.length > 0
         ? validatedTokens.reduce<{ [tokenAddress: string]: CurrencyAmount<Token> | undefined }>((memo, token, i) => {
-          const value = data?.[i]?.result as any;
-          const amount = value ? BigInt(value.toString()) : undefined;
-          if (amount) {
-            memo[token.address] = CurrencyAmount.fromRawAmount(token, amount);
-          }
-          return memo;
-        }, {})
+            const value = data?.[i]?.result as any;
+            const amount = value ? BigInt(value.toString()) : undefined;
+            if (amount) {
+              memo[token.address] = CurrencyAmount.fromRawAmount(token, amount);
+            }
+            return memo;
+          }, {})
         : {},
-    [address, validatedTokens, data]
-  )
-
+    [address, validatedTokens, data],
+  );
 
   // useEffect(() => {
   //   async function fetch() {

@@ -42,7 +42,7 @@ export function useBridgeActionHandlers(): {
     dispatch(switchChain());
   }, []);
 
-  const onChangeRecipient = useCallback((recipient: string | null) => {
+  const onChangeRecipient = useCallback((recipient: string) => {
     dispatch(setRecipient({ recipient }));
   }, []);
 
