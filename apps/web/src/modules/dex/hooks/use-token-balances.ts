@@ -5,23 +5,42 @@ import { useBlockNumber, useContractReads } from 'wagmi';
 import { isAddress } from '@market/helpers/utils';
 import { CurrencyAmount, Token } from '@pancakeswap/sdk';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { getTokenBalanceOnCertainChain } from '@dex/utils';
 import { useAppChainConfig } from '@src/config/hooks';
+import { wagmiConfigs } from '@src/config/chains';
+import { multicall } from '@wagmi/core';
+import { utils } from 'ethers';
 
 export const useTokenBalanceOnCertainChain = (
   tokenAddress: string,
-  chainId: number,
+  chainId: 338 | 388 | 25 | 282 | undefined,
   account: string,
 ): { balance: string; isLoading: boolean } => {
   const { config } = useAppChainConfig(chainId);
   const [balance, setBalance] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const execute = useCallback(async () => {
-    const rpcUrl = config.chain.rpcUrls.default.http[0];
     setIsLoading(true);
     try {
-      const balance = await getTokenBalanceOnCertainChain(tokenAddress, rpcUrl, account);
-      if (balance) setBalance(balance);
+      const [balance, decimals] = await multicall(wagmiConfigs, {
+        chainId,
+        contracts: [
+          {
+            abi: erc20Abi,
+            address: tokenAddress as Address,
+            functionName: 'balanceOf',
+            args: [account as Address],
+          },
+          {
+            abi: erc20Abi,
+            address: tokenAddress as Address,
+            functionName: 'decimals',
+            args: [],
+          },
+        ],
+      });
+      let formattedBalance;
+      if (!balance.error) formattedBalance = utils.formatUnits(balance.result, decimals.result);
+      if (formattedBalance) setBalance(formattedBalance);
       else setBalance('');
     } catch (error) {
       console.log(error);

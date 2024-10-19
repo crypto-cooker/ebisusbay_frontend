@@ -9,6 +9,7 @@ import {
 } from 'wagmi/chains'
 import {chainConfig} from "viem/zksync";
 import {Address} from "viem";
+import { createConfig, http } from 'wagmi';
 
 export const CHAIN_QUERY_NAME = chainNames
 
@@ -454,3 +455,14 @@ export const CHAINS = SUPPORTED_CHAIN_CONFIGS.map(({ chain }) => chain);
 export const DEFAULT_CHAIN_ID = process.env.NEXT_PUBLIC_ENV === 'testnet' ? ChainId.CRONOS_TESTNET : ChainId.CRONOS;
 
 export default chainConfigs;
+
+
+export const wagmiConfigs = createConfig({
+  chains:[cronos_, cronosTestnet_, cronoszkEVM_, cronoszkEVMTestnet_],
+  transports:{
+    [cronos.id]: http(),
+    [cronosTestnet_.id]:http(),
+    [cronoszkEVM_.id]:http(),
+    [cronoszkEVMTestnet_.id]:http(),
+  }
+})
