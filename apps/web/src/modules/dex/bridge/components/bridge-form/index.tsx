@@ -1,10 +1,4 @@
-import {
-  Container,
-  Box,
-  VStack,
-  HStack,
-  Flex,
-} from '@chakra-ui/react';
+import { Container, Box, VStack, HStack, Flex } from '@chakra-ui/react';
 import { Card } from '@src/components-v2/foundation/card';
 import { PrimaryButton } from '@src/components-v2/foundation/button';
 import AuthenticationGuard from '@src/components-v2/shared/authentication-guard';
@@ -14,7 +8,8 @@ import { ToChainSelector } from './toChainSelector';
 import { FromChainSelector } from './fromChainSelector';
 import CurrencyInputPanel from '@dex/components/currency-input-panel';
 import { useBridgeActionHandlers } from '@dex/bridge/state/useBridgeActionHandler';
-import { useBridgeState, useDefaultCurrency } from '@dex/bridge/state/hooks';
+import { useBridgeState } from '@dex/bridge/state/hooks';
+import { useDefaultCurrency } from '@dex/bridge/hooks/useDefaultCurrency';
 import { Field } from '@dex/swap/constants';
 import { useCurrency } from '@dex/swap/imported/pancakeswap/web/hooks/tokens';
 import { useMemo, useCallback, useState } from 'react';
