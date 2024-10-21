@@ -479,7 +479,7 @@ export const isBundle = (addressOrSlug: string) => {
 
 export const isCollectionListable = (collection: any) => {
   const listableStates = [MapiCollectionBlacklist.PENDING, MapiCollectionBlacklist.LISTABLE];
-  return listableStates.includes(collection.blacklisted ?? collection.blacklist);
+  return listableStates.includes(collection.blacklisted ?? collection.blacklist) || collection.listable;
 }
 
 export const percentage = (partialValue: number | string, totalValue: number | string) => {

@@ -36,9 +36,6 @@ const ThemedBackground = styled.div`
   background: ${({ theme }) => theme.colors.bgColor1}
 `;
 
-// TODO fix
-const hasRank = false;
-
 const Items = ({collection, initialQuery, traits, powertraits}: ItemsProps) => {
   const router = useRouter();
   const [filtersVisible, setFiltersVisible] = useState(true);
