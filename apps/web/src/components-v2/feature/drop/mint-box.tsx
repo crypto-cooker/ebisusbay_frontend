@@ -364,7 +364,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                   </Box>
                 )}
 
-                {whitelistCost > 0 || (!!drop.erc20WhitelistCost) && (
+                {(whitelistCost > 0 || !!drop.erc20WhitelistCost) && (
                   <Box>
                     <Heading as="h6" size="sm" className="mb-1">Whitelist Price</Heading>
                     {!drop.erc20Only && (
