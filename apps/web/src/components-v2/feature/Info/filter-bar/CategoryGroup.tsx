@@ -4,10 +4,10 @@ export default function CategoryGroup() {
   return (
     <Container>
       <HStack>
-        <HStack gap={0}>
-          <Button borderRadius={{ right: 'full', left: 0 }}>Overview</Button>
-          <Button>Pairs</Button>
-          <Button>Tokens</Button>
+        <HStack gap='1px'>
+          <Button roundedLeft='full' roundedRight={0}>Overview</Button>
+          <Button rounded={0}>Pairs</Button>
+          <Button roundedLeft={0} roundedRight='full'>Tokens</Button>
         </HStack>
         <ChainSelector />
       </HStack>
