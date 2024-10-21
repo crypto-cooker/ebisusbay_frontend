@@ -7755,5 +7755,42 @@
       "escrow": false,
       "verified": true
     }
+  },
+  {
+    "id": 197,
+    "chainId": 388,
+    "slug": "make-art-great-again",
+    "title": "Make Art Great Again",
+    "subtitle": "",
+    "description": "Folks, the Charon NFT collection is here, and it’s going to be YUGE! We’re talking the most exclusive, the most powerful NFTs ever created—absolutely legendary.\n\nDrawn by the incredibly talented Alemf—fantastic to work with, let me tell you. You might’ve heard of her—she drew the first NFT on Cronos, \"Crocrow\"—huge success, people loved it!\n\nNow, she’s back, working with the Titans of Cronos. Charon isn’t just digital art, folks—they’re your ticket to greatness. The Titans of Cronos are bringing you the future, and believe me, nobody’s doing it better.\n\nSo let’s get together and Make Art Great Again!",
+    "author": {
+      "name": "Titans of Cronos",
+      "website": "https://titans-of-cronos.gitbook.io/titans-of-cronos/charon-nft/mint"
+    },
+    "address": "",
+    "maxMintPerTx": 100,
+    "maxMintPerAddress": 100,
+    "totalSupply": 3333,
+    "cost": "99",
+    "whitelistCost": "75",
+    "foundersOnly": false,
+    "start": 1729886400000,
+    "end": null,
+    "referral": false,
+    "is1155": false,
+    "published": true,
+    "complete": false,
+    "images": {
+      "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/make-art-great-again/banner.webp",
+      "banner": "https://cdn-prod.ebisusbay.com/files/drop-images/make-art-great-again/banner.webp",
+      "avatar": "https://cdn-prod.ebisusbay.com/files/drop-images/make-art-great-again/avatar.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/drop-images/make-art-great-again/preview.webp"
+    },
+    "verification": {
+      "doxx": true,
+      "kyc": true,
+      "escrow": false,
+      "verified": true
+    }
   }
 ]
