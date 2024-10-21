@@ -31,7 +31,7 @@ export const MobileBatchPreview = () => {
 
   return (
     <>
-      <Slide direction='bottom' in={batchListingCart.isDrawerOpen} style={{ zIndex: 10 }}>
+      <Slide direction='bottom' in={batchListingCart.isDrawerOpen} style={{ zIndex: 100 }}>
         <Box p={3} backgroundColor={sliderBackground}>
           <Flex justify="space-between">
             <Text fontSize="14px" my="auto" fontWeight="bold">

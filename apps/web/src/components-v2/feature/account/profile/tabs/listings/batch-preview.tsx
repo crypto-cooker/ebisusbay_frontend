@@ -94,7 +94,7 @@ const BatchPreview = ({mutationKey}: BatchPreviewProps) => {
 
   return (
     <>
-      <Slide direction='bottom' in={listings.length > 0} style={{ zIndex: 10 }}>
+      <Slide direction='bottom' in={listings.length > 0} style={{ zIndex: 100 }}>
         <Box p={3} backgroundColor={sliderBackground} borderTop='1px solid white'>
           <Flex direction={{base:'column', sm: showSecureCancelConfirmation ? 'column' : 'row', md: 'row'}} justify="space-between" align={{base: 'start', sm: showSecureCancelConfirmation ? 'start' : 'center', md: 'center'}}>
             <Text
