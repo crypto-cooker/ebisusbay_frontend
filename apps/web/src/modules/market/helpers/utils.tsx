@@ -479,7 +479,9 @@ export const isBundle = (addressOrSlug: string) => {
 
 export const isCollectionListable = (collection: any) => {
   const listableStates = [MapiCollectionBlacklist.PENDING, MapiCollectionBlacklist.LISTABLE];
-  return listableStates.includes(collection.blacklisted ?? collection.blacklist);
+
+  // the "listable" property only used for legacy lookups in rpc_config. Remove when no longer needed
+  return listableStates.includes(collection.blacklisted ?? collection.blacklist) || collection.listable;
 }
 
 export const percentage = (partialValue: number | string, totalValue: number | string) => {

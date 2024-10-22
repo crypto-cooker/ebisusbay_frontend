@@ -8,7 +8,6 @@ import {
   faSync
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {useQuery} from "@tanstack/react-query";
 
 import NftPropertyLabel from '@src/components-v2/feature/nft/property-label';
 import {
@@ -72,8 +71,6 @@ import {ChainLogo} from "@dex/components/logo";
 import {getChainByIdOrSlug} from "@src/helpers";
 import chainConfigs from "@src/config/chains";
 import {ChainId} from "@pancakeswap/chains";
-import { MapiCollection } from '@src/core/services/api-service/mapi/types';
-import { getCollections } from '@src/core/api/next/collectioninfo';
 
 const tabs = {
   properties: 'properties',
@@ -114,21 +111,8 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
   });
   const isLoading = useAppSelector((state) => state.nft.loading);
   const user = useUser();
-  const [{ isLoading: isFavoriting, response, error: errorTF }, toggleFavorite] = useToggleFavorite();
+  const [{ isLoading: isFavoriting, response, error }, toggleFavorite] = useToggleFavorite();
   const [showFullDescription, setShowFullDescription] = useState(false);
-
-  const { isPending: isLoadingCollection, error, data, status } = useQuery({
-    queryKey: ['Collections', address],
-    queryFn: () => getCollections({address})
-  });
-
-  const [collectionFromMapi, setCollection] = useState<MapiCollection>();
-
-  useEffect(() => {
-    if (!isLoadingCollection && data) {
-      setCollection(data.data.collections[0] as MapiCollection)
-    }
-  }, [isLoadingCollection, data])
 
   useEffect(() => {
     dispatch(getNftDetails(address, id, chain));
@@ -297,7 +281,7 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
           </VStack>
         </Box>
       )}
-      {isLoading || isLoadingCollection || !collectionFromMapi ? (
+      {isLoading ? (
         <section className="gl-legacy container">
           <Center>
             <Spinner />
@@ -394,12 +378,12 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                     </Tag>
                   </Box>
 
-                  {isCollectionListable(collectionFromMapi) && (
+                  {isCollectionListable(collection) && (
                     <PriceActionBar
                       offerType={offerType}
                       onOfferSelected={() => handleMakeOffer()}
                       label="Floor Price"
-                      collectionName={collection?.name}
+                      collectionName={collectionName}
                       isVerified={collection.verification?.verified}
                       isOwner={false}
                     />
@@ -441,7 +425,7 @@ const Nft1155 = ({ address, id, chain, collection }: Nft721Props) => {
                       <li className={`tab ${currentTab === tabs.history ? 'active' : ''}`}>
                         <span onClick={() => handleTabChange(tabs.history)}>History</span>
                       </li>
-                      {isCollectionListable(collectionFromMapi) && (
+                      {isCollectionListable(collection) && (
                         <li className={`tab ${currentTab === tabs.listings ? 'active' : ''}`}>
                           <span onClick={() => handleTabChange(tabs.listings)}>Listings</span>
                         </li>

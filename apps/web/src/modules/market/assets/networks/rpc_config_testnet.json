@@ -7,7 +7,7 @@
       "address": "0x3F1590A5984C89e6d5831bFB76788F3517Cdf034",
       "is1155": true,
       "id": 2,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "/img/avatar.png",
@@ -32,7 +32,7 @@
       "address": "0x3F1590A5984C89e6d5831bFB76788F3517Cdf034",
       "is1155": true,
       "id": 1,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "",
@@ -55,7 +55,7 @@
       "is1155": false,
       "address": "0xe51377a260043381b8B525D33B9fFBC601A1469b",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Our very own Halloween collection, from the team at Ebisu's Bay.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-halloween/avatar.webp",
@@ -81,7 +81,7 @@
       "is1155": false,
       "address": "0xCfEEe4c7B10C52854e061607C347e0D79C6F73A1",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "",
@@ -104,7 +104,7 @@
       "is1155": false,
       "address": "0x6777a24aef6374265B4A900c9Db57673cFF426Ab",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "",
@@ -127,7 +127,7 @@
       "is1155": false,
       "address": "0xe9DCa9E03F31CBD538A19a89eA2cA3684AF2788f",
       "onChain": true,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "",
@@ -150,7 +150,7 @@
       "is1155": false,
       "address": "0xEf05151db4e0c96fff0921481300e2d53618Ee96",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "",
@@ -173,7 +173,7 @@
       "is1155": false,
       "address": "0xBf792Bdfd565Bc9D4619ed085d4E8B8EA4d9E79E",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/deplone/avatar.jpg",
@@ -193,7 +193,7 @@
       "is1155": false,
       "address": "0x6200a747EccE14315b6a9eDd3cAF76dC6C4F53A2",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/lazyhorse/avatar.png",
@@ -213,7 +213,7 @@
       "is1155": false,
       "address": "0x7B1A84D5766B5670C0dab14fA9526b39c284E11A",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crougars/avatar.png",
@@ -233,7 +233,7 @@
       "is1155": false,
       "address": "0x3B94bF5B766419a7f8E3a6d23921EA4F02712d56",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/lazyhorse/avatar.png",
@@ -253,7 +253,7 @@
       "is1155": false,
       "address": "0xefEf991Be8F4911764f72598e4C4776D917A1F9D",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "They are magical! Their strength lies in feeling and finding those in need.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/barbara/spacecrystalunicorns/avatar.jpg",
@@ -273,7 +273,7 @@
       "is1155": false,
       "address": "0x570966a3503aE3fc2191f68dae3a6395eeFB897A",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crognomes/avatar.png",
@@ -296,7 +296,7 @@
       "is1155": false,
       "address": "0xFdc26dde39BE26e01f25e26999AF26C672541174",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/anuah/avatar.png",
@@ -316,7 +316,7 @@
       "is1155": false,
       "address": "0xc25914a85652a160CE4b74e678354aB336A1C217",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronogods/avatar.gif",
@@ -339,7 +339,7 @@
       "is1155": false,
       "address": "",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/mariecyborg/avatar.png",
@@ -365,7 +365,7 @@
       "is1155": false,
       "address": "0x3620FC8174199A2666cca88A18Fcf6e9c4B166eB",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/magbrew/avatar.jpg",
@@ -390,7 +390,7 @@
       "is1155": false,
       "address": "0x6F25b5cCf0Ab49A1906E36C9572CF202e62aE066",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crazyscientists/avatar.png",
@@ -414,7 +414,7 @@
       "is1155": false,
       "address": "0xde0d3CCA05A9870D82180e771Eb2efc1de039cB9",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/bobanftea/avatar.png",
@@ -438,7 +438,7 @@
       "is1155": false,
       "address": "0x3b3BC5Ca5451D6dDDFCa7248AF04172632f4A990",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/recklessrobots/avatar.png",
@@ -462,7 +462,7 @@
       "is1155": false,
       "address": "0x1D3587f44944a665F28bE1d9D9E322d43318DbB8",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/hypeddogs/avatar.webp",
@@ -486,7 +486,7 @@
       "is1155": false,
       "address": "0xd036b2223bcc2A96164B023022D6b78CD71A1a12",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/creatures/avatar.jpg",
@@ -511,7 +511,7 @@
       "is1155": false,
       "address": "0x10F7D2BbaEEF04e7b61335ba4b680412d0B167D6",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/alienft/avatar.png",
@@ -535,7 +535,7 @@
       "is1155": false,
       "address": "0xdd5014784763ea9C0d758b8C84a7979ca29BADDF",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/meta_cyborgs/avatar.png",
@@ -559,7 +559,7 @@
       "is1155": false,
       "address": "0x65d9377905Ceb76B96055B13A8d84DFdf59529aA",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crosmonauts/ship/avatar.webp",
@@ -583,7 +583,7 @@
       "is1155": false,
       "address": "0xC10e3eAdaE647E1C8CBA8497256CCd5f278f6E7c",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronosmb/special/avatar.png",
@@ -607,7 +607,7 @@
       "is1155": false,
       "address": "0x7d09ff680b210770D6D9a1296b4A74bd5391b341",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/slothty/avatar.png",
@@ -631,7 +631,7 @@
       "is1155": false,
       "address": "0x99a1E178d0AB41DbdA42EED5faaDFAA073c4AA14",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "",
@@ -654,7 +654,7 @@
       "is1155": false,
       "address": "0x87de5d738c1a9a3fDEEb85A2fA5c04E54b21AEC4",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/lolitafriends/avatar.png",
@@ -677,7 +677,7 @@
       "is1155": false,
       "address": "0x4668329e1cb30841282c0b209B20e6b069f8C523",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/goldpartner/avatar.gif",
@@ -723,7 +723,7 @@
       "is1155": false,
       "address": "0x0E1B4c3370005b5F9bDBBa12ea97D90aC2dCdaDe",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/bigbadwolves/avatar.webp",
@@ -747,7 +747,7 @@
       "is1155": false,
       "address": "0x424616fAb8A0f2DE40627bd798e03Fdd718CfAcd",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/nobuddies/avatar.webp",
@@ -770,7 +770,7 @@
       "is1155": false,
       "address": "0x6262825f4f0B32918AF227DcdF9Eba7ff39EDb76",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/marbleverse/avatar.webp",
@@ -795,7 +795,7 @@
       "is1155": false,
       "address": "0xC997749351CC4C9770f885B0147F455F5907F11A",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/lazyhorse/avatar.png",
@@ -819,7 +819,7 @@
       "is1155": false,
       "address": "0x77436B454e9EAAeA307c84243F521F313fb89BD9",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronosverse/avatar.webp",
@@ -842,7 +842,7 @@
       "is1155": false,
       "address": "0x00F2218f253b1AF8315b5aA7Dce9D692eB0817Bb",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/succubus/avatar.png",
@@ -865,7 +865,7 @@
       "is1155": false,
       "address": "0xBde6bc3dd2265b23684435C4C87AA7DD85910739",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crobees/avatar.webp",
@@ -889,7 +889,7 @@
       "is1155": false,
       "address": "0x231729415031099336930158078859A19409D1c6",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ladyri/avatar.jpg",
@@ -912,7 +912,7 @@
       "is1155": false,
       "address": "0x24DBc5f5F6e8637cf77DDe8c09ee076d36C469d4",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/kardia/avatar.webp",
@@ -937,7 +937,7 @@
       "is1155": false,
       "address": "0xF559EefCD14E0a65e20281b9F0aD4c7FabF9D855",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/monkey-anarkey/avatar.webp",
@@ -962,7 +962,7 @@
       "is1155": false,
       "address": "0x000732Ddc0f7208b2400944d4a7296bc001aE866",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/lazyhorse/barncats/avatar.webp",
@@ -986,7 +986,7 @@
       "is1155": false,
       "address": "0xA53b72d9733aBEaCF97e0557f2767B189404a066",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/panelsproject/primate/avatar.webp",
@@ -1010,7 +1010,7 @@
       "is1155": false,
       "address": "0xFB7C34B7D5782baF2fF2F65B40Ab0d4070674c19",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/croclubs/avatar.png",
@@ -1034,7 +1034,7 @@
       "is1155": false,
       "address": "0xF184aD3a4f31376b5D9372040f12A80d3198a9D6",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/likehumans/avatar.webp",
@@ -1055,7 +1055,7 @@
       "is1155": false,
       "address": "0x781aF58CA8caEE76042Aa50d76059339E8A4AB26",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Employee of the Month is a collection that reflects on the topic of the hard, day to day corporate work. The employees are portrayed by the artist, as plain, green smileys, which is a symbol of how the society formed them to be more or less the same. It highlights (sometimes in a funny way) daily struggles, challenges and disappointments of the everyday office life.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/eotm/avatar.png",
@@ -1079,7 +1079,7 @@
       "is1155": false,
       "address": "0x794dc82F15fce5f5A90Ea2c4442FA03B76e8C8a8",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/multiverse-selfies/avatar.webp",
@@ -1102,7 +1102,7 @@
       "is1155": false,
       "address": "0x2b918ed7929ff2787a8eebcf2d78378672530882",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/psycho-golden-lady/avatar.webp",
@@ -1125,7 +1125,7 @@
       "is1155": false,
       "address": "0x660c86fc9977278204245f2e54C11A0f1276a94b",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-of-thrones/avatar.webp",
@@ -1148,7 +1148,7 @@
       "is1155": false,
       "address": "0xB458E21EB481Ef9652684e0656a96ca002554AAb",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/smash-stunts/avatar.png",
@@ -1171,7 +1171,7 @@
       "is1155": false,
       "address": "0x979b561e9e596ca6f8aacb26ecc605e71a30e0fe",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/croppelganger/avatar.webp",
@@ -1193,7 +1193,7 @@
       "is1155": false,
       "address": "0xb65477F31262399777A511Cf0d7e668C775095B1",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/genesis-crates/avatar.png",
@@ -1218,7 +1218,7 @@
       "is1155": false,
       "address": "0xb588883f69E94889A81608bf58EB0a578B93aa6f",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/beta-mascots/avatar.webp",
@@ -1242,7 +1242,7 @@
       "is1155": false,
       "address": "0x01A0962b78AF631AE0a56cDE60458Abdb81467Db",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ghetto-doves/avatar.webp",
@@ -1271,7 +1271,7 @@
       ],
       "address": "0x2fAe3a245CAE5e863faA3954E74F486BC08E25ff",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ghetto-doves/avatar.webp",
@@ -1295,7 +1295,7 @@
       "is1155": false,
       "address": "0x2D803AC436d7F86d52070Bc5eB72F72358dA150b",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Cyberclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the Cyberclones, who are conquering earth!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cyber-clone/avatar.webp",
@@ -1319,7 +1319,7 @@
       "is1155": false,
       "address": "0x9CD90D8Efa6D7302b5d1E720E31aA98C014A4c2b",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Bankroll Bear Society is an NFT project consisting of 5,000 Bears. Found on the Cronos chain. We are offering direct REAL-LIFE utilities. Our Bears are a VIP gateway into the Bankroll Universe and ecosystem.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/bankroll-bear-society/avatar.webp",
@@ -1342,7 +1342,7 @@
       "is1155": false,
       "address": "0x7a7Ac50912B869a8Cd7f1614499b9684859Bb71b",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Looneycorns is the first of 5 unique toys/NFTs from the Lost Toy collection. Each toy character represents a childhood favourite that has been lost over time and needs a new home. \n\nEach of the 2,200 Looneycorns NFT have a different rarity level and to ensure that each one is totally unique, we have also gone the \u00e2\u20ac\u0153extra-mile\u00e2\u20ac\u009d and created over 120 traits which would easily make up a collection of 5,000 NFTs!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/looneycorns/avatar.webp",
@@ -1365,7 +1365,7 @@
       "is1155": false,
       "address": "0xE91CcEF501e07B1A0928085e104a67F67ef40201",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Welcome to Manor H, where Dr. Boo's ghosts were born. These ghosts come in 2111 appearances, divided into 3 categories: COMMON, RARE & EPIC. In addition to the staking and the numerous perks offered by these categories, each Boo NFT acquired will receive a Poison NFT, with a different color depending on the category (yellow, green or black). A Boo NFT + Poison NFT pair will allow access to the Manor in the metaverse, to retrieve multiple items daily to build a new NFT Boo FRK!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/dr-boos-ghosts/avatar.webp",
@@ -1389,7 +1389,7 @@
       "is1155": false,
       "address": "0xFF2d132Ec0B07210448D662EccB9BE68380e4DcF",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Northern Hippo Syndicate brings the artistic and creative stylings of Little Sloth from Open Sea to the Cronos chain. This crazy collection of 5000 unique PFP grants you access to so much more than amazing art. Hold a minimum of 3 to receive a plot of metaverse land.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/northern-hippo-syndicate/avatar.webp",
@@ -1412,7 +1412,7 @@
       "is1155": false,
       "address": "0x3279F28dC59783d204D9cD66a965cF4AA120706F",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Flaming Phenix Club is a prestigious collection of 6,666 stunningly beautiful, fiery, and unique creatures apart of the Phenix Finance Ecosystem.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/flaming-phenix-club/avatar.webp",
@@ -1437,7 +1437,7 @@
       "is1155": false,
       "address": "0x6270Da0F8a685Af46CBBFbdba18EbE76AdA942A3",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Icy Valkyries is a collection of 1000 NFTs who live in the darkest corner of Valhalla. Owning a Valkyrie allows you to fight in the monthly Icy Squid Game for huge jackpots, build a farm, start a family and establish your own clan.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/icy-valkyries/avatar.png",
@@ -1461,7 +1461,7 @@
       "is1155": false,
       "address": "0xd0186A9e068407738A5D4c710347F37763c20394",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Carkayous is a fictitious continent created by Jesse Smith (Ink Master | TV Celeb | Tattoo Artist) where his art lives. The goal of Expedition #9 is to further explore Killick Falls Lagoon where the Feral Fish lives. This is a 2,222 PFP collection with FREE Tattoos (flight and hotel included) as the primary utility.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/carkayous/avatar.png",
@@ -1484,7 +1484,7 @@
       "is1155": true,
       "address": "0x44fcFB92e9F08770449e0f39A9A449502432c3cc",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Holding a Lost Toy VIP NFT grants you access to the Lost Toys DAO to be able to vote on the future characters within the collection and the next features of our platform SnipeHub. Other utilities include exclusive raffles, WL to other projects and many more benefits yet to be announced.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/looneycorns/avatar.webp",
@@ -1507,7 +1507,7 @@
       "is1155": false,
       "address": "0xe6f9Bbe97183F1849697cF6722e414Ff46398b74",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cyber-squad/avatar.png",
@@ -1530,7 +1530,7 @@
       "is1155": false,
       "address": "0x37f42eb690f03b845BA4a4eb19a977AaE10dB448",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "categories": []
@@ -1547,7 +1547,7 @@
       "is1155": false,
       "address": "0xd0997A498E6e4e90ff850202BAEEe88C64d265Fb",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Create a community of aristocrats, driven by the community.\n\nFirst 100% utility project, our goal is to greatly improve the experience of cronos users.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/aristodog/avatar.png",
@@ -1571,7 +1571,7 @@
       "is1155": false,
       "address": "0xa20A2502777948ba4D2231c100011F27cD0B8444",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Alien Apocalypse is a collection of 3,000 uniquely generated invaders. The first of its kind, bridging the Cronos and Cardano Blockchains. The collection contains over 180 out of this world traits that are sure to blow your mind. Owning an Alien Apocalypse NFT will grant you access to the Horde Ecosystem.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/alien-apocalypse/avatar.png",
@@ -1594,7 +1594,7 @@
       "is1155": false,
       "address": "0xA23A6AE440CfE3Ca3d1FEc8424153a8c50C1A342",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Hype Hogs, a collection of 3,333 different characters generated by the artist named \"ZAP7\". Each character has unique identity and rarity. Holders will be allowed to engage in a variety of community events such as random airdrops, customizing your hype hogs, the opportunity to win a random prize, or numerous giveaways. Half of the royalties will be used to sweep the floor or to help grow the community.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/hype-hogs/avatar.png",
@@ -1617,7 +1617,7 @@
       "onChain": false,
       "address": "0x962026657a05BA7F52b27d249fe3fa90D9691692",
       "is1155": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "/img/avatar.png",
@@ -1641,7 +1641,7 @@
       "is1155": false,
       "address": "0xf28aD2F8557ae2b53B26211c5cF4a5EF99b0347F",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Fury Mouse Gang is an NFT project with a first generation of 2500 unique mice gang PFP collectibles. At night the fury takes hold of them and they ravage everything in their path. These creatures rule their world. The ambition is huge: to become the number 1 project on Cronos. Our community is linked around a story and a brotherhood between the members of the Gang. We want our members to live an unique experience, never seen on Cronos.. So if you can\u00e2\u20ac\u2122t beat the gang, join us, before it is too late.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fury-mouse-gang/avatar.png",
@@ -1664,7 +1664,7 @@
       "is1155": false,
       "address": "0x782ab511719f5A1560eEaEbD19676aD47cD45384",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Battle Ready Boyz is a project combining Design and GameFi offering its members to use their NFTs in Play-to-Earn or Risk-To-Earn.\n\nThe BRB collection features 7777 unique NFTs representing Aurora's gorilla soldiers and statues of their emperors.\n\nDon't forget to fight each other, life is too short!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/battle-ready-boyz/avatar.png",
@@ -1688,7 +1688,7 @@
       "is1155": false,
       "address": "0x9aD80cc42Cb644AbB5fdb7cE37F44f79c902C821",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Apes embark on a journey through the Kingdom of Utopia to set foot on the world! Apes Utopia is a collection of 2,222 NFTs with over 200 features built on the Cronos blockchain. Apes Utopia NFTs provide access to various benefits in our ecosystem. Apes Utopia owners can participate in special events such as NFT sweepstakes, surprise sweepstakes, giveaways and much more. Remember, all Apes Utopia is special - but some are particularly special.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/apes-utopia/avatar.gif",
@@ -1713,7 +1713,7 @@
       "is1155": false,
       "address": "0x063E25D6B7B087c4f0FB875821e30f8cFdB6E33e",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "categories": []
       },
@@ -1729,7 +1729,7 @@
       "is1155": false,
       "address": "0xFCd08C7BE680b36522BA87240B296377A80a01D0",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Everybody's not friends is a handcrafted set of unique and rare 1/1 collectible characters and animations created by timebeam. This is a community driven passion project. The purpose of this project is to build a community which promotes friendship through a\u00c2 set of humorous 3D cartoon characters,\u00c2 animations and monthly live streamed brawls.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/everybodysnf/avatar.png",
@@ -1752,7 +1752,7 @@
       "is1155": false,
       "address": "0x53973c3239388a23f99fA5D6CF85106434d27076",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Noodles Club is a PFP collection of 8,888 NFTs stored on the Cronos Chain that comes with an ever-developing set of utilities. Only the real Noodles lovers will enjoy this spicy journey.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/noodles-club/avatar.webp",
@@ -1776,7 +1776,7 @@
       "is1155": false,
       "address": "0xe823026da4f921E6830b435672B8c74BF3f426Ac",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "RYBORG: THE BUNKER is the first NFT trading/investment project on the Cronos Chain. Backed by TradingFXVPS, RYBORG aims to create an investment DAO that shares 80% profit sharing through diversification of portfolio through Stock, Forex, DeFi, NFT, Coins & Tokens. Only 1,000 unique RYBORG will be available on the 1st round.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ryborgs/avatar.webp",
@@ -1800,7 +1800,7 @@
       "is1155": false,
       "address": "0xbCaE686611A3B5006389955cA265A0Bd2272aeAA",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Crovilians are the citizens of The CronosVerse and have various traits representing the many societal roles required in both the metaverse and in the physical world. While each Crovilian\u00e2\u20ac\u2122s unique traits represent real life roles in our society, all Crovilians are created equal in terms of access to The CronosVerse. Holding a Crovilian NFT will grant access to The CronosVerse and allow the owner to create a custom avatar to be used in our metaverse.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crovilians/avatar.webp",
@@ -1823,7 +1823,7 @@
       "is1155": false,
       "address": "0x4a2d5c811E8117C4C4ea574ce810D681D5Cd14F2",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Cyberclone & Alphaclone is a collection of 2000 uniquely generated NFTs stored on the Cronos blockchain. Each NFT Clone is inspired by the futuristic life of the year 2234, where the world is falling apart under the control of the WorldClones, who are conquering earth!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/alpha-clone/avatar.webp",
@@ -1847,7 +1847,7 @@
       "is1155": false,
       "address": "0x0EFccB1889EB8eE3b92a805A5d66D49fC9ae885E",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Pocket Demons project is a collection of 666 uniquely generated demon characters. Each Demon is generated from a pool of over 70 traits. These Demons also carry unique stats and attacks that are utilized in our P2E Game!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/pocket-demons/avatar.webp",
@@ -1870,7 +1870,7 @@
       "is1155": false,
       "address": "0x0BfBd9d15e5cD740917d1a0F63ec5137005673b9",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "CroHamster is a collection of 1000 unique and 3D animated NFTs on Cronos. Each CroHamster is based on a wide variety of different traits. Owning a CroHamster will give you access to our CroHamster arena, where you can fight for awesome rewards.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-hamsters/avatar.webp",
@@ -1894,7 +1894,7 @@
       "is1155": false,
       "address": "0x69C4984ABdc4164A73C26e44195ea572F8132285",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "categories": []
@@ -1911,7 +1911,7 @@
       "is1155": false,
       "address": "0x3f29cc0c07736eddb9c0678a51515d5de6a1d7e2",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "GymKongZ is a 10,000 pfp project made up of more than 255 unique traits. We will focus on improving all pillars of life, not only the physical but also the mental and financial, and any other goal members are choosing to pursue. \nWe are really wanting to expand the horizon when it comes to a group of people coming together sharing similar goals and interests.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/gymkongz/avatar.webp",
@@ -1934,7 +1934,7 @@
       "is1155": false,
       "address": "0xA383245Cd497aFb047802e6A64B79A234f43F33D",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "CroKami is a universe comprising our Manga series, NFT collection, and lore-connected game. We have set out to create a special ecosystem in which players can battle each other in game using their NFT\u00e2\u20ac\u2122s, or AI in a street-fighter style arena and earn $PACK -our real world cryptocurrency and in-game currency. Play and earn!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crokami/avatar.webp",
@@ -1957,7 +1957,7 @@
       "is1155": false,
       "address": "0x6D8E071C38a6386EA8BDBa0d4022C3c4645c1792",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Cronos Women aims to invest in projects that turn digital into reality and create many added value, together with members of the CRO foundation and DAO. The main purpose of these investments is to create a model that not only owns a piece, but also provides an advantage to the owners and adopts the passive income model. 300k CRO will be distributed to DAO members.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-women/avatar.webp",
@@ -1981,7 +1981,7 @@
       "is1155": false,
       "address": "0x8f0596af0dda307c3e58fa07230f506ace395784",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "BunnyFish from Carkayous attained by owning Feral Fishes that include Ledgelip or Riptide as the background. Owning enough BunnyFish that adds up to 75 points will get you an Expedition 8.2 BunnyFish.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/carkayous-bunnyfish/avatar.webp",
@@ -2004,7 +2004,7 @@
       "is1155": false,
       "address": "0xa2Dd607A92252daf79901d04c6eB871B95e31ddE",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "God hates all crofam!!! This is strictly a pfp project with no utility. Why no utility\u2026 because god hates you. Now go away.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/god-hates-crofam/avatar.webp",
@@ -2026,7 +2026,7 @@
       "is1155": false,
       "address": "0xe7cbE08d6B4684c2962E5e06c1D1019Ba86dff79",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "CNS domains are unique decentralized domains for web3. CNS makes the blockchain ecosystem a bit simpler by allowing users to create a global username for their public addresses and decentralized dapps. Join our discord community to learn more about CNS.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-name-service/avatar.webp",
@@ -2051,7 +2051,7 @@
       "is1155": false,
       "address": "0xFec1D8AcBCBaDDC00cec22D544854E2fD938cF05",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Trillionaire Trashcans - A 10,000 uniquely created PFP project coming to you. As you may have heard the TTC NFT project has some of the best giveaways the Cronos chain has seen. We pride ourselves on how much we can give back to the community; that\u2019s why we will be giving away a LAMBO to one lucky minter. In order to be entered into the WenLambo giveaway, you must get lucky and mint 1 of 500 Trashcans that wear the Golden Key Earring!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/trillionaire-trashcans/avatar.webp",
@@ -2074,7 +2074,7 @@
       "is1155": false,
       "address": "0xbFFE791a74Ac0BC08a55853F9A41f6B073752e2F",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "World of Cats is a handcrafted collection of 4444 Unique NFTs created by the artist Tam4tik with utility that is tied to the real world.\nEach with their own identity to be discovered by its founder. \nIn its purest form, WORLD OF CATS is the art of storytelling.\nCurated By:  HiddenFishDAO\u2122",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/world-of-cats/avatar.webp",
@@ -2097,7 +2097,7 @@
       "is1155": false,
       "address": "0x449e8DcD04f7E232Ee669090799FA30aE778851d",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Meanies are a collection of 2,500 uniquely generated NFTs and the 2nd character of the Lost Toys project. Each NFT is based on 7 trait categories with different rarities. A Lost Toy NFT is not simply an NFT it is a key to unlocking over 15 utilities!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/the-meanies/avatar.webp",
@@ -2122,7 +2122,7 @@
       "is1155": false,
       "address": "0xd324C3B5e160266A858c7B35968e7d9eAD8cfE59",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "5555 Lucky Finger Monkeys are about to hit Cronos. Lookout for the interactive platform!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/finger-monkeys/avatar.webp",
@@ -2144,7 +2144,7 @@
       "is1155": false,
       "address": "0xdab24a4cfbc3bb5eef28adfffd6e48966cae9ac8",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "A collection of 1,888 access cards, featuring 3D Spiteful Sea Creatures - the turtle, octopus, and the shark. The character and purpose of the models reflects the desire of their owners - further develop and bring change to the NFT market and the Web3 space as a whole. Setting new standards and trends requires a group of convinced individuals who come together to set in motion a wave that will eventually sweep an entire sea with it.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ssc-access-cards/avatar.webp",
@@ -2168,7 +2168,7 @@
       "is1155": false,
       "address": "0x52795c4B3aC043990076947013c71BE1eC0c3123",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "V2 Fighters are HERE! Now grab a Fighter you love, make upgrades, earn tokens and battle them out in a head to head fight!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-fighters-v2/avatar.webp",
@@ -2192,7 +2192,7 @@
       "is1155": false,
       "address": "0x8845C0ce2bFCFE5fa3F28c919134096f6035E261",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "8K Resolution Artworks that are unique and unlike anything else on the blockchain, created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos. No roadmaps, no staking, no games, just art, community, and utility.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/0xluckless-v2-0/avatar.webp",
@@ -2217,7 +2217,7 @@
       "is1155": false,
       "address": "0xFa6D6607E6850bBB10bD48370C99aB9C985BF759",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The \"Whale Family\" features a collection of 5,555 fun & vibrant Whale\nPFPs swimming on the Cronos blockchain with different levels of rarity \nfrom over 160 hand-drawn traits by Barbara Redekop.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/whalefam/avatar.webp",
@@ -2242,7 +2242,7 @@
       "is1155": false,
       "address": "0x04bc90269D272078B1d5f2CB9969836162ACE0AA",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Devil Loves Cro Fam is a pfp project only with no roadmap or utility. Unless you call going to hell a utility!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/devil-loves-crofam/avatar.webp",
@@ -2264,7 +2264,7 @@
       "is1155": false,
       "address": "0x5be9A14fE14F13954Ef44B5efDBbab1AD1f17Ac4",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Evolution Hogs is a collection of 3333 characters generated randomly. All are on the Cronos Chain with unique identity and rarity.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/evolution-hogs/avatar.webp",
@@ -2287,7 +2287,7 @@
       "is1155": false,
       "address": "0x4B02dBAF4Ee8b4B3137BC549e6158B4a502f01bf",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Lion Social Club is minting our first collection, each NFT is unique and holds special utility. LSC aims to bring a community based DEX and DAO that puts the community first and gives each holder a voice with our utility based roadmap.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/lion-social-club/avatar.webp",
@@ -2311,7 +2311,7 @@
       "is1155": false,
       "address": "0x902b4C3B8F847bBdD2b1897FeBa15638baC5bafe",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY\u2019s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you\u2019ve experienced heartbreak of any kind in your life, there\u2019s sure to be an image that speaks to you in some form. ",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/broken-hearts/avatar.webp",
@@ -2334,7 +2334,7 @@
       "is1155": false,
       "address": "0x2a4c54c64487734080843188642c1ac48f772053",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Broken Hearts collection is a line of 101 tarot cards created by the musician Grey_hart, using MIDJOURNEY\u2019s AI software, all around the subject of a broken heart. Each 9x16 is a 1 of a kind image with varying themes and elements around heartbreak and the spiritual journey involved in getting through it. Some are astral guides, some spirit animals, some just metaphors and feelings made into imagery. If you\u2019ve experienced heartbreak of any kind in your life, there\u2019s sure to be an image that speaks to you in some form. ",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/broken-hearts/avatar.webp",
@@ -2357,7 +2357,7 @@
       "is1155": false,
       "address": "0x313D04832B309CD5f3D75eD7407F34f655cf6455",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "\u2606 1,000 Collectable Renegade Monks \u2606\n\nMint your Monk and fight with The New Resistance!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/renegade-monks/avatar.webp",
@@ -2380,7 +2380,7 @@
       "is1155": false,
       "address": "0x6AEc192705203eb4EE1106bA5bcf9a11f44397B1",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Team Movember 2022 is an initiative of Team Mustachios to raise funds for the Movember Foundation Charity. 2022 NFTs and 50% of the mint will go directly to the cause. Movember fundraisers are a global community of fired up Mo Bros and Mo Sisters \u2013 aka rock stars making a difference in mental health and suicide prevention, prostate cancer and testicular cancer.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/team-movember/avatar.webp",
@@ -2403,7 +2403,7 @@
       "is1155": false,
       "address": "0xcA2a705cd8c623Ed52848A272c8F8414Baeb918c",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Resurrection potion can be deadly if I\u2019m the wrong hands!!! Dr. Boo has been working hard in the lab to bring you the first of its kind mutant potion!!! If you own and nft and want to mutate it\u2026 then drink the juice.  You will get a resurrected version of your favorite nft!!  Don\u2019t worry the host nft will not be harmed.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/dr-boo-resurrection/avatar.webp",
@@ -2426,7 +2426,7 @@
       "is1155": false,
       "address": "0x51Cd050BB937AD8f6aF35e4413c97073e9f73D2d",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "A 2,000 NFT access card collection on the CRONOS chain that provides holders' with virtual real-estate in the ALSTONIAVERSE!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/alstoniaverse-access-card/avatar.webp",
@@ -2448,7 +2448,7 @@
       "is1155": false,
       "address": "0xa658fc75FC40B079345810503eb3E4Cca9Feae06",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Rebel Punks is an artistically hand drawn collection, pioneering a new hybrid Gaming Ecosystem, the Metawarz Shooter. The Rebel Punks are more than just collectibles, they carry endless possibilities and utilities. The art is derived from one faction of the Metawarz. Thus, they are the cornerstone of Metawarz Shooter ecosystem. Your Rebel serve as a membership card, and grants you access to members-only benefits.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/rebel-punks/avatar.webp",
@@ -2474,7 +2474,7 @@
       "is1155": false,
       "address": "0x0EfaD04B14cdFcCC5e322481663043441c0048d7",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Patron NFT is 4999 unique dogs of Jack Russell Terrier breed, created to help victims of the war in Ukraine",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/patron-nft/avatar.webp",
@@ -2499,7 +2499,7 @@
       "is1155": false,
       "address": "0x068E74818582A542e35a37057b92f974F0823A50",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Cro Llamas is a NFT project created to share a cultural vision with a Llama themed art. We want to build a successful project that collecting Llama artwork is the main center of it.\n\nThe CRO Llamas used to live in their world called Llamaverse, a beautiful world where all llamas could live in harmony and wealth. One day, the twin gods, creators of the world, wanted to choose one of the llamas to become a new god and sit next to them, but to do so, the chosen one would need to go in an adventure.\n\n1200 Llamas were hand picked to participate on this quest!\nWhen they started their journey, they were sent to a world called Cronos Blockchain.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-llamas/avatar.webp",
@@ -2522,7 +2522,7 @@
       "is1155": false,
       "address": "0xf90f9C8448c8d147faC73695635f868D6c1f8f0b",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Crazy Crossbreeds are wicked beasts who's genetics consist of Goat & Boar DNA. These NFT's will powers our Defi Game Cove and will be by far the craziest beasts in our eco-system. Holders receive benefits through our DAO, Tools, Games, Mint, and upcoming Comic Book release. Join The Herd Today!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crazy-crossbreeds/avatar.webp",
@@ -2546,7 +2546,7 @@
       "is1155": false,
       "address": "0x803F1caB2Bf0B13FbcaB54E993f552a0dd1AD28F",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Selfie Guys is a collection with many utilities! Grab yours now and join our amazing community!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/selfie-guys/avatar.webp",
@@ -2570,7 +2570,7 @@
       "is1155": false,
       "address": "0xCF7aedEbC5223c4C620625A560300582B77D8719",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Ryoshi Tales awaits all of our enthusiastic supporters. Get your hands on these exclusive Ryoshi Tales-themed VIP NFTs now! Coming with 8 different traits each with relevant attributes \u2013 body, background, tools, mouth, hair, miscellaneous, eyes, clothing \u2013 every NFT is completely unique. Don\u2019t miss out on the opportunity to participate in our project\u2019s evolution.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-vip/avatar.webp",
@@ -2598,7 +2598,7 @@
       "onChain": false,
       "address": "0xa937e814A2c5e99E9e86c4F34162c4F012F75a52",
       "is1155": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "/img/avatar.png",
@@ -2622,7 +2622,7 @@
       "onChain": false,
       "address": "0xa4C40C51de20d1e75E0ac83D6F043AF2f9C6Faa9",
       "is1155": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "/img/avatar.png",
@@ -2646,7 +2646,7 @@
       "is1155": false,
       "address": "0x65479558b3e1a178E9eD460c290B443D0944fdc7",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "CroWorld Cup is a nft project celebrating the biggest soccer tournament in the world.  There are 32 countries battling for the title.  So are you.  Each mint will be a flag representing a country.  If your country wins.. you win.  First place country nft holders win $7500* split over each NFT.  2nd Place wins $2500* split over every nft holder.  THere are 30 flags per country so for every winning flag you can win $333.33 for first place and $83.33 per flag.  Own 2 flags get double winnings\n\nAll country flags that lose, will be dropped an NFT 1-2 weeks after the tournament ends.  These NFTs will be your ticket to future games.\n\n*These numbers are based on minting out.  Should we not mint out the first place team will get 50% of the pot and 2nd place will get 20% of the pot.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-world-cup/avatar.webp",
@@ -2669,7 +2669,7 @@
       "is1155": false,
       "address": "0xF0ce06Ac2bB27d14177aAB1b52f1C0D0A780e14f",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Piggy Bank Finance (PBF) is a collection of 6,666 unique NFTs with over 200 hand-drawn traits on the Cronos blockchain.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/piggy-bank-finance/avatar.webp",
@@ -2695,7 +2695,7 @@
       "is1155": false,
       "address": "0xA9806E1F6Aa8FdF47470c06a2c1f563CFA501690",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Welcome to the club\n5,555 planets ready to be explored...\nSomewhere far away in the universe, Meta Planet Club appears. A collection of 5,555 algorithmically generated psychedelic planets, offering its community a friendly ecosystem for life on the Web3.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/meta-planet-club/avatar.webp",
@@ -2720,7 +2720,7 @@
       "is1155": false,
       "address": "0x7389d2eb61593940c87fca0ae9785ef196141093",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Brought to you by CROugar Kingdom! Weekly Twitter and Discord giveaways for an entire year!  Maybe you will be a big winner! Get your Wetland Razzle Tix and tune in for the fun!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/wetland-razzles/avatar.webp",
@@ -2746,7 +2746,7 @@
       "is1155": false,
       "address": "0x50c96032C5f10E21078C9269e1088D200a76CD4a",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "A Collection of 4420 PFPs to hit our Cronos blockchains, with planned donations to clinics, Holder Royalties pay outs, exclusive holder competitions, custom merch, app development and potential business investment opportunity for our O.G 4420 Buds holders, as well as plenty of live team chats! Our team is excited to bring you all along with us! let's better our medicinal cannabis industry 1 Bud at a time we look forward to providing greatness to our CroFam and the world.\nWe have planned an app development to help link patients, doctors and clinics to full cultivator information (what's used in the process, THC/CBD info, also trying to help recognizing the various cultivars and terpenes with DNA as well to optimize therapy outcomes.\n\nFuture plans for Buds is an import/export licensing to help regulate a more affordable medicinal option on our Aussie market, with the full potential to explore possible Cultivation licensing in the future! \n\nLets Break The Stigma!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/buds/avatar.webp",
@@ -2772,7 +2772,7 @@
       "is1155": false,
       "address": "0x0b54c93A363A3f064F97777C0491A2D798547378",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "C\u00b3 is a brand of 3000 PFP crow characters granting holders utility and revenue. Bringing powerful set of trading and analytical tools. It's the first project that allows holders to browse the Cronos NFT space efficiently and have fun in our Crowgame . Join C\u00b3DAO to get access to all those benefits.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/c3-cronos-crow-crew/avatar.webp",
@@ -2795,7 +2795,7 @@
       "is1155": false,
       "address": "0xEbFB981D5a7A7C2133752F7787263B58495bb923",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Ebisu's Bay bundle contract",
         "avatar": "/img/avatar.png",
@@ -2821,7 +2821,7 @@
       "is1155": false,
       "address": "0xb948d0B3D18d4d9Db61226F840395e7A8E3a7F30",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "A collection of 777 animated NFT rings. \n\nCollect all 7 ring types to receive a real life hand-made custom ring based on your chosen ring type.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/nft-rings-aperson-lyeque/avatar.webp",
@@ -2844,7 +2844,7 @@
       "is1155": false,
       "address": "0x786e53f0E8979367aE015b612EB3a9fcA24307dA",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Trippy Meanies, are a special-edition limited collection of the Lost Toys Meanies.\n\nThese incredible designs have been created by top 2D artists Ugonzo, Genius and Woah Johnny. Each NFT is signed and also unlocks great utilities!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/trippy-meanies/avatar.webp",
@@ -2869,7 +2869,7 @@
       "is1155": false,
       "address": "0x7fb11087c21719C2e4f9Fc16408e8a97a46c92Ad",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Xmas is coming, and the Lotus Ocean Islands are covered in snow.  The characters of Ryoshi Tales have been preparing for the winter festivities!\n\nFrom getting ready to weather the harsh climate to enjoying the frosted landscapes, the characters of the Ryoshi Xmas Tales NFT collection come jam-packed with seasonally appropriate traits that make every NFT completely unique. \n\nWhat are you waiting for? \n\n**Get one now to sport your most Xmassy PFP to date.**",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-christmas/avatar.webp",
@@ -2895,7 +2895,7 @@
       "is1155": false,
       "address": "0xd9094AbE3cc719735E3aEc8D0356Ca2Faf729A10",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "A collection of 5,555 Xmas Trollfam NFTs brought to you by Trollcoin. Jump into our discord and have some fun!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/trollfam-xmas/avatar.webp",
@@ -2919,7 +2919,7 @@
       "is1155": false,
       "address": "0x90E4bE01f94d6A8851Bf1a576B6495A77C5Ba0Ed",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Cro Snowmen are the first collection from Holiday NFT, which is an NFT project managed by TopBlok Digital Asset Management.  TopBlok is known for other Cronos Projects such as The CronosVerse and CROmmandos.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cro-snowmen/avatar.webp",
@@ -2944,7 +2944,7 @@
       "is1155": false,
       "address": "0xFAdF08b861BEFB90F024fd12F814Dcf07E7545E9",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "A collection of 1000 IcyCRO glasses. \n\nMint yourself a ICY NFT and you will be part of the biggest community validator project in Cronos and in the whole Cosmos.\n\nIcyCRO has grown quickly to be one the most popular validators and best relayers in three chains: Crypto.org, ATOM and JUNO.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/icy/avatar.webp",
@@ -2970,7 +2970,7 @@
       "is1155": false,
       "address": "0xce4329B17BeF21Fb8651Ac4107412C50AfE5b2e5",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Blumies collection brought to you by ''Purple Fantasy'' team. \n\nUnique styles lead to unique ideas. Join the journey and discover what you haven't seen and heard before! Work with the team, learn, receive, observe and enjoy while the story evolves.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/blumies/avatar.webp",
@@ -2994,7 +2994,7 @@
       "is1155": false,
       "address": "0xfaDb4ef67596492534d7315C405B4B06D1e19Bf1",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "CroHamsterNFT Items MK1 is a collection of 1000 animated 3D NFT Items that builds on our CroHamsterNFT collection for use in our CroHamster arena. These Item NFTs have different combat values and rarities! Owning such an Item will increase your CroHamsterNFT's combat abilities in one of our arena matchups, where you can compete for great NFT and Cro rewards and work your way up to our Hall of Fame for even more rewards and glory! In addition, 100% of the funds resulting from this Item collection will be used to burn the CroHamsterNFT floor price in multiple unannounced waves and expand our CroHamsterNFT Universe!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crohamsternft-items-mk1/avatar.webp",
@@ -3025,7 +3025,7 @@
       ],
       "address": "0xBE1B0475F1CDaF4481E944AE6a28eABF149128B1",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Turkey has recently been struck by a devastating earthquake with a magnitude of 7.8. The impact has been widespread and many communities have been severely affected. In this difficult time, we are reaching out to ask for your support. Any donation, no matter how small, will help us provide much-needed aid to those affected by the earthquake. Your generosity will help provide shelter, food, and medical supplies to those in need. Your contribution will make a real difference in the lives of those affected by this disaster. Thank you for your kindness and support.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/turkey-earthquake-support/avatar.webp",
@@ -3048,7 +3048,7 @@
       "is1155": false,
       "address": "0x14dc317829f1bd1d76abedbc586a94c83fb0e3f1",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Reckless Robots Legends is a collection of 3000 hand-drawn NFTs deployed on the Cronos Chain. The collection consists of three (3) main Classes starring the Commander, The Void and The Beast. These three will be put to a test as they battle it out to become true Legends of Cronos",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/reckless-robots-legends/avatar.webp",
@@ -3076,7 +3076,7 @@
       "is1155": false,
       "address": "0x66adfe35f6a4371b4cC91481E633B03c83Ff423E",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Fallen Angels is a collection of 1998 uniquely generated NFTs on the Cronos Chain.Each Fallen Angel NFT is generated with over 70+ Attributes with different rarities and 10 Legendaries.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fallen-angels-demons/avatar.webp",
@@ -3101,7 +3101,7 @@
       "is1155": false,
       "address": "0x3443171b364B49B7D0f87861e961240D0b1D88a8",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Each SUITE NFT represents ownership of either an office, studio, apartment or luxury sweet in one of the downtown towers within The CronosVerse.  By owning a SUITE NFT, users are able to access The CronosVerse and customize their metaverse experience inside of their digital property",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/the-cronosverse-suites/avatar.webp",
@@ -3128,7 +3128,7 @@
       "is1155": false,
       "address": "0x6DFdA93e4a23Ef5245278ff7328fC541FeC1DC3D",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "For My Brothers is a charity focused NFT collection created by Elkay, the artist behind Trooprz. \n\nThe collection will focus on 3 key goals;\n\n- Kick-start 'Hearts of Gold' charity fund (40%)\n- Raise awareness and support Mens Mental Health in the Crypto/NFT space\n- Support the development of the CroDraw Lottery (and give holder discount!)\n\n420 hand-crafted, algorithmically generated, unique NFTs.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/for-my-brothers/avatar.webp",
@@ -3153,7 +3153,7 @@
       "is1155": false,
       "address": "0x0a9aDe7c04AF4902c84D120B18d69fFFe5AE099E",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "CroMorphs are currently stuck in a timeloop - and need your help to mint safely out of the timeloop - and onto the cronos chain.\nThese mysterious creatures have connections to mythic anicent worlds - where they once lived.\n\nThey now find themselves in MetaMorphis - a barren desert land, where they are doing their best to grow and prosper.\nExplore the hidden secrets of MetaMorphis together with CroMorphs, and unlock all the mysteries of the world.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cromorphs/avatar.webp",
@@ -3179,7 +3179,7 @@
       "is1155": false,
       "address": "0xd464f36885163e124e3a15e31c0e581ba3f648ab",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "website": "https://app.ebisusbay.com/",
@@ -3204,7 +3204,7 @@
       "is1155": false,
       "address": "0xa3a9bd5142bfaf3126734096cacc96a71103611f",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Elf Citizens is a collection of 1,111 characters generated randomly. All are on the Cronos Chain with unique identity and rarity.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/elf-citizens/avatar.webp",
@@ -3228,7 +3228,7 @@
       "is1155": false,
       "address": "0x57f458ad92147c27b5e00995cd228a2ba708480f",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The CronosVerse is offering 143 Unique In-Game Furniture and Decorative Items for you to place on your Land or in your Suite.  With 12 multiples of each item available, there will be a total of 1716 NFTs available in this drop. ",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronosverse-in-game-assets/avatar2.webp",
@@ -3254,7 +3254,7 @@
       "is1155": false,
       "address": "0xFAD821B0aA4C1a749BD71be595C223240B232d62",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Rebel AUT Club is a collection of 7777 Rebels generated on the Cronos Chain. \nWith over 300+ attributes and different rarities,  \nthe collection consists of 8 animal-themed digital collectible NFTs. \nThe collection’s primary objective is to generate awareness and raise funds to support children who are impacted by ASD, Autism Spectrum Disorder, with essential sensory equipment.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/rebel-aut-club/avatar.webp",
@@ -3279,7 +3279,7 @@
       "is1155": false,
       "address": "0x367f3dbad544885264388507008cd91c4766684a",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Welcome to 0xLuckless v2.2, a 6K resolution art project, unique and unlike anything else on the blockchain Created with the power of A.I. and advanced editing techniques across multiple platforms to produce the highest quality artwork on Cronos.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/0xluckless-v2-2/avatar.webp",
@@ -3306,7 +3306,7 @@
       "is1155": false,
       "address": "0xA9a3141033100ab6c1e7618eF140FB2bA02ADb25",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "There's a coin lying on the ground! Pick it up?",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/diamond-coins/avatar.webp",
@@ -3332,7 +3332,7 @@
       "is1155": false,
       "address": "0x5Ec772bcE2D981C6ce42ff002a586B10f257031D",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Crypto Crows NFT collection is the first from Corvus Labs. In addition to owning one of a kind NFTs, it's primary utility is free shipping on orders from the Crypto Crows custom merchandise website. There will be additional perks such as discounts on rotation based on traits as well as the usual giveaways, contests, airdrops/free mint for future projects.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/crypto-crows/avatar.webp",
@@ -3374,7 +3374,7 @@
         }
       ],
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Fortune Teller NFT from the team at Ebisu's Bay.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fortuneteller/avatar.webp",
@@ -3400,7 +3400,7 @@
       "is1155": false,
       "address": "0xf92988Ee3dB59DA98d17BEb832491BDAb3825D70",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "The Pogo are randomly generated, non-fungible tokens, also known as an \"NFT.\" There are 2,500 unique & 3D rendered Pogo in our genesis collection with over 300 attribute, No two Pogo are the same. \n2490pcs random generated NFT\n10pcs Legendary 1:1 NFT\n\n-Hype The Fun Of Mint\nLucky minter will receive $cro token and NFT airdrops that worth over 15000$cro, Prizes and specific NFT ID can be found on The Pogo social media.\n\n -Sharing Is Caring\nHolder could earn passive income via our partnered NFT staking platform, 20% of mint fund and 50% of the royalties will be share to the Pogo liquidity pool. \n\n- Creative 1:1 Pogo Custom Design\nA fully customize 1/1 Special Pogo NFT with your idea to you in terms of swapping 8 of the genesis Pogo collection.\n\n-We Won't Stop The Joy\nOwner of POGO NFT means you're acquisition a POGO membership card and POGO discord holder badges that available to access the Pogo exclusive club.\nNFT raffles, Stealth event and more activities will be host to our valuable community.\n\n-Merch Store\nVarious merchs oriented from community activities, such as idea proposals, fan arts, will be produced and sold via online store. Figurines, Hats, Tees, Socks, Hoodies, etc will be designed by The Pogo Team.\n\n-Pogoland\nUsing cutting edge technology & art direction we bring Pogo into The Pogoland Metaverse, A web3 crypto home of immersive experiences, from gaming to social hangouts, to concerts, fashion shows, education, and entertainment, connecting each other with our resources.\n\n-Project Holder Benefits\nThis is not the end, it's only the beginning.\nPogo holder will be our first priority to benefit them with our future roadmap, partnership, future collection or even cross chain project.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/the-pogo/avatar.webp",
@@ -3426,7 +3426,7 @@
       "is1155": false,
       "address": "0x8aB4457eE1D5E8eAcB8716a4A183E6FF21321bC4",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Cronos Towers is a NFT collection of 1234 unique towers made with AI Midjourney + Scenario.\n\nOur aim is to create more awareness about capabilities of new AIs while providing various utilities to holders of our NFTs. Such as, staking, free AI subsciptions, AI guides, secondary profits, P2E game, Metaverse experience and more.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronos-towers/avatar.webp",
@@ -3449,7 +3449,7 @@
       "is1155": false,
       "address": "0x2963a24552A5E544e4CA5820Ba8A0B9e87a46011",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Introducing The Strange Camel - a one-of-a-kind collection of 4,000 custom-designed 3D Avatars. These stunningly beautiful avatars are aesthetically pleasing and carry special perks within the SCS ecosystem. The Strange Camel also tells a fascinating story about how camels were the only creatures to survive a deadly virus in 2969, leading to a thrilling adventure that you can be a part of.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/strange-camel-society/avatar.webp",
@@ -3479,7 +3479,7 @@
         }
       ],
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fortuneteller/avatar.webp",
@@ -3519,7 +3519,7 @@
         }
       ],
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Fortune Guards NFT from the team at Ebisu's Bay. Fortune Tellers gained from the Fortune presale can be exchanged 1:1 for Fortune Guards.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/fortuneteller/avatar.webp",
@@ -3545,7 +3545,7 @@
       "is1155": false,
       "address": "0xbf274fD475CBB7Dfc84d0Fbe35ce35bB8b1AA5e1",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Ballies Cheerleaders are the new assets in the Ballies Metaverse. They are a set of 3333 completely unique basketball characters algorithmically generated from over 140 hand-drawn traits. They are amazing collectibles as well as super strong game assets. They have rarity skills to influence the Ballie's game and give you the advantage on the Meta-court. Own a Cheerleader Ballie and live out your basketball dream! Become the KING of the Meta-Court! Do you have what it takes?",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ballies-cheerleaders/avatar.webp",
@@ -3571,7 +3571,7 @@
       "is1155": false,
       "address": "0x5a78147a57824872EE7AD0D07B0Eb57f92F3Dfb5",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/barber-shop/avatar.webp",
@@ -3596,7 +3596,7 @@
       "is1155": false,
       "address": "0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Discover the Legend of Izanami's Cradle.\n\nBecome the owner of unique lands, farm Resources, explore Points of Interest, fight Epic Bosses & receive Rare Artifacts and Weapons.\n\nLevel up the Buildings on your Land to Unlock Extra Staking Slots and Higher Bonuses. \nAre you ready? You can use $FRTN to acquire Land Deeds and become the first ever Ryoshi Dynasties official landowner.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/izanamis-cradle-land-deeds/avatar2.webp",
@@ -3622,7 +3622,7 @@
       "is1155": false,
       "address": "0x653397aA2E3167492e13f34191EaEc6455D0C3C1",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/jafc-comics/avatar.webp",
@@ -3647,7 +3647,7 @@
       "is1155": false,
       "address": "0x757092f15Fc90BEDa1089B3bd999AD8Ff45E1ef6",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Join Coom Cats to be a part of a private club, earn passive income through our presale platform, and much more.  Join the movement.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/coom-cats/avatar.webp",
@@ -3696,7 +3696,7 @@
       "is1155": false,
       "address": "0x75524C8c0509223A9F4B81FF34901FC132ce32f3",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Collectable playing cards allowing you participation in several different ongoing card games on EbisusBay.com\n\nCollect them all and join in on the fun!",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-playing-cards/avatar.webp",
@@ -3774,7 +3774,7 @@
       "is1155": false,
       "address": "0xCDC905b5cDaDE71BFd3540e632aeFfE99b9965E4",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales/avatar.webp",
@@ -3800,7 +3800,7 @@
       "is1155": false,
       "address": "0x458073C0fb97e42d441778aE4beFc8c1180E513e",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-heroes/avatar.webp",
@@ -3826,7 +3826,7 @@
       "is1155": false,
       "address": "0xa62F0C192691f5f17EBc704E1ad77ca4Ba687f74",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "Tokenized vaults from the Bank in Ryoshi Dynasties",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-vaults/avatar.webp",
@@ -3852,7 +3852,7 @@
       "is1155": false,
       "address": "0xb115C623109b7998e497837Ae6200FF79e49E1Ee",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/pixel-ebisu/avatar.webp",
@@ -3873,7 +3873,7 @@
       "is1155": false,
       "address": "0x386628E36B208B83aD119d2a81fB71eD6a86bB83",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "categories": []
@@ -3918,7 +3918,7 @@
       "is1155": false,
       "address": "0x1A695B3aC30D41F9A1D856A27DD0D9DdaaCe750d",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "/img/avatar.png",
@@ -3956,7 +3956,7 @@
         }
       ],
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/moggy-money-brokers/avatar.webp",
@@ -3985,7 +3985,7 @@
       "is1155": false,
       "address": "0x67A96285C2aD0385F8e511813dfd72a0140B6456",
       "onChain": false,
-      "listable": true,
+      "blacklist": 0,
       "metadata": {
         "description": "\"Free The Gang\", the upgrade art from the legendary Fury Mouse Gang collection & the first ever NFT collection on zkEVM Cronos chain.",
         "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/free-the-gang/avatar.webp",
