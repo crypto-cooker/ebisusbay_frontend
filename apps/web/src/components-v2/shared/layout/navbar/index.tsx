@@ -162,7 +162,6 @@ const Header = function () {
       </Box>
       <NavMenu
         position={'fixed'}
-        style={{ zIndex: 20 }}
         bottom={0}
         display={{ base: 'flex', md: 'none' }}
         justifyContent={'space-around'}

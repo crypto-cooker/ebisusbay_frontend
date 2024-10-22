@@ -33,7 +33,7 @@ const ScrollToTop = () => {
       icon={<ArrowUpIcon />}
       isRound
       position="fixed"
-      bottom="2rem"
+      bottom="4rem"
       right="2rem"
       onClick={scrollToTop}
       display={isVisible ? "flex" : "none"}
