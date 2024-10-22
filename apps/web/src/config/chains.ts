@@ -158,7 +158,7 @@ const cronosConfig: AppChainConfig = {
   urls: {
     subgraph: {
       root: 'https://cronos-graph.ebisusbay.com:8000/subgraphs/name/ebisusbay/',
-      ryoshiDynasties: 'ryoshi-dynasties-lp-staking-fixed',
+      ryoshiDynasties: 'ryoshi-dynasties-lp-vaults',
       ryoshiPresale: 'ryoshi-presale',
       stakedOwners: 'staked-owners-2',
       staking: 'staking',
@@ -341,7 +341,7 @@ const cronosZkEVMConfig: AppChainConfig = {
   urls: {
     subgraph: {
       root: 'https://cronos-zkevm-graph.ebisusbay.com:18000/subgraphs/name/ebisusbay/zkcro/',
-      ryoshiDynasties: 'ryoshi-dynasties-lp-staking',
+      ryoshiDynasties: 'ryoshi-dynasties-lp-staking-fixed',
       ryoshiPresale: '',
       stakedOwners: 'main',
       staking: '',
