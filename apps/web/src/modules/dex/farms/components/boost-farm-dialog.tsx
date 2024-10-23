@@ -301,24 +301,24 @@ function maxBoostTimeByXpLevel(level: number) {
 function boostPctByMitama(mitama: number) {
   let boostValue = 0;
 
-  if (mitama >= 2500) {
-    boostValue = 1;
-  } else if (mitama >= 10000) {
-    boostValue = 5;
-  } else if (mitama >= 25000) {
-    boostValue = 10;
-  } else if (mitama >= 50000) {
-    boostValue = 25;
-  } else if (mitama >= 100000) {
-    boostValue = 50;
-  } else if (mitama >= 250000) {
-    boostValue = 100;
-  } else if (mitama >= 500000) {
-    boostValue = 200;
+  if (mitama >= 2000000) {
+    boostValue = 300;
   } else if (mitama >= 1000000) {
     boostValue = 250;
-  } else if (mitama >= 2000000) {
-    boostValue = 300;
+  } else if (mitama >= 500000) {
+    boostValue = 200;
+  } else if (mitama >= 250000) {
+    boostValue = 100;
+  } else if (mitama >= 100000) {
+    boostValue = 50;
+  } else if (mitama >= 50000) {
+    boostValue = 25;
+  } else if (mitama >= 25000) {
+    boostValue = 10;
+  } else if (mitama >= 10000) {
+    boostValue = 5;
+  } else if (mitama >= 2500) {
+    boostValue = 1;
   } else {
     boostValue = 0;
   }

@@ -7,6 +7,7 @@ import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {useAtom, useSetAtom} from "jotai";
+import { SUPPORTED_RD_CHAIN_CONFIGS } from "@src/config/chains";
 
 interface RefetchContextProps {
   refetchApprovals: () => void;
@@ -45,9 +46,19 @@ export default function UserFarmsProvider({ children }: { children: ReactNode })
     enabled: !!user.address,
   });
 
-  const {data: frtnAndMitamaBalances} = useQuery({
+  const {data: mitamaBalance} = useQuery({
     queryKey: ['UserFrtnMitamaBalances', user.address],
-    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getErc20Account(user!.address!),
+    queryFn: async () => {
+      let totalMitama = 0;
+      for (const chainConfig of SUPPORTED_RD_CHAIN_CONFIGS) {
+        const account = await ApiService.forChain(chainConfig.chain.id).ryoshiDynasties.getErc20Account(user!.address!);
+        if (account) {
+          totalMitama += Number(account.mitamaBalance);
+        }
+      }
+
+      return totalMitama;
+    },
     refetchOnWindowFocus: false,
     enabled: !!user.address
   });
@@ -70,9 +81,9 @@ export default function UserFarmsProvider({ children }: { children: ReactNode })
 
   useEffect(() => {
     if (user.address) {
-      setMitama(frtnAndMitamaBalances ? parseInt(frtnAndMitamaBalances?.mitamaBalance) : 0);
+      setMitama(mitamaBalance ?? 0);
     }
-  }, [user.address, frtnAndMitamaBalances]);
+  }, [user.address, mitamaBalance]);
 
   return (
     <UserFarmsRefetchProvider
