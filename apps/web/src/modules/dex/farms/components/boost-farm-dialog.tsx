@@ -258,7 +258,7 @@ function maxBoostTimeByXpLevel(level: number) {
   let maxTime = 0;
   switch (level) {
     case 0:
-      maxTime = 600;
+      maxTime = 3600;
       break;
     case 1:
       maxTime = 3600;
