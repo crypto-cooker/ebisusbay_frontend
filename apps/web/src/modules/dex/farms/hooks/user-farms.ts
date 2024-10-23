@@ -1,5 +1,5 @@
 import {useAtom, useSetAtom} from "jotai";
-import {approvalsAtom, balancesAtom, boostsAtom, userFarmsAtom} from "@dex/farms/state/user";
+import {approvalsAtom, balancesAtom, boostsAtom, userFarmsAtom, mitamaAtom} from "@dex/farms/state/user";
 import {useContext, useMemo} from "react";
 import {Contract, ethers} from "ethers";
 import FarmsAbi from "@src/global/contracts/Farms.json";
@@ -18,6 +18,11 @@ import {timeSince} from "@market/helpers/utils";
 export const useUserFarms = () => {
   const [userFarms] = useAtom(userFarmsAtom);
   return userFarms;
+}
+
+export const useUserMitama = () => {
+  const [userMitama] = useAtom(mitamaAtom);
+  return userMitama;
 }
 
 export const fetchApprovals = async (userAddress: string, chainId: number) => {

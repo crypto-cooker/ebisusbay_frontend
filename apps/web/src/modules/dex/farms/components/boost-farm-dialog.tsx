@@ -10,6 +10,7 @@ import {
   FormHelperText,
   FormLabel,
   HStack,
+  Image,
   ModalBody,
   ModalFooter,
   NumberInput,
@@ -20,7 +21,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {ApiService} from "@src/core/services/api-service";
@@ -28,10 +29,11 @@ import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnfor
 import {useUser} from "@src/components-v2/useUser";
 import {useAppChainConfig} from "@src/config/hooks";
 import {useQuery} from "@tanstack/react-query";
-import {getLengthOfTime, pluralize} from "@market/helpers/utils";
+import {getLengthOfTime, pluralize, round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
 import {CheckIcon} from "@chakra-ui/icons";
-import {useUserFarmBoost} from "@dex/farms/hooks/user-farms";
+import {useUserFarmBoost, useUserMitama} from "@dex/farms/hooks/user-farms";
+import ImageService from "@src/core/services/image";
 
 interface StakeLpTokensDialogProps {
   isOpen: boolean;
@@ -40,14 +42,14 @@ interface StakeLpTokensDialogProps {
   onSuccess: () => void;
 }
 
-const MAX_TROOPS = 360;
-const MIN_TROOPS = 60;
+const MIN_TROOPS = 10;
 const SECONDS_PER_TROOP = 60;
 
 const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialogProps) => {
   const user = useUser();
   const { config: appChainConfig } = useAppChainConfig();
   const { boost: existingBoost, claimable: isBoostClaimable, timeRemaining } = useUserFarmBoost(farm.data.pid);
+  const userMitama = useUserMitama();
 
   const {signature, isSignedIn, requestSignature} = useEnforceSignature();
   const [quantity, setQuantity] = useState<string>('');
@@ -64,9 +66,12 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
     refetchOnWindowFocus: false,
     enabled: isOpen && !!user.address && isSignedIn,
   });
+
   const availableTroops = rdUserContext?.game.troops.user.available.total;
   const xpLevel = rdUserContext?.experience.level ?? 1;
-  const xpLevelBoost = boostPercentageByExpLevel(xpLevel);
+  const mitamaBoost = useMemo(() => boostPctByMitama(userMitama), [userMitama]);
+  const maxBoostTime = useMemo(() => maxBoostTimeByXpLevel(xpLevel), [xpLevel]);
+  const maxTroops = round(maxBoostTime / 60);
 
   const handleQuantityChange = (valueString: string) => {
     setQuantity(valueString);
@@ -74,7 +79,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
 
   const handlePresetQuantityChange = (percent: number) => {
     let newQuantity = Math.floor((availableTroops ?? 0) * (percent / 100));
-    if (newQuantity > MAX_TROOPS) newQuantity = MAX_TROOPS;
+    if (newQuantity > maxTroops) newQuantity = maxTroops;
 
     setQuantity(newQuantity.toString());
   }
@@ -89,8 +94,8 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
         return;
       }
 
-      if (quantityInt > MAX_TROOPS) {
-        toast.error(`Cannot add more than ${MAX_TROOPS} ${pluralize(MAX_TROOPS, 'troop')}`);
+      if (quantityInt > maxTroops) {
+        toast.error(`Cannot add more than ${maxTroops} ${pluralize(maxTroops, 'troop')}`);
         return;
       }
 
@@ -174,7 +179,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                 <NumberInput
                   value={quantity}
                   min={0}
-                  max={MAX_TROOPS}
+                  max={maxTroops}
                   step={1}
                   onChange={(valueString) => handleQuantityChange(valueString)}
                   w='full'
@@ -183,17 +188,23 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                 </NumberInput>
                 <Button onClick={() => handlePresetQuantityChange(100)}>MAX</Button>
               </HStack>
-              <FormHelperText fontSize='sm'>Min: {MIN_TROOPS}, Max: {MAX_TROOPS}. Quest time increases 1 minute per troop sent</FormHelperText>
+              <FormHelperText fontSize='sm'>Min: {MIN_TROOPS}, Max: {maxTroops}. Quest time increases 1 minute per troop sent</FormHelperText>
               <FormErrorMessage fontSize='sm'>Error</FormErrorMessage>
             </FormControl>
             <VStack align='stretch' mt={4}>
               <Flex justify='space-between' fontSize='sm'>
-                <Box>XP Boost</Box>
-                <Box>{xpLevelBoost}% (level {xpLevel})</Box>
+                <Box>Mitama Boost</Box>
+                <VStack align='end' spacing={0}>
+                  <Box>{mitamaBoost}%</Box>
+                  <HStack>
+                    <Box fontSize='xs' className='text-muted'>{userMitama}</Box>
+                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/mitama.png').convert()} alt="troopsIcon" boxSize={3} />
+                  </HStack>
+                </VStack>
               </Flex>
               <Flex justify='space-between' fontSize='sm'>
                 <Box>Boosted APR</Box>
-                <Box>{parseFloat(farm.derived.apr.slice(0, -1)) + xpLevelBoost}%</Box>
+                <Box>{parseFloat(farm.derived.apr.slice(0, -1)) + mitamaBoost}%</Box>
               </Flex>
               <Flex justify='space-between' fontSize='sm'>
                 <Box>Duration</Box>
@@ -224,7 +235,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                   flex={1}
                   onClick={handleConfirmBoost}
                   isLoading={executing}
-                  isDisabled={executing || !quantity || Number(quantity) === 0 || Number(quantity) > MAX_TROOPS || !availableTroops}
+                  isDisabled={executing || !quantity || Number(quantity) === 0 || Number(quantity) > maxTroops || !availableTroops}
                 >
                   Confirm
                 </PrimaryButton>
@@ -243,43 +254,73 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
 
 export default BoostFarmDialog;
 
-
-function boostPercentageByExpLevel(level: number) {
-  let boostValue = 0;
+function maxBoostTimeByXpLevel(level: number) {
+  let maxTime = 0;
   switch (level) {
+    case 0:
+      maxTime = 600;
+      break;
     case 1:
-      boostValue = 5;
+      maxTime = 3600;
       break;
     case 2:
-      boostValue = 7.88;
+      maxTime = 10800;
       break;
     case 3:
-      boostValue = 12.41;
+      maxTime = 21600;
       break;
     case 4:
-      boostValue = 19.56;
+      maxTime = 28800;
       break;
     case 5:
-      boostValue = 30.82;
+      maxTime = 43200;
       break;
     case 6:
-      boostValue = 48.56;
+      maxTime = 64800;
       break;
     case 7:
-      boostValue = 76.52;
+      maxTime = 86400;
       break;
     case 8:
-      boostValue = 120.58;
+      maxTime = 129600;
       break;
     case 9:
-      boostValue = 190;
+      maxTime = 172800;
       break;
     case 10:
-      boostValue = 300;
+      maxTime = 345600;
       break;
     default:
-      boostValue = 1;
+      maxTime = 345600;
       break;
+  }
+
+  return maxTime;
+}
+
+function boostPctByMitama(mitama: number) {
+  let boostValue = 0;
+
+  if (mitama >= 2500) {
+    boostValue = 1;
+  } else if (mitama >= 10000) {
+    boostValue = 5;
+  } else if (mitama >= 25000) {
+    boostValue = 10;
+  } else if (mitama >= 50000) {
+    boostValue = 25;
+  } else if (mitama >= 100000) {
+    boostValue = 50;
+  } else if (mitama >= 250000) {
+    boostValue = 100;
+  } else if (mitama >= 500000) {
+    boostValue = 200;
+  } else if (mitama >= 1000000) {
+    boostValue = 250;
+  } else if (mitama >= 2000000) {
+    boostValue = 300;
+  } else {
+    boostValue = 0;
   }
 
   return boostValue;
