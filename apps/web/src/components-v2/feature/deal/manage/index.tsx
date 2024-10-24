@@ -285,7 +285,7 @@ const ConditionalActionBar = ({condition, children}: {condition: boolean, childr
   const sliderBackground = useColorModeValue('gray.50', 'gray.700');
   
   return condition ? (
-    <Slide direction='bottom' in={true} style={{ zIndex: 10 }}>
+    <Slide direction='bottom' in={true} style={{ zIndex: 100 }}>
       <Box textAlign='center' p={3} backgroundColor={sliderBackground} borderTop='1px solid white'>
         {children}
       </Box>

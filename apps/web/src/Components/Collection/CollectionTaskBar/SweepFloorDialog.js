@@ -158,8 +158,6 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
     if (!validateForm()) return;
 
     try {
-      const collectionAddress = collection.address;
-
       setExecutingSweepFloor(true);
       // Sentry.captureEvent({message: 'handleSweepFloor', extra: {address: collectionAddress}});
 
@@ -168,14 +166,12 @@ export default function SweepFloorDialog({ isOpen, collection, onClose, activeFi
         filteredListings = await retrieveEligibleListings();
       }
 
-      const listingIds = filteredListings.map((listing) => ({
+      await buyGaslessListings(filteredListings.map((listing) => ({
         listingId: listing.listingId,
         price: Number(listing.price),
-        currency: listing.currency
-      }));
-      const totalCost = filteredListings.reduce((p, n) => p + parseInt(n.price), 0);
-
-      await buyGaslessListings(listingIds, totalCost)
+        currency: listing.currency,
+        chainId: listing.chain
+      })));
 
       setExecutingSweepFloor(false);
       onClose();

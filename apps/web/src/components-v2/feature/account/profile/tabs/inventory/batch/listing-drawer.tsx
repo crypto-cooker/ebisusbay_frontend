@@ -50,6 +50,7 @@ import {
   ciEquals,
   createSuccessfulTransactionToastContent,
   isBundle,
+  isCollectionListable,
   isGaslessListing,
   pluralize
 } from "@market/helpers/utils";
@@ -345,7 +346,7 @@ export const ListingDrawer = () => {
       !Object.values(batchListingCart.extras).some((o) => !o.approval || !o.canList) &&
       (isBundling || !batchListingCart.items.some((o) => !o.price || !(o.price > 0))) &&
       (isBundling || !batchListingCart.items.some((o) => !o.expiration || !(o.expiration > 0))) &&
-      !batchListingCart.items.some((o) => !o.nft.listable || o.nft.isStaked || (isBundling && isBundle(o.nft.nftAddress)));
+      !batchListingCart.items.some((o) => !isCollectionListable(o.nft.collection) || o.nft.isStaked || (isBundling && isBundle(o.nft.nftAddress)));
   }
 
   const hasErc20Listing = Object.values(batchListingCart.items).some((o) => o.currency !== 'cro');

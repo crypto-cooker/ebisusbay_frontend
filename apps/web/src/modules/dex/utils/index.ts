@@ -1,6 +1,24 @@
 import { ChainId } from "@pancakeswap/chains"
 import {CHAINS} from "@src/config/chains";
 import {cronos} from "wagmi/chains";
+import { Contract, utils, ethers } from 'ethers';
+import { erc20Abi } from 'viem';
+
+// Get the token balance of certain address on given chain
+export async function getTokenBalanceOnCertainChain(tokenAddress: string, rpcUrl: string, account: string) {
+  const readProvider = new ethers.providers.JsonRpcProvider(rpcUrl);
+  try {
+    const tokenContract = new Contract(tokenAddress, erc20Abi, readProvider);
+    const balance = await tokenContract.balanceOf(account);
+    const decimals = await tokenContract.decimals();
+    const formattedBalance = utils.formatUnits(balance, decimals);
+    return formattedBalance;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 
 export function getBlockExplorerLink(
   data: string | number | undefined | null,

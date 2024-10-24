@@ -117,6 +117,7 @@ class RyoshiDynasties {
             startTime
             endTime
             vaultId
+            frtnDeposit
           }
         }
       }

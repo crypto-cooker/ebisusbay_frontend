@@ -43,7 +43,7 @@ export const getAllCollections =
         const sortedCollections = sortCollections(response.collections, sortKey, sortDirection);
         dispatch(
           collectionsReceived({
-            collections: sortedCollections.filter((c) => c.listable && !c.skip),
+            collections: sortedCollections.filter((c) => isCollectionListable(c) && !c.skip),
             sort: {
               key: sortKey,
               direction: sortDirection,
@@ -100,7 +100,7 @@ const formatCollections = (collections) => {
       averageSalePrice: collection?.stats?.total?.avgSalePrice,
       collection: collection?.address,
       floorPrice: collection?.stats?.total?.floorPrice,
-      listable: collection?.listable,
+      listable: isCollectionListable(collection),
       metadata: collection?.metadata,
       name: collection?.name,
       numberActive: collection?.stats?.total?.active,

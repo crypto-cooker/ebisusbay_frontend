@@ -13,6 +13,7 @@ import CollectionInfoBar from "@src/Components/components/CollectionInfoBar";
 import {
   ciEquals,
   isBundle,
+  isCollectionListable,
   isCronosGorillaBusinessCollection,
   isCronosVerseCollection,
   isCrosmocraftsCollection,
@@ -199,7 +200,7 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
                 </div>
               </div>
             )}
-            <CollectionInfoBar collectionStats={collectionStats} hideFloor={!collection.listable} />
+            <CollectionInfoBar collectionStats={collectionStats} hideFloor={!isCollectionListable(collection)} />
             {collection.address.toLowerCase() === '0x7D5f8F9560103E1ad958A6Ca43d49F954055340a'.toLowerCase() && (
               <div className="row m-3">
                 <div className="mx-auto text-center fw-bold" style={{ fontSize: '1.2em' }}>

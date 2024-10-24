@@ -12,6 +12,7 @@ import Decimal from 'decimal.js-light';
 import knownTokens from '@src/modules/dex/config/tokens.json';
 import {getBlockExplorerLink} from "@dex/utils";
 import { ChainId } from '@pancakeswap/chains';
+import { MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/types';
 
 const config = appConfig();
 const drops = config.drops;
@@ -474,6 +475,13 @@ export const isKoban = (address: string, nftId?: string | number) => {
 
 export const isBundle = (addressOrSlug: string) => {
   return ciEquals(addressOrSlug, config.contracts.bundle) || addressOrSlug === 'nft-bundles';
+}
+
+export const isCollectionListable = (collection: any) => {
+  const listableStates = [MapiCollectionBlacklist.PENDING, MapiCollectionBlacklist.LISTABLE];
+
+  // the "listable" property only used for legacy lookups in rpc_config. Remove when no longer needed
+  return listableStates.includes(collection.blacklisted ?? collection.blacklist) || collection.listable;
 }
 
 export const percentage = (partialValue: number | string, totalValue: number | string) => {

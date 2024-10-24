@@ -129,6 +129,7 @@ export interface MapiCollection {
     doxx: boolean;
     kyc: boolean;
   },
+  blacklist: MapiCollectionBlacklist;
   holders: string;
   totalSupply: string;
   address: string;

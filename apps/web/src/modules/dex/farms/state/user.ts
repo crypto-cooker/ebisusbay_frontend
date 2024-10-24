@@ -49,11 +49,13 @@ export interface UserFarms {
 const initialApprovals: { [address: string]: boolean } = {};
 const initialBalances: MappedUserFarmBalances = {};
 const initialBoosts: UserFarmBoost[] = [];
+const initialMitama = 0;
 
 // Atoms for individual data pieces
 export const approvalsAtom = atomWithReset<{ [address: string]: boolean }>(initialApprovals);
 export const balancesAtom = atomWithReset<MappedUserFarmBalances>(initialBalances);
 export const boostsAtom = atom<UserFarmBoost[]>(initialBoosts);
+export const mitamaAtom = atom<number>(initialMitama);
 
 // Refetch trigger atoms
 export const refetchApprovalsAtom = atomWithReset<number>(0);

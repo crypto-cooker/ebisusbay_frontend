@@ -42,6 +42,11 @@ const useBuyGaslessListings = (chainId?: SupportedChainId) => {
 
     try {
       const targetChainId = chainId ?? pendingPurchases[0].chainId as SupportedChainId
+      if (!targetChainId) {
+        toast.error('Missing chain ID');
+        return;
+      }
+      
       const chainConfig = chainConfigs[targetChainId];
 
       const croTotal = pendingPurchases

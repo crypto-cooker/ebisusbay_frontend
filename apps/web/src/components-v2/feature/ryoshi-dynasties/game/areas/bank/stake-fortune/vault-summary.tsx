@@ -27,7 +27,6 @@ import {
   BankStakeTokenContextProps,
   VaultType
 } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
-import useStakingPair from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/use-staking-pair";
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
@@ -43,7 +42,6 @@ import {commify} from "ethers/lib/utils";
 import moment from "moment/moment";
 import {ReactNode, useCallback, useContext, useEffect, useMemo, useState} from "react";
 import {toast} from "react-toastify";
-import {parseEther} from "viem";
 import RdButton from "../../../../components/rd-button";
 
 interface VaultSummaryProps {
@@ -147,16 +145,6 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
   const [troops, setTroops] = useState(0);
   const [mitama, setMitama] = useState(0);
 
-  const stakingPair = useStakingPair({pairAddress: vault.pool, chainId: bankChainId});
-
-  const derivedFrtnAmount = useMemo(() => {
-    if (!stakingPair || !stakingPair.totalSupply || stakingPair.totalSupply.equalTo(0)) {
-      return '0'
-    }
-
-    return stakingPair.frtnReserve?.multiply(parseEther(`${vaultBalance}`)).divide(stakingPair.totalSupply ?? 0).toExact() ?? '0';
-  }, [stakingPair, vaultBalance]);
-
   useEffect(() => {
     let totalApr = 0;
     let bonusApr = 0;
@@ -169,6 +157,7 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
   }, [vault, rdConfig, rdUser, baseApr]);
 
   useEffect(() => {
+    const derivedFrtnAmount = ethers.utils.formatEther(vault.frtnDeposit);
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
     const mitama = (Number(derivedFrtnAmount) * daysToAdd) / 1080;
     const multipliedLpMitama = Math.floor(mitama * 2.5 * 0.98); // 2% slippage
@@ -177,7 +166,7 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
     if (newTroops < 1 && Number(derivedFrtnAmount) > 0) newTroops = 1;
     setTroops(newTroops);
     setMitama(multipliedLpMitama);
-  }, [derivedFrtnAmount, daysToAdd, rdConfig]);
+  }, [daysToAdd, rdConfig]);
 
   return (
     <AccordionItem bgColor='#292626' rounded='md'>
