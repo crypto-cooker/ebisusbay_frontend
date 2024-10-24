@@ -8,25 +8,22 @@ import { Field } from '@dex/bridge/state/actions';
 
 type ChainSelectModalProps = {
   isOpen: boolean;
-  field: Field;
   onClose: () => void;
   onSelectChain: (value: number) => void;
-  modalProps?: Pick<ModalProps, 'size' | 'isCentered'>;
 };
 
-export default function ChainSelectModal({ isOpen, onClose, onSelectChain, field, modalProps }: ChainSelectModalProps) {
+export default function ChainSelectModal({ isOpen, onClose, onSelectChain }: ChainSelectModalProps) {
   const ResponsiveDialog = useResponsiveDialog();
   useEffect(() => {
     console.log({ chains });
   }, [isOpen]);
 
   const handleSelect = (chainId: number) => {
-    console.log('chain selection');
     onSelectChain(chainId);
     onClose();
   };
   return (
-    <ResponsiveDialog.DialogComponent isOpen={isOpen} onClose={onClose} modalProps={modalProps}>
+    <ResponsiveDialog.DialogComponent isOpen={isOpen} onClose={onClose}>
       <Card>
         <Box mb={4}>Select the Chain</Box>
         <VStack justify="flex-start">
