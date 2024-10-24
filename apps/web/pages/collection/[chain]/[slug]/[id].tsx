@@ -6,6 +6,7 @@ import {
   humanizeAdvanced,
   isAddress,
   isBundle,
+  isCollectionListable,
   isHeroesCollection,
   relativePrecision
 } from '@market/helpers/utils';
@@ -146,25 +147,14 @@ export const getServerSideProps = async ({ params }: GetServerSidePropsContext) 
     }
   }
 
-  // default to cronos chain if collection has no chain
-  const chainMatchCondition = (chainId: number) => !chainId || chainId === chainConfig?.chain.id;
-
   const queryClient = new QueryClient();
-
-  let isDegen = false;
-  const legacyConfig = appConfig();
-  let collection = legacyConfig.legacyCollections.find((c: any) => {
-    return (isAddress(collectionSlug) && ciEquals(c.address, collectionSlug)) || ciEquals(c.slug, collectionSlug) && chainMatchCondition(c.chainId)
+  const collection = await queryClient.fetchQuery({
+    queryKey: ['CollectionInfo', collectionSlug],
+    queryFn: () => fetchCollection(collectionSlug, chainConfig.chain.id),
+    staleTime: 1000 * 60 * 10, // 10 minutes
   });
-
-  if (!collection) {
-    isDegen = true;
-    collection = await queryClient.fetchQuery({
-      queryKey: ['CollectionInfo', collectionSlug],
-      queryFn: () => fetchCollection(collectionSlug, chainConfig.chain.id),
-      staleTime: 1000 * 60 * 30, // 30 minutes
-    });
-  }
+  
+  const isDegen = !isCollectionListable(collection);
 
   let nftData;
   if (collection?.address) {

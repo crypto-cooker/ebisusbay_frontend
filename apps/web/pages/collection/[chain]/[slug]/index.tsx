@@ -134,7 +134,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
   const collection = await queryClient.fetchQuery({
     queryKey: ['CollectionInfo', collectionSlug],
     queryFn: () => fetchCollection(collectionSlug, chain.chain.id),
-    staleTime: 1000 * 60 * 30, // 30 minutes
+    staleTime: 1000 * 60 * 10, // 10 minutes
   });
 
   if (!collection) {
@@ -144,7 +144,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
   }
   // }
 
-  const isDegen = !isCollectionListable(collection)
+  const isDegen = !isCollectionListable(collection);
 
   // if (!ciEquals(collection.slug, slug)) {
   //   return {
