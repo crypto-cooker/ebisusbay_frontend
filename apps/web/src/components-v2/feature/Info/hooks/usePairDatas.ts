@@ -1,5 +1,6 @@
 
 import { useMemo } from "react"
+import { useAllPairDataQuery } from "./useAllPairDataQuery"
 
 export const usePairDatas = () => {
 

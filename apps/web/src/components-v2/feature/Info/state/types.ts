@@ -6,7 +6,6 @@ export interface PairData {
   reserve0: number;
   reserve1: number;
   token0: {
-    id: string;
     name: string;
     symbol: string;
     address: string;
@@ -15,7 +14,6 @@ export interface PairData {
   };
 
   token1: {
-    id: string;
     name: string;
     symbol: string;
     address: string;
@@ -24,11 +22,7 @@ export interface PairData {
   };
 
   volumeUSD: number;
-  volumeOutUSD?: number;
   volumeUSDChange: number;
-  volumeUSDWeek: number;
-  volumeOutUSDWeek?: number;
-  volumeUSDChangeWeek: number;
 
   totalFees24h: number;
   lpFees24h: number;

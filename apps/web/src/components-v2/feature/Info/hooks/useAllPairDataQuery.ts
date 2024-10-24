@@ -1,80 +1,58 @@
+import { useMemo, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useChainIdByQuery, useChainNameByQuery } from './chain';
 import chainConfigs from '@src/config/chains';
-import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
+import { Info } from '@src/core/services/api-service/graph/subgraphs/info';
+import { PairData } from '../state/types';
+import { LP_HOLDERS_FEE, TOTAL_FEE, DAYS_IN_YEAR } from '../state/constants';
+import dayjs from 'dayjs';
 
-
-export const useAllPoolDataQuery = () => {
+export const useAllPairDataQuery = () => {
   const chainId: number = useChainIdByQuery();
-  const chain = chainConfigs[chainId as keyof typeof chainConfigs];
+  const info = useMemo(() => new Info(chainId), [chainId]);
+
   const { data } = useQuery({
-    queryKey: [`info/pairs/data`, chainId],
+    queryKey: ['useGetPairs'],
     queryFn: async () => {
-      if (!chainId) {
-        throw new Error('No chain');
-      }
-      return explorerApiClient
-        .GET('/cached/pools/v2/{chainName}/list/top', {
-          params: {
-            path: {
-              chainName,
-            },
-          },
-        })
-        .then((res) => res.data);
+      const response = await info.getPairs();
+      return response.data.pairs;
     },
-    enabled: Boolean(chainName),
-    ...QUERY_SETTINGS_IMMUTABLE,
-    ...QUERY_SETTINGS_WITHOUT_INTERVAL_REFETCH,
-    select: useCallback((data_) => {
+    select: useCallback((data_: any) => {
       if (!data_) {
         throw new Error('No data');
       }
 
       const final: {
         [address: string]: {
-          data: PoolData;
+          data: PairData;
         };
       } = {};
 
       for (const d of data_) {
-        const { totalFees24h, totalFees7d, lpFees24h, lpFees7d, lpApr7d } = getLpFeesAndApr(
-          +d.volumeUSD24h,
-          +d.volumeUSD7d,
-          +d.tvlUSD,
-        );
+        const { totalFees24h, lpFees24h, lpApr24h } = getLpFeesAndApr(+d.volumeUSD24h, +d.volumeUSD);
         final[d.id] = {
           data: {
-            address: d.id,
-            timestamp: dayjs(d.createdAtTimestamp as string).unix(),
+            pairAddres: d.pairAddress,
             token0: {
               address: d.token0.id,
               symbol: d.token0.symbol,
               name: d.token0.name,
               decimals: d.token0.decimals,
+              totalLiquidity: d.token0.totalLiquidity,
             },
             token1: {
               address: d.token1.id,
               symbol: d.token1.symbol,
               name: d.token1.name,
               decimals: d.token1.decimals,
+              totalLiquidity: d.token1.totalLiquidity,
             },
-            feeTier: d.feeTier,
             volumeUSD: +d.volumeUSD24h,
             volumeUSDChange: 0,
-            volumeUSDWeek: +d.volumeUSD7d,
             liquidityUSD: +d.tvlUSD,
             liquidityUSDChange: getPercentChange(+d.tvlUSD, d.tvlUSD24h ? +d.tvlUSD24h : 0),
             totalFees24h,
-            totalFees7d,
             lpFees24h,
-            lpFees7d,
-            lpApr7d,
-            liquidityToken0: +d.tvlToken0,
-            liquidityToken1: +d.tvlToken1,
-            token0Price: +d.token0Price,
-            token1Price: +d.token1Price,
-            volumeUSDChangeWeek: 0,
           },
         };
       }
@@ -86,3 +64,22 @@ export const useAllPoolDataQuery = () => {
     return data ?? {};
   }, [data]);
 };
+
+const getLpFeesAndApr = (volumeUSD: number, liquidityUSD: number) => {
+  const totalFees24h = volumeUSD * TOTAL_FEE;
+  const lpFees24h = volumeUSD * LP_HOLDERS_FEE;
+
+  const lpApr24h = liquidityUSD > 0 ? (totalFees24h * LP_HOLDERS_FEE * DAYS_IN_YEAR * 100) / liquidityUSD : 0;
+  return {
+    totalFees24h,
+    lpFees24h,
+    lpApr24h: lpApr24h !== Infinity ? lpApr24h : 0,
+  };
+};
+
+const getPercentChange = (valueNow?: number, valueBefore?: number): number => {
+  if (valueNow && valueBefore) {
+    return ((valueNow - valueBefore) / valueBefore) * 100
+  }
+  return 0
+}
