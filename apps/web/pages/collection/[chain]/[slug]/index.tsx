@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import Collection1155 from '@src/components-v2/feature/collection/collection-1155';
 import Collection721 from '@src/components-v2/feature/collection/collection-721';
-import {appUrl, cacheBustingKey, ciEquals} from '@market/helpers/utils';
+import {appUrl, cacheBustingKey, ciEquals, isCollectionListable} from '@market/helpers/utils';
 import {appConfig} from "@src/config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {CollectionPageContext} from "@src/components-v2/feature/collection/context";
@@ -126,13 +126,10 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
     }
   }
 
-  let isDegen = false;
   let collection = appConfig('legacyCollections')
     .find((c: any) => ciEquals(c.slug, collectionSlug) || ciEquals(c.address, collectionSlug));
 
   if (!collection) {
-    isDegen = true;
-
     const queryClient = new QueryClient();
     collection = await queryClient.fetchQuery({
       queryKey: ['CollectionInfo', collectionSlug],
@@ -146,6 +143,8 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
       }
     }
   }
+
+  const isDegen = !isCollectionListable(collection)
 
   // if (!ciEquals(collection.slug, slug)) {
   //   return {
