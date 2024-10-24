@@ -1,6 +1,6 @@
 import {NextRequest} from "next/server";
 import {ImageResponse} from "next/og";
-import {ciEquals, isAddress, round, siPrefixedNumber, urlify} from "@edge/utils";
+import {isAddress, round, siPrefixedNumber, urlify} from "@edge/utils";
 import {appConfig} from "@src/config";
 import imageSize from "image-size";
 
@@ -22,8 +22,6 @@ const boldFont = fetch(
 // .then((res) => res.arrayBuffer());
 
 const defaultBanner = `${appConfig('urls').app}img/background/banner-default.webp`;
-
-const collections = appConfig('legacyCollections');
 
 const getBanner = (collection: any) => {
   let banner = defaultBanner;
@@ -57,35 +55,35 @@ export default async function handler(req: NextRequest) {
   ]);
   // const cronosIconData = await cronosIcon;
 
-  let collection;
-  if (isAddress(slug)) {
-    collection = collections.find((c: any) => ciEquals(c.address, slug));
-  } else {
-    collection = collections.find((c: any) => ciEquals(c.slug, slug));
-  }
 
-  if (!collection) {
-    return {
-      notFound: true
-    }
-  }
-
-  const banner = await base64Image(getBanner(collection));
-  let avatarSource = collection.metadata?.avatar;
-  if (!avatarSource && avatarSource.startsWith('http')) {
-    avatarSource = urlify(appConfig('urls.app'), collection.metadata.avatar)
-  }
-
-  const avatar = avatarSource ? await base64Image(avatarSource) : null;
+  // For exception handling defaults
+  let collectionName;
+  let banner = defaultBanner;
 
   try {
+    const queryKey = isAddress(slug) ? 'address' : 'slug';
+
     const data = await fetch(
-      `${appConfig('urls').api}collectioninfo?address=${collection.address}`,
+      `${appConfig('urls').api}collectioninfo?${queryKey}=${slug}`,
       { next: { revalidate: 10 }}
     );
-    const collectionData = (await data.json()).collections[0];
+    const collection = (await data.json()).collections[0];
 
+    if (!collection) {
+      return {
+        notFound: true
+      }
+    }
 
+    collectionName = collection.name;
+    banner = await base64Image(getBanner(collection));
+    let avatarSource = collection.metadata?.avatar;
+    if (!avatarSource && avatarSource.startsWith('http')) {
+      avatarSource = urlify(appConfig('urls.app'), collection.metadata.avatar)
+    }
+  
+    const avatar = avatarSource ? await base64Image(avatarSource) : null;
+    
     return new ImageResponse(
       (
         <div
@@ -145,7 +143,7 @@ export default async function handler(req: NextRequest) {
                   flexDirection: 'column',
                 }}
               >
-                <div style={{fontWeight:'bold', fontSize: 20}}>{!!collectionData.totalSupply ? siPrefixedNumber(collectionData.totalSupply) : '-'}</div>
+                <div style={{fontWeight:'bold', fontSize: 20}}>{!!collection.totalSupply ? siPrefixedNumber(collection.totalSupply) : '-'}</div>
                 <div style={{fontWeight:'bold', fontSize: 16, color:'#DDDDDDCC'}}>Items</div>
               </div>
               <div
@@ -155,7 +153,7 @@ export default async function handler(req: NextRequest) {
                   marginLeft: 12
                 }}
               >
-                <div style={{fontWeight:'bold', fontSize: 20}}>{!!collectionData.holders && collection.slug !== 'ryoshi-tales-vip' ? siPrefixedNumber(collectionData.holders) : '-'}</div>
+                <div style={{fontWeight:'bold', fontSize: 20}}>{!!collection.holders && collection.slug !== 'ryoshi-tales-vip' ? siPrefixedNumber(collection.holders) : '-'}</div>
                 <div style={{fontWeight:'bold', fontSize: 16, color:'#DDDDDDCC'}}>Owners</div>
               </div>
               <div
@@ -166,7 +164,7 @@ export default async function handler(req: NextRequest) {
                 }}
               >
                 <div style={{fontWeight:'bold', fontSize: 20, display: 'flex'}}>
-                  <span>{!!Number(collectionData.stats.total.volume) ? `${siPrefixedNumber(round(collectionData.stats.total.volume))} CRO` : '-'}</span>
+                  <span>{!!Number(collection.stats.total.volume) ? `${siPrefixedNumber(round(collection.stats.total.volume))} CRO` : '-'}</span>
                   {/*<img src={cronosIconData} width='17' height='20' style={{marginTop: '3px', marginLeft: '2px'}}/>*/}
                 </div>
                 <div style={{fontWeight:'bold', fontSize: 16, color:'#DDDDDDCC'}}>Volume</div>
@@ -179,7 +177,7 @@ export default async function handler(req: NextRequest) {
                 }}
               >
                 <div style={{fontWeight:'bold', fontSize: 20, display: 'flex'}}>
-                  <span>{!!Number(collectionData.stats.total.floorPrice) ? `${siPrefixedNumber(round(collectionData.stats.total.floorPrice))} CRO` : '-'}</span>
+                  <span>{!!Number(collection.stats.total.floorPrice) ? `${siPrefixedNumber(round(collection.stats.total.floorPrice))} CRO` : '-'}</span>
                   {/*<img src={cronosIconData} width='17' height='20' style={{marginTop: '3px', marginLeft: '2px'}}/>*/}
                 </div>
                 <div style={{fontWeight:'bold', fontSize: 16, color:'#DDDDDDCC'}}>Floor</div>
@@ -214,7 +212,7 @@ export default async function handler(req: NextRequest) {
     return new ImageResponse(
       (
         <img
-          alt={collection.name}
+          alt={collectionName}
           src={banner}
           width='100%'
           height='100%'
