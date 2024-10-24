@@ -200,7 +200,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                   <QuestionHelper
                     text={
                       <Box fontSize='sm'>
-                        <Box>Boost values are based on user Mitama holdings:</Box>
+                        <Box>Boost will earn <strong>1 XP / hour</strong>, plus an additional APR percentage based on user Mitama holdings:</Box>
                         <VStack align='stretch' spacing={0} mt={2}>
                           {mitamaTiers.map(tier => (
                             <Flex justify='space-between'>
@@ -211,8 +211,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                         </VStack>
                       </Box>
                     }
-                    ml="4px"
-                    placement="top"
+                    placement='top'
                   />
                 </HStack>
                 <VStack align='end' spacing={0}>
@@ -225,7 +224,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
               </Flex>
               <Flex justify='space-between' fontSize='sm'>
                 <Box>Boosted APR</Box>
-                <Box>{parseFloat(farm.derived.apr.slice(0, -1)) + (mitamaBoostTier?.boostValue ?? 0)}%</Box>
+                <Box>{round(parseFloat(farm.derived.apr.slice(0, -1)) + (mitamaBoostTier?.boostValue ?? 0), 2)}%</Box>
               </Flex>
               <Flex justify='space-between' fontSize='sm'>
                 <Box>Duration</Box>
@@ -320,7 +319,7 @@ function maxBoostTimeByXpLevel(level: number) {
 }
 
 const mitamaTiers = [
-  { tier: 1, minMitama: 0, boostValue: 0, displayValue: '1 Koban / hr / $100 in LP' },
+  { tier: 1, minMitama: 0, boostValue: 0, displayValue: '0%' },
   { tier: 2, minMitama: 2500, boostValue: 1, displayValue: '1%' },
   { tier: 3, minMitama: 10000, boostValue: 5, displayValue: '5%' },
   { tier: 4, minMitama: 25000, boostValue: 10, displayValue: '10%' },
