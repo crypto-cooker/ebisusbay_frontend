@@ -126,23 +126,23 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
     }
   }
 
-  let collection = appConfig('legacyCollections')
-    .find((c: any) => ciEquals(c.slug, collectionSlug) || ciEquals(c.address, collectionSlug));
+  // let collection = appConfig('legacyCollections')
+  //   .find((c: any) => ciEquals(c.slug, collectionSlug) || ciEquals(c.address, collectionSlug));
+
+  // if (!collection) {
+  const queryClient = new QueryClient();
+  const collection = await queryClient.fetchQuery({
+    queryKey: ['CollectionInfo', collectionSlug],
+    queryFn: () => fetchCollection(collectionSlug, chain.chain.id),
+    staleTime: 1000 * 60 * 30, // 30 minutes
+  });
 
   if (!collection) {
-    const queryClient = new QueryClient();
-    collection = await queryClient.fetchQuery({
-      queryKey: ['CollectionInfo', collectionSlug],
-      queryFn: () => fetchCollection(collectionSlug, chain.chain.id),
-      staleTime: 1000 * 60 * 30, // 30 minutes
-    });
-
-    if (!collection) {
-      return {
-        notFound: true
-      }
+    return {
+      notFound: true
     }
   }
+  // }
 
   const isDegen = !isCollectionListable(collection)
 
