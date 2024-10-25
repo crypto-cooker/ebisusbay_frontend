@@ -478,6 +478,8 @@ export const isBundle = (addressOrSlug: string) => {
 }
 
 export const isCollectionListable = (collection: any) => {
+  if (!collection) return false;
+  
   const listableStates = [MapiCollectionBlacklist.PENDING, MapiCollectionBlacklist.LISTABLE];
 
   // the "listable" property only used for legacy lookups in rpc_config. Remove when no longer needed

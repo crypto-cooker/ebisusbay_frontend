@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import Collection1155 from '@src/components-v2/feature/collection/collection-1155';
 import Collection721 from '@src/components-v2/feature/collection/collection-721';
-import {appUrl, cacheBustingKey, ciEquals} from '@market/helpers/utils';
+import {appUrl, cacheBustingKey, ciEquals, isCollectionListable} from '@market/helpers/utils';
 import {appConfig} from "@src/config";
 import PageHead from "@src/components-v2/shared/layout/page-head";
 import {CollectionPageContext} from "@src/components-v2/feature/collection/context";
@@ -126,26 +126,25 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
     }
   }
 
-  let isDegen = false;
-  let collection = appConfig('legacyCollections')
-    .find((c: any) => ciEquals(c.slug, collectionSlug) || ciEquals(c.address, collectionSlug));
+  // let collection = appConfig('legacyCollections')
+  //   .find((c: any) => ciEquals(c.slug, collectionSlug) || ciEquals(c.address, collectionSlug));
+
+  // if (!collection) {
+  const queryClient = new QueryClient();
+  const collection = await queryClient.fetchQuery({
+    queryKey: ['CollectionInfo', collectionSlug],
+    queryFn: () => fetchCollection(collectionSlug, chain.chain.id),
+    staleTime: 1000 * 60 * 10, // 10 minutes
+  });
 
   if (!collection) {
-    isDegen = true;
-
-    const queryClient = new QueryClient();
-    collection = await queryClient.fetchQuery({
-      queryKey: ['CollectionInfo', collectionSlug],
-      queryFn: () => fetchCollection(collectionSlug, chain.chain.id),
-      staleTime: 1000 * 60 * 30, // 30 minutes
-    });
-
-    if (!collection) {
-      return {
-        notFound: true
-      }
+    return {
+      notFound: true
     }
   }
+  // }
+
+  const isDegen = !isCollectionListable(collection);
 
   // if (!ciEquals(collection.slug, slug)) {
   //   return {

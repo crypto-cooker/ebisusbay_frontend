@@ -18,6 +18,7 @@ import {
   Spinner,
   Stack,
   Tag,
+  Text,
   VStack
 } from "@chakra-ui/react";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
@@ -34,6 +35,7 @@ import {commify} from "ethers/lib/utils";
 import {CheckIcon} from "@chakra-ui/icons";
 import {useUserFarmBoost, useUserMitama} from "@dex/farms/hooks/user-farms";
 import ImageService from "@src/core/services/image";
+import { QuestionHelper } from "@dex/swap/components/tabs/swap/question-helper";
 
 interface StakeLpTokensDialogProps {
   isOpen: boolean;
@@ -69,7 +71,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
 
   const availableTroops = rdUserContext?.game.troops.user.available.total;
   const xpLevel = rdUserContext?.experience.level ?? 1;
-  const mitamaBoost = useMemo(() => boostPctByMitama(userMitama), [userMitama]);
+  const mitamaBoostTier = useMemo(() => boostPctByMitama(userMitama), [userMitama]);
   const maxBoostTime = useMemo(() => maxBoostTimeByXpLevel(xpLevel), [xpLevel]);
   const maxTroops = round(maxBoostTime / 60);
 
@@ -193,9 +195,28 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
             </FormControl>
             <VStack align='stretch' mt={4}>
               <Flex justify='space-between' fontSize='sm'>
-                <Box>Mitama Boost</Box>
+                <HStack>
+                  <Box>Mitama Boost</Box>
+                  <QuestionHelper
+                    text={
+                      <Box fontSize='sm'>
+                        <Box>Boost values are based on user Mitama holdings:</Box>
+                        <VStack align='stretch' spacing={0} mt={2}>
+                          {mitamaTiers.map(tier => (
+                            <Flex justify='space-between'>
+                              <Box>{tier.tier}. (min. {commify(tier.minMitama)})</Box>
+                              <Box>{tier.displayValue}</Box>
+                            </Flex>
+                          ))}
+                        </VStack>
+                      </Box>
+                    }
+                    ml="4px"
+                    placement="top"
+                  />
+                </HStack>
                 <VStack align='end' spacing={0}>
-                  <Box>{mitamaBoost}%</Box>
+                  <Box>{mitamaBoostTier?.displayValue}</Box>
                   <HStack>
                     <Box fontSize='xs' className='text-muted'>{userMitama}</Box>
                     <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/mitama.png').convert()} alt="troopsIcon" boxSize={3} />
@@ -204,7 +225,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
               </Flex>
               <Flex justify='space-between' fontSize='sm'>
                 <Box>Boosted APR</Box>
-                <Box>{parseFloat(farm.derived.apr.slice(0, -1)) + mitamaBoost}%</Box>
+                <Box>{parseFloat(farm.derived.apr.slice(0, -1)) + (mitamaBoostTier?.boostValue ?? 0)}%</Box>
               </Flex>
               <Flex justify='space-between' fontSize='sm'>
                 <Box>Duration</Box>
@@ -298,30 +319,19 @@ function maxBoostTimeByXpLevel(level: number) {
   return maxTime;
 }
 
+const mitamaTiers = [
+  { tier: 1, minMitama: 0, boostValue: 0, displayValue: '1 Koban / hr / $100 in LP' },
+  { tier: 2, minMitama: 2500, boostValue: 1, displayValue: '1%' },
+  { tier: 3, minMitama: 10000, boostValue: 5, displayValue: '5%' },
+  { tier: 4, minMitama: 25000, boostValue: 10, displayValue: '10%' },
+  { tier: 5, minMitama: 50000, boostValue: 25, displayValue: '25%' },
+  { tier: 6, minMitama: 100000, boostValue: 50, displayValue: '50%' },
+  { tier: 7, minMitama: 250000, boostValue: 100, displayValue: '100%' },
+  { tier: 8, minMitama: 500000, boostValue: 200, displayValue: '200%' },
+  { tier: 9, minMitama: 1000000, boostValue: 250, displayValue: '250%' },
+  { tier: 10, minMitama: 2000000, boostValue: 300, displayValue: '300%' }
+];
+
 function boostPctByMitama(mitama: number) {
-  let boostValue = 0;
-
-  if (mitama >= 2000000) {
-    boostValue = 300;
-  } else if (mitama >= 1000000) {
-    boostValue = 250;
-  } else if (mitama >= 500000) {
-    boostValue = 200;
-  } else if (mitama >= 250000) {
-    boostValue = 100;
-  } else if (mitama >= 100000) {
-    boostValue = 50;
-  } else if (mitama >= 50000) {
-    boostValue = 25;
-  } else if (mitama >= 25000) {
-    boostValue = 10;
-  } else if (mitama >= 10000) {
-    boostValue = 5;
-  } else if (mitama >= 2500) {
-    boostValue = 1;
-  } else {
-    boostValue = 0;
-  }
-
-  return boostValue;
+  return [...mitamaTiers].reverse().find(t => mitama >= t.minMitama);
 }
