@@ -287,7 +287,7 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
       stakedOwners: 'main',
       staking: '',
       farms: 'farms',
-      dex: ''
+      dex: 'exchange-v2'
     }
   },
   contracts: {
@@ -346,7 +346,7 @@ const cronosZkEVMConfig: AppChainConfig = {
       stakedOwners: 'main',
       staking: '',
       farms: 'farms',
-      dex: ''
+      dex: 'exchange-v2'
     }
   },
   contracts: {

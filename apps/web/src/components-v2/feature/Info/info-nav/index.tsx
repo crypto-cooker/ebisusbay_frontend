@@ -29,7 +29,7 @@ export default function InfoNav() {
   const [tabIndex, setTabIndex] = useState(primaryTabIndex);
 
   return (
-    <Box bgColor="#0d6efd29">
+    <Box bgColor="#0d6efd29" mb={4}>
       <StandardContainer>
         <HStack justify="space-between" py={2}>
           <HStack>

@@ -1,10 +1,8 @@
-// POOLS
-
+// Pairs
 export interface PairData {
-  pairAddres: string;
+  pairAddress: string;
   dailyVolumeUSD: number;
-  reserve0: number;
-  reserve1: number;
+  reserveUSD:number;
   token0: {
     name: string;
     symbol: string;
@@ -21,7 +19,6 @@ export interface PairData {
     totalLiquidity: number;
   };
 
-  volumeUSD: number;
   volumeUSDChange: number;
 
   totalFees24h: number;
@@ -30,4 +27,16 @@ export interface PairData {
 
   liquidityUSD: number;
   liquidityUSDChange: number;
+}
+
+// TOKENS
+export interface TokenData {
+  id: string;
+  name: string;
+  symbol: string;
+  totalLiquidity: number;
+  decimals: number;
+  tradeVolume: number;
+  tradeVolumeUSD: number;
+  derivedUSD: number;
 }

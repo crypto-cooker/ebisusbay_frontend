@@ -13,12 +13,6 @@ export const TableWrapper = styled(Flex)`
   padding-top: 16px;
   flex-direction: column;
   gap: 16px;
-  background-color: ${({ theme }) => theme.card.background};
-  border: 1px solid ${({ theme }) => theme.colors.cardBorder};
-  border-radius: ${({ theme }) => theme.radii.card};
-  ${({ theme }) => theme.mediaQueries.md} {
-    border-radius: ${({ theme }) => theme.radii.card};
-  }
   overflow: hidden;
 `
 

@@ -9,7 +9,7 @@ import {
 } from '@src/components-v2/feature/info/hooks/chain';
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import styled from 'styled-components';
-import { PairData } from '@src/components-v2/feature/info/state/types';
+import { TokenData } from '@src/components-v2/feature/info/state/types';
 import { ITEMS_PER_INFO_TABLE_PAGE } from '../../state/constants';
 import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from './shared';
 import { Card } from '@src/components-v2/foundation/card';
@@ -90,41 +90,41 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => (
   </>
 );
 
-const DataRow = ({ PairData, index }: { PairData: PairData; index: number }) => {
+const DataRow = ({ TokenData, index }: { TokenData: TokenData; index: number }) => {
   const chainName = useChainNameByQuery();
   const chainId = useChainIdByQuery();
   const chainPath = useChainPathByQuery();
-  const token0symbol = PairData.token0.symbol;
-  const token1symbol = PairData.token1.symbol;
+  const token0symbol = TokenData.token0.symbol;
+  const token1symbol = TokenData.token1.symbol;
 
   return (
-    <LinkWrapper to={`/info${chainPath}/pairs/${PairData.pairAddress}`}>
+    <LinkWrapper to={`/info${chainPath}/pairs/${TokenData.pairAddress}`}>
       <ResponsiveGrid>
         <Text>{index + 1}</Text>
         <Flex>
           <HStack display={{base: 'none', md: 'flex'}}>
-            <CurrencyLogoByAddress address={PairData.token0.address} chainId={chainId} />
-            <CurrencyLogoByAddress address={PairData.token1.address} chainId={chainId} />
+            <CurrencyLogoByAddress address={TokenData.token0.address} chainId={chainId} />
+            <CurrencyLogoByAddress address={TokenData.token1.address} chainId={chainId} />
           </HStack>
           <Text ml="8px">
             {token0symbol}/{token1symbol}
           </Text>
         </Flex>
-        <Text>${formatAmount(PairData.dailyVolumeUSD)}</Text>
-        <Text>${formatAmount(PairData.lpFees24h)}</Text>
-        <Text>{formatAmount(PairData.lpApr24h)}%</Text>
-        <Text>${formatAmount(PairData.liquidityUSD)}</Text>
+        <Text>${formatAmount(TokenData.dailyVolumeUSD)}</Text>
+        <Text>${formatAmount(TokenData.lpFees24h)}</Text>
+        <Text>{formatAmount(TokenData.lpApr24h)}%</Text>
+        <Text>${formatAmount(TokenData.liquidityUSD)}</Text>
       </ResponsiveGrid>
     </LinkWrapper>
   );
 };
 
 interface PairTableProps {
-  pairDatas: (PairData | undefined)[];
+  TokenDatas: (TokenData | undefined)[];
   loading?: boolean; // If true shows indication that SOME pools are loading, but the ones already fetched will be shown
 }
 
-const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairDatas, loading }) => {
+const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ TokenDatas, loading }) => {
   // for sorting
   const [sortField, setSortField] = useState(SORT_FIELD.volumeUSD);
   const [sortDirection, setSortDirection] = useState<boolean>(true);
@@ -134,18 +134,18 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
   const [maxPage, setMaxPage] = useState(1);
   useEffect(() => {
     let extraPages = 1;
-    if (pairDatas.length % ITEMS_PER_INFO_TABLE_PAGE === 0) {
+    if (TokenDatas.length % ITEMS_PER_INFO_TABLE_PAGE === 0) {
       extraPages = 0;
     }
-    setMaxPage(Math.floor(pairDatas.length / ITEMS_PER_INFO_TABLE_PAGE) + extraPages);
-  }, [pairDatas]);
+    setMaxPage(Math.floor(TokenDatas.length / ITEMS_PER_INFO_TABLE_PAGE) + extraPages);
+  }, [TokenDatas]);
   const sortedPools = useMemo(() => {
-    return pairDatas
-      ? pairDatas
+    return TokenDatas
+      ? TokenDatas
           .sort((a, b) => {
             if (a && b) {
-              const aElement = a[sortField as keyof PairData];
-              const bElement = b[sortField as keyof PairData];
+              const aElement = a[sortField as keyof TokenData];
+              const bElement = b[sortField as keyof TokenData];
               const predicate = aElement !== undefined && bElement !== undefined ? aElement > bElement : false;
               return predicate ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1;
             }
@@ -153,7 +153,7 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
           })
           .slice(ITEMS_PER_INFO_TABLE_PAGE * (page - 1), page * ITEMS_PER_INFO_TABLE_PAGE)
       : [];
-  }, [page, pairDatas, sortDirection, sortField]);
+  }, [page, TokenDatas, sortDirection, sortField]);
 
   const handleSort = useCallback(
     (newField: string) => {
@@ -221,11 +221,11 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
         <Break />
         {sortedPools.length > 0 ? (
           <>
-            {sortedPools.map((PairData, i) => {
-              if (PairData) {
+            {sortedPools.map((TokenData, i) => {
+              if (TokenData) {
                 return (
-                  <Fragment key={PairData.pairAddress}>
-                    <DataRow index={(page - 1) * ITEMS_PER_INFO_TABLE_PAGE + i} PairData={PairData} />
+                  <Fragment key={TokenData.pairAddress}>
+                    <DataRow index={(page - 1) * ITEMS_PER_INFO_TABLE_PAGE + i} TokenData={TokenData} />
                     <Break />
                   </Fragment>
                 );

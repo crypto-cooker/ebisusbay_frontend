@@ -3,10 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import { useChainIdByQuery, useChainNameByQuery } from './chain';
 import chainConfigs from '@src/config/chains';
 import { Info } from '@src/core/services/api-service/graph/subgraphs/info';
-import { PairData } from '../state/types';
+import { TokenData } from '../state/types';
 import { LP_HOLDERS_FEE, TOTAL_FEE, DAYS_IN_YEAR } from '../state/constants';
 
-export const useAllPairDataQuery = () => {
+export const useAllTokenDataQuery = () => {
   const chainId: number = useChainIdByQuery();
   const info = useMemo(() => new Info(chainId), [chainId]);
   const { data } = useQuery({
@@ -15,10 +15,10 @@ export const useAllPairDataQuery = () => {
       try{
       const response = await info.getPairs();
       console.log({response}, "GGGGGG")
-      if (!response?.data?.pairDayDatas) {
+      if (!response?.data?.tokenDayDatas) {
         throw new Error('Failed to fetch pairs data');
       }
-      return response.data.pairDayDatas;
+      return response.data.tokenDayDatas;
     }catch(error) {
       console.error("Error fetching data", error)
     }

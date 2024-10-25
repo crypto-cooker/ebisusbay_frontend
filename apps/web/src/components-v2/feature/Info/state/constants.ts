@@ -24,5 +24,5 @@ export const chainIdByChainPath = (chainName: string): number => {
 
 export const WEEKS_IN_YEAR = 52.1429;
 export const DAYS_IN_YEAR = 365;
-export const TOTAL_FEE = 0.0025;
+export const TOTAL_FEE = 0.001;
 export const LP_HOLDERS_FEE = 0.0017;

@@ -19,7 +19,6 @@ const ChainSelector = (props: any) => {
   const switchNetwork = useCallback(
     (chianId: any) => {
       const chainPath:string = chainPaths[chianId];
-      console.log(chainPath, activeIndex, "GGGGGGGGGGGG")
       if (activeIndex === 0) router.push(`/info${chainPath}`);
       if (activeIndex === 1) router.push(`/info${chainPath}/pairs`);
       if (activeIndex === 2) router.push(`/info${chainPath}/tokens`);
