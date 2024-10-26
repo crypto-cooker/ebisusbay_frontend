@@ -1,14 +1,20 @@
 // Pairs
 export interface PairData {
-  pairAddress: string;
+  id: string;
+  name: string;
+  volumeUSD: number;
+  liquidity: number;
   dailyVolumeUSD: number;
-  reserveUSD:number;
   token0: {
     name: string;
     symbol: string;
     address: string;
     decimals: number;
+    derivedUSD: number;
+    derivedCRO: number;
     totalLiquidity: number;
+    dailyVolumeUSD: number;
+    reserveUSD: number;
   };
 
   token1: {
@@ -16,7 +22,11 @@ export interface PairData {
     symbol: string;
     address: string;
     decimals: number;
+    derivedUSD: number;
+    derivedCRO: number;
     totalLiquidity: number;
+    dailyVolumeUSD: number;
+    reserveUSD: number;
   };
 
   volumeUSDChange: number;
@@ -34,9 +44,15 @@ export interface TokenData {
   id: string;
   name: string;
   symbol: string;
-  totalLiquidity: number;
+  priceUSD: number;
   decimals: number;
+  totalLiquidity: number;
+  totalLiquidityUSD: number;
   tradeVolume: number;
   tradeVolumeUSD: number;
-  derivedUSD: number;
+  volume24h: number;
+  volumeUSD24h: number;
+  priceUSD24h: number;
+  totalLiquidity24h: number;
+  priceChange: number;
 }

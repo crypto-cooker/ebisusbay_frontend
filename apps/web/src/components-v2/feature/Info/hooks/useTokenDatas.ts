@@ -4,19 +4,18 @@ import { useAllTokenDataQuery } from "./useAllTokenDataQuery"
 
 export const useTokenDatas = () => {
 
-  // get all the pair datas that exist
+  // get all the token datas that exist
   const allTokenData= useAllTokenDataQuery()
 
   // get all the pair datas that exist
-  const TokenDatas = useMemo(() => {
-    console.log({allTokenData},"HHHHHHHHH")
+  const tokenDatas = useMemo(() => {
     return Object.values(allTokenData)
-      .map((pair) => {
+      .map((token) => {
         return {
-          ...pair.data,
+          ...token.data,
         }
       })
-      .filter((pair) => pair.token1.name !== 'unknown' && pair.token0.name !== 'unknown')
+      .filter((token) => token.name !== 'unknown')
   }, [allTokenData])
-  return { TokenDatas }
+  return { tokenDatas }
 }

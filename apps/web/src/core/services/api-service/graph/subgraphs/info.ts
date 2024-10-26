@@ -14,27 +14,45 @@ export class Info {
       cache: new InMemoryCache(),
     });
   }
-  
+
   async getPairs() {
     const query = `
-        query GetPairs {
-          pairDayDatas(orderBy: dailyVolumeUSD, orderDirection: desc) {
-          dailyVolumeUSD
-          pairAddress
+      query MyQuery {
+        pairs(orderBy: volumeUSD, orderDirection: desc) {
+          id
+          name
+          volumeUSD
           reserveUSD
+          block
           token0 {
-            symbol
-            totalLiquidity
-            name
             decimals
+            name
+            symbol
+            derivedUSD
+            derivedCRO
             id
-          }   
+            totalLiquidity
+            pairDayDataBase(first: 1, orderBy: date, orderDirection: desc) {
+              dailyVolumeUSD
+              reserveUSD
+              date
+            }
+            tradeVolumeUSD
+          }
           token1 {
-            symbol
-            totalLiquidity
-            name
-            id
             decimals
+            name
+            symbol
+            derivedUSD
+            derivedCRO
+            id
+            totalLiquidity
+            pairDayDataBase(first: 1, orderBy: date, orderDirection: desc) {
+              dailyVolumeUSD
+              reserveUSD
+              date
+            }
+            tradeVolumeUSD
           }
         }
       }
@@ -46,26 +64,31 @@ export class Info {
   }
 
   async getTokens() {
-    const query=`
+    const query = `
     query GetTokens {
-      tokenDayDatas {
-        dailyVolumeToken
-        dailyVolumeUSD
+      tokens(orderBy: tradeVolumeUSD, orderDirection: desc) {
+        decimals
+        name
+        symbol
+        tradeVolume
+        tradeVolumeUSD
+        totalLiquidity
+        derivedUSD
         id
-        priceUSD
-        totalLiquidityUSD
-        token {
-          decimals
-          name
-          symbol
-          totalLiquidity
+        tokenDayData(first: 1, orderBy: date, orderDirection: desc, skip: 1) {
+          date
+          dailyVolumeToken
+          dailyVolumeUSD
+          priceUSD
+          totalLiquidityToken
+          totalLiquidityUSD
         }
       }
     }
-    `
+    `;
 
     return this.apollo.query({
-      query:gql(query),
+      query: gql(query),
     });
   }
 }

@@ -10,15 +10,14 @@ export const useAllTokenDataQuery = () => {
   const chainId: number = useChainIdByQuery();
   const info = useMemo(() => new Info(chainId), [chainId]);
   const { data } = useQuery({
-    queryKey: ['useGetPairs', chainId],
+    queryKey: ['useGetTokens', chainId],
     queryFn: async () => {
       try{
-      const response = await info.getPairs();
-      console.log({response}, "GGGGGG")
-      if (!response?.data?.tokenDayDatas) {
+      const response = await info.getTokens();
+      if (!response?.data?.tokens) {
         throw new Error('Failed to fetch pairs data');
       }
-      return response.data.tokenDayDatas;
+      return response.data.tokens;
     }catch(error) {
       console.error("Error fetching data", error)
     }
@@ -30,40 +29,30 @@ export const useAllTokenDataQuery = () => {
   
       const final: {
         [address: string]: {
-          data: PairData;
+          data: TokenData;
         };
       } = {};
-  
       for (const d of data_) {
-        const { totalFees24h, lpFees24h, lpApr24h } = getLpFeesAndApr(+d.dailyVolumeUSD, +d.volumeUSD);
-        final[d.pairAddress] = {
+        final[d.id] = {
           data: {
-            pairAddress: d.pairAddress,
-            token0: {
-              address: d.token0.id,
-              symbol: d.token0.symbol,
-              name: d.token0.name,
-              decimals: d.token0.decimals,
-              totalLiquidity: d.token0.totalLiquidity,
-            },
-            token1: {
-              address: d.token1.id,
-              symbol: d.token1.symbol,
-              name: d.token1.name,
-              decimals: d.token1.decimals,
-              totalLiquidity: d.token1.totalLiquidity,
-            },
-            dailyVolumeUSD: +d.dailyVolumeUSD,
-            volumeUSDChange: 0,
-            liquidityUSD: +d.reserveUSD,
-            liquidityUSDChange: 0,
-            totalFees24h,
-            lpFees24h,
-            lpApr24h,
-            reserveUSD: 0,
+            id: d.id,
+            name: d.name,
+            symbol: d.symbol,
+            priceUSD: +d.derivedUSD,
+            decimals: +d.decimals,
+            totalLiquidity:+ d.totalLiquidity,
+            totalLiquidityUSD: d.totalLiquidity * d.derivedUSD,
+            tradeVolumeUSD: +d.tradeVolumeUSD,
+            tradeVolume: +d.tradeVolume,
+            volume24h: +d?.tokenDayData[0]?.dailyVolumeToken,
+            volumeUSD24h: +d?.tokenDayData[0]?.dailyVolumeUSD,
+            priceUSD24h: +d?.tokenDayData[0]?.priceUSD,
+            totalLiquidity24h: +d.tokenDayData[0]?.totalLiquidityToken,
+            priceChange: getPercentChange(+d.derivedUSD, +d?.tokenDayData[0]?.priceUSD)
           },
         };
       }
+      console.log(final,  "DFADFASDF")
   
       return final;
     },
@@ -74,17 +63,6 @@ export const useAllTokenDataQuery = () => {
   }, [data, chainId]);
 };
 
-const getLpFeesAndApr = (volumeUSD: number, liquidityUSD: number) => {
-  const totalFees24h = volumeUSD * TOTAL_FEE;
-  const lpFees24h = volumeUSD * LP_HOLDERS_FEE;
-
-  const lpApr24h = liquidityUSD > 0 ? (totalFees24h * LP_HOLDERS_FEE * DAYS_IN_YEAR * 100) / liquidityUSD : 0;
-  return {
-    totalFees24h,
-    lpFees24h,
-    lpApr24h: lpApr24h !== Infinity ? lpApr24h : 0,
-  };
-};
 
 const getPercentChange = (valueNow?: number, valueBefore?: number): number => {
   if (valueNow && valueBefore) {

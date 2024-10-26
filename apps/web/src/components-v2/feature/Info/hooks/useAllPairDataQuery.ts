@@ -14,11 +14,10 @@ export const useAllPairDataQuery = () => {
     queryFn: async () => {
       try{
       const response = await info.getPairs();
-      console.log({response}, "GGGGGG")
-      if (!response?.data?.pairDayDatas) {
+      if (!response?.data?.pairs) {
         throw new Error('Failed to fetch pairs data');
       }
-      return response.data.pairDayDatas;
+      return response.data.pairs;
     }catch(error) {
       console.error("Error fetching data", error)
     }
@@ -36,31 +35,41 @@ export const useAllPairDataQuery = () => {
   
       for (const d of data_) {
         const { totalFees24h, lpFees24h, lpApr24h } = getLpFeesAndApr(+d.dailyVolumeUSD, +d.volumeUSD);
-        final[d.pairAddress] = {
+        final[d.id] = {
           data: {
-            pairAddress: d.pairAddress,
+            id: d.id,
+            name: d.name,
+            volumeUSD: +d.volumeUSD,
+            liquidity: +d.reservedUSD,
             token0: {
-              address: d.token0.id,
-              symbol: d.token0.symbol,
               name: d.token0.name,
+              symbol: d.token0.symbol,
+              address: d.token0.id,
               decimals: d.token0.decimals,
-              totalLiquidity: d.token0.totalLiquidity,
+              derivedUSD: +d.token0.derivedUSD,
+              derivedCRO: +d.token0.derivedCRO,
+              totalLiquidity: +d.token0.totalLiquidity,
+              dailyVolumeUSD: +d.token0.pairDayDataBase.dailyVolumeUSD,
+              reserveUSD: +d.token0.pairDayDataBase.reserveUSD,
             },
             token1: {
-              address: d.token1.id,
-              symbol: d.token1.symbol,
               name: d.token1.name,
-              decimals: d.token1.decimals,
-              totalLiquidity: d.token1.totalLiquidity,
+              symbol: d.token1.symbol,
+              address: d.token1.id,
+              decimals: +d.token1.decimals,
+              derivedUSD: +d.token1.derivedUSD,
+              derivedCRO: +d.token1.derivedCRO,
+              totalLiquidity: +d.token1.totalLiquidity,
+              dailyVolumeUSD: +d.token1.pairDayDataBase.dailyVolumeUSD,
+              reserveUSD: +d.token1.pairDayDataBase.reserveUSD,
             },
             dailyVolumeUSD: +d.dailyVolumeUSD,
-            volumeUSDChange: 0,
+            volumeUSDChange: +d.volumeUSD - d.dailyVolumeUSD,
             liquidityUSD: +d.reserveUSD,
             liquidityUSDChange: 0,
             totalFees24h,
             lpFees24h,
             lpApr24h,
-            reserveUSD: 0,
           },
         };
       }

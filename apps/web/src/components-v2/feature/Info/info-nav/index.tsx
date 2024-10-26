@@ -12,6 +12,7 @@ import { StandardContainer } from '@src/components-v2/shared/containers';
 import { ButtonMenu, ButtonMenuItem } from '@src/components-v2/foundation/button-group';
 import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
 import { useChainPathByQuery } from '../hooks/chain';
+import BreadCrumb from '@src/components-v2/feature/info/components/breadcrumb';
 
 export default function InfoNav() {
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function InfoNav() {
   return (
     <Box bgColor="#0d6efd29" mb={4}>
       <StandardContainer>
-        <HStack justify="space-between" py={2}>
+        <Box display={{ base: 'block', sm: 'flex' }} gap={2} justifyContent="space-between" py={2}>
           <HStack>
             <ButtonMenu activeIndex={activeIndex}>
               <ButtonMenuItem as={NextLinkFromReactRouter} to={`/info${chainPath}`}>
@@ -44,14 +45,12 @@ export default function InfoNav() {
                 Tokens
               </ButtonMenuItem>
             </ButtonMenu>
-            <ChainSelector activeIndex={activeIndex}/>
+            <ChainSelector activeIndex={activeIndex} />
           </HStack>
-          <HStack>
-            <VStack>
-              <Input placeholder="Search pair or token" />
-            </VStack>
+          <HStack mt={{base:2, sm:0}}>
+              <Input w='full' placeholder="Search pair or token" />
           </HStack>
-        </HStack>
+        </Box>
       </StandardContainer>
     </Box>
   );

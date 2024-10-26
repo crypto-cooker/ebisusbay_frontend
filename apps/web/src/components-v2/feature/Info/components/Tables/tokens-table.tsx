@@ -28,11 +28,11 @@ const ResponsiveGrid = styled.div`
   display: grid;
   grid-gap: 1em;
   align-items: center;
-  grid-template-columns: 20px 3.5fr repeat(4, 1fr);
+  grid-template-columns: 30px 1.5fr repeat(4, 1fr);
 
   padding: 0 24px;
   @media screen and (max-width: 900px) {
-    grid-template-columns: 20px 1.5fr repeat(2, 1fr);
+    grid-template-columns: 30px 1.5fr repeat(2, 1fr);
     & :nth-child(4),
     & :nth-child(5)
      {
@@ -40,7 +40,7 @@ const ResponsiveGrid = styled.div`
     }
   }
   @media screen and (max-width: 500px) {
-    grid-template-columns: 20px 1.5fr repeat(1, 1fr);
+    grid-template-columns: 30px 1.5fr repeat(1, 1fr);
     & :nth-child(4),
     & :nth-child(5),
     & :nth-child(6),
@@ -65,10 +65,10 @@ const LinkWrapper = styled(NextLinkFromReactRouter)`
 `;
 
 const SORT_FIELD = {
-  volumeUSD: 'volumeUSD',
-  liquidityUSD: 'liquidityUSD',
-  lpFees24h: 'lpFees24h',
-  lpApr7d: 'lpApr24h',
+  priceUSD: 'priceUSD',
+  priceChange: 'priceChange',
+  volumeUSD24h: 'volumeUSD24h',
+  totalLiquidityUSD: 'totalLiquidityUSD',
 };
 
 const LoadingRow: React.FC<React.PropsWithChildren> = () => (
@@ -94,39 +94,38 @@ const DataRow = ({ TokenData, index }: { TokenData: TokenData; index: number }) 
   const chainName = useChainNameByQuery();
   const chainId = useChainIdByQuery();
   const chainPath = useChainPathByQuery();
-  const token0symbol = TokenData.token0.symbol;
-  const token1symbol = TokenData.token1.symbol;
+  const symbol = TokenData.symbol
+  const color = TokenData.priceChange < 0 ? '#a11259' : '#12a17d'
 
   return (
-    <LinkWrapper to={`/info${chainPath}/pairs/${TokenData.pairAddress}`}>
+    <LinkWrapper to={`/info${chainPath}/tokens/${TokenData.id}`}>
       <ResponsiveGrid>
         <Text>{index + 1}</Text>
         <Flex>
           <HStack display={{base: 'none', md: 'flex'}}>
-            <CurrencyLogoByAddress address={TokenData.token0.address} chainId={chainId} />
-            <CurrencyLogoByAddress address={TokenData.token1.address} chainId={chainId} />
+            <CurrencyLogoByAddress size='20px' address={TokenData.id} chainId={chainId} />
           </HStack>
           <Text ml="8px">
-            {token0symbol}/{token1symbol}
+            {symbol}
           </Text>
         </Flex>
-        <Text>${formatAmount(TokenData.dailyVolumeUSD)}</Text>
-        <Text>${formatAmount(TokenData.lpFees24h)}</Text>
-        <Text>{formatAmount(TokenData.lpApr24h)}%</Text>
-        <Text>${formatAmount(TokenData.liquidityUSD)}</Text>
+        <Text>${formatAmount(TokenData.priceUSD)}</Text>
+        <Text color={color}>{formatAmount(TokenData.priceChange)}%</Text>
+        <Text>${formatAmount(TokenData.tradeVolumeUSD)}</Text>
+        <Text>${formatAmount(TokenData.totalLiquidityUSD)}</Text>
       </ResponsiveGrid>
     </LinkWrapper>
   );
 };
 
-interface PairTableProps {
-  TokenDatas: (TokenData | undefined)[];
+interface TokenTableProps {
+  tokenDatas: (TokenData | undefined)[];
   loading?: boolean; // If true shows indication that SOME pools are loading, but the ones already fetched will be shown
 }
 
-const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ TokenDatas, loading }) => {
+const TokenTable: React.FC<React.PropsWithChildren<TokenTableProps>> = ({ tokenDatas, loading }) => {
   // for sorting
-  const [sortField, setSortField] = useState(SORT_FIELD.volumeUSD);
+  const [sortField, setSortField] = useState(SORT_FIELD.volumeUSD24h);
   const [sortDirection, setSortDirection] = useState<boolean>(true);
 
   // pagination
@@ -134,14 +133,14 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ TokenDat
   const [maxPage, setMaxPage] = useState(1);
   useEffect(() => {
     let extraPages = 1;
-    if (TokenDatas.length % ITEMS_PER_INFO_TABLE_PAGE === 0) {
+    if (tokenDatas.length % ITEMS_PER_INFO_TABLE_PAGE === 0) {
       extraPages = 0;
     }
-    setMaxPage(Math.floor(TokenDatas.length / ITEMS_PER_INFO_TABLE_PAGE) + extraPages);
-  }, [TokenDatas]);
-  const sortedPools = useMemo(() => {
-    return TokenDatas
-      ? TokenDatas
+    setMaxPage(Math.floor(tokenDatas.length / ITEMS_PER_INFO_TABLE_PAGE) + extraPages);
+  }, [tokenDatas]);
+  const sortedTokens = useMemo(() => {
+    return tokenDatas
+      ? tokenDatas
           .sort((a, b) => {
             if (a && b) {
               const aElement = a[sortField as keyof TokenData];
@@ -153,7 +152,7 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ TokenDat
           })
           .slice(ITEMS_PER_INFO_TABLE_PAGE * (page - 1), page * ITEMS_PER_INFO_TABLE_PAGE)
       : [];
-  }, [page, TokenDatas, sortDirection, sortField]);
+  }, [page, tokenDatas, sortDirection, sortField]);
 
   const handleSort = useCallback(
     (newField: string) => {
@@ -179,53 +178,53 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ TokenDat
             #
           </Text>
           <Text color="secondary" fontSize="12px" bold textTransform="uppercase">
-            Pair
+            Tokens
           </Text>
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
             bold
-            onClick={() => handleSort(SORT_FIELD.volumeUSD)}
+            onClick={() => handleSort(SORT_FIELD.priceUSD)}
             textTransform="uppercase"
           >
-            {'Volume 24H'} {arrow(SORT_FIELD.volumeUSD)}
+            {'Price'} {arrow(SORT_FIELD.priceUSD)}
           </ClickableColumnHeader>
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
             bold
-            onClick={() => handleSort(SORT_FIELD.lpFees24h)}
+            onClick={() => handleSort(SORT_FIELD.priceChange)}
             textTransform="uppercase"
           >
-            {'LP reward fees 24H'} {arrow(SORT_FIELD.lpFees24h)}
+            {'Price Change'} {arrow(SORT_FIELD.priceChange)}
           </ClickableColumnHeader>
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
             bold
-            onClick={() => handleSort(SORT_FIELD.lpApr7d)}
+            onClick={() => handleSort(SORT_FIELD.volumeUSD24h)}
             textTransform="uppercase"
           >
-            {'LP reward APR'} {arrow(SORT_FIELD.lpApr7d)}
+            {'Volume 24H'} {arrow(SORT_FIELD.volumeUSD24h)}
           </ClickableColumnHeader>
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
             bold
-            onClick={() => handleSort(SORT_FIELD.liquidityUSD)}
+            onClick={() => handleSort(SORT_FIELD.totalLiquidityUSD)}
             textTransform="uppercase"
           >
-            {'Liquidity'} {arrow(SORT_FIELD.liquidityUSD)}
+            {'Liquidty'} {arrow(SORT_FIELD.totalLiquidityUSD)}
           </ClickableColumnHeader>
         </ResponsiveGrid>
         <Break />
-        {sortedPools.length > 0 ? (
+        {sortedTokens.length > 0 ? (
           <>
-            {sortedPools.map((TokenData, i) => {
-              if (TokenData) {
+            {sortedTokens.map((tokenData, i) => {
+              if (tokenData) {
                 return (
-                  <Fragment key={TokenData.pairAddress}>
-                    <DataRow index={(page - 1) * ITEMS_PER_INFO_TABLE_PAGE + i} TokenData={TokenData} />
+                  <Fragment key={tokenData.id}>
+                    <DataRow index={(page - 1) * ITEMS_PER_INFO_TABLE_PAGE + i} TokenData={tokenData} />
                     <Break />
                   </Fragment>
                 );
@@ -239,7 +238,7 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ TokenDat
                   setPage(page === 1 ? page : page - 1);
                 }}
               >
-                <ArrowBackIcon color={page === 1 ? 'textDisabled' : 'primary'} />
+                <ArrowBackIcon color={page === 1 ? '' : '#1E7EE6'} />
               </Arrow>
 
               <Text>{`Page ${page} of ${maxPage}`}</Text>
@@ -249,7 +248,7 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ TokenDat
                   setPage(page === maxPage ? page : page + 1);
                 }}
               >
-                <ArrowForwardIcon color={page === maxPage ? 'textDisabled' : 'primary'} />
+                <ArrowForwardIcon color={page === maxPage ? '' : '#1E7EE6'} />
               </Arrow>
             </PageButtons>
           </>
@@ -265,4 +264,4 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ TokenDat
   );
 };
 
-export default PairTable;
+export default TokenTable;

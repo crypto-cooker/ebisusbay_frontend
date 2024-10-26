@@ -19,7 +19,6 @@ export const lightTheme = {
   bgColor3: '#eeeeee',
   bgColor4: '#0078cb',
   bgColor5: '#eeeeee',
-  backgroundDisabled: "#3c3742",
 };
 
 export const darkTheme = {
@@ -40,7 +39,6 @@ export const darkTheme = {
   bgColor3: '#212428',
   bgColor4: '#000000',
   bgColor5: '#333333',
-  backgroundDisabled: "#3c3742",
 };
 
 export const theme = {

@@ -9,7 +9,6 @@ export const usePairDatas = () => {
 
   // get all the pair datas that exist
   const pairDatas = useMemo(() => {
-    console.log({allPairData},"HHHHHHHHH")
     return Object.values(allPairData)
       .map((pair) => {
         return {

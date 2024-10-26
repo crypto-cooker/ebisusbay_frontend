@@ -28,11 +28,11 @@ const ResponsiveGrid = styled.div`
   display: grid;
   grid-gap: 1em;
   align-items: center;
-  grid-template-columns: 20px 3.5fr repeat(4, 1fr);
+  grid-template-columns: 30px 2fr repeat(4, 1fr);
 
   padding: 0 24px;
   @media screen and (max-width: 900px) {
-    grid-template-columns: 20px 1.5fr repeat(2, 1fr);
+    grid-template-columns: 30px 1.5fr repeat(2, 1fr);
     & :nth-child(4),
     & :nth-child(5)
      {
@@ -40,7 +40,7 @@ const ResponsiveGrid = styled.div`
     }
   }
   @media screen and (max-width: 500px) {
-    grid-template-columns: 20px 1.5fr repeat(1, 1fr);
+    grid-template-columns: 30px 1.5fr repeat(1, 1fr);
     & :nth-child(4),
     & :nth-child(5),
     & :nth-child(6),
@@ -60,7 +60,8 @@ const LinkWrapper = styled(NextLinkFromReactRouter)`
   text-decoration: none;
   &:hover {
     cursor: pointer;
-    opacity: 0.7;
+    opacity: 0.6;
+    color: white;
   }
 `;
 
@@ -68,7 +69,7 @@ const SORT_FIELD = {
   volumeUSD: 'volumeUSD',
   liquidityUSD: 'liquidityUSD',
   lpFees24h: 'lpFees24h',
-  lpApr7d: 'lpApr24h',
+  lpApr24h: 'lpApr24h',
 };
 
 const LoadingRow: React.FC<React.PropsWithChildren> = () => (
@@ -98,13 +99,13 @@ const DataRow = ({ PairData, index }: { PairData: PairData; index: number }) => 
   const token1symbol = PairData.token1.symbol;
 
   return (
-    <LinkWrapper to={`/info${chainPath}/pairs/${PairData.pairAddress}`}>
+    <LinkWrapper to={`/info${chainPath}/pairs/${PairData.id}`}>
       <ResponsiveGrid>
         <Text>{index + 1}</Text>
         <Flex>
           <HStack display={{base: 'none', md: 'flex'}}>
-            <CurrencyLogoByAddress address={PairData.token0.address} chainId={chainId} />
-            <CurrencyLogoByAddress address={PairData.token1.address} chainId={chainId} />
+            <CurrencyLogoByAddress size='20px' address={PairData.token0.address} chainId={chainId} />
+            <CurrencyLogoByAddress size='20px' address={PairData.token1.address} chainId={chainId} />
           </HStack>
           <Text ml="8px">
             {token0symbol}/{token1symbol}
@@ -203,10 +204,10 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
             color="secondary"
             fontSize="12px"
             bold
-            onClick={() => handleSort(SORT_FIELD.lpApr7d)}
+            onClick={() => handleSort(SORT_FIELD.lpApr24h)}
             textTransform="uppercase"
           >
-            {'LP reward APR'} {arrow(SORT_FIELD.lpApr7d)}
+            {'LP reward APR'} {arrow(SORT_FIELD.lpApr24h)}
           </ClickableColumnHeader>
           <ClickableColumnHeader
             color="secondary"
@@ -224,7 +225,7 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
             {sortedPools.map((PairData, i) => {
               if (PairData) {
                 return (
-                  <Fragment key={PairData.pairAddress}>
+                  <Fragment key={PairData.id}>
                     <DataRow index={(page - 1) * ITEMS_PER_INFO_TABLE_PAGE + i} PairData={PairData} />
                     <Break />
                   </Fragment>
@@ -239,7 +240,7 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
                   setPage(page === 1 ? page : page - 1);
                 }}
               >
-                <ArrowBackIcon color={page === 1 ? 'textDisabled' : 'primary'} />
+                <ArrowBackIcon color={page === 1 ? '' : '#1E7EE6'} />
               </Arrow>
 
               <Text>{`Page ${page} of ${maxPage}`}</Text>
@@ -249,7 +250,7 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
                   setPage(page === maxPage ? page : page + 1);
                 }}
               >
-                <ArrowForwardIcon color={page === maxPage ? 'textDisabled' : 'primary'} />
+                <ArrowForwardIcon color={page === maxPage ? '' : '#1E7EE6'} />
               </Arrow>
             </PageButtons>
           </>

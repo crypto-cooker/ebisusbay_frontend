@@ -1,9 +1,11 @@
-import { Box } from '@chakra-ui/react';
+import Tokens from '../tokens';
+import Pairs from '../pairs';
 
 export default function Overview() {
   return (
     <>
-    Overview page
+    <Tokens/>
+    <Pairs/>
     </>
   );
 }
