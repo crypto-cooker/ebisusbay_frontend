@@ -16,7 +16,7 @@ const useSearch = () => {
   };
 
   const removeItem = (address: string) => {
-    setItems((oldItems) => oldItems.filter((item) => ciEquals(item.address, address)));
+    setItems((oldItems) => oldItems.filter((item) => !ciEquals(item.address, address)));
   };
 
   const clearCart = () => {
