@@ -7623,7 +7623,7 @@
     "referral": false,
     "is1155": false,
     "published": true,
-    "complete": false,
+    "complete": true,
     "images": {
       "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/argonauts-gears/drop.webp",
       "banner": "https://cdn-prod.ebisusbay.com/files/drop-images/argonauts-gears/banner.webp",
@@ -7776,7 +7776,7 @@
     "cost": "99",
     "whitelistCost": "75",
     "foundersOnly": false,
-    "start": 1729886400000,
+    "start": null,
     "end": null,
     "referral": false,
     "is1155": false,
