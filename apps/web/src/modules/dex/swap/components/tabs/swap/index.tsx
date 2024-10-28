@@ -37,6 +37,7 @@ import useWrapCallback, {WrapType} from "@eb-pancakeswap-web/hooks/useWrapCallba
 import {BIG_INT_ZERO} from "@dex/swap/constants/exchange";
 import {useUserSingleHopOnly} from "@dex/swap/state/user/hooks";
 import {useIsWrapping} from "@eb-pancakeswap-web/hooks/useIsWrapping";
+import * as Sentry from "@sentry/nextjs";
 
 // interface Props {
 //   inputAmount?: CurrencyAmount<Currency>
@@ -217,6 +218,7 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
         setSwapState({ attemptingTxn: false, tradeToConfirm, swapErrorMessage: undefined, txHash: hash });
       })
       .catch((error) => {
+        Sentry.captureException(error);
         setSwapState({
           attemptingTxn: false,
           tradeToConfirm,
