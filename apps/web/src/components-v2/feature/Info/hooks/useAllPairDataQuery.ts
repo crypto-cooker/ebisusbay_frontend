@@ -47,10 +47,7 @@ export const useAllPairDataQuery = () => {
               address: d.token0.id,
               decimals: d.token0.decimals,
               derivedUSD: +d.token0.derivedUSD,
-              derivedCRO: +d.token0.derivedCRO,
               totalLiquidity: +d.token0.totalLiquidity,
-              dailyVolumeUSD: +d.token0.pairDayDataBase.dailyVolumeUSD,
-              reserveUSD: +d.token0.pairDayDataBase.reserveUSD,
             },
             token1: {
               name: d.token1.name,
@@ -58,12 +55,9 @@ export const useAllPairDataQuery = () => {
               address: d.token1.id,
               decimals: +d.token1.decimals,
               derivedUSD: +d.token1.derivedUSD,
-              derivedCRO: +d.token1.derivedCRO,
               totalLiquidity: +d.token1.totalLiquidity,
-              dailyVolumeUSD: +d.token1.pairDayDataBase.dailyVolumeUSD,
-              reserveUSD: +d.token1.pairDayDataBase.reserveUSD,
             },
-            dailyVolumeUSD: +d.dailyVolumeUSD,
+            dailyVolumeUSD: getDailyVolumeFromHourlVolume(+d.timestamp, d.pairHourData),
             volumeUSDChange: +d.volumeUSD - d.dailyVolumeUSD,
             liquidityUSD: +d.reserveUSD,
             liquidityUSDChange: 0,
@@ -100,4 +94,19 @@ const getPercentChange = (valueNow?: number, valueBefore?: number): number => {
     return ((valueNow - valueBefore) / valueBefore) * 100
   }
   return 0
+}
+
+interface HourlyData {
+  hourlyVolumeUSD: string, hourStartUnix:number
+}
+
+const getDailyVolumeFromHourlVolume = (timestamp:number, hourData: HourlyData[]):number => {
+  const _24hago = timestamp - 24 * 3600;
+  const dailyVolumeUSD = hourData.reduce((acc, cur, index) => {
+    if(cur.hourStartUnix >= _24hago){
+      acc += +cur.hourlyVolumeUSD;
+    }
+    return acc
+  }, 0);
+  return dailyVolumeUSD;
 }

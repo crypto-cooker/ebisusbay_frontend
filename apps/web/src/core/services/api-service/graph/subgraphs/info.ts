@@ -18,41 +18,31 @@ export class Info {
   async getPairs() {
     const query = `
       query MyQuery {
-        pairs(orderBy: volumeUSD, orderDirection: desc) {
+        pairs {
           id
           name
-          volumeUSD
           reserveUSD
-          block
+          timestamp
+          volumeUSD
+          pairHourData(first: 24, orderBy: hourStartUnix, orderDirection: desc) {
+            hourlyVolumeUSD
+            hourStartUnix
+          }
           token0 {
-            decimals
+            id
             name
             symbol
+            decimals
             derivedUSD
-            derivedCRO
-            id
             totalLiquidity
-            pairDayDataBase(first: 1, orderBy: date, orderDirection: desc) {
-              dailyVolumeUSD
-              reserveUSD
-              date
-            }
-            tradeVolumeUSD
           }
           token1 {
-            decimals
+            id
             name
             symbol
+            decimals
             derivedUSD
-            derivedCRO
-            id
             totalLiquidity
-            pairDayDataBase(first: 1, orderBy: date, orderDirection: desc) {
-              dailyVolumeUSD
-              reserveUSD
-              date
-            }
-            tradeVolumeUSD
           }
         }
       }
