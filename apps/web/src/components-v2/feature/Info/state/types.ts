@@ -22,8 +22,6 @@ export interface PairData {
     totalLiquidity: number;
   };
 
-  volumeUSDChange: number;
-
   totalFees24h: number;
   lpFees24h: number;
   lpApr24h: number;

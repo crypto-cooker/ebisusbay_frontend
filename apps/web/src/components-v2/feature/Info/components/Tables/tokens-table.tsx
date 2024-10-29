@@ -1,6 +1,6 @@
-import { ArrowBackIcon, ArrowForwardIcon, Box, Flex, Skeleton, Text } from '@pancakeswap/uikit';
+import { Box, Flex, Skeleton, Text } from '@chakra-ui/react';
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
-
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   useChainIdByQuery,
@@ -34,8 +34,7 @@ const ResponsiveGrid = styled.div`
   @media screen and (max-width: 900px) {
     grid-template-columns: 30px 1.5fr repeat(2, 1fr);
     & :nth-child(4),
-    & :nth-child(5)
-     {
+    & :nth-child(5) {
       display: none;
     }
   }
@@ -94,20 +93,18 @@ const DataRow = ({ TokenData, index }: { TokenData: TokenData; index: number }) 
   const chainName = useChainNameByQuery();
   const chainId = useChainIdByQuery();
   const chainPath = useChainPathByQuery();
-  const symbol = TokenData.symbol
-  const color = TokenData.priceChange < 0 ? '#a11259' : '#12a17d'
+  const symbol = TokenData.symbol;
+  const color = TokenData.priceChange < 0 ? '#a11259' : '#12a17d';
 
   return (
     <LinkWrapper to={`/info${chainPath}/tokens/${TokenData.id}`}>
       <ResponsiveGrid>
         <Text>{index + 1}</Text>
         <Flex>
-          <HStack display={{base: 'none', md: 'flex'}}>
-            <CurrencyLogoByAddress size='20px' address={TokenData.id} chainId={chainId} />
+          <HStack display={{ base: 'none', md: 'flex' }}>
+            <CurrencyLogoByAddress size="20px" address={TokenData.id} chainId={chainId} />
           </HStack>
-          <Text ml="8px">
-            {symbol}
-          </Text>
+          <Text ml="8px">{symbol}</Text>
         </Flex>
         <Text>${formatAmount(TokenData.priceUSD)}</Text>
         <Text color={color}>{formatAmount(TokenData.priceChange)}%</Text>
@@ -174,16 +171,15 @@ const TokenTable: React.FC<React.PropsWithChildren<TokenTableProps>> = ({ tokenD
     <Card>
       <TableWrapper>
         <ResponsiveGrid>
-          <Text color="secondary" fontSize="12px" bold>
+          <Text color="secondary" fontSize="12px" fontWeight="bold">
             #
           </Text>
-          <Text color="secondary" fontSize="12px" bold textTransform="uppercase">
+          <Text color="secondary" fontSize="12px" fontWeight="bold" textTransform="uppercase">
             Tokens
           </Text>
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
-            bold
             onClick={() => handleSort(SORT_FIELD.priceUSD)}
             textTransform="uppercase"
           >
@@ -192,7 +188,6 @@ const TokenTable: React.FC<React.PropsWithChildren<TokenTableProps>> = ({ tokenD
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
-            bold
             onClick={() => handleSort(SORT_FIELD.priceChange)}
             textTransform="uppercase"
           >
@@ -201,7 +196,6 @@ const TokenTable: React.FC<React.PropsWithChildren<TokenTableProps>> = ({ tokenD
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
-            bold
             onClick={() => handleSort(SORT_FIELD.volumeUSD24h)}
             textTransform="uppercase"
           >
@@ -210,7 +204,6 @@ const TokenTable: React.FC<React.PropsWithChildren<TokenTableProps>> = ({ tokenD
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
-            bold
             onClick={() => handleSort(SORT_FIELD.totalLiquidityUSD)}
             textTransform="uppercase"
           >

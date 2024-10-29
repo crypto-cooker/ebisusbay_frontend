@@ -1,6 +1,6 @@
-import { ArrowBackIcon, ArrowForwardIcon, Box, Flex, Skeleton, Text } from '@pancakeswap/uikit';
+import {Box, Flex, Skeleton, Text } from '@chakra-ui/react';
+import {ArrowBackIcon, ArrowForwardIcon} from '@chakra-ui/icons'
 import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
-
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   useChainIdByQuery,
@@ -10,7 +10,7 @@ import {
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import styled from 'styled-components';
 import { PairData } from '@src/components-v2/feature/info/state/types';
-import { ITEMS_PER_INFO_TABLE_PAGE } from '../../state/constants';
+import { ITEMS_PER_INFO_TABLE_PAGE } from '@src/components-v2/feature/info/state/constants';
 import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from './shared';
 import { Card } from '@src/components-v2/foundation/card';
 import { CurrencyLogo, CurrencyLogoByAddress, DoubleCurrencyLogo } from '@dex/components/logo';
@@ -61,7 +61,6 @@ const LinkWrapper = styled(NextLinkFromReactRouter)`
   &:hover {
     cursor: pointer;
     opacity: 0.6;
-    color: white;
   }
 `;
 
@@ -176,16 +175,15 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
     <Card>
       <TableWrapper>
         <ResponsiveGrid>
-          <Text color="secondary" fontSize="12px" bold>
+          <Text color="secondary" fontSize="12px" fontWeight='bold'>
             #
           </Text>
-          <Text color="secondary" fontSize="12px" bold textTransform="uppercase">
+          <Text color="secondary" fontSize="12px" fontWeight='bold' textTransform="uppercase">
             Pair
           </Text>
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
-            bold
             onClick={() => handleSort(SORT_FIELD.volumeUSD)}
             textTransform="uppercase"
           >
@@ -194,7 +192,6 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
-            bold
             onClick={() => handleSort(SORT_FIELD.lpFees24h)}
             textTransform="uppercase"
           >
@@ -203,7 +200,6 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
-            bold
             onClick={() => handleSort(SORT_FIELD.lpApr24h)}
             textTransform="uppercase"
           >
@@ -212,7 +208,6 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
-            bold
             onClick={() => handleSort(SORT_FIELD.liquidityUSD)}
             textTransform="uppercase"
           >

@@ -34,7 +34,8 @@ export const useAllPairDataQuery = () => {
       } = {};
   
       for (const d of data_) {
-        const { totalFees24h, lpFees24h, lpApr24h } = getLpFeesAndApr(+d.dailyVolumeUSD, +d.volumeUSD);
+        const dailyVolumeUSD = getDailyVolumeFromHourlVolume(+d.timestamp, d.pairHourData)
+        const { totalFees24h, lpFees24h, lpApr24h } = getLpFeesAndApr(dailyVolumeUSD, +d.volumeUSD);
         final[d.id] = {
           data: {
             id: d.id,
@@ -57,8 +58,7 @@ export const useAllPairDataQuery = () => {
               derivedUSD: +d.token1.derivedUSD,
               totalLiquidity: +d.token1.totalLiquidity,
             },
-            dailyVolumeUSD: getDailyVolumeFromHourlVolume(+d.timestamp, d.pairHourData),
-            volumeUSDChange: +d.volumeUSD - d.dailyVolumeUSD,
+            dailyVolumeUSD,
             liquidityUSD: +d.reserveUSD,
             liquidityUSDChange: 0,
             totalFees24h,
