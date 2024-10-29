@@ -1,8 +1,6 @@
 import {defaultWagmiConfig} from '@web3modal/wagmi/react/config';
-import {cookieStorage, createConfig, createStorage, http} from 'wagmi'
-import {cronos, cronosTestnet} from 'wagmi/chains'
+import { cookieStorage, createStorage } from '@wagmi/core'
 import {appConfig as applicationConfig, isTestnet} from "@src/config";
-import {walletConnect} from "@wagmi/connectors";
 import {CHAINS} from "@src/config/chains";
 import memoize from "lodash/memoize";
 
