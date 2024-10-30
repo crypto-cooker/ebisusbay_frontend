@@ -7583,7 +7583,7 @@
     "referral": false,
     "is1155": false,
     "published": true,
-    "complete": false,
+    "complete": true,
     "featured": false,
     "images": {
       "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/pixel-ebisu/drop.webp",
@@ -7739,7 +7739,7 @@
     "referral": false,
     "is1155": false,
     "published": true,
-    "complete": false,
+    "complete": true,
     "erc20Cost": "2500",
     "erc20Token": "0x96e03fa6c5ab3a7f2e7098dd07c8935493294e26",
     "erc20Only": true,
