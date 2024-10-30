@@ -6,9 +6,9 @@ import { isAddress } from '@market/helpers/utils';
 import { CurrencyAmount, Token } from '@pancakeswap/sdk';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppChainConfig } from '@src/config/hooks';
-import { wagmiConfigs } from '@src/config/chains';
 import { multicall } from '@wagmi/core';
 import { utils } from 'ethers';
+import { wagmiConfig } from '@src/wagmi';
 
 export const useTokenBalanceOnCertainChain = (
   tokenAddress: string,
@@ -21,7 +21,7 @@ export const useTokenBalanceOnCertainChain = (
   const execute = useCallback(async () => {
     setIsLoading(true);
     try {
-      const [balance, decimals] = await multicall(wagmiConfigs, {
+      const [balance, decimals] = await multicall(wagmiConfig, {
         chainId,
         contracts: [
           {
