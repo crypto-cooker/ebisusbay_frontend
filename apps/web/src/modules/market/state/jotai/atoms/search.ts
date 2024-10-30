@@ -1,5 +1,5 @@
-import {atomWithStorage} from "jotai/utils";
-import {atom} from "jotai/index";
+import { atomWithStorage } from 'jotai/utils';
+import { atom } from 'jotai/index';
 
 export interface SearchHistoryItem {
   address: string;
@@ -10,14 +10,14 @@ export interface SearchHistoryItem {
     verified: boolean;
     doxx: boolean;
     kyc: boolean;
-  }
+  };
 }
 
-export const searchHistoryAtom = atomWithStorage<SearchHistoryItem[]>('eb.search-history', [],{
+export const searchHistoryAtom = atomWithStorage<SearchHistoryItem[]>('eb.search-history', [], {
   getItem(key, initialValue) {
-    const storedValue = localStorage.getItem(key)
+    const storedValue = localStorage.getItem(key);
     try {
-      const value = JSON.parse(storedValue ?? '')
+      const value = JSON.parse(storedValue ?? '');
       const invalidItems = getInvalidCartItems(value);
 
       if (invalidItems.length > 0) {
@@ -28,7 +28,7 @@ export const searchHistoryAtom = atomWithStorage<SearchHistoryItem[]>('eb.search
 
       return value;
     } catch {
-      return initialValue
+      return initialValue;
     }
   },
   setItem(key, value) {
@@ -41,13 +41,10 @@ export const searchHistoryAtom = atomWithStorage<SearchHistoryItem[]>('eb.search
     }
   },
   removeItem(key) {
-    localStorage.removeItem(key)
+    localStorage.removeItem(key);
   },
   subscribe(key, callback, initialValue) {
-    if (
-      typeof window === 'undefined' ||
-      typeof window.addEventListener === 'undefined'
-    ) {
+    if (typeof window === 'undefined' || typeof window.addEventListener === 'undefined') {
       return () => {};
     }
 
@@ -70,7 +67,7 @@ export const searchHistoryAtom = atomWithStorage<SearchHistoryItem[]>('eb.search
       }
     };
 
-    window.addEventListener('storage', handleStorageChange)
+    window.addEventListener('storage', handleStorageChange);
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);
@@ -82,11 +79,7 @@ const getInvalidCartItems = (data: any): SearchHistoryItem[] => {
   if (!Array.isArray(data)) return [];
 
   return data.filter((item: any) => {
-    const hasEssentialFields = item.address &&
-      item.name &&
-      item.slug &&
-      item.stats &&
-      item.verification;
+    const hasEssentialFields = item.address && item.name && item.slug && item.stats && item.verification;
 
     return !hasEssentialFields;
   });
