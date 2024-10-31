@@ -223,7 +223,25 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                 </VStack>
               </Flex>
               <Flex justify='space-between' fontSize='sm'>
-                <Box>Boosted APR</Box>
+                <HStack>
+                  <Box>Boosted APR</Box>
+                  <QuestionHelper
+                    text={
+                      <Box fontSize='sm'>
+                        <Box>FRTN earned will be subject to the following cap rules based on user Mitama holdings:</Box>
+                        <VStack align='stretch' spacing={0} mt={2} maxH='150px' overflowY='scroll'>
+                          {frtnCapTiers.map(tier => (
+                            <Flex justify='space-between'>
+                              <Box>{tier.tier}. (min. {commify(tier.minMitama)})</Box>
+                              <Box>{commify(tier.capValue)}</Box>
+                            </Flex>
+                          ))}
+                        </VStack>
+                      </Box>
+                    }
+                    placement='top'
+                  />
+                </HStack>
                 <Box>{round(parseFloat(farm.derived.apr.slice(0, -1)) + (mitamaBoostTier?.boostValue ?? 0), 2)}%</Box>
               </Flex>
               <Flex justify='space-between' fontSize='sm'>
@@ -333,4 +351,35 @@ const mitamaTiers = [
 
 function boostPctByMitama(mitama: number) {
   return [...mitamaTiers].reverse().find(t => mitama >= t.minMitama);
+}
+
+const frtnCapTiers = [
+  { tier: 1, minMitama: 0, capValue: 10 },
+  { tier: 2, minMitama: 2500, capValue: 25 },
+  { tier: 3, minMitama: 5000, capValue: 50 },
+  { tier: 4, minMitama: 10000, capValue: 200 },
+  { tier: 5, minMitama: 20000, capValue: 400 },
+  { tier: 6, minMitama: 40000, capValue: 800 },
+  { tier: 7, minMitama: 60000, capValue: 1200 },
+  { tier: 8, minMitama: 80000, capValue: 1600 },
+  { tier: 9, minMitama: 100000, capValue: 2000 },
+  { tier: 10, minMitama: 125000, capValue: 2500 },
+  { tier: 11, minMitama: 150000, capValue: 3000 },
+  { tier: 12, minMitama: 175000, capValue: 3500 },
+  { tier: 13, minMitama: 200000, capValue: 4000 },
+  { tier: 14, minMitama: 225000, capValue: 4500 },
+  { tier: 15, minMitama: 250000, capValue: 5000 },
+  { tier: 16, minMitama: 300000, capValue: 6000 },
+  { tier: 17, minMitama: 350000, capValue: 7000 },
+  { tier: 18, minMitama: 400000, capValue: 8000 },
+  { tier: 19, minMitama: 500000, capValue: 10000 },
+  { tier: 20, minMitama: 600000, capValue: 12000 },
+  { tier: 21, minMitama: 700000, capValue: 14000 },
+  { tier: 22, minMitama: 800000, capValue: 16000 },
+  { tier: 23, minMitama: 900000, capValue: 18000 },
+  { tier: 24, minMitama: 1000000, capValue: 20000 }
+]
+;
+function frtnCapByMitama(mitama: number) {
+  return [...frtnCapTiers].reverse().find(t => mitama >= t.minMitama);
 }
