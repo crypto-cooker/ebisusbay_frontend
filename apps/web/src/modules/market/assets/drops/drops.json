@@ -7661,7 +7661,7 @@
     "end": null,
     "referral": false,
     "is1155": false,
-    "published": true,
+    "published": false,
     "complete": false,
     "images": {
       "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/free-the-gang/drop.webp",
