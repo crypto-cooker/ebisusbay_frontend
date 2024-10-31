@@ -513,4 +513,8 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async claimFarmBoost(farmId: number, address: string, signature: string) {
     return this.cms.claimFarmBoost(farmId, address, signature);
   }
+
+  async getUserDailyFrtnRewards(address: string) {
+    return this.cms.getUserDailyFrtnRewards(address);
+  }
 }

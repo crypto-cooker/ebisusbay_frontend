@@ -256,6 +256,10 @@ class Cms {
   async claimFarmBoost(farmId: number, address: string, signature: string) {
     return this.ryoshiDynasties.claimFarmBoost(farmId, address, signature);
   }
+
+  async getUserDailyFrtnRewards(address: string) {
+    return this.ryoshiDynasties.getUserDailyFrtnRewards(address);
+  }
 }
 
 export default Cms;

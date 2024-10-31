@@ -32,7 +32,7 @@ import {useAppChainConfig} from "@src/config/hooks";
 import {useQuery} from "@tanstack/react-query";
 import {getLengthOfTime, pluralize, round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
-import {CheckIcon} from "@chakra-ui/icons";
+import {CheckIcon, WarningIcon} from "@chakra-ui/icons";
 import {useUserFarmBoost, useUserMitama} from "@dex/farms/hooks/user-farms";
 import ImageService from "@src/core/services/image";
 import { QuestionHelper } from "@dex/swap/components/tabs/swap/question-helper";
@@ -69,11 +69,19 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
     enabled: isOpen && !!user.address && isSignedIn,
   });
 
+  const { data: userDailyFrtnRewards } = useQuery({
+    queryKey: ['UserFortuneRewards', user.address],
+    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getUserDailyFrtnRewards(user.address!),
+    refetchOnWindowFocus: false,
+    enabled: !!user.address,
+  });
+
   const availableTroops = rdUserContext?.game.troops.user.available.total;
   const xpLevel = rdUserContext?.experience.level ?? 1;
   const mitamaBoostTier = useMemo(() => boostPctByMitama(userMitama), [userMitama]);
   const maxBoostTime = useMemo(() => maxBoostTimeByXpLevel(xpLevel), [xpLevel]);
   const maxTroops = round(maxBoostTime / 60);
+  const hasReachedFrtnCap = userDailyFrtnRewards && userDailyFrtnRewards.totalRewards >= userDailyFrtnRewards.maxRewards;
 
   const handleQuantityChange = (valueString: string) => {
     setQuantity(valueString);
@@ -242,11 +250,14 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                     placement='top'
                   />
                 </HStack>
-                <Box>{round(parseFloat(farm.derived.apr.slice(0, -1)) + (mitamaBoostTier?.boostValue ?? 0), 2)}%</Box>
+                <VStack align='end' spacing={0}>
+                  <Box>{round(parseFloat(farm.derived.apr.slice(0, -1)) + (mitamaBoostTier?.boostValue ?? 0), 2)}%</Box>
+                  <Box fontSize='xs' className='text-muted'>{userDailyFrtnRewards?.totalRewards}/{userDailyFrtnRewards?.maxRewards}</Box>
+                </VStack>
               </Flex>
               <Flex justify='space-between' fontSize='sm'>
                 <Box>Duration</Box>
-                <Box>{getLengthOfTime(parseInt(quantity) * SECONDS_PER_TROOP)}</Box>
+                <Box>{quantity ? getLengthOfTime(parseInt(quantity) * SECONDS_PER_TROOP) : '-'}</Box>
               </Flex>
             </VStack>
           </>
@@ -267,17 +278,25 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                 </PrimaryButton>
               </Stack>
             ) : !existingBoost && (
-              <Stack direction='row' w='full'>
-                <SecondaryButton flex={1} onClick={onClose}>Cancel</SecondaryButton>
-                <PrimaryButton
-                  flex={1}
-                  onClick={handleConfirmBoost}
-                  isLoading={executing}
-                  isDisabled={executing || !quantity || Number(quantity) === 0 || Number(quantity) > maxTroops || !availableTroops}
-                >
-                  Confirm
-                </PrimaryButton>
-              </Stack>
+              <VStack align='stretch' w='full'>
+                {hasReachedFrtnCap && (
+                  <Alert status='info'>
+                    <WarningIcon />
+                    <Box ms={1} fontSize='sm'>You have reached your daily FRTN reward limit for today. Come back tomorrow for more boosts!</Box>
+                  </Alert>
+                )}
+                <Stack direction='row' w='full'>
+                  <SecondaryButton flex={1} onClick={onClose}>Cancel</SecondaryButton>
+                  <PrimaryButton
+                    flex={1}
+                    onClick={handleConfirmBoost}
+                    isLoading={executing}
+                    isDisabled={executing || !quantity || Number(quantity) === 0 || Number(quantity) > maxTroops || !availableTroops || hasReachedFrtnCap}
+                  >
+                    Confirm
+                  </PrimaryButton>
+                </Stack>
+              </VStack>
             )}
           </>
         ) : (

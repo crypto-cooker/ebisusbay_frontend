@@ -630,6 +630,14 @@ class RyoshiDynastiesRepository extends CmsRepository {
     );
     return response.data.data;
   }
+
+  async getUserDailyFrtnRewards(address: string) {
+    const response = await this.cms.get(
+      `ryoshi-dynasties/fortune-rewards/info/${address}`
+    );
+
+    return response.data.data;
+  }
 }
 
 export default RyoshiDynastiesRepository;

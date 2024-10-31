@@ -88,6 +88,7 @@ export interface RyoshiDynastiesApi {
     sendTroopsToFarm(farmId: number, chainId: number, troops: string, address: string, signature: string): Promise<any>;
     getFarmBoosts(address: string, active: boolean): Promise<any>;
     claimFarmBoost(farmId: number, address: string, signature: string): Promise<any>;
+    getUserDailyFrtnRewards(address: string): Promise<{ totalRewards: number, maxRewards: number }>;
 }
 
 // @deprecated move to OrderState once MAPI migrated
