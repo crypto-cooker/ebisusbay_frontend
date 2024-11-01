@@ -57,11 +57,18 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
   const [quantity, setQuantity] = useState<string>('');
   const [executing, setExecuting] = useState<boolean>(false);
 
-  const { data: rdUserContext } = useQuery({
-    queryKey: ['RyoshiDynastiesUserContext', user.address, signature],
+  const { data } = useQuery({
+    queryKey: ['RyoshiDynastiesUserContext', user.address, signature, farm.data.pid, farm.derived.chainId],
     queryFn: async () => {
       if (!!signature && !!user.address) {
-        return await ApiService.withoutKey().ryoshiDynasties.getUserContext(user.address!, signature)
+        const userContext = await ApiService.withoutKey().ryoshiDynasties.getUserContext(user.address!, signature);
+        const userDailyFrtnRewards = await ApiService.withoutKey().ryoshiDynasties.getUserDailyFrtnRewards(user.address!);
+        const userPredictedFrtnRewards = await ApiService.withoutKey().ryoshiDynasties.getUserPredictedFrtnRewards(farm.data.pid, farm.derived.chainId, user.address!, signature);
+        return {
+          userContext,
+          userDailyFrtnRewards,
+          userPredictedFrtnRewards
+        }
       }
       throw 'Please sign message in wallet to continue'
     },
@@ -69,19 +76,13 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
     enabled: isOpen && !!user.address && isSignedIn,
   });
 
-  const { data: userDailyFrtnRewards } = useQuery({
-    queryKey: ['UserFortuneRewards', user.address],
-    queryFn: () => ApiService.withoutKey().ryoshiDynasties.getUserDailyFrtnRewards(user.address!),
-    refetchOnWindowFocus: false,
-    enabled: !!user.address,
-  });
-
-  const availableTroops = rdUserContext?.game.troops.user.available.total;
-  const xpLevel = rdUserContext?.experience.level ?? 1;
+  const availableTroops = data?.userContext.game.troops.user.available.total;
+  const xpLevel = data?.userContext?.experience.level ?? 1;
   const mitamaBoostTier = useMemo(() => boostPctByMitama(userMitama), [userMitama]);
   const maxBoostTime = useMemo(() => maxBoostTimeByXpLevel(xpLevel), [xpLevel]);
   const maxTroops = round(maxBoostTime / SECONDS_PER_TROOP);
-  const hasReachedFrtnCap = userDailyFrtnRewards && userDailyFrtnRewards.totalRewards >= userDailyFrtnRewards.maxRewards;
+  const hasReachedFrtnCap = data?.userDailyFrtnRewards && data?.userDailyFrtnRewards.totalRewards >= data?.userDailyFrtnRewards.maxRewards;
+  const willReachFrtnCap = data && data.userDailyFrtnRewards.totalRewards + (data.userPredictedFrtnRewards.frtnPerOneTroop * (parseInt(quantity) || 0)) >= data.userDailyFrtnRewards.maxRewards;
 
   const handleQuantityChange = (valueString: string) => {
     setQuantity(valueString);
@@ -252,7 +253,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                 </HStack>
                 <VStack align='end' spacing={0}>
                   <Box>{round(parseFloat(farm.derived.apr.slice(0, -1)) + (mitamaBoostTier?.boostValue ?? 0), 2)}%</Box>
-                  <Box fontSize='xs' className='text-muted'>{userDailyFrtnRewards?.totalRewards}/{userDailyFrtnRewards?.maxRewards}</Box>
+                  <Box fontSize='xs' className='text-muted'>Daily Limit: {data?.userDailyFrtnRewards.totalRewards}/{data?.userDailyFrtnRewards?.maxRewards}</Box>
                 </VStack>
               </Flex>
               <Flex justify='space-between' fontSize='sm'>
@@ -279,10 +280,15 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
               </Stack>
             ) : !existingBoost && (
               <VStack align='stretch' w='full'>
-                {hasReachedFrtnCap && (
-                  <Alert status='info'>
+                {hasReachedFrtnCap ? (
+                  <Alert status='warning'>
                     <WarningIcon />
                     <Box ms={1} fontSize='sm'>You have reached your daily FRTN reward limit for today. Come back tomorrow for more boosts!</Box>
+                  </Alert>
+                ) : willReachFrtnCap && (
+                  <Alert status='info'>
+                    <WarningIcon />
+                    <Box ms={1} fontSize='sm'>You will reach your daily FRTN reward limit with this boost. Rewards will be capped at the max value for your mitama tier</Box>
                   </Alert>
                 )}
                 <Stack direction='row' w='full'>

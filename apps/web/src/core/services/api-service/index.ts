@@ -517,4 +517,8 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async getUserDailyFrtnRewards(address: string) {
     return this.cms.getUserDailyFrtnRewards(address);
   }
+
+  async getUserPredictedFrtnRewards(farmId: number, chainId: number, address: string, signature: string) {
+    return this.cms.getUserPredictedFrtnRewards(farmId, chainId, address, signature);
+  }
 }

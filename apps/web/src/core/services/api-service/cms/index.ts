@@ -260,6 +260,10 @@ class Cms {
   async getUserDailyFrtnRewards(address: string) {
     return this.ryoshiDynasties.getUserDailyFrtnRewards(address);
   }
+
+  async getUserPredictedFrtnRewards(farmId: number, chainId: number, address: string, signature: string) {
+    return this.ryoshiDynasties.getUserPredictedFrtnRewards(farmId, chainId, address, signature);
+  }
 }
 
 export default Cms;
