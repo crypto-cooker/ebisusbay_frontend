@@ -45,7 +45,7 @@ interface StakeLpTokensDialogProps {
 }
 
 const MIN_TROOPS = 10;
-const SECONDS_PER_TROOP = 60;
+const SECONDS_PER_TROOP = 30;
 
 const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialogProps) => {
   const user = useUser();
@@ -80,7 +80,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
   const xpLevel = rdUserContext?.experience.level ?? 1;
   const mitamaBoostTier = useMemo(() => boostPctByMitama(userMitama), [userMitama]);
   const maxBoostTime = useMemo(() => maxBoostTimeByXpLevel(xpLevel), [xpLevel]);
-  const maxTroops = round(maxBoostTime / 60);
+  const maxTroops = round(maxBoostTime / SECONDS_PER_TROOP);
   const hasReachedFrtnCap = userDailyFrtnRewards && userDailyFrtnRewards.totalRewards >= userDailyFrtnRewards.maxRewards;
 
   const handleQuantityChange = (valueString: string) => {
