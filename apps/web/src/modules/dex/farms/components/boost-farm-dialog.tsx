@@ -199,7 +199,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                 </NumberInput>
                 <Button onClick={() => handlePresetQuantityChange(100)}>MAX</Button>
               </HStack>
-              <FormHelperText fontSize='sm'>Min: {MIN_TROOPS}, Max: {maxTroops}. Quest time increases 1 minute per troop sent</FormHelperText>
+              <FormHelperText fontSize='sm'>Min: {MIN_TROOPS}, Max: {maxTroops}. Quest time increases {getLengthOfTime(SECONDS_PER_TROOP)} per troop sent</FormHelperText>
               <FormErrorMessage fontSize='sm'>Error</FormErrorMessage>
             </FormControl>
             <VStack align='stretch' mt={4}>
