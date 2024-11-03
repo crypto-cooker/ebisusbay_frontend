@@ -1,7 +1,7 @@
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {ReactNode} from "react";
 import {useUser} from "@src/components-v2/useUser";
-import {useWeb3Modal} from "@web3modal/wagmi/react";
+import { useAppKit } from '@reown/appkit/react';
 
 type AuthRenderProps = (props: {
   isConnected: boolean;
@@ -20,7 +20,7 @@ interface AuthenticationGuardProps {
 const AuthenticationGuard = ({ children }: AuthenticationGuardProps) => {
   const {isSignedIn, signin, isSigningIn} = useEnforceSigner();
   const user = useUser();
-  const { open } = useWeb3Modal();
+  const { open } = useAppKit();
 
   return <>
     {children({

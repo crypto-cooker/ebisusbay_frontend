@@ -1,12 +1,12 @@
 import {toast} from "react-toastify";
-import {useWeb3Modal} from "@web3modal/wagmi/react";
+import { useAppKit } from '@reown/appkit/react'
 import {useUser} from "@src/components-v2/useUser";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {useAccount} from "wagmi";
 import {DEFAULT_CHAIN_ID} from "@src/config/chains";
 
 const useAuthedFunctionWithChainID = (id?: number | number[]) => {
-  const { open } = useWeb3Modal();
+  const { open } = useAppKit();
   const user = useUser();
   const { chainId: wagmiChainId } = useAccount();
   // const { chainId } = useActiveChainId()

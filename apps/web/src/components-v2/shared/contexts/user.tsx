@@ -10,7 +10,7 @@ import {useAtom} from "jotai";
 import {RESET} from "jotai/utils";
 import {isUserBlacklisted} from "@market/helpers/utils";
 import {useColorMode} from "@chakra-ui/react";
-import {useWeb3ModalTheme} from "@web3modal/wagmi/react";
+import { useAppKitTheme } from '@reown/appkit/react'
 import {storageSignerAtom} from "@market/state/jotai/atoms/storage";
 import * as Sentry from "@sentry/react";
 import {themeAtom} from "@market/state/jotai/atoms/theme";
@@ -98,7 +98,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const croBalance = useBalance({ address: address });
   const frtnBalance = useBalance({ address: address, token: config.tokens.frtn.address });
   const { setColorMode: setChakraTheme } = useColorMode();
-  const { setThemeMode: setWeb3ModalTheme } = useWeb3ModalTheme();
+  const { setThemeMode: setWeb3ModalTheme } = useAppKitTheme();
 
   const { data: profile } = useQuery({
     queryKey: ['UserProfile', address],

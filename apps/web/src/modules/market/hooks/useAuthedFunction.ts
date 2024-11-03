@@ -1,10 +1,10 @@
 import {toast} from "react-toastify";
-import {useWeb3Modal} from "@web3modal/wagmi/react";
+import { useAppKit } from '@reown/appkit/react'
 import {useUser} from "@src/components-v2/useUser";
 import {parseErrorMessage} from "@src/helpers/validator";
 
 const useAuthedFunction = () => {
-  const { open } = useWeb3Modal();
+  const { open } = useAppKit();
   const user = useUser();
 
   const runAuthedFunction = async (fn: Function) => {
