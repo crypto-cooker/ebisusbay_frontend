@@ -1,37 +1,34 @@
 'use client';
 
-import {createWeb3Modal} from '@web3modal/wagmi/react'
+import {createAppKit} from "@reown/appkit/react";
+import { cronos } from '@reown/appkit/networks'
 import {State, WagmiProvider} from 'wagmi'
 import {appConfig as applicationConfig} from "@src/config";
-import ImageService from "@src/core/services/image";
 import {ReactNode} from "react";
-import {wagmiConfig} from "@src/wagmi";
+import {wagmiAdapter, wagmiConfig} from "@src/wagmi";
 
 const appConfig = applicationConfig();
 
 const projectId = process.env.NEXT_PUBLIC_WEB3MODAL_API_KEY;
 if (!projectId) throw 'Web3Modal API Key not defined';
 
+const metadata = {
+  name: 'Ebisu\'s Bay',
+  description: 'A dynamic platform that combines NFT and DEX trading with GameFi, enabling users to battle for market dominance.',
+  url: appConfig.urls.app,
+  icons: ['https://cdn-prod.ebisusbay.com/img/logo-dark.svg']
+}
 
-createWeb3Modal({
-  // ethersConfig: defaultConfig({ metadata }),
-  wagmiConfig: wagmiConfig,
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
   projectId,
-  // chains: wagmiConfig.config.chains,
-  tokens: {
-    [appConfig.chain.id]: {
-      address: appConfig.tokens.frtn.address,
-      image: 'token_image_url' //optional
-    }
-  },
-  // featuredWalletIds: [
-  //   'f2436c67184f158d1beda5df53298ee84abfc367581e4505134b5bcf5f46697d'
-  // ],
-  termsConditionsUrl: ImageService.staticAsset('terms-of-service.html').convert(),
-  privacyPolicyUrl: ImageService.staticAsset('privacy-policy.html').convert(),
-
-  themeMode: 'dark',
-});
+  networks: wagmiAdapter.wagmiChains,
+  defaultNetwork: cronos,
+  metadata: metadata,
+  features: {
+    analytics: true // Optional - defaults to your Cloud configuration
+  }
+})
 
 // export function Web3Modal({ children }: { children: React.ReactNode }) {
 //   return <WagmiConfig config={customConfig.config}>{children}</WagmiConfig>;

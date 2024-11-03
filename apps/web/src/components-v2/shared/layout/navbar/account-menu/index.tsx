@@ -20,7 +20,7 @@ import {toast} from 'react-toastify';
 import {ethers} from 'ethers';
 import {createSuccessfulTransactionToastContent, round, shortAddress, urlify, username} from '@market/helpers/utils';
 import styles from './accountmenu.module.scss';
-import {useWeb3Modal} from '@web3modal/wagmi/react'
+import { useAppKit } from '@reown/appkit/react'
 import {appConfig} from '@src/config';
 import classnames from "classnames";
 import {
@@ -83,7 +83,7 @@ const AccountMenu = function () {
 
   const [gasToken, setGasToken] = useGasTokenByChain(supportedChainId);
 
-  const { open: openWeb3Modal, close: closeWeb3Modal } = useWeb3Modal();
+  const { open: openWeb3Modal, close: closeWeb3Modal } = useAppKit();
   const contractService = useContractService();
   const { isOpen: isLoginWizardOpen, onOpen: onLoginWizardOpen, onClose: onLoginWizardClose } = useDisclosure()
   const { isOpen: isOpenGasToken, onOpen: onOpenGasToken, onClose: onCloseGasToken } = useDisclosure()

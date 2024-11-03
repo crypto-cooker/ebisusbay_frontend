@@ -4,7 +4,7 @@ import UserContractService from "@src/core/contractService";
 import ContractService from "@src/core/contractService";
 import {UserContext} from "@src/components-v2/shared/contexts/user";
 import {Config, useConnectorClient} from "wagmi";
-import {useWeb3Modal} from "@web3modal/wagmi/react";
+import { useAppKit } from '@reown/appkit/react'
 import {useQueryClient} from "@tanstack/react-query";
 import * as Sentry from "@sentry/nextjs";
 import {shortAddress} from "@market/helpers/utils";
@@ -13,7 +13,7 @@ import {getTheme} from "@src/global/theme/theme";
 
 export const useUser = () => {
   const context = useContext(UserContext);
-  const { open: connect } = useWeb3Modal();
+  const { open: connect } = useAppKit();
   const queryClient = useQueryClient();
   const legacyProvider = useLegacyProviderFunctions();
 
