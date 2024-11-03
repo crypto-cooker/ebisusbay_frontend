@@ -1,7 +1,7 @@
 'use client';
 
 import {createAppKit} from "@reown/appkit/react";
-import { cronos } from '@reown/appkit/networks'
+import {cronos, cronosTestnet} from '@reown/appkit/networks'
 import {State, WagmiProvider} from 'wagmi'
 import {appConfig as applicationConfig} from "@src/config";
 import {ReactNode} from "react";
@@ -23,7 +23,7 @@ const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   networks: wagmiAdapter.wagmiChains,
-  defaultNetwork: cronos,
+  defaultNetwork: process.env.NEXT_PUBLIC_ENV === 'testnet' ? cronosTestnet : cronos,
   metadata: metadata,
   features: {
     analytics: true // Optional - defaults to your Cloud configuration
