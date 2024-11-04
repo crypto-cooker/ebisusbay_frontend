@@ -52,7 +52,7 @@ import {
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
 import {MeepleMint, MeepleUpkeep} from "@src/core/api/RyoshiDynastiesAPICalls";
-import {Contract} from "ethers";
+import {constants, Contract} from "ethers";
 import Resources from "@src/global/contracts/Resources.json";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {parseErrorMessage} from "@src/helpers/validator";
@@ -65,6 +65,7 @@ import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/
 import {useIsTouchDevice} from "@market/hooks/use-is-touch-device";
 import moment from "moment";
 import {useUser} from "@src/components-v2/useUser";
+import Fortune from "@src/global/contracts/Fortune.json";
 
 const config = appConfig();
 
@@ -913,7 +914,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
   const user = useUser();
   const { config: rdConfig, game: rdGameContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const {requestSignature} = useEnforceSignature();
-  const collectionAddress = config.contracts.resources
+  const resourcesAddress = config.contracts.resources
   const [isExecuting, setIsExecuting] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
 
@@ -932,7 +933,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
     try {
       setIsInitializing(true);
       let data = await ApiService.withoutKey().getCollectionItems({
-        address: collectionAddress,
+        address: resourcesAddress,
         pageSize: 100
       });
       let locations:LocationCard[] = [];
@@ -1006,7 +1007,15 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
         user.address,
         signature,
       );
-      const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
+
+      const fortuneContract = new Contract(config.contracts.fortune, Fortune, user.provider.getSigner());
+      const allowance = await fortuneContract.allowance(user.address, resourcesAddress);
+      if (allowance.sub(cmsResponse.request.fortuneRequired) <= 0) {
+        const approvalTx = await fortuneContract.approve(resourcesAddress, constants.MaxUint256);
+        await approvalTx.wait();
+      }
+
+      const resourcesContract = new Contract(resourcesAddress, Resources, user.provider.getSigner());
       const tx = await resourcesContract.craftItems(cmsResponse.request, cmsResponse.signature);
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -1205,6 +1214,7 @@ const TurnInCardsModal = ({isOpen, onClose, onComplete, userLocationCards}: Turn
               Turn In Cards
             </RdButton>
           </Box>
+          <Box fontSize='xs' mt={4}>Each trade in has a 100 FRTN base fee, plus 25 FRTN per additional set</Box>
         </Box>
       </RdModalFooter>
     </RdModal>
