@@ -7808,7 +7808,7 @@
       "twitter": "https://twitter.com/KitCoinX",
       "discord": "https://discord.gg/kitcoin"
     },
-    "address": "",
+    "address": "0x4015264055dE9f1bd4bf60981d96FFD840Fb9a95",
     "maxMintPerTx": 100,
     "maxMintPerAddress": 100,
     "totalSupply": 2000,
