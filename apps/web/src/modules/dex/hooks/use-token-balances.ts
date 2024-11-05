@@ -1,7 +1,7 @@
 import useSupportedTokens from '@dex/hooks/use-supported-tokens';
 import { useUser } from '@src/components-v2/useUser';
 import { Address, ContractFunctionParameters, erc20Abi } from 'viem';
-import { useBlockNumber, useContractReads } from 'wagmi';
+import {useBlockNumber, useContractReads, useReadContracts} from 'wagmi';
 import { isAddress } from '@market/helpers/utils';
 import { CurrencyAmount, Token } from '@pancakeswap/sdk';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -133,7 +133,7 @@ export function useTokenBalances(
     data,
     isLoading: anyLoading,
     error,
-  } = useContractReads({
+  } = useReadContracts({
     contracts,
   });
 

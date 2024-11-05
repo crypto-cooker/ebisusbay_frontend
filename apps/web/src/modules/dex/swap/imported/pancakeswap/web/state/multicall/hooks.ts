@@ -15,7 +15,7 @@ import {
 } from './actions'
 import {multicall} from "viem/actions";
 import {wagmiConfig} from "@src/wagmi";
-import { useContractReads } from 'wagmi';
+import {useReadContracts} from 'wagmi';
 
 type ViemContractReadResult<T> =
   | { data: T; status: 'success' }
@@ -187,7 +187,7 @@ SingleContractMultipleDataCallParameters<TAbi, TFunctionName>): CallState<any>[]
   );
 
   // @ts-ignore
-  const { data, error } = useContractReads({
+  const { data, error } = useReadContracts({
     contracts,
     ...options,
   });
@@ -250,7 +250,7 @@ MultipleSameDataCallParameters<TAbi, TFunctionName>): CallState<any>[] {
     [abi, addresses, functionName, args, enabled, chainId],
   );
 
-  const { data, error, status } = useContractReads({
+  const { data, error, status } = useReadContracts({
     contracts,
     watch: options?.blocksPerFetch || undefined,
     enabled,
