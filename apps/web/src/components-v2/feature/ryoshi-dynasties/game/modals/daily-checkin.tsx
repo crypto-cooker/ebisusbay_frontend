@@ -42,7 +42,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
     return false;
   }, []);
 
-  const kobanMultiplier = isEligibleForBonus ? 10 : 1;
+  const xpMultiplier = isEligibleForBonus ? 10 : 1;
 
   const authCheckBeforeClaim = async () => {
     await runAuthedFunction(claimDailyRewards);
@@ -58,7 +58,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
         setExecutingClaim(true);
         const signature = await requestSignature();
         await ApiService.withoutKey().ryoshiDynasties.claimDailyRewards(user.address, signature);
-        toast.success('Success! Claimed Koban is now in the Bank');
+        toast.success('Success, thanks for checking in!');
         setCanClaim(false);
         setNextClaim('tomorrow');
         rdContext.refreshUser();
@@ -103,7 +103,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
     >
       <Box mx={1} pb={4}>
         <Text align='center'>
-          Earn Koban by checking in daily. Multiply your rewards by claiming multiple days in a row!
+          Earn XP by checking in daily. Multiply your rewards by claiming multiple days in a row!
         </Text>
         {isEligibleForBonus && (
           <Text align='center' fontWeight='bold' color='#FFD700' mt={2}>
@@ -120,8 +120,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
                 <Box key={index} w='100%' h='55' rounded="lg" color={'#FFD700'}  border={streakIndex == index + 1 ? '2px' : ''}>
                   <Text fontSize={16} color='#aaa' textAlign={'center'}>Day {index + 1}</Text>
                   <HStack justifyContent={'center'} spacing={0.5}>
-                    <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >{reward * kobanMultiplier}</Text>
-                    <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="walletIcon" boxSize={4}/>
+                    <Text fontSize={18} color={'white'} fontWeight='bold' textAlign={'center'} >{reward * xpMultiplier} XP</Text>
                   </HStack>
                 </Box>
               ))}
@@ -133,7 +132,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
                   <Text as='span'>Your current streak is <strong>{streak} {pluralize(streak, 'day')}</strong>. </Text>
                   {canClaim ? (
                     <Text as='span'>
-                      Claim now to increase your streak and earn {rdContext.config.rewards.daily[streakIndex] * kobanMultiplier} Koban
+                      Claim now to increase your streak and earn {rdContext.config.rewards.daily[streakIndex] * xpMultiplier} XP
                     </Text>
                   ) : (
                     <Text as='span'>
@@ -149,7 +148,7 @@ const DailyCheckin = ({isOpen, onClose, forceRefresh}: DailyCheckinProps) => {
                         disabled={executingClaim}
                         loadingText='Claiming'
                       >
-                        Claim Koban
+                        Claim XP
                       </RdButton>
                     </Box>
                   )}
