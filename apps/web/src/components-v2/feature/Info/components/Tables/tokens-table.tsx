@@ -16,6 +16,7 @@ import { Card } from '@src/components-v2/foundation/card';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import { HStack } from '@chakra-ui/react';
 import { useUserTheme } from '@src/components-v2/useUser';
+import DecimalAbbreviatedNumber from "@src/components-v2/shared/decimal-abbreviated-number";
 
 const ResponsiveGrid = styled.div`
   display: grid;
@@ -99,9 +100,9 @@ const DataRow = ({ TokenData, index }: { TokenData: TokenData; index: number }) 
           </HStack>
           <Text ml="8px">{symbol}</Text>
         </Flex>
-        <Text>${formatAmount(TokenData.priceUSD)}</Text>
+        <DecimalAbbreviatedNumber value={TokenData.priceUSD} />
         <Text color={color}>{formatAmount(TokenData.priceChange)}%</Text>
-        <Text>${formatAmount(TokenData.tradeVolumeUSD)}</Text>
+        <Text>${formatAmount(TokenData.volumeUSD24h)}</Text>
         <Text>${formatAmount(TokenData.totalLiquidityUSD)}</Text>
       </ResponsiveGrid>
     </LinkWrapper>
@@ -200,7 +201,7 @@ const TokenTable: React.FC<React.PropsWithChildren<TokenTableProps>> = ({ tokenD
             onClick={() => handleSort(SORT_FIELD.totalLiquidityUSD)}
             textTransform="uppercase"
           >
-            {'Liquidty'} {arrow(SORT_FIELD.totalLiquidityUSD)}
+            {'Liquidity'} {arrow(SORT_FIELD.totalLiquidityUSD)}
           </ClickableColumnHeader>
         </ResponsiveGrid>
         <Break />

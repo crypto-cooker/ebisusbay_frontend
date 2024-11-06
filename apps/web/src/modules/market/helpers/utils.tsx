@@ -784,16 +784,26 @@ export const uniqueNftId = (nft: any) => {
   return `${nft.nftAddress ?? nft.address}${nft.nftId ?? nft.id}`;
 }
 
-export function abbreviateDecimal(decimalStr: string | number, zeroThreshold: number = 5, maxDigitsWithSubscript: number = 4, maxDigitsWithoutSubscript: number = 8): string {
+export function subscriptedDecimal(decimalStr: string | number, zeroThreshold: number = 5, maxDigitsWithSubscript: number = 4, maxDigitsWithoutSubscript: number = 8): {
+  left: string,
+  subscript?: number,
+  right: string
+} | string {
   if (typeof decimalStr !== 'string') decimalStr = `${decimalStr}`;
 
-  // Handle special cases for zero input
-  if (new Decimal(decimalStr).isZero()) {
-    return "0";
-  }
+  try {
+    // Handle special cases for zero input
+    if (new Decimal(decimalStr).isZero()) {
+      return "0";
+    }
 
-  if (new Decimal(decimalStr).gte(1)) {
-    return new Decimal(decimalStr).toFixed(2);
+    if (new Decimal(decimalStr).gte(1)) {
+      return new Decimal(decimalStr).toFixed(2);
+    }
+
+  } catch {
+    // Will catch if a non-numeric string
+    return decimalStr;
   }
 
   // Find the first non-zero digit after the decimal
@@ -804,16 +814,23 @@ export function abbreviateDecimal(decimalStr: string | number, zeroThreshold: nu
 
   if (zeroCount >= zeroThreshold) {
     // Use subscript notation
-    const subscriptNumbers = ['₀', '₁', '₂', '₃', '₄', '₅', '₆', '₇', '₈', '₉'];
-    const subscript = zeroCount.toString().split('').map(num => subscriptNumbers[parseInt(num)]).join('');
+    const subscriptNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const significantDigits = decimalStr.slice(firstNonZeroIndex, firstNonZeroIndex + maxDigitsWithSubscript);
-    return `0.0${subscript}${significantDigits}`;
+    return {
+      left: '0.0',
+      subscript: zeroCount,
+      right: significantDigits
+    }
+    // return `0.0${subscript}${significantDigits}`;
   } else {
     // Regular formatting, just truncate to the max digits without subscript
     const start = decimalStr.indexOf('.') + 1;
     // const end = start + zeroCount + maxDigitsWithoutSubscript;
     const regularDigits = decimalStr.slice(start, maxDigitsWithoutSubscript);
-    return `0.${regularDigits}`;
+    return {
+      left: '0.',
+      right: regularDigits
+    }
   }
 }
 
