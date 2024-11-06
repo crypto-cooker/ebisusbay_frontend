@@ -46,4 +46,63 @@ export interface TokenData {
   priceUSD24h: number;
   totalLiquidity24h: number;
   priceChange: number;
+  txCount:number;
+}
+
+export interface Block {
+  number: number
+  timestamp: string
+}
+
+export interface TvlChartEntry {
+  date: number
+  liquidityUSD: number
+}
+
+export interface VolumeChartEntry {
+  date: number
+  volumeUSD: number
+  liquidityUSD: number
+}
+
+/**
+ * Formatted type for Candlestick charts
+ */
+export interface PriceChartEntry {
+  time: number
+  open: number
+  close: number
+  high: number
+  low: number
+}
+
+export enum TransactionType {
+  SWAP,
+  MINT,
+  BURN,
+}
+
+export type Transaction = {
+  type: TransactionType
+  hash: string
+  timestamp: string
+  sender: string
+  token0Symbol?: string
+  token1Symbol?: string
+  token0Address?: string
+  token1Address?: string
+  amountUSD: number
+  amountToken0: number
+  amountToken1: number
+}
+
+export interface ProtocolData {
+  volumeUSD: number
+  volumeUSDChange: number // in 24h, as percentage
+
+  liquidityUSD: number
+  liquidityUSDChange: number // in 24h, as percentage
+
+  txCount: number
+  txCountChange: number
 }

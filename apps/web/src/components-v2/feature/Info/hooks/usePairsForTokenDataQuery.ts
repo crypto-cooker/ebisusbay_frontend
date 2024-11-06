@@ -6,14 +6,14 @@ import { Info } from '@src/core/services/api-service/graph/subgraphs/info';
 import { PairData } from '../state/types';
 import { LP_HOLDERS_FEE, TOTAL_FEE, DAYS_IN_YEAR } from '../state/constants';
 
-export const useAllPairDataQuery = () => {
+export const usePairsForTokenDataQuery = (address:string) => {
   const chainId: number = useChainIdByQuery();
   const info = useMemo(() => new Info(chainId), [chainId]);
   const { data } = useQuery({
-    queryKey: ['useGetPairs', chainId],
+    queryKey: ['getPairsForToken', chainId],
     queryFn: async () => {
       try{
-      const response = await info.getPairs();
+      const response = await info.getPairsForToken(address);
       if (!response?.data?.pairs) {
         throw new Error('Failed to fetch pairs data');
       }

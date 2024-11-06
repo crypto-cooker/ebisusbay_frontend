@@ -22,7 +22,15 @@ export const chainIdByChainPath = (chainName: string): number => {
   }
 };
 
+export const chainQueryName = {
+  [ChainId.CRONOS]: '',
+  [ChainId.CRONOS_TESTNET]: 'cro-test',
+  [ChainId.CRONOS_ZKEVM]: 'cro-zkevm',
+  [ChainId.CRONOS_ZKEVM_TESTNET]: 'cro-zkevm-test',
+}
+
 export const WEEKS_IN_YEAR = 52.1429;
 export const DAYS_IN_YEAR = 365;
 export const TOTAL_FEE = 0.001;
 export const LP_HOLDERS_FEE = 0.0017;
+export const ONE_HOUR_SECONDS = 3600

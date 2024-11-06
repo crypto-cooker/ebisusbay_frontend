@@ -1,5 +1,5 @@
-import {Box, Flex, Skeleton, Text } from '@chakra-ui/react';
-import {ArrowBackIcon, ArrowForwardIcon} from '@chakra-ui/icons'
+import { Box, Flex, Skeleton, Text } from '@chakra-ui/react';
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import {
@@ -13,17 +13,9 @@ import { PairData } from '@src/components-v2/feature/info/state/types';
 import { ITEMS_PER_INFO_TABLE_PAGE } from '@src/components-v2/feature/info/state/constants';
 import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from './shared';
 import { Card } from '@src/components-v2/foundation/card';
-import { CurrencyLogo, CurrencyLogoByAddress, DoubleCurrencyLogo } from '@dex/components/logo';
-import { useCurrency } from '@dex/swap/imported/pancakeswap/web/hooks/tokens';
+import { CurrencyLogoByAddress } from '@dex/components/logo';
 import { HStack } from '@chakra-ui/react';
 
-/**
- *  Columns on different layouts
- *  5 = | # | Pool | TVL | Volume 24H | Volume 7D |
- *  4 = | # | Pool |     | Volume 24H | Volume 7D |
- *  3 = | # | Pool |     | Volume 24H |           |
- *  2 = |   | Pool |     | Volume 24H |           |
- */
 const ResponsiveGrid = styled.div`
   display: grid;
   grid-gap: 1em;
@@ -34,8 +26,7 @@ const ResponsiveGrid = styled.div`
   @media screen and (max-width: 900px) {
     grid-template-columns: 30px 1.5fr repeat(2, 1fr);
     & :nth-child(4),
-    & :nth-child(5)
-     {
+    & :nth-child(5) {
       display: none;
     }
   }
@@ -65,7 +56,7 @@ const LinkWrapper = styled(NextLinkFromReactRouter)`
 `;
 
 const SORT_FIELD = {
-  volumeUSD: 'volumeUSD',
+  dailyVolumeUSD: 'dailyVolumeUSD',
   liquidityUSD: 'liquidityUSD',
   lpFees24h: 'lpFees24h',
   lpApr24h: 'lpApr24h',
@@ -73,12 +64,12 @@ const SORT_FIELD = {
 
 const LoadingRow: React.FC<React.PropsWithChildren> = () => (
   <ResponsiveGrid>
-    {/* <Skeleton />
-    <Skeleton />
-    <Skeleton />
-    <Skeleton />
-    <Skeleton />
-    <Skeleton /> */}
+    <Skeleton width="full" height="20px" />
+    <Skeleton width="full" height="20px" />
+    <Skeleton width="full" height="20px" />
+    <Skeleton width="full" height="20px" />
+    <Skeleton width="full" height="20px" />
+    <Skeleton width="full" height="20px" />
   </ResponsiveGrid>
 );
 
@@ -98,13 +89,13 @@ const DataRow = ({ PairData, index }: { PairData: PairData; index: number }) => 
   const token1symbol = PairData.token1.symbol;
 
   return (
-    <LinkWrapper to={`/info${chainPath}/pairs/${PairData.id}`}>
+    // <LinkWrapper to={`/info${chainPath}/pairs/${PairData.id}`}>
       <ResponsiveGrid>
         <Text>{index + 1}</Text>
         <Flex>
-          <HStack display={{base: 'none', md: 'flex'}}>
-            <CurrencyLogoByAddress size='20px' address={PairData.token0.address} chainId={chainId} />
-            <CurrencyLogoByAddress size='20px' address={PairData.token1.address} chainId={chainId} />
+          <HStack display={{ base: 'none', md: 'flex' }}>
+            <CurrencyLogoByAddress size="20px" address={PairData.token0.address} chainId={chainId} />
+            <CurrencyLogoByAddress size="20px" address={PairData.token1.address} chainId={chainId} />
           </HStack>
           <Text ml="8px">
             {token0symbol}/{token1symbol}
@@ -115,7 +106,7 @@ const DataRow = ({ PairData, index }: { PairData: PairData; index: number }) => 
         <Text>{formatAmount(PairData.lpApr24h)}%</Text>
         <Text>${formatAmount(PairData.liquidityUSD)}</Text>
       </ResponsiveGrid>
-    </LinkWrapper>
+    // </LinkWrapper>
   );
 };
 
@@ -126,7 +117,7 @@ interface PairTableProps {
 
 const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairDatas, loading }) => {
   // for sorting
-  const [sortField, setSortField] = useState(SORT_FIELD.volumeUSD);
+  const [sortField, setSortField] = useState(SORT_FIELD.dailyVolumeUSD);
   const [sortDirection, setSortDirection] = useState<boolean>(true);
 
   // pagination
@@ -175,19 +166,19 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
     <Card>
       <TableWrapper>
         <ResponsiveGrid>
-          <Text color="secondary" fontSize="12px" fontWeight='bold'>
+          <Text color="secondary" fontSize="12px" fontWeight="bold">
             #
           </Text>
-          <Text color="secondary" fontSize="12px" fontWeight='bold' textTransform="uppercase">
+          <Text color="secondary" fontSize="12px" fontWeight="bold" textTransform="uppercase">
             Pair
           </Text>
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
-            onClick={() => handleSort(SORT_FIELD.volumeUSD)}
+            onClick={() => handleSort(SORT_FIELD.dailyVolumeUSD)}
             textTransform="uppercase"
           >
-            {'Volume 24H'} {arrow(SORT_FIELD.volumeUSD)}
+            {'Volume 24H'} {arrow(SORT_FIELD.dailyVolumeUSD)}
           </ClickableColumnHeader>
           <ClickableColumnHeader
             color="secondary"

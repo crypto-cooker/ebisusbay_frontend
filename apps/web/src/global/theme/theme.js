@@ -1,4 +1,4 @@
-import {defineStyleConfig, extendTheme} from "@chakra-ui/react";
+import { defineStyleConfig, extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 
 export const lightTheme = {
@@ -19,6 +19,8 @@ export const lightTheme = {
   bgColor3: '#eeeeee',
   bgColor4: '#0078cb',
   bgColor5: '#eeeeee',
+  success:  '#12a17d',
+  failure: '#a11259'
 };
 
 export const darkTheme = {
@@ -39,6 +41,8 @@ export const darkTheme = {
   bgColor3: '#212428',
   bgColor4: '#000000',
   bgColor5: '#333333',
+  success:  '#12a17d',
+  failure: '#a11259'
 };
 
 export const theme = {
@@ -78,11 +82,11 @@ const grayColor = {
   700: '#212428',
   // 800: '#000000',
   // 900: '#888888',
-}
+};
 
 const blueColor = {
-  200: '#0d6efd'
-}
+  200: '#0d6efd',
+};
 
 const Button = defineStyleConfig({
   variants: {
@@ -92,22 +96,22 @@ const Button = defineStyleConfig({
       _hover: {
         bg: '#1E7EE6',
         _disabled: {
-          bg: '#b3d7ff'
-        }
+          bg: '#b3d7ff',
+        },
       },
       _active: {
-        bg: '#1B72CF'
+        bg: '#1B72CF',
       },
       _disabled: {
         color: 'white',
-        bg: '#b3d7ffff'
-      }
+        bg: '#b3d7ffff',
+      },
     },
     tab: {
       color: 'white',
       _active: {
-        bg: '#35669e'
-      }
+        bg: '#35669e',
+      },
     },
     ryoshiDynasties: {
       bg: '#F48F0C',
@@ -116,28 +120,29 @@ const Button = defineStyleConfig({
         bg: '#dc810b',
         _disabled: {
           bg: '#7a4806',
-          textShadow: 'none'
-        }
+          textShadow: 'none',
+        },
       },
       _active: {
-        bg: '#c3720a'
+        bg: '#c3720a',
       },
       _disabled: {
         color: 'white',
         bg: '#7a4806ff',
-        textShadow: 'none'
+        textShadow: 'none',
       },
       rounded: 'lg',
-      textShadow: '-1px -1px 0 #9f2729,\n' +
+      textShadow:
+        '-1px -1px 0 #9f2729,\n' +
         '          0   -1px 0 #9f2729,\n' +
         '          1px -1px 0 #9f2729,\n' +
         '          1px  0   0 #9f2729,\n' +
         '          1px  1px 0 #9f2729,\n' +
         '          0    1px 0 #9f2729,\n' +
         '          -1px  1px 0 #9f2729,\n' +
-        '          -1px  0   0 #9f2729;'
-    }
-  }
+        '          -1px  0   0 #9f2729;',
+    },
+  },
 });
 
 const breakpoints = {
@@ -146,7 +151,7 @@ const breakpoints = {
   lg: '62em', // 992px
   xl: '80em', // 1280px
   '2xl': '96em', // 1536px
-}
+};
 
 const customTheme = extendTheme({
   config: {
@@ -163,10 +168,21 @@ const customTheme = extendTheme({
     gray: grayColor,
     blue: blueColor,
     ryoshiDynasties: {
-      100: "#f7fafc",
-      200: "#FDAB1A",
-      900: "#1a202c",
+      100: '#f7fafc',
+      200: '#FDAB1A',
+      900: '#1a202c',
     },
+  },
+  radii: {
+    none: '0',
+    sm: '4px',
+    md: '8px',
+    lg: '12px',
+    xl: '16px',
+    default: '6px', // custom default border radius
+    small: '3px', // custom small border radius
+    rounded: '20px', // custom rounded border radius
+    circle: '50%',
   },
   breakpoints,
   components: {
@@ -175,11 +191,11 @@ const customTheme = extendTheme({
       baseStyle: {
         track: {
           _checked: {
-            background: (props) => `${props.colorMode}.textColor4`
+            background: (props) => `${props.colorMode}.textColor4`,
           },
         },
       },
-    }
-  }
-})
-export default customTheme
+    },
+  },
+});
+export default customTheme;

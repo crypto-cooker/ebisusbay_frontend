@@ -1,6 +1,30 @@
-import styled from "styled-components"
-import { NextLinkFromReactRouter } from "@src/components-v2/foundation/button"
+/* eslint-disable no-nested-ternary */
+import { Link, Box, Breadcrumb, Flex, Heading, Image, Text, BreadcrumbSeparator } from '@chakra-ui/react';
+import { Spinner } from '@chakra-ui/react';
+import { Card } from '@src/components-v2/foundation/card';
+import { CopyButton } from '../components/copy-button';
+import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
 
+import truncateHash from '@pancakeswap/utils/truncateHash';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import { useTokenDataQuery } from '@src/components-v2/feature/info/hooks/useTokenDataQuery';
+import { useTokenChartDataVolumeQuery } from '@src/components-v2/feature/info/hooks/useTokenChartDataVolumeQuery';
+
+import { useTokenTransactionsQuery } from '@src/components-v2/feature/info/hooks/useTokenTransactionsQuery';
+import { useChainIdByQuery, useChainPathByQuery } from '@src/components-v2/feature/info/hooks/chain';
+import styled from 'styled-components';
+import { getBlockExploreLink } from '../components/tables/transcation-table';
+import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
+import { CurrencyLogoByAddress } from '@dex/components/logo';
+import ChartCard from '@src/components-v2/feature/info/components/charts/chart-card';
+import PairTable from '../components/tables/pairs-table';
+import TransactionTable from '../components/tables/transcation-table';
+import Percent from '@src/components-v2/feature/info/components/percent';
+import useCMCLink from '../hooks/useCMCLink';
+import { usePairDatasForToken } from '../hooks';
+
+dayjs.extend(duration);
 
 const ContentLayout = styled.div`
   margin-top: 16px;
@@ -11,9 +35,9 @@ const ContentLayout = styled.div`
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
   }
-`
+`;
 
-const StyledCMCLink = styled(UIKitLink)`
+const StyledCMCLink = styled(Link)`
   width: 24px;
   height: 24px;
   margin-right: 8px;
@@ -21,46 +45,39 @@ const StyledCMCLink = styled(UIKitLink)`
   &:hover {
     opacity: 0.8;
   }
-`
-const DEFAULT_TIME_WINDOW = dayjs.duration(1, 'weeks')
+`;
+const DEFAULT_TIME_WINDOW = dayjs.duration(1, 'weeks');
 
 const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({ routeAddress }) => {
-  const { isXs, isSm } = useMatchBreakpoints()
-  const { t } = useTranslation()
-  const chainId = useChainIdByQuery()
+  const chainId = useChainIdByQuery();
 
   // In case somebody pastes checksummed address into url (since GraphQL expects lowercase address)
-  const address = routeAddress.toLowerCase()
+  const address = routeAddress.toLocaleLowerCase();
 
-  const cmcLink = useCMCLink(address)
+  const cmcLink = useCMCLink(address);
 
-  const tokenData = useTokenDataQuery(address)
-  const poolDatas = usePoolsForTokenDataQuery(address)
-  const transactions = useTokenTransactionsQuery(address)
-  // const chartData = useTokenChartDataQuery(address)
-  const volumeChartData = useTokenChartVolumeDataQuery(address)
-  const tvlChartData = useTokenChartTvlDataQuery(address)
+  const tokenData = useTokenDataQuery(address);
+  const { pairDatas } = usePairDatasForToken(address);
+  const transactions = useTokenTransactionsQuery(address);
+  const volumeChartData = useTokenChartDataVolumeQuery(address);
 
   // pricing data
-  const priceData = useTokenPriceDataQuery(address, ONE_HOUR_SECONDS, DEFAULT_TIME_WINDOW)
+  // const priceData = useTokenPriceDataQuery(address, ONE_HOUR_SECONDS, DEFAULT_TIME_WINDOW);
 
-  const chainPath = useMultiChainPath()
-  const chainName = useChainNameByQuery()
-  const infoTypeParam = useStableSwapPath()
-  const tokenSymbol = tokenData ? getTokenSymbolAlias(tokenData.address, chainId, tokenData.symbol) : ''
-  const tokenName = tokenData ? getTokenNameAlias(tokenData.address, chainId, tokenData.name) : ''
+  const chainPath = useChainPathByQuery();
+  const tokenSymbol = tokenData?.symbol;
+  const tokenName = tokenData?.name;
 
   return (
-    <Page>
-      <NextSeo title={tokenData?.symbol} />
+    <Box>
       {tokenData ? (
-        !tokenData.exists ? (
+        tokenData?.id == undefined ? (
           <Card>
             <Box p="16px">
               <Text>
-                {t('No pair has been created with this token yet. Create one')}
+                No pair has been created with this token yet. Create one
                 <NextLinkFromReactRouter style={{ display: 'inline', marginLeft: '6px' }} to={`/add/${address}`}>
-                  {t('here.')}
+                  here.
                 </NextLinkFromReactRouter>
               </Text>
             </Box>
@@ -69,27 +86,24 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
           <>
             {/* Stuff on top */}
             <Flex justifyContent="space-between" mb="24px" flexDirection={['column', 'column', 'row']}>
-              <Breadcrumbs mb="32px">
-                <NextLinkFromReactRouter to={`/info${chainPath}${infoTypeParam}`}>
-                  <Text color="primary">{t('Info')}</Text>
+              <Breadcrumb mb="32px">
+                <NextLinkFromReactRouter to={`/info${chainPath}`}>
+                  <Text color="primary">{'Info'}</Text>
                 </NextLinkFromReactRouter>
-                <NextLinkFromReactRouter to={`/info${chainPath}/tokens${infoTypeParam}`}>
-                  <Text color="primary">{t('Tokens')}</Text>
+                <BreadcrumbSeparator>{'>'}</BreadcrumbSeparator>
+                <NextLinkFromReactRouter to={`/info${chainPath}/tokens`}>
+                  <Text color="primary">{'Tokens'}</Text>
                 </NextLinkFromReactRouter>
+                <BreadcrumbSeparator>{'>'}</BreadcrumbSeparator>
                 <Flex>
                   <Text mr="8px">{tokenSymbol}</Text>
                   <Text>{`(${truncateHash(address)})`}</Text>
                 </Flex>
-              </Breadcrumbs>
+              </Breadcrumb>
               <Flex justifyContent={[null, null, 'flex-end']} mt={['8px', '8px', 0]}>
-                <ScanLink
-                  mr="8px"
-                  color="primary"
-                  useBscCoinFallback={ChainLinkSupportChains.includes(multiChainId[chainName])}
-                  href={getBlockExploreLink(address, 'address', multiChainId[chainName])}
-                >
-                  {t('View on %site%', { site: multiChainScan[chainName] })}
-                </ScanLink>
+                <Link mr="8px" color="primary" href={getBlockExploreLink(address, 'address', chainId)}>
+                  {'View on Explorer'}
+                </Link>
                 {cmcLink && (
                   <StyledCMCLink
                     href={cmcLink}
@@ -97,83 +111,76 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
                     target="_blank"
                     title="CoinMarketCap"
                   >
-                    <Image src="/images/CMC-logo.svg" height={22} width={22} alt={t('View token on CoinMarketCap')} />
+                    <Image src="/img/cmc_mark.jpeg" rounded='full' height={22} width={22} alt={'View token on CoinMarketCap'} />
                   </StyledCMCLink>
                 )}
                 {/* <SaveIcon
                   fill={savedTokens.includes(address)}
                   onClick={() => (savedTokens.includes(address) ? removeToken(address) : addToken(address))}
                 /> */}
-                <CopyButton ml="4px" text={address} tooltipMessage={t('Token address copied')} />
+                {/* <CopyButton ml="4px" text={address} tooltipMessage={'Token address copied'} /> */}
               </Flex>
             </Flex>
             <Flex justifyContent="space-between" flexDirection={['column', 'column', 'column', 'row']}>
               <Flex flexDirection="column" mb={['8px', null]}>
                 <Flex alignItems="center">
-                  <CurrencyLogo size="32px" address={address} chainName={chainName} />
+                  <CurrencyLogoByAddress size="32px" address={address} chainId={chainId} />
                   <Text
                     ml="12px"
-                    bold
+                    fontWeight={'bold'}
                     lineHeight="0.7"
-                    fontSize={isXs || isSm ? '24px' : '40px'}
+                    fontSize={'40px'}
                     id="info-token-name-title"
                   >
                     {tokenName}
                   </Text>
-                  <Text ml="12px" lineHeight="1" color="textSubtle" fontSize={isXs || isSm ? '14px' : '20px'}>
+                  <Text ml="12px" lineHeight="1" color="textSubtle" fontSize={'20px'}>
                     ({tokenSymbol})
                   </Text>
                 </Flex>
                 <Flex mt="8px" ml="46px" alignItems="center">
-                  <Text mr="16px" bold fontSize="24px">
+                  <Text mr="16px" fontWeight={'bold'} fontSize="24px">
                     ${formatAmount(tokenData.priceUSD, { notation: 'standard' })}
                   </Text>
-                  <Percent value={tokenData.priceUSDChange} fontWeight={600} />
+                  <Percent value={tokenData.priceChange} fontWeight={600} />
                 </Flex>
               </Flex>
-              <Flex>
-                <NextLinkFromReactRouter to={`/add/${address}?chain=${CHAIN_QUERY_NAME[chainId]}`}>
+              {/* <Flex>
+                <NextLinkFromReactRouter to={`/dex/liquidity}`}>
                   <Button mr="8px" variant="secondary">
-                    {t('Add Liquidity')}
+                    {'Add Liquidity'}
                   </Button>
                 </NextLinkFromReactRouter>
-                <NextLinkFromReactRouter to={`/swap?outputCurrency=${address}&chainId=${multiChainId[chainName]}`}>
-                  <Button>{t('Trade')}</Button>
+                <NextLinkFromReactRouter to={`/dex/swap`}>
+                  <Button>{'Trade'}</Button>
                 </NextLinkFromReactRouter>
-              </Flex>
+              </Flex> */}
             </Flex>
 
             {/* data on the right side of chart */}
             <ContentLayout>
               <Card>
                 <Box p="24px">
-                  <Text bold small color="secondary" fontSize="12px" textTransform="uppercase">
-                    {t('Liquidity')}
+                  <Text fontWeight={'bold'} color="secondary" fontSize="12px" textTransform="uppercase">
+                    {'Liquidity'}
                   </Text>
-                  <Text bold fontSize="24px">
-                    ${formatAmount(tokenData.liquidityUSD)}
+                  <Text fontWeight={'bold'} fontSize="24px">
+                    ${formatAmount(tokenData.totalLiquidityUSD)}
                   </Text>
-                  <Percent value={tokenData.liquidityUSDChange} />
+                  <Percent value={tokenData.totalLiquidity24h} />
 
-                  <Text mt="24px" bold color="secondary" fontSize="12px" textTransform="uppercase">
-                    {t('Volume 24H')}
+                  <Text mt="24px" fontWeight={'bold'} color="secondary" fontSize="12px" textTransform="uppercase">
+                    {'Volume 24H'}
                   </Text>
-                  <Text bold fontSize="24px" textTransform="uppercase">
-                    ${formatAmount(tokenData.volumeUSD)}
+                  <Text fontWeight={'bold'} fontSize="24px" textTransform="uppercase">
+                    ${formatAmount(tokenData.tradeVolumeUSD)}
                   </Text>
-                  <Percent value={tokenData.volumeUSDChange} />
+                  <Percent value={tokenData.volumeUSD24h} />
 
-                  <Text mt="24px" bold color="secondary" fontSize="12px" textTransform="uppercase">
-                    {t('Volume 7D')}
+                  <Text mt="24px" fontWeight={'bold'} color="secondary" fontSize="12px" textTransform="uppercase">
+                    {'Transactions 24H'}
                   </Text>
-                  <Text bold fontSize="24px">
-                    ${formatAmount(tokenData.volumeUSDWeek)}
-                  </Text>
-
-                  <Text mt="24px" bold color="secondary" fontSize="12px" textTransform="uppercase">
-                    {t('Transactions 24H')}
-                  </Text>
-                  <Text bold fontSize="24px">
+                  <Text fontWeight={'bold'} fontSize="24px">
                     {formatAmount(tokenData.txCount, { isInteger: true })}
                   </Text>
                 </Box>
@@ -182,21 +189,21 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
               <ChartCard
                 variant="token"
                 volumeChartData={volumeChartData}
-                tvlChartData={tvlChartData}
+                tvlChartData={volumeChartData}
                 tokenData={tokenData}
-                tokenPriceData={priceData}
+                tokenPriceData={undefined}
               />
             </ContentLayout>
 
             {/* pools and transaction tables */}
             <Heading scale="lg" mb="16px" mt="40px">
-              {t('Pairs')}
+              {'Pairs'}
             </Heading>
 
-            <PoolTable poolDatas={poolDatas} />
+            <PairTable pairDatas={pairDatas} />
 
             <Heading scale="lg" mb="16px" mt="40px">
-              {t('Transactions')}
+              {'Transactions'}
             </Heading>
 
             <TransactionTable transactions={transactions} />
@@ -207,8 +214,8 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
           <Spinner />
         </Flex>
       )}
-    </Page>
-  )
-}
+    </Box>
+  );
+};
 
-export default TokenPage
+export default TokenPage;

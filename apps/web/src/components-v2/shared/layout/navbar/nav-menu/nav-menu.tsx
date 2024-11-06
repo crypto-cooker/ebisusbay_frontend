@@ -101,6 +101,9 @@ const NavMenu = (props: any) => {
             </VStack>
           </MenuButton>
           <MenuList>
+            <MenuItem as={Link} href="/info" _hover={{ color: 'inherit' }} justifyContent="space-between">
+              Info
+            </MenuItem>
             <MenuItem as={Link} href="/dex/bridge" _hover={{ color: 'inherit' }} justifyContent="space-between">
               Bridge
             </MenuItem>

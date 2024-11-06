@@ -13,17 +13,10 @@ import { TokenData } from '@src/components-v2/feature/info/state/types';
 import { ITEMS_PER_INFO_TABLE_PAGE } from '../../state/constants';
 import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from './shared';
 import { Card } from '@src/components-v2/foundation/card';
-import { CurrencyLogo, CurrencyLogoByAddress, DoubleCurrencyLogo } from '@dex/components/logo';
-import { useCurrency } from '@dex/swap/imported/pancakeswap/web/hooks/tokens';
+import { CurrencyLogoByAddress } from '@dex/components/logo';
 import { HStack } from '@chakra-ui/react';
+import { useUserTheme } from '@src/components-v2/useUser';
 
-/**
- *  Columns on different layouts
- *  5 = | # | Pool | TVL | Volume 24H | Volume 7D |
- *  4 = | # | Pool |     | Volume 24H | Volume 7D |
- *  3 = | # | Pool |     | Volume 24H |           |
- *  2 = |   | Pool |     | Volume 24H |           |
- */
 const ResponsiveGrid = styled.div`
   display: grid;
   grid-gap: 1em;
@@ -72,12 +65,12 @@ const SORT_FIELD = {
 
 const LoadingRow: React.FC<React.PropsWithChildren> = () => (
   <ResponsiveGrid>
-    {/* <Skeleton />
-    <Skeleton />
-    <Skeleton />
-    <Skeleton />
-    <Skeleton />
-    <Skeleton /> */}
+    <Skeleton width="full" height="20px" />
+    <Skeleton width="full" height="20px" />
+    <Skeleton width="full" height="20px" />
+    <Skeleton width="full" height="20px" />
+    <Skeleton width="full" height="20px" />
+    <Skeleton width="full" height="20px" />
   </ResponsiveGrid>
 );
 
@@ -90,11 +83,11 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => (
 );
 
 const DataRow = ({ TokenData, index }: { TokenData: TokenData; index: number }) => {
-  const chainName = useChainNameByQuery();
   const chainId = useChainIdByQuery();
   const chainPath = useChainPathByQuery();
   const symbol = TokenData.symbol;
-  const color = TokenData.priceChange < 0 ? '#a11259' : '#12a17d';
+  const theme = useUserTheme()
+  const color = TokenData.priceChange < 0 ? theme.colors.failure : theme.colors.success;
 
   return (
     <LinkWrapper to={`/info${chainPath}/tokens/${TokenData.id}`}>

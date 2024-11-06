@@ -41,18 +41,18 @@ export const useAllTokenDataQuery = () => {
             priceUSD: +d.derivedUSD,
             decimals: +d.decimals,
             totalLiquidity:+ d.totalLiquidity,
-            totalLiquidityUSD: d.totalLiquidity * d.derivedUSD,
+            totalLiquidityUSD: +d?.tokenDayData[0]?.totalLiquidityUSD,
             tradeVolumeUSD: +d.tradeVolumeUSD,
             tradeVolume: +d.tradeVolume,
             volume24h: +d?.tokenDayData[0]?.dailyVolumeToken,
             volumeUSD24h: +d?.tokenDayData[0]?.dailyVolumeUSD,
             priceUSD24h: +d?.tokenDayData[0]?.priceUSD,
             totalLiquidity24h: +d.tokenDayData[0]?.totalLiquidityToken,
-            priceChange: getPercentChange(+d.derivedUSD, +d?.tokenDayData[0]?.priceUSD)
+            priceChange: getPercentChange(+d.derivedUSD, +d?.tokenDayData[0]?.priceUSD),
+            txCount: 0
           },
         };
       }
-      console.log(final,  "DFADFASDF")
   
       return final;
     },
