@@ -7583,7 +7583,7 @@
     "referral": false,
     "is1155": false,
     "published": true,
-    "complete": false,
+    "complete": true,
     "featured": false,
     "images": {
       "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/pixel-ebisu/drop.webp",
@@ -7661,7 +7661,7 @@
     "end": null,
     "referral": false,
     "is1155": false,
-    "published": true,
+    "published": false,
     "complete": false,
     "images": {
       "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/free-the-gang/drop.webp",
@@ -7739,7 +7739,7 @@
     "referral": false,
     "is1155": false,
     "published": true,
-    "complete": false,
+    "complete": true,
     "erc20Cost": "2500",
     "erc20Token": "0x96e03fa6c5ab3a7f2e7098dd07c8935493294e26",
     "erc20Only": true,
@@ -7769,14 +7769,14 @@
       "discord": "https://discord.gg/hB52WapAhm",
       "twitter": "https://x.com/TitansofCronos"
     },
-    "address": "",
+    "address": "0x3a459618918c5B45C52B54c32fee3D26aCD826c4",
     "maxMintPerTx": 100,
     "maxMintPerAddress": 100,
     "totalSupply": 3333,
     "cost": "99",
     "whitelistCost": "75",
     "foundersOnly": false,
-    "start": null,
+    "start": 1730318400000,
     "end": null,
     "referral": false,
     "is1155": false,
@@ -7791,6 +7791,44 @@
     "verification": {
       "doxx": true,
       "kyc": true,
+      "escrow": false,
+      "verified": true
+    }
+  },
+  {
+    "id": 198,
+    "chainId": 25,
+    "slug": "kitcoin-kitty-cats",
+    "title": "KitCoin KITTY Cats",
+    "subtitle": "",
+    "description": "The KitCoin KITTY Cats collection consists of 2,000 hand-drawn NFTs, with 15 legendary NFTs to be randomly minted throughout the collection, each carrying a bounty of 890 $CRO. This unique collection also includes 18 individual project traits from three different blockchains: Cronos, Polygon & Solana, which are rewarded with project-specific rewards. After the minting phase, KitCoin KITTY Cats can be staked to earn $KITTY. Additionally, 40% of mint funds will be reinvested into the KitCoin ecosystem to support staking & strengthen the $KITTY token.",
+    "author": {
+      "name": "KitCoin",
+      "website": "https://www.kitcoin.io/",
+      "twitter": "https://twitter.com/KitCoinX",
+      "discord": "https://discord.gg/kitcoin"
+    },
+    "address": "0x4015264055dE9f1bd4bf60981d96FFD840Fb9a95",
+    "maxMintPerTx": 100,
+    "maxMintPerAddress": 100,
+    "totalSupply": 2000,
+    "cost": "89",
+    "foundersOnly": false,
+    "start": 1730836800000,
+    "end": null,
+    "referral": false,
+    "is1155": false,
+    "published": true,
+    "complete": false,
+    "images": {
+      "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/kitcoin-kitty-cats/drop.webp",
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/kitcoin-kitty-cats/banner.webp",
+      "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/kitcoin-kitty-cats/avatar.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/kitcoin-kitty-cats/card.webp"
+    },
+    "verification": {
+      "doxx": false,
+      "kyc": false,
       "escrow": false,
       "verified": true
     }

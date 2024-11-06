@@ -76,7 +76,6 @@ const MobileSearchDrawer = () => {
 
   const getRelevantVisits = () => {
     const visits = searchHistory.items;
-
     if (value && value.length >= minChars) {
       return visits.filter((item: any) => {
         return item.name.toLowerCase().includes(value.toLowerCase());
@@ -84,11 +83,11 @@ const MobileSearchDrawer = () => {
     }
 
     return visits;
-  };
+  }
 
   useEffect(() => {
     setSearchVisits(getRelevantVisits());
-  }, [value]);
+  }, [value, searchHistory.items]);
 
   return (
     <>

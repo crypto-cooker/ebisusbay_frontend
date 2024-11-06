@@ -58,8 +58,7 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState}: SlotUnlockDia
   const [executingFortuneApproval, setExecutingFortuneApproval] = useState(false);
   const [executingResourcesApproval, setExecutingResourcesApproval] = useState(false);
   const [unlockApprovalState, setUnlockApprovalState] = useState(initialApprovalState);
-  const fortuneApprovalLimit = 10000;
-  const fortuneTopUpThreshold = 5000;
+  const fortuneApprovalLimit = 100000;
   const {requestSignature} = useEnforceSignature();
   const queryClient = useQueryClient();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
@@ -68,16 +67,11 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState}: SlotUnlockDia
   const handleEnableFortune = async () => {
     try {
       setExecutingFortuneApproval(true);
-      const fortuneContract = new Contract(appChainConfig.contracts.fortune, Fortune, user.provider.getSigner());
-      const totalApproved = await fortuneContract.allowance(user.address?.toLowerCase(), appChainConfig.contracts.resources);
       const fortuneApprovalLimitWei = ethers.utils.parseEther(fortuneApprovalLimit.toString());
-      const fortuneTopUpThresholdWei = ethers.utils.parseEther(fortuneTopUpThreshold.toString());
-      if (totalApproved.lt(fortuneTopUpThresholdWei)) {
-        const fortuneContract = new Contract(appChainConfig.contracts.fortune, Fortune, user.provider.getSigner());
-        const tx = await fortuneContract.approve(appChainConfig.contracts.resources, fortuneApprovalLimitWei);
-        await tx.wait();
-        setUnlockApprovalState([fortuneApprovalLimitWei, unlockApprovalState[1]]);
-      }
+      const fortuneContract = new Contract(appChainConfig.contracts.fortune, Fortune, user.provider.getSigner());
+      const tx = await fortuneContract.approve(appChainConfig.contracts.resources, fortuneApprovalLimitWei);
+      await tx.wait();
+      setUnlockApprovalState([fortuneApprovalLimitWei, unlockApprovalState[1]]);
       toast.success('Fortune has been enabled!');
     } catch (e) {
       console.log(e);
@@ -216,7 +210,7 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState}: SlotUnlockDia
         <ModalFooter>
           <VStack w='full'>
             <ButtonGroup spacing={2} width="full">
-              {unlockApprovalState[0].lt(ethers.utils.parseEther(fortuneTopUpThreshold.toString())) && (
+              {!!nextSlot && unlockApprovalState[0].lt(ethers.utils.parseEther(nextSlot.cost.frtn.toString())) && (
                 <Button
                   size='md'
                   isLoading={executingFortuneApproval}
@@ -245,7 +239,7 @@ const SlotUnlockDialog = ({isOpen, onClose, initialApprovalState}: SlotUnlockDia
               w='full'
               size='md'
               isLoading={mutation.isPending}
-              isDisabled={mutation.isPending || !unlockApprovalState[0].gte(ethers.utils.parseEther(fortuneTopUpThreshold.toString())) || !unlockApprovalState[1]}
+              isDisabled={mutation.isPending || !unlockApprovalState[0].gte(ethers.utils.parseEther(nextSlot?.cost.frtn.toString() ?? '0')) || !unlockApprovalState[1]}
               onClick={handleUnlock}
               variant='ryoshiDynasties'
             >

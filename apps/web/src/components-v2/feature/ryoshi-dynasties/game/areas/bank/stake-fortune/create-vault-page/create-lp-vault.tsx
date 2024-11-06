@@ -287,7 +287,7 @@ const CreateLpVault = ({vaultIndex, vaults, onSuccess}: CreateLpVaultProps) => {
             <VStack align='stretch'>
               <Text>LP Token</Text>
               <FormControl maxW='250px' isInvalid={!!lengthError}>
-                <Select onChange={handleChangeToken} value={daysToStake} bg='none'>
+                <Select onChange={handleChangeToken} value={pairConfig.pair} bg='none'>
                   {chainConfig.lpVaults.map((vaultConfig) => (
                     <option key={vaultConfig.pair} value={vaultConfig.pair}>{vaultConfig.name}</option>
                   ))}

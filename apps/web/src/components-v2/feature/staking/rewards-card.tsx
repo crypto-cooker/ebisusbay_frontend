@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from "react";
-import {Contract, ethers} from "ethers";
-import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, round, siPrefixedNumber} from "@market/helpers/utils";
-import {useInterval} from "@market/hooks/use-interval";
-import {getTheme} from "@src/global/theme/theme";
-import StakeABI from "@src/global/contracts/Stake.json";
-import {appConfig} from "@src/config";
-import {Box, Center, Link, SimpleGrid, Spinner, Text} from "@chakra-ui/react";
-import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {useUser} from "@src/components-v2/useUser";
-import NextLink from "next/link";
-import {GasWriter} from "@src/core/chain/gas-writer";
+import React, { useEffect, useState } from 'react';
+import { Contract, ethers } from 'ethers';
+import { toast } from 'react-toastify';
+import { createSuccessfulTransactionToastContent, round, siPrefixedNumber } from '@market/helpers/utils';
+import { useInterval } from '@market/hooks/use-interval';
+import { getTheme } from '@src/global/theme/theme';
+import StakeABI from '@src/global/contracts/Stake.json';
+import { appConfig } from '@src/config';
+import { Box, Center, Link, SimpleGrid, Spinner, Text } from '@chakra-ui/react';
+import { PrimaryButton } from '@src/components-v2/foundation/button';
+import { useUser } from '@src/components-v2/useUser';
+import NextLink from 'next/link';
+import { GasWriter } from '@src/core/chain/gas-writer';
+import RewardDocument from './reward-document';
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -68,7 +69,7 @@ const RewardsCard = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const harvest = async () => {
     if (!stakeContract) return;
@@ -79,10 +80,7 @@ const RewardsCard = () => {
       if (amountToHarvest.gt(0)) {
         try {
           const writeContract = new Contract(config.contracts.stake, StakeABI.abi, user.provider.getSigner());
-          const tx = await GasWriter.withContract(writeContract).call(
-            'harvest',
-            user.wallet.address
-          );
+          const tx = await GasWriter.withContract(writeContract).call('harvest', user.wallet.address);
           const receipt = await tx.wait();
           await getRewardsInfo();
           toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
@@ -130,12 +128,12 @@ const RewardsCard = () => {
         <div className="card-body d-flex flex-column">
           {rewardsInfoLoading ? (
             <Center>
-              <Spinner size='sm' />
+              <Spinner size="sm" />
             </Center>
           ) : (
             <>
               <Box>
-                <SimpleGrid columns={{base: 1, sm: 2, md: 4}} textAlign="center">
+                <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} textAlign="center">
                   <Box>
                     <div>Global Staked</div>
                     <div className="fw-bold" style={{ color: getTheme(userTheme).colors.textColor3 }}>
@@ -166,17 +164,20 @@ const RewardsCard = () => {
                 <div className="mt-4">
                   {Number(userPendingRewards) > 0 && (
                     <>
-                      <p className="text-center my-xl-auto fs-5" style={{ color: getTheme(userTheme).colors.textColor3 }}>
+                      <p
+                        className="text-center my-xl-auto fs-5"
+                        style={{ color: getTheme(userTheme).colors.textColor3 }}
+                      >
                         You have <strong>{ethers.utils.commify(round(userPendingRewards, 3))} CRO</strong> available for
                         harvest!
                       </p>
                       <PrimaryButton
-                        w='full'
+                        w="full"
                         mb={1}
                         mt={2}
                         onClick={harvest}
                         disabled={!(Number(userPendingRewards) > 0)}
-                        loadingText='Harvesting...'
+                        loadingText="Harvesting..."
                         isLoading={isHarvesting}
                       >
                         Harvest
@@ -188,6 +189,9 @@ const RewardsCard = () => {
             </>
           )}
         </div>
+      </div>
+      <div className="card eb-nft__card h-100 shadow p-4 mt-4">
+        <RewardDocument />
       </div>
     </div>
   );

@@ -630,6 +630,30 @@ class RyoshiDynastiesRepository extends CmsRepository {
     );
     return response.data.data;
   }
+
+  async getUserDailyFrtnRewards(address: string) {
+    const response = await this.cms.get(
+      `ryoshi-dynasties/fortune-rewards/info/${address}`
+    );
+
+    return response.data.data;
+  }
+
+  async getUserPredictedFrtnRewards(farmId: number, chainId: number, address: string, signature: string) {
+    const response = await this.cms.get(
+      'ryoshi-dynasties/fortune-rewards/farm-boost/predicted-frtn-rate',
+      {
+        params: {
+          farmId,
+          chainId,
+          address,
+          signature
+        }
+      }
+    );
+
+    return response.data.data;
+  }
 }
 
 export default RyoshiDynastiesRepository;

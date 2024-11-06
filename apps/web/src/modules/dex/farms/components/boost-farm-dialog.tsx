@@ -32,7 +32,7 @@ import {useAppChainConfig} from "@src/config/hooks";
 import {useQuery} from "@tanstack/react-query";
 import {getLengthOfTime, pluralize, round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
-import {CheckIcon} from "@chakra-ui/icons";
+import {CheckIcon, WarningIcon} from "@chakra-ui/icons";
 import {useUserFarmBoost, useUserMitama} from "@dex/farms/hooks/user-farms";
 import ImageService from "@src/core/services/image";
 import { QuestionHelper } from "@dex/swap/components/tabs/swap/question-helper";
@@ -45,7 +45,7 @@ interface StakeLpTokensDialogProps {
 }
 
 const MIN_TROOPS = 10;
-const SECONDS_PER_TROOP = 60;
+const SECONDS_PER_TROOP = 30;
 
 const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialogProps) => {
   const user = useUser();
@@ -57,11 +57,18 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
   const [quantity, setQuantity] = useState<string>('');
   const [executing, setExecuting] = useState<boolean>(false);
 
-  const { data: rdUserContext } = useQuery({
-    queryKey: ['RyoshiDynastiesUserContext', user.address, signature],
+  const { data } = useQuery({
+    queryKey: ['RyoshiDynastiesUserContext', user.address, signature, farm.data.pid, farm.derived.chainId],
     queryFn: async () => {
       if (!!signature && !!user.address) {
-        return await ApiService.withoutKey().ryoshiDynasties.getUserContext(user.address!, signature)
+        const userContext = await ApiService.withoutKey().ryoshiDynasties.getUserContext(user.address!, signature);
+        const userDailyFrtnRewards = await ApiService.withoutKey().ryoshiDynasties.getUserDailyFrtnRewards(user.address!);
+        const userPredictedFrtnRewards = await ApiService.withoutKey().ryoshiDynasties.getUserPredictedFrtnRewards(farm.data.pid, farm.derived.chainId, user.address!, signature);
+        return {
+          userContext,
+          userDailyFrtnRewards,
+          userPredictedFrtnRewards
+        }
       }
       throw 'Please sign message in wallet to continue'
     },
@@ -69,11 +76,13 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
     enabled: isOpen && !!user.address && isSignedIn,
   });
 
-  const availableTroops = rdUserContext?.game.troops.user.available.total;
-  const xpLevel = rdUserContext?.experience.level ?? 1;
+  const availableTroops = data?.userContext.game.troops.user.available.total;
+  const xpLevel = data?.userContext?.experience.level ?? 1;
   const mitamaBoostTier = useMemo(() => boostPctByMitama(userMitama), [userMitama]);
   const maxBoostTime = useMemo(() => maxBoostTimeByXpLevel(xpLevel), [xpLevel]);
-  const maxTroops = round(maxBoostTime / 60);
+  const maxTroops = round(maxBoostTime / SECONDS_PER_TROOP);
+  const hasReachedFrtnCap = data?.userDailyFrtnRewards && data?.userDailyFrtnRewards.totalRewards >= data?.userDailyFrtnRewards.maxRewards;
+  const willReachFrtnCap = data && data.userDailyFrtnRewards.totalRewards + (data.userPredictedFrtnRewards.frtnPerOneTroop * (parseInt(quantity) || 0)) >= data.userDailyFrtnRewards.maxRewards;
 
   const handleQuantityChange = (valueString: string) => {
     setQuantity(valueString);
@@ -190,7 +199,7 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                 </NumberInput>
                 <Button onClick={() => handlePresetQuantityChange(100)}>MAX</Button>
               </HStack>
-              <FormHelperText fontSize='sm'>Min: {MIN_TROOPS}, Max: {maxTroops}. Quest time increases 1 minute per troop sent</FormHelperText>
+              <FormHelperText fontSize='sm'>Min: {MIN_TROOPS}, Max: {maxTroops}. Quest time increases {getLengthOfTime(SECONDS_PER_TROOP)} per troop sent</FormHelperText>
               <FormErrorMessage fontSize='sm'>Error</FormErrorMessage>
             </FormControl>
             <VStack align='stretch' mt={4}>
@@ -223,12 +232,33 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                 </VStack>
               </Flex>
               <Flex justify='space-between' fontSize='sm'>
-                <Box>Boosted APR</Box>
-                <Box>{round(parseFloat(farm.derived.apr.slice(0, -1)) + (mitamaBoostTier?.boostValue ?? 0), 2)}%</Box>
+                <HStack>
+                  <Box>Boosted APR</Box>
+                  <QuestionHelper
+                    text={
+                      <Box fontSize='sm'>
+                        <Box>FRTN earned will be subject to the following cap rules based on user Mitama holdings:</Box>
+                        <VStack align='stretch' spacing={0} mt={2} maxH='150px' overflowY='scroll'>
+                          {frtnCapTiers.map(tier => (
+                            <Flex justify='space-between'>
+                              <Box>{tier.tier}. (min. {commify(tier.minMitama)})</Box>
+                              <Box>{commify(tier.capValue)}</Box>
+                            </Flex>
+                          ))}
+                        </VStack>
+                      </Box>
+                    }
+                    placement='top'
+                  />
+                </HStack>
+                <VStack align='end' spacing={0}>
+                  <Box>{round(parseFloat(farm.derived.apr.slice(0, -1)) + (mitamaBoostTier?.boostValue ?? 0), 2)}%</Box>
+                  <Box fontSize='xs' className='text-muted'>Daily Limit: {data?.userDailyFrtnRewards.totalRewards}/{data?.userDailyFrtnRewards?.maxRewards}</Box>
+                </VStack>
               </Flex>
               <Flex justify='space-between' fontSize='sm'>
                 <Box>Duration</Box>
-                <Box>{getLengthOfTime(parseInt(quantity) * SECONDS_PER_TROOP)}</Box>
+                <Box>{quantity ? getLengthOfTime(parseInt(quantity) * SECONDS_PER_TROOP) : '-'}</Box>
               </Flex>
             </VStack>
           </>
@@ -249,17 +279,30 @@ const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialog
                 </PrimaryButton>
               </Stack>
             ) : !existingBoost && (
-              <Stack direction='row' w='full'>
-                <SecondaryButton flex={1} onClick={onClose}>Cancel</SecondaryButton>
-                <PrimaryButton
-                  flex={1}
-                  onClick={handleConfirmBoost}
-                  isLoading={executing}
-                  isDisabled={executing || !quantity || Number(quantity) === 0 || Number(quantity) > maxTroops || !availableTroops}
-                >
-                  Confirm
-                </PrimaryButton>
-              </Stack>
+              <VStack align='stretch' w='full'>
+                {hasReachedFrtnCap ? (
+                  <Alert status='warning'>
+                    <WarningIcon />
+                    <Box ms={1} fontSize='sm'>You have reached your daily FRTN reward limit for today. Come back tomorrow for more boosts!</Box>
+                  </Alert>
+                ) : willReachFrtnCap && (
+                  <Alert status='info'>
+                    <WarningIcon />
+                    <Box ms={1} fontSize='sm'>You will reach your daily FRTN reward limit with this boost. Rewards will be capped at the max value for your mitama tier</Box>
+                  </Alert>
+                )}
+                <Stack direction='row' w='full'>
+                  <SecondaryButton flex={1} onClick={onClose}>Cancel</SecondaryButton>
+                  <PrimaryButton
+                    flex={1}
+                    onClick={handleConfirmBoost}
+                    isLoading={executing}
+                    isDisabled={executing || !quantity || Number(quantity) === 0 || Number(quantity) > maxTroops || !availableTroops || hasReachedFrtnCap}
+                  >
+                    Confirm
+                  </PrimaryButton>
+                </Stack>
+              </VStack>
             )}
           </>
         ) : (
@@ -333,4 +376,35 @@ const mitamaTiers = [
 
 function boostPctByMitama(mitama: number) {
   return [...mitamaTiers].reverse().find(t => mitama >= t.minMitama);
+}
+
+const frtnCapTiers = [
+  { tier: 1, minMitama: 0, capValue: 10 },
+  { tier: 2, minMitama: 2500, capValue: 25 },
+  { tier: 3, minMitama: 5000, capValue: 50 },
+  { tier: 4, minMitama: 10000, capValue: 200 },
+  { tier: 5, minMitama: 20000, capValue: 400 },
+  { tier: 6, minMitama: 40000, capValue: 800 },
+  { tier: 7, minMitama: 60000, capValue: 1200 },
+  { tier: 8, minMitama: 80000, capValue: 1600 },
+  { tier: 9, minMitama: 100000, capValue: 2000 },
+  { tier: 10, minMitama: 125000, capValue: 2500 },
+  { tier: 11, minMitama: 150000, capValue: 3000 },
+  { tier: 12, minMitama: 175000, capValue: 3500 },
+  { tier: 13, minMitama: 200000, capValue: 4000 },
+  { tier: 14, minMitama: 225000, capValue: 4500 },
+  { tier: 15, minMitama: 250000, capValue: 5000 },
+  { tier: 16, minMitama: 300000, capValue: 6000 },
+  { tier: 17, minMitama: 350000, capValue: 7000 },
+  { tier: 18, minMitama: 400000, capValue: 8000 },
+  { tier: 19, minMitama: 500000, capValue: 10000 },
+  { tier: 20, minMitama: 600000, capValue: 12000 },
+  { tier: 21, minMitama: 700000, capValue: 14000 },
+  { tier: 22, minMitama: 800000, capValue: 16000 },
+  { tier: 23, minMitama: 900000, capValue: 18000 },
+  { tier: 24, minMitama: 1000000, capValue: 20000 }
+]
+;
+function frtnCapByMitama(mitama: number) {
+  return [...frtnCapTiers].reverse().find(t => mitama >= t.minMitama);
 }

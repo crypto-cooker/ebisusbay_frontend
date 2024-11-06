@@ -1,14 +1,14 @@
 import useSupportedTokens from '@dex/hooks/use-supported-tokens';
 import { useUser } from '@src/components-v2/useUser';
 import { Address, ContractFunctionParameters, erc20Abi } from 'viem';
-import { useBlockNumber, useContractReads } from 'wagmi';
+import {useBlockNumber, useContractReads, useReadContracts} from 'wagmi';
 import { isAddress } from '@market/helpers/utils';
 import { CurrencyAmount, Token } from '@pancakeswap/sdk';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppChainConfig } from '@src/config/hooks';
-import { wagmiConfigs } from '@src/config/chains';
 import { multicall } from '@wagmi/core';
 import { utils } from 'ethers';
+import { wagmiConfig } from '@src/wagmi';
 
 export const useTokenBalanceOnCertainChain = (
   tokenAddress: string,
@@ -21,7 +21,7 @@ export const useTokenBalanceOnCertainChain = (
   const execute = useCallback(async () => {
     setIsLoading(true);
     try {
-      const [balance, decimals] = await multicall(wagmiConfigs, {
+      const [balance, decimals] = await multicall(wagmiConfig, {
         chainId,
         contracts: [
           {
@@ -133,7 +133,7 @@ export function useTokenBalances(
     data,
     isLoading: anyLoading,
     error,
-  } = useContractReads({
+  } = useReadContracts({
     contracts,
   });
 

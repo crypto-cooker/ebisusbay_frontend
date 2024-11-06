@@ -103,7 +103,7 @@ Separately, a player can burn 3 matching Battle Card NFTs in exchange for additi
             <Text> Get rewarded for simply visiting Ryoshi Dynasties! Ryoshi Dynasties counts the number of days in a row (aka “a streak”) that a user visits the site.  Players even get Koban for a single check in</Text>
             <Text mt={2}>Players will complete daily check-ins to earn Koban which is required within Ryoshi Dynasties – players pay for their attacks with Koban.</Text>
             <Text mt={2}>The size of the check in rewards increases every day, and the check-in streaks are restarted each week. </Text>
-            <Text mt={2}>In order to view the current check-in streak, and to claim check-in Koban rewards, players can select the “Claim Reward” button on the “In-game wallet” in the upper left of the Village map, or visit the “Claim Daily Reward” button on the Announcements page.</Text>
+            <Text mt={2}>In order to view the current check-in streak, and to claim check-in XP rewards, players can select the “Claim Reward” button on the “In-game wallet” in the upper left of the Village map, or visit the “Claim Daily Reward” button on the Announcements page.</Text>
             <Text mt={2}>All Resources are 1155 tokens and will be freely tradable on the open NFT market.</Text>
           </AccordionPanel>
         </AccordionItem>

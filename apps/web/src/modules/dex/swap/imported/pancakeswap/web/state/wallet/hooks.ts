@@ -7,7 +7,7 @@ import {useMemo} from 'react'
 import {safeGetAddress} from "@eb-pancakeswap-web/utils";
 import {getMulticallAddress} from '@eb-pancakeswap-web/utils/addressHelpers'
 import {Address, ContractFunctionParameters, erc20Abi, getAddress, isAddress} from 'viem'
-import {useAccount, useBlockNumber, useContractReads} from 'wagmi'
+import {useAccount, useBlockNumber, useReadContracts} from 'wagmi'
 import {useSingleContractMultipleData} from '../multicall/hooks'
 
 /**
@@ -35,7 +35,7 @@ export function useNativeBalances(uncheckedAddresses?: (string | undefined)[]): 
       [native],
     ),
     functionName: 'getEthBalance',
-    args: useMemo(() => addresses.map((address) => [address] as const), [addresses]),
+    args: addresses.map((address) => [address] as const),
   })
 
   return useMemo(
@@ -83,7 +83,7 @@ export function useTokenBalancesWithLoadingIndicator(
     };
   });
 
-  const { data, isLoading: anyLoading, error } = useContractReads({
+  const { data, isLoading: anyLoading, error } = useReadContracts({
     contracts
   });
 
