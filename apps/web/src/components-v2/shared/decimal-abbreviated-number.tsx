@@ -11,7 +11,7 @@ const DecimalAbbreviatedNumber = ({ value }: DecimalAbbreviatedNumberProps) => {
   return (
     <Box>
       {typeof valueObj === 'string' ? (
-        <>{value}</>
+        <>{valueObj}</>
       ) : (
         <Box>
           {valueObj.left}
