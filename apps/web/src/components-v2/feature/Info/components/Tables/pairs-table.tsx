@@ -89,7 +89,7 @@ const DataRow = ({ PairData, index }: { PairData: PairData; index: number }) => 
   const token1symbol = PairData.token1.symbol;
 
   return (
-    // <LinkWrapper to={`/info${chainPath}/pairs/${PairData.id}`}>
+    <LinkWrapper to={`/info${chainPath}/pairs/${PairData.id}`}>
       <ResponsiveGrid>
         <Text>{index + 1}</Text>
         <Flex>
@@ -106,7 +106,7 @@ const DataRow = ({ PairData, index }: { PairData: PairData; index: number }) => 
         <Text>{formatAmount(PairData.lpApr24h)}%</Text>
         <Text>${formatAmount(PairData.liquidityUSD)}</Text>
       </ResponsiveGrid>
-    // </LinkWrapper>
+    </LinkWrapper>
   );
 };
 
