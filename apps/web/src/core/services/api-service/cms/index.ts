@@ -264,6 +264,14 @@ class Cms {
   async getUserPredictedFrtnRewards(farmId: number, chainId: number, address: string, signature: string) {
     return this.ryoshiDynasties.getUserPredictedFrtnRewards(farmId, chainId, address, signature);
   }
+
+  async upkeepMeeple(amount: number, address: string, signature: string) {
+    return this.ryoshiDynasties.upkeepMeeple(amount, address, signature);
+  }
+
+  async resetMeepleUpkeep(address: string, signature: string) {
+    return this.ryoshiDynasties.resetMeepleUpkeep(address, signature);
+  }
 }
 
 export default Cms;

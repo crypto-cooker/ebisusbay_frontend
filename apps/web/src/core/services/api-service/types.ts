@@ -90,6 +90,8 @@ export interface RyoshiDynastiesApi {
     claimFarmBoost(farmId: number, address: string, signature: string): Promise<any>;
     getUserDailyFrtnRewards(address: string): Promise<{ totalRewards: number, maxRewards: number }>;
     getUserPredictedFrtnRewards(farmId: number, chainId: number, address: string, signature: string): Promise<{chainId: number, farmId: number, boostValue: number, depositedLiquidityUSD: number, frtnPerOneTroop: number}>;
+    upkeepMeeple(amount: number, address: string, signature: string): Promise<any>;
+    resetMeepleUpkeep(address: string, signature: string): Promise<any>;
 }
 
 // @deprecated move to OrderState once MAPI migrated

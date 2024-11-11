@@ -654,6 +654,36 @@ class RyoshiDynastiesRepository extends CmsRepository {
 
     return response.data.data;
   }
+
+  async upkeepMeeple(amount: number, address: string, signature: string) {
+    const response = await this.cms.post(
+      `ryoshi-dynasties/meeple/upkeep`,
+      {
+        amount
+      },
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+    return response.data.data;
+  }
+
+  async resetMeepleUpkeep(address: string, signature: string) {
+    const response = await this.cms.post(
+      `ryoshi-dynasties/meeple/upkeep/reset`,
+      {},
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+    return response.data.data;
+  }
 }
 
 export default RyoshiDynastiesRepository;

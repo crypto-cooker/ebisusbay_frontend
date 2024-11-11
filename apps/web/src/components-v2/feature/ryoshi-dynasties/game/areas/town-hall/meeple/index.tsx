@@ -51,7 +51,7 @@ import {
 } from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import NextApiService from "@src/core/services/api-service/next";
-import {MeepleMint, MeepleUpkeep} from "@src/core/api/RyoshiDynastiesAPICalls";
+import {MeepleMint} from "@src/core/api/RyoshiDynastiesAPICalls";
 import {constants, Contract} from "ethers";
 import Resources from "@src/global/contracts/Resources.json";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
@@ -704,12 +704,17 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
     return calculateUpkeepCost(quantityToUpkeep + targetMeeple.upkeptMeeple, rdConfig.townHall.ryoshi.upkeepCosts);
   }, [quantityToUpkeep, rdConfig.townHall.ryoshi.upkeepCosts]);
 
-  const payUpkeep = async () => {
+  const payUpkeep = async (isReset: boolean) => {
     if (!user.address) return;
     const signature = await requestSignature();
     try {
       setIsExecuting(true);
-      const cmsResponse = await MeepleUpkeep(user.address, signature, Number(quantityToUpkeep.toFixed()));
+      let cmsResponse;
+      if (isReset) {
+        cmsResponse = await ApiService.withoutKey().ryoshiDynasties.resetMeepleUpkeep(user.address, signature);
+      } else {
+        cmsResponse = await ApiService.withoutKey().ryoshiDynasties.upkeepMeeple(Number(quantityToUpkeep.toFixed()), user.address, signature);
+      }
       const resourcesContract = new Contract(collectionAddress, Resources, user.provider.getSigner());
       const tx = await resourcesContract.upkeep(cmsResponse.request, cmsResponse.signature);
       return await tx.wait();
@@ -736,16 +741,23 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
       } finally {
         toast.success(createSuccessfulTransactionToastContent(data.transactionHash));
         setQuantityToUpkeep(0);
+        setCurrentTab('pay');
         onComplete();
       }
     }
   });
 
   const handlePayUpkeep = async () => {
-    mutation.mutate();
+    mutation.mutate(false);
+  }
+
+  const handleResetUpkeep = async () => {
+    mutation.mutate(true);
   }
 
   const nextUpkeep = lastUpkeep ? formatTimeDifference(lastUpkeep + (rdConfig.townHall.ryoshi.upkeepActiveDays * 86400)) : 0;
+
+  const [currentTab, setCurrentTab] = useState('pay');
 
   return (
     <RdModal isOpen={isOpen} onClose={onClose} title={'Upkeep Cost Breakdown'} >
@@ -778,92 +790,125 @@ const UpkeepModal = ({isOpen, onClose, onComplete, maxUpkeepAmount, staleMeeple,
             )}
           </SimpleGrid>
         </RdModalBox>
+        <HStack justify='center' mt={4}>
+          <RdTabButton isActive={currentTab === 'pay'} onClick={() => setCurrentTab('pay')}>
+            Pay
+          </RdTabButton>
+          <RdTabButton isActive={currentTab === 'reset'} onClick={() => setCurrentTab('reset')}>
+            Reset
+          </RdTabButton>
+        </HStack>
         <RdModalBox mt={2}>
-          <FormControl>
-            <FormLabel>Upkeep Amount</FormLabel>
-            <Stack direction='row'>
-              <NumberInput
-                w='full'
-                defaultValue={0}
-                min={0}
-                max={staleMeeple}
-                name="quantity"
-                onChange={(valueString, valueNumber) => setQuantityToUpkeep(valueNumber)}
-                value={quantityToUpkeep}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-              <Button onClick={() => setQuantityToUpkeep(staleMeeple)}>
-                Max
-              </Button>
-            </Stack>
-            <FormHelperText>The amount of Ryoshi to upkeep</FormHelperText>
-          </FormControl>
-          <Flex justify='space-between' pt={4}>
-            <Text my='auto' fontSize={{base:'md', sm:'lg'}} fontWeight='bold'>Payment Amount</Text>
-            <HStack spacing={0} justifyContent='end'>
-              <Text as={'b'} textAlign={'right'} fontSize='28'>{commify(paymentAmount)}</Text>
-              <Image  src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/>
-            </HStack >
-          </Flex>
-          <Accordion allowToggle>
-            <AccordionItem border='none'>
-              {({ isExpanded }) => (
-                <>
-                  <AccordionButton p={0}>
-                    <Flex w='full' fontSize='sm'>
-                      <Box>{isExpanded ? 'Hide' : 'Show'} payment tiers</Box>
-                      <Box ms={4}>
-                        <AccordionIcon/>
-                      </Box>
-                    </Flex>
-                  </AccordionButton>
-                  <AccordionPanel fontSize='sm' px={0}>
-                    Cost per Ryoshi is based on the following tiers:
-                    <Box mt={2}>
-                      {rdConfig.townHall.ryoshi.upkeepCosts.sort((a, b) => a.threshold - b.threshold).map((cost, index, array) => {
-                        const nextCost = array[index + 1];
-                        return (
-                          <Flex key={index} justify='space-between'>
-                            {!!nextCost ? (
-                              <Box>{cost.threshold} - {nextCost.threshold - 1} Ryoshi</Box>
-                            ) : (
-                              <Box>{cost.threshold}+ Ryoshi</Box>
-                            )}
-                            <HStack spacing={0} justifyContent='end'>
-                              <Text>{cost.multiplier}</Text>
-                              <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={3}/>
-                            </HStack>
-                          </Flex>
-                        );
-                      })}
-                    </Box>
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-          </Accordion>
+          {currentTab === 'pay' ? (
+            <>
+              <FormControl>
+                <FormLabel>Upkeep Amount</FormLabel>
+                <Stack direction='row'>
+                  <NumberInput
+                    w='full'
+                    defaultValue={0}
+                    min={0}
+                    max={staleMeeple}
+                    name="quantity"
+                    onChange={(valueString, valueNumber) => setQuantityToUpkeep(valueNumber)}
+                    value={quantityToUpkeep}
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                  <Button onClick={() => setQuantityToUpkeep(staleMeeple)}>
+                    Max
+                  </Button>
+                </Stack>
+                <FormHelperText>The amount of Ryoshi to upkeep</FormHelperText>
+              </FormControl>
+              <Flex justify='space-between' pt={4}>
+                <Text my='auto' fontSize={{base:'md', sm:'lg'}} fontWeight='bold'>Payment Amount</Text>
+                <HStack spacing={0} justifyContent='end'>
+                  <Text as={'b'} textAlign={'right'} fontSize='28'>{commify(paymentAmount)}</Text>
+                  <Image  src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={6}/>
+                </HStack >
+              </Flex>
+              <Accordion allowToggle>
+                <AccordionItem border='none'>
+                  {({ isExpanded }) => (
+                    <>
+                      <AccordionButton p={0}>
+                        <Flex w='full' fontSize='sm'>
+                          <Box>{isExpanded ? 'Hide' : 'Show'} payment tiers</Box>
+                          <Box ms={4}>
+                            <AccordionIcon/>
+                          </Box>
+                        </Flex>
+                      </AccordionButton>
+                      <AccordionPanel fontSize='sm' px={0}>
+                        Cost per Ryoshi is based on the following tiers:
+                        <Box mt={2}>
+                          {rdConfig.townHall.ryoshi.upkeepCosts.sort((a, b) => a.threshold - b.threshold).map((cost, index, array) => {
+                            const nextCost = array[index + 1];
+                            return (
+                              <Flex key={index} justify='space-between'>
+                                {!!nextCost ? (
+                                  <Box>{cost.threshold} - {nextCost.threshold - 1} Ryoshi</Box>
+                                ) : (
+                                  <Box>{cost.threshold}+ Ryoshi</Box>
+                                )}
+                                <HStack spacing={0} justifyContent='end'>
+                                  <Text>{cost.multiplier}</Text>
+                                  <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/koban.png').convert()} alt="kobanIcon" boxSize={3}/>
+                                </HStack>
+                              </Flex>
+                            );
+                          })}
+                        </Box>
+                      </AccordionPanel>
+                    </>
+                  )}
+                </AccordionItem>
+              </Accordion>
+              <Box textAlign='center' mt={6} ps={5}>
+                <RdButton
+                  stickyIcon={true}
+                  onClick={handlePayUpkeep}
+                  fontSize={{base: 'xl', sm: '2xl'}}
+                  isLoading={isExecuting}
+                  isDisabled={isExecuting}
+                >
+                  Pay Upkeep
+                </RdButton>
+              </Box>
+            </>
+          ) : currentTab === 'reset' && (
+            <>
+              <VStack textAlign='center'>
+                <Text>
+                  By resetting your upkeep, upkeep cost will go to zero at the expense of all active and inactive off duty Ryoshi being burned.
+                </Text>
+                <Text>
+                  This may be helpful for those who wish to "start fresh" if upkeep cost has become unmanagable.
+                </Text>
+                <Text fontWeight='bold'>
+                  Please be sure this is what you want to do before continuing
+                </Text>
+              </VStack>
+              <Box textAlign='center' mt={6} ps={5}>
+                <RdButton
+                  stickyIcon={true}
+                  onClick={handleResetUpkeep}
+                  fontSize={{base: 'xl', sm: '2xl'}}
+                  isLoading={isExecuting}
+                  isDisabled={isExecuting}
+                >
+                  Reset Upkeep
+                </RdButton>
+              </Box>
+            </>
+          )}
         </RdModalBox>
       </Box>
-      <RdModalFooter>
-        <Box textAlign='center' mx={2}>
-          <Box ps='20px'>
-            <RdButton
-              stickyIcon={true}
-              onClick={handlePayUpkeep}
-              fontSize={{base: 'xl', sm: '2xl'}}
-              isLoading={isExecuting}
-              isDisabled={isExecuting}
-            >
-              Pay Upkeep
-            </RdButton>
-          </Box>
-        </Box>
-      </RdModalFooter>
     </RdModal>
   )
 }

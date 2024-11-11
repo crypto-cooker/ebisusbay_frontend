@@ -185,17 +185,6 @@ export const getLeadersForSeason = async (gameId) => {
   }
 }
 //meeple
-export const MeepleUpkeep = async (address, signature, amount) => {
-  try{
-    var data = await api.post("ryoshi-dynasties/meeple/upkeep?", 
-      {amount},
-      {params: {address, signature}});
-    return data.data.data;
-  }
-  catch(error){
-    throw error;
-  }
-}
 export const MeepleMint = async (address, signature, amount) => {
   try{
     var data = await api.post("ryoshi-dynasties/meeple/minting?", 

@@ -6528,7 +6528,7 @@
     "referral": false,
     "is1155": false,
     "published": false,
-    "complete": false,
+    "complete": true,
     "images": {
       "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/rebel-aut-club/drop.webp",
       "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/rebel-aut-club/banner.webp",

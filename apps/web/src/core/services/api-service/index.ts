@@ -521,4 +521,12 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async getUserPredictedFrtnRewards(farmId: number, chainId: number, address: string, signature: string) {
     return this.cms.getUserPredictedFrtnRewards(farmId, chainId, address, signature);
   }
+
+  async upkeepMeeple(amount: number, address: string, signature: string) {
+    return this.cms.upkeepMeeple(amount, address, signature);
+  }
+
+  async resetMeepleUpkeep(address: string, signature: string) {
+    return this.cms.resetMeepleUpkeep(address, signature);
+  }
 }

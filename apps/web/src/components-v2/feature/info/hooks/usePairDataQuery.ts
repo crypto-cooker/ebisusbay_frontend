@@ -94,9 +94,7 @@ interface HourlyData {
 }
 
 const getLiquidityUSDChange = (current: number, hourData: HourlyData[]): number => {
-  console.log(current,  hourData[hourData.length - 1].reserveUSD, "HHHHHHH")
   const percentChange =  getPercentChange(current, +hourData[hourData.length - 1].reserveUSD);
-  console.log(percentChange, "HHHHHHH")
   return percentChange
 };
 
