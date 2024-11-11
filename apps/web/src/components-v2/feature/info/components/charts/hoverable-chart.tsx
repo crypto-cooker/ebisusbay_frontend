@@ -32,6 +32,7 @@ const HoverableChart = ({
   }, [protocolData])
 
   useEffect(() => {
+    console.log(protocolData, "HHHHHHHHHHHH")
     if (typeof hover === 'undefined' && protocolData) {
       setHover(protocolData[valueProperty as keyof typeof protocolData])
     }

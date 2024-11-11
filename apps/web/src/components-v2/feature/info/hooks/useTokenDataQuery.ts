@@ -42,7 +42,7 @@ export const useTokenDataQuery = (address: string): TokenData | undefined => {
         priceUSD24h: +data_.tokenDayData[0].priceUSD,
         totalLiquidity24h: (+data_.tokenDayData[0].totalLiquidityUSD - +data_.tokenDayData[1].totalLiquidityUSD) / +data_.tokenDayData[1].totalLiquidityUSD * 100,
         priceChange: +data_.derivedUSD - +data_.tokenDayData[0].priceUSD,
-        txCount: +data_.tokenDayData.dailyTxns,
+        txCount: +data_.tokenDayData[0].dailyTxns,
       };
 
       return final;

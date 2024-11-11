@@ -287,9 +287,6 @@ importers:
       styled-components:
         specifier: ^5.3.1
         version: 5.3.11(@babel/core@7.24.9)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)
-      styled-system:
-        specifier: ^5.1.5
-        version: 5.1.5
       swiper:
         specifier: ^11.1.12
         version: 11.1.12
@@ -345,9 +342,6 @@ importers:
       '@types/lodash':
         specifier: ^4.17.6
         version: 4.17.7
-      '@types/styled-system':
-        specifier: ^5.1.17
-        version: 5.1.22
       '@wagmi/cli':
         specifier: ^2.1.15
         version: 2.1.15(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10)

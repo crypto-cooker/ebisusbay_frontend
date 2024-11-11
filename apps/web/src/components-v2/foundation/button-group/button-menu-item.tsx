@@ -1,25 +1,29 @@
 import styled from 'styled-components';
-import { Button, ButtonProps } from '@chakra-ui/react';
+import { Button, ButtonProps, theme } from '@chakra-ui/react';
 import { ElementType, ReactNode } from 'react';
+import { useUserTheme } from '@src/components-v2/useUser';
 
 interface ButtonMenuItemProps {
   children: ReactNode;
   isActive?: boolean;
   variant?: string;
   as?: 'a' | 'button' | ElementType;
-  to: string
+  to?: string;
+  onClick?: () => void;
 }
 
-interface InactiveButtonProps{
+interface InactiveButtonProps {
   forwardedAs: ButtonMenuItemProps['as'];
 }
 
 const InactiveButton = styled(Button)<InactiveButtonProps>`
-  &:hover:not(:disabled):not(:active) {
+  &:hover {
+    color: ${({ theme }) => theme.colors.textColor2};
   }
 `;
 
 const ButtonMenuItem = ({ children, isActive = false, variant = 'tab', as, ...props }: ButtonMenuItemProps) => {
+  const theme = useUserTheme();
   if (!isActive) {
     return (
       <InactiveButton forwardedAs={as} {...props}>
@@ -29,7 +33,7 @@ const ButtonMenuItem = ({ children, isActive = false, variant = 'tab', as, ...pr
   }
 
   return (
-    <Button as={as} variant={variant} {...props}>
+    <Button as={as} variant={variant} {...props} _hover={{ color: theme.colors.textColor2 }}>
       {children}
     </Button>
   );

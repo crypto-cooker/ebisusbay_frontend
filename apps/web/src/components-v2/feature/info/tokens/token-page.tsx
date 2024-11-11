@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { Link, Box, Breadcrumb, Flex, Heading, Image, Text, BreadcrumbSeparator } from '@chakra-ui/react';
+import { Link, Button, Box, Breadcrumb, Flex, Heading, Image, Text, BreadcrumbSeparator } from '@chakra-ui/react';
 import { Spinner } from '@chakra-ui/react';
 import { Card } from '@src/components-v2/foundation/card';
 import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
@@ -13,15 +13,15 @@ import { useTokenChartDataVolumeQuery } from '@src/components-v2/feature/info/ho
 import { useTokenTransactionsQuery } from '@src/components-v2/feature/info/hooks/useTokenTransactionsQuery';
 import { useChainIdByQuery, useChainPathByQuery } from '@src/components-v2/feature/info/hooks/chain';
 import styled from 'styled-components';
-import { getBlockExploreLink } from '../components/tables/transaction-table';
+import { getBlockExploreLink } from '@src/components-v2/feature/info/components/tables/transaction-table';
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import ChartCard from '@src/components-v2/feature/info/components/charts/chart-card';
-import PairTable from '../components/tables/pairs-table';
-import TransactionTable from '../components/tables/transaction-table';
+import PairTable from '@src/components-v2/feature/info/components/tables/pairs-table';
+import TransactionTable from '@src/components-v2/feature/info/components/tables/transaction-table';
 import Percent from '@src/components-v2/feature/info/components/percent';
-import useCMCLink from '../hooks/useCMCLink';
-import { usePairDatasForToken } from '../hooks';
+import useCMCLink from '@src/components-v2/feature/info/hooks/useCMCLink';
+import { usePairDatasForToken } from '@src/components-v2/feature/info/hooks';
 
 dayjs.extend(duration);
 
@@ -45,6 +45,12 @@ const StyledCMCLink = styled(Link)`
     opacity: 0.8;
   }
 `;
+
+const CustomBreadcrumb = styled(Breadcrumb)`
+  ol {
+    padding: 0;
+  }
+`
 const DEFAULT_TIME_WINDOW = dayjs.duration(1, 'weeks');
 
 const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({ routeAddress }) => {
@@ -84,8 +90,8 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
         ) : (
           <>
             {/* Stuff on top */}
-            <Flex justifyContent="space-between" mb="24px" flexDirection={['column', 'column', 'row']}>
-              <Breadcrumb mb="32px">
+            <Flex justifyContent="space-between" mt="24px" flexDirection={['column', 'column', 'row']}>
+              <CustomBreadcrumb mb="32px">
                 <NextLinkFromReactRouter to={`/info${chainPath}`}>
                   <Text color="primary">{'Info'}</Text>
                 </NextLinkFromReactRouter>
@@ -98,7 +104,7 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
                   <Text mr="8px">{tokenSymbol}</Text>
                   <Text>{`(${truncateHash(address)})`}</Text>
                 </Flex>
-              </Breadcrumb>
+              </CustomBreadcrumb>
               <Flex justifyContent={[null, null, 'flex-end']} mt={['8px', '8px', 0]}>
                 <Link mr="8px" color="primary" href={getBlockExploreLink(address, 'address', chainId)}>
                   {'View on Explorer'}
@@ -110,27 +116,22 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
                     target="_blank"
                     title="CoinMarketCap"
                   >
-                    <Image src="/img/cmc_mark.jpeg" rounded='full' height={22} width={22} alt={'View token on CoinMarketCap'} />
+                    <Image
+                      src="/img/cmc_mark.jpeg"
+                      rounded="full"
+                      height={22}
+                      width={22}
+                      alt={'View token on CoinMarketCap'}
+                    />
                   </StyledCMCLink>
                 )}
-                {/* <SaveIcon
-                  fill={savedTokens.includes(address)}
-                  onClick={() => (savedTokens.includes(address) ? removeToken(address) : addToken(address))}
-                /> */}
-                {/* <CopyButton ml="4px" text={address} tooltipMessage={'Token address copied'} /> */}
               </Flex>
             </Flex>
             <Flex justifyContent="space-between" flexDirection={['column', 'column', 'column', 'row']}>
               <Flex flexDirection="column" mb={['8px', null]}>
                 <Flex alignItems="center">
                   <CurrencyLogoByAddress size="32px" address={address} chainId={chainId} />
-                  <Text
-                    ml="12px"
-                    fontWeight={'bold'}
-                    lineHeight="0.7"
-                    fontSize={'40px'}
-                    id="info-token-name-title"
-                  >
+                  <Text ml="12px" fontWeight={'bold'} lineHeight="0.7" fontSize={'40px'} id="info-token-name-title">
                     {tokenName}
                   </Text>
                   <Text ml="12px" lineHeight="1" color="textSubtle" fontSize={'20px'}>
@@ -144,16 +145,16 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
                   <Percent value={tokenData.priceChange} fontWeight={600} />
                 </Flex>
               </Flex>
-              {/* <Flex>
-                <NextLinkFromReactRouter to={`/dex/liquidity}`}>
+              <Flex>
+                <NextLinkFromReactRouter to={`/dex/add/v2/${address}`}>
                   <Button mr="8px" variant="secondary">
                     {'Add Liquidity'}
                   </Button>
                 </NextLinkFromReactRouter>
-                <NextLinkFromReactRouter to={`/dex/swap`}>
+                <NextLinkFromReactRouter to={`/dex/swap?inputCurrency=${address}`}>
                   <Button>{'Trade'}</Button>
                 </NextLinkFromReactRouter>
-              </Flex> */}
+              </Flex>
             </Flex>
 
             {/* data on the right side of chart */}

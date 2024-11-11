@@ -11,7 +11,7 @@ import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import styled from 'styled-components';
 import { PairData } from '@src/components-v2/feature/info/state/types';
 import { ITEMS_PER_INFO_TABLE_PAGE } from '@src/components-v2/feature/info/state/constants';
-import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from './shared';
+import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from '@src/components-v2/feature/info/components/tables/shared';
 import { Card } from '@src/components-v2/foundation/card';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import { HStack } from '@chakra-ui/react';
@@ -44,6 +44,9 @@ const ResponsiveGrid = styled.div`
     > *:nth-child(1) {
       display: none;
     }
+  }
+  &:hover {
+    color: #cccccc;
   }
 `;
 

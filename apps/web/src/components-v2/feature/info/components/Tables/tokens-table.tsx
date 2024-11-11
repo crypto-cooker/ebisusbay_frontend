@@ -4,14 +4,13 @@ import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   useChainIdByQuery,
-  useChainNameByQuery,
   useChainPathByQuery,
 } from '@src/components-v2/feature/info/hooks/chain';
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import styled from 'styled-components';
 import { TokenData } from '@src/components-v2/feature/info/state/types';
-import { ITEMS_PER_INFO_TABLE_PAGE } from '../../state/constants';
-import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from './shared';
+import { ITEMS_PER_INFO_TABLE_PAGE } from '@src/components-v2/feature/info/state/constants';
+import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from '@src/components-v2/feature/info/components/tables/shared';
 import { Card } from '@src/components-v2/foundation/card';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import { HStack } from '@chakra-ui/react';
@@ -46,6 +45,9 @@ const ResponsiveGrid = styled.div`
     > *:nth-child(1) {
       display: none;
     }
+  }
+  &:hover {
+    color: #cccccc;
   }
 `;
 

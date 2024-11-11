@@ -12,6 +12,7 @@ export const useProtocolDataQuery = () :ProtocolData | undefined => {
     queryFn: async () => {
       try {
         const response = await info.getProtocolData();
+
         if (!response?.data?.overallDayDatas) {
           throw new Error('Failed to fetch data');
         }
@@ -26,12 +27,12 @@ export const useProtocolDataQuery = () :ProtocolData | undefined => {
       }
 
       const final: ProtocolData = {
-        volumeUSD: data_[0].volumeUSD,
-        volumeUSDChange: data_[0].volumeUSD - data_[1].volumeUSD,
-        liquidityUSD: data_[0].liquidityUSD,
-        liquidityUSDChange: data_[0].liquidityUSD - data_[1].liquidityUSD,
-        txCount: data_[0].totalTransactions,
-        txCountChange: data_[0].totalTransactions - data_[1].totalTransactions,
+        volumeUSD: +data_[0].dailyVolumeUSD,
+        volumeUSDChange: +data_[0].dailyVolumeUntracked - +data_[1].dailyVolumeUntracked,
+        liquidityUSD: +data_[0].totalLiquidityUSD,
+        liquidityUSDChange: +data_[0].totalLiquidityUSD - +data_[1].totalLiquidityUSD,
+        txCount: +data_[0].totalTransactions,
+        txCountChange: +data_[0].totalTransactions - +data_[1].totalTransactions,
       };
 
       return final;

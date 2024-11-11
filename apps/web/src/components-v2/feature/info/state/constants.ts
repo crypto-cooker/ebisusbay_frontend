@@ -3,19 +3,19 @@ import { ChainId } from '@pancakeswap/chains';
 export const ITEMS_PER_INFO_TABLE_PAGE = 10;
 
 export const chainPaths: Record<number, string> = {
-  [ChainId.CRONOS]: '',
-  [ChainId.CRONOS_TESTNET]: '/cro-test',
-  [ChainId.CRONOS_ZKEVM]: '/cro-zkevm',
-  [ChainId.CRONOS_ZKEVM_TESTNET]: '/cro-zkevm-test',
+  [ChainId.CRONOS]: '/cronos',
+  [ChainId.CRONOS_TESTNET]: '/cronos-testnet',
+  [ChainId.CRONOS_ZKEVM]: '/cronos-zkevm',
+  [ChainId.CRONOS_ZKEVM_TESTNET]: '/cronos-zkevm-testnet',
 };
 
 export const chainIdByChainPath = (chainName: string): number => {
   switch (chainName) {
-    case 'cro-test':
+    case 'cronos-testnet':
       return ChainId.CRONOS_TESTNET;
-    case 'cro-zkevm':
+    case 'cronos-zkevm':
       return ChainId.CRONOS_ZKEVM;
-    case 'cro-zkevm-test':
+    case 'cronos-zkevm-testnet':
       return ChainId.CRONOS_ZKEVM_TESTNET;
     default:
       return ChainId.CRONOS;
@@ -23,10 +23,10 @@ export const chainIdByChainPath = (chainName: string): number => {
 };
 
 export const chainQueryName = {
-  [ChainId.CRONOS]: '',
-  [ChainId.CRONOS_TESTNET]: 'cro-test',
-  [ChainId.CRONOS_ZKEVM]: 'cro-zkevm',
-  [ChainId.CRONOS_ZKEVM_TESTNET]: 'cro-zkevm-test',
+  [ChainId.CRONOS]: 'cronos',
+  [ChainId.CRONOS_TESTNET]: 'cronos-testnet',
+  [ChainId.CRONOS_ZKEVM]: 'cronos-zkevm',
+  [ChainId.CRONOS_ZKEVM_TESTNET]: 'cronos-zkevm-testnet',
 }
 
 export const WEEKS_IN_YEAR = 52.1429;

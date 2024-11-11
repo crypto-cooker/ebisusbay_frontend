@@ -53,6 +53,45 @@ export class Info {
     });
   }
 
+  async getPair(address: string) {
+    const query = `
+      query MyQuery {
+        pair(id: "${address}") {
+          id
+          name
+          reserveUSD
+          timestamp
+          volumeUSD
+          pairHourData(first: 24, orderBy: hourStartUnix, orderDirection: desc) {
+            hourlyVolumeUSD
+            hourStartUnix
+            reserveUSD
+          }
+          token0 {
+            id
+            name
+            symbol
+            decimals
+            derivedUSD
+            totalLiquidity
+          }
+          token1 {
+            id
+            name
+            symbol
+            decimals
+            derivedUSD
+            totalLiquidity
+          }
+        }
+      }
+    `;
+
+    return this.apollo.query({
+      query: gql(query),
+    });
+  }
+
   async getTokens() {
     const query = `
     query GetTokens {
@@ -84,16 +123,16 @@ export class Info {
 
   async getProtocolData() {
     const query = `
-    query GetProtocolData {
-      overallDayDatas(orderBy: date, orderDirection: desc, first: 2) {
-        dailyVolumeUSD
-        totalLiquidityUSD
-        totalTransactions
-        date
-        id
-        totalVolumeUSD
+      query GetProtocolData {
+        overallDayDatas(orderBy: date, orderDirection: desc, first: 2) {
+          dailyVolumeUSD
+          totalLiquidityUSD
+          totalTransactions
+          date
+          id
+          dailyVolumeUntracked
+        }
       }
-    }
     `;
 
     return this.apollo.query({
@@ -112,6 +151,30 @@ export class Info {
         id
       }
     }
+    `;
+
+    return this.apollo.query({
+      query: gql(query),
+    });
+  }
+
+  async getPairVolumeData(address:string) {
+    const query = `
+      query MyQuery {
+        pairDayDatas(where: {pairAddress: "${address}"}, first:1000, orderBy: date, orderDirection: desc) {
+          dailyVolumeCRO
+          dailyVolumeToken0
+          dailyVolumeToken1
+          dailyVolumeUSD
+          date
+          id
+          pairAddress
+          reserve0
+          reserve1
+          reserveUSD
+          totalSupply
+        }
+      }
     `;
 
     return this.apollo.query({
@@ -148,7 +211,7 @@ export class Info {
     });
   }
 
-  async getTransactions( ) {
+  async getTransactions() {
     const query = `
       query GetTransactions {
         transactions (orderBy: timestamp, orderDirection: desc) {
@@ -215,7 +278,7 @@ export class Info {
     });
   }
 
-  async getTransactionsForToken( address: string ) {
+  async getTransactionsForToken(address: string) {
     const query = `
       query GetTransactions {
         transactions (
@@ -318,7 +381,95 @@ export class Info {
     });
   }
 
-  async getTokenData( address: string) {
+  async getTransactionsForPair(address: string) {
+    const query = `
+      query GetTransactions {
+        transactions (
+        where: {
+            or: [
+              { 
+              burns_:
+                {
+                  pair:"${address}"
+                }
+              },{ 
+              mints_:
+                {
+                  pair:"${address}"
+                }
+              },{ 
+              swaps_:
+                {
+                  pair:"${address}"
+                }
+              }
+            ]          
+          },
+        orderBy: timestamp, orderDirection: desc) {
+          timestamp
+          id
+          burns {
+            amount1
+            amount0
+            amountUSD
+            token0 {
+              name
+              symbol
+              id
+            }
+            token1 {
+              id
+              name
+              symbol
+            }
+            sender
+          }
+          mints {
+            amountUSD
+            amount0
+            amount1
+            token0 {
+              name
+              symbol
+              id
+            }
+            token1 {
+              id
+              name
+              symbol
+            }
+            sender
+          }
+          swaps {
+            amount0In
+            amount0Out
+            amount1In
+            amount1Out
+            amountUSD
+            timestamp
+            id
+            token0 {
+              id
+              name
+              symbol
+            }
+            token1 {
+              id
+              name
+              symbol
+            }
+            sender
+          }
+        }
+      }
+    `;
+
+    return this.apollo.query({
+      query: gql(query),
+    });
+  }
+
+  async getTokenData(address: string) {
     const query = `
       query MyQuery {
           token(id: "${address}") {
@@ -348,7 +499,7 @@ export class Info {
     });
   }
 
-  async getTokenVolumeData( address: string) {
+  async getTokenVolumeData(address: string) {
     const query = `
       query MyQuery {
         token(id: "${address}") {
@@ -373,7 +524,7 @@ export class Info {
     });
   }
 
-  async getPairsForToken( address: string) {
+  async getPairsForToken(address: string) {
     const query = `
       query MyQuery {
          pairs(

@@ -1,207 +1,237 @@
 /* eslint-disable no-nested-ternary */
-import { Link, Box, Breadcrumb, Flex, Heading, Image, Text, BreadcrumbSeparator } from '@chakra-ui/react';
-import { Spinner } from '@chakra-ui/react';
-import { Card } from '@src/components-v2/foundation/card';
+import { Box, Button, Breadcrumb, Flex, Heading, Spinner, Text, Link, HStack, BreadcrumbSeparator } from '@chakra-ui/react';
 import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
-
-import truncateHash from '@pancakeswap/utils/truncateHash';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-import { useTokenDataQuery } from '@src/components-v2/feature/info/hooks/useTokenDataQuery';
-import { useTokenChartDataVolumeQuery } from '@src/components-v2/feature/info/hooks/useTokenChartDataVolumeQuery';
-
-import { useTokenTransactionsQuery } from '@src/components-v2/feature/info/hooks/useTokenTransactionsQuery';
-import { useChainIdByQuery, useChainPathByQuery } from '@src/components-v2/feature/info/hooks/chain';
+import { Card } from '@src/components-v2/foundation/card';
+import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { getBlockExploreLink } from '../components/tables/transaction-table';
+import { getBlockExploreLink } from '@src/components-v2/feature/info/components/tables/transaction-table';
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import ChartCard from '@src/components-v2/feature/info/components/charts/chart-card';
-import PairTable from '../components/tables/pairs-table';
-import TransactionTable from '../components/tables/transaction-table';
+import TransactionTable from '@src/components-v2/feature/info/components/tables/transaction-table';
 import Percent from '@src/components-v2/feature/info/components/percent';
-import useCMCLink from '../hooks/useCMCLink';
-import { usePairDatasForToken } from '../hooks';
-
-dayjs.extend(duration);
+import { useChainIdByQuery, useChainPathByQuery } from '../hooks/chain';
+import { usePairDataQuery } from '../hooks/usePairDataQuery';
+import { usePairChartVolumeDataQuery } from '../hooks/usePairChartVolumeDataQuery';
+import { usePairTransactionsQuery } from '../hooks/usePairTransactionsQuery';
+import { Pair } from '@pancakeswap/sdk';
 
 const ContentLayout = styled.div`
-  margin-top: 16px;
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 300px 1fr;
   grid-gap: 1em;
+  margin-top: 16px;
   @media screen and (max-width: 800px) {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
   }
 `;
 
-const StyledCMCLink = styled(Link)`
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-
+const TokenButton = styled(Flex)`
+  padding: 8px 0px;
+  margin-right: 16px;
   &:hover {
-    opacity: 0.8;
+    cursor: pointer;
+    opacity: 0.6;
   }
 `;
-const DEFAULT_TIME_WINDOW = dayjs.duration(1, 'weeks');
 
-const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({ routeAddress }) => {
+const LockedTokensContainer = styled(Flex)`
+  border: 1px solid ${({ theme }) => theme.colors.cardBorder};
+  background-color: ${({ theme }) => theme.colors.background};
+  padding: 16px;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  border-radius: 16px;
+  max-width: 280px;
+`;
+
+const CustomBreadcrumb = styled(Breadcrumb)`
+  ol {
+    padding: 0;
+  }
+`
+
+const PairPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({ routeAddress }) => {
+  const [showWeeklyData, setShowWeeklyData] = useState(0);
+
+  const PairData = usePairDataQuery(routeAddress);
+  const volumeChartData = usePairChartVolumeDataQuery(routeAddress);
+  const transactions = usePairTransactionsQuery(routeAddress);
+
+
   const chainId = useChainIdByQuery();
-
-  // In case somebody pastes checksummed address into url (since GraphQL expects lowercase address)
-  const address = routeAddress.toLocaleLowerCase();
-
-  const cmcLink = useCMCLink(address);
-
-  const tokenData = useTokenDataQuery(address);
-  const pairData = usePairDataQuery(address);
-  const { pairDatas } = usePairDatasForToken(address);
-  const transactions = useTokenTransactionsQuery(address);
-  const volumeChartData = useTokenChartDataVolumeQuery(address);
-
-  // pricing data
-  // const priceData = useTokenPriceDataQuery(address, ONE_HOUR_SECONDS, DEFAULT_TIME_WINDOW);
-
+  const [pairSymbol, symbol0, symbol1] = useMemo(() => {
+    const s0 = PairData?.token0.symbol;
+    const s1 = PairData?.token1.symbol;
+    return [`${s0} / ${s1}`, s0, s1];
+  }, [chainId, PairData?.token0.address, PairData?.token0.symbol, PairData?.token1.address, PairData?.token1.symbol]);
   const chainPath = useChainPathByQuery();
-  const tokenSymbol = tokenData?.symbol;
-  const tokenName = tokenData?.name;
+
+  const hasSmallDifference = useMemo(() => {
+    return PairData ? Math.abs(PairData.token1.derivedUSD - PairData.token0.derivedUSD) < 1 : false;
+  }, [PairData]);
 
   return (
     <Box>
-      {tokenData ? (
-        tokenData?.id == undefined ? (
-          <Card>
-            <Box p="16px">
-              <Text>
-                No pair has been created with this token yet. Create one
-                <NextLinkFromReactRouter style={{ display: 'inline', marginLeft: '6px' }} to={`/add/${address}`}>
-                  here.
-                </NextLinkFromReactRouter>
-              </Text>
-            </Box>
-          </Card>
-        ) : (
-          <>
-            {/* Stuff on top */}
-            <Flex justifyContent="space-between" mb="24px" flexDirection={['column', 'column', 'row']}>
-              <Breadcrumb mb="32px">
-                <NextLinkFromReactRouter to={`/info${chainPath}`}>
-                  <Text color="primary">{'Info'}</Text>
-                </NextLinkFromReactRouter>
-                <BreadcrumbSeparator>{'>'}</BreadcrumbSeparator>
-                <NextLinkFromReactRouter to={`/info${chainPath}/tokens`}>
-                  <Text color="primary">{'Tokens'}</Text>
-                </NextLinkFromReactRouter>
-                <BreadcrumbSeparator>{'>'}</BreadcrumbSeparator>
-                <Flex>
-                  <Text mr="8px">{tokenSymbol}</Text>
-                  <Text>{`(${truncateHash(address)})`}</Text>
-                </Flex>
-              </Breadcrumb>
-              <Flex justifyContent={[null, null, 'flex-end']} mt={['8px', '8px', 0]}>
-                <Link mr="8px" color="primary" href={getBlockExploreLink(address, 'address', chainId)}>
-                  {'View on Explorer'}
-                </Link>
-                {cmcLink && (
-                  <StyledCMCLink
-                    href={cmcLink}
-                    rel="noopener noreferrer nofollow"
-                    target="_blank"
-                    title="CoinMarketCap"
-                  >
-                    <Image src="/img/cmc_mark.jpeg" rounded='full' height={22} width={22} alt={'View token on CoinMarketCap'} />
-                  </StyledCMCLink>
-                )}
-                {/* <SaveIcon
-                  fill={savedTokens.includes(address)}
-                  onClick={() => (savedTokens.includes(address) ? removeToken(address) : addToken(address))}
-                /> */}
-                {/* <CopyButton ml="4px" text={address} tooltipMessage={'Token address copied'} /> */}
+      {PairData ? (
+        <>
+          <Flex justifyContent="space-between" mt="16px" flexDirection={['column', 'column', 'row']}>
+            <CustomBreadcrumb mb="32px">
+              <NextLinkFromReactRouter to={`/info${chainPath}`}>
+                <Text color="primary">{'Info'}</Text>
+              </NextLinkFromReactRouter>
+              <BreadcrumbSeparator>{'>'}</BreadcrumbSeparator>
+              <NextLinkFromReactRouter to={`/info${chainPath}/pairs`}>
+                <Text color="primary">{'Pairs'}</Text>
+              </NextLinkFromReactRouter>
+              <BreadcrumbSeparator>{'>'}</BreadcrumbSeparator>
+              <Flex>
+                <Text mr="8px">{pairSymbol}</Text>
               </Flex>
+            </CustomBreadcrumb>
+            <Flex justifyContent={[null, null, 'flex-end']} mt={['8px', '8px', 0]}>
+              <Link mr="8px" color="primary" href={getBlockExploreLink(routeAddress, 'address', chainId)}>
+                {'View on Explorer'}
+              </Link>
+            </Flex>
+          </Flex>
+          <Flex flexDirection="column">
+            <Flex alignItems="center" mb={['8px', null]}>
+              <HStack display={{ base: 'none', md: 'flex' }}>
+                <CurrencyLogoByAddress size={'32px'} address={PairData.token0.address} chainId={chainId} />
+                <CurrencyLogoByAddress size={'32px'} address={PairData.token1.address} chainId={chainId} />
+              </HStack>
+              <Text ml="38px" fontWeight={'bold'} fontSize={'24px'} id="info-pool-pair-title">
+                {pairSymbol}
+              </Text>
             </Flex>
             <Flex justifyContent="space-between" flexDirection={['column', 'column', 'column', 'row']}>
-              <Flex flexDirection="column" mb={['8px', null]}>
-                <Flex alignItems="center">
-                  <CurrencyLogoByAddress size="32px" address={address} chainId={chainId} />
-                  <Text
-                    ml="12px"
-                    fontWeight={'bold'}
-                    lineHeight="0.7"
-                    fontSize={'40px'}
-                    id="info-token-name-title"
-                  >
-                    {tokenName}
-                  </Text>
-                  <Text ml="12px" lineHeight="1" color="textSubtle" fontSize={'20px'}>
-                    ({tokenSymbol})
-                  </Text>
-                </Flex>
-                <Flex mt="8px" ml="46px" alignItems="center">
-                  <Text mr="16px" fontWeight={'bold'} fontSize="24px">
-                    ${formatAmount(tokenData.priceUSD, { notation: 'standard' })}
-                  </Text>
-                  <Percent value={tokenData.priceChange} fontWeight={600} />
-                </Flex>
+              <Flex flexDirection={['column', 'column', 'row']} mb={['8px', '8px', null]}>
+                <NextLinkFromReactRouter to={`/info${chainPath}/tokens/${PairData.token0.address}`}>
+                  <TokenButton>
+                    <CurrencyLogoByAddress address={PairData.token0.address} size="24px" chainId={chainId} />
+                    <Text fontSize="16px" ml="4px" style={{ whiteSpace: 'nowrap' }} width="fit-content">
+                      {`1 ${symbol0} =  ${formatAmount(PairData.token1.derivedUSD, {
+                        notation: 'standard',
+                        displayThreshold: 0.001,
+                        tokenPrecision: hasSmallDifference ? 'enhanced' : 'normal',
+                      })} ${symbol1}`}
+                    </Text>
+                  </TokenButton>
+                </NextLinkFromReactRouter>
+                <NextLinkFromReactRouter to={`/info${chainPath}/tokens/${PairData.token1.address}`}>
+                  <TokenButton ml={[null, null, '10px']}>
+                    <CurrencyLogoByAddress address={PairData.token1.address} size="24px" chainId={chainId} />
+                    <Text fontSize="16px" ml="4px" style={{ whiteSpace: 'nowrap' }} width="fit-content">
+                      {`1 ${symbol1} =  ${formatAmount(PairData.token0.derivedUSD, {
+                        notation: 'standard',
+                        displayThreshold: 0.001,
+                        tokenPrecision: hasSmallDifference ? 'enhanced' : 'normal',
+                      })} ${symbol0}`}
+                    </Text>
+                  </TokenButton>
+                </NextLinkFromReactRouter>
               </Flex>
-              {/* <Flex>
-                <NextLinkFromReactRouter to={`/dex/liquidity}`}>
-                  <Button mr="8px" variant="secondary">
+              <Flex>
+              <NextLinkFromReactRouter to={`/dex/add/v2/${PairData.token0.address}`}>
+                  <Button mr="8px">
                     {'Add Liquidity'}
                   </Button>
                 </NextLinkFromReactRouter>
-                <NextLinkFromReactRouter to={`/dex/swap`}>
+                <NextLinkFromReactRouter to={`/dex/swap?outputCurrency=${PairData.token1.address}&inputCurrency=${PairData.token0.address}`}>
                   <Button>{'Trade'}</Button>
                 </NextLinkFromReactRouter>
-              </Flex> */}
+              </Flex>
             </Flex>
-
-            {/* data on the right side of chart */}
-            <ContentLayout>
+          </Flex>
+          <ContentLayout>
+            <Box>
               <Card>
-                <Box p="24px">
-                  <Text fontWeight={'bold'} color="secondary" fontSize="12px" textTransform="uppercase">
-                    {'Liquidity'}
-                  </Text>
-                  <Text fontWeight={'bold'} fontSize="24px">
-                    ${formatAmount(tokenData.totalLiquidityUSD)}
-                  </Text>
-                  <Percent value={tokenData.totalLiquidity24h} />
-
-                  <Text mt="24px" fontWeight={'bold'} color="secondary" fontSize="12px" textTransform="uppercase">
-                    {'Volume 24H'}
-                  </Text>
-                  <Text fontWeight={'bold'} fontSize="24px" textTransform="uppercase">
-                    ${formatAmount(tokenData.tradeVolumeUSD)}
-                  </Text>
-                  <Percent value={tokenData.volumeUSD24h} />
-
-                  <Text mt="24px" fontWeight={'bold'} color="secondary" fontSize="12px" textTransform="uppercase">
-                    {'Transactions 24H'}
-                  </Text>
-                  <Text fontWeight={'bold'} fontSize="24px">
-                    {formatAmount(tokenData.txCount, { isInteger: true })}
-                  </Text>
-                </Box>
+                <Flex justifyContent="space-between">
+                  <Flex flex="1" flexDirection="column">
+                    <Text color="secondary" fontWeight={'bold'} fontSize="12px" textTransform="uppercase">
+                      {'Liquidity'}
+                    </Text>
+                    <Text fontSize="24px" fontWeight={'bold'}>
+                      ${formatAmount(PairData.liquidityUSD)}
+                    </Text>
+                    <Percent value={PairData.liquidityUSDChange} />
+                  </Flex>
+                  <Flex flex="1" flexDirection="column">
+                    <Text color="secondary" fontWeight={'bold'} fontSize="12px" textTransform="uppercase">
+                      {'LP reward APR'}
+                    </Text>
+                    <Text fontSize="24px" fontWeight={'bold'}>
+                      {formatAmount(PairData.lpApr24h)}%
+                    </Text>
+                    <Flex alignItems="center">
+                      <Text mr="4px" fontSize="12px" color="textSubtle">
+                        {'24 performance'}
+                      </Text>
+                    </Flex>
+                  </Flex>
+                </Flex>
+                <Text color="secondary" fontWeight={'bold'} mt="24px" fontSize="12px" textTransform="uppercase">
+                  {'Total Tokens Locked'}
+                </Text>
+                <LockedTokensContainer>
+                  <Flex justifyContent="space-between">
+                    <Flex>
+                      <CurrencyLogoByAddress address={PairData.token0.address} size="24px" chainId={chainId} />
+                      <Text color="textSubtle" ml="8px">
+                        {symbol0}
+                      </Text>
+                    </Flex>
+                    <Text>{formatAmount(PairData.token0.totalLiquidity)}</Text>
+                  </Flex>
+                  <Flex justifyContent="space-between">
+                    <Flex>
+                      <CurrencyLogoByAddress address={PairData.token1.address} size="24px" chainId={chainId} />
+                      <Text color="textSubtle" ml="8px">
+                        {symbol1}
+                      </Text>
+                    </Flex>
+                    <Text>{formatAmount(PairData.token1.totalLiquidity)}</Text>
+                  </Flex>
+                </LockedTokensContainer>
               </Card>
-              {/* charts card */}
-              <ChartCard
-                variant="token"
-                volumeChartData={volumeChartData}
-                tvlChartData={volumeChartData}
-                tokenData={tokenData}
-                tokenPriceData={undefined}
-              />
-            </ContentLayout>
-
-            <Heading scale="lg" mb="16px" mt="40px">
-              {'Transactions'}
-            </Heading>
-
-            <TransactionTable transactions={transactions} />
-          </>
-        )
+              <Card mt="16px" pt='16px'>
+                <Flex flexDirection="column">
+                  {/* <ButtonMenu activeIndex={showWeeklyData}>
+                    <ButtonMenuItem onClick={() => {setShowWeeklyData(0)}}>{'24H'}</ButtonMenuItem>
+                    <ButtonMenuItem onClick={() => {setShowWeeklyData(1)}}>{'7D'}</ButtonMenuItem>
+                  </ButtonMenu> */}
+                  <Flex flexDirection="column" gap='16px'>
+                    <Flex flex="1" flexDirection="column">
+                      <Text color="secondary" fontSize="12px" fontWeight={'bold'} textTransform="uppercase">
+                        {'Volume 24H'}
+                      </Text>
+                      <Text fontSize="24px" fontWeight={'bold'}>
+                        ${formatAmount(PairData.volumeUSD)}
+                      </Text>
+                      <Percent value={PairData.dailyVolumeUSD} />
+                    </Flex>
+                    <Flex flex="1" flexDirection="column">
+                      <Text color="secondary" fontSize="12px" fontWeight={'bold'} textTransform="uppercase">
+                        {showWeeklyData ? 'LP reward fees 7D' : 'LP reward fees 24H'}
+                      </Text>
+                      <Text fontSize="24px" fontWeight={'bold'}>
+                        ${formatAmount(PairData.totalFees24h)}
+                      </Text>
+                    </Flex>
+                  </Flex>
+                </Flex>
+              </Card>
+            </Box>
+            <ChartCard variant="pool" volumeChartData={volumeChartData} tvlChartData={volumeChartData} />
+          </ContentLayout>
+          <Heading mb="16px" mt="40px" scale="lg">
+            {'Transactions'}
+          </Heading>
+          <TransactionTable transactions={transactions} />
+        </>
       ) : (
         <Flex mt="80px" justifyContent="center">
           <Spinner />
@@ -211,4 +241,4 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
   );
 };
 
-export default TokenPage;
+export default PairPage;
