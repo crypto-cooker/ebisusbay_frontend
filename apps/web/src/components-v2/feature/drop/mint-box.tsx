@@ -58,9 +58,10 @@ interface MintBoxProps {
   specialWhitelist: any;
   maxMintPerTx: number;
   maxMintPerAddress: number;
+  isInPresale: boolean;
 }
 
-export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescription, onMintSuccess, canMintQuantity, regularCost, memberCost, whitelistCost, specialWhitelist, maxMintPerTx, maxMintPerAddress}: MintBoxProps) => {
+export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescription, onMintSuccess, canMintQuantity, regularCost, memberCost, whitelistCost, specialWhitelist, maxMintPerTx, maxMintPerAddress, isInPresale}: MintBoxProps) => {
   const user = useUser();
   const userTheme = user.theme;
   const {requestSignature} = useEnforceSigner();
@@ -159,7 +160,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
         const receipt = await response.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
-        const finalCostDecimals = drop.slug === '946-club' ? 6 : 18;
+        const finalCostDecimals = is946Drop ? 6 : 18;
 
         {
           const purchaseAnalyticParams = {
@@ -224,7 +225,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
     const actualContract = contractService!.custom(drop.address, abi);
     const gasPrice = parseUnits('20000', 'gwei');
-    const gasEstimate = drop.slug === '946-club' ?
+    const gasEstimate = is946Drop ?
       await actualContract.estimateGas.mint(numToMint) :
       await actualContract.estimateGas.mintWithToken(numToMint);
     const gasLimit = gasEstimate.mul(2);
@@ -233,7 +234,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       gasLimit
     };
 
-    return drop.slug === '946-club' ?
+    return is946Drop ?
       await actualContract.mint(numToMint, extra) :
       await actualContract.mintWithToken(numToMint, extra);
   }
@@ -282,6 +283,8 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     }
   }, [drop]);
 
+  const is946Drop = drop.slug === '946-club';
+
   return (
     <div className="card h-100 shadow mt-2" style={{
       borderColor:getTheme(userTheme).colors.borderColor3,
@@ -319,8 +322,19 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       {drop.erc20Cost && drop.erc20Token && erc20Token && (
                         <Heading as="h5" size="md" mt={1}>
                           <Flex alignItems='center'>
-                            <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(drop.chainId ?? ChainId.CRONOS)} size='24px' />
-                            <span className="ms-2">{ethers.utils.commify(round(drop.erc20Cost))}</span>
+                            {is946Drop && isInPresale ? (
+                              <span className="ms-2">Free</span>
+                            ) : is946Drop ? (
+                              <>
+                                <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(drop.chainId ?? ChainId.CRONOS)} size='24px' />
+                                <span className="ms-2">{ethers.utils.commify(round(regularCost))}</span>
+                              </>
+                            ) : (
+                              <>
+                                <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(drop.chainId ?? ChainId.CRONOS)} size='24px' />
+                                <span className="ms-2">{ethers.utils.commify(round(drop.erc20Cost))}</span>
+                              </>
+                            )}
                           </Flex>
                         </Heading>
                       )}

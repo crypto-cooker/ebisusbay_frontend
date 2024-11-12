@@ -95,6 +95,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
   const [specialWhitelist, setSpecialWhitelist] = useState<SpecialWhitelist | null>(null);
   const [totalSupply, setTotalSupply] = useState(0);
   const [canMintQuantity, setCanMintQuantity] = useState(0);
+  const [isInPresale, setIsInPresale] = useState(false);
 
 
   const [openMenu, setOpenMenu] = useState(tabs.description);
@@ -174,7 +175,8 @@ const SingleDrop = ({drop}: SingleDropProps) => {
             normalCost,
             whitelistCost,
             totalSupply,
-            canMint
+            canMint,
+            isInPresale
           ] = await multicall(wagmiConfig, {
             chainId: currentDrop.chainId,
             contracts: [
@@ -214,6 +216,12 @@ const SingleDrop = ({drop}: SingleDropProps) => {
                 functionName: 'canMint',
                 args: [user.address as Address],
               },
+              {
+                abi: abi as any,
+                address: currentDrop.address as Address,
+                functionName: 'isInPresale',
+                args: [],
+              },
             ],
           });
 
@@ -223,7 +231,8 @@ const SingleDrop = ({drop}: SingleDropProps) => {
             regularCost: BigNumber.from(normalCost.result).toString(),
             memberCost: 0,
             whitelistCost: BigNumber.from(whitelistCost.result),
-            maxMintPerTx: BigNumber.from(maxPerTx.result)
+            maxMintPerTx: BigNumber.from(maxPerTx.result),
+            isInPresale: isInPresale.result
           }
           setDropInfoFromContract(newInfos, canMint.status === 'success' ? Number(canMint.result as bigint) : 0, 6);
           calculateStatus(currentDrop, newInfos.totalSupply, newInfos.maxSupply);
@@ -260,6 +269,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     setWhitelistCost(drop.whitelistCost);
     setSpecialWhitelist(drop.specialWhitelistCost);
     setCanMintQuantity(drop.maxMintPerTx);
+    setIsInPresale(false);
   };
 
   const setDropInfoFromContract = (infos: any, canMint: number, decimals = 18) => {
@@ -271,6 +281,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     setTotalSupply(infos.totalSupply);
     if (infos.whitelistCost) setWhitelistCost(Number(ethers.utils.formatUnits(infos.whitelistCost, decimals)));
     setCanMintQuantity(Math.min(canMint, infos.maxMintPerTx));
+    setIsInPresale(infos.isInPresale);
 
     setTotalSupply(infos.totalSupply - drop.supplyOffset);
     setMaxSupply(infos.maxSupply - drop.supplyOffset);
@@ -432,6 +443,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
                   specialWhitelist={specialWhitelist}
                   maxMintPerTx={maxMintPerTx}
                   maxMintPerAddress={maxMintPerAddress}
+                  isInPresale={isInPresale}
                 />
               )}
 
