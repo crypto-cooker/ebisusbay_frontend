@@ -159,9 +159,11 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
         const receipt = await response.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
+        const finalCostDecimals = drop.slug === '946-club' ? 6 : 18;
+
         {
           const purchaseAnalyticParams = {
-            value: Number(ethers.utils.formatEther(finalCost)),
+            value: Number(ethers.utils.formatUnits(finalCost, finalCostDecimals)),
             currency: 'CRO',
             transaction_id: receipt.transactionHash,
             drop_name: drop.title.toString(),
@@ -172,7 +174,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
               item_name: drop.title,
               item_brand: drop.author.name,
               price: regularCost,
-              discount: regularCost - Number(ethers.utils.formatEther(finalCost)),
+              discount: regularCost - Number(ethers.utils.formatUnits(finalCost, finalCostDecimals)),
               quantity: numToMint
             }]
           };
@@ -222,14 +224,18 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
     const actualContract = contractService!.custom(drop.address, abi);
     const gasPrice = parseUnits('20000', 'gwei');
-    const gasEstimate = await actualContract.estimateGas.mintWithToken(numToMint);
+    const gasEstimate = drop.slug === '946-club' ?
+      await actualContract.estimateGas.mint(numToMint) :
+      await actualContract.estimateGas.mintWithToken(numToMint);
     const gasLimit = gasEstimate.mul(2);
     let extra = {
       gasPrice,
       gasLimit
     };
 
-    return await actualContract.mintWithToken(numToMint, extra);
+    return drop.slug === '946-club' ?
+      await actualContract.mint(numToMint, extra) :
+      await actualContract.mintWithToken(numToMint, extra);
   }
 
   const mintWithRewards = async (finalCost: number) => {

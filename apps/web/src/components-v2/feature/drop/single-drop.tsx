@@ -7,7 +7,7 @@ import {useRouter} from 'next/router';
 import ReactPlayer from 'react-player';
 import * as Sentry from '@sentry/react';
 import styled from 'styled-components';
-import {isFounderDrop, newlineText,} from '@market/helpers/utils';
+import { ciEquals, isFounderDrop, newlineText } from '@market/helpers/utils';
 import {DropState as statuses} from '@src/core/api/enums';
 import {EbisuDropAbi, ERC20} from '@src/global/contracts/Abis';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
@@ -23,6 +23,9 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import {useUser} from "@src/components-v2/useUser";
 import {useAppChainConfig} from "@src/config/hooks";
+import { wagmiConfig } from '@src/wagmi';
+import { multicall } from '@wagmi/core';
+import { Address } from 'viem';
 
 const Markdown= dynamic(() => import('react-markdown'),{ ssr: false });
 
@@ -147,7 +150,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
         currentDrop = Object.assign({ writeContract: writeContract }, currentDrop);
 
         if (currentDrop.erc20Token) {
-          const token = config.tokens[currentDrop.erc20Token];
+          const token = config.tokens[currentDrop.erc20Token] ?? Object.values(config.tokens).find(token => ciEquals(token.address, currentDrop.erc20Token));
           const erc20Contract = new ethers.Contract(token.address, ERC20, user.provider.getSigner());
           const erc20ReadContract = new ethers.Contract(token.address, ERC20, readProvider);
           currentDrop = {
@@ -163,23 +166,75 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     }
     try {
       if (currentDrop.address && (isUsingDefaultDropAbi(currentDrop.abi) || isUsingAbiFile(currentDrop.abi))) {
-        let readContract = await new ethers.Contract(currentDrop.address, abi!, readProvider);
-        const infos = await readContract.getInfo();
-        const canMint = user.address ? await readContract.canMint(user.address) : 0;
-        if (drop.slug === 'pixel-ryoshi-vip') {
-          let newInfos = {...infos}
-          newInfos.maxSupply = BigNumber.from(currentDrop.totalSupply);
-          newInfos.totalSupply = BigNumber.from(currentDrop.totalSupply - infos.totalSupply)
-          newInfos.memberCost = BigNumber.from(0)
-          newInfos.whitelistCost = BigNumber.from(0)
-          setDropInfoFromContract(newInfos, canMint);
+        let readContract = new ethers.Contract(currentDrop.address, abi!, readProvider);
+        if (drop.slug === '946-club') {
+          const [
+            maxPerTx,
+            maxSupply,
+            normalCost,
+            whitelistCost,
+            totalSupply,
+            canMint
+          ] = await multicall(wagmiConfig, {
+            chainId: currentDrop.chainId,
+            contracts: [
+              {
+                abi: abi as any,
+                address: currentDrop.address as Address,
+                functionName: 'maxPerTx',
+                args: [],
+              },
+              {
+                abi: abi as any,
+                address: currentDrop.address as Address,
+                functionName: 'maxSupply',
+                args: [],
+              },
+              {
+                abi: abi as any,
+                address: currentDrop.address as Address,
+                functionName: 'normalCost',
+                args: [],
+              },
+              {
+                abi: abi as any,
+                address: currentDrop.address as Address,
+                functionName: 'whitelistCost',
+                args: [],
+              },
+              {
+                abi: abi as any,
+                address: currentDrop.address as Address,
+                functionName: 'totalSupply',
+                args: [],
+              },
+              {
+                abi: abi as any,
+                address: currentDrop.address as Address,
+                functionName: 'canMint',
+                args: [user.address as Address],
+              },
+            ],
+          });
+
+          let newInfos: { [key: string]: any } = {
+            maxSupply: BigNumber.from(maxSupply.result),
+            totalSupply: BigNumber.from(totalSupply.result),
+            regularCost: BigNumber.from(normalCost.result).toString(),
+            memberCost: 0,
+            whitelistCost: BigNumber.from(whitelistCost.result),
+            maxMintPerTx: BigNumber.from(maxPerTx.result)
+          }
+          setDropInfoFromContract(newInfos, canMint.status === 'success' ? Number(canMint.result as bigint) : 0, 6);
           calculateStatus(currentDrop, newInfos.totalSupply, newInfos.maxSupply);
         } else {
+          const infos = await readContract.getInfo();
+          const canMint = user.address ? await readContract.canMint(user.address) : 0;
           setDropInfoFromContract(infos, canMint);
           calculateStatus(currentDrop, infos.totalSupply, infos.maxSupply);
         }
       } else {
-        let readContract = await new ethers.Contract(currentDrop.address, abi!, readProvider);
+        let readContract = new ethers.Contract(currentDrop.address, abi!, readProvider);
         const currentSupply = await readContract.totalSupply();
         setDropInfo(currentDrop, currentSupply);
         calculateStatus(currentDrop, currentSupply, currentDrop.totalSupply);
@@ -207,14 +262,14 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     setCanMintQuantity(drop.maxMintPerTx);
   };
 
-  const setDropInfoFromContract = (infos: any, canMint: number) => {
+  const setDropInfoFromContract = (infos: any, canMint: number, decimals = 18) => {
     setMaxMintPerAddress(Number(infos.maxMintPerAddress));
     setMaxMintPerTx(infos.maxMintPerTx);
     setMaxSupply(infos.maxSupply);
-    setMemberCost(Number(ethers.utils.formatEther(infos.memberCost)));
-    setRegularCost(Number(ethers.utils.formatEther(infos.regularCost)));
+    setMemberCost(Number(ethers.utils.formatUnits(infos.memberCost, decimals)));
+    setRegularCost(Number(ethers.utils.formatUnits(infos.regularCost, decimals)));
     setTotalSupply(infos.totalSupply);
-    if (infos.whitelistCost) setWhitelistCost(Number(ethers.utils.formatEther(infos.whitelistCost)));
+    if (infos.whitelistCost) setWhitelistCost(Number(ethers.utils.formatUnits(infos.whitelistCost, decimals)));
     setCanMintQuantity(Math.min(canMint, infos.maxMintPerTx));
 
     setTotalSupply(infos.totalSupply - drop.supplyOffset);

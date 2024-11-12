@@ -7832,5 +7832,46 @@
       "escrow": false,
       "verified": true
     }
+  },
+  {
+    "id": 199,
+    "chainId": 25,
+    "slug": "946-club",
+    "title": "946 Club",
+    "subtitle": "",
+    "description": "",
+    "author": {
+      "name": "crow with knife",
+      "website": "https://crowwithknife.com/",
+      "twitter": "https://twitter.com/crow_with_knife",
+      "discord": "https://discord.gg/gutvRaZpdr"
+    },
+    "address": "0x5c84dc2eeb3836ce0b07a47cb4c0d70fb867a22c",
+    "maxMintPerTx": 100,
+    "maxMintPerAddress": 100,
+    "totalSupply": 2000,
+    "erc20Cost": "100",
+    "erc20Token": "0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
+    "erc20Only": true,
+    "foundersOnly": false,
+    "abi": "946-club.json",
+    "start": 1730836800000,
+    "end": null,
+    "referral": false,
+    "is1155": false,
+    "published": true,
+    "complete": false,
+    "images": {
+      "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/946-club/drop.webp",
+      "banner": "https://cdn-prod.ebisusbay.com/files/drop-images/946-club/banner.webp",
+      "avatar": "https://cdn-prod.ebisusbay.com/files/drop-images/946-club/avatar.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/946-club/card.webp"
+    },
+    "verification": {
+      "doxx": false,
+      "kyc": false,
+      "escrow": false,
+      "verified": true
+    }
   }
 ]
