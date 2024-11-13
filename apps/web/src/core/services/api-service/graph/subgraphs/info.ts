@@ -18,7 +18,7 @@ export class Info {
   async getPairs() {
     const query = `
       query MyQuery {
-        pairs {
+        pairs(orderBy:reserveUSD, orderDirection:desc) {
           id
           name
           reserveUSD
@@ -104,7 +104,7 @@ export class Info {
         totalLiquidity
         derivedUSD
         id
-        tokenDayData(first: 1, orderBy: date, orderDirection: desc, skip: 1) {
+        tokenDayData(first: 2, orderBy: date, orderDirection: desc) {
           date
           dailyVolumeToken
           dailyVolumeUSD
