@@ -17,10 +17,6 @@ import { Field, replaceSwapState } from './actions';
 import { swapReducerAtom, SwapState } from './reducer';
 import { useGetENSAddressByName } from '@eb-pancakeswap-web/hooks/useGetENSAddressByName';
 import { computeSlippageAdjustedAmounts } from '@eb-pancakeswap-web/utils/exchange';
-import { useExchangeRate } from '@market/hooks/useGlobalPrices';
-import { formattedCurrencyAmount } from '@dex/components/formatted-currency-amount';
-import { formatCurrencyAmount, formatRawAmount } from '../../utils/formatCurrencyAmount';
-import formatAmountDisplay from '@dex/swap/utils/formatAmountDisplay';
 
 // import {useBestAMMTrade} from "@eb-pancakeswap-web/hooks/useBestAMMTrade";
 
@@ -110,7 +106,6 @@ export function useDerivedSwapInfo(
 ): {
   currencies: { [field in Field]?: Currency };
   currencyBalances: { [field in Field]?: CurrencyAmount<Currency> };
-  currencyUSDAmounts: { [field in Field]?: number };
   parsedAmount: CurrencyAmount<Currency> | undefined;
   v2Trade: Trade<Currency, Currency, TradeType> | undefined;
   inputError?: string;
@@ -183,40 +178,9 @@ export function useDerivedSwapInfo(
     inputError = `Insufficient ${amountIn.currency.symbol} balance`;
   }
 
-  const chainId = useChainId();
-
-  const { usdValueForToken } = useExchangeRate(chainId);
-
-  const currencyUSDAmounts = {
-    [Field.INPUT]: usdValueForToken(
-      Number(
-        formatCurrencyAmount(slippageAdjustedAmounts ? slippageAdjustedAmounts[Field.INPUT] : undefined, 3, 'en-US'),
-      ),
-      currencies[Field.OUTPUT]?.wrapped.address,
-    ),
-    [Field.OUTPUT]: usdValueForToken(
-      Number(
-        formatCurrencyAmount(slippageAdjustedAmounts ? slippageAdjustedAmounts[Field.OUTPUT] : undefined, 3, 'en-US'),
-      ),
-      currencies[Field.OUTPUT]?.wrapped.address,
-    ),
-  };
-
-  const price = usdValueForToken(1, currencies[Field.OUTPUT]?.wrapped.address);
-  console.log(
-    price,
-    formatCurrencyAmount(slippageAdjustedAmounts ? slippageAdjustedAmounts[Field.INPUT] : undefined, 3, 'en-US'),
-    formatCurrencyAmount(slippageAdjustedAmounts ? slippageAdjustedAmounts[Field.OUTPUT] : undefined, 3, 'en-US'),
-    formatAmountDisplay(slippageAdjustedAmounts ? slippageAdjustedAmounts[Field.INPUT]?.asFraction : undefined),
-    currencyUSDAmounts,
-    currencies[Field.OUTPUT]?.wrapped.address,
-    'HHHHHHHHHHH',
-  );
-
   return {
     currencies,
     currencyBalances,
-    currencyUSDAmounts,
     parsedAmount,
     v2Trade: v2Trade ?? undefined,
     inputError,
