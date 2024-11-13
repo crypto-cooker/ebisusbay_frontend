@@ -1,7 +1,7 @@
 import { Box, BreadcrumbSeparator, Stack } from '@chakra-ui/react';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbProps } from '@chakra-ui/react';
-import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
 import { useChainPathByQuery } from '../hooks/chain';
+import Link from 'next/link';
 
 interface BreadCrumbProps {
   infoType: string;
@@ -13,9 +13,9 @@ const BreadCrumb = ({ infoType, infoContent }: BreadCrumbProps) => {
   return (
     <Stack>
       <Breadcrumb variant="plain">
-        <NextLinkFromReactRouter to={`/info${chainPath}`}>Info</NextLinkFromReactRouter>
+        <Link href={`/info${chainPath}`}>Info</Link>
         <BreadcrumbSeparator>{'>'}</BreadcrumbSeparator>
-        <NextLinkFromReactRouter to={`/info${chainPath}/${infoType}`}>{infoType}</NextLinkFromReactRouter>
+        <Link href={`/info${chainPath}/${infoType}`}>{infoType}</Link>
         <BreadcrumbSeparator>{'>'}</BreadcrumbSeparator>
         <Box>{infoContent}</Box>
       </Breadcrumb>

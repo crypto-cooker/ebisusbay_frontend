@@ -1,6 +1,6 @@
 import { Box, Flex, Skeleton, Text } from '@chakra-ui/react';
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
-import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
+import Link from 'next/link';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   useChainIdByQuery,
@@ -50,7 +50,7 @@ const ResponsiveGrid = styled.div`
   }
 `;
 
-const LinkWrapper = styled(NextLinkFromReactRouter)`
+const LinkWrapper = styled(Link)`
   text-decoration: none;
   &:hover {
     cursor: pointer;
@@ -92,7 +92,7 @@ const DataRow = ({ PairData, index }: { PairData: PairData; index: number }) => 
   const token1symbol = PairData.token1.symbol;
 
   return (
-    <LinkWrapper to={`/info${chainPath}/pairs/${PairData.id}`}>
+    <LinkWrapper href={`/info${chainPath}/pairs/${PairData.id}`}>
       <ResponsiveGrid>
         <Text>{index + 1}</Text>
         <Flex>

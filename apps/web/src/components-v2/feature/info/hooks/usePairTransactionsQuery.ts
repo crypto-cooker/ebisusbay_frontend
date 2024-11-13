@@ -4,7 +4,7 @@ import { useChainIdByQuery } from './chain';
 import { Info } from '@src/core/services/api-service/graph/subgraphs/info';
 import { Transaction, TransactionType } from '../state/types';
 
-export const usePairTransactionsQuery = (address:string): Transaction[]=> {
+export const usePairTransactionsQuery = (address:string): Transaction[] | undefined => {
   const chainId: number = useChainIdByQuery();
   const info = useMemo(() => new Info(chainId), [chainId]);
   const { data } = useQuery({
@@ -54,7 +54,7 @@ export const usePairTransactionsQuery = (address:string): Transaction[]=> {
   });
 
   return useMemo(() => {
-    return data ?? [];
+    return data ?? undefined;
   }, [data, chainId]);
 };
 

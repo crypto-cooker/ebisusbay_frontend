@@ -1,7 +1,7 @@
 import { Box, Flex, Skeleton, Text } from '@chakra-ui/react';
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
-import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 import {
   useChainIdByQuery,
   useChainPathByQuery,
@@ -51,7 +51,7 @@ const ResponsiveGrid = styled.div`
   }
 `;
 
-const LinkWrapper = styled(NextLinkFromReactRouter)`
+const LinkWrapper = styled(Link)`
   text-decoration: none;
   &:hover {
     cursor: pointer;
@@ -93,7 +93,7 @@ const DataRow = ({ TokenData, index }: { TokenData: TokenData; index: number }) 
   const color = TokenData.priceChange < 0 ? theme.colors.failure : theme.colors.success;
 
   return (
-    <LinkWrapper to={`/info${chainPath}/tokens/${TokenData.id}`}>
+    <LinkWrapper href={`/info${chainPath}/tokens/${TokenData.id}`}>
       <ResponsiveGrid>
         <Text>{index + 1}</Text>
         <Flex>

@@ -8,7 +8,7 @@ interface ButtonMenuItemProps {
   isActive?: boolean;
   variant?: string;
   as?: 'a' | 'button' | ElementType;
-  to?: string;
+  href?: string;
   onClick?: () => void;
 }
 

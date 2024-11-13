@@ -7,11 +7,9 @@ import { ITEMS_PER_INFO_TABLE_PAGE } from '../../state/constants';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
-import { useChainIdByQuery, useChainNameByQuery } from '../../hooks/chain';
+import { useChainIdByQuery } from '../../hooks/chain';
 import { Transaction, TransactionType } from '../../state/types';
 import styled from 'styled-components';
-
-// import { useDomainNameForAddress } from 'hooks/useDomain';
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from './shared';
 import { CHAINS } from '@src/config/chains';

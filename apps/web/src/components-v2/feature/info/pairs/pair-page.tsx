@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
-import { Box, Button, Breadcrumb, Flex, Heading, Spinner, Text, Link, HStack, BreadcrumbSeparator } from '@chakra-ui/react';
-import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
+import { Box, Button, Breadcrumb, Flex, Heading, Spinner, Text, HStack, BreadcrumbSeparator } from '@chakra-ui/react';
+import Link from 'next/link';
 import { Card } from '@src/components-v2/foundation/card';
 import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
@@ -15,6 +15,7 @@ import { usePairDataQuery } from '../hooks/usePairDataQuery';
 import { usePairChartVolumeDataQuery } from '../hooks/usePairChartVolumeDataQuery';
 import { usePairTransactionsQuery } from '../hooks/usePairTransactionsQuery';
 import { Pair } from '@pancakeswap/sdk';
+import { PrimaryButton } from '@src/components-v2/foundation/button';
 
 const ContentLayout = styled.div`
   display: grid;
@@ -79,20 +80,20 @@ const PairPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({
         <>
           <Flex justifyContent="space-between" mt="16px" flexDirection={['column', 'column', 'row']}>
             <CustomBreadcrumb mb="32px">
-              <NextLinkFromReactRouter to={`/info${chainPath}`}>
+              <Link href={`/info${chainPath}`}>
                 <Text color="primary">{'Info'}</Text>
-              </NextLinkFromReactRouter>
+              </Link>
               <BreadcrumbSeparator>{'>'}</BreadcrumbSeparator>
-              <NextLinkFromReactRouter to={`/info${chainPath}/pairs`}>
+              <Link href={`/info${chainPath}/pairs`}>
                 <Text color="primary">{'Pairs'}</Text>
-              </NextLinkFromReactRouter>
+              </Link>
               <BreadcrumbSeparator>{'>'}</BreadcrumbSeparator>
               <Flex>
                 <Text mr="8px">{pairSymbol}</Text>
               </Flex>
             </CustomBreadcrumb>
             <Flex justifyContent={[null, null, 'flex-end']} mt={['8px', '8px', 0]}>
-              <Link mr="8px" color="primary" href={getBlockExploreLink(routeAddress, 'address', chainId)}>
+              <Link style={{marginRight: '8px', color: 'primary'}} href={getBlockExploreLink(routeAddress, 'address', chainId)}>
                 {'View on Explorer'}
               </Link>
             </Flex>
@@ -109,7 +110,7 @@ const PairPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({
             </Flex>
             <Flex justifyContent="space-between" flexDirection={['column', 'column', 'column', 'row']}>
               <Flex flexDirection={['column', 'column', 'row']} mb={['8px', '8px', null]}>
-                <NextLinkFromReactRouter to={`/info${chainPath}/tokens/${PairData.token0.address}`}>
+                <Link href={`/info${chainPath}/tokens/${PairData.token0.address}`}>
                   <TokenButton>
                     <CurrencyLogoByAddress address={PairData.token0.address} size="24px" chainId={chainId} />
                     <Text fontSize="16px" ml="4px" style={{ whiteSpace: 'nowrap' }} width="fit-content">
@@ -120,8 +121,8 @@ const PairPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({
                       })} ${symbol1}`}
                     </Text>
                   </TokenButton>
-                </NextLinkFromReactRouter>
-                <NextLinkFromReactRouter to={`/info${chainPath}/tokens/${PairData.token1.address}`}>
+                </Link>
+                <Link href={`/info${chainPath}/tokens/${PairData.token1.address}`}>
                   <TokenButton ml={[null, null, '10px']}>
                     <CurrencyLogoByAddress address={PairData.token1.address} size="24px" chainId={chainId} />
                     <Text fontSize="16px" ml="4px" style={{ whiteSpace: 'nowrap' }} width="fit-content">
@@ -132,17 +133,17 @@ const PairPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({
                       })} ${symbol0}`}
                     </Text>
                   </TokenButton>
-                </NextLinkFromReactRouter>
+                </Link>
               </Flex>
               <Flex>
-              <NextLinkFromReactRouter to={`/dex/add/v2/${PairData.token0.address}`}>
-                  <Button mr="8px">
+              <Link href={`/dex/add/v2/${PairData.token0.address}`}>
+                  <PrimaryButton mr="8px">
                     {'Add Liquidity'}
-                  </Button>
-                </NextLinkFromReactRouter>
-                <NextLinkFromReactRouter to={`/dex/swap?outputCurrency=${PairData.token1.address}&inputCurrency=${PairData.token0.address}`}>
-                  <Button>{'Trade'}</Button>
-                </NextLinkFromReactRouter>
+                  </PrimaryButton>
+                </Link>
+                <Link href={`/dex/swap?outputCurrency=${PairData.token1.address}&inputCurrency=${PairData.token0.address}`}>
+                  <PrimaryButton>{'Trade'}</PrimaryButton>
+                </Link>
               </Flex>
             </Flex>
           </Flex>

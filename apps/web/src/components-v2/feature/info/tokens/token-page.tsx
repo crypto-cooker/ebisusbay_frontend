@@ -1,9 +1,8 @@
 /* eslint-disable no-nested-ternary */
-import { Link, Button, Box, Breadcrumb, Flex, Heading, Image, Text, BreadcrumbSeparator } from '@chakra-ui/react';
+import { Button, Box, Breadcrumb, Flex, Heading, Image, Text, BreadcrumbSeparator } from '@chakra-ui/react';
 import { Spinner } from '@chakra-ui/react';
 import { Card } from '@src/components-v2/foundation/card';
-import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
-
+import Link from 'next/link';
 import truncateHash from '@pancakeswap/utils/truncateHash';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
@@ -22,6 +21,7 @@ import TransactionTable from '@src/components-v2/feature/info/components/tables/
 import Percent from '@src/components-v2/feature/info/components/percent';
 import useCMCLink from '@src/components-v2/feature/info/hooks/useCMCLink';
 import { usePairDatasForToken } from '@src/components-v2/feature/info/hooks';
+import { PrimaryButton } from '@src/components-v2/foundation/button';
 
 dayjs.extend(duration);
 
@@ -50,7 +50,7 @@ const CustomBreadcrumb = styled(Breadcrumb)`
   ol {
     padding: 0;
   }
-`
+`;
 const DEFAULT_TIME_WINDOW = dayjs.duration(1, 'weeks');
 
 const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({ routeAddress }) => {
@@ -81,9 +81,9 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
             <Box p="16px">
               <Text>
                 No pair has been created with this token yet. Create one
-                <NextLinkFromReactRouter style={{ display: 'inline', marginLeft: '6px' }} to={`/add/${address}`}>
+                <Link style={{ display: 'inline', marginLeft: '6px' }} href={`/add/${address}`}>
                   here.
-                </NextLinkFromReactRouter>
+                </Link>
               </Text>
             </Box>
           </Card>
@@ -92,13 +92,13 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
             {/* Stuff on top */}
             <Flex justifyContent="space-between" mt="24px" flexDirection={['column', 'column', 'row']}>
               <CustomBreadcrumb mb="32px">
-                <NextLinkFromReactRouter to={`/info${chainPath}`}>
+                <Link href={`/info${chainPath}`}>
                   <Text color="primary">{'Info'}</Text>
-                </NextLinkFromReactRouter>
+                </Link>
                 <BreadcrumbSeparator>{'>'}</BreadcrumbSeparator>
-                <NextLinkFromReactRouter to={`/info${chainPath}/tokens`}>
+                <Link href={`/info${chainPath}/tokens`}>
                   <Text color="primary">{'Tokens'}</Text>
-                </NextLinkFromReactRouter>
+                </Link>
                 <BreadcrumbSeparator>{'>'}</BreadcrumbSeparator>
                 <Flex>
                   <Text mr="8px">{tokenSymbol}</Text>
@@ -106,7 +106,10 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
                 </Flex>
               </CustomBreadcrumb>
               <Flex justifyContent={[null, null, 'flex-end']} mt={['8px', '8px', 0]}>
-                <Link mr="8px" color="primary" href={getBlockExploreLink(address, 'address', chainId)}>
+                <Link
+                  style={{ marginRight: '8px', color: 'primary' }}
+                  href={getBlockExploreLink(address, 'address', chainId)}
+                >
                   {'View on Explorer'}
                 </Link>
                 {cmcLink && (
@@ -146,14 +149,14 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
                 </Flex>
               </Flex>
               <Flex>
-                <NextLinkFromReactRouter to={`/dex/add/v2/${address}`}>
-                  <Button mr="8px" variant="secondary">
+                <Link href={`/dex/add/v2/${address}`}>
+                  <PrimaryButton mr="8px">
                     {'Add Liquidity'}
-                  </Button>
-                </NextLinkFromReactRouter>
-                <NextLinkFromReactRouter to={`/dex/swap?inputCurrency=${address}`}>
-                  <Button>{'Trade'}</Button>
-                </NextLinkFromReactRouter>
+                  </PrimaryButton>
+                </Link>
+                <Link href={`/dex/swap?inputCurrency=${address}`}>
+                  <PrimaryButton>{'Trade'}</PrimaryButton>
+                </Link>
               </Flex>
             </Flex>
 

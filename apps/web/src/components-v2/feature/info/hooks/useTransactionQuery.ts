@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useChainIdByQuery } from './chain';
 import { Info } from '@src/core/services/api-service/graph/subgraphs/info';
-import { Transaction, TransactionType } from '../state/types';
+import { Transaction } from '../state/types';
 
-export const useTransactionDataQuery = (): Transaction[]=> {
+export const useTransactionDataQuery = (): Transaction[] | undefined => {
   const chainId: number = useChainIdByQuery();
   const info = useMemo(() => new Info(chainId), [chainId]);
   const { data } = useQuery({
@@ -29,9 +29,9 @@ export const useTransactionDataQuery = (): Transaction[]=> {
 
       const types = ['swaps', 'mints', 'burns'];
       for (const d of data_) {
-        for(const t of types) {
+        for (const t of types) {
           const transactions = d[t];
-          transactions.map((transaction:any) => {
+          transactions.map((transaction: any) => {
             final.push({
               type: types.indexOf(t),
               hash: d.id,
@@ -42,10 +42,20 @@ export const useTransactionDataQuery = (): Transaction[]=> {
               token0Address: transaction.token0?.id,
               token1Address: transaction.token1?.id,
               amountUSD: +transaction.amountUSD,
-              amountToken0: t == 'swaps' ? +transaction.amount0Out ? +transaction.amount0Out : +transaction.amount0In :  +transaction.amount0,
-              amountToken1: t == 'swaps' ? +transaction.amount1Out ? +transaction.amount1Out : +transaction.amount1In :  +transaction.amount1
-            })
-          })
+              amountToken0:
+                t == 'swaps'
+                  ? +transaction.amount0Out
+                    ? +transaction.amount0Out
+                    : +transaction.amount0In
+                  : +transaction.amount0,
+              amountToken1:
+                t == 'swaps'
+                  ? +transaction.amount1Out
+                    ? +transaction.amount1Out
+                    : +transaction.amount1In
+                  : +transaction.amount1,
+            });
+          });
         }
       }
 
@@ -54,7 +64,6 @@ export const useTransactionDataQuery = (): Transaction[]=> {
   });
 
   return useMemo(() => {
-    return data ?? [];
+    return data?.length ? data : undefined;
   }, [data, chainId]);
 };
-

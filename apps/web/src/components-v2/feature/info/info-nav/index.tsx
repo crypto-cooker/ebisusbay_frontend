@@ -9,7 +9,7 @@ export enum InfoTabIndex {
 }
 import { StandardContainer } from '@src/components-v2/shared/containers';
 import { ButtonMenu, ButtonMenuItem } from '@src/components-v2/foundation/button-group';
-import { NextLinkFromReactRouter } from '@src/components-v2/foundation/button';
+import Link from 'next/link';
 import { useChainPathByQuery } from '../hooks/chain';
 
 export default function InfoNav() {
@@ -32,13 +32,13 @@ export default function InfoNav() {
         <Box display={{ base: 'block', sm: 'flex' }} gap={2} justifyContent="space-between" py={2}>
           <HStack>
             <ButtonMenu activeIndex={activeIndex}>
-              <ButtonMenuItem as={NextLinkFromReactRouter} to={`/info${chainPath}`}>
+              <ButtonMenuItem as={Link} href={`/info${chainPath}`}>
                 Overview
               </ButtonMenuItem>
-              <ButtonMenuItem as={NextLinkFromReactRouter} to={`/info${chainPath}/pairs`}>
+              <ButtonMenuItem as={Link} href={`/info${chainPath}/pairs`}>
                 Pairs
               </ButtonMenuItem>
-              <ButtonMenuItem as={NextLinkFromReactRouter} to={`/info${chainPath}/tokens`}>
+              <ButtonMenuItem as={Link} href={`/info${chainPath}/tokens`}>
                 Tokens
               </ButtonMenuItem>
             </ButtonMenu>
