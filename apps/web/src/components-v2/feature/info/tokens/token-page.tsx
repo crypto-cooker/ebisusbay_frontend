@@ -154,7 +154,7 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
                     {'Add Liquidity'}
                   </PrimaryButton>
                 </Link>
-                <Link href={`/dex/swap?inputCurrency=${address}`}>
+                <Link href={`/dex/swap?outputCurrency=${address}`}>
                   <PrimaryButton>{'Trade'}</PrimaryButton>
                 </Link>
               </Flex>
