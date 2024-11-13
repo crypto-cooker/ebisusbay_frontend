@@ -324,9 +324,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       {drop.erc20Cost && drop.erc20Token && erc20Token && (
                         <Heading as="h5" size="md" mt={1}>
                           <Flex alignItems='center'>
-                            {is946Drop && isInPresale ? (
-                              <span className="ms-2">Free</span>
-                            ) : is946Drop ? (
+                            {is946Drop ? (
                               <>
                                 <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(drop.chainId ?? ChainId.CRONOS)} size='24px' />
                                 <span className="ms-2">{ethers.utils.commify(round(regularCost))}</span>
@@ -438,6 +436,11 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
             {(status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete) && (
               <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
                 Supply: {ethers.utils.commify(maxSupply.toString())}
+              </Text>
+            )}
+            {is946Drop && (
+              <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
+                First 2 days open to Allowlist only, then open to public. Allowlist users can mint up to one free NFT
               </Text>
             )}
             {status >= statuses.LIVE && !drop.complete && (
