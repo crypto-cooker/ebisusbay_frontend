@@ -217,10 +217,12 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
     const erc20Contract = contractService!.erc20(erc20Token.address);
 
-    const allowance = await erc20Contract.allowance(user.address, drop.address);
-    if (allowance.sub(finalCost) <= 0) {
-      const approvalTx = await erc20Contract.approve(drop.address, constants.MaxUint256);
-      await approvalTx.wait();
+    if (finalCost > 0) {
+      const allowance = await erc20Contract.allowance(user.address, drop.address);
+      if (allowance.sub(finalCost) <= 0) {
+        const approvalTx = await erc20Contract.approve(drop.address, constants.MaxUint256);
+        await approvalTx.wait();
+      }
     }
 
     const actualContract = contractService!.custom(drop.address, abi);
