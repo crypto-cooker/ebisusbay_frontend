@@ -428,7 +428,8 @@ const configData: AppConfigMap = {
           '0x4F68b2F90091B6C6012b487Faa7D267FC0Db86dE': ['icy'],
           '0x45008e129A33368119757496DA762284ff8e2565': ['icy'],
           '0x7677cbE702Ff3d0e66d3BaC0fD71Cb641A276Ae0': ['icy'],
-          '0xccc598ef1b4d17d9f44a889eee38c8de53f5df00': ['icy'], // ICY Brand End
+          '0xccc598ef1b4d17d9f44a889eee38c8de53f5df00': ['icy'],
+          '0x187d7fcbf849ae520e47fe710529585dd8592c60': ['icy'], // ICY Brand End
           '0x6A7808f1e84bB173D6fC53Efd9Ebc6E56380AB5E': ['cro'], // Cronos Chickens
           '0x5dd80779025679D06C9A175a7090FEEe92eA70aa': ['frtn'], // Strategy Series Vol.1,
           '0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845': ['cro', 'frtn', 'coom'], // Coom Cats
