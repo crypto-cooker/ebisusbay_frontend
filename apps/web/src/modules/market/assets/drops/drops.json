@@ -7832,5 +7832,46 @@
       "escrow": false,
       "verified": true
     }
+  },
+  {
+    "id": 199,
+    "chainId": 25,
+    "slug": "946-club",
+    "title": "946 Club",
+    "subtitle": "An exclusive NFT project created to honor the first-ever NFT on Cronos, CRO CROW minted in block #946, and to celebrate the success of the resulting iconic crow with knife community.  Alemf is the artist for both NFT collections.",
+    "description": "946 Club is an exclusive NFT project created to honor the first-ever NFT on Cronos, CRO CROW minted in block #946, and to celebrate the success of the resulting iconic crow with knife community.  Alemf is the artist for both NFT collections.",
+    "author": {
+      "name": "crow with knife",
+      "website": "https://crowwithknife.com/",
+      "twitter": "https://x.com/946_Club",
+      "discord": "https://discord.gg/8a8Xm4wwR9"
+    },
+    "address": "",
+    "maxMintPerTx": 100,
+    "maxMintPerAddress": 100,
+    "totalSupply": 946,
+    "erc20Cost": "100",
+    "erc20Token": "0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
+    "erc20Only": true,
+    "foundersOnly": false,
+    "abi": "946-club.json",
+    "start": 1731711600000,
+    "end": null,
+    "referral": false,
+    "is1155": false,
+    "published": true,
+    "complete": false,
+    "images": {
+      "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/946-club/drop.webp",
+      "banner": "https://cdn-prod.ebisusbay.com/files/drop-images/946-club/banner.webp",
+      "avatar": "https://cdn-prod.ebisusbay.com/files/drop-images/946-club/avatar.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/946-club/card.webp"
+    },
+    "verification": {
+      "doxx": false,
+      "kyc": false,
+      "escrow": false,
+      "verified": true
+    }
   }
 ]
