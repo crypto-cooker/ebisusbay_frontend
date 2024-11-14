@@ -1,18 +1,18 @@
-import {WrappedTokenInfo} from "@dex/hooks/use-supported-tokens";
-import {Image, Flex, SpaceProps, Box, Avatar, BoxProps} from "@chakra-ui/react";
-import React, {memo, useMemo, useState} from "react";
-import {QuestionOutlineIcon} from "@chakra-ui/icons";
-import {isChainSupported} from "@src/wagmi";
-import ImageService from "@src/core/services/image";
-import {ChainId} from "@pancakeswap/chains";
-import uriToHttp from "@pancakeswap/utils/uriToHttp";
-import memoize from "lodash/memoize";
-import {Currency, Token} from "@pancakeswap/swap-sdk-core";
-import {Address, getAddress} from "viem";
-import {bscTokens, cronosTokens, cronosZkEvmTokens, ethereumTokens} from "@pancakeswap/tokens";
-import {NATIVE} from "@pancakeswap/swap-sdk-evm";
-import styled from "styled-components";
-import {ethers} from "ethers";
+import { WrappedTokenInfo } from '@dex/hooks/use-supported-tokens';
+import { Image, Flex, SpaceProps, Box, Avatar, BoxProps, HStack } from '@chakra-ui/react';
+import React, { memo, useMemo, useState } from 'react';
+import { QuestionOutlineIcon } from '@chakra-ui/icons';
+import { isChainSupported } from '@src/wagmi';
+import ImageService from '@src/core/services/image';
+import { ChainId } from '@pancakeswap/chains';
+import uriToHttp from '@pancakeswap/utils/uriToHttp';
+import memoize from 'lodash/memoize';
+import { Currency, Token } from '@pancakeswap/swap-sdk-core';
+import { Address, getAddress } from 'viem';
+import { bscTokens, cronosTokens, cronosZkEvmTokens, ethereumTokens } from '@pancakeswap/tokens';
+import { NATIVE } from '@pancakeswap/swap-sdk-evm';
+import styled from 'styled-components';
+import { ethers } from 'ethers';
 
 export type CurrencyInfo = {
   address?: Address;
@@ -24,12 +24,16 @@ export type CurrencyInfo = {
 
 export default function useHttpLocations(uri: string | undefined): string[] {
   return useMemo(() => {
-    return uri ? uriToHttp(uri) : []
-  }, [uri])
+    return uri ? uriToHttp(uri) : [];
+  }, [uri]);
 }
 
-export function CurrencyLogoByAddress({address, chainId, size, ...props}: {address: string, chainId: number, size?: string} & SpaceProps) {
-
+export function CurrencyLogoByAddress({
+  address,
+  chainId,
+  size,
+  ...props
+}: { address: string; chainId: number; size?: string } & SpaceProps) {
   const currency: CurrencyInfo = useMemo(() => {
     const isNative = address === ethers.constants.AddressZero;
     const nativeSymbol = NATIVE[chainId as ChainId]?.symbol ?? '';
@@ -39,11 +43,11 @@ export function CurrencyLogoByAddress({address, chainId, size, ...props}: {addre
       chainId,
       symbol: isNative ? nativeSymbol : '',
       isToken: !isNative,
-      isNative
-    }
+      isNative,
+    };
   }, [address]);
 
-  return <CurrencyLogo currency={currency} size={size} {...props} />
+  return <CurrencyLogo currency={currency} size={size} {...props} />;
 }
 
 export function CurrencyLogo({
@@ -89,9 +93,8 @@ export function CurrencyLogo({
     );
   }
 
-  return <TokenLogo size={size} srcs={srcs} alt={`${currency?.symbol ?? "token"} logo`} style={style} {...props} />;
+  return <TokenLogo size={size} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} {...props} />;
 }
-
 
 export interface TokenLogoProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   srcs: string[];
@@ -108,7 +111,7 @@ const TokenLogo: React.FC<React.PropsWithChildren<TokenLogoProps>> = ({ srcs, us
     return (
       <Image
         w={size}
-        rounded='full'
+        rounded="full"
         {...rest}
         alt={alt}
         src={src}
@@ -147,14 +150,14 @@ export const ChainLogo = memo(
           src={ImageService.translate(`/files/dex/images/chains/${chainId}.webp`).fixedWidth(width, height)}
           width={`${width}px`}
           height={`${height}px`}
-          rounded='full'
+          rounded="full"
         />
-      )
+      );
     }
 
-    return <QuestionOutlineIcon width={width} height={height} />
+    return <QuestionOutlineIcon width={width} height={height} />;
   },
-)
+);
 
 const StyledListLogo = styled(TokenLogo)<{ size: string }>`
   width: ${({ size }) => size};
@@ -164,7 +167,7 @@ const StyledListLogo = styled(TokenLogo)<{ size: string }>`
 export function ListLogo({
   logoURI,
   style,
-  size = "24px",
+  size = '24px',
   alt,
 }: {
   logoURI: string;
@@ -178,30 +181,30 @@ export function ListLogo({
 }
 
 const mapping: { [key: number]: string } = {
-  [ChainId.BSC]: "smartchain",
-  [ChainId.ETHEREUM]: "ethereum",
-  [ChainId.POLYGON_ZKEVM]: "polygonzkevm",
-  [ChainId.CRONOS]: "cronos",
-  [ChainId.CRONOS_ZKEVM]: "cronoszkevm",
-  [ChainId.ARBITRUM_ONE]: "arbitrum",
-  [ChainId.ZKSYNC]: "zksync",
-  [ChainId.BASE]: "base",
-  [ChainId.LINEA]: "linea",
-  [ChainId.OPBNB]: "opbnb",
+  [ChainId.BSC]: 'smartchain',
+  [ChainId.ETHEREUM]: 'ethereum',
+  [ChainId.POLYGON_ZKEVM]: 'polygonzkevm',
+  [ChainId.CRONOS]: 'cronos',
+  [ChainId.CRONOS_ZKEVM]: 'cronoszkevm',
+  [ChainId.ARBITRUM_ONE]: 'arbitrum',
+  [ChainId.ZKSYNC]: 'zksync',
+  [ChainId.BASE]: 'base',
+  [ChainId.LINEA]: 'linea',
+  [ChainId.OPBNB]: 'opbnb',
 };
 
 export const chainName: { [key: number]: string } = {
-  [ChainId.BSC]: "",
-  [ChainId.ETHEREUM]: "eth",
-  [ChainId.POLYGON_ZKEVM]: "polygon-zkevm",
-  [ChainId.CRONOS]: "cronos",
-  [ChainId.CRONOS_ZKEVM]: "cronos-zkevm",
-  [ChainId.CRONOS_ZKEVM_TESTNET]: "cronos-zkevm-testnet",
-  [ChainId.ARBITRUM_ONE]: "arbitrum",
-  [ChainId.ZKSYNC]: "zksync",
-  [ChainId.LINEA]: "linea",
-  [ChainId.BASE]: "base",
-  [ChainId.OPBNB]: "opbnb",
+  [ChainId.BSC]: '',
+  [ChainId.ETHEREUM]: 'eth',
+  [ChainId.POLYGON_ZKEVM]: 'polygon-zkevm',
+  [ChainId.CRONOS]: 'cronos',
+  [ChainId.CRONOS_ZKEVM]: 'cronos-zkevm',
+  [ChainId.CRONOS_ZKEVM_TESTNET]: 'cronos-zkevm-testnet',
+  [ChainId.ARBITRUM_ONE]: 'arbitrum',
+  [ChainId.ZKSYNC]: 'zksync',
+  [ChainId.LINEA]: 'linea',
+  [ChainId.BASE]: 'base',
+  [ChainId.OPBNB]: 'opbnb',
 };
 
 const commonCurrencySymbols = [
@@ -231,12 +234,12 @@ export const getTokenLogoURLByAddress = memoize(
   (address?: string, chainId?: number) => {
     if (address && chainId && mapping[chainId]) {
       return `https://assets-cdn.trustwallet.com/blockchains/${mapping[chainId]}/assets/${getAddress(
-        address
+        address,
       )}/logo.png`;
     }
     return null;
   },
-  (address, chainId) => `${chainId}#${address}`
+  (address, chainId) => `${chainId}#${address}`,
 );
 
 export const getCommonCurrencyUrlBySymbol = memoize(
@@ -244,7 +247,7 @@ export const getCommonCurrencyUrlBySymbol = memoize(
     symbol && commonCurrencySymbols.includes(symbol)
       ? `https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${symbol.toLocaleLowerCase()}.webp`
       : undefined,
-  (symbol?: string) => `logoUrls#symbol#${symbol}`
+  (symbol?: string) => `logoUrls#symbol#${symbol}`,
 );
 
 type GetLogoUrlsOptions = {
@@ -260,40 +263,46 @@ export const getCurrencyLogoUrlsByInfo = memoize(
     const trustWalletLogo = getTokenLogoURLByAddress(address, chainId);
     const logoUrl = chainId && address ? getTokenListTokenUrl({ chainId, address, symbol }) : null;
     return [getCommonCurrencyUrlBySymbol(symbol), useTrustWallet ? trustWalletLogo : undefined, logoUrl].filter(
-      (url): url is string => !!url
+      (url): url is string => !!url,
     );
   },
   (currency, options) =>
-    `logoUrls#${currency?.chainId}#${currency?.symbol}#${currency?.address}#${options ? JSON.stringify(options) : ""}`
+    `logoUrls#${currency?.chainId}#${currency?.symbol}#${currency?.address}#${options ? JSON.stringify(options) : ''}`,
 );
 
 interface DoubleCurrencyLogoProps {
-  margin?: boolean
-  size?: number
-  currency0?: Currency
-  currency1?: Currency
+  margin?: boolean;
+  size?: number;
+  currency0?: Currency;
+  currency1?: Currency;
 }
 
 export function DoubleCurrencyLogo({ currency0, currency1, size = 20, margin = false }: DoubleCurrencyLogoProps) {
   return (
-    <Flex direction='row' me={2}>
+    <Flex direction="row" me={2}>
       {currency0 && <CurrencyLogo currency={currency0} size={`${size.toString()}px`} style={{ marginRight: '4px' }} />}
       {currency1 && <CurrencyLogo currency={currency1} size={`${size.toString()}px`} />}
     </Flex>
-  )
+  );
 }
-
 
 interface DoubleCurrencyLayeredLogoProps {
   address1: string;
   address2: string;
   chainId?: number;
-  size1?: number
-  size2?: number
-  variant?: 'horizontal' | 'diagonal'
+  size1?: number;
+  size2?: number;
+  variant?: 'horizontal' | 'diagonal';
 }
 
-export function DoubleCurrencyLayeredLogo({ address1, address2, chainId, size1 = 24, size2 = 32, variant }: DoubleCurrencyLayeredLogoProps) {
+export function DoubleCurrencyLayeredLogo({
+  address1,
+  address2,
+  chainId,
+  size1 = 24,
+  size2 = 32,
+  variant,
+}: DoubleCurrencyLayeredLogoProps) {
   const currency1: CurrencyInfo = useMemo(() => {
     const isNative = address1 === ethers.constants.AddressZero;
     const nativeSymbol = NATIVE[chainId as ChainId]?.symbol ?? '';
@@ -303,8 +312,8 @@ export function DoubleCurrencyLayeredLogo({ address1, address2, chainId, size1 =
       chainId,
       symbol: isNative ? nativeSymbol : '',
       isToken: !isNative,
-      isNative
-    }
+      isNative,
+    };
   }, [address1]);
 
   const currency2: CurrencyInfo = useMemo(() => {
@@ -316,20 +325,17 @@ export function DoubleCurrencyLayeredLogo({ address1, address2, chainId, size1 =
       chainId,
       symbol: isNative ? nativeSymbol : '',
       isToken: !isNative,
-      isNative
-    }
+      isNative,
+    };
   }, [address2]);
 
   return (
-    <Box position='relative' w={`40px`} h={`${variant === 'diagonal' ? 40 : 24}px`}>
-      <CurrencyLogo
-        currency={currency1}
-        size={`${size1}px`}
-      />
+    <Box position="relative" w={`40px`} h={`${variant === 'diagonal' ? 40 : 24}px`}>
+      <CurrencyLogo currency={currency1} size={`${size1}px`} />
       <CurrencyLogo
         currency={currency2}
         size={`${size2}px`}
-        position='absolute'
+        position="absolute"
         bottom={variant === 'diagonal' ? 0 : undefined}
         top={variant !== 'diagonal' ? 0 : undefined}
         right={0}
@@ -349,5 +355,5 @@ export function DoubleCurrencyLayeredLogo({ address1, address2, chainId, size1 =
       {/*  right={0}*/}
       {/*/>*/}
     </Box>
-  )
+  );
 }
