@@ -806,6 +806,9 @@ export function subscriptedDecimal(decimalStr: string | number, zeroThreshold: n
     return decimalStr;
   }
 
+  // This will convert any number in scientific notation to a proper formatted string
+  decimalStr = new Decimal(decimalStr).toFixed();
+
   // Find the first non-zero digit after the decimal
   const firstNonZeroIndex = decimalStr.indexOf('.') + 1 + decimalStr.slice(decimalStr.indexOf('.') + 1).search(/[^0]/);
 
