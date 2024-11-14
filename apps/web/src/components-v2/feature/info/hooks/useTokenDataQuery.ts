@@ -8,13 +8,14 @@ export const useTokenDataQuery = (address: string): TokenData | undefined => {
   const chainId: number = useChainIdByQuery();
   const info = useMemo(() => new Info(chainId), [chainId]);
   const { data } = useQuery({
-    queryKey: ['useTokenData', chainId],
+    queryKey: ['useTokenData', chainId, address],
     queryFn: async () => {
       try {
         const response = await info.getTokenData(address);
         if (!response?.data?.token) {
           throw new Error('Failed to fetch data');
         }
+
         return response.data.token;
       } catch (error) {
         console.error('Error fetching data', error);

@@ -1,27 +1,27 @@
-import {Currency, CurrencyAmount, Trade, TradeType} from '@pancakeswap/sdk'
-import {FRTN, STABLE_COIN, USDC, USDT} from '@pancakeswap/tokens'
-import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
-import {useUserSlippage} from '@pancakeswap/utils/user'
-import {DEFAULT_INPUT_CURRENCY} from '@dex/swap/constants/exchange'
-import {useTradeExactIn, useTradeExactOut} from '@eb-pancakeswap-web/hooks/trades'
-import {useActiveChainId} from '@eb-pancakeswap-web/hooks/useActiveChainId'
-import useNativeCurrency from '@eb-pancakeswap-web/hooks/useNativeCurrency'
-import {useAtom, useAtomValue} from 'jotai'
-import {useRouter} from 'next/router'
-import {ParsedUrlQuery} from 'querystring'
-import {useEffect, useMemo, useState} from 'react'
-import {safeGetAddress} from '@eb-pancakeswap-web/utils'
-import {useAccount} from 'wagmi'
-import {useCurrencyBalances} from '../wallet/hooks'
-import {Field, replaceSwapState} from './actions'
-import {swapReducerAtom, SwapState} from './reducer'
-import {useGetENSAddressByName} from "@eb-pancakeswap-web/hooks/useGetENSAddressByName";
-import {computeSlippageAdjustedAmounts} from "@eb-pancakeswap-web/utils/exchange";
+import { Currency, CurrencyAmount, Trade, TradeType } from '@pancakeswap/sdk';
+import { FRTN, STABLE_COIN, USDC, USDT } from '@pancakeswap/tokens';
+import tryParseAmount from '@pancakeswap/utils/tryParseAmount';
+import { useUserSlippage } from '@pancakeswap/utils/user';
+import { DEFAULT_INPUT_CURRENCY } from '@dex/swap/constants/exchange';
+import { useTradeExactIn, useTradeExactOut } from '@eb-pancakeswap-web/hooks/trades';
+import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
+import useNativeCurrency from '@eb-pancakeswap-web/hooks/useNativeCurrency';
+import { useAtom, useAtomValue } from 'jotai';
+import { useRouter } from 'next/router';
+import { ParsedUrlQuery } from 'querystring';
+import { useEffect, useMemo, useState } from 'react';
+import { safeGetAddress } from '@eb-pancakeswap-web/utils';
+import { useAccount, useChainId } from 'wagmi';
+import { useCurrencyBalances } from '../wallet/hooks';
+import { Field, replaceSwapState } from './actions';
+import { swapReducerAtom, SwapState } from './reducer';
+import { useGetENSAddressByName } from '@eb-pancakeswap-web/hooks/useGetENSAddressByName';
+import { computeSlippageAdjustedAmounts } from '@eb-pancakeswap-web/utils/exchange';
 
 // import {useBestAMMTrade} from "@eb-pancakeswap-web/hooks/useBestAMMTrade";
 
 export function useSwapState() {
-  return useAtomValue(swapReducerAtom)
+  return useAtomValue(swapReducerAtom);
 }
 
 // TODO: update
@@ -29,7 +29,7 @@ export const BAD_RECIPIENT_ADDRESSES: string[] = [
   '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f', // v2 factory
   '0xf164fC0Ec4E93095b804a4795bBe1e041497b92a', // v2 router 01
   '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D', // v2 router 02
-]
+];
 
 /**
  * Returns true if any of the pairs or tokens in a trade have the given checksummed address
@@ -40,7 +40,7 @@ function involvesAddress(trade: Trade<Currency, Currency, TradeType>, checksumme
   return (
     trade.route.path.some((token) => token.address === checksummedAddress) ||
     trade.route.pairs.some((pair) => pair.liquidityToken.address === checksummedAddress)
-  )
+  );
 }
 
 // // Get swap price for single token disregarding slippage and price impact
@@ -104,77 +104,78 @@ export function useDerivedSwapInfo(
   outputCurrency: Currency | undefined,
   recipient: string,
 ): {
-  currencies: { [field in Field]?: Currency }
-  currencyBalances: { [field in Field]?: CurrencyAmount<Currency> }
-  parsedAmount: CurrencyAmount<Currency> | undefined
-  v2Trade: Trade<Currency, Currency, TradeType> | undefined
-  inputError?: string
+  currencies: { [field in Field]?: Currency };
+  currencyBalances: { [field in Field]?: CurrencyAmount<Currency> };
+  parsedAmount: CurrencyAmount<Currency> | undefined;
+  v2Trade: Trade<Currency, Currency, TradeType> | undefined;
+  inputError?: string;
 } {
-  const { address: account } = useAccount()
-  const recipientENSAddress = useGetENSAddressByName(recipient)
+  const { address: account } = useAccount();
+  const recipientENSAddress = useGetENSAddressByName(recipient);
 
   const to: string | null =
-    (recipient === null ? account : safeGetAddress(recipient) || safeGetAddress(recipientENSAddress) || null) ?? null
+    (recipient === null ? account : safeGetAddress(recipient) || safeGetAddress(recipientENSAddress) || null) ?? null;
 
   const relevantTokenBalances = useCurrencyBalances(
     account ?? undefined,
     useMemo(() => [inputCurrency ?? undefined, outputCurrency ?? undefined], [inputCurrency, outputCurrency]),
-  )
+  );
 
-  const isExactIn: boolean = independentField === Field.INPUT
-  const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
+  const isExactIn: boolean = independentField === Field.INPUT;
+  const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined);
 
-  const bestTradeExactIn = useTradeExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined)
-  const bestTradeExactOut = useTradeExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined)
+  const bestTradeExactIn = useTradeExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined);
+  const bestTradeExactOut = useTradeExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined);
 
-  const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut
+  const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut;
 
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],
     [Field.OUTPUT]: relevantTokenBalances[1],
-  }
+  };
 
   const currencies: { [field in Field]?: Currency } = {
     [Field.INPUT]: inputCurrency ?? undefined,
     [Field.OUTPUT]: outputCurrency ?? undefined,
-  }
+  };
 
-  let inputError: string | undefined
+  let inputError: string | undefined;
   if (!account) {
-    inputError = 'Connect Wallet'
+    inputError = 'Connect Wallet';
   }
 
   if (!parsedAmount) {
-    inputError = inputError ?? 'Enter an amount'
+    inputError = inputError ?? 'Enter an amount';
   }
 
   if (!currencies[Field.INPUT] || !currencies[Field.OUTPUT]) {
-    inputError = inputError ?? 'Select a token'
+    inputError = inputError ?? 'Select a token';
   }
 
-  const formattedTo = safeGetAddress(to)
+  const formattedTo = safeGetAddress(to);
   if (!to || !formattedTo) {
-    inputError = inputError ?? 'Enter a recipient'
+    inputError = inputError ?? 'Enter a recipient';
   } else if (
     BAD_RECIPIENT_ADDRESSES.indexOf(formattedTo) !== -1 ||
     (bestTradeExactIn && involvesAddress(bestTradeExactIn, formattedTo)) ||
     (bestTradeExactOut && involvesAddress(bestTradeExactOut, formattedTo))
   ) {
-    inputError = inputError ?? 'Invalid recipient'
+    inputError = inputError ?? 'Invalid recipient';
   }
 
-  const [allowedSlippage] = useUserSlippage()
+  const [allowedSlippage] = useUserSlippage();
 
-  const slippageAdjustedAmounts = v2Trade && allowedSlippage && computeSlippageAdjustedAmounts(v2Trade, allowedSlippage)
+  const slippageAdjustedAmounts =
+    v2Trade && allowedSlippage && computeSlippageAdjustedAmounts(v2Trade, allowedSlippage);
 
   // compare input balance to max input based on version
   const [balanceIn, amountIn] = [
     currencyBalances[Field.INPUT],
     slippageAdjustedAmounts ? slippageAdjustedAmounts[Field.INPUT] : null,
-  ]
+  ];
 
   if (balanceIn && amountIn && balanceIn.lessThan(amountIn)) {
-    inputError = `Insufficient ${amountIn.currency.symbol} balance`
+    inputError = `Insufficient ${amountIn.currency.symbol} balance`;
   }
 
   return {
@@ -183,27 +184,27 @@ export function useDerivedSwapInfo(
     parsedAmount,
     v2Trade: v2Trade ?? undefined,
     inputError,
-  }
+  };
 }
 
 function parseTokenAmountURLParameter(urlParam: any): string {
-  return typeof urlParam === 'string' && !Number.isNaN(parseFloat(urlParam)) ? urlParam : ''
+  return typeof urlParam === 'string' && !Number.isNaN(parseFloat(urlParam)) ? urlParam : '';
 }
 
 function parseIndependentFieldURLParameter(urlParam: any): Field {
-  return typeof urlParam === 'string' && urlParam.toLowerCase() === 'output' ? Field.OUTPUT : Field.INPUT
+  return typeof urlParam === 'string' && urlParam.toLowerCase() === 'output' ? Field.OUTPUT : Field.INPUT;
 }
 
-const ENS_NAME_REGEX = /^[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)?$/
+const ENS_NAME_REGEX = /^[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)?$/;
 
-const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/
+const ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
 function validatedRecipient(recipient: any): string | null {
-  if (typeof recipient !== 'string') return null
-  const address = safeGetAddress(recipient)
-  if (address) return address
-  if (ENS_NAME_REGEX.test(recipient)) return recipient
-  if (ADDRESS_REGEX.test(recipient)) return recipient
-  return null
+  if (typeof recipient !== 'string') return null;
+  const address = safeGetAddress(recipient);
+  if (address) return address;
+  if (ENS_NAME_REGEX.test(recipient)) return recipient;
+  if (ADDRESS_REGEX.test(recipient)) return recipient;
+  return null;
 }
 
 export function queryParametersToSwapState(
@@ -211,20 +212,20 @@ export function queryParametersToSwapState(
   nativeSymbol?: string,
   defaultOutputCurrency?: string,
 ): SwapState {
-  let inputCurrency = safeGetAddress(parsedQs.inputCurrency) || (nativeSymbol ?? DEFAULT_INPUT_CURRENCY)
+  let inputCurrency = safeGetAddress(parsedQs.inputCurrency) || (nativeSymbol ?? DEFAULT_INPUT_CURRENCY);
   let outputCurrency =
     typeof parsedQs.outputCurrency === 'string'
       ? safeGetAddress(parsedQs.outputCurrency) || nativeSymbol
-      : defaultOutputCurrency
+      : defaultOutputCurrency;
   if (inputCurrency === outputCurrency) {
     if (typeof parsedQs.outputCurrency === 'string') {
-      inputCurrency = ''
+      inputCurrency = '';
     } else {
-      outputCurrency = ''
+      outputCurrency = '';
     }
   }
 
-  const recipient = validatedRecipient(parsedQs.recipient)
+  const recipient = validatedRecipient(parsedQs.recipient);
 
   return {
     [Field.INPUT]: {
@@ -238,30 +239,31 @@ export function queryParametersToSwapState(
     recipient,
     pairDataById: {},
     derivedPairDataById: {},
-  }
+  };
 }
 
 // updates the swap state to use the defaults for a given network
 export function useDefaultsFromURLSearch():
   | { inputCurrencyId: string | undefined; outputCurrencyId: string | undefined }
   | undefined {
-  const { chainId } = useActiveChainId()
-  const [, dispatch] = useAtom(swapReducerAtom)
-  const native = useNativeCurrency()
-  const { query, isReady } = useRouter()
+  const { chainId } = useActiveChainId();
+  const [, dispatch] = useAtom(swapReducerAtom);
+  const native = useNativeCurrency();
+  const { query, isReady } = useRouter();
   const [result, setResult] = useState<
     { inputCurrencyId: string | undefined; outputCurrencyId: string | undefined } | undefined
-  >()
+  >();
 
   useEffect(() => {
-    if (!chainId || !native || !isReady) return
+    if (!chainId || !native || !isReady) return;
     const parsed = queryParametersToSwapState(
       query,
       native.symbol,
       FRTN[chainId as keyof typeof FRTN]?.address ??
-      STABLE_COIN[chainId]?.address ?? USDC[chainId as keyof typeof USDC]?.address ??
-      USDT[chainId as keyof typeof USDT]?.address,
-    )
+        STABLE_COIN[chainId]?.address ??
+        USDC[chainId as keyof typeof USDC]?.address ??
+        USDT[chainId as keyof typeof USDT]?.address,
+    );
 
     dispatch(
       replaceSwapState({
@@ -271,11 +273,11 @@ export function useDefaultsFromURLSearch():
         outputCurrencyId: parsed[Field.OUTPUT].currencyId,
         recipient: null,
       }),
-    )
-    setResult({ inputCurrencyId: parsed[Field.INPUT].currencyId, outputCurrencyId: parsed[Field.OUTPUT].currencyId })
-  }, [dispatch, chainId, query, native, isReady])
+    );
+    setResult({ inputCurrencyId: parsed[Field.INPUT].currencyId, outputCurrencyId: parsed[Field.OUTPUT].currencyId });
+  }, [dispatch, chainId, query, native, isReady]);
 
-  return result
+  return result;
 }
 
 // type useFetchPairPricesParams = {
