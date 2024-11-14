@@ -96,7 +96,7 @@ const useUpsertGaslessListings = (chainId?: number) => {
       let itemTypes: {[key: string]: number} = {};
       for (const pendingListing of pendingListings) {
         if (itemTypes[pendingListing.collectionAddress] === undefined) {
-          itemTypes[pendingListing.collectionAddress] = await getItemType(pendingListing.collectionAddress);
+          itemTypes[pendingListing.collectionAddress] = await getItemType(pendingListing.collectionAddress, pendingListing.chainId);
         }
 
         const currencyAddress = pendingListing.currencySymbol ? tokens.tokens.find((token) => ciEquals(token.symbol, pendingListing.currencySymbol) && token.chainId === pendingListing.chainId)?.address : undefined;

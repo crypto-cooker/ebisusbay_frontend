@@ -118,7 +118,7 @@ const DialogContent = ({isOpen, onClose, nft, DialogBody, DialogFooter}: Pick<Re
       // Sentry.captureEvent({message: 'handleTransfer', extra: {address: nftAddress, targetAddress}});
 
       let tx;
-      if (await is1155(nftAddress)) {
+      if (await is1155(nftAddress, nft.chain)) {
         const contract = new Contract(nftAddress, ERC1155, user.provider.getSigner());
         tx = await contract.safeTransferFrom(user.address, targetAddress, nftId, quantity, []);
       } else {

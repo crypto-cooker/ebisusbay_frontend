@@ -11,7 +11,7 @@ import {readContract, readContracts} from "@wagmi/core";
 const config = appConfig();
 const { ItemType } = Constants;
 
-export async function getItemType(nftAddress: string) {
+export async function getItemType(nftAddress: string, chainId?: number) {
   if (ciEquals(nftAddress, ethers.constants.AddressZero)) return ItemType.NATIVE;
 
   const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -19,6 +19,7 @@ export async function getItemType(nftAddress: string) {
   const ERC1155InterfaceId = "0xd9b67a26";
   const ERC721InterfaceId = "0x80ac58cd";
   const is1155 = await readContract(wagmiConfig as any, {
+    chainId,
     abi: ERC165,
     address: nftAddress as Address,
     functionName: 'supportsInterface',
@@ -30,8 +31,8 @@ export async function getItemType(nftAddress: string) {
   return is1155 ? ItemType.ERC1155 : ItemType.ERC721;
 }
 
-export async function is1155(nftAddress: string) {
-  return await getItemType(nftAddress) === ItemType.ERC1155
+export async function is1155(nftAddress: string, chainId?: number) {
+  return await getItemType(nftAddress, chainId) === ItemType.ERC1155
 }
 
 export async function is1155Many(nftAddresses: string[]) {
