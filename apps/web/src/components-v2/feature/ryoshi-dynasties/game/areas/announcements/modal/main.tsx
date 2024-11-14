@@ -292,7 +292,7 @@ const MainPage = ({handleShowLeaderboard, onOpenDailyCheckin, handleShowPatchNot
                       }}
                     />
                   ) : (
-                    <>Claim Koban!</>
+                    <>Claim XP!</>
                   )}
                 </RdButton>
               </Flex>

@@ -207,7 +207,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
                   }}
                 />
                 ) : (
-                <>Claim Koban!</>
+                <>Claim XP!</>
               )}
             </RdButton>
           </HStack>
