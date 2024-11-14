@@ -10,8 +10,8 @@ import SwapRoute from '@dex/swap/components/tabs/swap/swap-details/swap-route';
 import { LP_HOLDERS_FEE, TOTAL_FEE, TREASURY_FEE } from '@dex/swap/constants';
 import { usePaymaster } from '@eb-pancakeswap-web/hooks/usePaymaster';
 import { GasTokenSelector } from '@dex/swap/components/tabs/swap/paymaster/gas-token-selector';
-import { useChainId } from 'wagmi';
-import { useExchangeRate } from '@market/hooks/useGlobalPrices';
+import { useTokenDataQuery } from '@src/components-v2/feature/info/hooks/useTokenDataQuery';
+import DecimalAbbreviatedNumber from '@src/components-v2/shared/decimal-abbreviated-number';
 
 function TradeSummary({
   trade,
@@ -30,19 +30,14 @@ function TradeSummary({
   const lpHoldersFeePercent = `${(LP_HOLDERS_FEE * 100).toFixed(2)}%`;
   const treasuryFeePercent = `${(TREASURY_FEE * 100).toFixed(2)}%`;
 
-  const chainId = useChainId();
-
-  const { usdValueForToken } = useExchangeRate(chainId);
+  const prices = {
+    [Field.INPUT]: useTokenDataQuery(trade.inputAmount.currency.wrapped.address.toLowerCase())?.priceUSD,
+    [Field.OUTPUT]: useTokenDataQuery(trade.outputAmount.currency.wrapped.address.toLowerCase())?.priceUSD,
+  };
 
   const currencyUSDAmounts = {
-    [Field.INPUT]: usdValueForToken(
-      Number(slippageAdjustedAmounts[Field.INPUT]?.toSignificant(6)),
-      trade.inputAmount.currency.wrapped.address,
-    ),
-    [Field.OUTPUT]: usdValueForToken(
-      Number(slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(6)),
-      trade.outputAmount.currency.wrapped.address,
-    ),
+    [Field.INPUT]: Number(slippageAdjustedAmounts[Field.INPUT]?.toSignificant(6)) * (prices[Field.INPUT] ?? 0),
+    [Field.OUTPUT]: Number(slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(6)) * (prices[Field.OUTPUT] ?? 0),
   };
   return (
     <Box>
@@ -71,12 +66,14 @@ function TradeSummary({
           </Text>
           <QuestionHelper text="Your transaction will revert if there is a large, unfavorable price movement before it is confirmed." />
         </HStack>
-        <Box>
-          <Text fontWeight="bold" fontSize="sm">
-            {isExactIn
-              ? (`$${currencyUSDAmounts[Field.OUTPUT]}` ?? '-')
-              : (`$${currencyUSDAmounts[Field.INPUT]}` ?? '-')}
-          </Text>
+        <Box fontWeight='bold' fontSize='sm'>
+          <DecimalAbbreviatedNumber
+            value={
+              isExactIn
+                ? (`$${currencyUSDAmounts[Field.OUTPUT]}` ?? '-')
+                : (`$${currencyUSDAmounts[Field.INPUT]}` ?? '-')
+            }
+          />
         </Box>
       </Flex>
       <Flex justify="space-between">
