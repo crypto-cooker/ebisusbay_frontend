@@ -102,6 +102,9 @@ const NavMenu = (props: any) => {
             </VStack>
           </MenuButton>
           <MenuList>
+            <MenuItem as={NextLink} href="/info" _hover={{ color: 'inherit' }} justifyContent="space-between">
+              Info
+            </MenuItem>
             <MenuItem as={NextLink} href="/dex/bridge" _hover={{ color: 'inherit' }} justifyContent="space-between">
               Bridge
             </MenuItem>
