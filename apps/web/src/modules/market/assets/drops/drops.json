@@ -7843,7 +7843,7 @@
     "author": {
       "name": "crow with knife",
       "website": "https://crowwithknife.com/",
-      "twitter": "https://twitter.com/crow_with_knife",
+      "twitter": "https://x.com/946_Club",
       "discord": "https://discord.gg/gutvRaZpdr"
     },
     "address": "",
@@ -7855,7 +7855,7 @@
     "erc20Only": true,
     "foundersOnly": false,
     "abi": "946-club.json",
-    "start": 1731700800000,
+    "start": 1731711600000,
     "end": null,
     "referral": false,
     "is1155": false,
