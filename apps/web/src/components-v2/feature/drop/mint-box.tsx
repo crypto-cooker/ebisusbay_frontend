@@ -58,9 +58,10 @@ interface MintBoxProps {
   specialWhitelist: any;
   maxMintPerTx: number;
   maxMintPerAddress: number;
+  isInPresale: boolean;
 }
 
-export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescription, onMintSuccess, canMintQuantity, regularCost, memberCost, whitelistCost, specialWhitelist, maxMintPerTx, maxMintPerAddress}: MintBoxProps) => {
+export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescription, onMintSuccess, canMintQuantity, regularCost, memberCost, whitelistCost, specialWhitelist, maxMintPerTx, maxMintPerAddress, isInPresale}: MintBoxProps) => {
   const user = useUser();
   const userTheme = user.theme;
   const {requestSignature} = useEnforceSigner();
@@ -159,9 +160,11 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
         const receipt = await response.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
+        const finalCostDecimals = is946Drop ? 6 : 18;
+
         {
           const purchaseAnalyticParams = {
-            value: Number(ethers.utils.formatEther(finalCost)),
+            value: Number(ethers.utils.formatUnits(finalCost, finalCostDecimals)),
             currency: 'CRO',
             transaction_id: receipt.transactionHash,
             drop_name: drop.title.toString(),
@@ -172,7 +175,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
               item_name: drop.title,
               item_brand: drop.author.name,
               price: regularCost,
-              discount: regularCost - Number(ethers.utils.formatEther(finalCost)),
+              discount: regularCost - Number(ethers.utils.formatUnits(finalCost, finalCostDecimals)),
               quantity: numToMint
             }]
           };
@@ -214,22 +217,28 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
     const erc20Contract = contractService!.erc20(erc20Token.address);
 
-    const allowance = await erc20Contract.allowance(user.address, drop.address);
-    if (allowance.sub(finalCost) <= 0) {
-      const approvalTx = await erc20Contract.approve(drop.address, constants.MaxUint256);
-      await approvalTx.wait();
+    if (finalCost > 0) {
+      const allowance = await erc20Contract.allowance(user.address, drop.address);
+      if (allowance.sub(finalCost) <= 0) {
+        const approvalTx = await erc20Contract.approve(drop.address, constants.MaxUint256);
+        await approvalTx.wait();
+      }
     }
 
     const actualContract = contractService!.custom(drop.address, abi);
     const gasPrice = parseUnits('20000', 'gwei');
-    const gasEstimate = await actualContract.estimateGas.mintWithToken(numToMint);
+    const gasEstimate = is946Drop ?
+      await actualContract.estimateGas.mint(numToMint) :
+      await actualContract.estimateGas.mintWithToken(numToMint);
     const gasLimit = gasEstimate.mul(2);
     let extra = {
       gasPrice,
       gasLimit
     };
 
-    return await actualContract.mintWithToken(numToMint, extra);
+    return is946Drop ?
+      await actualContract.mint(numToMint, extra) :
+      await actualContract.mintWithToken(numToMint, extra);
   }
 
   const mintWithRewards = async (finalCost: number) => {
@@ -276,6 +285,8 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     }
   }, [drop]);
 
+  const is946Drop = drop.slug === '946-club';
+
   return (
     <div className="card h-100 shadow mt-2" style={{
       borderColor:getTheme(userTheme).colors.borderColor3,
@@ -313,8 +324,17 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       {drop.erc20Cost && drop.erc20Token && erc20Token && (
                         <Heading as="h5" size="md" mt={1}>
                           <Flex alignItems='center'>
-                            <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(drop.chainId ?? ChainId.CRONOS)} size='24px' />
-                            <span className="ms-2">{ethers.utils.commify(round(drop.erc20Cost))}</span>
+                            {is946Drop ? (
+                              <>
+                                <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(drop.chainId ?? ChainId.CRONOS)} size='24px' />
+                                <span className="ms-2">{ethers.utils.commify(round(regularCost))}</span>
+                              </>
+                            ) : (
+                              <>
+                                <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(drop.chainId ?? ChainId.CRONOS)} size='24px' />
+                                <span className="ms-2">{ethers.utils.commify(round(drop.erc20Cost))}</span>
+                              </>
+                            )}
                           </Flex>
                         </Heading>
                       )}
@@ -416,6 +436,11 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
             {(status === statuses.UNSET || status === statuses.NOT_STARTED || drop.complete) && (
               <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
                 Supply: {ethers.utils.commify(maxSupply.toString())}
+              </Text>
+            )}
+            {is946Drop && (
+              <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
+                First 2 days open to Allowlist only, then open to public. Allowlist users can mint up to one free NFT
               </Text>
             )}
             {status >= statuses.LIVE && !drop.complete && (
