@@ -12,6 +12,7 @@ import { usePaymaster } from '@eb-pancakeswap-web/hooks/usePaymaster';
 import { GasTokenSelector } from '@dex/swap/components/tabs/swap/paymaster/gas-token-selector';
 import { useTokenDataQuery } from '@src/components-v2/feature/info/hooks/useTokenDataQuery';
 import DecimalAbbreviatedNumber from '@src/components-v2/shared/decimal-abbreviated-number';
+import { round } from '@market/helpers/utils';
 
 function TradeSummary({
   trade,
@@ -67,13 +68,10 @@ function TradeSummary({
           <QuestionHelper text="Your transaction will revert if there is a large, unfavorable price movement before it is confirmed." />
         </HStack>
         <Box fontWeight='bold' fontSize='sm'>
-          <DecimalAbbreviatedNumber
-            value={
-              isExactIn
-                ? (`$${currencyUSDAmounts[Field.OUTPUT]}` ?? '-')
-                : (`$${currencyUSDAmounts[Field.INPUT]}` ?? '-')
-            }
-          />
+          {isExactIn
+            ? (`$${round(currencyUSDAmounts[Field.OUTPUT], 2)}` ?? '-')
+            : (`$${round(currencyUSDAmounts[Field.INPUT], 2)}` ?? '-')
+          }
         </Box>
       </Flex>
       <Flex justify="space-between">
