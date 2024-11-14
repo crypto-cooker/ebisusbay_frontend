@@ -2,7 +2,6 @@ import {useUser} from "@src/components-v2/useUser";
 import {useEffect, useState} from "react";
 import {Transak, TransakConfig} from "@transak/transak-sdk";
 import {getServerSignature} from "@src/core/cms/endpoints/gaslessListing";
-import {is1155} from "@market/helpers/chain";
 import Pusher from "pusher-js";
 import {appConfig} from "@src/config";
 import {useErrorLogger} from "@market/hooks/use-error-logger";
