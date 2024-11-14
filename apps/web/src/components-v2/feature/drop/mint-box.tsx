@@ -327,7 +327,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                             {is946Drop ? (
                               <>
                                 <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(drop.chainId ?? ChainId.CRONOS)} size='24px' />
-                                <span className="ms-2">{ethers.utils.commify(round(regularCost))}</span>
+                                <span className="ms-2">{ethers.utils.commify(round(regularCost ?? drop.erc20Cost))}</span>
                               </>
                             ) : (
                               <>
