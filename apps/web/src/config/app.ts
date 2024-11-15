@@ -311,8 +311,8 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
         marketplace: {
           available: ['zkcro', 'frtn', 'vusd', 'veth'],
           nft: {
-            '0x46055078a40358c27f7850d81f29ec857342318f': ['frtn'],   // Moggy Money Brokers
-            '0xe99b17eb4ddb3efc6aff08afe83d1f80278fec7e': ['zkcro'],  // Ryoshi Vaults
+            '0x46055078a40358c27f7850d81f29ec857342318f': ['frtn'],           // Moggy Money Brokers
+            '0xe99b17eb4ddb3efc6aff08afe83d1f80278fec7e': ['zkcro', 'vusd'],  // Ryoshi Vaults
           }
         },
         deals: []
