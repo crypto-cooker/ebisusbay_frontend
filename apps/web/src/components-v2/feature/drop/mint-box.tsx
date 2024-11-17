@@ -34,6 +34,7 @@ import {ChainId} from "@pancakeswap/chains";
 import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
 import {useAppChainConfig} from "@src/config/hooks";
 import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
+import Countdown from 'react-countdown';
 
 const config = appConfig();
 
@@ -439,9 +440,14 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
               </Text>
             )}
             {is946Drop && (
-              <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
-                First 2 days open to Allowlist only, then open to public. Allowlist users can mint up to one free NFT
-              </Text>
+              <Box fontSize='sm' textAlign='center' fontWeight='semibold' mt={4}>
+                <Text>
+                  First 2 days open to Allowlist only, then open to public. Allowlist users can mint up to one free NFT
+                </Text>
+                {Date.now() < 1731884400000 && (
+                  <Box mt={2}>Public mint starts in <Countdown date={1731884400000} /></Box>
+                )}
+              </Box>
             )}
             {status >= statuses.LIVE && !drop.complete && (
               <div>
