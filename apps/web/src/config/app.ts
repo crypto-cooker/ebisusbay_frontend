@@ -110,7 +110,8 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
             'fftb',
             'mery',
             'lwv',
-            'daddy'
+            'daddy',
+            'caw'
           ],
           nft: {
             '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -275,6 +276,7 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
             '0xd265D2fd5BbBbFF42BF226c360c48C17bc24f49b': ['cro', 'frtn', 'daddy'], // National Fat Guy League (NFGL) 2023 Season
             '0x14769cebC0479e192A465A685844261F16109495': ['cro', 'frtn', 'daddy'], // Battle DBDs
             '0x369F27b939A4eB1f7b124A7948A435a3aA1e6CD6': ['cro', 'frtn', 'daddy'], // DBD Fantasy Football Season 1
+            '0xD27B89B4F0eFCf86c4b2d74EFf8977fe1c0B9d05': ['cro', 'frtn', 'caw'], // 946 club
 
           },
         },
