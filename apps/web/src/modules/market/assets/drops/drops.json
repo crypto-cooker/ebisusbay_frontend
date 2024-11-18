@@ -7874,5 +7874,40 @@
       "escrow": false,
       "verified": true
     }
+  },
+  {
+    "id": 200,
+    "chainId": 25,
+    "slug": "cronies-on-cronos",
+    "title": "Cronies On Cronos",
+    "subtitle": "The Unstoppable Force of the Cronos Blockchain. Cronies are a collection of 5000 NFT's that are digitally generated with loads of different traits making each one unique and special in its own way.  They protect your wallet assets, the Cronos Chain, and provide the holder with benefits in staking and earn rewards in future community events.  Owning one will help you sleep better at night knowing your assets are safe on the Cronos Chain.  Owning more than one makes you a true Cronies collector.",
+    "description": "Cronies - The Unstoppable Force of the Cronos Blockchain\n\nEmerging from the depths of the Cronos blockchain, Cronies is not just a NFT collection, but a symbol of resilience and community. Born in the crucible of both bullish exuberance and bearish despair, Cronies represents a group of like-minded crypto enthusiasts on the Cronos chain who have navigated the volatile waves of the market together.\n\nThis collection of 5,000 Cronies embodies the spirit of strength, perseverance, and swagger.  Each holder is part of a larger family called the Crofam, or 'CRONIES' bonded by the shared experiences of market highs and lows. Cronies is more than just an NFT; it's a form of art symbolizing the inevitable rise of its community against all odds. With a design that resonates with strength, defiance, and a nod to the cultural trends within the crypto space, Cronies stands as a testament to the enduring spirit of its holders, promising to be a beacon of hope and collective strength in the ever-fluctuating world of cryptocurrencies.",
+    "author": {
+      "name": "Cronies On Cronos"
+    },
+    "address": "",
+    "maxMintPerTx": 100,
+    "maxMintPerAddress": 100,
+    "totalSupply": 5000,
+    "cost": "55",
+    "foundersOnly": false,
+    "start": 1732046400000,
+    "end": null,
+    "referral": false,
+    "is1155": false,
+    "published": true,
+    "complete": false,
+    "images": {
+      "drop": "https://cdn-prod.ebisusbay.com/files/collection-images/cronies-on-cronos/card.webp",
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronies-on-cronos/banner.webp",
+      "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronies-on-cronos/avatar.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/cronies-on-cronos/card.webp"
+    },
+    "verification": {
+      "doxx": false,
+      "kyc": false,
+      "escrow": false,
+      "verified": true
+    }
   }
 ]
