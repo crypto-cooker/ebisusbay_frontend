@@ -110,7 +110,8 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
             'fftb',
             'mery',
             'lwv',
-            'daddy'
+            'daddy',
+            'caw'
           ],
           nft: {
             '0xE49709A3B59d708f50AA3712F2E5a84b7707664C': ['frtn'],        // Ryoshi VIP
@@ -227,7 +228,8 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
             '0x4F68b2F90091B6C6012b487Faa7D267FC0Db86dE': ['icy'],
             '0x45008e129A33368119757496DA762284ff8e2565': ['icy'],
             '0x7677cbE702Ff3d0e66d3BaC0fD71Cb641A276Ae0': ['icy'],
-            '0xccc598ef1b4d17d9f44a889eee38c8de53f5df00': ['icy'], // ICY Brand End
+            '0xccc598ef1b4d17d9f44a889eee38c8de53f5df00': ['icy'],
+            '0x187d7fcbf849ae520e47fe710529585dd8592c60': ['icy'], // ICY Brand End
             '0x6A7808f1e84bB173D6fC53Efd9Ebc6E56380AB5E': ['cro'], // Cronos Chickens
             '0x5dd80779025679D06C9A175a7090FEEe92eA70aa': ['frtn'], // Strategy Series Vol.1,
             '0xc7c010eCc6b7704a110fFCc7A9b2F0DfC4ee8845': ['cro', 'frtn', 'coom'], // Coom Cats
@@ -274,6 +276,7 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
             '0xd265D2fd5BbBbFF42BF226c360c48C17bc24f49b': ['cro', 'frtn', 'daddy'], // National Fat Guy League (NFGL) 2023 Season
             '0x14769cebC0479e192A465A685844261F16109495': ['cro', 'frtn', 'daddy'], // Battle DBDs
             '0x369F27b939A4eB1f7b124A7948A435a3aA1e6CD6': ['cro', 'frtn', 'daddy'], // DBD Fantasy Football Season 1
+            '0xD27B89B4F0eFCf86c4b2d74EFf8977fe1c0B9d05': ['cro', 'frtn', 'caw'], // 946 club
 
           },
         },
@@ -311,8 +314,8 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
         marketplace: {
           available: ['zkcro', 'frtn', 'vusd', 'veth'],
           nft: {
-            '0x46055078a40358c27f7850d81f29ec857342318f': ['frtn'],   // Moggy Money Brokers
-            '0xe99b17eb4ddb3efc6aff08afe83d1f80278fec7e': ['zkcro'],  // Ryoshi Vaults
+            '0x46055078a40358c27f7850d81f29ec857342318f': ['frtn'],           // Moggy Money Brokers
+            '0xe99b17eb4ddb3efc6aff08afe83d1f80278fec7e': ['zkcro', 'vusd'],  // Ryoshi Vaults
           }
         },
         deals: []

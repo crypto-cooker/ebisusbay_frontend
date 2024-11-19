@@ -310,7 +310,8 @@ const configData: AppConfigMap = {
           'coom',
           'fftb',
           'mery',
-          'lwv'
+          'lwv',
+          'caw'
         ],
         global: ['cro', 'frtn'],
         nft: {
@@ -469,6 +470,7 @@ const configData: AppConfigMap = {
           '0x25ea0f16e3a52db95e31f8514917a0610270e7cd': ['cro', 'frtn', 'lwv'], // TeenDACC
           '0x3fe29ffa527d712a5b202ddaeff714c12cb6aff5': ['cro', 'frtn', 'lwv'], // Snap!
           '0x4Ffca5C2790ef342c1EF25d48D1FFc8a2B4b1D9A': ['cro', 'frtn', 'lwv'], // Lightwave Booster
+          '0xD27B89B4F0eFCf86c4b2d74EFf8977fe1c0B9d05': ['cro', 'frtn', 'caw'], // 946 club
         }
       }
     },
