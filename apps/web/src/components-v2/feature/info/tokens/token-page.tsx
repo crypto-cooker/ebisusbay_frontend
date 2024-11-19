@@ -134,7 +134,7 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
               <Flex flexDirection="column" mb={['8px', null]}>
                 <Flex alignItems="center">
                   <CurrencyLogoByAddress size="32px" address={address} chainId={chainId} />
-                  <Text ml="12px" fontWeight={'bold'} lineHeight="0.7" fontSize={'40px'} id="info-token-name-title">
+                  <Text ml="12px" fontWeight={'bold'} lineHeight="0.7" fontSize={{base:'24px', md:'40px'}} id="info-token-name-title">
                     {tokenName}
                   </Text>
                   <Text ml="12px" lineHeight="1" color="textSubtle" fontSize={'20px'}>

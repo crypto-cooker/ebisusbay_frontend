@@ -11,6 +11,7 @@ import { StandardContainer } from '@src/components-v2/shared/containers';
 import { ButtonMenu, ButtonMenuItem } from '@src/components-v2/foundation/button-group';
 import Link from 'next/link';
 import { useChainPathByQuery } from '../hooks/chain';
+import Search from '../components/search';
 
 export default function InfoNav() {
   const router = useRouter();
@@ -24,12 +25,11 @@ export default function InfoNav() {
     }
     return 0;
   }, []);
-  const primaryTabIndex = InfoTabIndex[activeIndex];
 
   return (
     <Box bgColor="#0d6efd29" mb={4}>
       <StandardContainer>
-        <Box display={{ base: 'block', sm: 'flex' }} gap={2} justifyContent="space-between" py={2}>
+        <Box display={{ base: 'block', sm: 'flex' }} flexWrap={'wrap'} gap={2} justifyContent="space-between" py={2}>
           <HStack>
             <ButtonMenu activeIndex={activeIndex}>
               <ButtonMenuItem as={Link} href={`/info${chainPath}`}>
@@ -44,9 +44,7 @@ export default function InfoNav() {
             </ButtonMenu>
             <ChainSelector activeIndex={activeIndex} />
           </HStack>
-          {/* <HStack mt={{base:2, sm:0}}>
-              <Input w='full' placeholder="Search pair or token" />
-          </HStack> */}
+          <Search/>
         </Box>
       </StandardContainer>
     </Box>

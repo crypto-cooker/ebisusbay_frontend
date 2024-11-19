@@ -34,3 +34,4 @@ export const DAYS_IN_YEAR = 365;
 export const TOTAL_FEE = 0.001;
 export const LP_HOLDERS_FEE = 0.0017;
 export const ONE_HOUR_SECONDS = 3600
+export const MINIMUM_SEARCH_CHARACTERS = 2;

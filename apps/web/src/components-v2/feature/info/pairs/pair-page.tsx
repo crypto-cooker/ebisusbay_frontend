@@ -45,7 +45,6 @@ const LockedTokensContainer = styled(Flex)`
   gap: 8px;
   margin-top: 8px;
   border-radius: 16px;
-  max-width: 280px;
 `;
 
 const CustomBreadcrumb = styled(Breadcrumb)`
@@ -100,11 +99,11 @@ const PairPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({
           </Flex>
           <Flex flexDirection="column">
             <Flex alignItems="center" mb={['8px', null]}>
-              <HStack display={{ base: 'none', md: 'flex' }}>
+              <HStack>
                 <CurrencyLogoByAddress size={'32px'} address={PairData.token0.address} chainId={chainId} />
                 <CurrencyLogoByAddress size={'32px'} address={PairData.token1.address} chainId={chainId} />
               </HStack>
-              <Text ml="38px" fontWeight={'bold'} fontSize={'24px'} id="info-pool-pair-title">
+              <Text ml="38px" fontWeight={'bold'} fontSize={{base:'24px', md:'30px'}} id="info-pool-pair-title">
                 {pairSymbol}
               </Text>
             </Flex>
