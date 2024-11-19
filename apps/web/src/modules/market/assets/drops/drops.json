@@ -7885,7 +7885,7 @@
     "author": {
       "name": "Cronies On Cronos"
     },
-    "address": "",
+    "address": "0x031DdC6a10a331BCC9a3Cb5E6ac71366fB5db2c5",
     "maxMintPerTx": 100,
     "maxMintPerAddress": 100,
     "totalSupply": 5000,
