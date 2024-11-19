@@ -29426,22 +29426,47 @@
       "onChain": false,
       "blacklist": 0,
       "metadata": {
-          "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos-zkevm/0xd17bdd27f4c505b857ec3d020d4b541efd128ab3/avatar-f7d843df-635f-45c6-bb3c-6e08e5457507.png",
-          "card": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos-zkevm/0xd17bdd27f4c505b857ec3d020d4b541efd128ab3/preview-5602b66a-4ddb-467c-a776-ee8fa33e1726.jpeg",
-          "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos-zkevm/0xd17bdd27f4c505b857ec3d020d4b541efd128ab3/banner-c0ed2367-15fc-4f93-8869-9a7622bf764f.jpeg",
-          "medium": "",
-          "discord": "https://discord.gg/J7yqRZ4EZG",
-          "twitter": "https://x.com/kittycatcromeow?s=21&t=dIVyb7DvE_A5RZLzo2t3ew",
-          "website": "https://kittycatcromeow.weebly.com/",
-          "telegram": "http://t.me/+ZuIo2jKsos01ODBl",
-          "instagram": "",
-          "categories": [],
-          "description": "The Zombie Apocalypse has started! The Zombie Kitty's are running rampant! Get them before they get you! Earn royalties just from capturing them: https://zombie-kitty.netlify.app/ "
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos-zkevm/0xd17bdd27f4c505b857ec3d020d4b541efd128ab3/avatar-f7d843df-635f-45c6-bb3c-6e08e5457507.png",
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos-zkevm/0xd17bdd27f4c505b857ec3d020d4b541efd128ab3/preview-5602b66a-4ddb-467c-a776-ee8fa33e1726.jpeg",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/chains/cronos-zkevm/0xd17bdd27f4c505b857ec3d020d4b541efd128ab3/banner-c0ed2367-15fc-4f93-8869-9a7622bf764f.jpeg",
+        "medium": "",
+        "discord": "https://discord.gg/J7yqRZ4EZG",
+        "twitter": "https://x.com/kittycatcromeow?s=21&t=dIVyb7DvE_A5RZLzo2t3ew",
+        "website": "https://kittycatcromeow.weebly.com/",
+        "telegram": "http://t.me/+ZuIo2jKsos01ODBl",
+        "instagram": "",
+        "categories": [],
+        "description": "The Zombie Apocalypse has started! The Zombie Kitty's are running rampant! Get them before they get you! Earn royalties just from capturing them: https://zombie-kitty.netlify.app/ "
       },
       "verification": {
         "verified": false,
         "doxx": false,
         "kyc": false
+      }
+    },
+    {
+      "name": "946 Club",
+      "slug": "946-club",
+      "chain": 388,
+      "is1155": false,
+      "address": "0xd27b89b4f0efcf86c4b2d74eff8977fe1c0b9d05",
+      "onChain": false,
+      "blacklist": 0,
+      "metadata": {
+        "card": "https://cdn-prod.ebisusbay.com/files/collection-images/946-club/card.webp",
+        "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/946-club/avatar.webp",
+        "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/946-club/banner.webp",
+        "discord": "https://discord.gg/8a8Xm4wwR9",
+        "twitter": "https://x.com/946_Club",
+        "website": "https://crowwithknife.com/",
+        "telegram": "https://t.me/crowwithknife",
+        "categories": [],
+        "description": "946 Club is an exclusive NFT project created to honor the first-ever NFT on Cronos, CRO CROW minted in block #946, and to celebrate the success of the resulting iconic crow with knife community.  Alemf is the artist for both NFT collections."
+      },
+      "verification": {
+        "verified": true,
+        "doxx": false,
+        "kyc": true
       }
     }
   ]
