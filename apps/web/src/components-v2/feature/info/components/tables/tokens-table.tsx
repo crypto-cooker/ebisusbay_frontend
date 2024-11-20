@@ -1,25 +1,27 @@
-import { Box, Flex, Skeleton, Text } from '@chakra-ui/react';
+import { Box, Flex, Skeleton, Text, VStack } from '@chakra-ui/react';
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import {
-  useChainIdByQuery,
-  useChainPathByQuery,
-} from '@src/components-v2/feature/info/hooks/chain';
+import { useChainIdByQuery, useChainPathByQuery } from '@src/components-v2/feature/info/hooks/chain';
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import styled from 'styled-components';
 import { TokenData } from '@src/components-v2/feature/info/state/types';
 import { ITEMS_PER_INFO_TABLE_PAGE } from '@src/components-v2/feature/info/state/constants';
-import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from '@src/components-v2/feature/info/components/tables/shared';
+import {
+  Arrow,
+  Break,
+  ClickableColumnHeader,
+  PageButtons,
+  TableWrapper,
+} from '@src/components-v2/feature/info/components/tables/shared';
 import { Card } from '@src/components-v2/foundation/card';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import { HStack } from '@chakra-ui/react';
 import { useUserTheme } from '@src/components-v2/useUser';
-import DecimalAbbreviatedNumber from "@src/components-v2/shared/decimal-abbreviated-number";
+import DecimalAbbreviatedNumber from '@src/components-v2/shared/decimal-abbreviated-number';
 import { breakpoints } from '@src/global/theme/break-points';
 import { FilterOptionButton } from '@src/components-v2/feature/info/components/tables/shared';
 import useMatchBreakpoints from '@src/global/hooks/use-match-breakpoints';
-
 
 const ResponsiveGrid = styled.div`
   display: grid;
@@ -75,12 +77,12 @@ const SORT_FIELD = {
   totalLiquidityUSD: 'totalLiquidityUSD',
 };
 
-const FILTER_HEAD ={
+const FILTER_HEAD = {
   priceUSD: 'Price',
   priceChange: 'Price Change',
   volumeUSD24h: 'Volume 24H',
   totalLiquidityUSD: 'Liquidity',
-}
+};
 
 const LoadingRow: React.FC<React.PropsWithChildren> = () => (
   <ResponsiveGrid>
@@ -101,18 +103,12 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => (
   </>
 );
 
-const DataRow = ({ TokenData, index, filter }: { TokenData: TokenData; index: number, filter: string }) => {
+const DataRow = ({ TokenData, index, filter }: { TokenData: TokenData; index: number; filter: string }) => {
   const chainId = useChainIdByQuery();
   const chainPath = useChainPathByQuery();
   const symbol = TokenData.symbol;
-  const theme = useUserTheme()
+  const theme = useUserTheme();
   const color = TokenData.priceChange < 0 ? theme.colors.failure : theme.colors.success;
-  const getStyledAmount = (filter: string) => {
-    if (filter.includes(SORT_FIELD.priceChange)) {
-      return `${formatAmount(TokenData[filter as keyof TokenData] as number)}%`;
-    } else return `$${formatAmount(TokenData[filter as keyof TokenData] as number)}`;
-  };
-
 
   return (
     <LinkWrapper href={`/info${chainPath}/tokens/${TokenData.id}`}>
@@ -124,8 +120,11 @@ const DataRow = ({ TokenData, index, filter }: { TokenData: TokenData; index: nu
           </HStack>
           <Text ml="8px">{symbol}</Text>
         </Flex>
-        <DecimalAbbreviatedNumber value={getStyledAmount(filter)} />
-        {/* <DecimalAbbreviatedNumber value={TokenData.priceUSD} /> */}
+        <Text display='flex' color={filter.includes(SORT_FIELD.priceChange) ? color : ''}>
+          {!filter.includes(SORT_FIELD.priceChange) && '$'}
+          <DecimalAbbreviatedNumber value={formatAmount(TokenData[filter as keyof TokenData] as number) ?? 0} />
+          {filter.includes(SORT_FIELD.priceChange) && '%'}
+        </Text>
         <Text color={color}>{formatAmount(TokenData.priceChange)}%</Text>
         <Text>${formatAmount(TokenData.volumeUSD24h)}</Text>
         <Text>${formatAmount(TokenData.totalLiquidityUSD)}</Text>
@@ -263,7 +262,7 @@ const TokenTable: React.FC<React.PropsWithChildren<TokenTableProps>> = ({ tokenD
               if (tokenData) {
                 return (
                   <Fragment key={tokenData.id}>
-                    <DataRow index={(page - 1) * ITEMS_PER_INFO_TABLE_PAGE + i} TokenData={tokenData} filter={filter}/>
+                    <DataRow index={(page - 1) * ITEMS_PER_INFO_TABLE_PAGE + i} TokenData={tokenData} filter={filter} />
                     <Break />
                   </Fragment>
                 );
