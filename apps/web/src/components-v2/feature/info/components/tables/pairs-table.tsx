@@ -1,4 +1,4 @@
-import { Box, Flex, Skeleton, Text } from '@chakra-ui/react';
+import { Box, Flex, Skeleton, Text, useDisclosure } from '@chakra-ui/react';
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
@@ -11,10 +11,19 @@ import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import styled from 'styled-components';
 import { PairData } from '@src/components-v2/feature/info/state/types';
 import { ITEMS_PER_INFO_TABLE_PAGE } from '@src/components-v2/feature/info/state/constants';
-import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from '@src/components-v2/feature/info/components/tables/shared';
+import {
+  Arrow,
+  Break,
+  ClickableColumnHeader,
+  PageButtons,
+  TableWrapper,
+} from '@src/components-v2/feature/info/components/tables/shared';
 import { Card } from '@src/components-v2/foundation/card';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import { HStack } from '@chakra-ui/react';
+import useMatchBreakpoints from '@src/global/hooks/use-match-breakpoints';
+import { breakpoints } from '@src/global/theme/break-points';
+import { FilterOptionButton } from '@src/components-v2/feature/info/components/tables/shared';
 
 const ResponsiveGrid = styled.div`
   display: grid;
@@ -23,23 +32,28 @@ const ResponsiveGrid = styled.div`
   grid-template-columns: 30px 2fr repeat(4, 1fr);
 
   padding: 0 24px;
-  @media screen and (max-width: 900px) {
-    grid-template-columns: 30px 1.5fr repeat(2, 1fr);
-    & :nth-child(4),
-    & :nth-child(5) {
+  @media screen and (max-width: ${breakpoints.lg}px) {
+    grid-template-columns: 30px 1.5fr repeat(3, 1fr);
+    & :nth-child(6) {
       display: none;
     }
   }
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: ${breakpoints.md}px) {
+    grid-template-columns: 30px 1.5fr repeat(2, 1fr);
+    & :nth-child(5),
+    & :nth-child(6) {
+      display: none;
+    }
+  }
+  @media screen and (max-width: ${breakpoints.sm}px) {
     grid-template-columns: 30px 1.5fr repeat(1, 1fr);
     & :nth-child(4),
     & :nth-child(5),
-    & :nth-child(6),
-    & :nth-child(7) {
+    & :nth-child(6) {
       display: none;
     }
   }
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: ${breakpoints.xs}px) {
     grid-template-columns: 2.5fr repeat(1, 1fr);
     > *:nth-child(1) {
       display: none;
@@ -65,6 +79,13 @@ const SORT_FIELD = {
   lpApr24h: 'lpApr24h',
 };
 
+const FILTER_HEAD = {
+  dailyVolumeUSD: 'Volume 24H',
+  liquidityUSD: 'Liquidity',
+  lpFees24h: 'LP reward fees 24H',
+  lpApr24h: 'LP reward APR',
+};
+
 const LoadingRow: React.FC<React.PropsWithChildren> = () => (
   <ResponsiveGrid>
     <Skeleton width="full" height="20px" />
@@ -84,12 +105,18 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => (
   </>
 );
 
-const DataRow = ({ PairData, index }: { PairData: PairData; index: number }) => {
+const DataRow = ({ PairData, index, filter }: { PairData: PairData; index: number; filter: any }) => {
   const chainName = useChainNameByQuery();
   const chainId = useChainIdByQuery();
   const chainPath = useChainPathByQuery();
   const token0symbol = PairData.token0.symbol;
   const token1symbol = PairData.token1.symbol;
+
+  const getStyledAmount = (filter: string) => {
+    if (filter.includes(SORT_FIELD.lpApr24h)) {
+      return `${formatAmount(PairData[filter as keyof PairData] as number)}%`;
+    } else return `$${formatAmount(PairData[filter as keyof PairData] as number)}`;
+  };
 
   return (
     <LinkWrapper href={`/info${chainPath}/pairs/${PairData.id}`}>
@@ -104,7 +131,7 @@ const DataRow = ({ PairData, index }: { PairData: PairData; index: number }) => 
             {token0symbol}/{token1symbol}
           </Text>
         </Flex>
-        <Text>${formatAmount(PairData.dailyVolumeUSD)}</Text>
+        <Text>{getStyledAmount(filter)}</Text>
         <Text>${formatAmount(PairData.lpFees24h)}</Text>
         <Text>{formatAmount(PairData.lpApr24h)}%</Text>
         <Text>${formatAmount(PairData.liquidityUSD)}</Text>
@@ -122,6 +149,23 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
   // for sorting
   const [sortField, setSortField] = useState(SORT_FIELD.dailyVolumeUSD);
   const [sortDirection, setSortDirection] = useState<boolean>(true);
+  const [filterOptions, setFilterOptions] = useState<string[]>([]);
+  const [filter, setFilter] = useState<string>(SORT_FIELD.dailyVolumeUSD);
+
+  // for responsive breakpoints
+  const { isXxs, isSm, isXs, isMd, isLg, isXl, isXxl } = useMatchBreakpoints();
+
+  useEffect(() => {
+    if (isLg) {
+      setFilterOptions([SORT_FIELD.liquidityUSD]);
+      setFilter(SORT_FIELD.dailyVolumeUSD);
+    } else if (isMd) {
+      setFilterOptions([SORT_FIELD.lpApr24h, SORT_FIELD.liquidityUSD]);
+      setFilter(SORT_FIELD.dailyVolumeUSD);
+    } else if (isSm || isXs || isXxs) {
+      setFilterOptions([SORT_FIELD.lpFees24h, SORT_FIELD.lpApr24h, SORT_FIELD.liquidityUSD]);
+    } else setFilterOptions([]);
+  }, [isXxs, isSm, isXs, isMd, isLg, isXl, isXxl]);
 
   // pagination
   const [page, setPage] = useState(1);
@@ -175,14 +219,24 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
           <Text color="secondary" fontSize="12px" fontWeight="bold" textTransform="uppercase">
             Pair
           </Text>
-          <ClickableColumnHeader
-            color="secondary"
-            fontSize="12px"
-            onClick={() => handleSort(SORT_FIELD.dailyVolumeUSD)}
-            textTransform="uppercase"
-          >
-            {'Volume 24H'} {arrow(SORT_FIELD.dailyVolumeUSD)}
-          </ClickableColumnHeader>
+          <HStack position="relative" gap={4}>
+            <ClickableColumnHeader
+              color="secondary"
+              fontSize="12px"
+              onClick={() => handleSort(SORT_FIELD.dailyVolumeUSD)}
+              textTransform="uppercase"
+            >
+              {FILTER_HEAD[filter as keyof typeof FILTER_HEAD]} {arrow(SORT_FIELD[filter as keyof typeof FILTER_HEAD])}
+            </ClickableColumnHeader>
+            {filterOptions.length > 0 && (
+              <FilterOptionButton
+                filterOptions={filterOptions}
+                setFilterOptions={setFilterOptions}
+                setFilter={setFilter}
+                filterHead={FILTER_HEAD}
+              />
+            )}
+          </HStack>
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
@@ -215,7 +269,7 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
               if (PairData) {
                 return (
                   <Fragment key={PairData.id}>
-                    <DataRow index={(page - 1) * ITEMS_PER_INFO_TABLE_PAGE + i} PairData={PairData} />
+                    <DataRow index={(page - 1) * ITEMS_PER_INFO_TABLE_PAGE + i} PairData={PairData} filter={filter} />
                     <Break />
                   </Fragment>
                 );

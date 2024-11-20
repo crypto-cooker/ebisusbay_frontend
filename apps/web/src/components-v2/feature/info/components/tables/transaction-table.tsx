@@ -1,6 +1,6 @@
 // TODO PCS refactor ternaries
 /* eslint-disable no-nested-ternary */
-import { Box, Flex, Radio, RadioGroup, Skeleton, Stack, Text } from '@chakra-ui/react';
+import { Box, Flex, HStack, Radio, RadioGroup, Skeleton, Stack, Text } from '@chakra-ui/react';
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import truncateHash from '@pancakeswap/utils/truncateHash';
 import { ITEMS_PER_INFO_TABLE_PAGE } from '../../state/constants';
@@ -11,10 +11,13 @@ import { useChainIdByQuery } from '../../hooks/chain';
 import { Transaction, TransactionType } from '../../state/types';
 import styled from 'styled-components';
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
-import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from './shared';
+import { Arrow, Break, ClickableColumnHeader, FilterOptionButton, PageButtons, TableWrapper } from './shared';
 import { CHAINS } from '@src/config/chains';
 import { Link } from '@chakra-ui/react';
 import { Card } from '@src/components-v2/foundation/card';
+import { breakpoints } from '@src/global/theme/break-points';
+import useMatchBreakpoints from '@src/global/hooks/use-match-breakpoints';
+import { getBlockExplorerLink } from '@dex/utils';
 dayjs.extend(relativeTime);
 
 const Wrapper = styled.div`
@@ -27,33 +30,36 @@ const ResponsiveGrid = styled.div`
   align-items: center;
   grid-template-columns: 2fr 0.8fr repeat(4, 1fr);
   padding: 0 24px;
-  @media screen and (max-width: 940px) {
-    grid-template-columns: 2fr repeat(4, 1fr);
+  @media screen and (max-width: ${breakpoints.lg}px) {
+    grid-template-columns: 2fr repeat(3, 1fr);
     & > *:nth-child(5) {
       display: none;
     }
+    & > *:nth-child(4) {
+      display: none;
+    }
   }
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: ${breakpoints.md}px) {
     grid-template-columns: 2fr repeat(2, 1fr);
     & > *:nth-child(5) {
       display: none;
     }
-    & > *:nth-child(3) {
-      display: none;
-    }
     & > *:nth-child(4) {
       display: none;
     }
+    & > *:nth-child(3) {
+      display: none;
+    }
   }
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: ${breakpoints.sm}px) {
     grid-template-columns: 2fr 1fr;
     & > *:nth-child(5) {
       display: none;
     }
-    & > *:nth-child(3) {
+    & > *:nth-child(4) {
       display: none;
     }
-    & > *:nth-child(4) {
+    & > *:nth-child(3) {
       display: none;
     }
     & > *:nth-child(2) {
@@ -77,6 +83,14 @@ const SORT_FIELD = {
   amountToken1: 'amountToken1',
 };
 
+const FILTER_HEAD = {
+  amountUSD: 'Total Value',
+  timestamp: 'Time',
+  sender: 'Account',
+  amountToken0: 'Token Amount',
+  amountToken1: 'Token Amount',
+};
+
 const TableLoader: React.FC<React.PropsWithChildren> = () => {
   const loadingRow = (
     <ResponsiveGrid>
@@ -97,7 +111,10 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
   );
 };
 
-const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction }>> = ({ transaction }) => {
+const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction; filter: string }>> = ({
+  transaction,
+  filter,
+}) => {
   const abs0 = Math.abs(transaction.amountToken0);
   const abs1 = Math.abs(transaction.amountToken1);
   const chainId = useChainIdByQuery();
@@ -107,9 +124,26 @@ const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction }>> =
 
   const outputTokenSymbol = transaction.amountToken0 < 0 ? token0Symbol : token1Symbol;
   const inputTokenSymbol = transaction.amountToken1 < 0 ? token1Symbol : token0Symbol;
+
+  const getStyledValue = (filter: string) => {
+    if (filter.includes(SORT_FIELD.amountUSD)) {
+      return <Text>{`$${formatAmount(transaction[filter as keyof Transaction] as number)}`}</Text>;
+    } else if (filter.includes(SORT_FIELD.amountToken0) || filter.includes(SORT_FIELD.amountToken1)) {
+      const abs = filter.includes(SORT_FIELD.amountToken0) ? abs0 : abs1;
+      return <Text>{`${formatAmount(abs)} ${token0Symbol}`}</Text>;
+    } else if (filter.includes(SORT_FIELD.timestamp)) {
+      return <Text>{dayjs.unix(parseInt(transaction.timestamp, 10)).toNow(true)}</Text>;
+    } else if (filter.includes(SORT_FIELD.sender)) {
+      return (
+        <Link href={getBlockExplorerLink(transaction.sender, 'address', chainId)} target="_blank">
+          {truncateHash(transaction.sender)}
+        </Link>
+      );
+    }
+  };
   return (
     <ResponsiveGrid>
-      <Link href={getBlockExploreLink(transaction.hash, 'transaction', chainId)} target="_blank">
+      <Link href={getBlockExplorerLink(transaction.hash, 'transaction', chainId)} target="_blank">
         <Text>
           {transaction.type === TransactionType.MINT
             ? `Add ${token0Symbol} and ${token1Symbol}`
@@ -118,17 +152,19 @@ const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction }>> =
               : `Remove ${token0Symbol} and ${token1Symbol}`}
         </Text>
       </Link>
-      <Text>${formatAmount(transaction.amountUSD)}</Text>
+      <Text>
+        <Text>{`$${formatAmount(transaction.amountUSD)}`}</Text>
+      </Text>
       <Text>
         <Text>{`${formatAmount(abs0)} ${token0Symbol}`}</Text>
       </Text>
       <Text>
         <Text>{`${formatAmount(abs1)} ${token1Symbol}`}</Text>
       </Text>
-      <Link href={getBlockExploreLink(transaction.sender, 'address', chainId)} target="_blank">
+      <Link href={getBlockExplorerLink(transaction.sender, 'address', chainId)} target="_blank">
         {truncateHash(transaction.sender)}
       </Link>
-      <Text>{dayjs.unix(parseInt(transaction.timestamp, 10)).toNow(true)}</Text>
+      {getStyledValue(filter)}
     </ResponsiveGrid>
   );
 };
@@ -140,6 +176,23 @@ const TransactionTable: React.FC<
 > = ({ transactions }) => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp);
   const [sortDirection, setSortDirection] = useState<boolean>(true);
+  const [filterOptions, setFilterOptions] = useState<string[]>([]);
+  const [filter, setFilter] = useState<string>(SORT_FIELD.timestamp);
+
+  // for responsive breakpoints
+  const { isXxs, isSm, isXs, isMd, isLg, isXl, isXxl } = useMatchBreakpoints();
+
+  useEffect(() => {
+    if (isLg) {
+      setFilterOptions([SORT_FIELD.sender]);
+      setFilter(SORT_FIELD.timestamp);
+    } else if (isMd) {
+      setFilterOptions([SORT_FIELD.amountToken0, SORT_FIELD.sender]);
+      setFilter(SORT_FIELD.timestamp);
+    } else if (isSm || isXs || isXxs) {
+      setFilterOptions([SORT_FIELD.amountToken1, SORT_FIELD.amountToken0, SORT_FIELD.sender]);
+    } else setFilterOptions([]);
+  }, [isXxs, isSm, isXs, isMd, isLg, isXl, isXxl]);
 
   const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
@@ -294,14 +347,24 @@ const TransactionTable: React.FC<
               >
                 Account {arrow(SORT_FIELD.sender)}
               </ClickableColumnHeader>
-              <ClickableColumnHeader
-                color="secondary"
-                fontSize="12px"
-                onClick={() => handleSort(SORT_FIELD.timestamp)}
-                textTransform="uppercase"
-              >
-                Time {arrow(SORT_FIELD.timestamp)}
-              </ClickableColumnHeader>
+              <HStack position="relative" gap={4}>
+                <ClickableColumnHeader
+                  color="secondary"
+                  fontSize="12px"
+                  onClick={() => handleSort(SORT_FIELD.timestamp)}
+                  textTransform="uppercase"
+                >
+                  {FILTER_HEAD[filter as keyof typeof FILTER_HEAD]} {arrow(SORT_FIELD[filter as keyof typeof FILTER_HEAD])}
+                </ClickableColumnHeader>
+                {filterOptions.length > 0 && (
+                  <FilterOptionButton
+                    filterOptions={filterOptions}
+                    setFilterOptions={setFilterOptions}
+                    setFilter={setFilter}
+                    filterHead={FILTER_HEAD}
+                  />
+                )}
+              </HStack>
             </ResponsiveGrid>
             <Break />
 
@@ -312,7 +375,7 @@ const TransactionTable: React.FC<
                     return (
                       // eslint-disable-next-line react/no-array-index-key
                       <Fragment key={index}>
-                        <DataRow transaction={transaction} />
+                        <DataRow transaction={transaction} filter={filter} />
                         <Break />
                       </Fragment>
                     );
@@ -358,28 +421,3 @@ const TransactionTable: React.FC<
 };
 
 export default TransactionTable;
-
-export function getBlockExploreLink(
-  data: string | number | undefined | null,
-  type: 'transaction' | 'token' | 'address' | 'block' | 'countdown',
-  chainId?: number,
-): string {
-  const chainConfig: any = CHAINS.find((chainConfig: any) => chainConfig.id == chainId);
-  switch (type) {
-    case 'transaction': {
-      return `${chainConfig?.blockExplorers?.default.url}tx/${data}`;
-    }
-    case 'token': {
-      return `${chainConfig?.blockExplorers?.default.url}token/${data}`;
-    }
-    case 'block': {
-      return `${chainConfig?.blockExplorers?.default.url}block/${data}`;
-    }
-    case 'countdown': {
-      return `${chainConfig?.blockExplorers?.default.url}block/countdown/${data}`;
-    }
-    default: {
-      return `${chainConfig?.blockExplorers?.default.url}address/${data}`;
-    }
-  }
-}

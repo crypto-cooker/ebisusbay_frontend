@@ -124,7 +124,7 @@ const TokenLogo: React.FC<React.PropsWithChildren<TokenLogoProps>> = ({ srcs, us
     );
   }
 
-  return <QuestionOutlineIcon />;
+  return <QuestionOutlineIcon fontSize={size} />;
 };
 
 const BAD_SRCS: { [tokenAddress: string]: true } = {};

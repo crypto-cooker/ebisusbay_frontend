@@ -1,46 +1,57 @@
-import { Box, Flex, Skeleton, Text } from '@chakra-ui/react';
+import { Box, Flex, Skeleton, Text, VStack } from '@chakra-ui/react';
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import {
-  useChainIdByQuery,
-  useChainPathByQuery,
-} from '@src/components-v2/feature/info/hooks/chain';
+import { useChainIdByQuery, useChainPathByQuery } from '@src/components-v2/feature/info/hooks/chain';
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import styled from 'styled-components';
 import { TokenData } from '@src/components-v2/feature/info/state/types';
 import { ITEMS_PER_INFO_TABLE_PAGE } from '@src/components-v2/feature/info/state/constants';
-import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from '@src/components-v2/feature/info/components/tables/shared';
+import {
+  Arrow,
+  Break,
+  ClickableColumnHeader,
+  PageButtons,
+  TableWrapper,
+} from '@src/components-v2/feature/info/components/tables/shared';
 import { Card } from '@src/components-v2/foundation/card';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import { HStack } from '@chakra-ui/react';
 import { useUserTheme } from '@src/components-v2/useUser';
-import DecimalAbbreviatedNumber from "@src/components-v2/shared/decimal-abbreviated-number";
+import DecimalAbbreviatedNumber from '@src/components-v2/shared/decimal-abbreviated-number';
+import { breakpoints } from '@src/global/theme/break-points';
+import { FilterOptionButton } from '@src/components-v2/feature/info/components/tables/shared';
+import useMatchBreakpoints from '@src/global/hooks/use-match-breakpoints';
 
 const ResponsiveGrid = styled.div`
   display: grid;
   grid-gap: 1em;
   align-items: center;
-  grid-template-columns: 30px 1.5fr repeat(4, 1fr);
+  grid-template-columns: 30px 2fr repeat(4, 1fr);
 
   padding: 0 24px;
-  @media screen and (max-width: 900px) {
-    grid-template-columns: 30px 1.5fr repeat(2, 1fr);
-    & :nth-child(4),
-    & :nth-child(5) {
+  @media screen and (max-width: ${breakpoints.lg}px) {
+    grid-template-columns: 30px 1.5fr repeat(3, 1fr);
+    & :nth-child(6) {
       display: none;
     }
   }
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: ${breakpoints.md}px) {
+    grid-template-columns: 30px 1.5fr repeat(2, 1fr);
+    & :nth-child(5),
+    & :nth-child(6) {
+      display: none;
+    }
+  }
+  @media screen and (max-width: ${breakpoints.sm}px) {
     grid-template-columns: 30px 1.5fr repeat(1, 1fr);
     & :nth-child(4),
     & :nth-child(5),
-    & :nth-child(6),
-    & :nth-child(7) {
+    & :nth-child(6) {
       display: none;
     }
   }
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: ${breakpoints.xs}px) {
     grid-template-columns: 2.5fr repeat(1, 1fr);
     > *:nth-child(1) {
       display: none;
@@ -55,7 +66,7 @@ const LinkWrapper = styled(Link)`
   text-decoration: none;
   &:hover {
     cursor: pointer;
-    opacity: 0.7;
+    opacity: 0.6;
   }
 `;
 
@@ -64,6 +75,13 @@ const SORT_FIELD = {
   priceChange: 'priceChange',
   volumeUSD24h: 'volumeUSD24h',
   totalLiquidityUSD: 'totalLiquidityUSD',
+};
+
+const FILTER_HEAD = {
+  priceUSD: 'Price',
+  priceChange: 'Price Change',
+  volumeUSD24h: 'Volume 24H',
+  totalLiquidityUSD: 'Liquidity',
 };
 
 const LoadingRow: React.FC<React.PropsWithChildren> = () => (
@@ -85,11 +103,11 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => (
   </>
 );
 
-const DataRow = ({ TokenData, index }: { TokenData: TokenData; index: number }) => {
+const DataRow = ({ TokenData, index, filter }: { TokenData: TokenData; index: number; filter: string }) => {
   const chainId = useChainIdByQuery();
   const chainPath = useChainPathByQuery();
   const symbol = TokenData.symbol;
-  const theme = useUserTheme()
+  const theme = useUserTheme();
   const color = TokenData.priceChange < 0 ? theme.colors.failure : theme.colors.success;
 
   return (
@@ -102,7 +120,11 @@ const DataRow = ({ TokenData, index }: { TokenData: TokenData; index: number }) 
           </HStack>
           <Text ml="8px">{symbol}</Text>
         </Flex>
-        <DecimalAbbreviatedNumber value={TokenData.priceUSD} />
+        <Text display='flex' color={filter.includes(SORT_FIELD.priceChange) ? color : ''}>
+          {!filter.includes(SORT_FIELD.priceChange) && '$'}
+          <DecimalAbbreviatedNumber value={formatAmount(TokenData[filter as keyof TokenData] as number) ?? 0} />
+          {filter.includes(SORT_FIELD.priceChange) && '%'}
+        </Text>
         <Text color={color}>{formatAmount(TokenData.priceChange)}%</Text>
         <Text>${formatAmount(TokenData.volumeUSD24h)}</Text>
         <Text>${formatAmount(TokenData.totalLiquidityUSD)}</Text>
@@ -120,6 +142,23 @@ const TokenTable: React.FC<React.PropsWithChildren<TokenTableProps>> = ({ tokenD
   // for sorting
   const [sortField, setSortField] = useState(SORT_FIELD.volumeUSD24h);
   const [sortDirection, setSortDirection] = useState<boolean>(true);
+  const [filterOptions, setFilterOptions] = useState<string[]>([]);
+  const [filter, setFilter] = useState<string>(SORT_FIELD.priceUSD);
+
+  // for responsive breakpoints
+  const { isXxs, isSm, isXs, isMd, isLg, isXl, isXxl } = useMatchBreakpoints();
+
+  useEffect(() => {
+    if (isLg) {
+      setFilterOptions([SORT_FIELD.totalLiquidityUSD]);
+      setFilter(SORT_FIELD.priceUSD);
+    } else if (isMd) {
+      setFilterOptions([SORT_FIELD.volumeUSD24h, SORT_FIELD.totalLiquidityUSD]);
+      setFilter(SORT_FIELD.priceUSD);
+    } else if (isSm || isXs || isXxs) {
+      setFilterOptions([SORT_FIELD.priceChange, SORT_FIELD.volumeUSD24h, SORT_FIELD.totalLiquidityUSD]);
+    } else setFilterOptions([]);
+  }, [isXxs, isSm, isXs, isMd, isLg, isXl, isXxl]);
 
   // pagination
   const [page, setPage] = useState(1);
@@ -173,14 +212,24 @@ const TokenTable: React.FC<React.PropsWithChildren<TokenTableProps>> = ({ tokenD
           <Text color="secondary" fontSize="12px" fontWeight="bold" textTransform="uppercase">
             Tokens
           </Text>
-          <ClickableColumnHeader
-            color="secondary"
-            fontSize="12px"
-            onClick={() => handleSort(SORT_FIELD.priceUSD)}
-            textTransform="uppercase"
-          >
-            {'Price'} {arrow(SORT_FIELD.priceUSD)}
-          </ClickableColumnHeader>
+          <HStack position="relative" gap={4}>
+            <ClickableColumnHeader
+              color="secondary"
+              fontSize="12px"
+              onClick={() => handleSort(SORT_FIELD.priceUSD)}
+              textTransform="uppercase"
+            >
+              {FILTER_HEAD[filter as keyof typeof FILTER_HEAD]} {arrow(SORT_FIELD.priceUSD)}
+            </ClickableColumnHeader>
+            {filterOptions.length > 0 && (
+              <FilterOptionButton
+                filterOptions={filterOptions}
+                setFilterOptions={setFilterOptions}
+                setFilter={setFilter}
+                filterHead={FILTER_HEAD}
+              />
+            )}
+          </HStack>
           <ClickableColumnHeader
             color="secondary"
             fontSize="12px"
@@ -213,7 +262,7 @@ const TokenTable: React.FC<React.PropsWithChildren<TokenTableProps>> = ({ tokenD
               if (tokenData) {
                 return (
                   <Fragment key={tokenData.id}>
-                    <DataRow index={(page - 1) * ITEMS_PER_INFO_TABLE_PAGE + i} TokenData={tokenData} />
+                    <DataRow index={(page - 1) * ITEMS_PER_INFO_TABLE_PAGE + i} TokenData={tokenData} filter={filter} />
                     <Break />
                   </Fragment>
                 );

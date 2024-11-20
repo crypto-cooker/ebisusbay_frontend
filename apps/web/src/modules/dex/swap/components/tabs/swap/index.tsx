@@ -92,9 +92,6 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
     account ?? '',
   );
 
-  useEffect(() => {
-    console.log(v2Trade);
-  }, [v2Trade]);
   const {
     wrapType,
     execute: onWrap,

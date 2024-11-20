@@ -95,7 +95,7 @@ export class Info {
   async getTokens() {
     const query = `
     query GetTokens {
-      tokens(orderBy: tradeVolumeUSD, orderDirection: desc) {
+      tokens( orderBy: tradeVolumeUSD, orderDirection: desc) {
         decimals
         name
         symbol
@@ -158,7 +158,7 @@ export class Info {
     });
   }
 
-  async getPairVolumeData(address:string) {
+  async getPairVolumeData(address: string) {
     const query = `
       query MyQuery {
         pairDayDatas(where: {pairAddress: "${address}"}, first:1000, orderBy: date, orderDirection: desc) {
@@ -185,7 +185,7 @@ export class Info {
   async getProtocolChartDataTvl() {
     const query = `
     query GetTokens {
-      tokens(orderBy: tradeVolumeUSD, orderDirection: desc) {
+      tokens( orderBy: tradeVolumeUSD, orderDirection: desc) {
         decimals
         name
         symbol
@@ -566,6 +566,61 @@ export class Info {
           }
         }
       }
+      `;
+
+    return this.apollo.query({
+      query: gql(query),
+    });
+  }
+  async search(searchString: string) {
+    const query = `
+      query MyQuery {
+        tokens(where: {
+          or: [
+            { name_contains_nocase: "${searchString}" },
+            { symbol_contains_nocase: "${searchString}" },
+            { id: "${searchString}" }
+          ]
+        }) {
+          id
+          name
+          decimals
+          derivedUSD
+          symbol
+        }
+
+        pairs(where: {
+          or: [
+            { token0_: { name_contains_nocase: "${searchString}" } },
+            { token0_: { symbol_contains_nocase: "${searchString}" } },
+            { token0_: { id: "${searchString}" } },
+            { token1_: { name_contains_nocase: "${searchString}" } },
+            { token1_: { symbol_contains_nocase: "${searchString}" } },
+            { token1_: { id: "${searchString}" } },
+            { name_contains_nocase: "${searchString}" },
+            { id: "${searchString}" }
+          ]
+        }) {
+          id
+          name
+          reserveUSD
+          token0 {
+            decimals
+            derivedUSD
+            name
+            id
+            symbol
+          }
+          token1 {
+            decimals
+            derivedUSD
+            name
+            id
+            symbol
+          }
+        }
+      }
+
       `;
 
     return this.apollo.query({

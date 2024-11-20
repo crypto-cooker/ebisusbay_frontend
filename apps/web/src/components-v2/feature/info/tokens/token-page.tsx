@@ -12,7 +12,6 @@ import { useTokenChartDataVolumeQuery } from '@src/components-v2/feature/info/ho
 import { useTokenTransactionsQuery } from '@src/components-v2/feature/info/hooks/useTokenTransactionsQuery';
 import { useChainIdByQuery, useChainPathByQuery } from '@src/components-v2/feature/info/hooks/chain';
 import styled from 'styled-components';
-import { getBlockExploreLink } from '@src/components-v2/feature/info/components/tables/transaction-table';
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import ChartCard from '@src/components-v2/feature/info/components/charts/chart-card';
@@ -21,7 +20,11 @@ import TransactionTable from '@src/components-v2/feature/info/components/tables/
 import Percent from '@src/components-v2/feature/info/components/percent';
 import useCMCLink from '@src/components-v2/feature/info/hooks/useCMCLink';
 import { usePairDatasForToken } from '@src/components-v2/feature/info/hooks';
-import { PrimaryButton } from '@src/components-v2/foundation/button';
+import { CopyButton, PrimaryButton } from '@src/components-v2/foundation/button';
+import { C } from '@tanstack/query-core/build/legacy/hydration-DTVzC0E7';
+import { CHAIN_QUERY_NAME } from '@src/config/chains';
+import { ChainId } from '@pancakeswap/chains';
+import { getBlockExplorerLink, getBlockExplorerName } from '@dex/utils';
 
 dayjs.extend(duration);
 
@@ -54,7 +57,7 @@ const CustomBreadcrumb = styled(Breadcrumb)`
 const DEFAULT_TIME_WINDOW = dayjs.duration(1, 'weeks');
 
 const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({ routeAddress }) => {
-  const chainId = useChainIdByQuery();
+  const chainId:ChainId = useChainIdByQuery();
 
   // In case somebody pastes checksummed address into url (since GraphQL expects lowercase address)
   const address = routeAddress.toLocaleLowerCase();
@@ -108,9 +111,9 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
               <Flex justifyContent={[null, null, 'flex-end']} mt={['8px', '8px', 0]}>
                 <Link
                   style={{ marginRight: '8px', color: 'primary' }}
-                  href={getBlockExploreLink(address, 'address', chainId)}
+                  href={getBlockExplorerLink(address, 'address', chainId)}
                 >
-                  {'View on Explorer'}
+                  {`View on ${getBlockExplorerName(chainId)}`}
                 </Link>
                 {cmcLink && (
                   <StyledCMCLink
@@ -128,13 +131,22 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
                     />
                   </StyledCMCLink>
                 )}
+                <Box paddingBottom={1}>
+                  <CopyButton value={address} />
+                </Box>
               </Flex>
             </Flex>
             <Flex justifyContent="space-between" flexDirection={['column', 'column', 'column', 'row']}>
               <Flex flexDirection="column" mb={['8px', null]}>
                 <Flex alignItems="center">
                   <CurrencyLogoByAddress size="32px" address={address} chainId={chainId} />
-                  <Text ml="12px" fontWeight={'bold'} lineHeight="0.7" fontSize={'40px'} id="info-token-name-title">
+                  <Text
+                    ml="12px"
+                    fontWeight={'bold'}
+                    lineHeight="0.7"
+                    fontSize={{ base: '24px', md: '40px' }}
+                    id="info-token-name-title"
+                  >
                     {tokenName}
                   </Text>
                   <Text ml="12px" lineHeight="1" color="textSubtle" fontSize={'20px'}>
@@ -150,11 +162,9 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
               </Flex>
               <Flex>
                 <Link href={`/dex/add/v2/${address}`}>
-                  <PrimaryButton mr="8px">
-                    {'Add Liquidity'}
-                  </PrimaryButton>
+                  <PrimaryButton mr="8px">{'Add Liquidity'}</PrimaryButton>
                 </Link>
-                <Link href={`/dex/swap?outputCurrency=${address}`}>
+                <Link href={`/dex/swap?outputCurrency=${address}${chainId == 25 ? '' : `&chain=${CHAIN_QUERY_NAME[chainId]}`}`}>
                   <PrimaryButton>{'Trade'}</PrimaryButton>
                 </Link>
               </Flex>
