@@ -41,10 +41,7 @@ interface BattleConclusionProps {
 }
 
 const BattleConclusion = ({attacker, attackerTroops, defender, battleAttack, onAttackAgain, onRetrieveKobanBalance}: BattleConclusionProps) => {
-  const [battleRewardsClaimed, setBattleRewardsClaimed] = useState(false);
-
   const [showDetailedResults, setShowDetailedResults] = useState(false);
-  const { isOpen: isOpenClaimRewards, onOpen: onOpenClaimRewards, onClose: onCloseClaimRewards} = useDisclosure();
 
   const battleDetails = useMemo(() => {
     const ret = {
@@ -86,11 +83,6 @@ const BattleConclusion = ({attacker, attackerTroops, defender, battleAttack, onA
 
     return ret;
   }, [battleAttack, attackerTroops]);
-
-  const onClaimedRewards = () => {
-    setBattleRewardsClaimed(true);
-    onCloseClaimRewards();
-  }
 
   const handleShowDetailedResults = () =>{
     setShowDetailedResults(!showDetailedResults);
@@ -152,6 +144,16 @@ const BattleConclusion = ({attacker, attackerTroops, defender, battleAttack, onA
             </GridItem>
           </SimpleGrid>
         </RdModalBox>
+        <RdModalBox mt={2}>
+          <HStack fontWeight='semibold' justify='space-between'>
+            <Box>Victory Points</Box>
+            {battleAttack.victoryPoints > 0 ? (
+              <Box color='green.400'>+{battleAttack.victoryPoints}</Box>
+            ) : (
+              <Box>0</Box>
+            )}
+          </HStack>
+        </RdModalBox>
       </Box>
 
       <Center>
@@ -172,11 +174,6 @@ const BattleConclusion = ({attacker, attackerTroops, defender, battleAttack, onA
             marginBottom='2'>
             Detailed Results
           </RdButton>
-          {!battleRewardsClaimed && (
-            <RdButton onClick={() => onOpenClaimRewards()} fontSize={{base: 'sm', sm: 'md'}}>
-              Check Rewards
-            </RdButton>
-          )}
         </HStack>
       </Center>
 
@@ -196,10 +193,6 @@ const BattleConclusion = ({attacker, attackerTroops, defender, battleAttack, onA
             </SimpleGrid>
           </RdModalBox>
         </Box>
-      )}
-
-      {isOpenClaimRewards && (
-        <ClaimRewards isOpen={isOpenClaimRewards} onClose={onClaimedRewards} />
       )}
     </>
   )
