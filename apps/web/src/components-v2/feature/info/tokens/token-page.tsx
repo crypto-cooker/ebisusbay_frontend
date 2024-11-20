@@ -12,7 +12,6 @@ import { useTokenChartDataVolumeQuery } from '@src/components-v2/feature/info/ho
 import { useTokenTransactionsQuery } from '@src/components-v2/feature/info/hooks/useTokenTransactionsQuery';
 import { useChainIdByQuery, useChainPathByQuery } from '@src/components-v2/feature/info/hooks/chain';
 import styled from 'styled-components';
-import { getBlockExploreLink } from '@src/components-v2/feature/info/components/tables/transaction-table';
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import ChartCard from '@src/components-v2/feature/info/components/charts/chart-card';
@@ -25,6 +24,7 @@ import { CopyButton, PrimaryButton } from '@src/components-v2/foundation/button'
 import { C } from '@tanstack/query-core/build/legacy/hydration-DTVzC0E7';
 import { CHAIN_QUERY_NAME } from '@src/config/chains';
 import { ChainId } from '@pancakeswap/chains';
+import { getBlockExplorerLink, getBlockExplorerName } from '@dex/utils';
 
 dayjs.extend(duration);
 
@@ -111,9 +111,9 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
               <Flex justifyContent={[null, null, 'flex-end']} mt={['8px', '8px', 0]}>
                 <Link
                   style={{ marginRight: '8px', color: 'primary' }}
-                  href={getBlockExploreLink(address, 'address', chainId)}
+                  href={getBlockExplorerLink(address, 'address', chainId)}
                 >
-                  {'View on Explorer'}
+                  {`View on ${getBlockExplorerName(chainId)}`}
                 </Link>
                 {cmcLink && (
                   <StyledCMCLink

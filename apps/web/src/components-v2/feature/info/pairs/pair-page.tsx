@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { Card } from '@src/components-v2/foundation/card';
 import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { getBlockExploreLink } from '@src/components-v2/feature/info/components/tables/transaction-table';
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import ChartCard from '@src/components-v2/feature/info/components/charts/chart-card';
@@ -16,6 +15,7 @@ import { usePairChartVolumeDataQuery } from '../hooks/usePairChartVolumeDataQuer
 import { usePairTransactionsQuery } from '../hooks/usePairTransactionsQuery';
 import { Pair } from '@pancakeswap/sdk';
 import { PrimaryButton } from '@src/components-v2/foundation/button';
+import { getBlockExplorerLink, getBlockExplorerName } from '@dex/utils';
 
 const ContentLayout = styled.div`
   display: grid;
@@ -92,8 +92,8 @@ const PairPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({
               </Flex>
             </CustomBreadcrumb>
             <Flex justifyContent={[null, null, 'flex-end']} mt={['8px', '8px', 0]}>
-              <Link style={{marginRight: '8px', color: 'primary'}} href={getBlockExploreLink(routeAddress, 'address', chainId)}>
-                {'View on Explorer'}
+              <Link style={{marginRight: '8px', color: 'primary'}} href={getBlockExplorerLink(routeAddress, 'address', chainId)}>
+                {`View on ${getBlockExplorerName(chainId)}`}
               </Link>
             </Flex>
           </Flex>

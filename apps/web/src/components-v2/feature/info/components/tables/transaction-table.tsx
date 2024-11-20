@@ -17,6 +17,7 @@ import { Link } from '@chakra-ui/react';
 import { Card } from '@src/components-v2/foundation/card';
 import { breakpoints } from '@src/global/theme/break-points';
 import useMatchBreakpoints from '@src/global/hooks/use-match-breakpoints';
+import { getBlockExplorerLink } from '@dex/utils';
 dayjs.extend(relativeTime);
 
 const Wrapper = styled.div`
@@ -134,7 +135,7 @@ const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction; filt
       return <Text>{dayjs.unix(parseInt(transaction.timestamp, 10)).toNow(true)}</Text>;
     } else if (filter.includes(SORT_FIELD.sender)) {
       return (
-        <Link href={getBlockExploreLink(transaction.sender, 'address', chainId)} target="_blank">
+        <Link href={getBlockExplorerLink(transaction.sender, 'address', chainId)} target="_blank">
           {truncateHash(transaction.sender)}
         </Link>
       );
@@ -142,7 +143,7 @@ const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction; filt
   };
   return (
     <ResponsiveGrid>
-      <Link href={getBlockExploreLink(transaction.hash, 'transaction', chainId)} target="_blank">
+      <Link href={getBlockExplorerLink(transaction.hash, 'transaction', chainId)} target="_blank">
         <Text>
           {transaction.type === TransactionType.MINT
             ? `Add ${token0Symbol} and ${token1Symbol}`
@@ -160,7 +161,7 @@ const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction; filt
       <Text>
         <Text>{`${formatAmount(abs1)} ${token1Symbol}`}</Text>
       </Text>
-      <Link href={getBlockExploreLink(transaction.sender, 'address', chainId)} target="_blank">
+      <Link href={getBlockExplorerLink(transaction.sender, 'address', chainId)} target="_blank">
         {truncateHash(transaction.sender)}
       </Link>
       {getStyledValue(filter)}
@@ -420,28 +421,3 @@ const TransactionTable: React.FC<
 };
 
 export default TransactionTable;
-
-export function getBlockExploreLink(
-  data: string | number | undefined | null,
-  type: 'transaction' | 'token' | 'address' | 'block' | 'countdown',
-  chainId?: number,
-): string {
-  const chainConfig: any = CHAINS.find((chainConfig: any) => chainConfig.id == chainId);
-  switch (type) {
-    case 'transaction': {
-      return `${chainConfig?.blockExplorers?.default.url}tx/${data}`;
-    }
-    case 'token': {
-      return `${chainConfig?.blockExplorers?.default.url}token/${data}`;
-    }
-    case 'block': {
-      return `${chainConfig?.blockExplorers?.default.url}block/${data}`;
-    }
-    case 'countdown': {
-      return `${chainConfig?.blockExplorers?.default.url}block/countdown/${data}`;
-    }
-    default: {
-      return `${chainConfig?.blockExplorers?.default.url}address/${data}`;
-    }
-  }
-}
