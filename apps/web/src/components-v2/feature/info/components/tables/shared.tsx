@@ -53,7 +53,7 @@ const FilterDrop = styled(Card)`
   background-color: ${({ theme }) => theme.colors.bgColor1};
   opacity: 1;
   top: 100%;
-  left: 0;
+  right: 0;
   z-index: 5;
   border-radius: 3px;
   width: fit-content;
