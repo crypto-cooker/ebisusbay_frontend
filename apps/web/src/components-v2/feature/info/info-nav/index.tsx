@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { Container, Button, HStack, Box, Input, VStack } from '@chakra-ui/react';
+import { useMemo } from 'react';
+import { HStack, Box } from '@chakra-ui/react';
 import ChainSelector from '../components/chain-selector';
 import { useRouter } from 'next/router';
 export enum InfoTabIndex {

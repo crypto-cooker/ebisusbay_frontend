@@ -9,7 +9,7 @@ import { LP_HOLDERS_FEE, TOTAL_FEE, DAYS_IN_YEAR } from '../state/constants';
 export const useAllTokenDataQuery = () => {
   const chainId: number = useChainIdByQuery();
   const info = useMemo(() => new Info(chainId), [chainId]);
-  const { data } = useQuery({
+  const { data: tokenDatas, isLoading } = useQuery({
     queryKey: ['useGetTokens', chainId],
     queryFn: async () => {
       try {
@@ -58,9 +58,11 @@ export const useAllTokenDataQuery = () => {
     },
   });
 
-  return useMemo(() => {
-    return data ?? {};
-  }, [data, chainId]);
+  const data = useMemo(() => {
+    return tokenDatas ?? {};
+  }, [tokenDatas, chainId]);
+
+  return {data, isLoading}
 };
 
 const getPercentChange = (valueNow?: number, valueBefore?: number): number => {

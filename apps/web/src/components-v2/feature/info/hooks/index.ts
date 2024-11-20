@@ -5,7 +5,7 @@ import { usePairsForTokenDataQuery } from './usePairsForTokenDataQuery';
 
 export const useTokenDatas = () => {
   // get all the token datas that exist
-  const allTokenData = useAllTokenDataQuery();
+  const {data: allTokenData, isLoading } = useAllTokenDataQuery();
 
   // get all the pair datas that exist
   const tokenDatas = useMemo(() => {
@@ -17,7 +17,7 @@ export const useTokenDatas = () => {
       })
       .filter((token) => token.name !== 'unknown');
   }, [allTokenData]);
-  return { tokenDatas };
+  return { tokenDatas, isLoading };
 };
 
 

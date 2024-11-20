@@ -2,15 +2,15 @@ import moment from 'moment';
 import blacklist from '../../../core/configs/blacklist.json';
 import attributes from '../../../core/configs/attributes.json';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
-import {appConfig} from '@src/config';
-import {commify, getAddress} from "ethers/lib/utils";
+import { appConfig } from '@src/config';
+import { commify, getAddress } from 'ethers/lib/utils';
 import brands from '../../../core/data/brands.json';
-import ImageService from "@src/core/services/image";
-import {ethers} from "ethers";
-import {MouseEventHandler} from "react";
+import ImageService from '@src/core/services/image';
+import { ethers } from 'ethers';
+import { MouseEventHandler } from 'react';
 import Decimal from 'decimal.js-light';
 import knownTokens from '@src/modules/dex/config/tokens.json';
-import {getBlockExplorerLink} from "@dex/utils";
+import { getBlockExplorerLink } from '@dex/utils';
 import { ChainId } from '@pancakeswap/chains';
 import { MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/types';
 
@@ -27,7 +27,7 @@ export function getLengthOfTime(duration: number) {
     { unit: 'day', threshold: 86400, roundFunc: (val: number) => Math.floor(val / 86400) },
     { unit: 'hour', threshold: 3600, roundFunc: (val: number) => Math.floor(val / 3600) },
     { unit: 'minute', threshold: 60, roundFunc: (val: number) => Math.floor(val / 60) },
-    { unit: 'second', threshold: 1, roundFunc: (val: number) => Math.floor(val) }
+    { unit: 'second', threshold: 1, roundFunc: (val: number) => Math.floor(val) },
   ];
 
   for (const { unit, threshold, roundFunc } of timeUnits) {
@@ -79,13 +79,12 @@ export function humanizeAdvanced(s?: string | number) {
   const words = spacedString.split(/[\s\-_]/);
 
   // Capitalize first letter of each word and make rest lowercase
-  const formattedWords = words.map(word => capitalizeFirstLetter(word));
+  const formattedWords = words.map((word) => capitalizeFirstLetter(word));
 
   return formattedWords.join(' ').trim();
 }
 
 export const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-
 
 /**
  * Extra formatting for collection attributes not caught by humanize(str)
@@ -97,19 +96,21 @@ export const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase(
  * @returns {string|*}
  */
 export function mapAttributeString(str: string, address?: string, category?: string, makeHuman?: boolean) {
-  const mappings: {[key: string]: string | object} = attributes[address as keyof typeof attributes]
+  const mappings: { [key: string]: string | object } = attributes[address as keyof typeof attributes];
   let newStr = str?.toString() ?? '';
 
   if (mappings) {
     if (Object.keys(mappings).includes(str) && typeof mappings[str] === 'string') {
-      return mappings[str]
+      return mappings[str];
     }
 
     if (category) {
       const potentialObj = mappings[category];
-      if (Object.keys(mappings).includes(category) &&
+      if (
+        Object.keys(mappings).includes(category) &&
         typeof potentialObj === 'object' &&
-        Object.keys(mappings[category]).includes(str.toString())) {
+        Object.keys(mappings[category]).includes(str.toString())
+      ) {
         return potentialObj[str as keyof typeof potentialObj];
       }
     }
@@ -135,15 +136,15 @@ export function siPrefixedNumber(num?: number | string, exclude = 5) {
   return Math.abs(Number(num)) >= 1.0e12 && shouldPrefix
     ? Number((Math.abs(Number(num)) / 1.0e12).toFixed(2)) + 'T'
     : // Nine Zeroes for Billions
-    Math.abs(Number(num)) >= 1.0e9 && shouldPrefix
+      Math.abs(Number(num)) >= 1.0e9 && shouldPrefix
       ? Number((Math.abs(Number(num)) / 1.0e9).toFixed(2)) + 'B'
       : // Six Zeroes for Millions
-    Math.abs(Number(num)) >= 1.0e6 && shouldPrefix
-      ? Number((Math.abs(Number(num)) / 1.0e6).toFixed(2)) + 'M'
-      : // Three Zeroes for Thousands
-    Math.abs(Number(num)) >= 1.0e3 && shouldPrefix
-      ? Number((Math.abs(Number(num)) / 1.0e3).toFixed(2)) + 'K'
-      : commify(Number(Math.abs(Number(num))));
+        Math.abs(Number(num)) >= 1.0e6 && shouldPrefix
+        ? Number((Math.abs(Number(num)) / 1.0e6).toFixed(2)) + 'M'
+        : // Three Zeroes for Thousands
+          Math.abs(Number(num)) >= 1.0e3 && shouldPrefix
+          ? Number((Math.abs(Number(num)) / 1.0e3).toFixed(2)) + 'K'
+          : commify(Number(Math.abs(Number(num))));
 }
 
 export function shortAddress(address?: string | null) {
@@ -232,7 +233,7 @@ export function openWithExplorer(transactionHash = '', chainId?: number) {
   if (typeof window === 'undefined') {
     return;
   }
-  window.open(getBlockExplorerLink(transactionHash, 'transaction', chainId ?? ChainId.CRONOS))
+  window.open(getBlockExplorerLink(transactionHash, 'transaction', chainId ?? ChainId.CRONOS));
 }
 
 export function createSuccessfulTransactionToastContent(transactionHash: string, chainId?: number) {
@@ -254,11 +255,7 @@ export function createSuccessfulAddCartContent(onClickView: MouseEventHandler<HT
   return (
     <span>
       Added to cart
-      <span
-        className="link-primary"
-        style={{ paddingLeft: '1rem' }}
-        onClick={onClickView}
-      >
+      <span className="link-primary" style={{ paddingLeft: '1rem' }} onClick={onClickView}>
         View cart
       </span>
     </span>
@@ -283,7 +280,11 @@ export function ciIncludes(array?: string[], str?: string) {
 }
 
 export function newlineText(text: string) {
-  return text.split('\n').map((str, i) => <p key={i} className="mb-3">{str}</p>);
+  return text.split('\n').map((str, i) => (
+    <p key={i} className="mb-3">
+      {str}
+    </p>
+  ));
 }
 
 export const isFounderDrop = (address: string) => {
@@ -302,10 +303,7 @@ export const isDrop = (address: string, slug: string) => {
 export const isCollection = (address: string, matchesSlug: string[] | string, matchesAddress: string[] | string) => {
   const slugs = Array.isArray(matchesSlug) ? matchesSlug : [matchesSlug];
   const addresses = Array.isArray(matchesAddress) ? matchesAddress : [matchesAddress];
-  return (
-    slugs.some((s) => ciEquals(s, address)) ||
-    addresses.some((a) => ciEquals(a, address))
-  );
+  return slugs.some((s) => ciEquals(s, address)) || addresses.some((a) => ciEquals(a, address));
 };
 
 export const isBrandCollection = (slug: string, matchesAddress: string) => {
@@ -360,18 +358,13 @@ export const isVoxelWeirdApesCollection = (address: string) => {
 export const isAnyWeirdApesCollection = (address: string) => {
   return isCollection(
     address,
-    [
-      'weird-apes-club',
-      'baby-weird-apes',
-      'lady-weird-apes',
-      'voxel-weird-apes'
-    ],
+    ['weird-apes-club', 'baby-weird-apes', 'lady-weird-apes', 'voxel-weird-apes'],
     [
       '0x0b289dEa4DCb07b8932436C2BA78bA09Fbd34C44',
       '0x89F7114C73d5cef7d7EDCbDb14DaA092EB2194c9',
       '0xD316F2F1872648a376D8c0937db1b4b10D1Ef8b1',
-      '0xe02A74813053e96C5C98F817C0949E0B00728Ef6'
-    ]
+      '0xe02A74813053e96C5C98F817C0949E0B00728Ef6',
+    ],
   );
 };
 
@@ -384,9 +377,11 @@ export const isEvoSkullCollection = (address: string) => {
 };
 
 export const isCroSkullPetsCollection = (address: string) => {
-  return isCollection(address, 'croskull-pets', '0xB77959DC7a12F7549ACC084Af01259Fc48813c89')||
+  return (
+    isCollection(address, 'croskull-pets', '0xB77959DC7a12F7549ACC084Af01259Fc48813c89') ||
     isCollection(address, 'croskull-pets-s2', '0x54655D5468f072D5bcE1577c4a46F701C28a41A7') ||
-    isCollection(address, 'croskull-pets-s3', '0x31B378ac025a341839CD81C4D29A8457324D3EbC');
+    isCollection(address, 'croskull-pets-s3', '0x31B378ac025a341839CD81C4D29A8457324D3EbC')
+  );
 };
 
 export const isCroniesCollection = (address: string) => {
@@ -411,15 +406,12 @@ export const isArgonautsBrandCollection = (address: string) => {
 
 export const isEbVipCollection = (address: string, id?: string | number) => {
   const collection = legacyCollections.find((c) => c.slug === 'founding-member');
-  return collection &&
-    ciEquals(collection.address, address) &&
-    id?.toString() === '2';
+  return collection && ciEquals(collection.address, address) && id?.toString() === '2';
 };
 
 export const isFoundingMemberCollection = (address: string) => {
   const collection = legacyCollections.find((c) => c.slug === 'founding-member');
-  return collection &&
-    ciEquals(collection.address, address);
+  return collection && ciEquals(collection.address, address);
 };
 
 export const isCronosGorillaBusinessCollection = (address: string) => {
@@ -435,7 +427,7 @@ export const isRyoshiResourceToken = (address: string, id: string) => {
 };
 
 export const isDynamicNftImageCollection = (address: string) => {
-  if(!address) return false;
+  if (!address) return false;
   if (isLandDeedsCollection(address)) return true;
   if (isHeroesCollection(address)) return true;
 
@@ -443,48 +435,51 @@ export const isDynamicNftImageCollection = (address: string) => {
 };
 
 export const isLandDeedsCollection = (address: string) => {
-  return isCollection(
-    address,
-    'izanamis-cradle-land-deeds',
-    ['0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3', '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad']
-  );
+  return isCollection(address, 'izanamis-cradle-land-deeds', [
+    '0xcF7C77967FaD74d0B5104Edd476db2C6913fb0e3',
+    '0x1189C0A75e7965974cE7c5253eB18eC93F2DE4Ad',
+  ]);
 };
 export const isHeroesCollection = (address: string) => {
-  return isCollection(
-    address,
-    'ryoshi-heroes',
-    ['0xF098C2aD290f32c8666ace27222d3E65cECE43b9', '0x458073C0fb97e42d441778aE4beFc8c1180E513e']
-  );
-}
+  return isCollection(address, 'ryoshi-heroes', [
+    '0xF098C2aD290f32c8666ace27222d3E65cECE43b9',
+    '0x458073C0fb97e42d441778aE4beFc8c1180E513e',
+  ]);
+};
 
 export const isVaultCollection = (address: string) => {
   return ciEquals(address, config.contracts.vaultNft);
-}
+};
 
 export const isPlayingCardsCollection = (address: string) => {
   return isCollection(address, 'ryoshi-playing-cards', '0xd87838a982a401510255ec27e603b0f5fea98d24');
-}
+};
 
 export const isRyoshiTalesCollection = (address: string) => {
-  return isCollection(address, 'ryoshi-tales', ['0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04', '0xCDC905b5cDaDE71BFd3540e632aeFfE99b9965E4']);
-}
+  return isCollection(address, 'ryoshi-tales', [
+    '0x562e3e2d3f69c53d5a5728e8d7f977f3de150e04',
+    '0xCDC905b5cDaDE71BFd3540e632aeFfE99b9965E4',
+  ]);
+};
 
 export const isKoban = (address: string, nftId?: string | number) => {
-  return isCollection(address, 'ryoshi-resources', '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d') && nftId?.toString() === '1';
-}
+  return (
+    isCollection(address, 'ryoshi-resources', '0xce3f4e59834b5B52B301E075C5B3D427B6884b3d') && nftId?.toString() === '1'
+  );
+};
 
 export const isBundle = (addressOrSlug: string) => {
   return ciEquals(addressOrSlug, config.contracts.bundle) || addressOrSlug === 'nft-bundles';
-}
+};
 
 export const isCollectionListable = (collection: any) => {
   if (!collection) return false;
-  
+
   const listableStates = [MapiCollectionBlacklist.PENDING, MapiCollectionBlacklist.LISTABLE];
 
   // the "listable" property only used for legacy lookups in rpc_config. Remove when no longer needed
   return listableStates.includes(collection.blacklisted ?? collection.blacklist) || collection.listable;
-}
+};
 
 export const percentage = (partialValue: number | string, totalValue: number | string) => {
   if (!totalValue || totalValue === 0) return 0;
@@ -499,7 +494,7 @@ export const relativePrecision = (num: number, minDecimals = 1) => {
   }
 
   const multiplier = minDecimals + 1;
-  return Math.round(num * 100 * multiplier) /  multiplier;
+  return Math.round(num * 100 * multiplier) / multiplier;
 };
 
 /**
@@ -582,8 +577,6 @@ export const devLog = (...params: any[]) => {
   }
 };
 
-
-
 /**
  * Ensure that a timestamp is in milliseconds
  *
@@ -607,14 +600,14 @@ export const isEventValidNumber = (e: any) => {
 // can use web3.utils.isAddress tho
 export const isAddress = (value?: string) => {
   if (!value) {
-    return false
+    return false;
   }
   try {
     // Alphabetical letters must be made lowercase for getAddress to work.
     // See documentation here: https://docs.ethers.io/v5/api/utils/address/
-    return !!getAddress(value.toLowerCase())
+    return !!getAddress(value.toLowerCase());
   } catch {
-    return false
+    return false;
   }
 };
 
@@ -656,13 +649,13 @@ export const buildTwitterUrl = (username?: string) => {
   if (!username || username.startsWith('http')) return username;
 
   return `https://twitter.com/${username}`;
-}
+};
 
 export const buildInstagramUrl = (username?: string) => {
   if (!username || username.startsWith('http')) return username;
 
   return `https://instagram.com/${username}`;
-}
+};
 
 export const isNumeric = (str: number | string) => {
   if (typeof str != 'string') return false; // we only process strings!
@@ -670,15 +663,15 @@ export const isNumeric = (str: number | string) => {
     !isNaN(str as any) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
     !isNaN(parseFloat(str))
   ); // ...and ensure strings of whitespace fail
-}
+};
 
 export const stripSpaces = (str: string) => {
   return str.replace(/\W/g, '');
-}
+};
 
 export const appUrl = (path: string | URL) => {
   return new URL(path, appConfig('urls.app'));
-}
+};
 
 /**
  * Removes extra slashes from url path
@@ -702,10 +695,9 @@ export const pluralize = (val: number, word: string, plural: string = word + 's'
   return [1, -1].includes(Number(val)) ? word : plural;
 };
 
-
 export const isGaslessListing = (listingId: string) => {
-  return listingId && listingId.toString().startsWith('0x')
-}
+  return listingId && listingId.toString().startsWith('0x');
+};
 
 export const usdFormat = (num: number | string) => {
   if (typeof num === 'string') num = Number(num);
@@ -716,18 +708,18 @@ export const usdFormat = (num: number | string) => {
   });
 
   return formatter.format(num);
-}
+};
 
 export const cacheBustingKey = (minutes = 5, date = Date.now()) => {
   const coeff = 1000 * 60 * minutes;
   return Math.round(date / coeff) * coeff;
-}
+};
 
 export const findNextLowestNumber = (array: string[] | number[], value: string | number) => {
   array = array.map(Number); // coerce all elements to numbers
   value = +value; // coerce value to a number
 
-  array.sort((a, b) => a - b);  // make sure array is sorted
+  array.sort((a, b) => a - b); // make sure array is sorted
 
   // If value is less than the smallest array value, return the smallest array value
   if (value <= array[0]) return array[0];
@@ -740,7 +732,7 @@ export const findNextLowestNumber = (array: string[] | number[], value: string |
 
   // If value is greater than the largest array value, return the largest array value
   return array[array.length - 1];
-}
+};
 
 /**
  * Converts a string to title case
@@ -754,86 +746,93 @@ export const titleCase = (str: string) => {
   }
 
   return splitStr.join(' ');
-}
+};
 
 export const knownErc20Token = (address?: string) => {
   if (!address) return null;
 
-  const value = knownTokens.tokens.find(token => ciEquals(token.address, address));
+  const value = knownTokens.tokens.find((token) => ciEquals(token.address, address));
   return value ?? null;
-}
+};
 
 export const isFortuneToken = (address: string) => {
   return ciEquals(address, config.tokens.frtn.address);
-}
+};
 
 export const isErc20Token = (address: string) => {
   return !!knownErc20Token(address);
-}
+};
 
 export const isNativeCro = (address: string) => {
   return ciEquals(address, ethers.constants.AddressZero);
-}
+};
 
 export const isWrappedeCro = (address: string) => {
   return ciEquals(address, config.tokens.wcro.address);
-}
+};
 
 export const uniqueNftId = (nft: any) => {
   if (!nft) return null;
   return `${nft.nftAddress ?? nft.address}${nft.nftId ?? nft.id}`;
-}
+};
 
-export function subscriptedDecimal(decimalStr: string | number, zeroThreshold: number = 5, maxDigitsWithSubscript: number = 4, maxDigitsWithoutSubscript: number = 8): {
-  left: string,
-  subscript?: number,
-  right: string
-} | string {
+export function subscriptedDecimal(
+  decimalStr: string | number,
+  zeroThreshold: number = 5,
+  maxDigitsWithSubscript: number = 4,
+  maxDigitsWithoutSubscript: number = 8,
+):
+  | {
+      left: string;
+      subscript?: number;
+      right: string;
+    }
+  | string {
   if (typeof decimalStr !== 'string') decimalStr = `${decimalStr}`;
 
   try {
     // Handle special cases for zero input
     if (new Decimal(decimalStr).isZero()) {
-      return "0";
+      return '0';
     }
 
     if (new Decimal(decimalStr).gte(1)) {
       return new Decimal(decimalStr).toFixed(2);
     }
 
+    // This will convert any number in scientific notation to a proper formatted string
+    decimalStr = new Decimal(decimalStr).toFixed();
+
+    // Find the first non-zero digit after the decimal
+    const firstNonZeroIndex =
+      decimalStr.indexOf('.') + 1 + decimalStr.slice(decimalStr.indexOf('.') + 1).search(/[^0]/);
+
+    // Calculate the number of zeros following the decimal point
+    const zeroCount = firstNonZeroIndex - decimalStr.indexOf('.') - 1;
+
+    if (zeroCount >= zeroThreshold) {
+      // Use subscript notation
+      const subscriptNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+      const significantDigits = decimalStr.slice(firstNonZeroIndex, firstNonZeroIndex + maxDigitsWithSubscript);
+      return {
+        left: '0.0',
+        subscript: zeroCount,
+        right: significantDigits,
+      };
+      // return `0.0${subscript}${significantDigits}`;
+    } else {
+      // Regular formatting, just truncate to the max digits without subscript
+      const start = decimalStr.indexOf('.') + 1;
+      // const end = start + zeroCount + maxDigitsWithoutSubscript;
+      const regularDigits = decimalStr.slice(start, maxDigitsWithoutSubscript);
+      return {
+        left: '0.',
+        right: regularDigits,
+      };
+    }
   } catch {
     // Will catch if a non-numeric string
     return decimalStr;
-  }
-
-  // This will convert any number in scientific notation to a proper formatted string
-  decimalStr = new Decimal(decimalStr).toFixed();
-
-  // Find the first non-zero digit after the decimal
-  const firstNonZeroIndex = decimalStr.indexOf('.') + 1 + decimalStr.slice(decimalStr.indexOf('.') + 1).search(/[^0]/);
-
-  // Calculate the number of zeros following the decimal point
-  const zeroCount = firstNonZeroIndex - decimalStr.indexOf('.') - 1;
-
-  if (zeroCount >= zeroThreshold) {
-    // Use subscript notation
-    const subscriptNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    const significantDigits = decimalStr.slice(firstNonZeroIndex, firstNonZeroIndex + maxDigitsWithSubscript);
-    return {
-      left: '0.0',
-      subscript: zeroCount,
-      right: significantDigits
-    }
-    // return `0.0${subscript}${significantDigits}`;
-  } else {
-    // Regular formatting, just truncate to the max digits without subscript
-    const start = decimalStr.indexOf('.') + 1;
-    // const end = start + zeroCount + maxDigitsWithoutSubscript;
-    const regularDigits = decimalStr.slice(start, maxDigitsWithoutSubscript);
-    return {
-      left: '0.',
-      right: regularDigits
-    }
   }
 }
 
@@ -845,8 +844,8 @@ export const chunkArray = <T,>(array: T[], size: number): T[][] => {
 
 export const getUnixTimestamp = (): number => {
   return Math.floor(Date.now() / 1000);
-}
+};
 
 export const hasDatePassedSeconds = (unixTimestamp: number) => {
   return getUnixTimestamp() > unixTimestamp;
-}
+};

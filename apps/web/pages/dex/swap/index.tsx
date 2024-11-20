@@ -5,18 +5,7 @@ import SwapPage from "@dex/swap/components";
 import {useRouter} from "next/navigation";
 import Subnavigation from "@dex/components/subnavigation";
 
-export default function Page() {  const router = useRouter();
-  const [tabIndex, setTabIndex] = useState(0);
-
-  const handleTabsChange = (index: number) => {
-    if (index === 0) {
-      // router.push('/dex/swap');
-    } else if (index === 1) {
-      router.push('/dex/liquidity');
-    }
-    setTabIndex(index);
-  };
-
+export default function Page() { 
   return (
     <>
       <PageHead

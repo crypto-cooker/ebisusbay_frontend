@@ -53,7 +53,7 @@ const FilterDrop = styled(Card)`
   right: 0;
   z-index: 5;
   border-radius: 3px;
-  width: 200px;
+  width: 180px;
   p:hover {
       opacity: 0.7;
   }

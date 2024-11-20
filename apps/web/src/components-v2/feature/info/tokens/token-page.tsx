@@ -21,7 +21,7 @@ import TransactionTable from '@src/components-v2/feature/info/components/tables/
 import Percent from '@src/components-v2/feature/info/components/percent';
 import useCMCLink from '@src/components-v2/feature/info/hooks/useCMCLink';
 import { usePairDatasForToken } from '@src/components-v2/feature/info/hooks';
-import { PrimaryButton } from '@src/components-v2/foundation/button';
+import { CopyButton, PrimaryButton } from '@src/components-v2/foundation/button';
 
 dayjs.extend(duration);
 
@@ -128,13 +128,22 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
                     />
                   </StyledCMCLink>
                 )}
+                <Box paddingBottom={1}>
+                  <CopyButton value={address} />
+                </Box>
               </Flex>
             </Flex>
             <Flex justifyContent="space-between" flexDirection={['column', 'column', 'column', 'row']}>
               <Flex flexDirection="column" mb={['8px', null]}>
                 <Flex alignItems="center">
                   <CurrencyLogoByAddress size="32px" address={address} chainId={chainId} />
-                  <Text ml="12px" fontWeight={'bold'} lineHeight="0.7" fontSize={{base:'24px', md:'40px'}} id="info-token-name-title">
+                  <Text
+                    ml="12px"
+                    fontWeight={'bold'}
+                    lineHeight="0.7"
+                    fontSize={{ base: '24px', md: '40px' }}
+                    id="info-token-name-title"
+                  >
                     {tokenName}
                   </Text>
                   <Text ml="12px" lineHeight="1" color="textSubtle" fontSize={'20px'}>
@@ -150,9 +159,7 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
               </Flex>
               <Flex>
                 <Link href={`/dex/add/v2/${address}`}>
-                  <PrimaryButton mr="8px">
-                    {'Add Liquidity'}
-                  </PrimaryButton>
+                  <PrimaryButton mr="8px">{'Add Liquidity'}</PrimaryButton>
                 </Link>
                 <Link href={`/dex/swap?outputCurrency=${address}`}>
                   <PrimaryButton>{'Trade'}</PrimaryButton>

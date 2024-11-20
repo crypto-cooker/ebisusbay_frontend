@@ -95,7 +95,7 @@ export class Info {
   async getTokens() {
     const query = `
     query GetTokens {
-      tokens( first: 1000, orderBy: tradeVolumeUSD, orderDirection: desc) {
+      tokens( orderBy: tradeVolumeUSD, orderDirection: desc) {
         decimals
         name
         symbol

@@ -125,6 +125,7 @@ const DataRow = ({ TokenData, index, filter }: { TokenData: TokenData; index: nu
           <Text ml="8px">{symbol}</Text>
         </Flex>
         <DecimalAbbreviatedNumber value={getStyledAmount(filter)} />
+        {/* <DecimalAbbreviatedNumber value={TokenData.priceUSD} /> */}
         <Text color={color}>{formatAmount(TokenData.priceChange)}%</Text>
         <Text>${formatAmount(TokenData.volumeUSD24h)}</Text>
         <Text>${formatAmount(TokenData.totalLiquidityUSD)}</Text>
@@ -219,7 +220,7 @@ const TokenTable: React.FC<React.PropsWithChildren<TokenTableProps>> = ({ tokenD
               onClick={() => handleSort(SORT_FIELD.priceUSD)}
               textTransform="uppercase"
             >
-              {FILTER_HEAD[filter as keyof typeof FILTER_HEAD]} {arrow(SORT_FIELD[filter as keyof typeof FILTER_HEAD])}
+              {FILTER_HEAD[filter as keyof typeof FILTER_HEAD]} {arrow(SORT_FIELD.priceUSD)}
             </ClickableColumnHeader>
             {filterOptions.length > 0 && (
               <FilterOptionButton
