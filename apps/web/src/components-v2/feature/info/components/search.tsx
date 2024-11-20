@@ -136,14 +136,14 @@ const Search = () => {
     const htmlBodyElement = document.querySelector('body');
     if (htmlBodyElement) {
       if (showMenu) {
-        document.addEventListener('click', handleOutsideClick);
+        document.addEventListener('mousedown', handleOutsideClick);
         htmlBodyElement.style.overflow = 'hidden';
       } else {
-        document.removeEventListener('click', handleOutsideClick);
+        document.removeEventListener('mousedown', handleOutsideClick);
         htmlBodyElement.style.overflow = 'visible';
       }
       return () => {
-        document.removeEventListener('click', handleOutsideClick);
+        document.removeEventListener('mousedown', handleOutsideClick);
       };
     }
     return undefined;
