@@ -22,6 +22,9 @@ import Percent from '@src/components-v2/feature/info/components/percent';
 import useCMCLink from '@src/components-v2/feature/info/hooks/useCMCLink';
 import { usePairDatasForToken } from '@src/components-v2/feature/info/hooks';
 import { CopyButton, PrimaryButton } from '@src/components-v2/foundation/button';
+import { C } from '@tanstack/query-core/build/legacy/hydration-DTVzC0E7';
+import { CHAIN_QUERY_NAME } from '@src/config/chains';
+import { ChainId } from '@pancakeswap/chains';
 
 dayjs.extend(duration);
 
@@ -54,7 +57,7 @@ const CustomBreadcrumb = styled(Breadcrumb)`
 const DEFAULT_TIME_WINDOW = dayjs.duration(1, 'weeks');
 
 const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({ routeAddress }) => {
-  const chainId = useChainIdByQuery();
+  const chainId:ChainId = useChainIdByQuery();
 
   // In case somebody pastes checksummed address into url (since GraphQL expects lowercase address)
   const address = routeAddress.toLocaleLowerCase();
@@ -161,7 +164,7 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
                 <Link href={`/dex/add/v2/${address}`}>
                   <PrimaryButton mr="8px">{'Add Liquidity'}</PrimaryButton>
                 </Link>
-                <Link href={`/dex/swap?outputCurrency=${address}`}>
+                <Link href={`/dex/swap?outputCurrency=${address}${chainId == 25 ? '' : `&chain=${CHAIN_QUERY_NAME[chainId]}`}`}>
                   <PrimaryButton>{'Trade'}</PrimaryButton>
                 </Link>
               </Flex>

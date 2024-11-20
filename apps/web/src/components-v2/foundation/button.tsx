@@ -1,4 +1,4 @@
-import { Button, ButtonProps, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, ButtonProps, useColorModeValue } from '@chakra-ui/react';
 import { forwardRef, useState } from 'react';
 import styled from 'styled-components';
 import NextLink from 'next/link';
@@ -50,15 +50,15 @@ export const NextLinkFromReactRouter = forwardRef<any, LinkProps>(
   ),
 );
 
-interface CopyButtonProps{
+interface CopyButtonProps {
   value: string;
-  props?: any
+  props?: any;
 }
 
-export function CopyButton(props:CopyButtonProps) {
+export function CopyButton(props: CopyButtonProps) {
   const [copied, setCopied] = useState(false);
 
-  const {value, ...prop} = props
+  const { value, ...prop } = props;
 
   const copyContent = async (value: string) => {
     try {
@@ -72,12 +72,14 @@ export function CopyButton(props:CopyButtonProps) {
     }, 1000);
   };
   return !copied ? (
-    <FontAwesomeIcon
-      icon={faCopy}
-      onClick={() => {
-        copyContent(value);
-      }}
-    />
+    <Box _hover={{cursor: 'pointer'}}>
+      <FontAwesomeIcon
+        icon={faCopy}
+        onClick={() => {
+          copyContent(value);
+        }}
+      />
+    </Box>
   ) : (
     <FontAwesomeIcon icon={faCheck} />
   );
