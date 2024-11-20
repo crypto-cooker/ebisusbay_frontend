@@ -219,7 +219,7 @@ const PairTable: React.FC<React.PropsWithChildren<PairTableProps>> = ({ pairData
           <Text color="secondary" fontSize="12px" fontWeight="bold" textTransform="uppercase">
             Pair
           </Text>
-          <HStack>
+          <HStack position="relative" gap={4}>
             <ClickableColumnHeader
               color="secondary"
               fontSize="12px"

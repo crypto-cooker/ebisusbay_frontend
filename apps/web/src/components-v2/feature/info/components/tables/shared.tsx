@@ -49,8 +49,11 @@ export const Break = styled.div`
 
 const FilterDrop = styled(Card)`
   position: absolute;
+  border-color: ${({ theme }) => theme.colors.borderColor3};
+  background-color: ${({ theme }) => theme.colors.bgColor1};
+  opacity: 1;
   top: 100%;
-  right: 0;
+  left: 0;
   z-index: 5;
   border-radius: 3px;
   width: fit-content;
@@ -137,7 +140,7 @@ interface FilterOptionButton {
 export const FilterOptionButton = ({ filterOptions, setFilterOptions, setFilter, filterHead }: FilterOptionButton) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   return (
-    <Box _hover={{ cursor: 'pointer', color: '#fff' }} position="relative" onClick={onOpen}>
+    <Box _hover={{ cursor: 'pointer', color: '#fff' }} onClick={onOpen}>
       <FontAwesomeIcon icon={faFilter} />
       <FilterOptions
         isOpen={isOpen}

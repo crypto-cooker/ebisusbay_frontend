@@ -212,7 +212,7 @@ const TokenTable: React.FC<React.PropsWithChildren<TokenTableProps>> = ({ tokenD
           <Text color="secondary" fontSize="12px" fontWeight="bold" textTransform="uppercase">
             Tokens
           </Text>
-          <HStack>
+          <HStack position="relative" gap={4}>
             <ClickableColumnHeader
               color="secondary"
               fontSize="12px"

@@ -11,6 +11,7 @@ import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import { useChainIdByQuery, useChainNameByQuery, useChainPathByQuery } from '../hooks/chain';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import { Card } from '@src/components-v2/foundation/card';
+import DecimalAbbreviatedNumber from '@src/components-v2/shared/decimal-abbreviated-number';
 
 const Container = styled(Box)`
   position: relative;
@@ -236,7 +237,7 @@ const Search = () => {
                           <Text>{`${token.address && token.name} (${token.address && token.symbol})`}</Text>
                         </Text>
                       </Flex>
-                      <Text textAlign="end">${formatAmount(token.priceUSD)}</Text>
+                      <Text justifyContent="end" display='flex'>$<DecimalAbbreviatedNumber value={formatAmount(token.priceUSD) ?? 0}/></Text>
                     </ResponsiveGrid>
                   </HoverRowLink>
                 );

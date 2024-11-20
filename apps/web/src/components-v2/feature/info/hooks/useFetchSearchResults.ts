@@ -16,7 +16,7 @@ const useFetchSearchResults = (searchString: string, enabled = true) => {
   } = useQuery({
     queryFn: async () => {
       try {
-        const response = await info.search(searchString);
+        const response = await info.search(searchString.toLowerCase());
         if (!response?.data) {
           throw new Error('Failed to fetch data');
         }

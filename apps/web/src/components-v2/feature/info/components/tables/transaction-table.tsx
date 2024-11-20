@@ -346,7 +346,7 @@ const TransactionTable: React.FC<
               >
                 Account {arrow(SORT_FIELD.sender)}
               </ClickableColumnHeader>
-              <HStack>
+              <HStack position="relative" gap={4}>
                 <ClickableColumnHeader
                   color="secondary"
                   fontSize="12px"
