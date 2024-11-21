@@ -1,41 +1,41 @@
-import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
-import {PagedList} from "@src/core/services/api-service/paginated-list";
-import Cms from "@src/core/services/api-service/cms";
-import Mapi from "@src/core/services/api-service/mapi";
-import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
-import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
-import {Listing, OwnerListing} from "@src/core/models/listing";
+import { ListingsQueryParams } from '@src/core/services/api-service/mapi/queries/listings';
+import { PagedList } from '@src/core/services/api-service/paginated-list';
+import Cms from '@src/core/services/api-service/cms';
+import Mapi from '@src/core/services/api-service/mapi';
+import SearchQuery from '@src/core/services/api-service/mapi/queries/search';
+import { OffersQueryParams } from '@src/core/services/api-service/mapi/queries/offers';
+import { Listing, OwnerListing } from '@src/core/models/listing';
 import {
   Api,
   BankStakeNft,
   BarracksStakeNft,
   PokerCollection,
   RyoshiDynastiesApi,
-  StakedTokenType
-} from "@src/core/services/api-service/types";
-import {Offer} from "@src/core/models/offer";
-import {WalletsQueryParams} from "./mapi/queries/wallets";
-import WalletNft from "@src/core/models/wallet-nft";
-import Graph from "@src/core/services/api-service/graph";
-import {ciEquals} from "@market/helpers/utils";
-import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
-import {getOwners} from "@src/core/subgraph"
-import {Player, RankPlayers, RankPlayersByWorst} from "@src/core/poker-rank-players"
-import {OffersV2QueryParams} from "@src/core/services/api-service/mapi/queries/offersV2";
-import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
-import {CollectionInfoQueryParams} from "@src/core/services/api-service/mapi/queries/collectioninfo";
+  StakedTokenType,
+} from '@src/core/services/api-service/types';
+import { Offer } from '@src/core/models/offer';
+import { WalletsQueryParams } from './mapi/queries/wallets';
+import WalletNft from '@src/core/models/wallet-nft';
+import Graph from '@src/core/services/api-service/graph';
+import { ciEquals } from '@market/helpers/utils';
+import { GetBattleLog } from '@src/core/services/api-service/cms/queries/battle-log';
+import { getOwners } from '@src/core/subgraph';
+import { Player, RankPlayers, RankPlayersByWorst } from '@src/core/poker-rank-players';
+import { OffersV2QueryParams } from '@src/core/services/api-service/mapi/queries/offersV2';
+import { FullCollectionsQueryParams } from '@src/core/services/api-service/mapi/queries/fullcollections';
+import { CollectionInfoQueryParams } from '@src/core/services/api-service/mapi/queries/collectioninfo';
 import {
   TownHallStakeRequest,
-  TownHallUnstakeRequest
-} from "@src/core/services/api-service/cms/queries/staking/town-hall";
-import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
-import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
-import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
-import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
-import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
-import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farms";
-import {ChainId} from "@pancakeswap/chains";
-import {DEFAULT_CHAIN_ID} from "@src/config/chains";
+  TownHallUnstakeRequest,
+} from '@src/core/services/api-service/cms/queries/staking/town-hall';
+import { FactionUpdateRequest } from '@src/core/services/api-service/cms/queries/faction';
+import { DeployTroopsRequest } from '@src/core/services/api-service/cms/queries/deploy';
+import { MerchantPurchaseRequest } from '@src/core/services/api-service/cms/queries/merchant-purchase';
+import { AttackRequest } from '@src/core/services/api-service/cms/queries/attack';
+import { DealListQueryParams } from '@src/core/services/api-service/mapi/queries/deallist';
+import { FarmsQueryParams } from '@src/core/services/api-service/mapi/queries/farms';
+import { ChainId } from '@pancakeswap/chains';
+import { DEFAULT_CHAIN_ID } from '@src/config/chains';
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -62,6 +62,23 @@ export class ApiService implements Api {
 
   static forChain(chainId: number) {
     return new ApiService(undefined, chainId);
+  }
+
+  static async allMitamaForChains(address: string, chainIds: number[]) {
+    let result = {
+      fortuneBalance: 0,
+      mitamaBalance: 0
+    }
+    for (const chainId of chainIds) {
+      const fortuneAndMitama = await ApiService.forChain(chainId).ryoshiDynasties.getErc20Account(
+        address.toLowerCase(),
+      );
+      console.log(fortuneAndMitama, "HHHHHHHHHHHHHHH")
+      result.fortuneBalance += fortuneAndMitama?.fortuneBalance != null ? +fortuneAndMitama?.fortuneBalance : 0;
+      result.mitamaBalance += fortuneAndMitama?.mitamaBalance != null ? +fortuneAndMitama?.mitamaBalance : 0;
+    }
+
+    return result;
   }
 
   async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
@@ -92,7 +109,7 @@ export class ApiService implements Api {
   }
 
   async getWallet(address: string, query?: WalletsQueryParams): Promise<PagedList<WalletNft>> {
-    return await this.mapi.getWallet({...query, wallet: address});
+    return await this.mapi.getWallet({ ...query, wallet: address });
   }
 
   async getMadeOffersByUser(address: string, query?: OffersQueryParams): Promise<PagedList<Offer>> {
@@ -121,21 +138,19 @@ export class ApiService implements Api {
     const response = await RankPlayers(owners, gameNumber);
 
     let combined = [];
-    if (pokerCollection == PokerCollection.Hearts)
-    {
+    if (pokerCollection == PokerCollection.Hearts) {
       let worstHands = await RankPlayers(owners, gameNumber);
       worstHands = await RankPlayersByWorst(worstHands, gameNumber);
-      
+
       for (let i = 0; i < response.length; i++) {
         combined.push(response[i]);
         combined.push(worstHands[i]);
       }
-
     } else {
       combined = response;
     }
 
-    function paginate(array : any, page_size:number, page_number:number) {
+    function paginate(array: any, page_size: number, page_number: number) {
       return array.slice((page_number - 1) * page_size, page_number * page_size);
     }
 
@@ -143,11 +158,7 @@ export class ApiService implements Api {
     const paginatedResponse = paginate(combined, pageSize, page);
     const totalPages = Math.ceil(combined.length / pageSize);
 
-    return new PagedList<Player>(
-      paginatedResponse,
-      page,
-      page < totalPages
-    );
+    return new PagedList<Player>(paginatedResponse, page, page < totalPages);
   }
 
   async getReceivedOffersByUser(address: string, query?: OffersV2QueryParams): Promise<PagedList<Offer>> {
@@ -182,45 +193,50 @@ export class ApiService implements Api {
     //   return result;
     // }, [] as Array<{ address: string; points: number; type: string }>);
 
-    const unqiueCollectionAddresses = new Set(pointsByAddress
-      .filter(entry => entry.type === 'COLLECTION')
-      .map(entry => entry.address));
-    const collections = await this.mapi.getCollections({address: Array.from(unqiueCollectionAddresses), pageSize: 200});
+    const unqiueCollectionAddresses = new Set(
+      pointsByAddress.filter((entry) => entry.type === 'COLLECTION').map((entry) => entry.address),
+    );
+    const collections = await this.mapi.getCollections({
+      address: Array.from(unqiueCollectionAddresses),
+      pageSize: 200,
+    });
     const mappedCollections = collections.data.map((collection: any) => {
       return {
         name: collection.name,
         address: collection.address,
         avatar: collection.metadata.avatar,
         type: 'COLLECTION',
-        frtnPerCollection: pointsByAddress.find(entry => ciEquals(entry.address, collection.address))?.frtnPerCollection,
-        eligibleListings: pointsByAddress.find(entry => ciEquals(entry.address, collection.address))?.eligibleListings,
-        frtnPerListing: pointsByAddress.find(entry => ciEquals(entry.address, collection.address))?.frtnPerListing,
+        frtnPerCollection: pointsByAddress.find((entry) => ciEquals(entry.address, collection.address))
+          ?.frtnPerCollection,
+        eligibleListings: pointsByAddress.find((entry) => ciEquals(entry.address, collection.address))
+          ?.eligibleListings,
+        frtnPerListing: pointsByAddress.find((entry) => ciEquals(entry.address, collection.address))?.frtnPerListing,
         points: pointsByAddress
-          .filter(entry => ciEquals(entry.address, collection.address))
+          .filter((entry) => ciEquals(entry.address, collection.address))
           .reduce((prev, next) => {
             return prev + next.points;
-          }, 0)
-      }
+          }, 0),
+      };
     });
 
-    const uniqueWalletAddresses = new Set(pointsByAddress
-      .filter(entry => entry.type === 'WALLET')
-      .map(entry => entry.address));
-    const walletRecords = Array.from(uniqueWalletAddresses).map(address => {
+    const uniqueWalletAddresses = new Set(
+      pointsByAddress.filter((entry) => entry.type === 'WALLET').map((entry) => entry.address),
+    );
+    const walletRecords = Array.from(uniqueWalletAddresses).map((address) => {
       return {
         name: address,
         address: address,
         avatar: null,
         type: 'WALLET',
-        frtnPerCollection: pointsByAddress.find(entry => ciEquals(entry.address, address))?.frtnPerCollection,
-        eligibleListings: pointsByAddress.find(entry => ciEquals(entry.address, address))?.eligibleListings,
-        frtnPerListing: pointsByAddress.find(entry => ciEquals(entry.address, address))?.frtnPerListing,
+        frtnPerCollection: pointsByAddress.find((entry) => ciEquals(entry.address, address))?.frtnPerCollection,
+        eligibleListings: pointsByAddress.find((entry) => ciEquals(entry.address, address))?.eligibleListings,
+        frtnPerListing: pointsByAddress.find((entry) => ciEquals(entry.address, address))?.frtnPerListing,
         points: pointsByAddress
-          .filter(entry => ciEquals(entry.address, address))
+          .filter((entry) => ciEquals(entry.address, address))
           .reduce((prev, next) => {
             return prev + next.points;
-          }, 0)
-      }
+          }, 0),
+      };
     });
 
     const completeRankings = mappedCollections.concat(walletRecords).sort((a, b) => b.points - a.points);
@@ -239,8 +255,8 @@ export class ApiService implements Api {
 
       return {
         ...record,
-        rank: thisRank
-      }
+        rank: thisRank,
+      };
     });
   }
 
@@ -350,29 +366,55 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async checkBlacklistStatus(address: string) {
     return this.cms.checkBlacklistStatus(address);
-  };
+  }
 
   async requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string, chainId: number) {
     return this.cms.requestBankUnstakeAuthorization(nfts, address, signature, chainId);
   }
 
-  async requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string, chainId: number) {
+  async requestBarracksStakeAuthorization(
+    nfts: BarracksStakeNft[],
+    address: string,
+    signature: string,
+    chainId: number,
+  ) {
     return this.cms.requestBarracksStakeAuthorization(nfts, address, signature, chainId);
   }
 
-  async requestBarracksUnstakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string, chainId: number) {
+  async requestBarracksUnstakeAuthorization(
+    nfts: BarracksStakeNft[],
+    address: string,
+    signature: string,
+    chainId: number,
+  ) {
     return this.cms.requestBarracksUnstakeAuthorization(nfts, address, signature, chainId);
   }
 
-  async requestTownHallStakeAuthorization(request: TownHallStakeRequest, address: string, signature: string, chainId: number) {
+  async requestTownHallStakeAuthorization(
+    request: TownHallStakeRequest,
+    address: string,
+    signature: string,
+    chainId: number,
+  ) {
     return this.cms.requestTownHallStakeAuthorization(request, address, signature, chainId);
   }
 
-  async requestTownHallUnstakeAuthorization(request: TownHallUnstakeRequest, address: string, signature: string, chainId: number) {
+  async requestTownHallUnstakeAuthorization(
+    request: TownHallUnstakeRequest,
+    address: string,
+    signature: string,
+    chainId: number,
+  ) {
     return this.cms.requestTownHallUnstakeAuthorization(request, address, signature, chainId);
   }
 
-  async requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string) {
+  async requestRewardsSpendAuthorization(
+    cost: number | string,
+    quantity: number,
+    id: string,
+    address: string,
+    signature: string,
+  ) {
     return this.cms.requestRewardsSpendAuthorization(cost, quantity, id, address, signature);
   }
 
@@ -400,10 +442,15 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.cms.requestSeasonalRewardsClaimAuthorization(address, amount, signature, chainId);
   }
 
-  async requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string, chainId: number) {
+  async requestSeasonalRewardsCompoundAuthorization(
+    address: string,
+    amount: number,
+    vaultIndex: number,
+    signature: string,
+    chainId: number,
+  ) {
     return this.cms.requestSeasonalRewardsCompoundAuthorization(address, amount, vaultIndex, signature, chainId);
   }
-
 
   async getPendingFortuneAuthorizations(address: string, signature: string) {
     return this.cms.getPendingFortuneAuthorizations(address, signature);
@@ -441,28 +488,48 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   }
 
   async deployTroops(request: DeployTroopsRequest, address: string, signature: string) {
-    return this.cms.deployTroops(request, address, signature)
+    return this.cms.deployTroops(request, address, signature);
   }
 
-  async relocateTroops(troops: number, fromControlPointId: number, toControlPointId: number, fromFactionId: number, toFactionId: number, address: string, signature: string) {
-    return this.cms.relocateTroops(troops, fromControlPointId, toControlPointId, fromFactionId, toFactionId, address, signature)
+  async relocateTroops(
+    troops: number,
+    fromControlPointId: number,
+    toControlPointId: number,
+    fromFactionId: number,
+    toFactionId: number,
+    address: string,
+    signature: string,
+  ) {
+    return this.cms.relocateTroops(
+      troops,
+      fromControlPointId,
+      toControlPointId,
+      fromFactionId,
+      toFactionId,
+      address,
+      signature,
+    );
   }
 
   async fetchGift(address: string, signature: string) {
-    return this.cms.fetchGift(address, signature)
+    return this.cms.fetchGift(address, signature);
   }
 
   async fetchValentinesGift(address: string, signature: string) {
-    return this.cms.fetchValentinesGift(address, signature)
+    return this.cms.fetchValentinesGift(address, signature);
   }
-
-
 
   async getFactionsByPoints(gameId: number) {
     return this.cms.getFactionsByPoints(gameId);
   }
 
-  async requestCardTradeInAuthorization(nftIds: string[], nftAmounts: number[], direct: boolean, address: string, signature: string) {
+  async requestCardTradeInAuthorization(
+    nftIds: string[],
+    nftAmounts: number[],
+    direct: boolean,
+    address: string,
+    signature: string,
+  ) {
     return this.cms.requestCardTradeInAuthorization(nftIds, nftAmounts, direct, address, signature);
   }
 
