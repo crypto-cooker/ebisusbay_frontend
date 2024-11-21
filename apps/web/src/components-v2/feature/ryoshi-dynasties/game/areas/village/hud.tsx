@@ -30,6 +30,7 @@ import {ERC1155} from "@src/global/contracts/Abis";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import Countdown, {zeroPad} from "react-countdown";
 import {useUser} from "@src/components-v2/useUser";
+import { useChainId } from "wagmi";
 
 interface VillageHudProps {
   onOpenBuildings: () => void;
@@ -41,6 +42,7 @@ interface VillageHudProps {
 
 export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog, onOpenXPLeaderboard, forceRefresh}: VillageHudProps) => {
   const user = useUser();
+  const chainId = useChainId();
   const { config: rdConfig, user: rdUserContext, game: rdGameContext, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const config = appConfig();
   const {isSignedIn} = useEnforceSigner();
@@ -66,7 +68,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
       let nfts = await NextApiService.getWallet(user!.address!, {
         collection: [config.contracts.resources],
       });
-      const fortuneAndMitama = await ApiService.withoutKey().ryoshiDynasties.getErc20Account(user!.address!)
+      const fortuneAndMitama = await ApiService.forChain(chainId).ryoshiDynasties.getErc20Account(user!.address!)
 
       let kobanBalance = 0;
       if (nfts.data.length > 0) {
@@ -143,7 +145,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
     if (!!user.address) {
       getResources();
     }
-  }, [user.address, forceRefresh])
+  }, [user.address, forceRefresh, chainId])
 
   useEffect(() => {
     if (!user.address || !rdUserContext) {
