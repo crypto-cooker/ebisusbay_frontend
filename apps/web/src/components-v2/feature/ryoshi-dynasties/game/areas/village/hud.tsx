@@ -31,6 +31,7 @@ import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceS
 import Countdown, {zeroPad} from "react-countdown";
 import {useUser} from "@src/components-v2/useUser";
 import { useChainId } from "wagmi";
+import { CHAIN_IDS } from "@src/wagmi";
 
 interface VillageHudProps {
   onOpenBuildings: () => void;

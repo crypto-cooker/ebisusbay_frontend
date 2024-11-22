@@ -65,20 +65,16 @@ export class ApiService implements Api {
   }
 
   static async allMitamaForChains(address: string, chainIds: number[]) {
-    let result = {
-      fortuneBalance: 0,
-      mitamaBalance: 0
-    }
+      let fortuneBalance = 0;
+      let mitamaBalance = 0;
     for (const chainId of chainIds) {
       const fortuneAndMitama = await ApiService.forChain(chainId).ryoshiDynasties.getErc20Account(
         address.toLowerCase(),
       );
-      console.log(fortuneAndMitama, "HHHHHHHHHHHHHHH")
-      result.fortuneBalance += fortuneAndMitama?.fortuneBalance != null ? +fortuneAndMitama?.fortuneBalance : 0;
-      result.mitamaBalance += fortuneAndMitama?.mitamaBalance != null ? +fortuneAndMitama?.mitamaBalance : 0;
+      fortuneBalance += fortuneAndMitama?.fortuneBalance ? +fortuneAndMitama?.fortuneBalance : 0;
+      mitamaBalance += fortuneAndMitama?.mitamaBalance ? +fortuneAndMitama?.mitamaBalance : 0;
     }
-
-    return result;
+    return {fortuneBalance: fortuneBalance.toString(), mitamaBalance: mitamaBalance.toString()};
   }
 
   async getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>> {
