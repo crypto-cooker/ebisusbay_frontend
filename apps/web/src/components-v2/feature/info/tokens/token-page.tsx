@@ -67,7 +67,6 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
   const { pairDatas } = usePairDatasForToken(address);
   const transactions = useTokenTransactionsQuery(address);
   const volumeChartData = useTokenChartDataVolumeQuery(address);
-  console.log(volumeChartData, "HHHHHHHHHHHHH")
 
   // pricing data
   // const priceData = useTokenPriceDataQuery(address, ONE_HOUR_SECONDS, DEFAULT_TIME_WINDOW);
