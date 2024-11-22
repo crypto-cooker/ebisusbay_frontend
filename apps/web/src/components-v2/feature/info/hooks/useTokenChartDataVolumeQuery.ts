@@ -6,9 +6,9 @@ import { VolumeChartEntry } from '../state/types';
 
 export const useTokenChartDataVolumeQuery = (address:string): VolumeChartEntry[]=> {
   const chainId: number = useChainIdByQuery();
-  const info = useMemo(() => new Info(chainId), [chainId]);
-  const { data } = useQuery({
-    queryKey: ['useTokenChartDataVolumeQuery', chainId],
+  const info = useMemo(() => new Info(chainId), [chainId, address]);
+  const { data, isLoading } = useQuery({
+    queryKey: ['useTokenChartDataVolumeQuery', chainId, address],
     queryFn: async () => {
       try {
         const response = await info.getTokenVolumeData(address);
