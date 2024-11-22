@@ -7924,7 +7924,7 @@
       "website": "https://www.misteryoncro.io/",
       "telegram": "https://t.me/misteryoncro"
     },
-    "address": "0x66bA2878E334d9872ce01FA352E6ca728Dea3DFb",
+    "address": "0x25cC6509DE7DeE25db129f27638b7D2f8941DD47",
     "maxMintPerTx": 100,
     "maxMintPerAddress": 100,
     "totalSupply": 2000,
@@ -7933,7 +7933,7 @@
     "erc20Only": true,
     "foundersOnly": false,
     "abi": "lil-mery.json",
-    "start": 1732305600000,
+    "start": 1732307400000,
     "end": null,
     "referral": false,
     "is1155": false,
