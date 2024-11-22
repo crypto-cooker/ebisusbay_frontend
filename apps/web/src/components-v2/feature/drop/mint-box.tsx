@@ -37,6 +37,7 @@ import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-b
 import Countdown from 'react-countdown';
 
 const config = appConfig();
+const newInterfaceDrops = ['946-club', 'lil-mery'];
 
 enum FundingType {
   NATIVE = 'native',
@@ -161,7 +162,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
         const receipt = await response.wait();
         toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
 
-        const finalCostDecimals = is946Drop ? 6 : 18;
+        const finalCostDecimals = isNewInterfaceDrop ? 18 : 18;
 
         {
           const purchaseAnalyticParams = {
@@ -228,7 +229,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
 
     const actualContract = contractService!.custom(drop.address, abi);
     const gasPrice = parseUnits('20000', 'gwei');
-    const gasEstimate = is946Drop ?
+    const gasEstimate = isNewInterfaceDrop ?
       await actualContract.estimateGas.mint(numToMint) :
       await actualContract.estimateGas.mintWithToken(numToMint);
     const gasLimit = gasEstimate.mul(2);
@@ -237,7 +238,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
       gasLimit
     };
 
-    return is946Drop ?
+    return isNewInterfaceDrop ?
       await actualContract.mint(numToMint, extra) :
       await actualContract.mintWithToken(numToMint, extra);
   }
@@ -286,7 +287,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     }
   }, [drop]);
 
-  const is946Drop = drop.slug === '946-club';
+  const isNewInterfaceDrop = newInterfaceDrops.includes(drop.slug);
 
   return (
     <div className="card h-100 shadow mt-2" style={{
@@ -325,7 +326,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
                       {drop.erc20Cost && drop.erc20Token && erc20Token && (
                         <Heading as="h5" size="md" mt={1}>
                           <Flex alignItems='center'>
-                            {is946Drop ? (
+                            {isNewInterfaceDrop ? (
                               <>
                                 <CurrencyLogoByAddress address={erc20Token.address} chainId={Number(drop.chainId ?? ChainId.CRONOS)} size='24px' />
                                 <span className="ms-2">{ethers.utils.commify(round(regularCost ?? drop.erc20Cost))}</span>
@@ -438,16 +439,6 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
               <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
                 Supply: {ethers.utils.commify(maxSupply.toString())}
               </Text>
-            )}
-            {is946Drop && (
-              <Box fontSize='sm' textAlign='center' fontWeight='semibold' mt={4}>
-                <Text>
-                  First 2 days open to Allowlist only, then open to public. Allowlist users can mint up to one free NFT
-                </Text>
-                {Date.now() < 1731884400000 && (
-                  <Box mt={2}>Public mint starts in <Countdown date={1731884400000} /></Box>
-                )}
-              </Box>
             )}
             {status >= statuses.LIVE && !drop.complete && (
               <div>

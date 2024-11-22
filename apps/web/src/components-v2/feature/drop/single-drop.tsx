@@ -30,6 +30,7 @@ import { Address } from 'viem';
 const Markdown= dynamic(() => import('react-markdown'),{ ssr: false });
 
 const config = appConfig();
+const newInterfaceDrops = ['946-club', 'lil-mery'];
 
 const fadeInUp = keyframes`
   0% {
@@ -168,15 +169,13 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     try {
       if (currentDrop.address && (isUsingDefaultDropAbi(currentDrop.abi) || isUsingAbiFile(currentDrop.abi))) {
         let readContract = new ethers.Contract(currentDrop.address, abi!, readProvider);
-        if (drop.slug === '946-club') {
+        if (newInterfaceDrops.includes(drop.slug)) {
           const [
             maxPerTx,
             maxSupply,
             normalCost,
-            whitelistCost,
             totalSupply,
             canMint,
-            isInPresale
           ] = await multicall(wagmiConfig, {
             chainId: currentDrop.chainId,
             contracts: [
@@ -201,12 +200,6 @@ const SingleDrop = ({drop}: SingleDropProps) => {
               {
                 abi: abi as any,
                 address: currentDrop.address as Address,
-                functionName: 'whitelistCost',
-                args: [],
-              },
-              {
-                abi: abi as any,
-                address: currentDrop.address as Address,
                 functionName: 'totalSupply',
                 args: [],
               },
@@ -216,12 +209,6 @@ const SingleDrop = ({drop}: SingleDropProps) => {
                 functionName: 'canMint',
                 args: [user.address as Address],
               },
-              {
-                abi: abi as any,
-                address: currentDrop.address as Address,
-                functionName: 'isInPresale',
-                args: [],
-              },
             ],
           });
 
@@ -230,11 +217,9 @@ const SingleDrop = ({drop}: SingleDropProps) => {
             totalSupply: BigNumber.from(totalSupply.result),
             regularCost: BigNumber.from(normalCost.result).toString(),
             memberCost: 0,
-            whitelistCost: BigNumber.from(whitelistCost.result),
             maxMintPerTx: BigNumber.from(maxPerTx.result),
-            isInPresale: isInPresale.result
           }
-          setDropInfoFromContract(newInfos, canMint.status === 'success' ? Number(canMint.result as bigint) : 0, 6);
+          setDropInfoFromContract(newInfos, canMint.status === 'success' ? Number(canMint.result as bigint) : 0, 18);
           calculateStatus(currentDrop, newInfos.totalSupply, newInfos.maxSupply);
         } else {
           const infos = await readContract.getInfo();
@@ -281,7 +266,7 @@ const SingleDrop = ({drop}: SingleDropProps) => {
     setTotalSupply(infos.totalSupply);
     if (infos.whitelistCost) setWhitelistCost(Number(ethers.utils.formatUnits(infos.whitelistCost, decimals)));
     setCanMintQuantity(Math.min(canMint, infos.maxMintPerTx));
-    setIsInPresale(infos.isInPresale);
+    setIsInPresale(infos.isInPresale ?? false);
 
     setTotalSupply(infos.totalSupply - drop.supplyOffset);
     setMaxSupply(infos.maxSupply - drop.supplyOffset);
