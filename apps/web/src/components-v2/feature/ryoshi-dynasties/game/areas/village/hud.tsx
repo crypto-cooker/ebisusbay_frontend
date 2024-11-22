@@ -69,7 +69,7 @@ export const VillageHud = ({onOpenBuildings, onOpenDailyCheckin, onOpenBattleLog
       let nfts = await NextApiService.getWallet(user!.address!, {
         collection: [config.contracts.resources],
       });
-      const fortuneAndMitama = await ApiService.allMitamaForChains(user!.address!, [25, 388])
+      const fortuneAndMitama = await ApiService.allMitamaForChains(user!.address!, CHAIN_IDS)
 
       let kobanBalance = 0;
       if (nfts.data.length > 0) {
