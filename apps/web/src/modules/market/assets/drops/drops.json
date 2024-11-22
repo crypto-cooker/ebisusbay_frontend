@@ -7924,11 +7924,11 @@
       "website": "https://www.misteryoncro.io/",
       "telegram": "https://t.me/misteryoncro"
     },
-    "address": "",
+    "address": "0xbC6fcc54b191CFEd26a83EDA93337D1f00958b91",
     "maxMintPerTx": 100,
     "maxMintPerAddress": 100,
     "totalSupply": 2000,
-    "erc20Cost": "11690000",
+    "erc20Cost": "1690000",
     "erc20Token": "0x3b41B27E74Dd366CE27cB389dc7877D4e1516d4d",
     "erc20Only": true,
     "foundersOnly": false,
