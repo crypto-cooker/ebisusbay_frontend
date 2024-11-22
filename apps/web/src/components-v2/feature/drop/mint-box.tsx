@@ -37,7 +37,7 @@ import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-b
 import Countdown from 'react-countdown';
 
 const config = appConfig();
-const newInterfaceDrops = ['946-club', 'lil-mery'];
+const newInterfaceDrops = ['946-club', 'lil-mistery'];
 
 enum FundingType {
   NATIVE = 'native',

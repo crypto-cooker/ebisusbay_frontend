@@ -30,7 +30,7 @@ import { Address } from 'viem';
 const Markdown= dynamic(() => import('react-markdown'),{ ssr: false });
 
 const config = appConfig();
-const newInterfaceDrops = ['946-club', 'lil-mery'];
+const newInterfaceDrops = ['946-club', 'lil-mistery'];
 
 const fadeInUp = keyframes`
   0% {
