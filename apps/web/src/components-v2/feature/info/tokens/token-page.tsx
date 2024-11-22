@@ -54,7 +54,6 @@ const CustomBreadcrumb = styled(Breadcrumb)`
     padding: 0;
   }
 `;
-const DEFAULT_TIME_WINDOW = dayjs.duration(1, 'weeks');
 
 const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = ({ routeAddress }) => {
   const chainId:ChainId = useChainIdByQuery();
@@ -68,6 +67,7 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
   const { pairDatas } = usePairDatasForToken(address);
   const transactions = useTokenTransactionsQuery(address);
   const volumeChartData = useTokenChartDataVolumeQuery(address);
+  console.log(volumeChartData, "HHHHHHHHHHHHH")
 
   // pricing data
   // const priceData = useTokenPriceDataQuery(address, ONE_HOUR_SECONDS, DEFAULT_TIME_WINDOW);
