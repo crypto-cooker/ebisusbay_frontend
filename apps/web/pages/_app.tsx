@@ -30,6 +30,7 @@ import { ErrorLoggerProvider } from '@market/hooks/use-error-logger';
 import { cookieToInitialState } from 'wagmi';
 import { wagmiConfig } from '@src/wagmi';
 import { MatchBreakpointsProvider } from '@src/components-v2/shared/contexts/break-point';
+import GlobalDataFetcher from '@src/components-v2/global-data-fetcher';
 
 Site24x7LoggingService.init();
 const queryClient = new QueryClient();
@@ -76,6 +77,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <Sentry.ErrorBoundary fallback={() => <ErrorPage />}>
           <ErrorLoggerProvider>
             <QueryClientProvider client={queryClient}>
+              <GlobalDataFetcher />
               <ChakraProvider theme={customTheme}>
                 <Web3Modal initialState={initialState}>
                   <UserProvider>

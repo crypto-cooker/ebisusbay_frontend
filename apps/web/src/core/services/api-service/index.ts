@@ -303,6 +303,10 @@ export class ApiService implements Api {
   async getFarmsUser(address: string) {
     return await this.graph.getFarmsUser(address);
   }
+
+  async getSupportedTokens() {
+    return await this.cms.getSupportedTokens();
+  }
 }
 
 class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
