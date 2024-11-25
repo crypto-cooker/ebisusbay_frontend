@@ -146,6 +146,11 @@ const nextConfig = {
         destination: '/dex/add/v2',
         permanent: false,
       },
+      {
+        source: '/drops/lil-mery',
+        destination: '/drops/lil-mistery',
+        permanent: true,
+      },
       // {
       //   source: '/dex/swap',
       //   destination:

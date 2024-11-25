@@ -19,18 +19,21 @@ import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/de
 import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
 import OrdersRepository from "@src/core/services/api-service/cms/repositories/orders";
+import TokensRepository from "@src/core/services/api-service/cms/repositories/tokens";
 
 class Cms {
   private profiles: ProfilesRepository;
   private gdcClaims: GdcClaimsRepository;
   private ryoshiDynasties: RyoshiDynastiesRepository;
   private orders: OrdersRepository;
+  private tokens: TokensRepository;
 
   constructor(apiKey?: string) {
     this.profiles = new ProfilesRepository(apiKey);
     this.gdcClaims = new GdcClaimsRepository(apiKey);
     this.ryoshiDynasties = new RyoshiDynastiesRepository(apiKey);
     this.orders = new OrdersRepository(apiKey);
+    this.tokens = new TokensRepository(apiKey);
   }
 
   async getProfile(addressOrUsername: string): Promise<any> {
@@ -271,6 +274,10 @@ class Cms {
 
   async resetMeepleUpkeep(address: string, signature: string) {
     return this.ryoshiDynasties.resetMeepleUpkeep(address, signature);
+  }
+
+  async getSupportedTokens() {
+    return await this.tokens.getSupportedTokens();
   }
 }
 
