@@ -7938,7 +7938,7 @@
     "referral": false,
     "is1155": false,
     "published": true,
-    "complete": false,
+    "complete": true,
     "images": {
       "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/lil-mery/drop.webp",
       "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/lil-mery/banner.webp",
