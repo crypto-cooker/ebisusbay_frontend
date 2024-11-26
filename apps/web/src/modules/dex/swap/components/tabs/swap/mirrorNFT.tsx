@@ -18,8 +18,10 @@ const MirrorNFT: FC<MirrorNFTProps> = ({ currencyId }) => {
   const chainPath = CHAIN_QUERY_NAME[chainId.chainId];
   const isShow = mirrorNFT !== zeroAddress;
   return (
-    <Box display={isShow ? 'flex' : 'none'} w='full' justifyContent={"flex-end"} fontSize='sm'>
+    <Box display={isShow ? 'flex' : 'none'} w="full" justifyContent={'flex-end'} fontSize="sm">
+      <Card>
         <Link href={`/collection/${chainPath}/${mirrorNFT}`}>{`Go to the Mirror NFT Collection  >> `}</Link>
+      </Card>
     </Box>
   );
 };

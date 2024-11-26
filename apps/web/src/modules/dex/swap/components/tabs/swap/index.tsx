@@ -359,7 +359,6 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
               onCurrencySelect={handleOutputSelect}
               onUserInput={handleTypeOutput}
             />
-            <MirrorNFT currencyId={outputCurrencyId} />
             {/*<Box>*/}
             {/*  <Flex justify='space-between'>*/}
             {/*    <Box>Price</Box>*/}
@@ -467,6 +466,7 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
             )}
           </AuthenticationGuard>
         </Card>
+        <MirrorNFT currencyId={inputCurrencyId} />
 
         {trade && (
           <Card mt={2}>
