@@ -44,7 +44,7 @@ const MirrorNFT: FC<MirrorNFTProps> = ({ currencyId }) => {
       <Box w="full" mt={2} justifyContent={'flex-end'} fontSize="sm">
         <Card>
           <Link href={`/collection/${chainPath}/${collection.address}`}>
-            <Flex flexDirection={{ base: 'column', sm: 'row' }} gap={2}>
+            <Flex flexDirection={{ base: 'column', sm: 'row' }} gap={2} justifyContent='space-between' alignItems='center'>
               <VStack position="relative">
                 {collection.metadata.avatar ? (
                   <Avatar
@@ -83,7 +83,7 @@ const MirrorNFT: FC<MirrorNFTProps> = ({ currencyId }) => {
               {/* <Box className="fs-4 mt-2">
                 <SocialsBar address={collection.address} socials={collection.metadata} />
               </Box> */}
-              <Box>
+              <Flex>
                 {collection && collectionStats && (
                   <Box className="mx-auto">
                     <div className="nft_attr_1">
@@ -148,7 +148,7 @@ const MirrorNFT: FC<MirrorNFTProps> = ({ currencyId }) => {
                     </div>
                   </Box>
                 )}
-              </Box>
+              </Flex>
             </Flex>
           </Link>
         </Card>
