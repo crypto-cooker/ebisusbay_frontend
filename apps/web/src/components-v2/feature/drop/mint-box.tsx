@@ -199,16 +199,16 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   const mintWithCro = async (finalCost: number) => {
     const actualContract = contractService!.custom(drop.address, abi);
 
-    const gasPrice = parseUnits('20000', 'gwei');
-    const gasEstimate = await actualContract.estimateGas.mint(numToMint, {value: finalCost});
-    const gasLimit = gasEstimate.mul(2);
-    let extra = {
-      value: finalCost,
-      gasPrice,
-      gasLimit
-    };
+    // const gasPrice = parseUnits('20000', 'gwei');
+    // const gasEstimate = await actualContract.estimateGas.mint(numToMint, {value: finalCost});
+    // const gasLimit = gasEstimate.mul(2);
+    // let extra = {
+    //   value: finalCost,
+    //   gasPrice,
+    //   gasLimit
+    // };
 
-    return await actualContract.mint(numToMint, extra);
+    return await actualContract.mint(numToMint, {value: finalCost});
   }
 
   const mintWithErc20 = async (finalCost: number) => {
