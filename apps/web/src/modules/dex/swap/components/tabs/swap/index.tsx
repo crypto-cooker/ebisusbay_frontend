@@ -335,7 +335,6 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
               onUserInput={handleTypeInput}
               onMax={handleMaxInput}
             />
-            <MirrorNFT currencyId={inputCurrencyId} />
             {/*<Wrap justify='center'>*/}
             {/*  <Button onClick={() => handleQuickChange(25)}>25%</Button>*/}
             {/*  <Button onClick={() => handleQuickChange(50)}>50%</Button>*/}

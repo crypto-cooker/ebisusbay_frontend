@@ -5,10 +5,14 @@ export const useGetStakingPlatform = (address: string) => {
   const [stakingPlatform, setStakingPlatform] = useState<any>();
 
   useEffect(() => {
+    if (address == undefined) {
+      setStakingPlatform(undefined);
+      return;
+    }
     const platform = Object.entries(stakingPlatforms).find(([key, platform]: [key: string, platform: any]) => {
       const collections = platform.collections.map((c: string) => c.toLowerCase());
       return collections.includes(address.toLowerCase());
-    })
+    });
 
     setStakingPlatform(!!platform ? platform[1] : undefined);
   }, [address]);

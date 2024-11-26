@@ -5,7 +5,7 @@ import { readContract } from '@wagmi/core';
 import { erc721Abi, zeroAddress } from 'viem';
 import { Address } from 'viem';
 
-export const getMirrorNFT = async (currencyId: string | undefined, chainId: number) => {
+export const getMirrorCollection = async (currencyId: string | undefined, chainId: number) => {
   try {
     const res = await readContract(wagmiConfig, {
       chainId,
