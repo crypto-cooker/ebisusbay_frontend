@@ -181,7 +181,7 @@ export const getServerSideProps = async ({ params, query }: GetServerSidePropsCo
 
 export default Collection;
 
-const fetchCollection = async (address: string, chainId: number) => {
+export const fetchCollection = async (address: string, chainId: number) => {
   const primaryField = address.startsWith('0x') ? 'address' : 'slug';
   const response = await ApiService.withKey(process.env.EB_API_KEY as string).getCollections({
     [primaryField]: [address],

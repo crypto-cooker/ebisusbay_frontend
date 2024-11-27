@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import {buildInstagramUrl, buildTwitterUrl, isCrosmocraftsCollection, isCrosmocraftsPartsCollection} from '@market/helpers/utils';
 import {useClipboard} from "@chakra-ui/react";
 
-const SocialsBar = ({ address, socials, showCopy = true }) => {
+const SocialsBar = ({ address, socials, showCopy = true, size = '5px' }) => {
   const { website, twitter, discord, telegram, instagram, medium, gitbook } = socials || {};
   const { onCopy } = useClipboard(address);
 

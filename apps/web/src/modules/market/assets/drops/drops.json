@@ -7812,7 +7812,7 @@
     "maxMintPerTx": 100,
     "maxMintPerAddress": 100,
     "totalSupply": 2000,
-    "cost": "89",
+    "cost": "63",
     "foundersOnly": false,
     "start": 1730836800000,
     "end": null,
@@ -7902,6 +7902,48 @@
       "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/cronies-on-cronos/banner.webp",
       "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/cronies-on-cronos/avatar.webp",
       "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/cronies-on-cronos/card.webp"
+    },
+    "verification": {
+      "doxx": false,
+      "kyc": false,
+      "escrow": false,
+      "verified": true
+    }
+  },
+  {
+    "id": 201,
+    "chainId": 25,
+    "slug": "lil-mistery",
+    "title": "lil mery",
+    "subtitle": "a lil mery raffle",
+    "description": "**We will running it big time!**\n\n2000/2000 tickets \uD83C\uDFAB \n\n1.69M $Mery per tickets\n \n$50K+ in prize \uD83C\uDFC6 \n\n1-500 Phase 1 reward pool 100M $Mery to 10 people\n500-1000 Phase 2 reward pool 100M $Mery to 10 people\n1000-1500 Phase 3 reward pool 100M $Mery to 10 people\n1500-2000 Phase 4 reward pool 100M $Mery to 10 people \n\nPhase 5 reward 20 Mystery Mery Exclusive Box\n\nFinal Major prize: 200M $MERY\n\n\nEach NFT will act as each ticket for the raffle - the more nft you hvae- the higher chance you win! \n\n**The raffle will be used for the subsequent listing process of $MERY on more exchanges upcoming.**",
+    "author": {
+      "name": "Mistery",
+      "discord": "https://discord.gg/mery",
+      "twitter": "https://twitter.com/Misteryoncro",
+      "website": "https://www.misteryoncro.io/",
+      "telegram": "https://t.me/misteryoncro"
+    },
+    "address": "0x25cC6509DE7DeE25db129f27638b7D2f8941DD47",
+    "maxMintPerTx": 100,
+    "maxMintPerAddress": 100,
+    "totalSupply": 2000,
+    "erc20Cost": "1690000",
+    "erc20Token": "0x3b41B27E74Dd366CE27cB389dc7877D4e1516d4d",
+    "erc20Only": true,
+    "foundersOnly": false,
+    "abi": "lil-mery.json",
+    "start": 1732307400000,
+    "end": null,
+    "referral": false,
+    "is1155": false,
+    "published": true,
+    "complete": true,
+    "images": {
+      "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/lil-mery/drop.webp",
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/lil-mery/banner.webp",
+      "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/lil-mery/avatar.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/lil-mery/card.webp"
     },
     "verification": {
       "doxx": false,

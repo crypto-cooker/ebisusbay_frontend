@@ -49,6 +49,7 @@ import { BIG_INT_ZERO } from '@dex/swap/constants/exchange';
 import { useUserSingleHopOnly } from '@dex/swap/state/user/hooks';
 import { useIsWrapping } from '@eb-pancakeswap-web/hooks/useIsWrapping';
 import * as Sentry from '@sentry/nextjs';
+import MirrorNFT from './mirrorNFT';
 
 // interface Props {
 //   inputAmount?: CurrencyAmount<Currency>
@@ -83,7 +84,6 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
   const isExpertMode = useIsExpertMode();
   const { isOpen: isOpenConfirmSwap, onOpen: onOpenConfirmSwap, onClose: onCloseConfirmSwap } = useDisclosure();
   const { isOpen: isOpenSettings, onOpen: onOpenSettings, onClose: onCloseSettings } = useDisclosure();
-
   const { v2Trade, ...derivedSwapInfo } = useDerivedSwapInfo(
     independentField,
     typedValue,
@@ -465,6 +465,7 @@ export default function SwapForm(/*{ pricingAndSlippage, inputAmount, outputAmou
             )}
           </AuthenticationGuard>
         </Card>
+        <MirrorNFT currencyId={inputCurrencyId} />
 
         {trade && (
           <Card mt={2}>

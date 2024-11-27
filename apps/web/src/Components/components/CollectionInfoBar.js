@@ -80,7 +80,7 @@ export default function CollectionInfoBar({ collectionStats, type = 'legacy', hi
 
   if (type === 'legacy') {
     return (
-      <div className="d-item col-lg-8 col-sm-10 mb-4 mx-auto">
+      <Box className="d-item col-lg-8 col-sm-10 mb-4 mx-auto">
         <div className="nft_attr">
           <div className="collection_info_bar">
             <Box minW={['50%', '50%', '72px']}>
@@ -113,12 +113,12 @@ export default function CollectionInfoBar({ collectionStats, type = 'legacy', hi
             {/*</Box>*/}
           </div>
         </div>
-      </div>
+      </Box>
     );
   }
 
   return (
-    <div>
+    <Box>
       <CollectionInfoBarContainer>
         <InfoItem>
           <ItemValue>{floorPrice ? <>{siPrefixedNumber(Number(floorPrice).toFixed(0))} CRO</> : <>-</>}</ItemValue>
@@ -147,6 +147,6 @@ export default function CollectionInfoBar({ collectionStats, type = 'legacy', hi
           <ItemTitle>Active Listings</ItemTitle>
         </InfoItem>
       </CollectionInfoBarContainer>
-    </div>
+    </Box>
   );
 }
