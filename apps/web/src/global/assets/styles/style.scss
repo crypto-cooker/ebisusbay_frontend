@@ -3983,6 +3983,31 @@ img.img-rounded-10 {
     }
   }
 }
+.nft_attr_1 {
+  display: block;
+  padding: 10px;
+  text-align: center;
+  background: rgba(64, 63, 131, 0.15);
+  border: solid 1px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  h5 {
+    color: $blue;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: $textColor1;
+    margin-bottom: 0;
+  }
+  span {
+    font-size: 13px;
+    color: #727272;
+  }
+}
+
 .nft_attr {
   display: block;
   padding: 10px;
