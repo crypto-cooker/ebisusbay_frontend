@@ -8,6 +8,7 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
+  Spinner,
   VStack,
 } from '@chakra-ui/react';
 import { FC } from 'react';
@@ -37,7 +38,6 @@ const MirrorNFT: FC<MirrorNFTProps> = ({ currencyId }) => {
   const chainId = useActiveChainId();
   const chainPath = CHAIN_QUERY_NAME[chainId.chainId];
   const user = useUser();
-  const { stakingPlatform } = useGetStakingPlatform(collection?.address);
 
   if (collection) {
     return (
@@ -84,10 +84,10 @@ const MirrorNFT: FC<MirrorNFTProps> = ({ currencyId }) => {
                 <SocialsBar address={collection.address} socials={collection.metadata} />
               </Box> */}
               <Flex>
-                {collection && collectionStats && (
+                {collection && (collectionStats ? (
                   <Box className="mx-auto">
-                    <div className="nft_attr_1">
-                      <div className="collection_info_bar">
+                    <Box className="nft_attr_1">
+                      <Box className="collection_info_bar">
                         <Box minW={['50%', '100px', '72px']}>
                           <h5>Items</h5>
                           <h4>{collectionStats.totalSupply ? commify(collectionStats.totalSupply) : '-'}</h4>
@@ -144,10 +144,10 @@ const MirrorNFT: FC<MirrorNFTProps> = ({ currencyId }) => {
                             )}
                           </h4>
                         </Box>
-                      </div>
-                    </div>
+                      </Box>
+                    </Box>
                   </Box>
-                )}
+                ) : <Spinner/>)}
               </Flex>
             </Flex>
           </Link>

@@ -1193,7 +1193,8 @@ export interface AppConfig {
     townHall: HexString,
     vaultNft: HexString,
     ryoshiWithKnife: HexString,
-    farms: HexString
+    farms: HexString,
+    zkLB: HexString
   },
   tokens: {[key: string] : {
     name: string,
