@@ -2,7 +2,6 @@
 // import {cronosTestnetTokens, cronosTokens, cronosZkEvmTokens, cronosZkEvmTestnetTokens} from "@pancakeswap/tokens";
 // import {SupportedChainId} from "@src/config/chains";
 // import {ERC20Token} from "@pancakeswap/swap-sdk-evm";
-// import dexTokens from '@dex/config/tokens.json';
 // import {Address} from "viem";
 //
 // interface AppToken {

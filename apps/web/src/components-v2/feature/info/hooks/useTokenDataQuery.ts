@@ -26,25 +26,40 @@ export const useTokenDataQuery = (address: string): TokenData | undefined => {
         throw new Error('No data');
       }
 
-      let final: TokenData;
-
-      final = {
+      let final: TokenData = {
         id: data_.id,
         name: data_.name,
         symbol: data_.symbol,
         priceUSD: +data_.derivedUSD,
         decimals: +data_.decimals,
         totalLiquidity: +data_.totalLiquidity,
-        totalLiquidityUSD: +data_.tokenDayData[0].totalLiquidityUSD,
         tradeVolume:+ data_.tradeVolume,
         tradeVolumeUSD: +data_.tradeVolumeUSD,
-        volume24h: +data_.tokenDayData[0].dailyVolumeToken,
-        volumeUSD24h: +data_.tokenDayData[0].dailyVolumeUSD / +data_.tradeVolumeUSD * 100,
-        priceUSD24h: +data_.tokenDayData[0].priceUSD,
-        totalLiquidity24h: (+data_.tokenDayData[0].totalLiquidityUSD - +data_.tokenDayData[1].totalLiquidityUSD) / +data_.tokenDayData[1].totalLiquidityUSD * 100,
-        priceChange: +data_.derivedUSD - +data_.tokenDayData[0].priceUSD,
-        txCount: +data_.tokenDayData[0].dailyTxns,
-      };
+        totalLiquidityUSD: 0,
+        volume24h: 0,
+        volumeUSD24h: 0,
+        priceUSD24h: 0,
+        totalLiquidity24h: 0,
+        priceChange: 0,
+        txCount: 0,
+      }
+      if (data_.tokenDayData[0]) {
+        final = {
+          ...final,
+          totalLiquidityUSD: +data_.tokenDayData[0].totalLiquidityUSD,
+          volume24h: +data_.tokenDayData[0].dailyVolumeToken0,
+          volumeUSD24h: +data_.tokenDayData[0].dailyVolumeUSD / +data_.tradeVolumeUSD * 100,
+          priceUSD24h: +data_.tokenDayData[0].priceUSD,
+          priceChange: +data_.derivedUSD - +data_.tokenDayData[0].priceUSD,
+          txCount: +data_.tokenDayData[0].dailyTxns,
+        };
+      }
+      if (data_.tokenDayData[0] && data_.tokenDayData[1]) {
+        final = {
+          ...final,
+          totalLiquidity24h: (+data_.tokenDayData[0].totalLiquidityUSD - +data_.tokenDayData[1].totalLiquidityUSD) / +data_.tokenDayData[1].totalLiquidityUSD * 100,
+        }
+      }
 
       return final;
     },

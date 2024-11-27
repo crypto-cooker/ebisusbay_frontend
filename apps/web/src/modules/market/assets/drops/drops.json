@@ -7812,7 +7812,7 @@
     "maxMintPerTx": 100,
     "maxMintPerAddress": 100,
     "totalSupply": 2000,
-    "cost": "89",
+    "cost": "63",
     "foundersOnly": false,
     "start": 1730836800000,
     "end": null,

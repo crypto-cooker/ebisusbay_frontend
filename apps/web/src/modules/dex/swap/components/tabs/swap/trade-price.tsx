@@ -45,7 +45,7 @@ export function TradePrice({ price, loading }: TradePriceProps) {
           />
           {`${formattedPrice} ${showInverted ? price?.quoteCurrency?.symbol : price?.baseCurrency?.symbol}`}
           <Box fontWeight="bold" fontSize="sm" ml={4}>
-            <DecimalAbbreviatedNumber value={`$${usdPrice}`} />
+            <DecimalAbbreviatedNumber value={usdPrice ?? 0} leftText='$' />
           </Box>
           {loading ? (
             <Box>loading...</Box>

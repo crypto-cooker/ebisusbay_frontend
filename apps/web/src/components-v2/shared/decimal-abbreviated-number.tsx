@@ -3,17 +3,19 @@ import {subscriptedDecimal} from "@market/helpers/utils";
 
 interface DecimalAbbreviatedNumberProps {
   value: number | string;
+  leftText?: string;
 }
 
-const DecimalAbbreviatedNumber = ({ value }: DecimalAbbreviatedNumberProps) => {
+const DecimalAbbreviatedNumber = ({ value, leftText }: DecimalAbbreviatedNumberProps) => {
   const valueObj = subscriptedDecimal(value);
 
   return (
     <Box>
       {typeof valueObj === 'string' ? (
-        <>{valueObj}</>
+        <>{leftText}{valueObj}</>
       ) : (
         <Box>
+          {leftText}
           {valueObj.left}
           {!!valueObj.subscript && (
             <Box as='span' fontSize='xs' verticalAlign='sub'>
