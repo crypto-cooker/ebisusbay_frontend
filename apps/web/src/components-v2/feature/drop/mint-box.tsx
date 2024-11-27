@@ -208,7 +208,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
     //   gasLimit
     // };
 
-    return await actualContract.mint(numToMint);
+    return await actualContract.mint(numToMint, {value: finalCost});
   }
 
   const mintWithErc20 = async (finalCost: number) => {
