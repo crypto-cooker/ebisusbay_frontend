@@ -3,10 +3,23 @@ import { useQuery } from '@tanstack/react-query';
 import { atom, useSetAtom } from 'jotai';
 import { ApiService } from "@src/core/services/api-service";
 
-export const globalDataAtom = atom<null | any>(null);
+interface CmsToken {
+  address: string;
+  name: string;
+  symbol: string;
+  decimals: number;
+  logo: string;
+  chainId: number;
+  marketDefault: boolean;
+  dex: boolean;
+  listings: boolean;
+  offers: boolean;
+}
+
+export const globalTokensAtom = atom<null | CmsToken[]>(null);
 
 const GlobalDataFetcher = () => {
-  const setGlobalData = useSetAtom(globalDataAtom);
+  const setGlobalTokens = useSetAtom(globalTokensAtom);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['GlobalData'],
@@ -18,9 +31,9 @@ const GlobalDataFetcher = () => {
 
   useEffect(() => {
     if (data) {
-      setGlobalData(data);
+      setGlobalTokens(data.data);
     }
-  }, [data, setGlobalData]);
+  }, [data, setGlobalTokens]);
 
   if (isLoading || error) {
     // Optionally handle loading and error states here
