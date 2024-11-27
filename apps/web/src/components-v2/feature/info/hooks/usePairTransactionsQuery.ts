@@ -6,9 +6,9 @@ import { Transaction, TransactionType } from '../state/types';
 
 export const usePairTransactionsQuery = (address:string): Transaction[] | undefined => {
   const chainId: number = useChainIdByQuery();
-  const info = useMemo(() => new Info(chainId), [chainId]);
+  const info = useMemo(() => new Info(chainId), [chainId, address]);
   const { data } = useQuery({
-    queryKey: ['useTransactionData', chainId],
+    queryKey: ['useTransactionData', chainId, address],
     queryFn: async () => {
       try {
         const response = await info.getTransactionsForPair(address);
