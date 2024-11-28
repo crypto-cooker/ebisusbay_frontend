@@ -40,7 +40,6 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
   };
 
   const presentPresent = async () => {
-
     setShowMessage(false);
     await new Promise(r => setTimeout(r, 2000));
     setShowMessage(true);
@@ -104,23 +103,25 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
   useEffect(() => {
     if (!isOpen) return;
 
-    if (user.address) {
-      fetchGift();
-    } else {
+    // if (user.address) {
+    //   fetchGift();
+    // } else {
       presentPresent();
-    }
+    // }
   }, [isOpen, user.address]);
+
+  const canReceiveGifts = false;
 
   return (
     <RdModal
       isOpen={isOpen}
       onClose={onClose}
-      title='Gifts from Ebisu Claus'
+      title='Gift from Ebisu Claus'
     >
       <RdModalAlert>
         {showMessage ? (
           <>
-            {user.wallet.isConnected ? (
+            {canReceiveGifts ? (
               <Box>
                 <VStack>
                   {((gift?.nfts && gift?.nfts?.length > 0) || (!!gift?.frtn && gift.frtn > 0)) && (
@@ -164,7 +165,7 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
             ) : (
               <>
                 <Text>{presentMessage}</Text>
-                <Text fontSize='sm' mt={4}>Connect your wallet for a surprise!</Text>
+                {/*<Text fontSize='sm' mt={4}>Connect your wallet for a surprise!</Text>*/}
               </>
             )}
           </>
