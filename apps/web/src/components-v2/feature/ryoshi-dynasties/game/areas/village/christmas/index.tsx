@@ -105,8 +105,7 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
     if (!isOpen) return;
 
     if (user.address) {
-      // fetchGift();
-      presentPresent();
+      fetchGift();
     } else {
       presentPresent();
     }
@@ -116,12 +115,12 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
     <RdModal
       isOpen={isOpen}
       onClose={onClose}
-      title='Gift from Ebisu Claus'
+      title='Gifts from Ebisu Claus'
     >
       <RdModalAlert>
         {showMessage ? (
           <>
-            {false ? (
+            {user.wallet.isConnected ? (
               <Box>
                 <VStack>
                   {((gift?.nfts && gift?.nfts?.length > 0) || (!!gift?.frtn && gift.frtn > 0)) && (
@@ -165,7 +164,7 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
             ) : (
               <>
                 <Text>{presentMessage}</Text>
-                {/* <Text fontSize='sm' mt={4}>Connect your wallet for a surprise!</Text> */}
+                <Text fontSize='sm' mt={4}>Connect your wallet for a surprise!</Text>
               </>
             )}
           </>
