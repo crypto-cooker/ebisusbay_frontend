@@ -55,7 +55,7 @@ import {ValentinesDayDialog} from "@src/components-v2/feature/ryoshi-dynasties/g
 
 
 const config = appConfig();
-const xmasCutoffDate = new Date(Date.UTC(2025, 0, 8, 0, 0, 0));
+const xmasCutoffDate = new Date(Date.UTC(2024, 0, 8, 0, 0, 0));
 const currentDate = new Date();
 const isChristmasTime = currentDate < xmasCutoffDate;
 
