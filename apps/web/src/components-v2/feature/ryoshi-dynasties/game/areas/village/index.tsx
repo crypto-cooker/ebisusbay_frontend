@@ -55,7 +55,7 @@ import {ValentinesDayDialog} from "@src/components-v2/feature/ryoshi-dynasties/g
 
 
 const config = appConfig();
-const xmasCutoffDate = new Date(Date.UTC(2025, 0, 8, 0, 0, 0));
+const xmasCutoffDate = new Date(Date.UTC(2024, 0, 8, 0, 0, 0));
 const currentDate = new Date();
 const isChristmasTime = currentDate < xmasCutoffDate;
 
@@ -129,7 +129,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
     'market': {height: 545, width: 793, top: '36.5%', left: '55%'},
     'barracks': {height: 579, width: 832, top: '15.5%', left: '-0.5%'},
     'swordsmen': {height: 270, width: 383, top: '34%', left: '50.5%'},
-    'xmas_tree': {height: 505, width: 344, top: '23%', left: '29%'},
+    'xmas_tree': {height: 505, width: 344, top: '23%', left: '27%'},
 
     'flowers1': {height: 251, width: 229, top: '3%', left: '14%'},
     'flowers2': {height: 251, width: 229, top: '3%', left: '14%'},
@@ -441,7 +441,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                           />
 
                           <Box className={styles.enlarge} style={{position:"absolute", marginTop: xmasTreeTop, marginLeft: xmasTreeLeft, zIndex:"8"}}
-                            onClick={PresentPresent}>
+                            onClick={() => setOpenShakePresent(!openShakePresent)}>
                               <VStack
                                 justifyContent={'center'}
                                 alignItems={'center'}
