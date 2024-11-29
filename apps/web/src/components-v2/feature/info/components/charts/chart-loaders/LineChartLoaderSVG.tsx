@@ -1,4 +1,4 @@
-import { SvgProps } from '@pancakeswap/uikit'
+type SvgProps = React.SVGProps<SVGSVGElement>;
 
 const LineChartLoaderSVG: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
   return (
