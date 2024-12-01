@@ -6,7 +6,7 @@ import { Transaction, TokenData } from '../state/types';
 
 export const useTokenDataQuery = (address: string): TokenData | undefined => {
   const chainId: number = useChainIdByQuery();
-  const info = useMemo(() => new Info(chainId), [chainId]);
+  const info = useMemo(() => new Info(chainId), [chainId, address]);
   const { data } = useQuery({
     queryKey: ['useTokenData', chainId, address],
     queryFn: async () => {
