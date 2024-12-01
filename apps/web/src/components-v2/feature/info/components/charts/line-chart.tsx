@@ -1,9 +1,9 @@
 import { LineChartLoader } from './chart-loaders';
-import dayjs from 'dayjs';
 import { IChartApi, createChart } from 'lightweight-charts';
 import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import { useUserTheme } from '@src/components-v2/useUser';
+import moment from 'moment';
 
 export type LineChartProps = {
   data: any[];
@@ -55,7 +55,7 @@ const LineChart = ({ data, setHoverValue, setHoverDate, dateFormat = 'h:mm a' }:
         borderVisible: false,
         secondsVisible: false,
         tickMarkFormatter: (unixTime: number) => {
-          return dayjs.unix(unixTime).format(dateFormat);
+          return moment.unix(unixTime).format(dateFormat);
         },
       },
       grid: {

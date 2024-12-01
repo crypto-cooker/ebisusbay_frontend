@@ -35,7 +35,6 @@
 
       "@eb-pancakeswap-web/*": ["src/modules/dex/swap/imported/pancakeswap/web/*"],
 
-//      "@pancakeswap/uikit": ["../../submodules/eb-pancake-frontend/packages/uikit/src"],
 //      "@pancakeswap/multicall": ["../../submodules/eb-pancake-frontend/packages/multicall/src"],
 //      "@pancakeswap/smart-router": ["../../submodules/eb-pancake-frontend/packages/smart-router/dist"],
 //      "@pancakeswap/chains": ["../../submodules/eb-pancake-frontend/packages/chains/src"],

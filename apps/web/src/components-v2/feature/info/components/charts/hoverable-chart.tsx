@@ -1,10 +1,10 @@
 import { Box, Skeleton, Text } from '@chakra-ui/react'
-import dayjs from 'dayjs'
 import { memo, useEffect, useMemo, useState } from 'react'
 import { ProtocolData, TvlChartEntry, VolumeChartEntry } from '@src/components-v2/feature/info/state/types'
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers'
 import BarChart from './bar-chart'
 import LineChart from './line-chart'
+import moment from 'moment';
 
 interface HoverableChartProps {
   volumeChartData: VolumeChartEntry[] | undefined
@@ -41,7 +41,7 @@ const HoverableChart = ({
     if (volumeChartData) {
       return volumeChartData.map((day) => {
         return {
-          time: dayjs.unix(day.date).toDate(),
+          time: moment.unix(day.date).toDate(),
           value: day[valueProperty as keyof typeof protocolData],
         }
       })
