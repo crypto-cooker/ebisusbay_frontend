@@ -481,7 +481,7 @@ export class Info {
             totalLiquidity
             totalTransactions
             tradeVolume
-            tokenDayData(orderBy: date, orderDirection: desc, first: 2, skip: 1) {
+            tokenDayData(orderBy: date, orderDirection: desc, first: 2) {
               priceUSD
               dailyVolumeUSD
               date
