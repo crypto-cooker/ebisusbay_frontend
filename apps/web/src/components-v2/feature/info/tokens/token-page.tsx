@@ -177,12 +177,12 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
                   <Percent value={tokenData.totalLiquidity24h} />
 
                   <Text mt="24px" fontWeight={'bold'} color="secondary" fontSize="12px" textTransform="uppercase">
-                    {'Volume 24H'}
+                    {'Volume Today'}
                   </Text>
                   <Text fontWeight={'bold'} fontSize="24px" textTransform="uppercase">
-                    ${formatAmount(tokenData.tradeVolumeUSD)}
+                    ${formatAmount(tokenData.volumeToday)}
                   </Text>
-                  <Percent value={tokenData.volumeUSD24h} />
+                  <Percent value={tokenData.volumeUSD24hChange} />
 
                   <Text mt="24px" fontWeight={'bold'} color="secondary" fontSize="12px" textTransform="uppercase">
                     {'Transactions 24H'}

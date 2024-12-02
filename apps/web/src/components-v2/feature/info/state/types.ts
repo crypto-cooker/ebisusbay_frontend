@@ -43,6 +43,8 @@ export interface TokenData {
   tradeVolumeUSD: number;
   volume24h: number;
   volumeUSD24h: number;
+  volumeToday?: number;
+  volumeUSD24hChange?: number;
   priceUSD24h: number;
   totalLiquidity24h: number;
   priceChange: number;
