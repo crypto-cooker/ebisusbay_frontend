@@ -44,6 +44,8 @@ const useCreateDeal = () => {
   const user = useUser();
 
   const createDeal = async (barterState: BarterState) => {
+
+    console.log(barterState, "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
     setResponse({
       ...response,
       loading: true,

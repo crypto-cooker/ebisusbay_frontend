@@ -36,11 +36,13 @@ import InventoryFilterContainer
 import InfiniteScroll from "react-infinite-scroll-component";
 import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
+import {toast} from 'react-toastify'
+import { useChainId } from "wagmi";
 
 export const ChooseNftsTab = ({address}: {address: string}) => {
   const user = useUser();
   const { toggleOfferNFT, barterState } = useBarterDeal();
-
+  const chainId = useChainId();
 
   const [collections, setCollections] = useState([]);
   const [searchTerms, setSearchTerms] = useState<string>();
@@ -54,7 +56,8 @@ export const ChooseNftsTab = ({address}: {address: string}) => {
   );
   const [queryParams, setQueryParams] = useState<WalletsQueryParams>({
     sortBy: 'receivedTimestamp',
-    direction: 'desc'
+    direction: 'desc',
+    chain: chainId
   });
 
   const fetcher = async ({ pageParam = 1 }) => {
@@ -99,7 +102,10 @@ export const ChooseNftsTab = ({address}: {address: string}) => {
   }, []);
 
   const handleSelectItem = (nft: any) => {
-    toggleOfferNFT(nft);
+    if(nft.chain == chainId) toggleOfferNFT(nft);
+    else {
+      toast.warning('Please select the items on the connected chain.')
+    }
   }
 
   const userTheme =  user.theme;
