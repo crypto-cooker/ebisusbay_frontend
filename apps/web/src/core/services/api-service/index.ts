@@ -65,14 +65,14 @@ export class ApiService implements Api {
   }
 
   static async allMitamaForChains(address: string, chainIds: number[]) {
-      let fortuneBalance = 0;
-      let mitamaBalance = 0;
+    let fortuneBalance = BigInt(0);
+    let mitamaBalance = BigInt(0);
     for (const chainId of chainIds) {
       const fortuneAndMitama = await ApiService.forChain(chainId).ryoshiDynasties.getErc20Account(
         address.toLowerCase(),
       );
-      fortuneBalance += fortuneAndMitama?.fortuneBalance ? +fortuneAndMitama?.fortuneBalance : 0;
-      mitamaBalance += fortuneAndMitama?.mitamaBalance ? +fortuneAndMitama?.mitamaBalance : 0;
+      fortuneBalance += BigInt(fortuneAndMitama?.fortuneBalance ? fortuneAndMitama?.fortuneBalance : 0);
+      mitamaBalance += BigInt(fortuneAndMitama?.mitamaBalance ? fortuneAndMitama?.mitamaBalance : 0);
     }
     return {fortuneBalance: fortuneBalance.toString(), mitamaBalance: mitamaBalance.toString()};
   }
