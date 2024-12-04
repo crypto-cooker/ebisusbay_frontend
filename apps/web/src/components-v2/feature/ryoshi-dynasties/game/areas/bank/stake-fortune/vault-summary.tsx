@@ -19,7 +19,7 @@ import {
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
-import {faGem} from "@fortawesome/free-solid-svg-icons";
+import { faGem, faStar } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {createSuccessfulTransactionToastContent, findNextLowestNumber, round} from "@market/helpers/utils";
 import {
@@ -51,6 +51,7 @@ interface VaultSummaryProps {
   onEditVault: (type: string) => void;
   onWithdrawVault: () => void;
   onTokenizeVault: () => void;
+  onBoostVault: () => void;
   onClosed: () => void;
 }
 
@@ -59,7 +60,7 @@ const VaultSummary = (props: VaultSummaryProps) => {
 }
 
 
-const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onClosed }: VaultSummaryProps) => {
+const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onClosed }: VaultSummaryProps) => {
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const vaultBalance = Number(ethers.utils.formatEther(vault.balance));
@@ -121,6 +122,7 @@ const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVaul
           onEditVault={onEditVault}
           onWithdrawVault={onWithdrawVault}
           onTokenizeVault={onTokenizeVault}
+          onBoostVault={onBoostVault}
           onVaultClosed={onClosed}
           canTokenize={true}
         />
@@ -194,6 +196,7 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
           onEditVault={onEditVault}
           onWithdrawVault={onWithdrawVault}
           onTokenizeVault={onTokenizeVault}
+          onBoostVault={onBoostVault}
           onVaultClosed={onClosed}
           canTokenize={false}
         />
@@ -292,11 +295,12 @@ interface VaultActionButtonsProps {
   onEditVault: (type: string) => void;
   onWithdrawVault: () => void;
   onTokenizeVault: () => void;
+  onBoostVault: () => void;
   onVaultClosed: () => void;
   canTokenize: boolean;
 }
 
-const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onVaultClosed, canTokenize }: VaultActionButtonsProps) => {
+const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onVaultClosed, canTokenize }: VaultActionButtonsProps) => {
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useUser();
   const { chainId: bankChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
@@ -360,6 +364,12 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
                   Tokenize Vault
                 </Button>
               )}
+              <Button
+                leftIcon={<Icon as={FontAwesomeIcon} icon={faStar} />}
+                onClick={onBoostVault}
+              >
+                Boost Vault
+              </Button>
             </Stack>
           </Center>
           <Center>

@@ -684,6 +684,45 @@ class RyoshiDynastiesRepository extends CmsRepository {
     );
     return response.data.data;
   }
+
+  async boostVault(vaultId: number, chainId: number, troops: string, address: string, signature: string) {
+    const response = await this.cms.post(
+      `ryoshi-dynasties/armies/send/vault`,
+      {
+        vaultId,
+        chainId,
+        troops
+      },
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+    return response.data.data;
+  }
+
+  async getVaultBoosts(address: string) {
+    const response = await this.cms.get(
+      `ryoshi-dynasties/vault-boost/${address}`
+    );
+
+    return response.data.data;
+  }
+
+  async claimVaultBoost(vaultId: number, address: string, signature: string) {
+    const response = await this.cms.post(
+      `ryoshi-dynasties/vault-boost/claim/${vaultId}`,
+      {
+        params: {
+          address,
+          signature
+        }
+      }
+    );
+    return response.data.data;
+  }
 }
 
 export default RyoshiDynastiesRepository;

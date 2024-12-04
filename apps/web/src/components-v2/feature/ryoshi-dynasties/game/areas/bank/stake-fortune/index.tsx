@@ -13,6 +13,10 @@ import TokenizeVaultPage
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/tokenize-vault-page";
 import {SUPPORTED_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
 import {BankStakeTokenContext, Vault, VaultType} from "./context";
+import BoostVaultPage from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/boost-vault-page';
+import { useQuery } from '@tanstack/react-query';
+import { ApiService } from '@src/core/services/api-service';
+import { useUser } from '@src/components-v2/useUser';
 
 interface StakeFortuneProps {
   address: string;
@@ -25,6 +29,14 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
   const [title, setTitle] = useState<string>('Stake Tokens');
   const [currentChainId, setCurrentChainId] = useState<SupportedChainId>(SUPPORTED_CHAIN_CONFIGS[0].chain.id);
   const [currentVaultType, setCurrentVaultType] = useState<VaultType>(VaultType.TOKEN);
+  const user = useUser();
+
+  const { data: userVaultBoosts, refetch: refetchBoosts } = useQuery({
+    queryKey: ['UserVaultBoosts', user.address],
+    queryFn: async () => ApiService.withoutKey().ryoshiDynasties.getVaultBoosts(user.address!),
+    refetchOnWindowFocus: false,
+    enabled: !!user.address,
+  });
 
   const handleClose = async () => {
     returnHome();
@@ -66,6 +78,11 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
     setTitle('Tokenize Vault');
   }, [returnHome]);
 
+  const handleBoostVault = useCallback((vault: FortuneStakingAccount) => {
+    setPage(<BoostVaultPage vault={vault} onReturn={returnHome} />);
+    setTitle('Boost Vault');
+  }, [returnHome]);
+
   const handleUpdateChainContext = useCallback((chainId: SupportedChainId) => {
     setCurrentChainId(chainId);
   }, []);
@@ -83,7 +100,10 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
       utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
       onUtilBtnClick={handleBack}
     >
-      <BankStakeTokenContext.Provider value={{chainId: currentChainId, vaultType: currentVaultType}}>
+      <BankStakeTokenContext.Provider value={{
+        chainId: currentChainId,
+        vaultType: currentVaultType,
+      }}>
         {!!page ? (
           <>{page}</>
         ) : (
@@ -92,6 +112,7 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
             onCreateVault={handleCreateVault}
             onWithdrawVault={handleWithdrawVault}
             onTokenizeVault={handleTokenizeVault}
+            onBoostVault={handleBoostVault}
             initialChainId={currentChainId}
             onUpdateChainContext={handleUpdateChainContext}
             onUpdateVaultContext={handleUpdateVaultContext}

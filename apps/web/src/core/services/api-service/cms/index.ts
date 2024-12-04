@@ -279,6 +279,18 @@ class Cms {
   async getSupportedTokens() {
     return await this.tokens.getSupportedTokens();
   }
+
+  async boostVault(vaultId: number, chainId: number, troops: string, address: string, signature: string) {
+    return this.ryoshiDynasties.boostVault(vaultId, chainId, troops, address, signature);
+  }
+
+  async getVaultBoosts(address: string) {
+    return this.ryoshiDynasties.getVaultBoosts(address);
+  }
+
+  async claimVaultBoost(vaultId: number, address: string, signature: string) {
+    return this.ryoshiDynasties.claimVaultBoost(vaultId, address, signature);
+  }
 }
 
 export default Cms;

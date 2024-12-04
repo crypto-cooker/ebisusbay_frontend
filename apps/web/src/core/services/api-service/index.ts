@@ -596,4 +596,16 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async resetMeepleUpkeep(address: string, signature: string) {
     return this.cms.resetMeepleUpkeep(address, signature);
   }
+
+  async boostVault(vaultId: number, chainId: number, troops: string, address: string, signature: string) {
+    return this.cms.boostVault(vaultId, chainId, troops, address, signature);
+  }
+
+  async getVaultBoosts(address: string) {
+    return this.cms.getVaultBoosts(address);
+  }
+
+  async claimVaultBoost(vaultId: number, address: string, signature: string) {
+    return this.cms.claimVaultBoost(vaultId, address, signature);
+  }
 }
