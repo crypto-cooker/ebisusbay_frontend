@@ -48,9 +48,10 @@ export const useTokenDataQuery = (address: string): TokenData | undefined => {
           ...final,
           totalLiquidityUSD: +data_.tokenDayData[0].totalLiquidityUSD,
           volume24h: +data_.tokenDayData[0].dailyVolumeToken0,
-          volumeUSD24h: +data_.tokenDayData[0].dailyVolumeUSD / +data_.tradeVolumeUSD * 100,
+          volumeUSD24h: +data_.tokenDayData[0].dailyVolumeUSD,
           priceUSD24h: +data_.tokenDayData[0].priceUSD,
           priceChange: +data_.derivedUSD - +data_.tokenDayData[0].priceUSD,
+          volumeToday: +data_.tokenDayData[0].dailyVolumeUSD,
           txCount: +data_.tokenDayData[0].dailyTxns,
         };
       }
@@ -58,6 +59,7 @@ export const useTokenDataQuery = (address: string): TokenData | undefined => {
         final = {
           ...final,
           totalLiquidity24h: (+data_.tokenDayData[0].totalLiquidityUSD - +data_.tokenDayData[1].totalLiquidityUSD) / +data_.tokenDayData[1].totalLiquidityUSD * 100,
+          volumeUSD24hChange: +data_.tokenDayData[0].dailyVolumeUSD / +data_.tokenDayData[1].dailyVolumeUSD * 100,
         }
       }
 
