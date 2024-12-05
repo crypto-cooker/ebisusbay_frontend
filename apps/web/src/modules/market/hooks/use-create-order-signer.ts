@@ -1,9 +1,11 @@
-import {useCallback, useState} from 'react';
-import {appConfig} from "@src/config";
-import {BigNumber, ethers} from "ethers";
-import {useUser} from "@src/components-v2/useUser";
+import { useCallback, useState } from 'react';
+import { appConfig } from "@src/config";
+import { BigNumber, ethers } from "ethers";
+import { useUser } from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";
 import UUID from "uuid-int";
+import { useAppChainConfig } from '@src/config/hooks';
+import { useChainId } from 'wagmi';
 
 const generator = UUID(0);
 
@@ -70,7 +72,8 @@ export type OfferItem = {
 
 const useSignature = () => {
   const user = useUser();
-  const config = appConfig();
+  const chainId = useChainId();
+  const { config } = useAppChainConfig(chainId);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -131,7 +134,6 @@ const useSignature = () => {
     };
 
     try {
-
       const signature = await signMessage(order);
       setIsLoading(false);
 

@@ -389,6 +389,7 @@ const AcceptButtonView = ({deal, onProgress, onSuccess}: {deal: Deal, onProgress
 
       const { signature, orderData, ...sigData } = authorization;
       const total = price.add(sigData.feeAmount);
+      console.log({orderData, sigData, signature, total}, "HHHHHHHHHHHHHHHHHHHHH")
       const tx = await contractService!.ship.fillOrders(orderData, sigData, signature, { value: total });
       return await tx.wait();
     },

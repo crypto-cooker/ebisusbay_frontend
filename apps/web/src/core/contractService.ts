@@ -11,10 +11,11 @@ import PlatformRewards from "@src/global/contracts/PlatformRewards.json";
 import PresaleVaults from "@src/global/contracts/PresaleVaults.json";
 import {ERC20} from "@src/global/contracts/Abis";
 
-const config = appConfig();
+const defaultConfig = appConfig();
 
 class UserContractService {
   private signer: Signer;
+  private config: any;
   private erc20Tokens: { [key: string]: Contract } = {};
 
   private _market?: Contract;
@@ -28,69 +29,71 @@ class UserContractService {
   private _ryoshiPresaleVaults?: Contract;
   private _custom: { [key: string]: Contract } = {};
 
-  constructor(signer: Signer | ethers.providers.JsonRpcSigner) {
+  constructor(signer: Signer | ethers.providers.JsonRpcSigner, config?:any) {
     this.signer = signer;
+    this.config = config;
+    if(config == undefined || !config) this.config = defaultConfig;
   }
 
   get market() {
     if (!this._market) {
-      this._market = new Contract(config.contracts.market, Market.abi, this.signer)
+      this._market = new Contract(this.config.contracts.market, Market.abi, this.signer)
     }
     return this._market;
   }
 
   get auction() {
     if (!this._auction) {
-      this._auction = new Contract(config.contracts.madAuction, Auction.abi, this.signer)
+      this._auction = new Contract(this.config.contracts.madAuction, Auction.abi, this.signer)
     }
     return this._auction;
   }
 
   get offer() {
     if (!this._offer) {
-      this._offer = new Contract(config.contracts.offer, Offer.abi, this.signer)
+      this._offer = new Contract(this.config.contracts.offer, Offer.abi, this.signer)
     }
     return this._offer;
   }
 
   get staking() {
     if (!this._staking) {
-      this._staking = new Contract(config.contracts.stake, StakeABI.abi, this.signer)
+      this._staking = new Contract(this.config.contracts.stake, StakeABI.abi, this.signer)
     }
     return this._staking;
   }
 
   get membership() {
     if (!this._membership) {
-      this._membership = new Contract(config.contracts.membership, Membership.abi, this.signer)
+      this._membership = new Contract(this.config.contracts.membership, Membership.abi, this.signer)
     }
     return this._membership;
   }
 
   get ship() {
     if (!this._ship) {
-      this._ship = new Contract(config.contracts.gaslessListing, gaslessListingContract.abi, this.signer)
+      this._ship = new Contract(this.config.contracts.gaslessListing, gaslessListingContract.abi, this.signer)
     }
     return this._ship;
   }
 
   get gdc() {
     if (!this._gdc) {
-      this._gdc = new Contract(config.contracts.gdc, gdcAbi, this.signer)
+      this._gdc = new Contract(this.config.contracts.gdc, gdcAbi, this.signer)
     }
     return this._gdc;
   }
 
   get ryoshiPlatformRewards() {
     if (!this._ryoshiPlatformRewards) {
-      this._ryoshiPlatformRewards = new Contract(config.contracts.rewards, PlatformRewards, this.signer)
+      this._ryoshiPlatformRewards = new Contract(this.config.contracts.rewards, PlatformRewards, this.signer)
     }
     return this._ryoshiPlatformRewards;
   }
 
   get ryoshiPresaleVaults() {
     if (!this._ryoshiPresaleVaults) {
-      this._ryoshiPresaleVaults = new Contract(config.contracts.presaleVaults, PresaleVaults, this.signer)
+      this._ryoshiPresaleVaults = new Contract(this.config.contracts.presaleVaults, PresaleVaults, this.signer)
     }
     return this._ryoshiPresaleVaults;
   }
