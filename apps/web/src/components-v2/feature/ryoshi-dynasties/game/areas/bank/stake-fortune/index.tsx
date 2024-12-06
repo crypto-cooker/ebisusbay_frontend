@@ -103,6 +103,7 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
       <BankStakeTokenContext.Provider value={{
         chainId: currentChainId,
         vaultType: currentVaultType,
+        userVaultBoosts
       }}>
         {!!page ? (
           <>{page}</>

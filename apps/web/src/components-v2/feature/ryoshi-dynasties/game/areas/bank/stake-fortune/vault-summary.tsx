@@ -131,7 +131,7 @@ const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVaul
   )
 }
 
-const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onClosed }: VaultSummaryProps) => {
+const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onClosed }: VaultSummaryProps) => {
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
 
