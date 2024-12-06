@@ -92,7 +92,6 @@ export const useContractService = () => {
   const chainId = useChainId();
   
   const signer = useEthersSigner();
-  const signer2 = useEthersSigner({chainId})
 
   const [contractService, setContractService] = useState<UserContractService | null>(null);
   const {config} = useAppChainConfig(chainId);

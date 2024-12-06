@@ -1,5 +1,4 @@
 import {useUser} from "@src/components-v2/useUser";
-import useCurrencyBroker, {BrokerCurrency} from "@market/hooks/use-currency-broker";
 import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import React, {useCallback, useState} from "react";
 import ReactSelect, {SingleValue} from "react-select";
@@ -28,6 +27,11 @@ import {CustomTokenPicker} from "@src/components-v2/feature/deal/create/custom-t
 import {commify} from "ethers/lib/utils";
 import {useQuery} from "@tanstack/react-query";
 import {ERC20} from "@src/global/contracts/Abis";
+import { useChainId } from "wagmi";
+import useMultichainCurrencyBroker, { MultichainBrokerCurrency } from "@market/hooks/use-multichain-currency-broker";
+import { CurrencyLogoByAddress } from "@dex/components/logo";
+import { readContract } from "@wagmi/core";
+import { wagmiConfig } from "@src/wagmi";
 
 const config = appConfig();
 const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
@@ -51,7 +55,10 @@ export const ChooseTokensTab = ({address}: {address: string}) => {
 
 const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: string}) => {
   const user = useUser();
-  const { whitelistedERC20DealCurrencies  } = useCurrencyBroker();
+  const chainId = useChainId();
+  const config = appConfig();
+
+  const { whitelistedERC20DealCurrencies } = useMultichainCurrencyBroker(chainId);
   const { toggleOfferERC20 } = useBarterDeal();
   const [quantity, setQuantity] = useState<string>();
   const [isWrapping, setIsWrapping] = useState(false);
@@ -73,13 +80,18 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
     return a.symbol.localeCompare(b.symbol);
   });
 
-  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(sortedWhitelistedERC20DealCurrencies[0]);
+  const [selectedCurrency, setSelectedCurrency] = useState<MultichainBrokerCurrency>(sortedWhitelistedERC20DealCurrencies[0]);
 
   const { data: availableBalance, isLoading } = useQuery({
-    queryKey: ['balance', balanceCheckAddress, selectedCurrency.address],
+    queryKey: ['balance', balanceCheckAddress, selectedCurrency.address, chainId],
     queryFn: async () => {
-      const readContract = new Contract(selectedCurrency.address, ERC20, readProvider);
-      const count = await readContract.balanceOf(balanceCheckAddress);
+      const count: any = await readContract(wagmiConfig, {
+        abi:ERC20,
+        chainId,
+        address: selectedCurrency?.address,
+        functionName:'balanceOf',
+        args:[balanceCheckAddress]
+      })
       let native = 0;
       if (isWrappedeCro(selectedCurrency.address)) {
         const cro = await readProvider.getBalance(balanceCheckAddress);
@@ -90,7 +102,7 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
     enabled: !!selectedCurrency,
   });
 
-  const handleCurrencyChange = useCallback((currency: SingleValue<BrokerCurrency>) => {
+  const handleCurrencyChange = useCallback((currency: SingleValue<MultichainBrokerCurrency>) => {
     if (!currency) return;
 
     setSelectedCurrency(currency);
@@ -109,6 +121,8 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
 
     toggleOfferERC20({
       ...selectedCurrency,
+      name: selectedCurrency.name!,
+      chainId,
       amount: Number(quantity),
     });
   }
@@ -139,6 +153,8 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
       toast.success('CRO wrapped successfully to WCRO');
       toggleOfferERC20({
         ...selectedCurrency,
+        name: selectedCurrency.name!,
+        chainId,
         amount: Math.floor(parseInt(quantity)),
       });
     } catch (e) {
@@ -194,9 +210,9 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
           menuPortalTarget={document.body} menuPosition={'fixed'}
           styles={customStyles}
           options={sortedWhitelistedERC20DealCurrencies}
-          formatOptionLabel={({ symbol, image }) => (
+          formatOptionLabel={({ symbol, address, chainId }) => (
             <HStack>
-              <Box as='span' minW='30px'>{image}</Box>
+              <CurrencyLogoByAddress address={address} chainId={chainId}/>
               <span>{symbol}</span>
             </HStack>
           )}

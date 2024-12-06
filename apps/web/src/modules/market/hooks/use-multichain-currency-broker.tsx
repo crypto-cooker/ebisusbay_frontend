@@ -49,6 +49,10 @@ const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
   const isDealCurrency = (symbol: string) => {
     return appConfig.currencies?.[chainId]?.deals.includes(symbol.toLowerCase());
   }
+  
+  const isGlobalCurrency = (symbol: string) => {
+    return appConfig.currencies?.[chainId]?.global.includes(symbol.toLowerCase());
+  }
 
   const getByCollection = (nftAddress: string) => {
     const chainCurrencies = appConfig.currencies?.[chainId];
@@ -70,8 +74,8 @@ const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
 
   return {
     knownCurrencies,
-    whitelistedDealCurrencies: knownCurrencies.filter((currency) => isDealCurrency(currency.symbol)),
-    whitelistedERC20DealCurrencies: knownCurrencies.filter((currency) => isDealCurrency(currency.symbol) && !isNativeCro(currency.address)),
+    whitelistedDealCurrencies: knownCurrencies.filter((currency) => isGlobalCurrency(currency.symbol)),
+    whitelistedERC20DealCurrencies: knownCurrencies.filter((currency) => isGlobalCurrency(currency.symbol) && !isNativeCro(currency.address)),
     listingCurrencies,
     getBySymbol,
     getByAddress,

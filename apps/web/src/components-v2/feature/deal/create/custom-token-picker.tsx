@@ -20,13 +20,16 @@ import useCurrencyBroker from "@market/hooks/use-currency-broker";
 import { wagmiConfig } from '@src/wagmi';
 import { Address, erc20Abi } from 'viem';
 import {readContracts} from "@wagmi/core";
+import { useChainId } from "wagmi";
+import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
 
 interface CustomTokenPickerProps {
   onAdd: (token: BarterToken) => void;
 }
 
 export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
-  const { knownCurrencies  } = useCurrencyBroker();
+  const chainId = useChainId()
+  const { knownCurrencies  } = useMultichainCurrencyBroker(chainId);
   const [tokenAddress, setTokenAddress] = useState<string>();
   const [quantity, setQuantity] = useState<string>();
 
@@ -56,6 +59,7 @@ export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
       if (knownToken) {
         onAdd({
           ...knownToken,
+          name: knownToken.name!,
           address: knownToken.address.toLowerCase(),
           amount: Number(quantity),
         });
@@ -67,18 +71,21 @@ export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
           {
             address: tokenAddress as Address,
             abi: erc20Abi,
+            chainId,
             functionName: 'name',
             args: []
           },
           {
             address: tokenAddress as Address,
             abi: erc20Abi,
+            chainId,
             functionName: 'symbol',
             args: []
           },
           {
             address: tokenAddress as Address,
             abi: erc20Abi,
+            chainId,
             functionName: 'decimals',
             args: []
           }
@@ -105,6 +112,7 @@ export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
         symbol: tokenInfo[1].result ?? `CT-${shortAddress(tokenAddress)}`,
         name: tokenInfo[0].result ?? `Custom Token (${shortAddress(tokenAddress)})`,
         decimals: tokenInfo[2].result,
+        chainId,
         image: '',
         amount: Number(quantity),
       });

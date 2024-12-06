@@ -1,5 +1,4 @@
 import { useUser } from '@src/components-v2/useUser';
-import useCurrencyBroker, { BrokerCurrency } from '@market/hooks/use-currency-broker';
 import useBarterDeal from '@src/components-v2/feature/deal/use-barter-deal';
 import React, { useCallback, useState } from 'react';
 import ReactSelect, { SingleValue } from 'react-select';
@@ -25,13 +24,15 @@ import { CustomTokenPicker } from '@src/components-v2/feature/deal/create/custom
 import { BarterToken } from '@market/state/jotai/atoms/deal';
 import { ciEquals } from '@market/helpers/utils';
 import { appConfig } from '@src/config';
-import { Contract, ethers } from 'ethers';
+import { BigNumberish, Contract, ethers } from 'ethers';
 import { ERC20, ERC721 } from '@src/global/contracts/Abis';
 import { useQuery } from '@tanstack/react-query';
 import { commify } from 'ethers/lib/utils';
-
-const config = appConfig();
-const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
+import useMultichainCurrencyBroker, { MultichainBrokerCurrency } from '@market/hooks/use-multichain-currency-broker';
+import { useChainId } from 'wagmi';
+import { CurrencyLogoByAddress } from '@dex/components/logo';
+import { readContract } from '@wagmi/core';
+import { wagmiConfig } from '@src/wagmi';
 
 export const ChooseTokensTab = ({ address }: { address: string }) => {
   const { toggleSelectionERC20 } = useBarterDeal();
@@ -52,41 +53,54 @@ export const ChooseTokensTab = ({ address }: { address: string }) => {
 
 const WhitelistedTokenPicker = ({ balanceCheckAddress }: { balanceCheckAddress: string }) => {
   const user = useUser();
+  const chainId = useChainId();
+  const config = appConfig();
   const { toggleSelectionERC20 } = useBarterDeal();
   const [quantity, setQuantity] = useState<string>();
-  
-  const { whitelistedERC20DealCurrencies } = useCurrencyBroker();
+
+  const { whitelistedERC20DealCurrencies } = useMultichainCurrencyBroker(chainId);
   const sortedWhitelistedERC20DealCurrencies = whitelistedERC20DealCurrencies.sort((a, b) => {
     // Place FRTN first
     if (ciEquals(a.symbol, config.tokens.frtn.symbol)) return -1;
     if (ciEquals(b.symbol, config.tokens.frtn.symbol)) return 1;
-    
+
     // Place WCRO second
     if (ciEquals(a.symbol, config.tokens.wcro.symbol)) return -1;
     if (ciEquals(b.symbol, config.tokens.wcro.symbol)) return 1;
-    
+
     // Place USDC third
     if (ciEquals(a.symbol, config.tokens.usdc.symbol)) return -1;
     if (ciEquals(b.symbol, config.tokens.usdc.symbol)) return 1;
-    
+
     // Alphabetically sort the rest
     return a.symbol.localeCompare(b.symbol);
   });
 
-  const [selectedCurrency, setSelectedCurrency] = useState<BrokerCurrency>(sortedWhitelistedERC20DealCurrencies[0]);
+  const [selectedCurrency, setSelectedCurrency] = useState<MultichainBrokerCurrency>(
+    sortedWhitelistedERC20DealCurrencies[0],
+  );
 
   const { data: availableBalance, isLoading } = useQuery({
-    queryKey: ['balance', balanceCheckAddress, selectedCurrency.address],
+    queryKey: ['balance', balanceCheckAddress, selectedCurrency?.address, chainId],
     queryFn: async () => {
-      const readContract = new Contract(selectedCurrency.address, ERC20, readProvider);
-      const count = await readContract.balanceOf(balanceCheckAddress);
-      return Number(ethers.utils.formatUnits(count, selectedCurrency.decimals));
+      let count: any;
+      try {
+        count = await readContract(wagmiConfig, {
+          abi: ERC20,
+          chainId,
+          address: selectedCurrency?.address,
+          functionName: 'balanceOf',
+          args: [balanceCheckAddress],
+        });
+      } catch (error) {
+      }
+      return Number(ethers.utils.formatUnits(count, selectedCurrency?.decimals));
     },
     enabled: !!selectedCurrency,
   });
 
   const handleCurrencyChange = useCallback(
-    (currency: SingleValue<BrokerCurrency>) => {
+    (currency: SingleValue<MultichainBrokerCurrency>) => {
       if (!currency) return;
 
       setSelectedCurrency(currency);
@@ -107,6 +121,7 @@ const WhitelistedTokenPicker = ({ balanceCheckAddress }: { balanceCheckAddress: 
 
     toggleSelectionERC20({
       ...selectedCurrency,
+      name: selectedCurrency.name!,
       amount: Number(quantity),
     });
   };
@@ -157,10 +172,10 @@ const WhitelistedTokenPicker = ({ balanceCheckAddress }: { balanceCheckAddress: 
           menuPosition={'fixed'}
           styles={customStyles}
           options={sortedWhitelistedERC20DealCurrencies}
-          formatOptionLabel={({ symbol, image }) => (
+          formatOptionLabel={({ symbol, address, chainId }) => (
             <HStack>
               <Box as="span" minW="30px">
-                {image}
+                <CurrencyLogoByAddress address={address} chainId={chainId} />
               </Box>
               <span>{symbol}</span>
             </HStack>

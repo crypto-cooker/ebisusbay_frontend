@@ -9,6 +9,7 @@ export interface BarterNft {
   name: string;
   image: string;
   balance: number;
+  chainId: number;
   amountSelected: number;
 }
 
@@ -16,9 +17,10 @@ export interface BarterToken {
   address: string;
   symbol: string;
   name: string;
-  image: string;
+  image?: string;
   amount: number;
   decimals: number;
+  chainId: number;
 }
 
 export interface BarterState {

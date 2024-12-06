@@ -77,7 +77,7 @@ export const ChooseNftsTab = ({address}: {address: string}) => {
   }
 
   const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery({
-    queryKey: ['Step1ChooseItems', address, queryParams],
+    queryKey: ['Step1ChooseItems', address, queryParams, chainId],
     queryFn: fetcher,
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {

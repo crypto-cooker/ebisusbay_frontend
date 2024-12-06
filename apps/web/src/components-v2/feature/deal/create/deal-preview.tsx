@@ -36,6 +36,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandshake } from '@fortawesome/free-solid-svg-icons';
 import { useUser } from '@src/components-v2/useUser';
 import { commify } from 'ethers/lib/utils';
+import { CurrencyLogoByAddress } from '@dex/components/logo';
+import DynamicNftImage from '@src/components-v2/shared/media/dynamic-nft-image';
+import AnyMedia from '@src/components-v2/shared/media/any-media';
+import { nftCardUrl } from '@src/helpers/image';
 
 const previewSize = '50px';
 
@@ -101,7 +105,7 @@ export const DealPreview = ({ onChangeStep, onConfirm, isConfirming }: DealPrevi
 
   return (
     <>
-      <Slide direction="bottom" in={true} style={{ zIndex: 20}}>
+      <Slide direction="bottom" in={true} style={{ zIndex: 20 }}>
         <Box p={3} backgroundColor={sliderBackground} borderTop="1px solid white" pb={{ base: '60px', md: 0 }}>
           <Stack spacing={4} direction={{ base: 'column', sm: 'row' }} align={{ base: 'end', sm: 'center' }}>
             <Stack w="full" direction="row" align="center">
@@ -190,8 +194,8 @@ export const DealPreview = ({ onChangeStep, onConfirm, isConfirming }: DealPrevi
                           newAmountSelected: amount,
                         });
                       }}
-                      onRemove={(nft: any) => {
-                        toggleOfferERC20(nft);
+                      onRemove={(token: any) => {
+                        toggleOfferERC20(token);
                       }}
                       isPaused={!user.wallet.isConnected}
                     />
@@ -249,6 +253,29 @@ export const DealPreview = ({ onChangeStep, onConfirm, isConfirming }: DealPrevi
         </Box>
       </Slide>
     </>
+  );
+};
+
+const Badge = ({ nft, isPaused }: { nft: any; isPaused: boolean }) => {
+  const borderColor = useColorModeValue('#000', '#FFF');
+  return (
+    <Box
+      display={'flex'}
+      justifyContent="center"
+      alignItems="center"
+      position="absolute"
+      bottom={0}
+      right={0}
+      transform={"translate(25%, 25%)"}
+      rounded="full"
+      boxSize={6}
+      bg={isPaused ? 'gray.500' : '#218cff'}
+      fontSize={nft.amountSelected > 99 ? 'xs' : 'sm'}
+      fontWeight="bold"
+      border={`1px solid ${borderColor}`}
+    >
+      {nft.amountSelected > 999 ? '+' : nft.amountSelected}
+    </Box>
   );
 };
 
@@ -312,38 +339,62 @@ const PreviewNftItem = ({ nft, ref, isOpen, onOpen, onClose, onSave, onRemove, i
           opacity={isPaused ? 0.5 : 'auto'}
           title={hoverTitle}
         >
-          <Avatar
-            src={ImageService.translate(nft.image).avatar()}
+          <Box
             w={previewSize}
             h={previewSize}
-            borderRadius="md"
+            borderRadius="xs"
             border={`1px solid ${borderColor}`}
+            position="relative"
           >
-            {nft.balance > 1 && (
-              <AvatarBadge
-                boxSize={6}
-                bg={isPaused ? 'gray.500' : '#218cff'}
-                fontSize={nft.amountSelected > 99 ? 'xs' : 'sm'}
-                border={`1px solid ${borderColor}`}
-              >
-                {nft.amountSelected > 999 ? '+' : nft.amountSelected}
-              </AvatarBadge>
-            )}
-          </Avatar>
+            <DynamicNftImage nft={nft} address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
+              <AnyMedia
+                image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}
+                className={`card-img-top`}
+                title={nft.name}
+                url={''}
+                width={440}
+                height={440}
+                video={nft.video ?? nft.animationUrl ?? nft.animation_url}
+                thumbnail={
+                  !!nft.video || !!nft.animationUrl || !!nft.animation_url
+                    ? ImageService.translate(nft.video ?? nft.animationUrl ?? nft.animation_url).thumbnail()
+                    : undefined
+                }
+                usePlaceholder={true}
+              />
+            </DynamicNftImage>
+            {nft.balance > 1 && <Badge nft={nft} isPaused={isPaused} />}
+          </Box>
         </Box>
       </PopoverTrigger>
       <PopoverContent p={5}>
         <PopoverArrow />
         <PopoverCloseButton />
         <Flex w="full" justify="space-between" my={4}>
-          <Box>
-            <Image
-              src={ImageService.translate(nft.image).avatar()}
-              w={previewSize}
-              h={previewSize}
-              borderRadius="md"
-              border={`1px solid ${borderColor}`}
-            />
+        <Box
+            w={previewSize}
+            h={previewSize}
+            borderRadius="xs"
+            border={`1px solid ${borderColor}`}
+            position="relative"
+          >
+            <DynamicNftImage nft={nft} address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
+              <AnyMedia
+                image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}
+                className={`card-img-top`}
+                title={nft.name}
+                url={''}
+                width={440}
+                height={440}
+                video={nft.video ?? nft.animationUrl ?? nft.animation_url}
+                thumbnail={
+                  !!nft.video || !!nft.animationUrl || !!nft.animation_url
+                    ? ImageService.translate(nft.video ?? nft.animationUrl ?? nft.animation_url).thumbnail()
+                    : undefined
+                }
+                usePlaceholder={true}
+              />
+            </DynamicNftImage>
           </Box>
           <VStack spacing={1} align="end" fontSize="sm">
             <Box>{nft.name}</Box>
@@ -456,7 +507,9 @@ const PreviewTokenItem = ({
           overflow="hidden"
           title={`${token.amount} ${token.name}`}
         >
-          <Box p={1}>{token.image}</Box>
+          <Box p={1}>
+            <CurrencyLogoByAddress size="25px" address={token.address} chainId={token.chainId} />
+          </Box>
           <Box
             fontSize="xs"
             w="full"
@@ -474,7 +527,7 @@ const PreviewTokenItem = ({
         <PopoverCloseButton />
         <Flex w="full" justify="space-between" my={4}>
           <Box w={previewSize} h={previewSize}>
-            {token.image}
+            <CurrencyLogoByAddress address={token.address} chainId={token.chainId} />
           </Box>
           <VStack align="end" fontSize="sm" spacing={0}>
             <Box>{token.name}</Box>
