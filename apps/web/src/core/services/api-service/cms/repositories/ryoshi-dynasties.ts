@@ -705,7 +705,12 @@ class RyoshiDynastiesRepository extends CmsRepository {
 
   async getVaultBoosts(address: string) {
     const response = await this.cms.get(
-      `ryoshi-dynasties/vault-boost/${address}`
+      `ryoshi-dynasties/vault-boost/${address}`,
+      {
+        params: {
+          active: 1
+        }
+      }
     );
 
     return response.data.data;
@@ -714,6 +719,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
   async claimVaultBoost(vaultId: number, address: string, signature: string) {
     const response = await this.cms.post(
       `ryoshi-dynasties/vault-boost/claim/${vaultId}`,
+      {},
       {
         params: {
           address,

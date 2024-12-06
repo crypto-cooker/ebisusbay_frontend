@@ -10,12 +10,11 @@ import {
   Image,
   NumberInput,
   NumberInputField,
-  Stack,
   Tag,
   Text,
   VStack
 } from '@chakra-ui/react';
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import RdButton from '@src/components-v2/feature/ryoshi-dynasties/components/rd-button';
 import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
@@ -28,15 +27,11 @@ import {
 import { parseErrorMessage } from '@src/helpers/validator';
 import AuthenticationRdButton from '@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button';
 import { useUser } from '@src/components-v2/useUser';
-import { useWriteContract } from 'wagmi';
 import {
   BankStakeTokenContext,
   BankStakeTokenContextProps,
   VaultType
 } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context';
-import { useAppChainConfig } from '@src/config/hooks';
-import { useBankContract } from '@src/global/hooks/contracts';
-import { useCallWithGasPrice } from '@eb-pancakeswap-web/hooks/useCallWithGasPrice';
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
 import { useSwitchNetwork } from '@eb-pancakeswap-web/hooks/useSwitchNetwork';
 import { ApiService } from '@src/core/services/api-service';
@@ -44,6 +39,12 @@ import useEnforceSignature from '@src/Components/Account/Settings/hooks/useEnfor
 import { commify } from 'ethers/lib/utils';
 import { QuestionHelper } from '@dex/swap/components/tabs/swap/question-helper';
 import ImageService from '@src/core/services/image';
+import { RdModalBox } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-modal';
+import {
+  useUserVaultBoost
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/vault-summary';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/constants';
 
 const steps = {
   form: 'form',
@@ -56,7 +57,6 @@ interface BoostVaultPageProps {
   onReturn: () => void;
 }
 
-const MIN_TROOPS = 10;
 const SECONDS_PER_TROOP = 30;
 const REWARD_MITAMA_DENOMINATOR = 1000;
 
@@ -64,9 +64,7 @@ const BoostVaultPage = ({ vault, onReturn }: BoostVaultPageProps) => {
   const { refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { chainId: bankChainId, userVaultBoosts } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const [currentStep, setCurrentStep] = useState(steps.form);
-
-  const [existingBoost, setExistingBoost] = useState<{claimAmount: any, troops: any, timeRemaining: any}>();
-  const [isBoostClaimable, setIsBoostClaimable] = useState(false);
+  const { boost: activeBoost, timeRemaining } = useUserVaultBoost(+vault.vaultId);
 
   const handleStart = () => {
     setCurrentStep(steps.complete);
@@ -77,12 +75,12 @@ const BoostVaultPage = ({ vault, onReturn }: BoostVaultPageProps) => {
     <Box mx={1} pb={6} px={2}>
       <Text textAlign='center' fontSize={14} py={2}>Boost your vault for additional bonuses. By sending Ryoshi troops, you can receive rewards in Koban and XP!</Text>
       <AuthenticationRdButton requireSignin={false}>
-        <Box p={4}>
-          {existingBoost ? (
+        <Box>
+          {activeBoost ? (
             <>
               {currentStep === steps.form && (
                 <ActiveVaultBoostForm
-                  existingBoost={existingBoost}
+                  vaultId={vault.vaultId}
                   onComplete={(message) => {
                     setCurrentStep(steps.complete)
                   }}
@@ -119,34 +117,26 @@ interface VaultBoostFormProps {
   onComplete: () => void;
 }
 const VaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
-  const { chainId: bankChainId, userVaultBoosts } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
-  const { config: chainConfig } = useAppChainConfig(bankChainId);
-  const [isExecuting, setIsExecuting] = useState(false);
-  const { writeContractAsync } = useWriteContract();
+  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const user = useUser();
-  const bankContract = useBankContract(bankChainId);
-  const { callWithGasPrice } = useCallWithGasPrice()
   const { chainId: activeChainId} = useActiveChainId();
   const { switchNetworkAsync } = useSwitchNetwork();
+  const queryClient = useQueryClient();
 
   const [quantity, setQuantity] = useState<string>('');
-  const {signature, isSignedIn, requestSignature} = useEnforceSignature();
+  const {requestSignature} = useEnforceSignature();
 
   const { user: rdUserContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-
 
   const vaultBalance = Number(ethers.utils.formatEther(vault.balance));
   const vaultLengthDays = Number(vault.length / (86400));
   const vaultMitama = Math.floor((vaultBalance * vaultLengthDays) / 1080);
   const vaultType = vault.frtnDeposit ? VaultType.LP : VaultType.TOKEN;
-  const hourlyKobanRate = kobanRateByMitama(vaultType, vaultMitama);
+  const hourlyKobanRate = kobanHourlyRateByMitama(vaultType, vaultMitama);
   const boostHours = (quantity * SECONDS_PER_TROOP) / 3600;
   const totalKobanReward = kobanRewardForDuration(vaultType, vaultMitama, boostHours);
-
+  const minTroops = minimumTroopsByMitama(vaultType, vaultMitama);
   const availableTroops = rdUserContext?.game.troops.user.available.total;
-  const xpLevel = rdUserContext?.experience.level ?? 1;
-  const maxBoostTime = useMemo(() => maxBoostTimeByXpLevel(xpLevel), [xpLevel]);
-  const maxTroops = round(maxBoostTime / SECONDS_PER_TROOP);
 
   const handleQuantityChange = (valueString: string) => {
     setQuantity(valueString);
@@ -154,51 +144,47 @@ const VaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
 
   const handlePresetQuantityChange = (percent: number) => {
     let newQuantity = Math.floor((availableTroops ?? 0) * (percent / 100));
-    if (newQuantity > maxTroops) newQuantity = maxTroops;
 
     setQuantity(newQuantity.toString());
   }
 
-  const handleStartBoost = async () => {
-    try {
-      if (activeChainId !== bankChainId) {
-        await switchNetworkAsync(bankChainId);
-        return;
-      }
-
-      setIsExecuting(true);
-
-      const quantityInt = +quantity;
-      if (quantityInt < MIN_TROOPS) {
-        toast.error(`Must add more than ${MIN_TROOPS} ${pluralize(MIN_TROOPS, 'troop')}`);
-        return;
-      }
-
-      if (quantityInt > maxTroops) {
-        toast.error(`Cannot add more than ${maxTroops} ${pluralize(maxTroops, 'troop')}`);
-        return;
-      }
-
-      const signature = await requestSignature();
-      await ApiService.withoutKey().ryoshiDynasties.boostVault(
-        vault.index,
-        bankChainId,
-        quantity,
-        user.address!,
-        signature
-      );
-
-      onComplete();
-    } catch (error: any) {
-      console.log(error);
-      toast.error(parseErrorMessage(error));
-    } finally {
-      setIsExecuting(false);
+  const startBoost = async () => {
+    if (activeChainId !== bankChainId) {
+      await switchNetworkAsync(bankChainId);
+      return;
     }
+
+    const quantityInt = +quantity;
+    if (quantityInt < minTroops) {
+      toast.error(`Must add at least ${minTroops} ${pluralize(minTroops, 'troop')}`);
+      return;
+    }
+
+    const signature = await requestSignature();
+    await ApiService.withoutKey().ryoshiDynasties.boostVault(
+      vault.vaultId,
+      bankChainId,
+      quantity,
+      user.address!,
+      signature
+    );
   }
 
+  const { mutate: handleStartBoost, isPending: isExecuting } = useMutation({
+    mutationFn: startBoost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.bankUserVaultBoosts(user.address) });
+
+      onComplete();
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    }
+  });
+
   return (
-    <Box>
+    <RdModalBox>
       <FormControl mt={4}>
         <FormLabel me={0}>
           <Flex justify='space-between'>
@@ -210,7 +196,7 @@ const VaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
           <NumberInput
             value={quantity}
             min={0}
-            max={maxTroops}
+            max={100000}
             step={1}
             onChange={(valueString) => handleQuantityChange(valueString)}
             w='full'
@@ -219,7 +205,7 @@ const VaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
           </NumberInput>
           <Button onClick={() => handlePresetQuantityChange(100)}>MAX</Button>
         </HStack>
-        <FormHelperText fontSize='sm'>Min: {MIN_TROOPS}, Max: {maxTroops}. boost time increases {getLengthOfTime(SECONDS_PER_TROOP)} per troop sent</FormHelperText>
+        <FormHelperText fontSize='sm'>Min: {minTroops}, Boost time increases {getLengthOfTime(SECONDS_PER_TROOP)} per troop sent</FormHelperText>
         <FormErrorMessage fontSize='sm'>Error</FormErrorMessage>
       </FormControl>
       <VStack align='stretch' mt={4}>
@@ -229,16 +215,16 @@ const VaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
             <QuestionHelper
               text={
                 <Box fontSize='sm'>
-                  <Box>Boost will earn ${kobanRates[vaultType]} Koban per 1000 Mitama per hour</Box>
+                  <Box>Boost will earn {kobanMultipliers[vaultType]} Koban per 1000 Mitama per hour</Box>
                 </Box>
               }
               placement='top'
             />
           </HStack>
           <VStack align='end' spacing={0}>
-            <Box>{hourlyKobanRate} Koban / hr</Box>
+            <Box>{round(hourlyKobanRate, 3)} Koban / hr</Box>
             <HStack>
-              <Box fontSize='xs' className='text-muted'>{vaultMitama}</Box>
+              <Box fontSize='xs' className='text-muted'>{commify(vaultMitama)}</Box>
               <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/mitama.png').convert()} alt="troopsIcon" boxSize={3} />
             </HStack>
           </VStack>
@@ -262,60 +248,73 @@ const VaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
           stickyIcon={true}
           isLoading={isExecuting}
           isDisabled={isExecuting}
-          onClick={handleStartBoost}
+          onClick={() => handleStartBoost()}
         >
           Boost
         </RdButton>
       </Box>
-    </Box>
+    </RdModalBox>
   )
 }
 
 interface ActiveVaultBoostFormProps {
-  existingBoost: any;
+  vaultId: number;
   onComplete: (message: string) => void;
 }
 
-const ActiveVaultBoostForm = ({ existingBoost, onComplete }: ActiveVaultBoostFormProps) => {
+const ActiveVaultBoostForm = ({ vaultId, onComplete }: ActiveVaultBoostFormProps) => {
   const user = useUser();
-  const [executing, setExecuting] = useState(false);
-  const {signature, isSignedIn, requestSignature} = useEnforceSignature();
+  const {requestSignature} = useEnforceSignature();
+  const { boost: activeBoost, claimable, timeRemaining } = useUserVaultBoost(+vaultId);
+  const queryClient = useQueryClient();
 
-  const handleClaimBoost = async () => {
-    try {
-      setExecuting(true);
-      const signature = await requestSignature();
-      await ApiService.withoutKey().ryoshiDynasties.claimFarmBoost(
-        existingBoost!.id,
-        user.address!,
-        signature
-      );
-      onComplete('Boost claimed!');
-    } catch (e) {
-      console.log(e);
-      toast.error(parseErrorMessage(e));
-    } finally {
-      setExecuting(false);
-    }
+  const claimBoost = async () => {
+    const signature = await requestSignature();
+    await ApiService.withoutKey().ryoshiDynasties.claimVaultBoost(
+      activeBoost!.id,
+      user.address!,
+      signature
+    );
   }
+
+  const { mutate: handleClaimBoost, isPending: isExecuting } = useMutation({
+    mutationFn: claimBoost,
+    onSuccess: () => {
+      queryClient.setQueryData(
+        queryKeys.bankUserVaultBoosts(user.address),
+        (oldData: any) => oldData.filter((boost: any) => +boost.vaultId !== +vaultId)
+      );
+
+      onComplete('Boost claimed!');
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error(parseErrorMessage(error));
+    }
+  });
 
   return (
     <Box py={4}>
-      <Box textAlign='center'>
-
-        {isBoostClaimable ? (
-          <Box>Your boost is complete! {existingBoost.claimAmount} FRTN rewards earned and will be sent to the Bank after claiming below.</Box>
+      <RdModalBox textAlign='center'>
+        {claimable ? (
+          <Box>Your boost is complete! {activeBoost.koban} Koban rewards earned and will be sent to the Bank after claiming below.</Box>
         ) : (
-          <Box>A boost is currently in progress ({existingBoost.troops} troops). Can be claimed in {existingBoost.timeRemaining}</Box>
+          <Box>A boost is currently in progress ({activeBoost.troops} troops). Can be claimed in {timeRemaining}</Box>
         )}
-      </Box>
-      <Box textAlign='center' mt={8} mx={2}>
-        <Stack direction={{base: 'column', sm: 'row'}} justify='space-between'>
-          <RdButton size={{base: 'md', md: 'lg'}} onClick={onReturn} w={{base: 'full', sm: 'auto'}}>
-            Back To Vaults
+      </RdModalBox>
+      {claimable && (
+        <Box textAlign='center' mt={8} mx={2}>
+          <RdButton
+            size={{base: 'md', md: 'lg'}}
+            stickyIcon={true}
+            isLoading={isExecuting}
+            isDisabled={isExecuting}
+            onClick={() => handleClaimBoost()}
+          >
+            Claim Rewards
           </RdButton>
-        </Stack>
-      </Box>
+        </Box>
+      )}
     </Box>
   )
 }
@@ -327,11 +326,9 @@ const VaultBoostComplete = ({message, onReturn}: {message: string, onReturn: () 
         {message}
       </Box>
       <Box textAlign='center' mt={8} mx={2}>
-        <Stack direction={{base: 'column', sm: 'row'}} justify='space-between'>
-          <RdButton size={{base: 'md', md: 'lg'}} onClick={onReturn} w={{base: 'full', sm: 'auto'}}>
-            Back To Vaults
-          </RdButton>
-        </Stack>
+        <RdButton size={{base: 'md', md: 'lg'}} onClick={onReturn}>
+          Back To Vaults
+        </RdButton>
       </Box>
     </Box>
   )
@@ -383,17 +380,24 @@ function maxBoostTimeByXpLevel(level: number) {
   return maxTime;
 }
 
-const kobanRates = {
+const kobanMultipliers = {
   [VaultType.TOKEN]: 0.002,
   [VaultType.LP]: 0.005
 };
 
-function kobanRateByMitama(vaultType: VaultType, mitama: number) {
-  const rate = kobanRates[vaultType];
-  return (mitama / REWARD_MITAMA_DENOMINATOR) * rate;
+function kobanHourlyRateByMitama(vaultType: VaultType, mitama: number) {
+  const multiplier = kobanMultipliers[vaultType];
+  return (mitama / REWARD_MITAMA_DENOMINATOR) * multiplier;
+}
+
+function minimumTroopsByMitama(vaultType: VaultType, mitama: number) {
+  const rate = kobanHourlyRateByMitama(vaultType, mitama);
+  const hoursForOneKoban = 0.5 / rate; // 0.5 because we round up koban
+  const secondsNeeded = hoursForOneKoban * 3600;
+  return Math.ceil(secondsNeeded / SECONDS_PER_TROOP);
 }
 
 function kobanRewardForDuration(vaultType: VaultType, mitama: number, hours: number) {
-  const rate = kobanRateByMitama(vaultType, mitama);
+  const rate = kobanHourlyRateByMitama(vaultType, mitama);
   return Math.round(rate * hours);
 }
