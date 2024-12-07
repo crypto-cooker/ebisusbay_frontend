@@ -49,7 +49,7 @@ import { queryKeys } from '@src/components-v2/feature/ryoshi-dynasties/game/area
 const steps = {
   form: 'form',
   started: 'started',
-  complete: 'complete'
+  claimed: 'claimed'
 };
 
 interface BoostVaultPageProps {
@@ -62,13 +62,16 @@ const REWARD_MITAMA_DENOMINATOR = 1000;
 
 const BoostVaultPage = ({ vault, onReturn }: BoostVaultPageProps) => {
   const { refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const { chainId: bankChainId, userVaultBoosts } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const [currentStep, setCurrentStep] = useState(steps.form);
-  const { boost: activeBoost, timeRemaining } = useUserVaultBoost(+vault.vaultId);
+  const { boost: activeBoost } = useUserVaultBoost(+vault.vaultId);
 
   const handleStart = () => {
-    setCurrentStep(steps.complete);
+    setCurrentStep(steps.started);
     refreshUser();
+  }
+
+  const handleClaimed = () => {
+    setCurrentStep(steps.claimed);
   }
 
   return (
@@ -76,35 +79,25 @@ const BoostVaultPage = ({ vault, onReturn }: BoostVaultPageProps) => {
       <Text textAlign='center' fontSize={14} py={2}>Boost your vault for additional bonuses. By sending Ryoshi troops, you can receive rewards in Koban and XP!</Text>
       <AuthenticationRdButton requireSignin={false}>
         <Box>
-          {activeBoost ? (
+          {currentStep === steps.form && (
             <>
-              {currentStep === steps.form && (
-                <ActiveVaultBoostForm
-                  vaultId={vault.vaultId}
-                  onComplete={(message) => {
-                    setCurrentStep(steps.complete)
-                  }}
-                />
-              )}
-              {currentStep === steps.complete && (
-                <VaultBoostComplete
-                  message='Boost claimed!'
-                  onReturn={onReturn}
-                />
-              )}
-            </>
-          ) : (
-            <>
-              {currentStep === steps.form && (
+              {activeBoost ? (
+                <ActiveVaultBoostForm vaultId={vault.vaultId} onComplete={handleClaimed} />
+              ) : (
                 <VaultBoostForm vault={vault} onComplete={handleStart} />
               )}
-              {currentStep === steps.complete && (
-                <VaultBoostComplete
-                  message='Boost started!'
-                  onReturn={onReturn}
-                />
-              )}
             </>
+          )}
+          {currentStep === steps.claimed ? (
+            <VaultBoostComplete
+              message='Boost claimed!'
+              onReturn={onReturn}
+            />
+          ) : currentStep === steps.started && (
+            <VaultBoostComplete
+              message='Boost started!'
+              onReturn={onReturn}
+            />
           )}
         </Box>
       </AuthenticationRdButton>
@@ -133,7 +126,7 @@ const VaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
   const vaultMitama = Math.floor((vaultBalance * vaultLengthDays) / 1080);
   const vaultType = vault.frtnDeposit ? VaultType.LP : VaultType.TOKEN;
   const hourlyKobanRate = kobanHourlyRateByMitama(vaultType, vaultMitama);
-  const boostHours = (quantity * SECONDS_PER_TROOP) / 3600;
+  const boostHours = (Number(quantity) * SECONDS_PER_TROOP) / 3600;
   const totalKobanReward = kobanRewardForDuration(vaultType, vaultMitama, boostHours);
   const minTroops = minimumTroopsByMitama(vaultType, vaultMitama);
   const availableTroops = rdUserContext?.game.troops.user.available.total;
@@ -156,8 +149,7 @@ const VaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
 
     const quantityInt = +quantity;
     if (quantityInt < minTroops) {
-      toast.error(`Must add at least ${minTroops} ${pluralize(minTroops, 'troop')}`);
-      return;
+      throw new Error(`Must add at least ${minTroops} ${pluralize(minTroops, 'troop')}`);
     }
 
     const signature = await requestSignature();
@@ -322,9 +314,9 @@ const ActiveVaultBoostForm = ({ vaultId, onComplete }: ActiveVaultBoostFormProps
 const VaultBoostComplete = ({message, onReturn}: {message: string, onReturn: () => void}) => {
   return (
     <Box py={4}>
-      <Box textAlign='center'>
+      <RdModalBox textAlign='center' fontSize='lg'>
         {message}
-      </Box>
+      </RdModalBox>
       <Box textAlign='center' mt={8} mx={2}>
         <RdButton size={{base: 'md', md: 'lg'}} onClick={onReturn}>
           Back To Vaults
@@ -335,50 +327,6 @@ const VaultBoostComplete = ({message, onReturn}: {message: string, onReturn: () 
 }
 
 export default BoostVaultPage;
-
-function maxBoostTimeByXpLevel(level: number) {
-  let maxTime = 0;
-  switch (level) {
-    case 0:
-      maxTime = 3600;
-      break;
-    case 1:
-      maxTime = 3600;
-      break;
-    case 2:
-      maxTime = 10800;
-      break;
-    case 3:
-      maxTime = 21600;
-      break;
-    case 4:
-      maxTime = 28800;
-      break;
-    case 5:
-      maxTime = 43200;
-      break;
-    case 6:
-      maxTime = 64800;
-      break;
-    case 7:
-      maxTime = 86400;
-      break;
-    case 8:
-      maxTime = 129600;
-      break;
-    case 9:
-      maxTime = 172800;
-      break;
-    case 10:
-      maxTime = 345600;
-      break;
-    default:
-      maxTime = 345600;
-      break;
-  }
-
-  return maxTime;
-}
 
 const kobanMultipliers = {
   [VaultType.TOKEN]: 0.002,
