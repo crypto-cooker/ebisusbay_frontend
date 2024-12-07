@@ -12,7 +12,8 @@ export interface Vault {
 
 export interface BankStakeTokenContextProps {
   chainId: SupportedChainId;
-  vaultType: VaultType
+  vaultType: VaultType;
+  userVaultBoosts: any;
 }
 
 export const BankStakeTokenContext = createContext<BankStakeTokenContextProps | null>(null);
