@@ -1,7 +1,6 @@
 import {
   AccordionButton,
   AccordionIcon,
-  AccordionItem,
   AccordionPanel,
   Box,
   Button,
@@ -11,38 +10,43 @@ import {
   Icon,
   Image,
   SimpleGrid,
-  Stack,
+  Spinner,
   Tag,
   Text,
-  VStack
-} from "@chakra-ui/react";
-import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
-import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
-import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
-import {faGem} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {createSuccessfulTransactionToastContent, findNextLowestNumber, round} from "@market/helpers/utils";
+  VStack,
+  Wrap
+} from '@chakra-ui/react';
+import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
+import { useCallWithGasPrice } from '@eb-pancakeswap-web/hooks/useCallWithGasPrice';
+import { useSwitchNetwork } from '@eb-pancakeswap-web/hooks/useSwitchNetwork';
+import { faGem, faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { createSuccessfulTransactionToastContent, findNextLowestNumber, round, timeSince } from '@market/helpers/utils';
 import {
   BankStakeTokenContext,
   BankStakeTokenContextProps,
   VaultType
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context";
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context';
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-import {useUser} from "@src/components-v2/useUser";
-import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
-import ImageService from "@src/core/services/image";
-import {useBankContract} from "@src/global/hooks/contracts";
-import {parseErrorMessage} from "@src/helpers/validator";
-import {ethers} from "ethers";
-import {commify} from "ethers/lib/utils";
-import moment from "moment/moment";
-import {ReactNode, useCallback, useContext, useEffect, useMemo, useState} from "react";
-import {toast} from "react-toastify";
-import RdButton from "../../../../components/rd-button";
+} from '@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context';
+import FortuneIcon from '@src/components-v2/shared/icons/fortune';
+import { useUser } from '@src/components-v2/useUser';
+import { FortuneStakingAccount } from '@src/core/services/api-service/graph/types';
+import ImageService from '@src/core/services/image';
+import { useBankContract } from '@src/global/hooks/contracts';
+import { parseErrorMessage } from '@src/helpers/validator';
+import { ethers } from 'ethers';
+import { commify } from 'ethers/lib/utils';
+import moment from 'moment/moment';
+import React, { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
+import RdButton from '../../../../components/rd-button';
+import { PrimaryButton } from '@src/components-v2/foundation/button';
+import StyledAccordionItem
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/styled-accordion-item';
+import { CheckIcon } from '@chakra-ui/icons';
 
 interface VaultSummaryProps {
   vault: FortuneStakingAccount;
@@ -51,6 +55,7 @@ interface VaultSummaryProps {
   onEditVault: (type: string) => void;
   onWithdrawVault: () => void;
   onTokenizeVault: () => void;
+  onBoostVault: () => void;
   onClosed: () => void;
 }
 
@@ -59,8 +64,9 @@ const VaultSummary = (props: VaultSummaryProps) => {
 }
 
 
-const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onClosed }: VaultSummaryProps) => {
+const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onClosed }: VaultSummaryProps) => {
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { boost: activeBoost } = useUserVaultBoost(+vault.vaultId);
 
   const vaultBalance = Number(ethers.utils.formatEther(vault.balance));
   const daysToAdd = Number(vault.length / (86400));
@@ -97,7 +103,7 @@ const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVaul
   }, [vaultBalance, daysToAdd, rdConfig]);
 
   return (
-    <AccordionItem bgColor='#292626' rounded='md'>
+    <StyledAccordionItem shouldUseAnimated={!!activeBoost}>
       <VaultHeading
         index={vault.index}
         tokenIcon={<FortuneIcon boxSize={6} />}
@@ -115,23 +121,26 @@ const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVaul
           troops={troops}
           mitama={mitama}
           endTime={vault.endTime}
+          vaultId={+vault.vaultId}
+          onClaim={onBoostVault}
         />
         <VaultActionButtons
           vault={vault}
           onEditVault={onEditVault}
           onWithdrawVault={onWithdrawVault}
           onTokenizeVault={onTokenizeVault}
+          onBoostVault={onBoostVault}
           onVaultClosed={onClosed}
           canTokenize={true}
         />
       </AccordionPanel>
-    </AccordionItem>
+    </StyledAccordionItem>
   )
 }
 
-const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onClosed }: VaultSummaryProps) => {
+const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onClosed }: VaultSummaryProps) => {
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { boost: activeBoost } = useUserVaultBoost(+vault.vaultId);
 
   const vaultBalance = Number(ethers.utils.formatEther(vault.balance));
   const daysToAdd = Number(vault.length / (86400));
@@ -169,7 +178,7 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
   }, [daysToAdd, rdConfig]);
 
   return (
-    <AccordionItem bgColor='#292626' rounded='md'>
+    <StyledAccordionItem shouldUseAnimated={!!activeBoost}>
       <VaultHeading
         index={vault.index}
         tokenIcon={<>LP</>}
@@ -187,18 +196,20 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
           troops={troops}
           mitama={mitama}
           endTime={vault.endTime}
-          isEstimate
+          vaultId={+vault.vaultId}
+          onClaim={onBoostVault}
         />
         <VaultActionButtons
           vault={vault}
           onEditVault={onEditVault}
           onWithdrawVault={onWithdrawVault}
           onTokenizeVault={onTokenizeVault}
+          onBoostVault={onBoostVault}
           onVaultClosed={onClosed}
           canTokenize={false}
         />
       </AccordionPanel>
-    </AccordionItem>
+    </StyledAccordionItem>
   )
 }
 
@@ -262,28 +273,47 @@ interface VaultBodyProps {
   troops: number;
   mitama: number;
   endTime: number;
-  isEstimate?: boolean;
+  vaultId: number;
+  onClaim: () => void;
 }
 
-const VaultBody = ({ totalApr, baseApr, bonusApr, troops, mitama, endTime, isEstimate}: VaultBodyProps) => {
+const VaultBody = ({ totalApr, baseApr, bonusApr, troops, mitama, endTime, vaultId, onClaim}: VaultBodyProps) => {
   const endDate = moment(endTime * 1000).format("MMM D yyyy");
+  const { boost: existingBoost, claimable: isBoostClaimable, timeRemaining } = useUserVaultBoost(vaultId);
 
   return (
-    <SimpleGrid columns={2}>
-      <Box>APR</Box>
-      <Box textAlign='end'>
-        <VStack align='end' spacing={0}>
-          <Box fontWeight='bold'>{round(totalApr, 2)}%</Box>
-          <Box fontSize='xs'>{round(baseApr, 2)}% Fortune stake + {round(bonusApr, 2)}% NFT stake</Box>
-        </VStack>
-      </Box>
-      <Box>Troops</Box>
-      <Box textAlign='end' fontWeight='bold'>{commify(troops)}</Box>
-      <Box>Mitama</Box>
-      <Box textAlign='end' fontWeight='bold'>{commify(mitama)}</Box>
-      <Box>End Date</Box>
-      <Box textAlign='end' fontWeight='bold'>{endDate}</Box>
-    </SimpleGrid>
+    <>
+      <SimpleGrid columns={2}>
+        <Box>APR {vaultId}</Box>
+        <Box textAlign='end'>
+          <VStack align='end' spacing={0}>
+            <Box fontWeight='bold'>{round(totalApr, 2)}%</Box>
+            <Box fontSize='xs'>{round(baseApr, 2)}% Fortune stake + {round(bonusApr, 2)}% NFT stake</Box>
+          </VStack>
+        </Box>
+        <Box>Troops</Box>
+        <Box textAlign='end' fontWeight='bold'>{commify(troops)}</Box>
+        <Box>Mitama</Box>
+        <Box textAlign='end' fontWeight='bold'>{commify(mitama)}</Box>
+        <Box>End Date</Box>
+        <Box textAlign='end' fontWeight='bold'>{endDate}</Box>
+      </SimpleGrid>
+      {existingBoost && (
+        <Flex justify='space-between' my={2}>
+          <Box my='auto'>Boost</Box>
+          <Box textAlign='end' fontWeight='bold'>
+            <PrimaryButton
+              isDisabled={!isBoostClaimable}
+              size='sm'
+              leftIcon={!isBoostClaimable ? <Spinner boxSize={4} /> : <CheckIcon />}
+              onClick={onClaim}
+            >
+              {!isBoostClaimable ? `Claim in ${timeRemaining}` : 'Claim'}
+            </PrimaryButton>
+          </Box>
+        </Flex>
+      )}
+    </>
   )
 }
 
@@ -292,14 +322,16 @@ interface VaultActionButtonsProps {
   onEditVault: (type: string) => void;
   onWithdrawVault: () => void;
   onTokenizeVault: () => void;
+  onBoostVault: () => void;
   onVaultClosed: () => void;
   canTokenize: boolean;
 }
 
-const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onVaultClosed, canTokenize }: VaultActionButtonsProps) => {
+const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onVaultClosed, canTokenize }: VaultActionButtonsProps) => {
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useUser();
   const { chainId: bankChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { boost: activeBoost } = useUserVaultBoost(+vault.vaultId);
   const bankContract = useBankContract(bankChainId);
   const { callWithGasPrice } = useCallWithGasPrice()
   const { chainId: activeChainId} = useActiveChainId();
@@ -343,7 +375,7 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
       {(Date.now() < vault.endTime * 1000) ? (
         <>
           <Center mb={4}>
-            <Stack direction={{base: 'column', sm: 'row'}} mt={4}>
+            <Wrap direction={{base: 'column', sm: 'row'}} justify='center' mt={4}>
               <Button onClick={() => onEditVault('amount')}>
                 + Add {vaultType === VaultType.LP ? 'LP' : 'FRTN'}
               </Button>
@@ -360,7 +392,15 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
                   Tokenize Vault
                 </Button>
               )}
-            </Stack>
+              {!activeBoost && (
+                <Button
+                  leftIcon={<Icon as={FontAwesomeIcon} icon={faStar} />}
+                  onClick={onBoostVault}
+                >
+                  Boost Vault
+                </Button>
+              )}
+            </Wrap>
           </Center>
           <Center>
             <Button
@@ -393,3 +433,29 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
 }
 
 export default VaultSummary;
+
+export const useUserVaultBoost = (vaultId: number) => {
+  const { userVaultBoosts, chainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+
+  return useMemo(() => {
+    const existingBoost = userVaultBoosts?.find((boost: any) => boost.vaultId === vaultId && boost.chainId === chainId);
+
+    if (!existingBoost) {
+      return {
+        claimable: false
+      }
+    }
+
+    const isBoostClaimable = new Date(existingBoost.claimAt) < new Date();
+    const timeRemaining = timeSince(new Date(existingBoost.claimAt));
+    let timeRemainingMilliseconds = isBoostClaimable ? 0 : new Date(existingBoost.claimAt).getTime() - Date.now();
+    if (timeRemainingMilliseconds < 0) timeRemainingMilliseconds = 0;
+
+    return {
+      boost: existingBoost,
+      claimable: isBoostClaimable,
+      timeRemaining,
+      timeRemainingMilliseconds
+    }
+  }, [vaultId, userVaultBoosts, chainId]);
+}
