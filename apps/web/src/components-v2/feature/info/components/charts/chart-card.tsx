@@ -1,13 +1,13 @@
 import { Box, Flex, Skeleton, Text } from '@chakra-ui/react'
 import { TabToggle, TabToggleGroup } from '../tab-toggle'
 import { Card } from '@src/components-v2/foundation/card'
-import dayjs from 'dayjs'
 import dynamic from 'next/dynamic'
 import { useMemo, useState } from 'react'
 import { PriceChartEntry, TokenData, TvlChartEntry, VolumeChartEntry } from '@src/components-v2/feature/info/state/types'
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers'
 import BarChart from "./bar-chart"
 import LineChart from './line-chart'
+import moment from 'moment';
 
 const CandleChart = dynamic(() => import('./candle-chart'), {
   ssr: false,
@@ -44,7 +44,7 @@ const ChartCard: React.FC<React.PropsWithChildren<ChartCardProps>> = ({
     if (tvlChartData) {
       return tvlChartData.map((day) => {
         return {
-          time: dayjs.unix(day.date).toDate(),
+          time: moment.unix(day.date).toDate(),
           value: day.liquidityUSD,
         }
       })
@@ -55,7 +55,7 @@ const ChartCard: React.FC<React.PropsWithChildren<ChartCardProps>> = ({
     if (volumeChartData) {
       return volumeChartData.map((day) => {
         return {
-          time: dayjs.unix(day.date).toDate(),
+          time: moment.unix(day.date).toDate(),
           value: day.volumeUSD,
         }
       })

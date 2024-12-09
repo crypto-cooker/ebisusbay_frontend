@@ -345,7 +345,7 @@ export function useDefaultsFromURLSearch():
 //         const hasSwapPrice = currentSwapPrice && currentSwapPrice[token0Address] > 0
 //
 //         const formatted = data_.map((d) => ({
-//           time: dayjs(d.bucket as string).toDate(),
+//           time: moment(d.bucket as string).toDate(),
 //           open: d.open ? +d.open : 0,
 //           close: d.close ? +d.close : 0,
 //           low: d.low ? +d.low : 0,

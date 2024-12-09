@@ -1,18 +1,23 @@
-import React, {ReactElement, useCallback, useState} from "react";
-import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {ArrowBackIcon} from "@chakra-ui/icons";
-import FaqPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/faq-page";
-import StakePage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/stake-page";
-import EditVaultPage from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/edit-vault-page";
-import {FortuneStakingAccount} from "@src/core/services/api-service/graph/types";
+import React, { ReactElement, useCallback, useState } from 'react';
+import { RdModal } from '@src/components-v2/feature/ryoshi-dynasties/components';
+import { ArrowBackIcon } from '@chakra-ui/icons';
+import FaqPage from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/faq-page';
+import StakePage from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/stake-page';
+import EditVaultPage from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/edit-vault-page';
+import { FortuneStakingAccount } from '@src/core/services/api-service/graph/types';
 import CreateVaultPage
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/create-vault-page";
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/create-vault-page';
 import WithdrawVaultPage
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/withdraw-vault-page";
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/withdraw-vault-page';
 import TokenizeVaultPage
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/tokenize-vault-page";
-import {SUPPORTED_CHAIN_CONFIGS, SupportedChainId} from "@src/config/chains";
-import {BankStakeTokenContext, Vault, VaultType} from "./context";
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/tokenize-vault-page';
+import { SUPPORTED_CHAIN_CONFIGS, SupportedChainId } from '@src/config/chains';
+import { BankStakeTokenContext, VaultType } from './context';
+import BoostVaultPage from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/boost-vault-page';
+import { useQuery } from '@tanstack/react-query';
+import { ApiService } from '@src/core/services/api-service';
+import { useUser } from '@src/components-v2/useUser';
+import { queryKeys } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/constants';
 
 interface StakeFortuneProps {
   address: string;
@@ -20,11 +25,21 @@ interface StakeFortuneProps {
   onClose: () => void;
 }
 
+const BOOSTS_ENABLED = false;
+
 const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
   const [page, setPage] = useState<ReactElement | null>(null);
   const [title, setTitle] = useState<string>('Stake Tokens');
   const [currentChainId, setCurrentChainId] = useState<SupportedChainId>(SUPPORTED_CHAIN_CONFIGS[0].chain.id);
   const [currentVaultType, setCurrentVaultType] = useState<VaultType>(VaultType.TOKEN);
+  const user = useUser();
+
+  const { data: userVaultBoosts } = useQuery({
+    queryKey: queryKeys.bankUserVaultBoosts(user.address),
+    queryFn: async () => ApiService.withoutKey().ryoshiDynasties.getVaultBoosts(user.address!),
+    refetchOnWindowFocus: false,
+    enabled: !!user.address && BOOSTS_ENABLED,
+  });
 
   const handleClose = async () => {
     returnHome();
@@ -66,6 +81,11 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
     setTitle('Tokenize Vault');
   }, [returnHome]);
 
+  const handleBoostVault = useCallback((vault: FortuneStakingAccount) => {
+    setPage(<BoostVaultPage vault={vault} onReturn={returnHome} />);
+    setTitle('Boost Vault');
+  }, [returnHome]);
+
   const handleUpdateChainContext = useCallback((chainId: SupportedChainId) => {
     setCurrentChainId(chainId);
   }, []);
@@ -83,7 +103,11 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
       utilBtnTitle={!!page ? <ArrowBackIcon /> : <>?</>}
       onUtilBtnClick={handleBack}
     >
-      <BankStakeTokenContext.Provider value={{chainId: currentChainId, vaultType: currentVaultType}}>
+      <BankStakeTokenContext.Provider value={{
+        chainId: currentChainId,
+        vaultType: currentVaultType,
+        userVaultBoosts
+      }}>
         {!!page ? (
           <>{page}</>
         ) : (
@@ -92,6 +116,7 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
             onCreateVault={handleCreateVault}
             onWithdrawVault={handleWithdrawVault}
             onTokenizeVault={handleTokenizeVault}
+            onBoostVault={handleBoostVault}
             initialChainId={currentChainId}
             onUpdateChainContext={handleUpdateChainContext}
             onUpdateVaultContext={handleUpdateVaultContext}

@@ -6,9 +6,9 @@ import { VolumeChartEntry } from '../state/types';
 
 export const usePairChartVolumeDataQuery = (address:string): VolumeChartEntry[]=> {
   const chainId: number = useChainIdByQuery();
-  const info = useMemo(() => new Info(chainId), [chainId]);
+  const info = useMemo(() => new Info(chainId), [chainId, address]);
   const { data } = useQuery({
-    queryKey: ['getPairChartVolumeDataQuery', chainId],
+    queryKey: ['getPairChartVolumeDataQuery', chainId, address],
     queryFn: async () => {
       try {
         const response = await info.getPairVolumeData(address);

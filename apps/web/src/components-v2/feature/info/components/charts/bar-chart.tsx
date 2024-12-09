@@ -2,8 +2,8 @@ import { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from '
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers'
 import { BarChartLoader } from './chart-loaders'
 import { createChart, IChartApi } from 'lightweight-charts'
-import dayjs from 'dayjs'
 import { useUserTheme } from '@src/components-v2/useUser'
+import moment from 'moment';
 
 export type LineChartProps = {
   data: any[]
@@ -53,7 +53,7 @@ const Chart = ({ data, setHoverValue, setHoverDate }: LineChartProps) => {
         borderVisible: false,
         secondsVisible: false,
         tickMarkFormatter: (unixTime: number) => {
-          return dayjs.unix(unixTime).format('MM')
+          return moment.unix(unixTime).format('MM')
         },
       },
       grid: {

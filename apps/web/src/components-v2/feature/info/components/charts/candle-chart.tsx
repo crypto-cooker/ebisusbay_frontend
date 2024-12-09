@@ -1,9 +1,9 @@
 import { useUserTheme } from '@src/components-v2/useUser'
 import { CandleChartLoader } from './chart-loaders'
-import dayjs from 'dayjs'
 import { ColorType, IChartApi, createChart } from 'lightweight-charts'
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { baseColors, lightColors, darkColors } from '../../state/colors'
+import moment from 'moment';
 
 const CANDLE_CHART_HEIGHT = 250
 
@@ -45,7 +45,7 @@ const CandleChart = ({ data, setValue, setLabel }: LineChartProps) => {
         borderVisible: false,
         secondsVisible: true,
         tickMarkFormatter: (unixTime: number) => {
-          return dayjs.unix(unixTime).format('MM/DD h:mm a')
+          return moment.unix(unixTime).format('MM/DD h:mm a')
         },
       },
       watermark: {

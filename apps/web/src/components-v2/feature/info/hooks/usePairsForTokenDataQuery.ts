@@ -8,9 +8,9 @@ import { LP_HOLDERS_FEE, TOTAL_FEE, DAYS_IN_YEAR } from '../state/constants';
 
 export const usePairsForTokenDataQuery = (address:string) => {
   const chainId: number = useChainIdByQuery();
-  const info = useMemo(() => new Info(chainId), [chainId]);
+  const info = useMemo(() => new Info(chainId), [chainId, address]);
   const { data } = useQuery({
-    queryKey: ['getPairsForToken', chainId],
+    queryKey: ['getPairsForToken', chainId, address],
     queryFn: async () => {
       try{
       const response = await info.getPairsForToken(address);

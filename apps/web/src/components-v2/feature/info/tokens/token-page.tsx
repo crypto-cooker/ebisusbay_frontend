@@ -1,11 +1,9 @@
 /* eslint-disable no-nested-ternary */
-import { Button, Box, Breadcrumb, Flex, Heading, Image, Text, BreadcrumbSeparator } from '@chakra-ui/react';
+import { Box, Breadcrumb, Flex, Heading, Image, Text, BreadcrumbSeparator } from '@chakra-ui/react';
 import { Spinner } from '@chakra-ui/react';
 import { Card } from '@src/components-v2/foundation/card';
 import Link from 'next/link';
 import truncateHash from '@pancakeswap/utils/truncateHash';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
 import { useTokenDataQuery } from '@src/components-v2/feature/info/hooks/useTokenDataQuery';
 import { useTokenChartDataVolumeQuery } from '@src/components-v2/feature/info/hooks/useTokenChartDataVolumeQuery';
 
@@ -21,12 +19,9 @@ import Percent from '@src/components-v2/feature/info/components/percent';
 import useCMCLink from '@src/components-v2/feature/info/hooks/useCMCLink';
 import { usePairDatasForToken } from '@src/components-v2/feature/info/hooks';
 import { CopyButton, PrimaryButton } from '@src/components-v2/foundation/button';
-import { C } from '@tanstack/query-core/build/legacy/hydration-DTVzC0E7';
 import { CHAIN_QUERY_NAME } from '@src/config/chains';
 import { ChainId } from '@pancakeswap/chains';
 import { getBlockExplorerLink, getBlockExplorerName } from '@dex/utils';
-
-dayjs.extend(duration);
 
 const ContentLayout = styled.div`
   margin-top: 16px;
@@ -182,12 +177,12 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
                   <Percent value={tokenData.totalLiquidity24h} />
 
                   <Text mt="24px" fontWeight={'bold'} color="secondary" fontSize="12px" textTransform="uppercase">
-                    {'Volume 24H'}
+                    {'Volume Today'}
                   </Text>
                   <Text fontWeight={'bold'} fontSize="24px" textTransform="uppercase">
-                    ${formatAmount(tokenData.tradeVolumeUSD)}
+                    ${formatAmount(tokenData.volumeToday)}
                   </Text>
-                  <Percent value={tokenData.volumeUSD24h} />
+                  <Percent value={tokenData.volumeUSD24hChange} />
 
                   <Text mt="24px" fontWeight={'bold'} color="secondary" fontSize="12px" textTransform="uppercase">
                     {'Transactions 24H'}

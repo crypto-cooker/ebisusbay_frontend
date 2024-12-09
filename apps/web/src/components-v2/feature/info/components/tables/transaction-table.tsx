@@ -4,21 +4,18 @@ import { Box, Flex, HStack, Radio, RadioGroup, Skeleton, Stack, Text } from '@ch
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import truncateHash from '@pancakeswap/utils/truncateHash';
 import { ITEMS_PER_INFO_TABLE_PAGE } from '../../state/constants';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { useChainIdByQuery } from '../../hooks/chain';
 import { Transaction, TransactionType } from '../../state/types';
 import styled from 'styled-components';
 import { formatAmount } from '@pancakeswap/utils/formatInfoNumbers';
 import { Arrow, Break, ClickableColumnHeader, FilterOptionButton, PageButtons, TableWrapper } from './shared';
-import { CHAINS } from '@src/config/chains';
 import { Link } from '@chakra-ui/react';
 import { Card } from '@src/components-v2/foundation/card';
 import { breakpoints } from '@src/global/theme/break-points';
 import useMatchBreakpoints from '@src/global/hooks/use-match-breakpoints';
 import { getBlockExplorerLink } from '@dex/utils';
-dayjs.extend(relativeTime);
+import { timeSince } from '@market/helpers/utils';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -132,7 +129,7 @@ const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction; filt
       const abs = filter.includes(SORT_FIELD.amountToken0) ? abs0 : abs1;
       return <Text>{`${formatAmount(abs)} ${token0Symbol}`}</Text>;
     } else if (filter.includes(SORT_FIELD.timestamp)) {
-      return <Text>{dayjs.unix(parseInt(transaction.timestamp, 10)).toNow(true)}</Text>;
+      return <Text>{timeSince(parseInt(transaction.timestamp, 10))}</Text>;
     } else if (filter.includes(SORT_FIELD.sender)) {
       return (
         <Link href={getBlockExplorerLink(transaction.sender, 'address', chainId)} target="_blank">
