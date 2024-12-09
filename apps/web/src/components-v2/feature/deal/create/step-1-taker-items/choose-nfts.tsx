@@ -61,14 +61,17 @@ export const ChooseNftsTab = ({address}: {address: string}) => {
     chain: chainId
   });
 
-  const fetcher = async ({ pageParam = 1 }) => {
+  const fetcher = useCallback( async ({ pageParam = 1 }) => {
     const params: WalletsQueryParams = {
+      ...queryParams,
       page: pageParam,
-      ...queryParams
+      chain: chainId
     }
 
+    setQueryParams(params);
+
     return ApiService.withoutKey().getWallet(address, params);
-  };
+  },[chainId])
 
   const amountSelected = (nftAddress: string, nftId: string) => {
     const selectedNft = barterState.taker.nfts.find((bNft) => ciEquals(bNft.nftAddress, nftAddress) && bNft.nftId === nftId);
