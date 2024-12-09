@@ -25,6 +25,8 @@ interface StakeFortuneProps {
   onClose: () => void;
 }
 
+const BOOSTS_ENABLED = false;
+
 const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
   const [page, setPage] = useState<ReactElement | null>(null);
   const [title, setTitle] = useState<string>('Stake Tokens');
@@ -36,7 +38,7 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
     queryKey: queryKeys.bankUserVaultBoosts(user.address),
     queryFn: async () => ApiService.withoutKey().ryoshiDynasties.getVaultBoosts(user.address!),
     refetchOnWindowFocus: false,
-    enabled: !!user.address,
+    enabled: !!user.address && BOOSTS_ENABLED,
   });
 
   const handleClose = async () => {
