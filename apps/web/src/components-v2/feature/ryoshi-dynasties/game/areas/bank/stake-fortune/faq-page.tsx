@@ -4,10 +4,10 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box,
+  Box, ListItem,
   Stack,
-  Text,
-} from "@chakra-ui/react"
+  Text, UnorderedList
+} from '@chakra-ui/react';
 import localFont from 'next/font/local';
 
 const gothamBook = localFont({ src: '../../../../../../../global/assets/fonts/Gotham-Book.woff2' })
@@ -100,6 +100,28 @@ const FaqPage = () => {
           <AccordionPanel pb={4}>
             <Text>To import a  vault from your Inventory, click the <strong>"+ New Vault"</strong> button. This will present an option to either create a new vault or import a vault. Click the <strong>"Import Vault"</strong> button and follow the instructions to complete the process.</Text>
             <Text mt={2}>Once imported, the vault will be immediately activated and start earning Bank benefits such as APR, Mitama, and Troops.</Text>
+          </AccordionPanel>
+        </AccordionItem>
+        <AccordionItem>
+          <AccordionButton fontSize='sm' fontWeight='bold'>
+            <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+              What is Vault Boosting?
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <Text>Vault Boosting allows users to earn Koban on their vaults by depositing Ryoshi troops. The amount of Koban earned depends on the type of vault (Token or LP) and the amount of Mitama derived from it.</Text>
+            <Text mt={2}>The vaults rewards based on below:</Text>
+            <UnorderedList>
+              <ListItem><strong>Token Vaults:</strong> 0.002 Koban per 1000 Mitama per hour</ListItem>
+              <ListItem><strong>LP Vaults:</strong> 0.005 Koban per 1000 Mitama per hour</ListItem>
+            </UnorderedList>
+            <Text mt={2}>Please be aware of the following limitations:</Text>
+            <UnorderedList>
+              <ListItem>While a boost is in progress, the vault cannot be tokenized</ListItem>
+              <ListItem>Adding more FRTN to a boosted vault will not increase the boost payout until the current boost is claimed and a new one has started</ListItem>
+              <ListItem>After an emergency withdraw, a boost cannot be claimed</ListItem>
+            </UnorderedList>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>

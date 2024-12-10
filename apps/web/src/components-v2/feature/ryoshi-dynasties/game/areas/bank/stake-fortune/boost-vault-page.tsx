@@ -14,7 +14,7 @@ import {
   Text,
   VStack
 } from '@chakra-ui/react';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import RdButton from '@src/components-v2/feature/ryoshi-dynasties/components/rd-button';
 import { ethers } from 'ethers';
 import { toast } from 'react-toastify';
@@ -57,6 +57,7 @@ interface BoostVaultPageProps {
   onReturn: () => void;
 }
 
+const MAX_TROOPS = 20160;
 const SECONDS_PER_TROOP = 30;
 const REWARD_MITAMA_DENOMINATOR = 1000;
 
@@ -84,7 +85,7 @@ const BoostVaultPage = ({ vault, onReturn }: BoostVaultPageProps) => {
               {activeBoost ? (
                 <ActiveVaultBoostForm vaultId={vault.vaultId} onComplete={handleClaimed} />
               ) : (
-                <VaultBoostForm vault={vault} onComplete={handleStart} />
+                <CreateVaultBoostForm vault={vault} onComplete={handleStart} />
               )}
             </>
           )}
@@ -109,14 +110,15 @@ interface VaultBoostFormProps {
   vault: FortuneStakingAccount;
   onComplete: () => void;
 }
-const VaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
+const CreateVaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
   const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const user = useUser();
   const { chainId: activeChainId} = useActiveChainId();
   const { switchNetworkAsync } = useSwitchNetwork();
   const queryClient = useQueryClient();
 
-  const [quantity, setQuantity] = useState<string>('');
+  const [kobanQuantity, setKobanQuantity] = useState<string>('');
+  const [derivedTroopsQuantity, setDerivedTroopsQuantity] = useState<number>(0);
   const {requestSignature} = useEnforceSignature();
 
   const { user: rdUserContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
@@ -125,20 +127,37 @@ const VaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
   const vaultLengthDays = Number(vault.length / (86400));
   const vaultMitama = Math.floor((vaultBalance * vaultLengthDays) / 1080);
   const vaultType = vault.frtnDeposit ? VaultType.LP : VaultType.TOKEN;
+
   const hourlyKobanRate = kobanHourlyRateByMitama(vaultType, vaultMitama);
-  const boostHours = (Number(quantity) * SECONDS_PER_TROOP) / 3600;
-  const totalKobanReward = kobanRewardForDuration(vaultType, vaultMitama, boostHours);
   const minTroops = minimumTroopsByMitama(vaultType, vaultMitama);
   const availableTroops = rdUserContext?.game.troops.user.available.total;
 
-  const handleQuantityChange = (valueString: string) => {
-    setQuantity(valueString);
+  const maxKoban = useMemo(() => {
+    let troops = availableTroops ?? 0;
+    if (troops > MAX_TROOPS) troops = MAX_TROOPS;
+
+    const boostHours = (Number(troops) * SECONDS_PER_TROOP) / 3600;
+    let totalKobanReward = kobanRewardForDuration(vaultType, vaultMitama, boostHours);
+
+    // Adjust down if rounding leads to needing more troops than available
+    while (totalKobanReward > 0 && minimumTroopsByDesiredKoban(vaultType, vaultMitama, totalKobanReward) > troops) {
+      totalKobanReward--;
+    }
+
+    return totalKobanReward;
+  }, [availableTroops, MAX_TROOPS, vaultType, vaultMitama]);
+
+  const handleQuantityChange = (valueString: string, valueNumber: number) => {
+    setKobanQuantity(valueString);
+    setDerivedTroopsQuantity(minimumTroopsByDesiredKoban(
+      vaultType,
+      vaultMitama,
+      isNaN(valueNumber) ? 0 : valueNumber
+    ));
   }
 
-  const handlePresetQuantityChange = (percent: number) => {
-    let newQuantity = Math.floor((availableTroops ?? 0) * (percent / 100));
-
-    setQuantity(newQuantity.toString());
+  const handleMaxInput = () => {
+    handleQuantityChange(maxKoban.toString(), maxKoban);
   }
 
   const startBoost = async () => {
@@ -147,16 +166,25 @@ const VaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
       return;
     }
 
-    const quantityInt = +quantity;
-    if (quantityInt < minTroops) {
+    if (!availableTroops || availableTroops < minTroops) {
+      throw new Error('Not enough troops required');
+    }
+
+    if (derivedTroopsQuantity < minTroops) {
       throw new Error(`Must add at least ${minTroops} ${pluralize(minTroops, 'troop')}`);
+    }
+
+    const maxTroops = Math.min(availableTroops ?? 0, MAX_TROOPS);
+    if (derivedTroopsQuantity > maxTroops) {
+      toast.error(`Cannot add more than ${maxTroops} ${pluralize(maxTroops, 'troop')}`);
+      return;
     }
 
     const signature = await requestSignature();
     await ApiService.withoutKey().ryoshiDynasties.boostVault(
       vault.vaultId,
       bankChainId,
-      quantity,
+      derivedTroopsQuantity,
       user.address!,
       signature
     );
@@ -180,24 +208,24 @@ const VaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
       <FormControl mt={4}>
         <FormLabel me={0}>
           <Flex justify='space-between'>
-            <Box>Troops to send</Box>
-            <Tag colorScheme='blue' variant='solid'>Available: {availableTroops !== undefined ? commify(availableTroops) : 'N/A'}</Tag>
+            <Box>Koban boost amount</Box>
+            <Tag colorScheme='blue' variant='solid'>Ryoshi: {availableTroops !== undefined ? commify(availableTroops) : 'N/A'}</Tag>
           </Flex>
         </FormLabel>
         <HStack align='stretch'>
           <NumberInput
-            value={quantity}
+            value={kobanQuantity}
             min={0}
-            max={100000}
+            max={maxKoban}
             step={1}
-            onChange={(valueString) => handleQuantityChange(valueString)}
+            onChange={handleQuantityChange}
             w='full'
           >
             <NumberInputField />
           </NumberInput>
-          <Button onClick={() => handlePresetQuantityChange(100)}>MAX</Button>
+          <Button onClick={handleMaxInput}>MAX</Button>
         </HStack>
-        <FormHelperText fontSize='sm'>Min: {minTroops}, Boost time increases {getLengthOfTime(SECONDS_PER_TROOP)} per troop sent</FormHelperText>
+        <FormHelperText fontSize='xs'>Max: {maxKoban} Koban. {minTroops * 2} Ryoshi per Koban, starting at {minTroops}</FormHelperText>
         <FormErrorMessage fontSize='sm'>Error</FormErrorMessage>
       </FormControl>
       <VStack align='stretch' mt={4}>
@@ -223,15 +251,15 @@ const VaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
         </Flex>
         <Flex justify='space-between' fontSize='sm'>
           <HStack>
-            <Box>Boosted Koban</Box>
+            <Box>Ryoshi to send</Box>
           </HStack>
           <VStack align='end' spacing={0}>
-            <Box>{totalKobanReward} Koban</Box>
+            <Box>{commify(derivedTroopsQuantity)}</Box>
           </VStack>
         </Flex>
         <Flex justify='space-between' fontSize='sm'>
           <Box>Duration</Box>
-          <Box>{quantity ? getLengthOfTime(parseInt(quantity) * SECONDS_PER_TROOP) : '-'}</Box>
+          <Box>{derivedTroopsQuantity ? getLengthOfTime(derivedTroopsQuantity * SECONDS_PER_TROOP) : '-'}</Box>
         </Flex>
       </VStack>
       <Box ps='20px' textAlign='center' mt={4}>
@@ -348,4 +376,12 @@ function minimumTroopsByMitama(vaultType: VaultType, mitama: number) {
 function kobanRewardForDuration(vaultType: VaultType, mitama: number, hours: number) {
   const rate = kobanHourlyRateByMitama(vaultType, mitama);
   return Math.round(rate * hours);
+}
+
+function minimumTroopsByDesiredKoban(vaultType: VaultType, mitama: number, desiredKoban: number) {
+  const rate = kobanHourlyRateByMitama(vaultType, mitama);
+  const hoursNeeded = (desiredKoban - 0.5) / rate; // similar logic as for 1 koban, but scaled
+  const secondsNeeded = hoursNeeded * 3600;
+  const troops = Math.ceil(secondsNeeded / SECONDS_PER_TROOP);
+  return troops > 0 ? troops : 0;
 }
