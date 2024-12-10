@@ -168,7 +168,7 @@ export const VillageHud = ({
     if (!!user.address) {
       getResources();
     }
-  }, [user.address, forceRefresh, chainId]);
+  }, [user.address, forceRefresh]);
 
   useEffect(() => {
     if (!user.address || !rdUserContext) {
