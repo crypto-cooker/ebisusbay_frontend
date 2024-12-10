@@ -3,6 +3,8 @@ import {useAppConfig} from "@src/config/hooks";
 import {SupportedChainId} from "@src/config/chains";
 import {SerializedToken} from "@pancakeswap/swap-sdk-core";
 import { useSupportedApiTokens } from '@src/global/hooks/use-supported-tokens';
+import { useMemo } from 'react';
+import { ethers } from 'ethers';
 
 export type MultichainBrokerCurrency = SerializedToken & {
   isToken: boolean;
@@ -17,6 +19,14 @@ const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
   const { config: appConfig } = useAppConfig();
   const supportedTokens = useSupportedApiTokens(chainId);
 
+
+  const shimmedSupportedTokens = supportedTokens.map((token) => ({
+    ...token,
+    isNative: false,
+    isToken: true,
+    logoURI: token.logo
+  }));
+
   // const nativeCurrency = useNativeCurrency(chainId);
   // const serializedNativeCurrency: MultichainBrokerCurrency = {
   //   chainId: nativeCurrency.chainId,
@@ -27,8 +37,16 @@ const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
   //   isNative: true,
   //   isToken: false
   // };
+  const serializedNativeCurrency = useMemo(() => {
+    const nativeToken = shimmedSupportedTokens.find((token) => token.address === ethers.constants.AddressZero)!;
+    return  {
+      ...nativeToken,
+      isNative: true,
+      isToken: false
+    }
+  }, [shimmedSupportedTokens]);
 
-  const knownCurrencies = supportedTokens;
+  const knownCurrencies = shimmedSupportedTokens;
 
   const listingCurrencies = knownCurrencies.filter((currency) => ciIncludes(appConfig.currencies?.[chainId]?.marketplace.available, currency.symbol));
 

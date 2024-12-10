@@ -1,6 +1,5 @@
 import {useCallback, useState} from 'react';
-import {appConfig} from "@src/config";
-import {BigNumber, ethers} from "ethers";
+import {ethers} from "ethers";
 import {useUser} from "@src/components-v2/useUser";
 import * as Sentry from "@sentry/nextjs";
 import {useSignTypedData} from "wagmi";
@@ -118,14 +117,6 @@ const useSignature = (chainId?: number) => {
   const signMessage = useCallback(async (value: Order) => {
     if (!user.wallet.isConnected) throw new Error();
     try {
-      const signer = user.provider.signer;
-
-      console.log('sign1', stringed({
-        domain,
-        types: typeOrder,
-        primaryType: 'Order',
-        message: value
-      }))
       const objectHash = ethers.utils._TypedDataEncoder.hash(domain, typeOrder, value);
       const objectSignature = await signTypedDataAsync({
         domain,
@@ -133,7 +124,6 @@ const useSignature = (chainId?: number) => {
         primaryType: 'Order',
         message: value
       });
-      console.log('sign2', objectSignature)
 
       return { objectSignature, objectHash }
     } catch (err: any) {
@@ -145,6 +135,9 @@ const useSignature = (chainId?: number) => {
 
   const createSigner = useCallback(async (signatureValues: ListingSignerProps) => {
     setIsLoading(true);
+
+    const isNative = signatureValues?.currency === ethers.constants.AddressZero;
+
     const considerationPrice= ethers.utils.parseEther(`${signatureValues.price}`).toBigInt();
     const offerItem = {
       itemType: signatureValues.itemType,
@@ -155,7 +148,7 @@ const useSignature = (chainId?: number) => {
     };
 
     const considerationItem = {
-      itemType: signatureValues.currency ? ItemType.ERC20 : ItemType.NATIVE,
+      itemType: isNative ? ItemType.NATIVE : ItemType.ERC20,
       token: signatureValues.currency ?? ethers.constants.AddressZero,
       identifierOrCriteria: BigInt(0),
       startAmount: considerationPrice,
@@ -166,7 +159,7 @@ const useSignature = (chainId?: number) => {
       offerer: user.address!.toLowerCase(),
       offerings: [offerItem],
       considerations: [considerationItem],
-      orderType: signatureValues.currency ? OrderType.SELL_NFT_TOKEN : OrderType.SELL_NFT_NATIVE,
+      orderType: isNative ? OrderType.SELL_NFT_NATIVE : OrderType.SELL_NFT_TOKEN,
       startAt: signatureValues.listingTime,
       endAt: signatureValues.expirationDate,
       salt: signatureValues.salt,
