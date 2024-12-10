@@ -1,10 +1,7 @@
 import {ciEquals, ciIncludes, isNativeCro} from '@market/helpers/utils';
 import {useAppConfig} from "@src/config/hooks";
-import useNativeCurrency from "@eb-pancakeswap-web/hooks/useNativeCurrency";
 import {SupportedChainId} from "@src/config/chains";
-import {ethers} from "ethers";
 import {SerializedToken} from "@pancakeswap/swap-sdk-core";
-import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 import { useSupportedApiTokens } from '@src/global/hooks/use-supported-tokens';
 
 export type MultichainBrokerCurrency = SerializedToken & {

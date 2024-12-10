@@ -2,7 +2,6 @@ import {Card} from "@src/components-v2/foundation/card";
 import {Box, Button, Flex, HStack, Image, NumberInput, NumberInputField, useDisclosure} from "@chakra-ui/react";
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import React, {useCallback} from "react";
-import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 import {Currency} from "@pancakeswap/sdk";
 import {useCurrencyBalance} from "@eb-pancakeswap-web/state/wallet/hooks";
 import {useUser} from "@src/components-v2/useUser";
@@ -35,7 +34,6 @@ export default function CurrencyInputPanel({
 
   const {address: account} = useUser();
   const { isOpen: isModalOpen, onOpen: onModalOpen, onClose: onModalClose } = useDisclosure();
-  const { supportedTokens } = useSupportedTokens();
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined);
 
   const handleSelectedCurrency = useCallback((currency: Currency) => {

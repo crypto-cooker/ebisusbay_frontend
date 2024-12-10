@@ -2,6 +2,10 @@ import { useEffect } from "react";
 import { useQuery } from '@tanstack/react-query';
 import { atom, useSetAtom } from 'jotai';
 import { ApiService } from "@src/core/services/api-service";
+import fallbackTokens from '@dex/config/tokens.json';
+import { appConfig as legacyAppConfig } from '@src/config';
+import { getAppConfig } from '@src/config/hooks';
+import { ciEquals } from '@market/helpers/utils';
 
 interface CmsToken {
   address: string;
@@ -26,11 +30,12 @@ const GlobalDataFetcher = () => {
     queryFn: async () => {
       return await ApiService.withoutKey().getSupportedTokens()
     },
-
   });
 
   useEffect(() => {
-    if (data) {
+    if (error) {
+      setGlobalTokens(getFallbackTokens());
+    } else if (data) {
       setGlobalTokens(data.data);
     }
   }, [data, setGlobalTokens]);
@@ -42,5 +47,91 @@ const GlobalDataFetcher = () => {
 
   return null; // This is purely a side-effect component
 };
+
+function remapMarketTokens() {
+  let frontendTokens: any[] = [];
+  let collectionTokens: any[] = [];
+
+  const { config: appConfig } = getAppConfig();
+
+  const legacyFrontendConfig = legacyAppConfig();
+  const knownAppConfigTokens = legacyFrontendConfig.tokens;
+  for (const legacyToken of Object.values(knownAppConfigTokens) as any[]) {
+    frontendTokens.push({
+      address: legacyToken.address.toLowerCase(),
+      name: legacyToken.name,
+      symbol: legacyToken.symbol,
+      decimals: legacyToken.decimals,
+      chainId: appConfig.defaultChainId
+    })
+  }
+
+  const frontendTokenWhitelists = appConfig.currencies;
+  for (const [chainId, chainTokens] of Object.entries(frontendTokenWhitelists) as [number, any]) {
+    for (const globalTokenSymbol of chainTokens.global) {
+      frontendTokens.forEach(ft => {
+        if (ciEquals(ft.symbol, globalTokenSymbol) && chainId.toString() === ft.chainId.toString()) {
+          ft.marketGlobal = true
+        }
+      });
+    }
+    for (const marketAvailableTokenSymbol of chainTokens.marketplace.available) {
+      frontendTokens.forEach(ft => {
+        if (ciEquals(ft.symbol, marketAvailableTokenSymbol) && chainId.toString() === ft.chainId.toString()) {
+          ft.marketAvailable = true
+        }
+      });
+    }
+    for (const dealTokenSymbol of chainTokens.deals) {
+      frontendTokens.forEach(ft => {
+        if (ciEquals(ft.symbol, dealTokenSymbol) && chainId.toString() === ft.chainId.toString()) {
+          ft.deals = true
+        }
+      });
+    }
+
+    for (const [collectionAddress, collectionTokenSymbols] of Object.entries(chainTokens.marketplace.nft)) {
+      for (const collectionTokenSymbol of collectionTokenSymbols as string[]) {
+        frontendTokens.forEach(ft => {
+          if (ciEquals(ft.symbol, collectionTokenSymbol) && chainId.toString() === ft.chainId.toString()) {
+            collectionTokens.push({
+              collectionAddress: collectionAddress,
+              chainId: Number(chainId),
+              tokenSymbol: collectionTokenSymbol,
+              tokenAddress: ft.address.toLowerCase()
+            });
+            return;
+          }
+        });
+      }
+    }
+  }
+
+  return [frontendTokens, collectionTokens];
+}
+
+function getFallbackTokens() {
+  const [frontendTokens] = remapMarketTokens();
+
+  console.log('FELLBECK', frontendTokens)
+  return Array.from(
+    [...fallbackTokens.tokens, ...frontendTokens].reduce((map, token) => {
+      const key = `${token.address.toLowerCase()}-${token.chainId}`;
+      if (!map.has(key)) {
+        // Include only required and optional fields directly in the map
+        map.set(key, {
+          address: token.address.toLowerCase(),
+          name: token.name,
+          symbol: token.symbol,
+          decimals: token.decimals,
+          chainId: token.chainId,
+          logo: token.logo ?? null,
+          dex: token.dex ?? false,
+        });
+      }
+      return map;
+    }, new Map<string, CmsToken>()).values() // Convert map values to an array
+  ) as CmsToken[];
+}
 
 export default GlobalDataFetcher;

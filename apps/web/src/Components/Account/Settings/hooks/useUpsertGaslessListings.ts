@@ -8,7 +8,6 @@ import NextApiService from "@src/core/services/api-service/next";
 import {getItemType} from "@market/helpers/chain";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
-import useSupportedTokens from '@dex/hooks/use-supported-tokens';
 import { ChainId } from '@pancakeswap/chains';
 import { useListingsTokens, useSupportedApiTokens } from '@src/global/hooks/use-supported-tokens';
 
