@@ -157,19 +157,7 @@ const CreateVaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
   }
 
   const handleMaxInput = () => {
-    let troops = availableTroops ?? 0;
-    if (troops > MAX_TROOPS) troops = MAX_TROOPS;
-
-    const boostHours = (Number(troops) * SECONDS_PER_TROOP) / 3600;
-    let totalKobanReward = kobanRewardForDuration(vaultType, vaultMitama, boostHours);
-
-    // Adjust down if rounding leads to needing more troops than available
-    while (totalKobanReward > 0 && minimumTroopsByDesiredKoban(vaultType, vaultMitama, totalKobanReward) > troops) {
-      totalKobanReward--;
-    }
-
-    setKobanQuantity(maxKoban.toString());
-    setDerivedTroopsQuantity(troops);
+    handleQuantityChange(maxKoban.toString(), maxKoban);
   }
 
   const startBoost = async () => {
@@ -178,12 +166,17 @@ const CreateVaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
       return;
     }
 
+    if (availableTroops < minTroops) {
+      throw new Error('Not enough troops required');
+    }
+
     if (derivedTroopsQuantity < minTroops) {
       throw new Error(`Must add at least ${minTroops} ${pluralize(minTroops, 'troop')}`);
     }
 
-    if (derivedTroopsQuantity > MAX_TROOPS) {
-      toast.error(`Cannot add more than ${MAX_TROOPS} ${pluralize(MAX_TROOPS, 'troop')}`);
+    const maxTroops = Math.min(availableTroops ?? 0, MAX_TROOPS);
+    if (derivedTroopsQuantity > maxTroops) {
+      toast.error(`Cannot add more than ${maxTroops} ${pluralize(maxTroops, 'troop')}`);
       return;
     }
 
@@ -389,5 +382,6 @@ function minimumTroopsByDesiredKoban(vaultType: VaultType, mitama: number, desir
   const rate = kobanHourlyRateByMitama(vaultType, mitama);
   const hoursNeeded = (desiredKoban - 0.5) / rate; // similar logic as for 1 koban, but scaled
   const secondsNeeded = hoursNeeded * 3600;
-  return Math.ceil(secondsNeeded / SECONDS_PER_TROOP);
+  const troops = Math.ceil(secondsNeeded / SECONDS_PER_TROOP);
+  return troops > 0 ? troops : 0;
 }
