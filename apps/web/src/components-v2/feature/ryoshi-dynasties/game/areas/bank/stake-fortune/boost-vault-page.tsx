@@ -166,7 +166,7 @@ const CreateVaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
       return;
     }
 
-    if (availableTroops < minTroops) {
+    if (!availableTroops || availableTroops < minTroops) {
       throw new Error('Not enough troops required');
     }
 
