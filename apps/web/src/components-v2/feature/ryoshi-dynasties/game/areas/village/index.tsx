@@ -442,7 +442,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                             pointerEvents={'none'}
                           />
 
-                          <Box className={styles.enlarge} style={{position:"absolute", marginTop: xmasTreeTop, marginLeft: xmasTreeLeft, zIndex:"8"}}
+                          <Box className={styles.enlarge} style={{position:"absolute", marginTop: xmasTreeTop, marginLeft: xmasTreeLeft, zIndex:"9"}}
                             onClick={PresentPresent}>
                               <VStack
                                 justifyContent={'center'}
