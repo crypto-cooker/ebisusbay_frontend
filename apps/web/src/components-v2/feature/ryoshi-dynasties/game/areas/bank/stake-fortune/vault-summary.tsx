@@ -59,6 +59,8 @@ interface VaultSummaryProps {
   onClosed: () => void;
 }
 
+const BOOSTS_ENABLED = false;
+
 const VaultSummary = (props: VaultSummaryProps) => {
   return props.vaultType === VaultType.LP ? <LpVaultSummary {...props} /> : <TokenVaultSummary {...props} />;
 }
@@ -298,7 +300,7 @@ const VaultBody = ({ totalApr, baseApr, bonusApr, troops, mitama, endTime, vault
         <Box>End Date</Box>
         <Box textAlign='end' fontWeight='bold'>{endDate}</Box>
       </SimpleGrid>
-      {existingBoost && (
+      {existingBoost && BOOSTS_ENABLED && (
         <Flex justify='space-between' my={2}>
           <Box my='auto'>Boost</Box>
           <Box textAlign='end' fontWeight='bold'>
@@ -392,7 +394,7 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
                   Tokenize Vault
                 </Button>
               )}
-              {!activeBoost && (
+              {!activeBoost && BOOSTS_ENABLED && (
                 <Button
                   leftIcon={<Icon as={FontAwesomeIcon} icon={faStar} />}
                   onClick={onBoostVault}
