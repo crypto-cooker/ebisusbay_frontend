@@ -71,14 +71,14 @@ function remapMarketTokens() {
     for (const globalTokenSymbol of chainTokens.global) {
       frontendTokens.forEach(ft => {
         if (ciEquals(ft.symbol, globalTokenSymbol) && chainId.toString() === ft.chainId.toString()) {
-          ft.marketGlobal = true
+          ft.marketDefault = true
         }
       });
     }
     for (const marketAvailableTokenSymbol of chainTokens.marketplace.available) {
       frontendTokens.forEach(ft => {
         if (ciEquals(ft.symbol, marketAvailableTokenSymbol) && chainId.toString() === ft.chainId.toString()) {
-          ft.marketAvailable = true
+          ft.listings = true
         }
       });
     }
@@ -110,12 +110,24 @@ function remapMarketTokens() {
   return [frontendTokens, collectionTokens];
 }
 
+function remapDexToken(token: any): Partial<CmsToken> {
+  return {
+    address: token.address.toLowerCase(),
+    name: token.name,
+    symbol: token.symbol,
+    decimals: token.decimals,
+    chainId: token.chainId,
+    logo: token.logoURI,
+    dex: true
+  };
+}
+
 function getFallbackTokens() {
   const [frontendTokens] = remapMarketTokens();
+  const dexTokens = fallbackTokens.tokens.map(remapDexToken);
 
-  console.log('FELLBECK', frontendTokens)
   return Array.from(
-    [...fallbackTokens.tokens, ...frontendTokens].reduce((map, token) => {
+    [...frontendTokens, ...dexTokens].reduce((map, token) => {
       const key = `${token.address.toLowerCase()}-${token.chainId}`;
       if (!map.has(key)) {
         // Include only required and optional fields directly in the map
@@ -125,9 +137,24 @@ function getFallbackTokens() {
           symbol: token.symbol,
           decimals: token.decimals,
           chainId: token.chainId,
-          logo: token.logo ?? null,
+          logo: token.logo ?? token.logoURI ?? null,
           dex: token.dex ?? false,
+          deals: token.deals ?? false,
+          listings: token.listings ?? false,
+          marketDefault: token.marketDefault ?? false
         });
+      } else {
+        let obj: any = {
+          ...map.get(key),
+          ...(token.logo && { logo: token.logo }),
+          ...(token.logoURI && { logo: token.logoURI }),
+          ...(token.dex && { dex: token.dex }),
+          ...(token.deals && { deals: token.deals }),
+          ...(token.listings && { listings: token.listings }),
+          ...(token.marketDefault && { marketDefault: token.marketDefault }),
+        };
+
+        map.set(key, obj);
       }
       return map;
     }, new Map<string, CmsToken>()).values() // Convert map values to an array
