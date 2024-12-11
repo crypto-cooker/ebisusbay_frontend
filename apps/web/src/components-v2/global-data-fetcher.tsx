@@ -18,6 +18,7 @@ export interface CmsToken {
   dex: boolean;
   listings: boolean;
   offers: boolean;
+  deals: boolean;
 }
 
 export const globalTokensAtom = atom<null | CmsToken[]>(null);

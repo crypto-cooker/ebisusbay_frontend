@@ -48,8 +48,7 @@ const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
 
   const knownCurrencies = shimmedSupportedTokens;
 
-  const listingCurrencies = knownCurrencies.filter((currency) => ciIncludes(appConfig.currencies?.[chainId]?.marketplace.available, currency.symbol));
-
+  const listingCurrencies = knownCurrencies.filter((currency) => currency.marketDefault || currency.listings);
 
   const getBySymbol = (symbol: string) => {
     return knownCurrencies.find((currency) => ciEquals(currency.symbol, symbol));
@@ -60,7 +59,7 @@ const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
   }
 
   const isDealCurrency = (symbol: string) => {
-    return appConfig.currencies?.[chainId]?.deals.includes(symbol.toLowerCase());
+    return !!knownCurrencies.find((currency) => ciEquals(symbol, currency.symbol) && currency.deals);
   }
 
   const getByCollection = (nftAddress: string) => {
