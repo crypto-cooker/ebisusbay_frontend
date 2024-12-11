@@ -16,7 +16,6 @@ import { Card } from '@src/components-v2/foundation/card';
 import useMirrorCollection from '@dex/swap/imported/pancakeswap/web/hooks/useMirrorCollection';
 import Link from 'next/link';
 import { useActiveChainId } from '@dex/swap/imported/pancakeswap/web/hooks/useActiveChainId';
-import { CHAIN_QUERY_NAME } from '@src/config/chains';
 import Blockies from 'react-blockies';
 import ImageService from '@src/core/services/image';
 import { getTheme } from '@src/global/theme/theme';
@@ -25,10 +24,7 @@ import { MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/typ
 import { WarningIcon } from '@chakra-ui/icons';
 import { BlueCheckIcon } from '@src/components-v2/shared/icons/blue-check';
 import { isCollectionListable, siPrefixedNumber } from '@market/helpers/utils';
-import useGetStakingPlatform from '@market/hooks/useGetStakingPlatform';
-import styled from 'styled-components';
 import { commify } from 'ethers/lib/utils';
-import { useChainPathByQuery } from '@src/components-v2/feature/info/hooks/chain';
 import { chainPaths } from '@src/components-v2/feature/info/state/constants';
 
 interface MirrorNFTProps {
@@ -39,7 +35,6 @@ const MirrorNFT: FC<MirrorNFTProps> = ({ currencyId }) => {
   const { mirrorCollection: collection, collectionStats } = useMirrorCollection(currencyId);
   const chainId = useActiveChainId();
   const chainPath = chainPaths[chainId.chainId];
-  // const chainPath = CHAIN_QUERY_NAME[chainId.chainId];
   const user = useUser();
 
   if (collection) {
