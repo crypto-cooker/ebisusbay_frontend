@@ -28,6 +28,8 @@ import { isCollectionListable, siPrefixedNumber } from '@market/helpers/utils';
 import useGetStakingPlatform from '@market/hooks/useGetStakingPlatform';
 import styled from 'styled-components';
 import { commify } from 'ethers/lib/utils';
+import { useChainPathByQuery } from '@src/components-v2/feature/info/hooks/chain';
+import { chainPaths } from '@src/components-v2/feature/info/state/constants';
 
 interface MirrorNFTProps {
   currencyId: string | undefined;
@@ -36,7 +38,8 @@ interface MirrorNFTProps {
 const MirrorNFT: FC<MirrorNFTProps> = ({ currencyId }) => {
   const { mirrorCollection: collection, collectionStats } = useMirrorCollection(currencyId);
   const chainId = useActiveChainId();
-  const chainPath = CHAIN_QUERY_NAME[chainId.chainId];
+  const chainPath = chainPaths[chainId.chainId];
+  // const chainPath = CHAIN_QUERY_NAME[chainId.chainId];
   const user = useUser();
 
   if (collection) {
