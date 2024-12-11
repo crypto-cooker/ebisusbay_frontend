@@ -4,6 +4,7 @@ import {useQuery} from "@tanstack/react-query";
 import {ApiService} from "@src/core/services/api-service";
 import {Box, SimpleGrid} from "@chakra-ui/react";
 import {isEvoSkullCollection, isLazyHorseCollection, isLazyHorsePonyCollection, isVaultCollection} from "@market/helpers/utils";
+import { useChainByIdOrSlug } from '@src/config/hooks';
 
 interface PropertiesProps {
   address: string;
@@ -14,9 +15,11 @@ interface PropertiesProps {
 }
 
 const Properties = ({ address, slug, chainSlug, attributes, queryKey }: PropertiesProps) => {
+  const chain = useChainByIdOrSlug(chainSlug);
+
   const { data: collectionTraits } = useQuery({
     queryKey: ['CollectionTraits', address],
-    queryFn: () => ApiService.withoutKey().getCollectionTraits(address),
+    queryFn: () => ApiService.withoutKey().getCollectionTraits(address, chain.id),
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 2
   });

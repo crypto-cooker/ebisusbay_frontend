@@ -3,7 +3,7 @@ import appChainConfig, { isSupportedChainId, SupportedChainId } from './chains';
 import { useEffect, useMemo, useState } from "react";
 import { ChainId } from "@pancakeswap/chains";
 import { useActiveChainId } from "@eb-pancakeswap-web/hooks/useActiveChainId";
-import { getChainById } from "@src/helpers";
+import { getChainById, getChainByIdOrSlug } from '@src/helpers';
 import { BridgeContract } from '@dex/bridge/constants/types';
 
 function getCurrentEnv() {
@@ -127,4 +127,11 @@ export function useChainById(chainId: number) {
     const chainConfig = getChainById(chainId);
     return chainConfig?.chain ?? chainId
   }, [chainId]);
+}
+
+export function useChainByIdOrSlug(idOrSlug: number | string) {
+  return useMemo(() => {
+    const chainConfig = getChainByIdOrSlug(idOrSlug);
+    return chainConfig?.chain ?? idOrSlug
+  }, [idOrSlug]);
 }
