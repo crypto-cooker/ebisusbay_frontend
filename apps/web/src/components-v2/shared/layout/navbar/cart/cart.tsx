@@ -50,6 +50,7 @@ import {GasTokenSelector} from "@src/components-v2/shared/layout/navbar/cart/gas
 import {useMarketPaymaster} from "@market/hooks/useMarketPaymaster";
 import PurchaseUnverifiedConfirmationDialog from '@src/components-v2/shared/dialogs/purchase-unverified-confirmation';
 import { MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/types';
+import { useMarketTokens } from '@src/global/hooks/use-supported-tokens';
 
 const Cart = function () {
   const user = useUser();
@@ -60,6 +61,7 @@ const Cart = function () {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const { isOpen: isOpenGasToken, onOpen: onOpenGasToken, onClose: onCloseGasToken } = useDisclosure()
   const [openUnverifiedCollectionDialog, setOpenUnverifiedCollectionDialog] = useState<any[]>([]);
+  const knownMarketTokens = useMarketTokens();
 
   const handleTabsChange = (index: number) => {
     setSelectedChain(cartChains[index]);
@@ -223,7 +225,7 @@ const Cart = function () {
         .reduce((acc, nft) => {
         if (!nft.price) return acc;
 
-        const currencyToken = knownErc20Token(nft.currency);
+        const currencyToken = !!nft.currency ? knownErc20Token(nft.currency, knownMarketTokens, nft.chain) : null;
 
         const numericPrice = parseInt(nft.price.toString());
         let amt = numericPrice;

@@ -7,7 +7,7 @@ import { appConfig as legacyAppConfig } from '@src/config';
 import { getAppConfig } from '@src/config/hooks';
 import { ciEquals } from '@market/helpers/utils';
 
-interface CmsToken {
+export interface CmsToken {
   address: string;
   name: string;
   symbol: string;
