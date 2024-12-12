@@ -20,6 +20,7 @@ import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/querie
 import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
 import OrdersRepository from "@src/core/services/api-service/cms/repositories/orders";
 import TokensRepository from "@src/core/services/api-service/cms/repositories/tokens";
+import LootBoxRepository from "@src/core/services/api-service/cms/repositories/loot-box";
 
 class Cms {
   private profiles: ProfilesRepository;
@@ -27,6 +28,7 @@ class Cms {
   private ryoshiDynasties: RyoshiDynastiesRepository;
   private orders: OrdersRepository;
   private tokens: TokensRepository;
+  private lootBox: LootBoxRepository;
 
   constructor(apiKey?: string) {
     this.profiles = new ProfilesRepository(apiKey);
@@ -34,6 +36,7 @@ class Cms {
     this.ryoshiDynasties = new RyoshiDynastiesRepository(apiKey);
     this.orders = new OrdersRepository(apiKey);
     this.tokens = new TokensRepository(apiKey);
+    this.lootBox = new LootBoxRepository(apiKey);
   }
 
   async getProfile(addressOrUsername: string): Promise<any> {
@@ -290,6 +293,22 @@ class Cms {
 
   async claimVaultBoost(vaultId: number, address: string, signature: string) {
     return this.ryoshiDynasties.claimVaultBoost(vaultId, address, signature);
+  }
+
+  async getLootBoxList() {
+    return this.lootBox.getLootBoxList()
+  }
+
+  async getLootBoxBalances(walletAddress:string) {
+    return this.lootBox.getLootBoxBalances(walletAddress);
+  }
+
+  async getLootBoxInfo(id:number) {
+    return this.lootBox.getLootBoxInfo(id);
+  }
+
+  async openLootBox(id:number) {
+    return this.lootBox.openLootBox(id);
   }
 }
 

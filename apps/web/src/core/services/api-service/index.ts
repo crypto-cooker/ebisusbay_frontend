@@ -608,4 +608,20 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async claimVaultBoost(vaultId: number, address: string, signature: string) {
     return this.cms.claimVaultBoost(vaultId, address, signature);
   }
+
+  async getLootBoxList() {
+    return this.cms.getLootBoxList();
+  }
+
+  async getLootBoxBalance(walletAddress:string) {
+    return this.cms.getLootBoxBalances(walletAddress);
+  }
+
+  async getLootBoxInfo(id: number) {
+    return this.cms.getLootBoxInfo(id);
+  }
+
+  async openLootBox(id:number) {
+    return this.cms.openLootBox(id);
+  }
 }

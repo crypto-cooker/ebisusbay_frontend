@@ -35,7 +35,7 @@ import { useChainId } from 'wagmi';
 import { CHAIN_IDS } from '@src/wagmi';
 import styled from 'styled-components';
 
-const LootBox = styled(Image)`
+const LootBoxImage = styled(Image)`
   transform: scale(1.3);
   &:hover {
     transform: scale(1.5);
@@ -46,7 +46,7 @@ interface VillageHudProps {
   onOpenBuildings: () => void;
   onOpenDailyCheckin: () => void;
   onOpenBattleLog: () => void;
-  onOpenLootBox: () => void;
+  onOpenLootBoxModal: () => void;
   onOpenXPLeaderboard: () => void;
   forceRefresh: boolean;
 }
@@ -55,7 +55,7 @@ export const VillageHud = ({
   onOpenBuildings,
   onOpenDailyCheckin,
   onOpenBattleLog,
-  onOpenLootBox,
+  onOpenLootBoxModal,
   onOpenXPLeaderboard,
   forceRefresh,
 }: VillageHudProps) => {
@@ -248,9 +248,9 @@ export const VillageHud = ({
               position="relative"
               _hover={{ cursor: 'pointer' }}
               _focus={{ bgColor: 'transparent' }}
-              onClick={onOpenLootBox}
+              onClick={onOpenLootBoxModal}
             >
-              <LootBox src="/img/lootbox.png" h="full" />
+              <LootBoxImage src="/img/lootbox.png" h="full" />
             </Button>
           </HStack>
 
