@@ -685,7 +685,7 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data.data;
   }
 
-  async boostVault(vaultId: number, chainId: number, troops: string, address: string, signature: string) {
+  async boostVault(vaultId: number, chainId: number, troops: number, address: string, signature: string) {
     const response = await this.cms.post(
       `ryoshi-dynasties/armies/send/vault`,
       {
