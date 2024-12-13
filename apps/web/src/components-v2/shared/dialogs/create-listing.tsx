@@ -155,7 +155,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const { switchNetworkAsync } = useSwitchNetwork();
   const { callWithGasPrice } = useCallWithGasPrice()
   const { config: appChainConfig } = useAppChainConfig(nft.chain);
-  const collectionMarketTokens = useCollectionListingTokens(nft.address ?? nft.nftAddress, nft.chain);
+  const { tokens: collectionMarketTokens } = useCollectionListingTokens(nft.address ?? nft.nftAddress, nft.chain);
   const windowSize = useWindowSize();
 
   const user = useUser();

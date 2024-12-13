@@ -28,9 +28,9 @@ const GlobalDataFetcher = () => {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['GlobalData'],
-    queryFn: async () => {
-      return await ApiService.withoutKey().getSupportedTokens()
-    },
+    queryFn: () => ApiService.withoutKey().getSupportedTokens(),
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
   });
 
   useEffect(() => {

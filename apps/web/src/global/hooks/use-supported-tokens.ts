@@ -46,7 +46,7 @@ export function useCollectionTokens(chainId?: number) {
 }
 
 export function useCollectionListingTokens(address: string, chainId: number) {
-  const listingTokens = useListingsTokens(chainId);
+  const marketDefaultTokens = useMarketDefaultTokens(chainId);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['CollectionMarketTokens', address, chainId],
@@ -55,12 +55,16 @@ export function useCollectionListingTokens(address: string, chainId: number) {
       if (collectionMarketTokens.length > 0) {
         return collectionMarketTokens;
       }
-      return listingTokens;
+      return marketDefaultTokens;
     },
     staleTime: 1000 * 60 * 10,
     gcTime: 1000 * 60 * 11,
     enabled: !!address && !!chainId
   });
 
-  return data ?? [];
+  return {
+    tokens: data ?? [],
+    isLoading,
+    error
+  };
 }

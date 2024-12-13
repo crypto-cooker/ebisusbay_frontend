@@ -65,37 +65,33 @@ export function CurrencyLogo({
   style?: React.CSSProperties;
   useTrustWalletUrl?: boolean;
 } & BoxProps) {
-  if (currency?.logo) {
-    currency.logoURI = currency.logo;
-  }
-  if (currency && currency.isNative === undefined) {
-    currency.isNative = currency.address === ethers.constants.AddressZero
-  }
-  if (currency && currency.isToken === undefined) {
-    currency.isToken = currency.address !== ethers.constants.AddressZero
-  }
 
-  const uriLocations = useHttpLocations(currency?.logoURI);
+  let safeCurrency = { ...currency };
+  if (safeCurrency.logo) safeCurrency.logoURI = safeCurrency.logo;
+  if (safeCurrency.isNative === undefined) safeCurrency.isNative = safeCurrency.address === ethers.constants.AddressZero;
+  if (safeCurrency.isToken === undefined) safeCurrency.isToken = safeCurrency.address !== ethers.constants.AddressZero;
+
+  const uriLocations = useHttpLocations(safeCurrency?.logoURI);
 
   const srcs: string[] = useMemo(() => {
-    if (currency?.isNative) return [];
+    if (safeCurrency?.isNative) return [];
 
-    if (currency?.isToken) {
-      const logoUrls = getCurrencyLogoUrlsByInfo(currency, { useTrustWallet: useTrustWalletUrl });
+    if (safeCurrency?.isToken) {
+      const logoUrls = getCurrencyLogoUrlsByInfo(safeCurrency, { useTrustWallet: useTrustWalletUrl });
 
-      if (currency?.logoURI) {
+      if (safeCurrency?.logoURI) {
         return [...uriLocations, ...logoUrls];
       }
       return [...logoUrls];
     }
     return [];
-  }, [currency, uriLocations, useTrustWalletUrl]);
+  }, [safeCurrency, uriLocations, useTrustWalletUrl]);
 
-  if (currency?.isNative) {
+  if (safeCurrency?.isNative) {
     return (
       <TokenLogo
         size={size}
-        srcs={[ImageService.translate(`files/dex/images/native/${currency.chainId}.webp`).convert()]}
+        srcs={[ImageService.translate(`files/dex/images/native/${safeCurrency.chainId}.webp`).convert()]}
         width={size}
         height={size}
         style={style}
@@ -104,7 +100,7 @@ export function CurrencyLogo({
     );
   }
 
-  return <TokenLogo size={size} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} {...props} />;
+  return <TokenLogo size={size} srcs={srcs} alt={`${safeCurrency?.symbol ?? 'token'} logo`} style={style} {...props} />;
 }
 
 export interface TokenLogoProps extends React.ImgHTMLAttributes<HTMLImageElement> {
