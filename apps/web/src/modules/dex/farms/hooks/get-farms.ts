@@ -57,8 +57,9 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
               }
 
               const rewardPerDay = !isNaN(parseInt(rewarder.rewardPerDay)) ? rewarder.rewardPerDay : '0';
-              const amount = commify(round(ethers.utils.formatUnits(rewardPerDay, token.decimals)));
+              const amount = commify(round(ethers.utils.formatUnits(rewardPerDay, token.decimals), token.decimals));
 
+              console.log()
               return {
                 rewarder,
                 token,
