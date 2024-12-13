@@ -67,7 +67,7 @@ import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
 import {useAppChainConfig} from "@src/config/hooks";
-import useMultichainCurrencyBroker, {MultichainBrokerCurrency} from "@market/hooks/use-multichain-currency-broker";
+import {MultichainBrokerCurrency} from "@market/hooks/use-multichain-currency-broker";
 import { useCollectionListingTokens } from '@src/global/hooks/use-supported-tokens';
 import { useSerializedNativeCurrency } from '@src/global/hooks/use-serialized-native-currency';
 
@@ -124,7 +124,6 @@ interface MakeGaslessListingDialogProps {
 }
 
 export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing }: MakeGaslessListingDialogProps) {
-  const { getByCollection } = useMultichainCurrencyBroker(nft.chain);
   const nativeCurrency = useSerializedNativeCurrency(nft.chain);
 
   // Input states

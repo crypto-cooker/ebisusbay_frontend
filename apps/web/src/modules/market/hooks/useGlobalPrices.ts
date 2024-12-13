@@ -180,8 +180,8 @@ export const useTokenExchangeRate = (token: string, chainId: number = 25) => {
   };
 
   return {
-    usd: usdRate,
-    cro: croRate,
+    tokenUsdRate: usdRate,
+    tokenCroRate: croRate,
     usdInverseRate,
     croInverseRate,
     calculateValuesFromToken,

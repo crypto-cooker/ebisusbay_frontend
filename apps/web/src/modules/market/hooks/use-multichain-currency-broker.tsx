@@ -1,5 +1,4 @@
-import {ciEquals, ciIncludes, isNativeCro} from '@market/helpers/utils';
-import {useAppConfig} from "@src/config/hooks";
+import {ciEquals, isNativeCro} from '@market/helpers/utils';
 import {SupportedChainId} from "@src/config/chains";
 import {SerializedToken} from "@pancakeswap/swap-sdk-core";
 import { useSupportedApiTokens } from '@src/global/hooks/use-supported-tokens';
@@ -11,14 +10,8 @@ export type MultichainBrokerCurrency = SerializedToken & {
   isNative: boolean;
 }
 
-type CollectionCurrencies = {
-  [key: string]: string[];
-}
-
 const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
-  const { config: appConfig } = useAppConfig();
   const supportedTokens = useSupportedApiTokens(chainId);
-
 
   const shimmedSupportedTokens = supportedTokens.map((token) => ({
     ...token,
@@ -62,24 +55,6 @@ const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
     return !!knownCurrencies.find((currency) => ciEquals(symbol, currency.symbol) && currency.deals);
   }
 
-  const getByCollection = (nftAddress: string) => {
-    const chainCurrencies = appConfig.currencies?.[chainId];
-    if (!chainCurrencies) return [];
-
-    const nftCurrencies = chainCurrencies.marketplace.nft;
-
-    const availableCurrencySymbols = Object.entries(nftCurrencies)
-      .find(([key]) => ciEquals(key, nftAddress)) as CollectionCurrencies | undefined;
-
-    return listingCurrencies.filter(({symbol}: { symbol: string }) => {
-      if (availableCurrencySymbols) {
-        return availableCurrencySymbols[1].includes(symbol.toLowerCase());
-      } else {
-        return appConfig.currencies?.[chainId]?.global.includes(symbol.toLowerCase())
-      }
-    });
-  }
-
   return {
     knownCurrencies,
     whitelistedDealCurrencies: knownCurrencies.filter((currency) => isDealCurrency(currency.symbol)),
@@ -87,7 +62,6 @@ const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
     listingCurrencies,
     getBySymbol,
     getByAddress,
-    getByCollection,
     nativeCurrency: serializedNativeCurrency
   }
 }
