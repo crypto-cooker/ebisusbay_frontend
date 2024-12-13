@@ -59,11 +59,22 @@ export function CurrencyLogo({
 }: {
   currency?: CurrencyInfo & {
     logoURI?: string | undefined;
+    logo?: string | undefined;
   };
   size?: string;
   style?: React.CSSProperties;
   useTrustWalletUrl?: boolean;
 } & BoxProps) {
+  if (currency?.logo) {
+    currency.logoURI = currency.logo;
+  }
+  if (currency && currency.isNative === undefined) {
+    currency.isNative = currency.address === ethers.constants.AddressZero
+  }
+  if (currency && currency.isToken === undefined) {
+    currency.isToken = currency.address !== ethers.constants.AddressZero
+  }
+
   const uriLocations = useHttpLocations(currency?.logoURI);
 
   const srcs: string[] = useMemo(() => {

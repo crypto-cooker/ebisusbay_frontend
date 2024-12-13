@@ -59,6 +59,7 @@ export function useCollectionListingTokens(address: string, chainId: number) {
     },
     staleTime: 1000 * 60 * 10,
     gcTime: 1000 * 60 * 11,
+    enabled: !!address && !!chainId
   });
 
   return data ?? [];
