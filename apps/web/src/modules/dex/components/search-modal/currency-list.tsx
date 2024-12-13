@@ -132,16 +132,6 @@ export default function CurrencyList({
         totalCount={itemData.length}
       />
     </Box>
-    // <FixedSizeList
-    //   height={height}
-    //   ref={fixedListRef as any}
-    //   itemData={itemData}
-    //   itemCount={itemData.length}
-    //   itemSize={56}
-    //   itemKey={itemKey}
-    // >
-    //   {Row}
-    // </FixedSizeList>
   )
 }
 

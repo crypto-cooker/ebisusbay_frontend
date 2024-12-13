@@ -6,10 +6,9 @@ import {ERC20Token, Pair, Percent} from "@pancakeswap/sdk";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useMemo} from "react";
 import {BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS} from "@dex/swap/constants/exchange";
-import {useQuery} from "@tanstack/react-query";
 import flatMap from "lodash/flatMap";
 import {safeGetAddress} from "@eb-pancakeswap-web/utils";
-import {useOfficialsAndUserAddedTokens} from "@eb-pancakeswap-web/hooks/tokens";
+import { useAllTokens } from '@eb-pancakeswap-web/hooks/tokens';
 import {useSelector} from "react-redux";
 import {deserializeToken} from "@pancakeswap/token-lists";
 import {RootState} from "@market/state/redux/store";
@@ -103,7 +102,7 @@ export function toV2LiquidityToken([tokenA, tokenB]: [ERC20Token, ERC20Token]): 
  */
 export function useTrackedTokenPairs(): [ERC20Token, ERC20Token][] {
   const { chainId } = useActiveChainId()
-  const tokens = useOfficialsAndUserAddedTokens()
+  const tokens = useAllTokens()
 
   // pinned pairs
   const pinnedPairs = useMemo(() => (chainId ? PINNED_PAIRS[chainId] ?? [] : []), [chainId])

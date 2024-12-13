@@ -36,6 +36,7 @@ import { DealListQueryParams } from '@src/core/services/api-service/mapi/queries
 import { FarmsQueryParams } from '@src/core/services/api-service/mapi/queries/farms';
 import { ChainId } from '@pancakeswap/chains';
 import { DEFAULT_CHAIN_ID } from '@src/config/chains';
+import { CmsToken } from '@src/components-v2/global-data-fetcher';
 
 export class ApiService implements Api {
   private mapi: Mapi;
@@ -306,6 +307,10 @@ export class ApiService implements Api {
 
   async getSupportedTokens() {
     return await this.cms.getSupportedTokens();
+  }
+
+  async getCollectionMarketTokens(address: string, chainId: number): Promise<CmsToken[]> {
+    return await this.cms.getCollectionMarketTokens(address, chainId);
   }
 }
 

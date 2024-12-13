@@ -9,7 +9,6 @@ import {
   ciEquals,
   isBundle,
   isEbVipCollection,
-  isErc20Token,
   isGaslessListing,
   knownErc20Token,
   round, urlify
@@ -58,6 +57,7 @@ import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 import {ApiService} from "@src/core/services/api-service";
 import {CurrencyLogoByAddress} from "@dex/components/logo";
+import { useMarketTokens } from '@src/global/hooks/use-supported-tokens';
 
 enum PaymentType {
   CRYPTO = 'CRYPTO',
@@ -76,6 +76,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const { config } = useAppConfig();
   const { chainId } = useActiveChainId()
   const { switchNetworkAsync } = useSwitchNetwork();
+  const knownMarketTokens = useMarketTokens();
 
   const user = useUser();
 
@@ -100,7 +101,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
     refetchOnWindowFocus: false
   });
 
-  const token = knownErc20Token(listing?.currency);
+  const token = !!listing?.currency ? knownErc20Token(listing.currency, knownMarketTokens, listing.chain) : null;
 
   const handleBuyCro = () => {
     if (!config.vendors?.transak) return;
@@ -290,8 +291,8 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                           <DotIcon icon={faCheck} />
                         )}
 
-                        {knownErc20Token(listing.currency) ? (
-                          <CurrencyOption currency={knownErc20Token(listing.currency)!} />
+                        {!!token ? (
+                          <CurrencyOption currency={token} />
                         ) : (
                           <>
                             <Flex align="center">
@@ -345,7 +346,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
                         )}
                       </Box>
                     </Flex>
-                    {isErc20Token(listing.currency) && !!token ? (
+                    {!!token && token.dex ? (
                       <Box textAlign="end" fontSize="sm">
                         Low on {token.name}?&nbsp;
                         <ChakraButton

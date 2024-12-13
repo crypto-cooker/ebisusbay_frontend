@@ -64,11 +64,11 @@ const MyNftCard = ({
   const [isHovered, setIsHovered] = useState(false);
   const batchListingCart = useSelector((state) => state.batchListing);
   const { onCopy } = useClipboard(nftUrl.toString());
-  const {tokenToUsdValue} = useTokenExchangeRate(nft.market?.currency ?? nft.currency, nft.chain);
+  const {calculateValuesFromToken} = useTokenExchangeRate(nft.market?.currency ?? nft.currency, nft.chain);
 
   const marketUsdValue = () => {
     if (nft.market?.price) {
-      return tokenToUsdValue(nft.market.price);
+      return calculateValuesFromToken(nft.market.price).totalUSD;
     }
     return 0;
   };
