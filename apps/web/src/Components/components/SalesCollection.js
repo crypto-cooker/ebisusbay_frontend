@@ -14,6 +14,7 @@ import ImageService from "@src/core/services/image";
 import {Center, Spinner, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
 import useDebounce from "@src/core/hooks/useDebounce";
 import {useAppDispatch} from "@market/state/redux/store/hooks";
+import { useMarketTokens } from '@src/global/hooks/use-supported-tokens';
 
 const SalesCollection = ({
   showLoadMore = true,
@@ -25,6 +26,7 @@ const SalesCollection = ({
   const dispatch = useAppDispatch();
   const [searchTerms, setSearchTerms] = useState('');
   const debouncedSearch = useDebounce(searchTerms, 500);
+  const knownMarketTokens = useMarketTokens();
 
   // const mobileListBreakpoint = 768;
   // const [tableMobileView, setTableMobileView] = useState(window.innerWidth > mobileListBreakpoint);
@@ -212,7 +214,7 @@ const SalesCollection = ({
                   </Link>
                 </Td>
                 <Td>{listing.nft.rank ?? '-'}</Td>
-                <Td style={{ minWidth: '100px' }}>{ethers.utils.commify(Math.round(listing.price))} {knownErc20Token(listing.currency)?.symbol ?? 'CRO'}</Td>
+                <Td style={{ minWidth: '100px' }}>{ethers.utils.commify(Math.round(listing.price))} {knownErc20Token(listing.currency, knownMarketTokens, listing.chain)?.symbol ?? 'CRO'}</Td>
                 <Td>
                   <Link href={`/account/${listing.seller}`}>
                     {shortAddress(listing.seller)}
