@@ -61,7 +61,7 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
   const [isPurchaseDialogOpen, setIsPurchaseDialogOpen] = useState(false);
   const [isPurchaseUnverifiedDialogOpen, setIsPurchaseUnverifiedDialogOpen] = useState(false);
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
-  const { tokenToUsdValue, tokenToCroValue } = useTokenExchangeRate(listing?.currency, listing?.chain);
+  const { calculateValuesFromToken } = useTokenExchangeRate(listing?.currency, listing?.chain);
   const showSmallOfferButton = useBreakpointValue(
     {base: true, sm: false},
     {fallback: 'sm'},
@@ -200,9 +200,9 @@ const PriceActionBar = ({ offerType, onOfferSelected, label, collectionName, isV
                           <Box as='span' ms={1} fontSize='sm' className="text-muted">
                             (
                             {listing.currency !== ethers.constants.AddressZero && (
-                              <Text as='span'>{commify(round(tokenToCroValue(listing.price)))} CRO / </Text>
+                              <Text as='span'>{commify(round(calculateValuesFromToken(listing.price).totalCRO))} CRO / </Text>
                             )}
-                            <Text as='span'>{usdFormat(tokenToUsdValue(listing.price))}</Text>
+                            <Text as='span'>{usdFormat(calculateValuesFromToken(listing.price).totalUSD)}</Text>
                             )
                           </Box>
                         )}
