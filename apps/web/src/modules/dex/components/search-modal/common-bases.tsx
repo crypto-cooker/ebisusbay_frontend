@@ -11,7 +11,6 @@ import {
   VStack,
   Wrap
 } from "@chakra-ui/react";
-import Row from "@dex/swap/components/tabs/swap/select-token/row";
 import React from "react";
 import {QuestionHelper} from "@dex/swap/components/tabs/swap/question-helper";
 import { CurrencyLogo } from "../logo";

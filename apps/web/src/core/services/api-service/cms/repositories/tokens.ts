@@ -7,7 +7,19 @@ class TokensRepository extends CmsRepository {
 
     return response.data;
   }
-  
+
+  async getCollectionMarketTokens(address: string, chainId: number) {
+    const response = await this.cms.get(
+      `tokens/collection/${address}`,
+      {
+        params: {
+          chainId
+        }
+      }
+    );
+
+    return response.data.data;
+  }
 }
 
 export default TokensRepository;

@@ -123,10 +123,17 @@ const CreateVaultBoostForm = ({vault, onComplete}: VaultBoostFormProps) => {
 
   const { user: rdUserContext } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
-  const vaultBalance = Number(ethers.utils.formatEther(vault.balance));
-  const vaultLengthDays = Number(vault.length / (86400));
-  const vaultMitama = Math.floor((vaultBalance * vaultLengthDays) / 1080);
   const vaultType = vault.frtnDeposit ? VaultType.LP : VaultType.TOKEN;
+  const isLpVault = vaultType === VaultType.LP;
+  const targetBalance = isLpVault ? vault.frtnDeposit : vault.balance;
+
+  const vaultMitama = useMemo(() => {
+    const vaultBalance = Number(ethers.utils.formatEther(targetBalance));
+    const vaultLengthDays = Number(vault.length / (86400));
+    let mitama = (vaultBalance * vaultLengthDays) / 1080;
+    const multiplier = isLpVault ? 2.5 * 0.98 : 1;
+    return Math.floor(mitama * multiplier);
+  }, [targetBalance, vault.length])
 
   const hourlyKobanRate = kobanHourlyRateByMitama(vaultType, vaultMitama);
   const minTroops = minimumTroopsByMitama(vaultType, vaultMitama);

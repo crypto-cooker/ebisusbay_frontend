@@ -26,6 +26,9 @@ import {
 import useUserAddedTokens from "@eb-pancakeswap-web/state/user/hooks/useUserAddedTokens";
 import {UnsafeCurrency} from "@eb-pancakeswap-web/config/constants/types";
 import { erc20Abi } from 'viem'
+import { useDexTokens } from '@src/global/hooks/use-supported-tokens';
+import { WrappedTokenInfo } from '@pancakeswap/token-lists';
+import { TokenList } from '@pancakeswap/token-lists/src';
 
 const mapWithoutUrls = (tokenMap?: TokenAddressMap<ChainId>, chainId?: ChainId) => {
   if (!tokenMap || !chainId) return {}
@@ -54,8 +57,26 @@ const mapWithoutUrlsBySymbol = (tokenMap?: TokenAddressMap<ChainId>, chainId?: C
  */
 export function useAllTokens(): { [address: string]: ERC20Token } {
   const { chainId } = useActiveChainId()
-  const tokenMap = useAtomValue(combinedTokenMapFromActiveUrlsAtom)
   const userAddedTokens = useUserAddedTokens()
+  const allTokens = useDexTokens();
+
+  const tokenMap = allTokens.reduce((acc, token) => {
+    if (!acc[token.chainId]) {
+      acc[token.chainId] = {};
+    }
+
+    acc[token.chainId][token.address] = {
+      list: { } as any, // replace this with any logic or property you need
+      token: new WrappedTokenInfo({
+        ...token,
+        logoURI: token.logo,
+        address: token.address as `0x${string}`}
+      )
+    };
+
+    return acc;
+  }, {} as Record<string, Record<string, { list: TokenList; token: WrappedTokenInfo }>>);
+
   return useMemo(() => {
     return (
       userAddedTokens

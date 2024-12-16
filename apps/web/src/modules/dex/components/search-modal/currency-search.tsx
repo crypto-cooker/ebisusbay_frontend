@@ -13,7 +13,7 @@ import { useAllLists, useInactiveListUrls } from '@eb-pancakeswap-web/state/list
 import { safeGetAddress } from '@eb-pancakeswap-web/utils'
 
 import { useTokenComparator } from '@eb-pancakeswap-web/hooks/useTokenComparator'
-import { useAllTokens, useIsUserAddedToken, useToken } from '@eb-pancakeswap-web/hooks/tokens'
+import { useAllTokens, useIsUserAddedToken, useToken } from '@eb-pancakeswap-web/hooks/tokens';
 import CommonBases from './common-bases'
 import CurrencyList from './currency-list'
 import ImportRow from './import-row'
@@ -27,8 +27,7 @@ import {
   InputRightElement,
   CloseButton
 } from "@chakra-ui/react";
-import useSupportedTokens from "@dex/hooks/use-supported-tokens";
-import {Virtuoso, VirtuosoHandle} from "react-virtuoso";
+import {VirtuosoHandle} from "react-virtuoso";
 
 interface CurrencySearchProps {
   selectedCurrency?: Currency | null
@@ -108,7 +107,7 @@ function CurrencySearch({
 
   const [invertSearchOrder] = useState<boolean>(false)
 
-  const allTokens = useAllTokens()
+  const allTokens = useAllTokens();
   // const { supportedTokens: allTokens } = useSupportedTokens();
 
   // if they input an address, use it

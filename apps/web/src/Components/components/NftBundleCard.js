@@ -63,12 +63,12 @@ const NftCard = ({ listing: nft, imgClass = 'marketplace', watermark = false, ca
   const [isHovered, setIsHovered] = useState(false);
   const isInCart = cart.isItemInCart(nft.market.id);
   const { onCopy } = useClipboard(nftUrl.toString());
-  const {tokenToUsdValue} = useTokenExchangeRate(nft.market?.currency ?? nft.currency, nft.chain);
+  const {calculateValuesFromToken} = useTokenExchangeRate(nft.market?.currency ?? nft.currency, nft.chain);
   const [runAuthedFunction] = useAuthedFunction();
 
   const marketUsdValue = () => {
     if (nft.market?.price) {
-      return tokenToUsdValue(nft.market.price);
+      return calculateValuesFromToken(nft.market.price).totalUSD;
     }
     return 0;
   };

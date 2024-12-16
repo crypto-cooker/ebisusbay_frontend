@@ -6,10 +6,10 @@ import UUID from "uuid-int";
 import {ciEquals, isGaslessListing} from "@market/helpers/utils";
 import NextApiService from "@src/core/services/api-service/next";
 import {getItemType} from "@market/helpers/chain";
-import {appConfig} from "@src/config";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
-import tokens from '@dex/config/tokens.json';
+import { ChainId } from '@pancakeswap/chains';
+import { useListingsTokens, useSupportedApiTokens } from '@src/global/hooks/use-supported-tokens';
 
 const generator = UUID(0);
 // const config = appConfig();
@@ -42,6 +42,7 @@ const useUpsertGaslessListings = (chainId?: number) => {
 
   const user = useUser();
   const contractService = useContractService();
+  const listableCurrencies = useListingsTokens(chainId ?? ChainId.CRONOS);
 
   const upsertGaslessListings = async (pendingListings: PendingListing[] | PendingListing, secureCancel: boolean = false) => {
     if (!Array.isArray(pendingListings)) pendingListings = [pendingListings];
@@ -99,7 +100,12 @@ const useUpsertGaslessListings = (chainId?: number) => {
           itemTypes[pendingListing.collectionAddress] = await getItemType(pendingListing.collectionAddress, pendingListing.chainId);
         }
 
-        const currencyAddress = pendingListing.currencySymbol ? tokens.tokens.find((token) => ciEquals(token.symbol, pendingListing.currencySymbol) && token.chainId === pendingListing.chainId)?.address : undefined;
+        const currencyAddress = pendingListing.currencySymbol ? listableCurrencies.find((token) => ciEquals(token.symbol, pendingListing.currencySymbol) && token.chainId === pendingListing.chainId)?.address : undefined;
+
+        if (!currencyAddress) {
+          throw new Error('Unsupported currency for listings');
+        }
+
         const listingSignerProps: ListingSignerProps = {
           price: pendingListing.price.toString(),
           itemType: itemTypes[pendingListing.collectionAddress],
