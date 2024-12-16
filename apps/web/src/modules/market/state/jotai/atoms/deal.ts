@@ -38,6 +38,14 @@ export interface BarterState {
   endDate?: Date;
   duration?: number;
   parentId?: string;
+  chainId: number;
+}
+
+export enum CreateDealStep {
+  CHOOSE_CHAIN,
+  CHOOSE_TAKER,
+  CHOOSE_MAKER,
+  CHOOSE_EXTRAS,
 }
 
 // Initial state for the barter deal
@@ -53,6 +61,7 @@ const initialBarterState: BarterState = {
     erc20: [],
   },
   duration: 7 * 24 * 60 * 60 * 1000,
+  chainId: 25
 };
 
 // Atom to hold the entire barter state
@@ -413,6 +422,19 @@ export const setParentIdAtom = atom(
       set(barterStateAtom, {
         ...currentState,
        parentId: id
+      });
+    }
+  }
+);
+
+export const setChainIdIdAtom = atom(
+  null,
+  (get, set, id: number) => {
+    const currentState = get(barterStateAtom);
+    if (currentState.chainId !== id) {
+      set(barterStateAtom, {
+        ...currentState,
+        chainId: id
       });
     }
   }

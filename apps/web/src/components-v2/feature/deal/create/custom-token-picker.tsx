@@ -16,19 +16,20 @@ import {
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {ethers} from "ethers";
 import {BarterToken} from "@market/state/jotai/atoms/deal";
-import useCurrencyBroker from "@market/hooks/use-currency-broker";
 import { wagmiConfig } from '@src/wagmi';
 import { Address, erc20Abi } from 'viem';
 import {readContracts} from "@wagmi/core";
-import { useChainId } from "wagmi";
 import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
+import useBarterDeal from '@src/components-v2/feature/deal/use-barter-deal';
 
 interface CustomTokenPickerProps {
   onAdd: (token: BarterToken) => void;
 }
 
 export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
-  const chainId = useChainId()
+  const { barterState } = useBarterDeal();
+  const chainId = barterState.chainId;
+
   const { knownCurrencies  } = useMultichainCurrencyBroker(chainId);
   const [tokenAddress, setTokenAddress] = useState<string>();
   const [quantity, setQuantity] = useState<string>();

@@ -27,6 +27,8 @@ import useCreateDeal from "@src/components-v2/feature/deal/use-create-deal";
 import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
 import {CheckCircleIcon} from "@chakra-ui/icons";
 import {useRouter} from "next/router";
+import { Step0ChooseChain } from '@src/components-v2/feature/deal/create/step-0-choose-chain';
+import { CreateDealStep } from '@market/state/jotai/atoms/deal';
 
 const sidebarWidth = '400px';
 
@@ -37,7 +39,7 @@ interface CreateDealProps {
 export const CreateDeal = ({address}: CreateDealProps) => {
   const user = useUser();
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(CreateDealStep.CHOOSE_CHAIN);
   const [executing, setExecuting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [createDeal, _] = useCreateDeal();
@@ -68,7 +70,9 @@ export const CreateDeal = ({address}: CreateDealProps) => {
     <>
       <DefaultContainer>
         <Box minH='calc(100vh - 289px)'>
-          {currentStep === 1 ? (
+          {currentStep === CreateDealStep.CHOOSE_CHAIN ? (
+            <Step0ChooseChain />
+          ) : currentStep === CreateDealStep.CHOOSE_TAKER ? (
             <Step1ChooseItems address={address} />
           ) : (
             <>

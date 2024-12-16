@@ -27,7 +27,7 @@ import { appConfig } from '@src/config';
 import { BarterToken } from '@market/state/jotai/atoms/deal';
 import { CustomTokenPicker } from '@src/components-v2/feature/deal/create/custom-token-picker';
 import { commify } from 'ethers/lib/utils';
-import { useBalance, useChainId, useReadContract } from 'wagmi';
+import { useBalance, useReadContract } from 'wagmi';
 import useMultichainCurrencyBroker, { MultichainBrokerCurrency } from '@market/hooks/use-multichain-currency-broker';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import { erc20Abi } from 'viem';
@@ -52,11 +52,11 @@ export const ChooseTokensTab = ({address}: {address: string}) => {
 
 const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: string}) => {
   const user = useUser();
-  const chainId = useChainId();
   const config = appConfig();
+  const { toggleOfferERC20, barterState } = useBarterDeal();
+  const chainId = barterState.chainId;
 
   const { whitelistedERC20DealCurrencies } = useMultichainCurrencyBroker(chainId);
-  const { toggleOfferERC20 } = useBarterDeal();
   const [quantity, setQuantity] = useState<string>();
   const [isWrapping, setIsWrapping] = useState(false);
 

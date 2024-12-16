@@ -36,13 +36,12 @@ import InventoryFilterContainer
 import InfiniteScroll from "react-infinite-scroll-component";
 import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
-import {toast} from 'react-toastify'
-import { useChainId } from "wagmi";
+import {toast} from 'react-toastify';
 
 export const ChooseNftsTab = ({address}: {address: string}) => {
   const user = useUser();
   const { toggleOfferNFT, barterState } = useBarterDeal();
-  const chainId = useChainId();
+  const chainId = barterState.chainId;
 
   const [collections, setCollections] = useState([]);
   const [searchTerms, setSearchTerms] = useState<string>();

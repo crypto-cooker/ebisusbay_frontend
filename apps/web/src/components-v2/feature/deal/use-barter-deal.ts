@@ -5,7 +5,7 @@ import {
   barterStateAtom,
   BarterToken,
   clearMakerDataAtom,
-  clearTakerDataAtom,
+  clearTakerDataAtom, setChainIdIdAtom,
   setDurationAtom,
   setEndDateAtom,
   setMakerAddressAtom,
@@ -20,7 +20,7 @@ import {
   updateERC20AmountSelectedAtom,
   updateOfferAmountSelectedAtom,
   updateOfferERC20AmountSelectedAtom
-} from "@market/state/jotai/atoms/deal";
+} from '@market/state/jotai/atoms/deal';
 import {RESET} from "jotai/utils";
 
 interface UseBarterDeal {
@@ -41,6 +41,7 @@ interface UseBarterDeal {
   setEndDate: (date: Date) => void;
   setDuration: (duration: number) => void;
   setParentId: (id?: string) => void;
+  setChainId: (id: number) => void;
   reset: () => void;
 }
 
@@ -63,6 +64,7 @@ const useBarterDeal = (): UseBarterDeal => {
   const [, setEndDate] = useAtom(setEndDateAtom);
   const [, setDuration] = useAtom(setDurationAtom);
   const [, setParentId] = useAtom(setParentIdAtom);
+  const [, setChainId] = useAtom(setChainIdIdAtom);
 
   return {
     barterState,
@@ -82,6 +84,7 @@ const useBarterDeal = (): UseBarterDeal => {
     setEndDate,
     setDuration,
     setParentId,
+    setChainId,
     reset: () => setBarterState(RESET)
   };
 };
