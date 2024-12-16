@@ -11,7 +11,9 @@ import {stripSpaces} from "@market/helpers/utils";
 import {CollectionPageContext, CollectionPageContextProps} from "@src/components-v2/feature/collection/context";
 import {ethers} from "ethers";
 import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container/filters/radio-filter";
-import useCurrencyBroker from '@market/hooks/use-currency-broker';
+import { useCollectionListingTokens } from '@src/global/hooks/use-supported-tokens';
+import { CmsToken } from '@src/components-v2/global-data-fetcher';
+import { getChainById } from '@src/helpers';
 
 const config = appConfig();
 
@@ -31,7 +33,21 @@ interface CollectionFilterContainerProps {
 const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, totalCount, traits, powertraits, children}: CollectionFilterContainerProps) => {
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
   const { queryParams, setQueryParams  } = useContext(CollectionPageContext) as CollectionPageContextProps;
-  const { getByCollection: currencies } = useCurrencyBroker();
+  const { tokens: currencies } = useCollectionListingTokens(collection.address, collection.chain);
+
+  const categorizedCurrencies = useMemo(() => {
+    const map = new Map<string, { key: string; label: string; items: CmsToken[] }>();
+
+    currencies.forEach(token => {
+      const chain = getChainById(token.chainId);
+      if (!map.has(chain.slug)) {
+        map.set(chain.slug, { key: chain.slug, label: chain.name, items: [] });
+      }
+      map.get(chain.slug)!.items.push(token);
+    });
+
+    return { categories: Array.from(map.values()) };
+  }, [currencies]);
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
     const params = queryParams;
@@ -212,9 +228,18 @@ const CollectionFilterContainer = ({collection, onFilter, filtersVisible, useMob
       {/*/>*/}
       <RadioFilter
         title='Currency'
-        items={currencies(collection.address).map((c) => (
-          {icon: c.image, label: c.symbol, key: `currency-${c.symbol.toLowerCase()}`, isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)}
-        ))}
+        items={{
+          categories: categorizedCurrencies.categories.map((category) => ({
+            key: category.key,
+            label: category.label,
+            items: category.items.map((c) => ({
+              icon: c.logo,
+              label: c.symbol,
+              key: `currency-${c.symbol.toLowerCase()}`,
+              isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)
+            }))
+          }))
+        }}
         onSelect={handleCurrencyFilter}
       />
       {!collection.is1155 && (

@@ -92,7 +92,7 @@ export interface RyoshiDynastiesApi {
     getUserPredictedFrtnRewards(farmId: number, chainId: number, address: string, signature: string): Promise<{chainId: number, farmId: number, boostValue: number, depositedLiquidityUSD: number, frtnPerOneTroop: number}>;
     upkeepMeeple(amount: number, address: string, signature: string): Promise<any>;
     resetMeepleUpkeep(address: string, signature: string): Promise<any>;
-    boostVault(vaultId: number, chainId: number, troops: string, address: string, signature: string): Promise<any>;
+    boostVault(vaultId: number, chainId: number, troops: number, address: string, signature: string): Promise<any>;
     getVaultBoosts(address: string): Promise<any>;
     claimVaultBoost(vaultId: number, address: string, signature: string): Promise<any>;
 }

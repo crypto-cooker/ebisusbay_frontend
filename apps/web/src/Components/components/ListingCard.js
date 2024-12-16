@@ -62,7 +62,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
   const isInCart = cart.isItemInCart(listing.listingId);
   const { onCopy } = useClipboard(nftUrl.toString());
   const [runAuthedFunction] = useAuthedFunction();
-  const {tokenUsdRate, tokenToUsdValue} = useTokenExchangeRate(listing.currency, listing.chain);
+  const {tokenUsdRate, calculateValuesFromToken} = useTokenExchangeRate(listing.currency, listing.chain);
 
   const getOptions = () => {
     const options = [];
@@ -262,7 +262,7 @@ const ListingCard = ({ listing, imgClass = 'marketplace', watermark }) => {
                   {!!tokenUsdRate && (
                     <Flex ps={5} className='text-muted'>
                       <Box as='span' ms={1}>
-                        ${tokenToUsdValue(listing.price) > 100000 ? siPrefixedNumber(tokenToUsdValue(listing.price)) : ethers.utils.commify(round(tokenToUsdValue(listing.price), 2))}
+                        ${calculateValuesFromToken(listing.price).totalUSD > 100000 ? siPrefixedNumber(calculateValuesFromToken(listing.price).totalUSD) : ethers.utils.commify(round(calculateValuesFromToken(listing.price).totalUSD, 2))}
                       </Box>
                     </Flex>
                   )}

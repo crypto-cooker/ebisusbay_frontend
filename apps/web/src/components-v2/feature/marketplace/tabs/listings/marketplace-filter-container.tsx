@@ -12,8 +12,10 @@ import {CollectionFilter} from "@src/components-v2/shared/filter-container/filte
 import {ciEquals, isCollectionListable} from "@market/helpers/utils";
 import {chains} from "@src/wagmi";
 import {useUserShowTestnet} from "@eb-pancakeswap-web/state/user/hooks/useUserShowTestnet";
-import useCurrencyBroker from '@market/hooks/use-currency-broker';
 import {ChainLogo} from "@dex/components/logo";
+import { useMarketTokens } from '@src/global/hooks/use-supported-tokens';
+import { getChainById } from '@src/helpers';
+import { CmsToken } from '@src/components-v2/global-data-fetcher';
 
 const config = appConfig();
 
@@ -35,7 +37,22 @@ interface MarketplaceFilterContainerProps {
 const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, totalCount, children}: MarketplaceFilterContainerProps) => {
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
   const { queryParams, setQueryParams  } = useContext(MarketplacePageContext) as MarketplacePageContextProps;
-  const { listingCurrencies } = useCurrencyBroker();
+  const listingCurrencies = useMarketTokens();
+
+  const categorizedListingCurrencies = useMemo(() => {
+    const map = new Map<string, { key: string; label: string; items: CmsToken[] }>();
+
+    listingCurrencies.forEach(token => {
+      const chain = getChainById(token.chainId);
+      if (!map.has(chain.slug)) {
+        map.set(chain.slug, { key: chain.slug, label: chain.name, items: [] });
+      }
+      map.get(chain.slug)!.items.push(token);
+    });
+
+    return { categories: Array.from(map.values()) };
+  }, [listingCurrencies]);
+
   const [showTestnet] = useUserShowTestnet()
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
@@ -169,9 +186,18 @@ const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, on
       />
       <RadioFilter
         title='Currency'
-        items={listingCurrencies.map((c) => (
-          {icon: c.image, label: c.symbol, key: `currency-${c.symbol.toLowerCase()}`, isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)}
-        ))}
+        items={{
+          categories: categorizedListingCurrencies.categories.map((category) => ({
+            key: category.key,
+            label: category.label,
+            items: category.items.map((c) => ({
+              icon: c.logo,
+              label: c.symbol,
+              key: `currency-${c.symbol.toLowerCase()}`,
+              isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)
+            }))
+          }))
+        }}
         onSelect={handleCurrencyFilter}
       />
       <RangeFilter

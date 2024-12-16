@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {specialImageTransform} from '@market/helpers/hacks';
 import {AnyMedia} from '@src/components-v2/shared/media/any-media';
 import {getCollectionMetadata} from '@src/core/api';
@@ -63,12 +63,13 @@ import {QuestionOutlineIcon} from '@chakra-ui/icons';
 import {CurrencyLogo} from "@dex/components/logo";
 import {useContract} from "@eb-pancakeswap-web/hooks/useContract";
 import {Address, erc721Abi} from "viem";
-import {useConfig} from "wagmi";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
 import {useAppChainConfig} from "@src/config/hooks";
-import useMultichainCurrencyBroker, {MultichainBrokerCurrency} from "@market/hooks/use-multichain-currency-broker";
+import {MultichainBrokerCurrency} from "@market/hooks/use-multichain-currency-broker";
+import { useCollectionListingTokens } from '@src/global/hooks/use-supported-tokens';
+import { useSerializedNativeCurrency } from '@src/global/hooks/use-serialized-native-currency';
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 5;
@@ -123,7 +124,7 @@ interface MakeGaslessListingDialogProps {
 }
 
 export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing }: MakeGaslessListingDialogProps) {
-  const { nativeCurrency, getByCollection } = useMultichainCurrencyBroker(nft.chain);
+  const nativeCurrency = useSerializedNativeCurrency(nft.chain);
 
   // Input states
   const [salePrice, setSalePrice] = useState<number>();
@@ -150,21 +151,20 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const [secureCancel, setSecureCancel] = useState(false);
   const [isRyoshiToken, setIsRyoshiToken] = useState(false);
   const nftContract = useContract(nft.nftAddress, erc721Abi, { chainId: nft.chain });
-  const { chainId, isWrongNetwork } = useActiveChainId()
-  const { isLoading: isNetworkSwitching, canSwitch, switchNetworkAsync } = useSwitchNetwork();
+  const { chainId } = useActiveChainId()
+  const { switchNetworkAsync } = useSwitchNetwork();
   const { callWithGasPrice } = useCallWithGasPrice()
   const { config: appChainConfig } = useAppChainConfig(nft.chain);
-  const wagConfig = useConfig();
-
+  const { tokens: collectionMarketTokens } = useCollectionListingTokens(nft.address ?? nft.nftAddress, nft.chain);
   const windowSize = useWindowSize();
 
   const user = useUser();
   const [upsertGaslessListings, responseUpsert] = useUpsertGaslessListings(nft.chain);
-  const { tokenToUsdValue, tokenToCroValue, croToTokenValue } = useTokenExchangeRate(selectedCurrency.address, nft.chain);
+  const { calculateValuesFromCro, calculateValuesFromToken } = useTokenExchangeRate(selectedCurrency?.address, nft.chain);
   const { usdValueForToken, croValueForToken } = useExchangeRate();
 
   const isBelowFloorPrice = (price: number) => {
-    const croPrice = tokenToCroValue(price);
+    const croPrice = calculateValuesFromToken(price).totalCRO;
     return (floorPrice !== 0 && ((floorPrice - croPrice) / floorPrice) * 100 > floorThreshold);
   };
 
@@ -190,7 +190,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     if (executingCreateListing || showConfirmButton) return;
 
     const newSalePrice = Math.round(floorPrice * (1 + percentage));
-    setSalePrice(round(croToTokenValue(newSalePrice)));
+    setSalePrice(round(calculateValuesFromCro(newSalePrice).totalTokens));
 
     if (isBelowFloorPrice(perUnitPrice)) {
       setShowConfirmButton(false);
@@ -205,10 +205,10 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft && user.wallet.address && appChainConfig) {
+    if (nft && user.wallet.address && appChainConfig, collectionMarketTokens.length > 0) {
       asyncFunc();
     }
-  }, [nft, user.wallet.address, appChainConfig]);
+  }, [nft, user.wallet.address, appChainConfig, collectionMarketTokens]);
 
   const getInitialProps = async () => {
     try {
@@ -259,9 +259,9 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
       //   setAllowedCurrencies(allowed);
       //   setSelectedCurrency(allowed[0]);
       // } else {
-        const allowed = getByCollection(nftAddress);
-        setAllowedCurrencies(allowed);
-        setSelectedCurrency(allowed[0]);
+      //   const allowed = getByCollection(nftAddress);
+        setAllowedCurrencies(collectionMarketTokens);
+        setSelectedCurrency(collectionMarketTokens[0]);
       // }
 
       setIsLoading(false);
@@ -549,9 +549,9 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       </FormControl>
                       <Box fontSize='sm' fontWeight='bold' className='text-muted'>
                         {!isNativeCro(selectedCurrency.address) && (
-                          <Text as='span'>{round(tokenToCroValue(salePrice ?? 0), 2)} CRO / </Text>
+                          <Text as='span'>{round(calculateValuesFromToken(salePrice ?? 0).totalCRO, 2)} CRO / </Text>
                         )}
-                        <Text as='span'>{usdFormat(tokenToUsdValue(salePrice ?? 0))} USD</Text>
+                        <Text as='span'>{usdFormat(calculateValuesFromToken(salePrice ?? 0).totalUSD)} USD</Text>
                       </Box>
                       <Flex justify='space-between' mb={3}>
                         {windowSize.width && windowSize.width > 377 && (
@@ -624,9 +624,9 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       <Flex justify='end' style={{marginBottom:0}}>
                         <Box fontSize='sm' className='text-muted'>
                           {!isNativeCro(selectedCurrency.address) && (
-                            <Text as='span' fontSize='sm' className='text-muted'>{round(tokenToCroValue(totalPrice))} CRO / </Text>
+                            <Text as='span' fontSize='sm' className='text-muted'>{round(calculateValuesFromToken(totalPrice).totalCRO)} CRO / </Text>
                           )}
-                          <Text as='span' fontSize='sm' className='text-muted'>{usdFormat(tokenToUsdValue(totalPrice))} USD</Text>
+                          <Text as='span' fontSize='sm' className='text-muted'>{usdFormat(calculateValuesFromToken(totalPrice).totalUSD)} USD</Text>
                         </Box>
                       </Flex>
                       <Flex justify='space-between'>
@@ -638,7 +638,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       <Flex justify='end' style={{marginBottom:0}}>
                         <Box fontSize='sm' className='text-muted'>
                           {!isNativeCro(selectedCurrency.address) && (
-                            <Text as='span' fontSize='sm' className='text-muted'>{round(croValueForToken(floorPrice, selectedCurrency.address))} {selectedCurrency?.name} / </Text>
+                            <Text as='span' fontSize='sm' className='text-muted'>{round(calculateValuesFromCro(floorPrice).totalTokens)} {selectedCurrency?.symbol} / </Text>
                           )}
                           <Text as='span' fontSize='sm' className='text-muted'>{usdFormat(usdValueForToken(floorPrice))} USD</Text>
                         </Box>
@@ -656,9 +656,9 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                       <Flex justify='end' style={{marginBottom:0}}>
                         <Box fontSize='sm' className='text-muted'>
                           {!isNativeCro(selectedCurrency.address) && (
-                            <Text as='span' fontWeight='bold' fontSize='sm' className='text-muted'>{round(tokenToCroValue(getYouReceiveViewValue()))} CRO / </Text>
+                            <Text as='span' fontWeight='bold' fontSize='sm' className='text-muted'>{round(calculateValuesFromToken(getYouReceiveViewValue()).totalCRO)} CRO / </Text>
                           )}
-                          <Text as='span' fontWeight='bold' fontSize='sm' className='text-muted'>{usdFormat(tokenToUsdValue(getYouReceiveViewValue()))} USD</Text>
+                          <Text as='span' fontWeight='bold' fontSize='sm' className='text-muted'>{usdFormat(calculateValuesFromToken(getYouReceiveViewValue()).totalUSD)} USD</Text>
                         </Box>
                       </Flex>
                     </Box>
@@ -680,7 +680,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                         {showConfirmButton ? (
                           <>
                             <div className="alert alert-danger my-auto mb-2 fw-bold text-center">
-                              The desired price is {(100 - ((tokenToCroValue(salePrice ?? 0)) * 100 / floorPrice)).toFixed(1)}% below the current floor price of {floorPrice} CRO. Are you sure?
+                              The desired price is {(100 - ((calculateValuesFromCro(salePrice ?? 0).totalTokens) * 100 / floorPrice)).toFixed(1)}% below the current floor price of {floorPrice} CRO. Are you sure?
                             </div>
                             {executingCreateListing && (
                               <div className="mb-2 text-center fst-italic">Please check your wallet for confirmation</div>

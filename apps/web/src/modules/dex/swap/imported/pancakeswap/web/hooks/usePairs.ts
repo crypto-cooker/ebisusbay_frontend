@@ -3,8 +3,6 @@ import { useMemo } from 'react'
 
 import { wrappedCurrency } from '@eb-pancakeswap-web/utils/wrappedCurrency'
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId'
-import {useGetPairs} from "@eb-pancakeswap-web/hooks/useGetPairs";
-import {parseUnits} from "ethers/lib/utils";
 import { useMultipleContractSingleData } from '@eb-pancakeswap-web/state/multicall/hooks'
 
 export enum PairState {

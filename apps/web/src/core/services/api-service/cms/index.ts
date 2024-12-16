@@ -280,7 +280,11 @@ class Cms {
     return await this.tokens.getSupportedTokens();
   }
 
-  async boostVault(vaultId: number, chainId: number, troops: string, address: string, signature: string) {
+  async getCollectionMarketTokens(address: string, chainId: number) {
+    return await this.tokens.getCollectionMarketTokens(address, chainId);
+  }
+
+  async boostVault(vaultId: number, chainId: number, troops: number, address: string, signature: string) {
     return this.ryoshiDynasties.boostVault(vaultId, chainId, troops, address, signature);
   }
 

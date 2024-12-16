@@ -4,7 +4,6 @@
 // import {ChangeEvent, useEffect, useState} from "react";
 // import {ChevronDownIcon} from "@chakra-ui/icons";
 // import {ResponsiveChooseTokenDialog} from "@dex/components/swap/responsive-choose-token-dialog";
-// import useSupportedTokens from "@dex/hooks/use-supported-tokens";
 // import {ciEquals} from "@market/helpers/utils";
 // import {ethers} from "ethers";
 // import {PrimitiveAtom, useAtom, useAtomValue, useSetAtom} from "jotai";

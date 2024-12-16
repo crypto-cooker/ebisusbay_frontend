@@ -59,7 +59,7 @@ interface VaultSummaryProps {
   onClosed: () => void;
 }
 
-const BOOSTS_ENABLED = false;
+const BOOSTS_ENABLED = true;
 
 const VaultSummary = (props: VaultSummaryProps) => {
   return props.vaultType === VaultType.LP ? <LpVaultSummary {...props} /> : <TokenVaultSummary {...props} />;
@@ -386,7 +386,7 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
                   + Increase Duration
                 </Button>
               )}
-              {canTokenize && (
+              {canTokenize && !activeBoost && (
                 <Button
                   leftIcon={<Icon as={FontAwesomeIcon} icon={faGem} />}
                   onClick={onTokenizeVault}

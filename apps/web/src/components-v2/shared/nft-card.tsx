@@ -80,12 +80,12 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
   const [openMakeOfferDialog, setOpenMakeOfferDialog] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { onCopy } = useClipboard(nftUrl.toString());
-  const {tokenToUsdValue} = useTokenExchangeRate(nft.market?.currency ?? nft.currency, nft.chain);
+  const {calculateValuesFromToken} = useTokenExchangeRate(nft.market?.currency ?? nft.currency, nft.chain);
   const [runAuthedFunction] = useAuthedFunction();
 
   const getListing = (): any => {
     if (nft.market?.price) {
-      const usdPrice = tokenToUsdValue(nft.market.price);
+      const usdPrice = calculateValuesFromToken(nft.market.price).totalUSD;
       return {
         id: nft.market.id,
         price: nft.market.price,
@@ -96,7 +96,7 @@ const BaseNftCard = ({ nft, imgClass = 'marketplace', watermark, is1155 = false,
       };
     }
     if (nft.listed) {
-      const usdPrice = tokenToUsdValue(nft.price);
+      const usdPrice = calculateValuesFromToken(nft.price).totalUSD;
       return {
         id: nft.listingId,
         price: nft.price,

@@ -13,6 +13,7 @@ import knownTokens from '@src/modules/dex/config/tokens.json';
 import { getBlockExplorerLink } from '@dex/utils';
 import { ChainId } from '@pancakeswap/chains';
 import { MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/types';
+import { CmsToken } from '@src/components-v2/global-data-fetcher';
 
 const config = appConfig();
 const drops = config.drops;
@@ -748,10 +749,14 @@ export const titleCase = (str: string) => {
   return splitStr.join(' ');
 };
 
-export const knownErc20Token = (address?: string) => {
+export const knownErc20Token = (
+  address: string,
+  tokenList: CmsToken[],
+  chainId: number
+) => {
   if (!address) return null;
 
-  const value = knownTokens.tokens.find((token) => ciEquals(token.address, address));
+  const value = tokenList.find((token) => ciEquals(token.address, address) && token.chainId === chainId);
   return value ?? null;
 };
 
@@ -759,8 +764,8 @@ export const isFortuneToken = (address: string) => {
   return ciEquals(address, config.tokens.frtn.address);
 };
 
-export const isErc20Token = (address: string) => {
-  return !!knownErc20Token(address);
+export const isErc20Token = (address: string, tokenList: any[], chainId: number) => {
+  return !!knownErc20Token(address, tokenList, chainId);
 };
 
 export const isNativeCro = (address: string) => {
