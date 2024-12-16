@@ -7,7 +7,6 @@ import { getTheme } from '@src/global/theme/theme';
 import {
   Box,
   Container,
-  Flex,
   HStack,
   NumberDecrementStepper,
   NumberIncrementStepper,
@@ -16,7 +15,7 @@ import {
   NumberInputStepper,
   Spacer,
   Spinner,
-  Stack,
+  Stack
 } from '@chakra-ui/react';
 import { TitledCard } from '@src/components-v2/foundation/card';
 import { PrimaryButton } from '@src/components-v2/foundation/button';
@@ -24,15 +23,12 @@ import { CustomTokenPicker } from '@src/components-v2/feature/deal/create/custom
 import { BarterToken } from '@market/state/jotai/atoms/deal';
 import { ciEquals } from '@market/helpers/utils';
 import { appConfig } from '@src/config';
-import { BigNumberish, Contract, ethers } from 'ethers';
-import { ERC20, ERC721 } from '@src/global/contracts/Abis';
-import { useQuery } from '@tanstack/react-query';
+import { ethers } from 'ethers';
 import { commify } from 'ethers/lib/utils';
 import useMultichainCurrencyBroker, { MultichainBrokerCurrency } from '@market/hooks/use-multichain-currency-broker';
-import { useChainId } from 'wagmi';
+import { useChainId, useReadContract } from 'wagmi';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
-import { readContract } from '@wagmi/core';
-import { wagmiConfig } from '@src/wagmi';
+import { erc20Abi } from 'viem';
 
 export const ChooseTokensTab = ({ address }: { address: string }) => {
   const { toggleSelectionERC20 } = useBarterDeal();
@@ -80,24 +76,17 @@ const WhitelistedTokenPicker = ({ balanceCheckAddress }: { balanceCheckAddress: 
     sortedWhitelistedERC20DealCurrencies[0],
   );
 
-  const { data: availableBalance, isLoading } = useQuery({
-    queryKey: ['balance', balanceCheckAddress, selectedCurrency?.address, chainId],
-    queryFn: async () => {
-      let count: any;
-      try {
-        count = await readContract(wagmiConfig, {
-          abi: ERC20,
-          chainId,
-          address: selectedCurrency?.address,
-          functionName: 'balanceOf',
-          args: [balanceCheckAddress],
-        });
-      } catch (error) {
-      }
-      return Number(ethers.utils.formatUnits(count, selectedCurrency?.decimals));
-    },
-    enabled: !!selectedCurrency,
+  const { data: tokenBalance, isLoading, error } = useReadContract({
+    address: selectedCurrency?.address,
+    abi: erc20Abi,
+    functionName: 'balanceOf',
+    chainId,
+    args: [balanceCheckAddress as `0x${string}`],
+    query: {
+      enabled: !!selectedCurrency
+    }
   });
+  const availableBalanceEth = Number(ethers.utils.formatUnits(tokenBalance ?? 0, selectedCurrency?.decimals ?? 18))
 
   const handleCurrencyChange = useCallback(
     (currency: SingleValue<MultichainBrokerCurrency>) => {
@@ -200,7 +189,7 @@ const WhitelistedTokenPicker = ({ balanceCheckAddress }: { balanceCheckAddress: 
         {!!selectedCurrency ? (
           <HStack fontSize="sm" align="end">
             <Box fontWeight="bold">Balance:</Box>
-            <Box>{isLoading ? <Spinner size="sm" /> : commify(availableBalance || 0)}</Box>
+            <Box>{isLoading ? <Spinner size="sm" /> : commify(availableBalanceEth || 0)}</Box>
           </HStack>
         ) : (
           <Spacer />

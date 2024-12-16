@@ -70,7 +70,7 @@ export const ChooseNftsTab = ({address}: {address: string}) => {
     setQueryParams(params);
 
     return ApiService.withoutKey().getWallet(address, params);
-  },[chainId])
+  }, [chainId, queryParams])
 
   const amountSelected = (nftAddress: string, nftId: string) => {
     const selectedNft = barterState.maker.nfts.find((bNft) => ciEquals(bNft.nftAddress, nftAddress) && bNft.nftId === nftId);

@@ -37,9 +37,6 @@ import { faHandshake } from '@fortawesome/free-solid-svg-icons';
 import { useUser } from '@src/components-v2/useUser';
 import { commify } from 'ethers/lib/utils';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
-import DynamicNftImage from '@src/components-v2/shared/media/dynamic-nft-image';
-import AnyMedia from '@src/components-v2/shared/media/any-media';
-import { nftCardUrl } from '@src/helpers/image';
 
 const previewSize = '50px';
 
@@ -339,62 +336,39 @@ const PreviewNftItem = ({ nft, ref, isOpen, onOpen, onClose, onSave, onRemove, i
           opacity={isPaused ? 0.5 : 'auto'}
           title={hoverTitle}
         >
-          <Box
+          <Avatar
+            src={ImageService.translate(nft.image).avatar()}
             w={previewSize}
             h={previewSize}
-            borderRadius="xs"
+            borderRadius="md"
             border={`1px solid ${borderColor}`}
-            position="relative"
           >
-            <DynamicNftImage nft={nft} address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
-              <AnyMedia
-                image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}
-                className={`card-img-top`}
-                title={nft.name}
-                url={''}
-                width={440}
-                height={440}
-                video={nft.video ?? nft.animationUrl ?? nft.animation_url}
-                thumbnail={
-                  !!nft.video || !!nft.animationUrl || !!nft.animation_url
-                    ? ImageService.translate(nft.video ?? nft.animationUrl ?? nft.animation_url).thumbnail()
-                    : undefined
-                }
-                usePlaceholder={true}
-              />
-            </DynamicNftImage>
-            {nft.balance > 1 && <Badge nft={nft} isPaused={isPaused} />}
-          </Box>
+            {nft.balance > 1 && (
+              <AvatarBadge
+                boxSize={6}
+                bg={isPaused ? 'gray.500' : '#218cff'}
+                fontSize={nft.amountSelected > 99 ? 'xs' : 'sm'}
+                border={`1px solid ${borderColor}`}
+              >
+                {nft.amountSelected > 999 ? '+' : nft.amountSelected}
+              </AvatarBadge>
+            )}
+          </Avatar>
         </Box>
       </PopoverTrigger>
       <PopoverContent p={5}>
         <PopoverArrow />
         <PopoverCloseButton />
         <Flex w="full" justify="space-between" my={4}>
-        <Box
-            w={previewSize}
-            h={previewSize}
-            borderRadius="xs"
-            border={`1px solid ${borderColor}`}
-            position="relative"
-          >
-            <DynamicNftImage nft={nft} address={nft.address ?? nft.nftAddress} id={nft.id ?? nft.nftId}>
-              <AnyMedia
-                image={nftCardUrl(nft.address ?? nft.nftAddress, nft.image)}
-                className={`card-img-top`}
-                title={nft.name}
-                url={''}
-                width={440}
-                height={440}
-                video={nft.video ?? nft.animationUrl ?? nft.animation_url}
-                thumbnail={
-                  !!nft.video || !!nft.animationUrl || !!nft.animation_url
-                    ? ImageService.translate(nft.video ?? nft.animationUrl ?? nft.animation_url).thumbnail()
-                    : undefined
-                }
-                usePlaceholder={true}
-              />
-            </DynamicNftImage>
+          <Box>
+            <Image
+              src={ImageService.translate(nft.image).avatar()}
+              w={previewSize}
+              h={previewSize}
+              borderRadius='md'
+              objectFit='cover'
+              border={`1px solid ${borderColor}`}
+            />
           </Box>
           <VStack spacing={1} align="end" fontSize="sm">
             <Box>{nft.name}</Box>

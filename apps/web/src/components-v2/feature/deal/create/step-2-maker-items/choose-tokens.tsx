@@ -1,13 +1,13 @@
-import {useUser} from "@src/components-v2/useUser";
-import useBarterDeal from "@src/components-v2/feature/deal/use-barter-deal";
-import React, {useCallback, useState} from "react";
-import ReactSelect, {SingleValue} from "react-select";
-import {toast} from "react-toastify";
-import {ciEquals, isWrappedeCro, round} from "@market/helpers/utils";
-import {Contract, ethers} from "ethers";
-import WCRO from "@src/global/contracts/WCRO.json";
-import {parseErrorMessage} from "@src/helpers/validator";
-import {getTheme} from "@src/global/theme/theme";
+import { useUser } from '@src/components-v2/useUser';
+import useBarterDeal from '@src/components-v2/feature/deal/use-barter-deal';
+import React, { useCallback, useMemo, useState } from 'react';
+import ReactSelect, { SingleValue } from 'react-select';
+import { toast } from 'react-toastify';
+import { ciEquals, isWrappedeCro, round } from '@market/helpers/utils';
+import { Contract, ethers } from 'ethers';
+import WCRO from '@src/global/contracts/WCRO.json';
+import { parseErrorMessage } from '@src/helpers/validator';
+import { getTheme } from '@src/global/theme/theme';
 import {
   Box,
   Container,
@@ -16,25 +16,22 @@ import {
   NumberIncrementStepper,
   NumberInput,
   NumberInputField,
-  NumberInputStepper, Spacer, Spinner,
-  Stack, VStack
-} from "@chakra-ui/react";
-import {Card, TitledCard} from "@src/components-v2/foundation/card";
-import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {appConfig} from "@src/config";
-import {BarterToken} from "@market/state/jotai/atoms/deal";
-import {CustomTokenPicker} from "@src/components-v2/feature/deal/create/custom-token-picker";
-import {commify} from "ethers/lib/utils";
-import {useQuery} from "@tanstack/react-query";
-import {ERC20} from "@src/global/contracts/Abis";
-import { useChainId } from "wagmi";
-import useMultichainCurrencyBroker, { MultichainBrokerCurrency } from "@market/hooks/use-multichain-currency-broker";
-import { CurrencyLogoByAddress } from "@dex/components/logo";
-import { readContract } from "@wagmi/core";
-import { wagmiConfig } from "@src/wagmi";
+  NumberInputStepper,
+  Spinner,
+  Stack,
+  VStack
+} from '@chakra-ui/react';
+import { TitledCard } from '@src/components-v2/foundation/card';
+import { PrimaryButton } from '@src/components-v2/foundation/button';
+import { appConfig } from '@src/config';
+import { BarterToken } from '@market/state/jotai/atoms/deal';
+import { CustomTokenPicker } from '@src/components-v2/feature/deal/create/custom-token-picker';
+import { commify } from 'ethers/lib/utils';
+import { useBalance, useChainId, useReadContract } from 'wagmi';
+import useMultichainCurrencyBroker, { MultichainBrokerCurrency } from '@market/hooks/use-multichain-currency-broker';
+import { CurrencyLogoByAddress } from '@dex/components/logo';
+import { erc20Abi } from 'viem';
 
-const config = appConfig();
-const readProvider = new ethers.providers.JsonRpcProvider(config.rpc.read);
 
 export const ChooseTokensTab = ({address}: {address: string}) => {
   const { toggleOfferERC20 } = useBarterDeal();
@@ -82,25 +79,38 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
 
   const [selectedCurrency, setSelectedCurrency] = useState<MultichainBrokerCurrency>(sortedWhitelistedERC20DealCurrencies[0]);
 
-  const { data: availableBalance, isLoading } = useQuery({
-    queryKey: ['balance', balanceCheckAddress, selectedCurrency.address, chainId],
-    queryFn: async () => {
-      const count: any = await readContract(wagmiConfig, {
-        abi:ERC20,
-        chainId,
-        address: selectedCurrency?.address,
-        functionName:'balanceOf',
-        args:[balanceCheckAddress]
-      })
-      let native = 0;
-      if (isWrappedeCro(selectedCurrency.address)) {
-        const cro = await readProvider.getBalance(balanceCheckAddress);
-        native = Number(ethers.utils.formatEther(cro));
-      }
-      return {native, selected: Number(ethers.utils.formatUnits(count, selectedCurrency.decimals))};
-    },
-    enabled: !!selectedCurrency,
-  });
+  const { data: tokenBalanceData, isLoading: isTokenBalanceLoading, error } = useReadContract({
+    address: selectedCurrency?.address,
+    abi: erc20Abi,
+    functionName: 'balanceOf',
+    args: [balanceCheckAddress as `0x${string}`],
+    chainId,
+    query: {
+      enabled: !!selectedCurrency
+    }
+  })
+
+  const { data: nativeBalanceData, isLoading: isNativeBalanceLoading } = useBalance({
+    address: balanceCheckAddress as `0x${string}`,
+    chainId,
+    query: {
+      enabled: !!selectedCurrency && isWrappedeCro(selectedCurrency.address)
+    }
+  })
+
+  const isLoading = isTokenBalanceLoading || isNativeBalanceLoading
+
+  const native = useMemo(() => {
+    if (!isWrappedeCro(selectedCurrency?.address) || !nativeBalanceData) return 0
+    return Number(ethers.utils.formatEther(nativeBalanceData.value))
+  }, [nativeBalanceData, selectedCurrency])
+
+  const selected = useMemo(() => {
+    if (!tokenBalanceData) return 0
+    return Number(ethers.utils.formatUnits(tokenBalanceData.toString(), selectedCurrency.decimals))
+  }, [tokenBalanceData, selectedCurrency])
+
+  const availableBalance = { native, selected };
 
   const handleCurrencyChange = useCallback((currency: SingleValue<MultichainBrokerCurrency>) => {
     if (!currency) return;
