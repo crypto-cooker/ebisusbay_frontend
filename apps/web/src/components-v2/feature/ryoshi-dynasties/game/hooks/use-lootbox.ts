@@ -39,9 +39,9 @@ export const useLootBoxInfo = (id: number) => {
   return { data, refetch, isLoading, error }
 }
 
-export const openLootBox = async (id: number) => {
+export const openLootBox = async (id: number, address:string, signature: string) => {
   try {
-    const res = await ApiService.withoutKey().ryoshiDynasties.openLootBox(id);
+    const res = await ApiService.withoutKey().ryoshiDynasties.openLootBox(id, address, signature);
     return res;
   } catch (error) {
     console.log(error)

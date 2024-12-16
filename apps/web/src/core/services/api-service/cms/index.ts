@@ -307,8 +307,8 @@ class Cms {
     return this.lootBox.getLootBoxInfo(id);
   }
 
-  async openLootBox(id:number) {
-    return this.lootBox.openLootBox(id);
+  async openLootBox(id:number, address: string, signature: string) {
+    return this.lootBox.openLootBox(id, address, signature);
   }
 }
 

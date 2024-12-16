@@ -99,7 +99,7 @@ export interface RyoshiDynastiesApi {
     getLootBoxList():Promise<any>;
     getLootBoxBalance(walletAddress:string): Promise<any>;
     getLootBoxInfo(id:number): Promise<any>;
-    openLootBox(id:number): Promise<any>;
+    openLootBox(id:number, address:string,  signature: string): Promise<any>;
 }
 
 // @deprecated move to OrderState once MAPI migrated
