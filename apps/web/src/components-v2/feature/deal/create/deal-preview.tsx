@@ -282,29 +282,6 @@ export const DealPreview = ({ onChangeStep, onConfirm, isConfirming }: DealPrevi
   );
 };
 
-const Badge = ({ nft, isPaused }: { nft: any; isPaused: boolean }) => {
-  const borderColor = useColorModeValue('#000', '#FFF');
-  return (
-    <Box
-      display={'flex'}
-      justifyContent="center"
-      alignItems="center"
-      position="absolute"
-      bottom={0}
-      right={0}
-      transform={"translate(25%, 25%)"}
-      rounded="full"
-      boxSize={6}
-      bg={isPaused ? 'gray.500' : '#218cff'}
-      fontSize={nft.amountSelected > 99 ? 'xs' : 'sm'}
-      fontWeight="bold"
-      border={`1px solid ${borderColor}`}
-    >
-      {nft.amountSelected > 999 ? '+' : nft.amountSelected}
-    </Box>
-  );
-};
-
 interface PreviewItemProps {
   nft: any;
   ref: MutableRefObject<any>;

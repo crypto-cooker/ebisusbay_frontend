@@ -31,6 +31,7 @@ import { useBalance, useReadContract } from 'wagmi';
 import useMultichainCurrencyBroker, { MultichainBrokerCurrency } from '@market/hooks/use-multichain-currency-broker';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
 import { erc20Abi } from 'viem';
+import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
 
 
 export const ChooseTokensTab = ({address}: {address: string}) => {
@@ -52,6 +53,7 @@ export const ChooseTokensTab = ({address}: {address: string}) => {
 
 const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: string}) => {
   const user = useUser();
+  const { chainId: userChainId } = useActiveChainId();
   const config = appConfig();
   const { toggleOfferERC20, barterState } = useBarterDeal();
   const chainId = barterState.chainId;
@@ -150,6 +152,11 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
 
     if (!quantity) {
       toast.error('An amount is required');
+      return;
+    }
+
+    if (userChainId !== chainId) {
+      toast.error('Switch wallet to correct deal chain');
       return;
     }
 
