@@ -1,15 +1,16 @@
-import {useContext, useEffect, useMemo, useState} from "react";
-import {ethers, providers} from "ethers";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { ethers, providers } from "ethers";
 import UserContractService from "@src/core/contractService";
 import ContractService from "@src/core/contractService";
-import {UserContext} from "@src/components-v2/shared/contexts/user";
-import {Config, useConnectorClient} from "wagmi";
+import { UserContext } from "@src/components-v2/shared/contexts/user";
+import { Config, useChainId, useConnectorClient } from "wagmi";
 import { useAppKit } from '@reown/appkit/react'
-import {useQueryClient} from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import * as Sentry from "@sentry/nextjs";
-import {shortAddress} from "@market/helpers/utils";
-import {Account, Address, Chain, Client, Transport} from "viem";
-import {getTheme} from "@src/global/theme/theme";
+import { shortAddress } from "@market/helpers/utils";
+import { Account, Address, Chain, Client, Transport } from "viem";
+import { getTheme } from "@src/global/theme/theme";
+import { useAppChainConfig } from "@src/config/hooks";
 
 export const useUser = () => {
   const context = useContext(UserContext);
@@ -24,14 +25,16 @@ export const useUser = () => {
   const { user, theme, disconnect, toggleTheme, onEscrowClaimed, onEscrowToggled, onStakingHarvested } = context;
 
   const refreshProfile = () => {
-    queryClient.refetchQueries({ queryKey: ['UserProfile', user.wallet.address], exact: true});
+    queryClient.refetchQueries({ queryKey: ['UserProfile', user.wallet.address], exact: true });
   }
 
   const requestTelemetry = () => {
-    Sentry.captureEvent({ message: 'requestTelemetry--hook', extra: {
-      provider: legacyProvider,
-      signer: legacyProvider?.signer
-    } });
+    Sentry.captureEvent({
+      message: 'requestTelemetry--hook', extra: {
+        provider: legacyProvider,
+        signer: legacyProvider?.signer
+      }
+    });
     context.requestTelemetry();
   }
 
@@ -86,17 +89,20 @@ const useLegacyProviderFunctions = () => {
 
 export const useContractService = () => {
   const user = useUser();
+  const chainId = useChainId();
+  
   const signer = useEthersSigner();
-  const [contractService, setContractService] = useState<UserContractService | null>(null);
 
-  useEffect(() => {
+  const [contractService, setContractService] = useState<UserContractService | null>(null);
+  const {config} = useAppChainConfig(chainId);
+
+  useEffect(() => { 
     async function initSigner() {
       if (!signer) {
         setContractService(null);
         return;
       }
-
-      setContractService(new UserContractService(signer));
+      setContractService(new UserContractService(signer, config));
     }
 
     if (user.wallet.isConnected && signer) {
@@ -104,9 +110,11 @@ export const useContractService = () => {
     } else {
       setContractService(null);
     }
-  }, [user.wallet.address, user.wallet.isConnected, signer]);
 
-  return contractService ?? (signer ? new ContractService(signer) : null);
+
+  }, [user.wallet.address, user.wallet.isConnected, signer, config]);
+
+  return contractService ?? (signer ? new ContractService(signer, config) : null);
 }
 
 /**
@@ -130,7 +138,7 @@ export function useEthersSigner({ chainId }: { chainId?: number } = {}) {
   const { data: walletClient } = useConnectorClient<Config>({ chainId });
   return useMemo(
     () => (walletClient?.chain ? walletClientToSigner(walletClient) : undefined),
-    [walletClient]
+    [walletClient, chainId]
   );
 }
 

@@ -72,7 +72,7 @@ export function useAllTokens(): { [address: string]: ERC20Token } {
       token: new WrappedTokenInfo({
         ...token,
         logoURI: token.logo,
-        address: token.address as `0x${string}`}
+        address: safeGetAddress(token.address as `0x${string}`)}
       )
     };
 
@@ -91,7 +91,7 @@ export function useAllTokens(): { [address: string]: ERC20Token } {
         token: new WrappedTokenInfo({
           ...token,
           symbol: token.ticker,
-          address: token.address as `0x${string}`,
+          address: safeGetAddress(token.address as `0x${string}`),
         })
       };
     } else {

@@ -7,8 +7,8 @@ import {parseErrorMessage} from "@src/helpers/validator";
 import {Box, Flex} from "@chakra-ui/react";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {appConfig} from "@src/config";
-
-const config = appConfig();
+import { getAppChainConfig, useAppChainConfig } from "@src/config/hooks";
+import { useChainId } from "wagmi";
 
 interface NftApprovalButtonProps {
   nft: {name: string, address: string};
@@ -16,7 +16,10 @@ interface NftApprovalButtonProps {
 }
 
 export const NftApprovalButton = ({nft, onApproved}: NftApprovalButtonProps) => {
+
   const user = useUser();
+  const chainId = useChainId();
+  const {config} = useAppChainConfig(chainId);
   const [isApproving, setIsApproving] = useState(false);
 
   const handleApproval = async () => {
@@ -56,7 +59,10 @@ interface Erc20ApprovalButtonProps {
 
 export const Erc20ApprovalButton = ({token, onApproved}: Erc20ApprovalButtonProps) => {
   const user = useUser();
+  const chainId = useChainId();
+  const {config} = useAppChainConfig(chainId);
   const [isApproving, setIsApproving] = useState(false);
+  
 
   const handleApproval = async () => {
     try {

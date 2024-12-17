@@ -37,6 +37,8 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {OrderState} from "@src/core/services/api-service/types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendarPlus, faClock, faEye} from "@fortawesome/free-solid-svg-icons";
+import { getChainById } from '@src/helpers';
+import { ChainLogo } from '@dex/components/logo';
 
 interface ResponsiveOffersTableProps {
   data: InfiniteData<IPaginatedList<AbbreviatedDeal>>;
@@ -68,6 +70,7 @@ const DataTable = ({data, state, onUpdate, onCancel, onSort}: ResponsiveOffersTa
           <Tr>
             <Th>From</Th>
             <Th>To</Th>
+            <Th>Chain</Th>
             <Th>Items</Th>
             <Th onClick={() => onSort('listingtime')} cursor='pointer'>Created</Th>
             {state === OrderState.COMPLETED ? (
@@ -92,6 +95,9 @@ const DataTable = ({data, state, onUpdate, onCancel, onSort}: ResponsiveOffersTa
                   </Td>
                   <Td>
                     <Link href={`/account/${deal.taker}`}>{shortAddress(deal.taker)}</Link>
+                  </Td>
+                  <Td>
+                    <ChainLogo chainId={deal.chain} />
                   </Td>
                   <Td>
                     {deal.maker_types.reduce((acc, item) => acc + item, 0)} : {deal.taker_types.reduce((acc, item) => acc + item, 0)}
@@ -160,9 +166,12 @@ const DataAccordion = ({data, state, onSort, onUpdate, onCancel}: ResponsiveOffe
                 <Flex w='100%' my={2}>
                   <Box flex='1' textAlign='left' my='auto'>
                     <VStack align='start' fontSize='sm'>
-                      <Box flex='1'>
-                        <strong>{shortAddress(deal.maker)}</strong> -{'>'} <strong>{shortAddress(deal.taker)}</strong>
-                      </Box>
+                      <HStack>
+                        <ChainLogo chainId={deal.chain} />
+                        <Box>
+                          <strong>{shortAddress(deal.maker)}</strong> -{'>'} <strong>{shortAddress(deal.taker)}</strong>
+                        </Box>
+                      </HStack>
                       <Box flex='1'>
                         {state === OrderState.COMPLETED ? (
                           <>Completed {deal.completed_at ? `${getLengthOfTime(Math.floor((new Date().getTime() - new Date(deal.completed_at).getTime()) / 1000))} ago` : 'N/A'}</>

@@ -13,6 +13,9 @@ import {ethers} from "ethers";
 import {chains} from "@src/wagmi";
 import {useUserShowTestnet} from "@eb-pancakeswap-web/state/user/hooks/useUserShowTestnet";
 import {ChainLogo} from "@dex/components/logo";
+import { useDealsTokens, useMarketTokens } from '@src/global/hooks/use-supported-tokens';
+import { CmsToken } from '@src/components-v2/global-data-fetcher';
+import { getChainById } from '@src/helpers';
 
 const config = appConfig();
 
@@ -30,9 +33,20 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
   const [showTestnet] = useUserShowTestnet()
 
-  const currencies = Object.entries(config.tokens)
-    .filter(([key, token]: [string, any]) => config.listings.currencies.available.includes(key))
-    .map(token => token[1]) as {name: string, symbol: string, address: string}[] ?? [];
+  const dealTokens = useDealsTokens();
+  const categorizedDealCurrencies = useMemo(() => {
+    const map = new Map<string, { key: string; label: string; items: CmsToken[] }>();
+
+    dealTokens.forEach(token => {
+      const chain = getChainById(token.chainId);
+      if (!map.has(chain.slug)) {
+        map.set(chain.slug, { key: chain.slug, label: chain.name, items: [] });
+      }
+      map.get(chain.slug)!.items.push(token);
+    });
+
+    return { categories: Array.from(map.values()) };
+  }, [dealTokens]);
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
     const params = queryParams;
@@ -215,13 +229,18 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
       />
       <RadioFilter
         title='Currency'
-        items={
-          [
-            {label: 'CRO', key: 'currency-cro', isSelected: filteredItems.some((fi) => fi.key === 'currency-cro')},
-            ...currencies.map((c) => (
-              {label: c.name, key: `currency-${c.symbol.toLowerCase()}`, isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)}
-            )),
-          ]}
+        items={{
+          categories: categorizedDealCurrencies.categories.map((category) => ({
+            key: category.key,
+            label: category.label,
+            items: category.items.map((c) => ({
+              icon: c.logo,
+              label: c.symbol,
+              key: `currency-${c.symbol.toLowerCase()}`,
+              isSelected: filteredItems.some((fi) => fi.key === `currency-${c.symbol.toLowerCase()}`)
+            }))
+          }))
+        }}
         onSelect={handleCurrencyFilter}
       />
     </Accordion>

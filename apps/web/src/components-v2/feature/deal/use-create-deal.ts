@@ -9,6 +9,7 @@ import useCreateOrderSigner, {ItemType, OfferItem, OrderSignerProps} from "@mark
 import {ethers} from "ethers";
 import {ciEquals} from "@market/helpers/utils";
 import {ApiService} from "@src/core/services/api-service";
+import { useChainId } from 'wagmi';
 
 const generator = UUID(0);
 const config = appConfig();
@@ -38,12 +39,14 @@ const useCreateDeal = () => {
     error: null,
   });
 
+  const chainId = useChainId();
   const [_, signOrder] = useCreateOrderSigner();
   const { requestSignature } = useEnforceSignature();
 
   const user = useUser();
 
   const createDeal = async (barterState: BarterState) => {
+
     setResponse({
       ...response,
       loading: true,
@@ -128,6 +131,7 @@ const useCreateDeal = () => {
         salt: orderSignerProps.salt,
         signature: objectSignature,
         digest: objectHash,
+        chainId,
         parentId: barterState.parentId,
       }, user.address!, signature);
 
