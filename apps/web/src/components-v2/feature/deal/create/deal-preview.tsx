@@ -123,7 +123,7 @@ export const DealPreview = ({ onChangeStep, onConfirm, isConfirming }: DealPrevi
   return (
     <>
       <Slide direction="bottom" in={true} style={{ zIndex: 20 }}>
-        <Box p={3} backgroundColor={sliderBackground} borderTop="1px solid white" pb={{ base: '60px', md: 0 }}>
+        <Box p={3} backgroundColor={sliderBackground} borderTop="1px solid white" pb={{ base: '60px', md: 2 }}>
           <Stack spacing={4} direction={{ base: 'column', sm: 'row' }} align={{ base: 'end', sm: 'center' }}>
             <Stack w="full" direction="row" align="center">
               <Wrap spacing={2} direction="row" justify="end" w="full">

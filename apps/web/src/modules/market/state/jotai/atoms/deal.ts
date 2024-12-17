@@ -110,7 +110,7 @@ export const clearTakerDataAtom = atom(
     set(barterStateAtom, {
       ...currentState,
       taker: {
-        address: '',
+        address: currentState.taker.address,
         nfts: [],
         erc20: [],
       },

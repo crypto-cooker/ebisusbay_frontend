@@ -6,6 +6,9 @@ import {appConfig} from '@src/config';
 import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
 import RadioFilter, {RadioItem} from "@src/components-v2/shared/filter-container/filters/radio-filter";
 import {OfferState, OrderState} from "@src/core/services/api-service/types";
+import { chains } from '@src/wagmi';
+import { ChainLogo } from '@dex/components/logo';
+import { useUserShowTestnet } from '@eb-pancakeswap-web/state/user/hooks/useUserShowTestnet';
 
 const config = appConfig();
 
@@ -20,6 +23,7 @@ interface DealsFilterContainerProps {
 
 const DealsFilterContainer = ({queryParams, onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, children}: DealsFilterContainerProps) => {
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
+  const [showTestnet] = useUserShowTestnet()
 
   const handleRemoveFilters = useCallback((items: FilteredItem[]) => {
     const params = queryParams;
@@ -49,6 +53,21 @@ const DealsFilterContainer = ({queryParams, onFilter, filtersVisible, useMobileM
 
   }, [queryParams, filteredItems]);
 
+  const handleChainFilter = useCallback((item: RadioItem) => {
+    const chainId = item.key.split('-')[1];
+
+    onFilter({...queryParams, chain: +chainId});
+
+    const i = filteredItems.findIndex((fi) => fi.key === item.key);
+    if (i === -1) {
+      setFilteredItems([
+        ...filteredItems.filter((fi) => !fi.key.startsWith('chain')),
+        {label: item.label, key: item.key}
+      ])
+    }
+
+  }, [queryParams, filteredItems]);
+
   const FilterAccordion = useMemo(() => (
     <Accordion defaultIndex={[0]} allowMultiple>
       <RadioFilter
@@ -61,6 +80,28 @@ const DealsFilterContainer = ({queryParams, onFilter, filtersVisible, useMobileM
           {label: 'Expired', key: 'status-expired', isSelected: filteredItems.some((fi) => fi.key === 'status-expired')}
         ]}
         onSelect={handleStatusFilter}
+      />
+      <RadioFilter
+        title='Chain'
+        items={
+          [
+            ...chains
+              .filter((chain) => {
+                if ('testnet' in chain && chain.testnet) {
+                  return showTestnet
+                }
+                return true
+              })
+              .map((c) => (
+                {
+                  label: c.name,
+                  key: `chain-${c.id}`,
+                  icon: <ChainLogo chainId={c.id} />,
+                  isSelected: filteredItems.some((fi) => fi.key === `chain-${c.id}`)
+                }
+              )),
+          ]}
+        onSelect={handleChainFilter}
       />
     </Accordion>
   ), [queryParams, filteredItems, handleStatusFilter]);
