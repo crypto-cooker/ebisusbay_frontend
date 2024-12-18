@@ -1,20 +1,20 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
-import nextApiService from "@src/core/services/api-service/next";
-import { useCallback, useState } from "react";
-import { PagedList } from "@src/core/services/api-service/paginated-list";
-import { Collection } from "@src/components-v2/shared/filter-container/filters/collection-filter";
-
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useCallback } from 'react';
+import { ApiService } from '@src/core/services/api-service';
+import { MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/types';
 
 
 export const useCollections = (search: string = '') => {
   const fetcher = useCallback( async ({pageParam = 1}:any) => {
-    const pageSize = 10;
-    const res = await nextApiService.getFilteredCollection({
+    const pageSize = 250;
+    return await ApiService.withoutKey().getCollections({
       page: pageParam,
       pageSize,
-      search
-    })
-    return new PagedList<Collection>(res.collections, pageParam, res.collections.length >= pageSize)
+      sortBy: 'name',
+      direction: 'asc',
+      search,
+      blacklist: [MapiCollectionBlacklist.LISTABLE, MapiCollectionBlacklist.UNLISTABLE]
+    });
   },[search])
 
   const { data, error, fetchNextPage, hasNextPage, status } = useInfiniteQuery({

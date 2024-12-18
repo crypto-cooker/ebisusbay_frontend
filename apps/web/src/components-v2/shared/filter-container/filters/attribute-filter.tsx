@@ -69,6 +69,11 @@ const AttributeFilter = ({attributes, currentFilters, onChange}: AttributeFilter
               <TableVirtuoso
                 style={{ height: Math.min(Object.entries(group[1]).length * 24, 200), width: '100%' }}
                 data={Object.entries(group[1]).sort((a, b) => a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1)}
+                components={{
+                  Table: (props) => (
+                    <table {...props} style={{ width: '100%'}} />
+                  )
+                }}
                 itemContent={(index, item: [string, any]) => (
                   <Flex w='100%' pe={1} key={stripSpaces(`trait-${group[0]}-${item[0]}`)} justify='space-between'>
                     <Checkbox
