@@ -19,11 +19,6 @@ import { CmsToken } from '@src/components-v2/global-data-fetcher';
 
 const config = appConfig();
 
-const collections = config.legacyCollections
-  .filter((c: any) => isCollectionListable(c))
-  .sort((a: any, b: any) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
-  .map((x: any) => ({avatar: x.metadata.avatar, name: x.name, address: x.address}));
-
 interface MarketplaceFilterContainerProps {
   queryParams: ListingsQueryParams;
   onFilter: (newParams: ListingsQueryParams) => void;
@@ -179,7 +174,7 @@ const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, on
   const FilterAccordion = useMemo(() => (
     <Accordion defaultIndex={[0]} allowMultiple>
       <CollectionFilter
-        collections={collections}
+        collections={[]}
         filteredAddresses={queryParams.collection ? (Array.isArray(queryParams.collection) ? queryParams.collection : [queryParams.collection]) : []}
         onFilter={handleCollectionFilter}
         showBalance={false}
