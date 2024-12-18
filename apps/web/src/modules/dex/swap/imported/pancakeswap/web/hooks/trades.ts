@@ -9,7 +9,7 @@ import { PairState, useV2Pairs } from './usePairs'
 
 // import { useUnsupportedTokens, useWarningTokens } from './tokens'
 import { useActiveChainId } from './useActiveChainId'
-import {useUserSingleHopOnly} from "@dex/swap/state/user/hooks";
+import { useUserSingleHopOnly } from '@pancakeswap/utils/user'
 import {ChainId} from "@pancakeswap/sdk";
 import {
   ADDITIONAL_BASES,
