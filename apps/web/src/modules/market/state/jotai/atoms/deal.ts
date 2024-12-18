@@ -9,6 +9,7 @@ export interface BarterNft {
   name: string;
   image: string;
   balance: number;
+  chainId: number;
   amountSelected: number;
 }
 
@@ -16,9 +17,10 @@ export interface BarterToken {
   address: string;
   symbol: string;
   name: string;
-  image: string;
+  image?: string;
   amount: number;
   decimals: number;
+  chainId: number;
 }
 
 export interface BarterState {
@@ -36,6 +38,14 @@ export interface BarterState {
   endDate?: Date;
   duration?: number;
   parentId?: string;
+  chainId: number;
+}
+
+export enum CreateDealStep {
+  CHOOSE_CHAIN,
+  CHOOSE_TAKER,
+  CHOOSE_MAKER,
+  CHOOSE_EXTRAS,
 }
 
 // Initial state for the barter deal
@@ -51,6 +61,7 @@ const initialBarterState: BarterState = {
     erc20: [],
   },
   duration: 7 * 24 * 60 * 60 * 1000,
+  chainId: 25
 };
 
 // Atom to hold the entire barter state
@@ -99,7 +110,7 @@ export const clearTakerDataAtom = atom(
     set(barterStateAtom, {
       ...currentState,
       taker: {
-        address: '',
+        address: currentState.taker.address,
         nfts: [],
         erc20: [],
       },
@@ -411,6 +422,19 @@ export const setParentIdAtom = atom(
       set(barterStateAtom, {
         ...currentState,
        parentId: id
+      });
+    }
+  }
+);
+
+export const setChainIdIdAtom = atom(
+  null,
+  (get, set, id: number) => {
+    const currentState = get(barterStateAtom);
+    if (currentState.chainId !== id) {
+      set(barterStateAtom, {
+        ...currentState,
+        chainId: id
       });
     }
   }

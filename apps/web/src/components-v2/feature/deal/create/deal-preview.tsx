@@ -31,11 +31,13 @@ import { PrimaryButton, SecondaryButton } from '@src/components-v2/foundation/bu
 import useBarterDeal from '@src/components-v2/feature/deal/use-barter-deal';
 import ImageService from '@src/core/services/image';
 import { toast } from 'react-toastify';
-import { BarterToken } from '@market/state/jotai/atoms/deal';
+import { BarterToken, CreateDealStep } from '@market/state/jotai/atoms/deal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandshake } from '@fortawesome/free-solid-svg-icons';
 import { useUser } from '@src/components-v2/useUser';
 import { commify } from 'ethers/lib/utils';
+import { CurrencyLogoByAddress } from '@dex/components/logo';
+import { useChainId } from 'wagmi';
 
 const previewSize = '50px';
 
@@ -47,6 +49,7 @@ interface DealPreviewProps {
 
 export const DealPreview = ({ onChangeStep, onConfirm, isConfirming }: DealPreviewProps) => {
   const user = useUser();
+  const userChainId = useChainId();
   const {
     barterState,
     updateAmountSelected,
@@ -60,21 +63,30 @@ export const DealPreview = ({ onChangeStep, onConfirm, isConfirming }: DealPrevi
   } = useBarterDeal();
   const sliderBackground = useColorModeValue('gray.50', 'gray.700');
 
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState<CreateDealStep>(CreateDealStep.CHOOSE_CHAIN);
 
   const handleNext = () => {
-    if (currentStep === 1) {
+    if (currentStep === CreateDealStep.CHOOSE_CHAIN) {
+      if (!barterState.chainId) {
+        toast.error('A chain is required');
+        return;
+      }
+    }
+
+    if (currentStep === CreateDealStep.CHOOSE_TAKER) {
       if (barterState.taker.nfts.length < 1 && barterState.taker.erc20.length < 1) {
         toast.error('At least one NFT or Token is required');
         return;
       }
     }
-    if (currentStep === 2) {
+
+    if (currentStep === CreateDealStep.CHOOSE_MAKER) {
       if (barterState.maker.nfts.length < 1 && barterState.maker.erc20.length < 1) {
         toast.error('At least one NFT or Token is required');
         return;
       }
     }
+
     setCurrentStep(currentStep + 1);
     onChangeStep(currentStep + 1);
   };
@@ -99,10 +111,19 @@ export const DealPreview = ({ onChangeStep, onConfirm, isConfirming }: DealPrevi
     return `${side}${token.address}`;
   };
 
+  const handleConfirm = () => {
+    if (barterState.chainId !== userChainId) {
+      toast.error('Please switch your wallet to the correct chain');
+      return;
+    }
+
+    onConfirm();
+  }
+
   return (
     <>
-      <Slide direction="bottom" in={true} style={{ zIndex: 20}}>
-        <Box p={3} backgroundColor={sliderBackground} borderTop="1px solid white" pb={{ base: '60px', md: 0 }}>
+      <Slide direction="bottom" in={true} style={{ zIndex: 20 }}>
+        <Box p={3} backgroundColor={sliderBackground} borderTop="1px solid white" pb={{ base: '60px', md: 2 }}>
           <Stack spacing={4} direction={{ base: 'column', sm: 'row' }} align={{ base: 'end', sm: 'center' }}>
             <Stack w="full" direction="row" align="center">
               <Wrap spacing={2} direction="row" justify="end" w="full">
@@ -190,8 +211,8 @@ export const DealPreview = ({ onChangeStep, onConfirm, isConfirming }: DealPrevi
                           newAmountSelected: amount,
                         });
                       }}
-                      onRemove={(nft: any) => {
-                        toggleOfferERC20(nft);
+                      onRemove={(token: any) => {
+                        toggleOfferERC20(token);
                       }}
                       isPaused={!user.wallet.isConnected}
                     />
@@ -210,33 +231,42 @@ export const DealPreview = ({ onChangeStep, onConfirm, isConfirming }: DealPrevi
             <Box>
               <HStack justify="end">
                 <HStack>
-                  {currentStep > 1 && <SecondaryButton onClick={handleBack}>Back</SecondaryButton>}
-                  {currentStep < 2 ? (
+                  {currentStep > CreateDealStep.CHOOSE_CHAIN && <SecondaryButton onClick={handleBack}>Back</SecondaryButton>}
+                  {currentStep === CreateDealStep.CHOOSE_CHAIN ? (
+                    <PrimaryButton
+                      onClick={handleNext}
+                      isDisabled={!barterState.chainId ?? false}
+                    >
+                      Next
+                    </PrimaryButton>
+                  ) : currentStep === CreateDealStep.CHOOSE_TAKER ? (
                     <PrimaryButton
                       onClick={handleNext}
                       isDisabled={barterState.taker.nfts.length < 1 && barterState.taker.erc20.length < 1}
                     >
                       Next
                     </PrimaryButton>
-                  ) : currentStep === 2 ? (
+                  ) : currentStep === CreateDealStep.CHOOSE_MAKER ? (
                     <PrimaryButton
                       onClick={handleNext}
                       isDisabled={
                         (barterState.taker.nfts.length < 1 && barterState.taker.erc20.length < 1) ||
                         (barterState.maker.nfts.length < 1 && barterState.maker.erc20.length < 1) ||
-                        !user.wallet.isConnected
+                        !user.wallet.isConnected ||
+                        (!barterState.chainId ?? false)
                       }
                     >
                       Review
                     </PrimaryButton>
                   ) : (
                     <PrimaryButton
-                      onClick={onConfirm}
+                      onClick={handleConfirm}
                       isLoading={isConfirming}
                       isDisabled={
                         (barterState.taker.nfts.length < 1 && barterState.taker.erc20.length < 1) ||
                         (barterState.maker.nfts.length < 1 && barterState.maker.erc20.length < 1) ||
-                        !user.wallet.isConnected
+                        !user.wallet.isConnected ||
+                        (!barterState.chainId ?? false)
                       }
                     >
                       Confirm
@@ -341,7 +371,8 @@ const PreviewNftItem = ({ nft, ref, isOpen, onOpen, onClose, onSave, onRemove, i
               src={ImageService.translate(nft.image).avatar()}
               w={previewSize}
               h={previewSize}
-              borderRadius="md"
+              borderRadius='md'
+              objectFit='cover'
               border={`1px solid ${borderColor}`}
             />
           </Box>
@@ -456,7 +487,9 @@ const PreviewTokenItem = ({
           overflow="hidden"
           title={`${token.amount} ${token.name}`}
         >
-          <Box p={1}>{token.image}</Box>
+          <Box p={1}>
+            <CurrencyLogoByAddress size="25px" address={token.address} chainId={token.chainId} />
+          </Box>
           <Box
             fontSize="xs"
             w="full"
@@ -474,7 +507,7 @@ const PreviewTokenItem = ({
         <PopoverCloseButton />
         <Flex w="full" justify="space-between" my={4}>
           <Box w={previewSize} h={previewSize}>
-            {token.image}
+            <CurrencyLogoByAddress address={token.address} chainId={token.chainId} />
           </Box>
           <VStack align="end" fontSize="sm" spacing={0}>
             <Box>{token.name}</Box>

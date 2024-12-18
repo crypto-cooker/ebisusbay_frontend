@@ -103,16 +103,17 @@ export const useTokenExchangeRate = (token: string, chainId: number = 25) => {
         }
       }
 
-      const subgraphToken = await info.getTokenData(token);
+      const subgraphToken = await info.getTokenData(token.toLowerCase());
 
       if (!subgraphToken?.data?.token) {
         throw new Error('Failed to fetch data');
       }
 
+      // For any token that doesn't have a CRO rate, derive it manually
       let cro = subgraphToken.data.token.derivedCRO;
       let derivedUSD = Number(subgraphToken.data.token.derivedUSD);
-      if (!cro) {
-        cro = derivedUSD/ Number(nativePrice.usdPrice)
+      if (!cro && !!nativePrice?.usdPrice) {
+        cro = derivedUSD / Number(nativePrice.usdPrice)
       }
 
       return {
@@ -135,9 +136,8 @@ export const useTokenExchangeRate = (token: string, chainId: number = 25) => {
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
     refetchOnWindowFocus: false,
-    enabled: !!chainId && !!token
+    enabled: !!chainId && !!token && globalPrices.prices.length > 0
   });
-
 
   const usdRate = data?.usd ?? 0;
   const croRate = data?.cro ?? 0;
