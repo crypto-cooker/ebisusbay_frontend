@@ -5,7 +5,7 @@
     "apps/*",
     "submodules/eb-pancakeswap-frontend/packages/*"
   ],
-  "packageManager": "pnpm@9.6.0",
+  "packageManager": "pnpm@9.15.0",
   "scripts": {
     "init-submodules": "git submodule update --init --recursive",
     "dev": "turbo run dev --filter=eb-frontend...",

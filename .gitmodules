@@ -1,3 +1,4 @@
 [submodule "submodules/eb-pancake-frontend"]
 	path = submodules/eb-pancake-frontend
-	url = https://github.com/zillarelli/eb-pancake-frontend.git
+	url = https://ebisusrob@bitbucket.org/ebisusbay/eb_pancake_frontend.git
+    branch = develop
