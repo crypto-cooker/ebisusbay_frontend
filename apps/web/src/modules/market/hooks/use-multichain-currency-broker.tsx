@@ -1,7 +1,7 @@
 import {ciEquals, isNativeCro} from '@market/helpers/utils';
 import {SupportedChainId} from "@src/config/chains";
 import {SerializedToken} from "@pancakeswap/swap-sdk-core";
-import { useSupportedApiTokens } from '@src/global/hooks/use-supported-tokens';
+import { useDexTokens, useSupportedApiTokens } from '@src/global/hooks/use-supported-tokens';
 import { useMemo } from 'react';
 import { ethers } from 'ethers';
 
@@ -57,8 +57,8 @@ const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
 
   return {
     knownCurrencies,
-    whitelistedDealCurrencies: knownCurrencies.filter((currency) => isDealCurrency(currency.symbol)),
-    whitelistedERC20DealCurrencies: knownCurrencies.filter((currency) => isDealCurrency(currency.symbol) && !isNativeCro(currency.address)),
+    whitelistedDealCurrencies: knownCurrencies.filter((currency) => currency.deals),
+    whitelistedERC20DealCurrencies: knownCurrencies.filter((currency) => currency.deals && !isNativeCro(currency.address)),
     listingCurrencies,
     getBySymbol,
     getByAddress,

@@ -35,7 +35,11 @@ const RadioFilter = ({title, items, onSelect, defaultSelection}: RadioFilterProp
     ? items
     : items.categories.flatMap(category => category.items);
 
+  const shouldUseIcons = allItems.some(item => !!item.icon);
+
   const iconForItem = (icon?: string | ReactNode) => {
+    if (!shouldUseIcons) return null;
+
     if (!icon) return <QuestionOutlineIcon boxSize={6} />;
     if (typeof icon === 'string') {
       return <Image src={icon} alt={''} width={6} height={6} rounded='full' />

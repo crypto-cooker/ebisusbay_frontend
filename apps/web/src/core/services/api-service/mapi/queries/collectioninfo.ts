@@ -1,5 +1,6 @@
 import Query from "@src/core/services/api-service/mapi/queries/index";
 import * as Yup from "yup";
+import { MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/types';
 
 export const collectionInfoQuerySchema: Yup.SchemaOf<CollectionInfoQueryParams> = Yup.object().shape({
   address: Yup.array().of(Yup.string()).optional(),
@@ -40,6 +41,7 @@ export interface CollectionInfoQueryParams {
   slug?: string;
   supported?: number;
   chain?: number;
+  blacklist?: MapiCollectionBlacklist | MapiCollectionBlacklist[]
 }
 
 export class CollectionInfoQuery extends Query<CollectionInfoQueryParams> {

@@ -1,7 +1,7 @@
 import { Currency, CurrencyAmount, Trade, TradeType } from '@pancakeswap/sdk';
 import { FRTN, STABLE_COIN, USDC, USDT } from '@pancakeswap/tokens';
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount';
-import { useUserSlippage } from '@pancakeswap/utils/user';
+import { useUserSingleHopOnly, useUserSlippage } from '@pancakeswap/utils/user';
 import { DEFAULT_INPUT_CURRENCY } from '@dex/swap/constants/exchange';
 import { useTradeExactIn, useTradeExactOut } from '@eb-pancakeswap-web/hooks/trades';
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';

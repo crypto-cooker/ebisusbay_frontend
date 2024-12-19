@@ -36,11 +36,12 @@ import InventoryFilterContainer
 import InfiniteScroll from "react-infinite-scroll-component";
 import {MobileSort} from "@src/components-v2/shared/drawers/mobile-sort";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
+import { toast } from "react-toastify";
 
 export const ChooseNftsTab = ({address}: {address: string}) => {
   const user = useUser();
   const { toggleSelectionNFT, barterState } = useBarterDeal();
-
+  const chainId = barterState.chainId;
 
   const [collections, setCollections] = useState([]);
   const [searchTerms, setSearchTerms] = useState<string>();
@@ -54,17 +55,21 @@ export const ChooseNftsTab = ({address}: {address: string}) => {
   );
   const [queryParams, setQueryParams] = useState<WalletsQueryParams>({
     sortBy: 'receivedTimestamp',
-    direction: 'desc'
+    direction: 'desc',
+    chain: chainId
   });
 
-  const fetcher = async ({ pageParam = 1 }) => {
+  const fetcher = useCallback( async ({ pageParam = 1 }) => {
     const params: WalletsQueryParams = {
+      ...queryParams,
       page: pageParam,
-      ...queryParams
+      chain: chainId
     }
 
+    setQueryParams(params);
+
     return ApiService.withoutKey().getWallet(address, params);
-  };
+  }, [chainId, queryParams])
 
   const amountSelected = (nftAddress: string, nftId: string) => {
     const selectedNft = barterState.taker.nfts.find((bNft) => ciEquals(bNft.nftAddress, nftAddress) && bNft.nftId === nftId);
@@ -73,7 +78,7 @@ export const ChooseNftsTab = ({address}: {address: string}) => {
   }
 
   const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery({
-    queryKey: ['Step1ChooseItems', address, queryParams],
+    queryKey: ['Step1ChooseItems', address, queryParams, chainId],
     queryFn: fetcher,
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
@@ -99,7 +104,10 @@ export const ChooseNftsTab = ({address}: {address: string}) => {
   }, []);
 
   const handleSelectItem = (nft: any) => {
-    toggleSelectionNFT(nft);
+    if(nft.chain == chainId) toggleSelectionNFT(nft);
+    else {
+      toast.warning('Please select the items on the connected chain.')
+    }
   }
 
   const userTheme =  user.theme;
@@ -171,7 +179,7 @@ export const ChooseNftsTab = ({address}: {address: string}) => {
         </SimpleGrid>
       </>
     );
-  }, [data, error, status, address, user.address, filtersVisible, handleSelectItem]);
+  }, [data, error, status, address, user.address, filtersVisible, handleSelectItem, chainId]);
 
   useEffect(() => {
     setQueryParams({...queryParams, search: debouncedSearch});

@@ -4,6 +4,7 @@ import {InvalidState, OrderState} from "@src/core/services/api-service/types";
 
 export const dealListQuerySchema: Yup.SchemaOf<DealListQueryParams> = Yup.object().shape({
   id: Yup.string().optional(),
+  chain: Yup.number().optional(),
   verified: Yup.number().optional(),
   maker: Yup.string().optional(),
   taker: Yup.string().optional(),
@@ -20,6 +21,7 @@ export const dealListQuerySchema: Yup.SchemaOf<DealListQueryParams> = Yup.object
 
 export interface DealListQueryParams {
   id?: string;
+  chain?: number;
   verified?: number;
   maker?: string;
   taker?: string;

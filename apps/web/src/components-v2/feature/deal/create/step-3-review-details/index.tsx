@@ -91,8 +91,8 @@ export const Step3ReviewDetails = ({address, onConfirm}: Step3ReviewDetailsProps
                   onChange={handleExpirationDateChange}
                   maxW='200px'
                 >
-                  {expirationDatesValues.map((time) => (
-                    <option value={time.value}>{time.label}</option>
+                  {expirationDatesValues.map((time, index) => (
+                    <option key={index} value={time.value}>{time.label}</option>
                   ))}
                 </Select>
               </FormControl>

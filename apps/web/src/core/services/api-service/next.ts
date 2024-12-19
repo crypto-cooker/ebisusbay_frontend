@@ -135,6 +135,13 @@ class NextApiService implements Api {
   getCollectionTraits(address: string): Promise<any> {
     throw new Error("Method not implemented.");
   }
+
+  async getFilteredCollection(query?: any): Promise<any> {
+    const response = await this.next.get('collections', {
+      params: query
+    });
+    return response.data
+  }
 }
 
 export default new NextApiService();

@@ -29,6 +29,7 @@ import { erc20Abi } from 'viem'
 import { useDexTokens } from '@src/global/hooks/use-supported-tokens';
 import { WrappedTokenInfo } from '@pancakeswap/token-lists';
 import { TokenList } from '@pancakeswap/token-lists/src';
+import { useGraduatedPuushTokens } from '@src/global/hooks/use-puush-tokens';
 
 const mapWithoutUrls = (tokenMap?: TokenAddressMap<ChainId>, chainId?: ChainId) => {
   if (!tokenMap || !chainId) return {}
@@ -59,6 +60,7 @@ export function useAllTokens(): { [address: string]: ERC20Token } {
   const { chainId } = useActiveChainId()
   const userAddedTokens = useUserAddedTokens()
   const allTokens = useDexTokens();
+  const puushTokens = useGraduatedPuushTokens();
 
   const tokenMap = allTokens.reduce((acc, token) => {
     if (!acc[token.chainId]) {
@@ -70,12 +72,32 @@ export function useAllTokens(): { [address: string]: ERC20Token } {
       token: new WrappedTokenInfo({
         ...token,
         logoURI: token.logo,
-        address: token.address as `0x${string}`}
+        address: safeGetAddress(token.address as `0x${string}`)}
       )
     };
 
     return acc;
   }, {} as Record<string, Record<string, { list: TokenList; token: WrappedTokenInfo }>>);
+
+  puushTokens.forEach(token => {
+    const chainKey = String(token.chainId);
+    if (!tokenMap[chainKey]) {
+      tokenMap[chainKey] = {};
+    }
+
+    if (!tokenMap[chainKey][token.address]) {
+      tokenMap[chainKey][token.address] = {
+        list: {} as TokenList,
+        token: new WrappedTokenInfo({
+          ...token,
+          symbol: token.ticker,
+          address: safeGetAddress(token.address as `0x${string}`),
+        })
+      };
+    } else {
+      // Already exists, merge logic if needed
+    }
+  });
 
   return useMemo(() => {
     return (

@@ -22,6 +22,7 @@ import ListingsGroup from "@src/components-v2/shared/listings-group";
 import DealsFilterContainer from "@src/components-v2/feature/account/profile/tabs/deals/deals-filter-container";
 import {DealListQueryParams} from "@src/core/services/api-service/mapi/queries/deallist";
 import DealsDataContainer from "@src/components-v2/feature/account/profile/tabs/deals/deals-data-container";
+import { useChainId } from "wagmi";
 
 interface DealsProps {
   address: string;
