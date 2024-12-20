@@ -48,16 +48,19 @@ COPY . .
 # Generate a partial monorepo with a pruned lockfile for a target workspace.
 RUN turbo prune eb-frontend --docker
 
-# Fetch git submodules
+# Git submodule - eb-pancake-frontend
 ARG BITBUCKET_CICD_USERNAME
 ENV BITBUCKET_CICD_USERNAME=$BITBUCKET_CICD_USERNAME
 
 ARG BITBUCKET_CICD_APP_PASSWORD
 ENV BITBUCKET_CICD_APP_PASSWORD=$BITBUCKET_CICD_APP_PASSWORD
 
-RUN echo "CI/CD user:" && echo $BITBUCKET_CICD_USERNAME
-RUN echo "CI/CD user password:" && echo $BITBUCKET_CICD_APP_PASSWORD
-RUN git submodule update --init --recursive
+# Clean submodule related references
+RUN rm -rf ./submodules && rm -rf .git/modules/submodules && git rm -r ./submodules
+# Add new submodule
+RUN git submodule add --name submodules/eb-pancake-frontend "https://${BITBUCKET_CICD_USERNAME}:${BITBUCKET_CICD_APP_PASSWORD}@bitbucket.org/ebisusbay/eb_pancake_frontend.git" "submodules/eb-pancake-frontend"
+# Submodule status
+RUN git submodule status
 
 ###############
 ### Builder ###

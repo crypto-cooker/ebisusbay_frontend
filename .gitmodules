@@ -1,4 +1,4 @@
 [submodule "submodules/eb-pancake-frontend"]
 	path = submodules/eb-pancake-frontend
-	url = https://${BITBUCKET_CICD_USERNAME}:${BITBUCKET_CICD_APP_PASSWORD}@bitbucket.org/ebisusbay/eb_pancake_frontend.git
-    branch = develop
+	url = https://cicd_ebisusbay@bitbucket.org/ebisusbay/eb_pancake_frontend.git
+	branch = develop
