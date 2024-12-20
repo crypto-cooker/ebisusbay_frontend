@@ -51,7 +51,6 @@ cd /<pathtorepository>/eb_web
 
 NOTE: Make sure that your Docker "Memory limit" is over 20GB as it will consume a lot of memory during the build!
 
-# Build & run project
 ```
 ./run-local-docker-compose.sh
 ```
