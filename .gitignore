@@ -51,3 +51,5 @@ src/components-v2/feature/ryoshi-dynasties/game/areas/lands/indv-meta/
 .turbo-docker-cache
 
 certificates
+
+.gitmodules

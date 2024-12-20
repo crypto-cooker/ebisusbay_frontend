@@ -1,5 +1,28 @@
 # Ebisu's Bay Web
 
+## Add submodule(s)
+
+### First time
+```
+git submodule add -b "develop" --name submodules/eb-pancake-frontend "https://cicd_ebisusbay@bitbucket.org/ebisusbay/eb_pancake_frontend.git" "submodules/eb-pancake-frontend"
+
+NOTE: Password: <1Password -> "Operations Admin" -> "Atlassian - Bitbucket Pipelines User (Ebisu's Bay)" -> see section "APP PASSWORD">
+```
+### After initialization
+```
+git submodule update --init --recursive
+```
+### (Only if required) - Reset submodule configuration
+```
+rm -rf ./submodules
+rm -rf .git/modules/submodules
+git rm -r ./submodules
+
+git submodule add -b "develop" --name submodules/eb-pancake-frontend "https://cicd_ebisusbay@bitbucket.org/ebisusbay/eb_pancake_frontend.git" "submodules/eb-pancake-frontend"
+
+NOTE: Password: <1Password -> "Operations Admin" -> "Atlassian - Bitbucket Pipelines User (Ebisu's Bay)" -> see section "APP PASSWORD">
+```
+
 ## Run locally (Windows)
 
 ### Step 1: Install dependencies
@@ -20,8 +43,7 @@ To set env vars, please refer to .env.example
 pnpm dev
 ```
 
-
-## Run locally (docker compose)
+## Run locally (Docker)
 
 ```
 cd /<pathtorepository>/eb_web
@@ -32,15 +54,8 @@ cd /<pathtorepository>/eb_web
 
 NOTE: Make sure that your Docker "Memory limit" is over 20GB as it will consume a lot of memory during the build!
 
-##### Fetch submodule(s)
-```
-# Prepare credentials
-# 1Password -> "Operations Admin" -> "Atlassian - Bitbucket Pipelines User (Ebisu's Bay)" -> see section "APP PASSWORD"
-export BITBUCKET_CICD_USERNAME="cicd_ebisusbay"
-export BITBUCKET_CICD_APP_PASSWORD="<1Password>"
-
-git submodule update --init --recursive
 # Build & run project
+```
 ./run-local-docker-compose.sh
 ```
 
@@ -104,6 +119,7 @@ aws sso login --profile ebisusbay-core
 ```
 
 Starting a session:
+
 ```
 aws ssm start-session \
     --target <DOCKER_HOST_INSTANCE_ID> \
