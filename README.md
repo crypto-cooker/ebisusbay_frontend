@@ -1,5 +1,25 @@
 # Ebisu's Bay Web
 
+## Add submodule(s)
+
+### First time
+```
+git submodule add -b "develop" --name submodules/eb-pancake-frontend "https://<username>@bitbucket.org/ebisusbay/eb_pancake_frontend.git" "submodules/eb-pancake-frontend"
+```
+### After initialization
+```
+git submodule update --init --recursive
+```
+### (Only if required) - Reset submodule configuration
+```
+rm -rf ./submodules
+rm -rf .git/modules/submodules
+git rm -r ./submodules
+git config -f .git/config --remove-section submodule.submodules/eb-pancake-frontend
+
+git submodule add -b "develop" --name submodules/eb-pancake-frontend "https://<username>@bitbucket.org/ebisusbay/eb_pancake_frontend.git" "submodules/eb-pancake-frontend"
+```
+
 ## Run locally (Windows)
 
 ### Step 1: Install dependencies
@@ -20,8 +40,7 @@ To set env vars, please refer to .env.example
 pnpm dev
 ```
 
-
-## Run locally (docker compose)
+## Run locally (Docker)
 
 ```
 cd /<pathtorepository>/eb_web
@@ -33,9 +52,6 @@ cd /<pathtorepository>/eb_web
 NOTE: Make sure that your Docker "Memory limit" is over 20GB as it will consume a lot of memory during the build!
 
 ```
-# Fetch submodule(s)
-git submodule update --init --recursive
-# Build & run project
 ./run-local-docker-compose.sh
 ```
 
@@ -99,6 +115,7 @@ aws sso login --profile ebisusbay-core
 ```
 
 Starting a session:
+
 ```
 aws ssm start-session \
     --target <DOCKER_HOST_INSTANCE_ID> \
