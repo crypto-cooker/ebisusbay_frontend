@@ -56,7 +56,7 @@ ARG BITBUCKET_CICD_APP_PASSWORD
 ENV BITBUCKET_CICD_APP_PASSWORD=$BITBUCKET_CICD_APP_PASSWORD
 
 # Clean submodule related references
-RUN rm -rf ./submodules && rm -rf .git/modules/submodules && if [ -d ./submodules ]; then git rm -r ./submodules; fi
+RUN rm -rf ./submodules && rm -rf .git/modules/submodules && git rm -r ./submodules
 # Add new submodule
 RUN git submodule add --name submodules/eb-pancake-frontend "https://${BITBUCKET_CICD_USERNAME}:${BITBUCKET_CICD_APP_PASSWORD}@bitbucket.org/ebisusbay/eb_pancake_frontend.git" "submodules/eb-pancake-frontend"
 # Submodule status
