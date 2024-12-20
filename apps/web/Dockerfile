@@ -56,6 +56,7 @@ ARG BITBUCKET_CICD_APP_PASSWORD
 ENV BITBUCKET_CICD_APP_PASSWORD=$BITBUCKET_CICD_APP_PASSWORD
 
 RUN echo "CI/CD user:" && echo $BITBUCKET_CICD_USERNAME
+RUN echo "CI/CD user password:" && echo $BITBUCKET_CICD_APP_PASSWORD
 RUN git submodule update --init --recursive
 
 ###############
