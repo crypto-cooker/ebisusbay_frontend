@@ -49,6 +49,10 @@ COPY . .
 RUN turbo prune eb-frontend --docker
 
 # Fetch git submodules
+ARG BITBUCKET_CICD_USERNAME
+ENV BITBUCKET_CICD_USERNAME=$BITBUCKET_CICD_USERNAME
+ARG BITBUCKET_CICD_APP_PASSWORD
+ENV BITBUCKET_CICD_APP_PASSWORD=$BITBUCKET_CICD_APP_PASSWORD
 RUN git submodule update --init --recursive
 
 ###############
