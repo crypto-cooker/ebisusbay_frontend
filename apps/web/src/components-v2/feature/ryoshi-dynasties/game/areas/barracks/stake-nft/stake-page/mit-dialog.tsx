@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { parseErrorMessage } from '@src/helpers/validator';
 import {
@@ -19,24 +19,28 @@ import {
   Text,
   VStack
 } from '@chakra-ui/react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import localFont from 'next/font/local';
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
-import { ChainId } from '@pancakeswap/chains';
 import { useSwitchNetwork } from '@eb-pancakeswap-web/hooks/useSwitchNetwork';
 import { useReadContract, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 import { Address, erc721Abi } from 'viem';
 import { useAppChainConfig, useAppConfig } from '@src/config/hooks';
-import { AppChainConfigZKEvm } from '@src/config/chains';
 import { useUser } from '@src/components-v2/useUser';
 import {
   BarracksStakeNftContext,
   BarracksStakeNftContextProps
 } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context';
-import useBarracksStakeNfts from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-barracks-stake-nfts';
 import { atom, useAtomValue, useSetAtom } from 'jotai';
 import { ApiService } from '@src/core/services/api-service';
 import useBarracksStakeMit from '../../../../hooks/use-barracks-stake-mit';
+import WalletNft from '@src/core/models/wallet-nft';
+import {
+  queryKeys
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/constants';
+import {
+  useMitMatcher
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/hooks';
 
 const gothamBook = localFont({ src: '../../../../../../../../../src/global/assets/fonts/Gotham-Book.woff2' });
 
@@ -46,51 +50,45 @@ const isResetAtom = atom(false);
 interface MitStakingDialogProps {
   isOpen: boolean;
   onClose: () => void;
+  mitNft?: WalletNft;
+  onConfirmAdd: (nft: WalletNft) => void;
+  onRemoved?: () => void;
 }
 
-const MitStakingDialog = ({isOpen, onClose}: MitStakingDialogProps) => {
+const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: MitStakingDialogProps) => {
   const user = useUser();
   const { config: appConfig } = useAppConfig();
   const { config: mitChainConfig } = useAppChainConfig(appConfig.mit.chainId);
-  const { stakedMit } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
+  const { stakedItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
 
+  // Only query for a random MIT if none explicitly provided to the component
   const { data: userMits } = useQuery({
-    queryKey: ['UserMits', user.address],
+    queryKey: queryKeys.barracksUnstakedMits(user.address!),
     queryFn: () => ApiService.withoutKey().getWallet(user.address!, {
       collection: [appConfig.mit.address],
       chain: mitChainConfig.chain.id,
       wallet: user.address
     }),
-    enabled: !!user.address
+    enabled: !!user.address && !mitNft
   });
 
-  const addMit = async () => {
-    console.log('add')
+  const handleConfirmAdd = () => {
+    let nft = mitNft;
+    if (!nft) {
+      nft = userMits?.data[0];
+      if (!nft) {
+        toast.error('Cannot find MIT to stake');
+        return;
+      }
+    }
+
+    onConfirmAdd(nft);
+    onClose();
   }
 
-  const removeMit = async () => {
-    console.log('remove')
-  }
-
-  const executeMit = async () => {
-    console.log('execute')
-  }
-
-  const mutation = useMutation({
-    mutationFn: executeMit,
-    onSuccess: (data) => {
-
-      toast.success('MIT has been set!');
-      onClose();
-    },
-    onError: (error) => {
-      console.log(error);
-      toast.error(parseErrorMessage(error));
-    },
-  });
-
-  const handleApply = async () => {
-    mutation.mutate();
+  const handleRemoved = () => {
+    onRemoved?.();
+    onClose();
   }
 
   return (
@@ -127,17 +125,16 @@ const MitStakingDialog = ({isOpen, onClose}: MitStakingDialogProps) => {
                 <Box fontWeight='bold'>Current inventory</Box>
                 <Spacer />
                 <Box fontSize='sm'>Required: 1</Box>
-                <Box fontSize='sm'>Quantity: {userMits?.data.length}</Box>
-                <Box fontSize='sm'>Staked: {!!stakedMit ? 'Yes' : 'No'}</Box>
+                <Box fontSize='sm'>Staked: {!!stakedItems.mit ? 'Yes' : 'No'}</Box>
               </VStack>
             </Stack>
           </Box>
         </ModalBody>
         <ModalFooter bg='#292626'>
-          {!!stakedMit ? (
-            <UnstakeActionBar onComplete={onClose} />
+          {!!stakedItems.mit ? (
+            <UnstakeActionBar onComplete={handleRemoved} />
           ) : (
-            <StakeActionBar onComplete={onClose} />
+            <StakeActionBar onComplete={handleConfirmAdd} />
           )}
         </ModalFooter>
       </ModalContent>
@@ -146,64 +143,20 @@ const MitStakingDialog = ({isOpen, onClose}: MitStakingDialogProps) => {
 }
 
 const StakeActionBar = ({onComplete}: {onComplete: () => void}) => {
-  const user = useUser();
   const { config: appConfig } = useAppConfig();
   const { config: mitChainConfig } = useAppChainConfig(appConfig.mit.chainId);
 
   const {chainId} = useActiveChainId();
   const { switchNetworkAsync } = useSwitchNetwork();
   const isWrongNetwork = chainId !== mitChainConfig.chain.id;
-  const [stakeNfts] = useBarracksStakeNfts();
   const isApproved = useAtomValue(isApprovedAtom);
-  const isReset = useAtomValue(isResetAtom);
-  const isReadyForStake = isApproved && isReset;
-  const { stakeMit } = useBarracksStakeMit();
+  const isReadyForStake = isApproved;
 
   const handleSyncNetwork = async () => {
     if (isWrongNetwork) {
       await switchNetworkAsync(mitChainConfig.chain.id);
     }
   }
-
-  const stake = async () => {
-    await handleSyncNetwork();
-
-    const mitNfts = await ApiService.withoutKey().getWallet(user.address!, {
-      collection: [appConfig.mit.address],
-      chain: mitChainConfig.chain.id,
-      wallet: user.address
-    });
-
-    if (mitNfts.data.length < 1) {
-      throw new Error('No MIT NFTs found');
-    }
-
-    const nft = {
-      nft: mitNfts.data[0],
-      amount: 1,
-      chainId: mitChainConfig.chain.id,
-      stake: {
-        multiplier: 1,
-        bonusTroops: 1,
-        isAlreadyStaked: false,
-        isActive: true,
-        refBalance: 0
-      }
-    }
-
-    await stakeMit(nft, mitChainConfig.chain.id);
-  }
-
-  const { mutate: handleStake, isPending: isExecuting } = useMutation({
-    mutationFn: stake,
-    onSuccess: () => {
-      toast.success('MIT staked!');
-      onComplete();
-    },
-    onError: (error) => {
-      toast.error(parseErrorMessage(error));
-    }
-  })
 
   return (
     <>
@@ -227,17 +180,12 @@ const StakeActionBar = ({onComplete}: {onComplete: () => void}) => {
             {!isApproved && (
               <ApprovalButton />
             )}
-            {!isReset && (
-              <ResetStakeButton />
-            )}
             {isReadyForStake && (
               <Button
                 w='full'
                 size='md'
-                onClick={() => handleStake()}
+                onClick={onComplete}
                 variant='ryoshiDynasties'
-                isLoading={isExecuting}
-                isDisabled={isExecuting}
                 loadingText='Staking'
               >
                 Stake MIT
@@ -254,12 +202,14 @@ const UnstakeActionBar = ({onComplete}: {onComplete: () => void}) => {
   const user = useUser();
   const { config: appConfig } = useAppConfig();
   const { config: mitChainConfig } = useAppChainConfig(appConfig.mit.chainId);
-  const { stakedNfts, stakedMit } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
+  const { stakedItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
 
   const {chainId} = useActiveChainId();
   const { switchNetworkAsync } = useSwitchNetwork();
   const isWrongNetwork = chainId !== mitChainConfig.chain.id;
   const { unstakeMit } = useBarracksStakeMit();
+  const queryClient = useQueryClient();
+  const { isMitNft } = useMitMatcher();
 
   const handleSyncNetwork = async () => {
     if (isWrongNetwork) {
@@ -270,7 +220,7 @@ const UnstakeActionBar = ({onComplete}: {onComplete: () => void}) => {
   const unstake = async () => {
     await handleSyncNetwork();
 
-    if (!stakedMit) {
+    if (!stakedItems.mit) {
       throw new Error ('No staked MIT found');
     }
 
@@ -281,13 +231,20 @@ const UnstakeActionBar = ({onComplete}: {onComplete: () => void}) => {
         await switchNetworkAsync(stakedChainId);
       }
 
-      await unstakeMit(stakedMit!, stakedChainId);
+      await unstakeMit(stakedItems.mit!, stakedChainId);
     }
   }
 
   const { mutate: handleStake, isPending: isExecuting } = useMutation({
     mutationFn: unstake,
     onSuccess: () => {
+      queryClient.setQueryData(queryKeys.barracksStakedNfts(user.address!), (oldData: any) => {
+        return {
+          ...oldData,
+          staked: oldData.staked.filter((nft: any) => !isMitNft(nft))
+        }
+      });
+
       toast.success('MIT unstaked!');
       onComplete();
     },
@@ -310,21 +267,19 @@ const UnstakeActionBar = ({onComplete}: {onComplete: () => void}) => {
           </Button>
         </Stack>
       ) : (
-        <VStack align='stretch' w='full'>
-          <Stack direction='row' w='full'>
-            <Button
-              w='full'
-              size='md'
-              onClick={() => handleStake()}
-              variant='ryoshiDynasties'
-              isLoading={isExecuting}
-              isDisabled={isExecuting}
-              loadingText='Staking'
-            >
-              Unstake MIT
-            </Button>
-          </Stack>
-        </VStack>
+        <Stack direction='row' w='full' justify='space-between' align='center'>
+          <Text fontSize='sm'>A MIT has already been staked</Text>
+          <Button
+            size='md'
+            onClick={() => handleStake()}
+            variant='ryoshiDynasties'
+            isLoading={isExecuting}
+            isDisabled={isExecuting}
+            loadingText='Unstaking'
+          >
+            Unstake MIT
+          </Button>
+        </Stack>
       )}
     </>
   )
@@ -391,66 +346,62 @@ const ApprovalButton = () => {
   );
 }
 
-const ResetStakeButton = () => {
-  const { pendingNfts, stakedNfts } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
-  const [stakeNfts] = useBarracksStakeNfts();
-  const { switchNetworkAsync } = useSwitchNetwork();
-  const {chainId} = useActiveChainId();
-  const setIsReset = useSetAtom(isResetAtom);
-
-  const reset = async () => {
-    const chainsToUnstake = [...new Set(pendingNfts.map(nft => nft.chainId))];
-
-    for (const stakedChainId of chainsToUnstake) {
-      if (chainId !== stakedChainId) {
-        await switchNetworkAsync(stakedChainId);
-      }
-
-      await stakeNfts(
-        [],
-        stakedNfts,
-        stakedChainId
-      );
-    }
-  }
-
-
-  const { mutate: handleReset, isPending: isExecuting } = useMutation({
-    mutationFn: reset,
-    onSuccess: () => {
-      setIsReset(true);
-      toast.error('NFTs unstaked');
-    },
-    onError: (err) => {
-      toast.error(parseErrorMessage(err));
-    }
-  })
-
-  useEffect(() => {
-    setIsReset(stakedNfts.length < 1 ?? false);
-  }, [stakedNfts]);
-
-  if (stakedNfts.length < 1) {
-    return null;
-  }
-
-  return (
-    <Button
-      w='full'
-      size='md'
-      onClick={() => handleReset()}
-      variant='ryoshiDynasties'
-      isLoading={isExecuting}
-      isDisabled={isExecuting}
-      loadingText='Resetting'
-    >
-      Reset Stake
-    </Button>
-  );
-}
-
-const SwitchNetworkComponent = () => {
-
-}
+// const ResetStakeButton = () => {
+//   const { pendingItems, stakedItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
+//   const [stakeNfts] = useBarracksStakeNfts();
+//   const { switchNetworkAsync } = useSwitchNetwork();
+//   const {chainId} = useActiveChainId();
+//   const setIsReset = useSetAtom(isResetAtom);
+//
+//   const reset = async () => {
+//     const chainsToUnstake = [...new Set(pendingItems.all.map(nft => nft.chainId))];
+//
+//     for (const stakedChainId of chainsToUnstake) {
+//       if (chainId !== stakedChainId) {
+//         await switchNetworkAsync(stakedChainId);
+//       }
+//
+//       await stakeNfts(
+//         [],
+//         stakedItems.all,
+//         stakedChainId
+//       );
+//     }
+//   }
+//
+//
+//   const { mutate: handleReset, isPending: isExecuting } = useMutation({
+//     mutationFn: reset,
+//     onSuccess: () => {
+//       setIsReset(true);
+//       toast.error('NFTs unstaked');
+//     },
+//     onError: (err) => {
+//       toast.error(parseErrorMessage(err));
+//     }
+//   })
+//
+//   useEffect(() => {
+//     setIsReset(pendingItems.all.length < 1 ?? false);
+//   }, [pendingItems]);
+//
+//   if (pendingItems.all.length < 1) {
+//     return null;
+//   }
+//
+//   return (
+//     <Button
+//       w='full'
+//       size='md'
+//       onClick={() => handleReset()}
+//       variant='ryoshiDynasties'
+//       isLoading={isExecuting}
+//       isDisabled={isExecuting}
+//       loadingText='Resetting'
+//     >
+//       Reset Stake
+//     </Button>
+//   );
+// }
 
 export default MitStakingDialog;

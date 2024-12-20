@@ -1,26 +1,16 @@
-import { Box, Flex, HStack, Icon, IconButton, Image, VStack } from '@chakra-ui/react';
-import { CloseIcon } from '@chakra-ui/icons';
+import { Box, Image } from '@chakra-ui/react';
 import React, { useContext } from 'react';
-import { MitNft } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/types';
 import {
   BarracksStakeNftContext,
   BarracksStakeNftContextProps
 } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context';
-import { useQuery } from '@tanstack/react-query';
-import { ApiService } from '@src/core/services/api-service';
-import { useAppChainConfig, useAppConfig } from '@src/config/hooks';
-import { useUser } from '@src/components-v2/useUser';
-import ImageService from '@src/core/services/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAward } from '@fortawesome/free-solid-svg-icons';
-import { ChainLogo } from '@dex/components/logo';
 
 interface StakingSlotProps {
   onSelect: () => void;
 }
 
 const StakingSlotMit = ({onSelect}: StakingSlotProps) => {
-  const { stakedMit } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
+  const { pendingItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
 
   const handleClick = () => {
     onSelect();
@@ -28,7 +18,7 @@ const StakingSlotMit = ({onSelect}: StakingSlotProps) => {
 
   return (
     <Box w='120px'>
-      {!!stakedMit ? (
+      {!!pendingItems.mit ? (
         <Box position='relative'>
           <Box
             p={2}
