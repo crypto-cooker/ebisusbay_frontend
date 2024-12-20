@@ -4,9 +4,7 @@
 
 ### First time
 ```
-git submodule add -b "develop" --name submodules/eb-pancake-frontend "https://cicd_ebisusbay@bitbucket.org/ebisusbay/eb_pancake_frontend.git" "submodules/eb-pancake-frontend"
-
-NOTE: Password: <1Password -> "Operations Admin" -> "Atlassian - Bitbucket Pipelines User (Ebisu's Bay)" -> see section "APP PASSWORD">
+git submodule add -b "develop" --name submodules/eb-pancake-frontend "https://<username>@bitbucket.org/ebisusbay/eb_pancake_frontend.git" "submodules/eb-pancake-frontend"
 ```
 ### After initialization
 ```
@@ -17,10 +15,9 @@ git submodule update --init --recursive
 rm -rf ./submodules
 rm -rf .git/modules/submodules
 git rm -r ./submodules
+git config -f .git/config --remove-section submodule.submodules/eb-pancake-frontend
 
-git submodule add -b "develop" --name submodules/eb-pancake-frontend "https://cicd_ebisusbay@bitbucket.org/ebisusbay/eb_pancake_frontend.git" "submodules/eb-pancake-frontend"
-
-NOTE: Password: <1Password -> "Operations Admin" -> "Atlassian - Bitbucket Pipelines User (Ebisu's Bay)" -> see section "APP PASSWORD">
+git submodule add -b "develop" --name submodules/eb-pancake-frontend "https://<username>@bitbucket.org/ebisusbay/eb_pancake_frontend.git" "submodules/eb-pancake-frontend"
 ```
 
 ## Run locally (Windows)
