@@ -32,8 +32,13 @@ cd /<pathtorepository>/eb_web
 
 NOTE: Make sure that your Docker "Memory limit" is over 20GB as it will consume a lot of memory during the build!
 
+##### Fetch submodule(s)
 ```
-# Fetch submodule(s)
+# Prepare credentials
+# 1Password -> "Operations Admin" -> "Atlassian - Bitbucket Pipelines User (Ebisu's Bay)" -> see section "APP PASSWORD"
+export BITBUCKET_CICD_USERNAME="cicd_ebisusbay"
+export BITBUCKET_CICD_APP_PASSWORD="<1Password>"
+
 git submodule update --init --recursive
 # Build & run project
 ./run-local-docker-compose.sh
