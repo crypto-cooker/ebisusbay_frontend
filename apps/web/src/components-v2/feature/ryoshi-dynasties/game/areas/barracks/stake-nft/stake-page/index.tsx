@@ -7,7 +7,11 @@ import {
 import {useAppConfig} from "@src/config/hooks";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {DEFAULT_CHAIN_ID, SUPPORTED_RD_CHAIN_CONFIGS} from "@src/config/chains";
-import {NextSlot, PendingNft} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/types";
+import {
+  MitNft,
+  NextSlot,
+  PendingNft
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/types';
 import {StakedToken} from "@src/core/services/api-service/graph/types";
 import {ApiService} from "@src/core/services/api-service";
 import {StakedTokenType} from "@src/core/services/api-service/types";
@@ -36,6 +40,7 @@ const StakePage = () => {
   const [originalPendingNfts, setOriginalPendingNfts] = useState<PendingNft[]>([]);
   const [stakedNfts, setStakedNfts] = useState<StakedToken[]>([]);
   const [nextSlot, setNextSlot] = useState<NextSlot>();
+  const [stakedMit, setStakedMit] = useState<StakedToken>();
 
   const uniqueCollections = useMemo(() => {
     return Array.from(
@@ -147,6 +152,7 @@ const StakePage = () => {
 
     (async () => {
       setStakedNfts(stakeInfo.staked);
+      setStakedMit(stakeInfo.specialStaked?.[0])
       const nfts = await mapStakedTokensToPending(stakeInfo.staked);
       setPendingNfts(nfts);
       setOriginalPendingNfts(nfts);
@@ -163,7 +169,8 @@ const StakePage = () => {
         nextSlot,
         selectedChainId,
         collections: uniqueCollections,
-        onNftsStaked: handleNftsStaked
+        onNftsStaked: handleNftsStaked,
+        stakedMit
       }}
     >
       <RdModalBox mx={1} textAlign='center'>

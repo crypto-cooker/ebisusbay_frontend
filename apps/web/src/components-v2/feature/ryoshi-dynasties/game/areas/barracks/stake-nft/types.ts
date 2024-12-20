@@ -19,3 +19,7 @@ export interface NextSlot {
     koban: number;
   }
 }
+
+export interface MitNft {
+  nft: WalletNft;
+}

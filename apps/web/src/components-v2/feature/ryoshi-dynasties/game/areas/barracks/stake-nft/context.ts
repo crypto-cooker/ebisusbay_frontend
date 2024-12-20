@@ -11,6 +11,7 @@ export interface BarracksStakeNftContextProps {
   nextSlot?: NextSlot;
   selectedChainId: number;
   collections: any[];
+  stakedMit?: StakedToken;
 }
 
 export const BarracksStakeNftContext = createContext<BarracksStakeNftContextProps | null>(null);

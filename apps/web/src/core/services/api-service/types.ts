@@ -42,7 +42,7 @@ export interface RyoshiDynastiesApi {
     presaleVault(address: string): Promise<PresaleVault | null>
     getUserStakedFortune(address: string): Promise<FortuneStakingAccount | null>;
     getErc20Account(address: string): Promise<Erc20Account | null>;
-    getStakedTokens(address: string, type: StakedTokenType): Promise<{ staked: StakedToken[], nextSlot?: {index: number, cost: {frtn: number, koban: number}} }>;
+    getStakedTokens(address: string, type: StakedTokenType): Promise<{ staked: StakedToken[], specialStaked: StakedToken[], nextSlot?: {index: number, cost: {frtn: number, koban: number}} }>;
     getTownHallUserStaked(address: string, collection: string, signature: string): Promise<StakedToken[]>;
     getTownHallUserInvalidStaked(address: string, signature: string): Promise<StakedToken[]>;
     getStakedTokenTotals(type: StakedTokenType): Promise<{[key: string]: number}>;

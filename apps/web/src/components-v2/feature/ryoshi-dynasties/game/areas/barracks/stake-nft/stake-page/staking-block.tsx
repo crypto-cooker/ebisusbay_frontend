@@ -6,7 +6,7 @@ import {ERC1155, ERC721} from "@src/global/contracts/Abis";
 import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import Fortune from "@src/global/contracts/Fortune.json";
-import {Box, SimpleGrid, Stack, VStack} from "@chakra-ui/react";
+import { Box, SimpleGrid, Stack, useDisclosure, VStack } from '@chakra-ui/react';
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useAppChainConfig} from "@src/config/hooks";
 import {useJsonRpcProviderForChain} from "@src/global/hooks/use-ethers-provider-for-chain";
@@ -21,6 +21,9 @@ import StakingSlot
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/staking-slot";
 import SlotUnlockDialog
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/slot-unlock-dialog";
+import StakingSlotMit
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/staking-slot-mit';
+import MitDialog from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/mit-dialog';
 
 interface StakingBlockProps {
   refetchSlotUnlockContext: () => void;
@@ -38,6 +41,7 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
   const [unlockApprovalState, setUnlockApprovalState] = useState<[BigNumber, boolean]>([BigNumber.from(0), false]);
   const [selectedLockedSlot, setSelectedLockedSlot] = useState<number>();
   const { switchNetworkAsync } = useSwitchNetwork();
+  const { isOpen: isMitOpen, onOpen: onOpenMit, onClose: onCloseMit } = useDisclosure();
 
   const { chainId: activeChainId} = useActiveChainId();
   const needsNetworkChange = activeChainId !== selectedChainId;
@@ -125,7 +129,10 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
   return (
     <Box>
       <VStack my={6} px={4} spacing={8}>
-        <SimpleGrid columns={{base: 2, sm: 3, md: 5}} gap={2}>
+        <SimpleGrid columns={{base: 2, sm: 3, md: 6}} gap={2}>
+          <StakingSlotMit
+            onSelect={onOpenMit}
+          />
           {[...Array(5).fill(0)].map((_, index) => (
             <StakingSlot
               key={index}
@@ -180,6 +187,10 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
           initialApprovalState={unlockApprovalState}
         />
       )}
+      <MitDialog
+        isOpen={isMitOpen}
+        onClose={onCloseMit}
+      />
     </Box>
   )
 }
