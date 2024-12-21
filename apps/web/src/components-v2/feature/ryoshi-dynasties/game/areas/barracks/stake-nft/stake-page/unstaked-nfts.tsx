@@ -151,7 +151,6 @@ const UnstakedNfts = ({isReady, address, collection}: UnstakedNftsProps) => {
         onClose={onCloseMit}
         mitNft={selectedMit}
         onConfirmAdd={handleAddMitNft}
-        onRemoved={() => console.log('removed')}
       />
     </>
   )

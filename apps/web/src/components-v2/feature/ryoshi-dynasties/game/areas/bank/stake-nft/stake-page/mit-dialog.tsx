@@ -28,17 +28,15 @@ import { Address, erc721Abi } from 'viem';
 import { useAppChainConfig, useAppConfig } from '@src/config/hooks';
 import { useUser } from '@src/components-v2/useUser';
 import {
-  BarracksStakeNftContext,
-  BarracksStakeNftContextProps
-} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context';
+  BankStakeNftContext,
+  BankStakeNftContextProps
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context';
 import { atom, useAtomValue, useSetAtom } from 'jotai';
 import { ApiService } from '@src/core/services/api-service';
-import useBarracksStakeMit from '../../../../hooks/use-barracks-stake-mit';
 import WalletNft from '@src/core/models/wallet-nft';
-import {
-  queryKeys
-} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/constants';
+import { queryKeys } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/constants';
 import { useMitMatcher } from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-mit-matcher';
+import useBankStakeMit from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-bank-stake-mit';
 
 const gothamBook = localFont({ src: '../../../../../../../../../src/global/assets/fonts/Gotham-Book.woff2' });
 
@@ -57,11 +55,11 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
   const user = useUser();
   const { config: appConfig } = useAppConfig();
   const { config: mitChainConfig } = useAppChainConfig(appConfig.mit.chainId);
-  const { stakedItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
+  const { stakedItems } = useContext(BankStakeNftContext) as BankStakeNftContextProps;
 
   // Only query for a random MIT if none explicitly provided to the component
   const { data: userMits } = useQuery({
-    queryKey: queryKeys.barracksUnstakedMits(user.address!),
+    queryKey: queryKeys.bankStakedMits(user.address!),
     queryFn: () => ApiService.withoutKey().getWallet(user.address!, {
       collection: [appConfig.mit.address],
       chain: mitChainConfig.chain.id,
@@ -200,12 +198,12 @@ const UnstakeActionBar = ({onComplete}: {onComplete: () => void}) => {
   const user = useUser();
   const { config: appConfig } = useAppConfig();
   const { config: mitChainConfig } = useAppChainConfig(appConfig.mit.chainId);
-  const { stakedItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
+  const { stakedItems } = useContext(BankStakeNftContext) as BankStakeNftContextProps;
 
   const {chainId} = useActiveChainId();
   const { switchNetworkAsync } = useSwitchNetwork();
   const isWrongNetwork = chainId !== mitChainConfig.chain.id;
-  const { unstakeMit } = useBarracksStakeMit();
+  const { unstakeMit } = useBankStakeMit();
   const queryClient = useQueryClient();
   const { isMitNft } = useMitMatcher();
 
@@ -236,7 +234,7 @@ const UnstakeActionBar = ({onComplete}: {onComplete: () => void}) => {
   const { mutate: handleStake, isPending: isExecuting } = useMutation({
     mutationFn: unstake,
     onSuccess: () => {
-      queryClient.setQueryData(queryKeys.barracksStakedNfts(user.address!), (oldData: any) => {
+      queryClient.setQueryData(queryKeys.bankStakedNfts(user.address!), (oldData: any) => {
         return {
           ...oldData,
           staked: oldData.staked.filter((nft: any) => !isMitNft(nft))
@@ -297,7 +295,7 @@ const ApprovalButton = () => {
     abi: erc721Abi,
     functionName: 'isApprovedForAll',
     chainId: mitChainConfig.chain.id,
-    args: [user.address as `0x${string}`, mitChainConfig.contracts.barracks]
+    args: [user.address as `0x${string}`, mitChainConfig.contracts.bank]
   });
 
   const handleApproval = async () => {
@@ -310,7 +308,7 @@ const ApprovalButton = () => {
         address: appConfig.mit.address as Address,
         abi: erc721Abi,
         functionName: 'setApprovalForAll',
-        args: [mitChainConfig.contracts.barracks, true],
+        args: [mitChainConfig.contracts.bank, true],
       });
       setApproval(true);
       toast.success('Contract approved for staking');
@@ -345,8 +343,8 @@ const ApprovalButton = () => {
 }
 
 // const ResetStakeButton = () => {
-//   const { pendingItems, stakedItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
-//   const [stakeNfts] = useBarracksStakeNfts();
+//   const { pendingItems, stakedItems } = useContext(BankStakeNftContext) as BankStakeNftContextProps;
+//   const [stakeNfts] = useBankStakeNfts();
 //   const { switchNetworkAsync } = useSwitchNetwork();
 //   const {chainId} = useActiveChainId();
 //   const setIsReset = useSetAtom(isResetAtom);

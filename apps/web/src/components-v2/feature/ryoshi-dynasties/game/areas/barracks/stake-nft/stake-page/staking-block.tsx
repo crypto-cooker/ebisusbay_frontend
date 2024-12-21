@@ -45,7 +45,7 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
   const [selectedLockedSlot, setSelectedLockedSlot] = useState<number>();
   const { switchNetworkAsync } = useSwitchNetwork();
   const { isOpen: isMitOpen, onOpen: onOpenMit, onClose: onCloseMit } = useDisclosure();
-  const {addNft} = useBarracksNftStakingHandlers();
+  const { addNft } = useBarracksNftStakingHandlers();
 
   const { chainId: activeChainId} = useActiveChainId();
   const needsNetworkChange = activeChainId !== selectedChainId;
@@ -134,9 +134,7 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
     <Box>
       <VStack my={6} px={4} spacing={8}>
         <SimpleGrid columns={{base: 2, sm: 3, md: 6}} gap={2}>
-          <StakingSlotMit
-            onSelect={onOpenMit}
-          />
+          <StakingSlotMit onSelect={onOpenMit} />
           {[...Array(5).fill(0)].map((_, index) => (
             <StakingSlot
               key={index}
@@ -195,7 +193,6 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
         isOpen={isMitOpen}
         onClose={onCloseMit}
         onConfirmAdd={addNft}
-        onRemoved={() => console.log('removed')}
       />
     </Box>
   )

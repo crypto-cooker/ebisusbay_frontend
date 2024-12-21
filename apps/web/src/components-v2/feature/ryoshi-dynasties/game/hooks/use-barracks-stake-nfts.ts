@@ -86,9 +86,9 @@ const useBarracksStakeNfts = () => {
         await stakeTx.wait();
       }
 
-      // if (newNfts.length === 0 && withdrawNfts.length === 0) {
-      //   throw new Error('No changes made')
-      // }
+      if (newNfts.length === 0 && withdrawNfts.length === 0) {
+        throw new Error('No changes made')
+      }
 
       setResponse({
         ...response,

@@ -1,18 +1,18 @@
-import React, {memo, useContext} from 'react';
-import {useRouter} from 'next/router';
-import {toast} from 'react-toastify';
-import {faInfoCircle, faLink, faMinus, faPlus, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {MenuPopup} from '@src/Components/components/chakra-components';
-import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {nftCardUrl} from "@src/helpers/image";
-import {Box, Flex, Heading, Spacer, useClipboard, useColorModeValue} from "@chakra-ui/react";
-import {appUrl, ciEquals} from "@market/helpers/utils";
-import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
+import React, { memo, useContext } from 'react';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import { faInfoCircle, faLink, faMinus, faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { MenuPopup } from '@src/Components/components/chakra-components';
+import { AnyMedia } from '@src/components-v2/shared/media/any-media';
+import { nftCardUrl } from '@src/helpers/image';
+import { Box, Flex, Heading, Spacer, useClipboard, useColorModeValue } from '@chakra-ui/react';
+import { appUrl, ciEquals } from '@market/helpers/utils';
+import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import {
   BankStakeNftContext,
   BankStakeNftContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context";
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context';
 
 interface StakingNftCardProps {
   nft: any;
@@ -85,11 +85,11 @@ const StakingNftCard = ({
   };
 
   const cartCount = () => {
-    return bankStakeNftContext.pendingNfts.filter((o) => o.nft.nftId === nft.nftId && ciEquals(o.nft.nftAddress, nft.nftAddress)).length;
+    return bankStakeNftContext.pendingItems.all.filter((o) => o.nft.nftId === nft.nftId && ciEquals(o.nft.nftAddress, nft.nftAddress)).length;
   };
 
   const stakedCount = () => {
-    return bankStakeNftContext.stakedNfts.reduce((acc, o) => {
+    return bankStakeNftContext.stakedItems.all.reduce((acc, o) => {
       if (o.tokenId === nft.nftId && ciEquals(o.contractAddress, nft.nftAddress)) {
         return acc + parseInt(o.amount);
       }

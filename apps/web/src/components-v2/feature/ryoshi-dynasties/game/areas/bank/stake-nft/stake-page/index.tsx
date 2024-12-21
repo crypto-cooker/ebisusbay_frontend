@@ -1,40 +1,53 @@
-import {Box, Flex, Select, Stack, Text} from "@chakra-ui/react";
-import React, {ChangeEvent, useContext, useEffect, useMemo, useState} from "react";
-import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
-import {DEFAULT_CHAIN_ID, SUPPORTED_RD_CHAIN_CONFIGS} from "@src/config/chains";
-import {BankStakeNftContext} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context";
-import {StakedTokenType} from "@src/core/services/api-service/types";
-import {ApiService} from "@src/core/services/api-service";
-import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {useUser} from "@src/components-v2/useUser";
+import { Box, Flex, Select, Stack } from '@chakra-ui/react';
+import React, { ChangeEvent, useContext, useEffect, useMemo, useState } from 'react';
+import RdTabButton from '@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button';
+import { DEFAULT_CHAIN_ID, SUPPORTED_RD_CHAIN_CONFIGS } from '@src/config/chains';
+import {
+  BankStakeNftContext,
+  PendingItems,
+  StakedItems
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context';
+import { StakedTokenType } from '@src/core/services/api-service/types';
+import { ApiService } from '@src/core/services/api-service';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useUser } from '@src/components-v2/useUser';
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {useAppConfig} from "@src/config/hooks";
-import {ciEquals} from "@market/helpers/utils";
-import {getNft} from "@src/core/api/endpoints/nft";
-import {NextSlot, PendingNft,} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/types";
-import {StakedToken} from "@src/core/services/api-service/graph/types";
+} from '@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context';
+import { ciEquals } from '@market/helpers/utils';
+import { getNft } from '@src/core/api/endpoints/nft';
+import { NextSlot, PendingNft } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/types';
+import { StakedToken } from '@src/core/services/api-service/graph/types';
 import StakingBlock
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/staking-block";
-import {queryKeys} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/constants";
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/staking-block';
+import { queryKeys } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/constants';
 import UnstakedNfts
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/unstaked-nfts";
-import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/unstaked-nfts';
+import { RdModalBox } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-modal';
+import useMitMatcher from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-mit-matcher';
 
 
 const StakePage = () => {
   const user = useUser();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const { config: appConfig } = useAppConfig();
   const queryClient = useQueryClient();
 
   const [selectedChainId, setSelectedChainId] = useState(DEFAULT_CHAIN_ID);
-  const [pendingNfts, setPendingNfts] = useState<PendingNft[]>([]);
   const [originalPendingNfts, setOriginalPendingNfts] = useState<PendingNft[]>([]);
-  const [stakedNfts, setStakedNfts] = useState<StakedToken[]>([]);
   const [nextSlot, setNextSlot] = useState<NextSlot>();
+
+  const [stakedItems, setStakedItems] = useState<StakedItems>({ all: [], common: [] });
+  const [pendingItems, setPendingItems] = useState<PendingItems>({ all: [], common: [] });
+  const { isMitNft } = useMitMatcher();
+
+  const handleSetPendingItems = (items: PendingNft[]) => {
+    setPendingItems({
+      all: items,
+      common: items.filter((item) => !isMitNft(item.nft)),
+      mit: items.find((item) => isMitNft(item.nft))
+    })
+  }
 
   const uniqueCollections = useMemo(() => {
     return Array.from(
@@ -94,23 +107,38 @@ const StakePage = () => {
 
         let troops = 0;
         const troopsConfig = stakeConfig.troops;
+        console.log('TROOPS CONFIG', nft)
         if (troopsConfig) {
           troops = troopsConfig.values
             .sort((a: any, b: any) => a.percentile - b.percentile)
             .find((m: any) => percentile <= m.percentile)?.value || 0;
 
-          const hasBonusTrait = nft.nft.attributes?.some((attr: any) => {
-            const traitType = attr.trait_type.toLowerCase();
-            const value = attr.value.toString().toLowerCase();
+          for (const bonus of troopsConfig.bonus) {
+            const hasBonusTrait = nft.nft.attributes.some((attr: any) => {
+              const traitType = attr.trait_type.toLowerCase();
+              const value = attr.value.toString().toLowerCase();
 
-            return troopsConfig.bonus.traits.some((traitRule: any) =>
-              traitRule.inclusion === 'include' &&
-              traitRule.type === traitType &&
-              traitRule.values.includes(value)
-            );
-          });
+              for (const traitRule of bonus.traits) {
+                if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
+                  return true;
+                }
+              }
+            });
+            if (hasBonusTrait) troops += bonus.value
+          }
 
-          if (hasBonusTrait) troops += troopsConfig.bonus.value;
+          // const hasBonusTrait = nft.nft.attributes?.some((attr: any) => {
+          //   const traitType = attr.trait_type.toLowerCase();
+          //   const value = attr.value.toString().toLowerCase();
+          //
+          //   return troopsConfig.bonus.traits.some((traitRule: any) =>
+          //     traitRule.inclusion === 'include' &&
+          //     traitRule.type === traitType &&
+          //     traitRule.values.includes(value)
+          //   );
+          // });
+          //
+          // if (hasBonusTrait) troops += troopsConfig.bonus.value;
         }
 
         for (let i = 0; i < Number(token.amount); i++) {
@@ -144,7 +172,11 @@ const StakePage = () => {
     const collection = uniqueCollections.find((c) => c.chainId === chainId);
     setCurrentCollection(collection);
 
-    setPendingNfts(originalPendingNfts);
+    setPendingItems({
+      all: originalPendingNfts,
+      common: originalPendingNfts.filter(item => !isMitNft(item.nft)),
+      mit: originalPendingNfts.find((item) => isMitNft(item.nft))
+    });
   }
 
   const handleNftsStaked = async (newStakedNfts: PendingNft[]) => {
@@ -163,24 +195,33 @@ const StakePage = () => {
     if (!stakeInfo) return;
 
     (async () => {
-      setStakedNfts(stakeInfo.staked);
       const nfts = await mapStakedTokensToPending(stakeInfo.staked);
-      setPendingNfts(nfts);
       setOriginalPendingNfts(nfts);
       setNextSlot(stakeInfo.nextSlot);
+
+      setStakedItems({
+        all: stakeInfo.staked,
+        common: stakeInfo.staked.filter(item => !isMitNft(item)),
+        mit: stakeInfo.staked.find(isMitNft)
+      });
+      setPendingItems({
+        all: nfts,
+        common: nfts.filter(item => !isMitNft(item.nft)),
+        mit: nfts.find((item) => isMitNft(item.nft))
+      });
     })();
   }, [stakeInfo]);
 
   return (
     <BankStakeNftContext.Provider
       value={{
-        stakedNfts,
-        pendingNfts,
-        setPendingNfts,
         nextSlot,
         selectedChainId,
         collections: uniqueCollections,
-        onNftsStaked: handleNftsStaked
+        onNftsStaked: handleNftsStaked,
+        stakedItems,
+        pendingItems,
+        setPendingItems: handleSetPendingItems
       }}
     >
       <RdModalBox mx={1} textAlign='center'>

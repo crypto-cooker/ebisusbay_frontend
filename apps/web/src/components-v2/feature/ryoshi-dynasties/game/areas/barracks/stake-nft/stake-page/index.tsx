@@ -23,9 +23,7 @@ import StakingBlock
 import UnstakedNfts
   from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/unstaked-nfts';
 import RdTabButton from '@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button';
-import {
-  useMitMatcher
-} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/hooks';
+import { useMitMatcher } from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-mit-matcher';
 
 const StakePage = () => {
   const user = useUser();
@@ -169,12 +167,12 @@ const StakePage = () => {
         all: stakeInfo.staked,
         common: stakeInfo.staked.filter(item => !isMitNft(item)),
         mit: stakeInfo.staked.find(isMitNft)
-      })
+      });
       setPendingItems({
         all: nfts,
         common: nfts.filter(item => !isMitNft(item.nft)),
         mit: nfts.find((item) => isMitNft(item.nft))
-      })
+      });
     })();
   }, [stakeInfo]);
 

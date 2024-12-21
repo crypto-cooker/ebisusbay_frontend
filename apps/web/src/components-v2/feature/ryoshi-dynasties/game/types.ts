@@ -96,7 +96,7 @@ interface RyoshiConfigBankStakingTroops {
   bonus: {
     value: number;
     traits: RyoshiConfigTraitEligibility[]
-  }
+  }[];
 }
 
 interface RyoshiConfigStakingMultiplier {

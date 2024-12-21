@@ -1,25 +1,31 @@
-import {useUser} from "@src/components-v2/useUser";
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import { useUser } from '@src/components-v2/useUser';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import {
   BankStakeNftContext,
   BankStakeNftContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context";
-import useBankStakeNfts from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-bank-stake-nfts";
-import {BigNumber, Contract} from "ethers";
-import {ERC1155, ERC721} from "@src/global/contracts/Abis";
-import {toast} from "react-toastify";
-import {parseErrorMessage} from "@src/helpers/validator";
-import Fortune from "@src/global/contracts/Fortune.json";
-import {Box, Flex, SimpleGrid, Stack, VStack} from "@chakra-ui/react";
-import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {useAppChainConfig} from "@src/config/hooks";
-import {useJsonRpcProviderForChain} from "@src/global/hooks/use-ethers-provider-for-chain";
-import {useMutation} from "@tanstack/react-query";
-import StakingSlot from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/staking-slot";
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context';
+import useBankStakeNfts from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-bank-stake-nfts';
+import { BigNumber, Contract } from 'ethers';
+import { ERC1155, ERC721 } from '@src/global/contracts/Abis';
+import { toast } from 'react-toastify';
+import { parseErrorMessage } from '@src/helpers/validator';
+import Fortune from '@src/global/contracts/Fortune.json';
+import { Box, Flex, SimpleGrid, Stack, useDisclosure, VStack } from '@chakra-ui/react';
+import { RdButton } from '@src/components-v2/feature/ryoshi-dynasties/components';
+import { useAppChainConfig } from '@src/config/hooks';
+import { useJsonRpcProviderForChain } from '@src/global/hooks/use-ethers-provider-for-chain';
+import { useMutation } from '@tanstack/react-query';
+import StakingSlot from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/staking-slot';
 import SlotUnlockDialog
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/slot-unlock-dialog";
-import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
-import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/slot-unlock-dialog';
+import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
+import { useSwitchNetwork } from '@eb-pancakeswap-web/hooks/useSwitchNetwork';
+import StakingSlotMit
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/staking-slot-mit';
+import {
+  useBankNftStakingHandlers
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/hooks';
+import MitDialog from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/mit-dialog';
 
 
 interface StakingBlockProps {
@@ -31,26 +37,28 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
   const { config: appChainConfig } = useAppChainConfig();
   const readProvider = useJsonRpcProviderForChain(appChainConfig.chain.id);
 
-  const { pendingNfts, stakedNfts, nextSlot, onNftsStaked, selectedChainId } = useContext(BankStakeNftContext) as BankStakeNftContextProps;
+  const { pendingItems, stakedItems, nextSlot, onNftsStaked, selectedChainId } = useContext(BankStakeNftContext) as BankStakeNftContextProps;
   const [isExecutingStake, setIsExecutingStake] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('');
   const [stakeNfts, response] = useBankStakeNfts();
   const [unlockApprovalState, setUnlockApprovalState] = useState<[BigNumber, boolean]>([BigNumber.from(0), false]);
   const [selectedLockedSlot, setSelectedLockedSlot] = useState<number>();
   const { switchNetworkAsync } = useSwitchNetwork();
+  const { isOpen: isMitOpen, onOpen: onOpenMit, onClose: onCloseMit } = useDisclosure();
+  const { addNft } = useBankNftStakingHandlers();
 
   const { chainId: activeChainId} = useActiveChainId();
   const needsNetworkChange = activeChainId !== selectedChainId;
 
   const stake = useCallback(async () => {
-    if (pendingNfts.length === 0 && stakedNfts.length === 0) {
+    if (pendingItems.all.length === 0 && stakedItems.all.length === 0) {
       throw new Error('No changes found');
     }
     setIsExecutingStake(true);
     setExecutingLabel('Approving');
 
     // Only check those on selected chain
-    const filteredPendingNfts = pendingNfts.filter(nft => nft.chainId === selectedChainId);
+    const filteredPendingNfts = pendingItems.all.filter(nft => nft.chainId === selectedChainId);
 
     const approvedCollections: string[] = [];
     for (let nft of filteredPendingNfts) {
@@ -68,14 +76,14 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
 
     setExecutingLabel('Staking');
     await stakeNfts(
-      pendingNfts.map((nft) => ({
+      pendingItems.all.map((nft) => ({
         ...nft,
         amount: 1
       })),
-      stakedNfts,
+      stakedItems.all,
       selectedChainId
     );
-  }, [pendingNfts, executingLabel, isExecutingStake, user.provider.signer]);
+  }, [pendingItems, stakedItems, selectedChainId, executingLabel, isExecutingStake, user.provider.signer]);
 
   const checkForApproval = async () => {
     const fortuneContract = new Contract(appChainConfig.contracts.fortune, Fortune, readProvider);
@@ -90,7 +98,7 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
   const mutation = useMutation({
     mutationFn: stake,
     onSuccess: (data) => {
-      onNftsStaked(pendingNfts);
+      onNftsStaked(pendingItems.all);
       toast.success('Staking successful!');
     },
     onError: (error) => {
@@ -125,11 +133,12 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
     <Box>
       <Flex justify='center'>
         <VStack my={6} px={4} spacing={8} justify='center'>
-          <SimpleGrid columns={{base: 2, sm: 3, md: 5}} gap={2}>
+          <SimpleGrid columns={{base: 2, sm: 3, md: 6}} gap={2}>
+            <StakingSlotMit onSelect={onOpenMit} />
             {[...Array(5).fill(0)].map((_, index) => (
               <StakingSlot
                 key={index}
-                pendingNft={pendingNfts[index]}
+                pendingNft={pendingItems.common[index]}
                 isUnlocked={!!nextSlot && index < nextSlot.index}
                 onSelect={() => setSelectedLockedSlot(index)}
                 isInDialog={selectedLockedSlot === index}
@@ -181,6 +190,11 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
           initialApprovalState={unlockApprovalState}
         />
       )}
+      <MitDialog
+        isOpen={isMitOpen}
+        onClose={onCloseMit}
+        onConfirmAdd={addNft}
+      />
     </Box>
   )
 }

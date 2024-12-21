@@ -9,8 +9,8 @@ import {
   BarracksStakeNftContext,
   BarracksStakeNftContextProps
 } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context';
-import { useAppConfig } from '@src/config/hooks';
 import { toast } from 'react-toastify';
+import useMitMatcher from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-mit-matcher';
 
 export const useBarracksNftStakingHandlers = () => {
   const { pendingItems, setPendingItems, stakedItems, nextSlot, collections } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
@@ -96,19 +96,5 @@ export const useBarracksNftStakingHandlers = () => {
   return {
     addNft,
     removeNft
-  }
-}
-
-export const useMitMatcher = () => {
-  const { config: appConfig } = useAppConfig();
-
-  const isMitNft = (nft: any) => {
-    const nftAddress = nft.contractAddress ?? nft.nftAddress;
-    const chainId = nft.chain ?? nft.chainId;
-    return ciEquals(nftAddress, appConfig.mit.address) && chainId === appConfig.mit.chainId;
-  }
-
-  return {
-    isMitNft
   }
 }
