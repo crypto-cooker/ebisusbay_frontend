@@ -629,4 +629,12 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
   async openLootBox(id:number, address:string,  signature: string) {
     return this.cms.openLootBox(id, address, signature);
   }
+
+  async checkGift(address:string, signature: string) {
+    return this.cms.checkGift(address, signature);
+  }
+
+  async claimGift(address: string, signature: string): Promise<any> {
+    return this.cms.claimGift(address, signature);
+  }
 }

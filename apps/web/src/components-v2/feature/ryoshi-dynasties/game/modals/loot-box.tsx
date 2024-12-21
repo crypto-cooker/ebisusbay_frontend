@@ -9,7 +9,6 @@ interface LootBoxProps {
   onClose: () => void;
 }
 const LootBoxModal = ({ isOpen, onClose }: LootBoxProps) => {
-  const { data: list, isLoading } = useLootBoxBalance();
   return (
     <RdModal isOpen={isOpen} onClose={onClose} title="Loot Box">
       <RdModalBody>
@@ -20,7 +19,7 @@ const LootBoxModal = ({ isOpen, onClose }: LootBoxProps) => {
           </Text>
         </Box>
         <RdModalBox maxH="500px" overflow='auto'>
-          <LootBoxBreakdown items={list} />
+          <LootBoxBreakdown />
         </RdModalBox>
       </RdModalBody>
     </RdModal>

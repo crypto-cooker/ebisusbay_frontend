@@ -314,6 +314,14 @@ class Cms {
   async openLootBox(id:number, address: string, signature: string) {
     return this.lootBox.openLootBox(id, address, signature);
   }
+
+  async checkGift(address: string, signature: string) {
+    return this.lootBox.checkGift(address, signature);
+  }
+
+  async claimGift(address: string, signature: string) {
+    return this.lootBox.claimGift(address, signature);
+  }
 }
 
 export default Cms;

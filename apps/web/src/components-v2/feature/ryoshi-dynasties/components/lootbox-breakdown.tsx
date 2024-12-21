@@ -12,18 +12,17 @@ import {
 } from '@chakra-ui/react';
 import { indexOf } from 'lodash';
 import { LootBox } from './lootbox';
+import { useLootBoxBalance } from '../game/hooks/use-lootbox';
 
-interface LootBoxBreakdownProps {
-  items: any[] | undefined;
-}
 
-const LootBoxBreakdown = ({ items }: LootBoxBreakdownProps) => {
+const LootBoxBreakdown = () => {
+  const { data: items, isLoading, refetch } = useLootBoxBalance();
   return (
     <>
       {items ? (
         <Accordion w="full" mt={2} allowMultiple>
-          {items.map((item, index) => (
-            <LootBox key={index} item={item}/>
+          {items.map((item:any, index:number) => (
+            <LootBox key={index} item={item} onChange={refetch}/>
           ))}
         </Accordion>
       ) : (

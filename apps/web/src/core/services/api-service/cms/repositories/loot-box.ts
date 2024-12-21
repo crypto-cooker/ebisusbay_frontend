@@ -1,4 +1,3 @@
-import { appConfig } from "@src/config";
 import CmsRepository from "@src/core/services/api-service/cms/repositories/index";
 
 class LootBoxRepository extends CmsRepository {
@@ -12,7 +11,6 @@ class LootBoxRepository extends CmsRepository {
   async getLootBoxInfo(id: number) {
     const response = await this.cms.get(`lootbox/info/${id}`);
     return response.data;
-
   }
 
   async getLootBoxBalances(walletAddress: string) {
@@ -22,17 +20,35 @@ class LootBoxRepository extends CmsRepository {
       }
     })
     return response.data;
-
   }
 
   async openLootBox(id: number, address: string, signature: string) {
-    const response = await this.cms.post(`lootbox/open/${id}`, {
+    const response = await this.cms.post(`lootbox/open/${id}`, null, {
       params: {
-        signature,
-        address
+        address,
+        signature
       }
     })
-    console.log(response.data, "HHHHHHHHHHHHHHHHHH")
+    return response.data;
+  }
+
+  async checkGift(address: string, signature: string) {
+    const response = await this.cms.get(`lootbox/holidays/check`, {
+      params: {
+        address,
+        signature
+      }
+    })
+    return response.data;
+  }
+
+  async claimGift(address: string, signature: string) {
+    const response = await this.cms.post(`lootbox/holidays/claim`, null, {
+      params: {
+        address,
+        signature
+      }
+    })
     return response.data;
   }
 }

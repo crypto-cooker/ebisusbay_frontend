@@ -1,172 +1,118 @@
-import {useUser} from "@src/components-v2/useUser";
-import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
-import {Box, Image, keyframes, Text, usePrefersReducedMotion, VStack} from "@chakra-ui/react";
-import React, {useEffect, useState} from "react";
-import xmasMessages from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/xmasMessages.json";
-import {ApiService} from "@src/core/services/api-service";
-import * as Sentry from "@sentry/nextjs";
-import {Contract} from "ethers";
-import Resources from "@src/global/contracts/Resources.json";
-import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
-import {parseErrorMessage} from "@src/helpers/validator";
-import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-import ImageService from "@src/core/services/image";
-import RdButton from "../../../../components/rd-button";
-import {RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-announcement-modal";
-import {appConfig} from "@src/config";
-
-const config = appConfig();
+import { useUser } from '@src/components-v2/useUser';
+import useEnforceSigner from '@src/Components/Account/Settings/hooks/useEnforceSigner';
+import { Box, Image, keyframes, Spinner, Text, usePrefersReducedMotion, VStack } from '@chakra-ui/react';
+import React, { useCallback, useEffect, useState } from 'react';
+import xmasMessages from '@src/components-v2/feature/ryoshi-dynasties/game/areas/village/xmasMessages.json';
+import { ApiService } from '@src/core/services/api-service';
+import { RdModal } from '@src/components-v2/feature/ryoshi-dynasties/components';
+import { RdModalAlert } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-modal';
+import RdButton from '../../../../components/rd-button';
+import { RdModalFooter } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-announcement-modal';
+import useEnforceSignature from '@src/Components/Account/Settings/hooks/useEnforceSigner';
 
 export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const user = useUser();
-  const {requestSignature, isSignedIn, signin, isSigningIn} = useEnforceSigner();
+  const { requestSignature } = useEnforceSignature();
   const prefersReducedMotion = usePrefersReducedMotion();
-
-  const [openShakePresent,setOpenShakePresent ] = useState(false);
-  const [presentMessage, setPresentMessage] = useState('');
-  const [showMessage, setShowMessage] = useState(false);
-  const [isClaimingToken, setIsClaimingToken] = useState<number>();
-
   const animation1 = prefersReducedMotion ? undefined : `${keyframe_dot1} infinite 1s linear`;
   const animation2 = prefersReducedMotion ? undefined : `${keyframe_dot2} infinite 1s linear`;
   const animation3 = prefersReducedMotion ? undefined : `${keyframe_dot3} infinite 1s linear`;
 
-  const getRandomEntry = (entries: string[]): string => {
-    const randomIndex = Math.floor(Math.random() * entries.length);
-    return entries[randomIndex];
+  const getRandomMessage = (): string => {
+    const randomIndex = Math.floor(Math.random() * xmasMessages.length);
+    return xmasMessages[randomIndex];
   };
 
-  const presentPresent = async () => {
+  const [hasGift, setHasGift] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [shaked, setShaked] = useState<boolean>(false);
+  const [isShaking, setIsShaking] = useState<boolean>(false);
+  const [opened, setOpened] = useState<boolean>(false);
+  const [isOpening, setIsOpening] = useState<boolean>(false);
+  const [boxId, setBoxId] = useState<number>(0);
 
-    setShowMessage(false);
-    await new Promise(r => setTimeout(r, 2000));
-    setShowMessage(true);
-
-    setPresentMessage(getRandomEntry(xmasMessages));
-    setOpenShakePresent(false);
-  }
-
-  const [gift, setGift] = useState<any>();
   const fetchGift = async () => {
-    if (!user.address) {
-      presentPresent();
-      return;
-    }
-
     try {
-      setShowMessage(false);
+      setIsLoading(true);
       const signature = await requestSignature();
-      const gift = await ApiService.withoutKey().ryoshiDynasties.fetchGift(user.address, signature);
-      let d = gift.data;
-      if (gift.data.nfts.length > 0) {
-        const items = await ApiService.withoutKey().getCollectionItems({
-          address: config.contracts.resources,
-          token: gift.data.nfts.join(',')
-        });
-        d.nftData = items.data;
+      const res = await ApiService.withoutKey().ryoshiDynasties.checkGift(user.address as string, signature);
+      setHasGift(res.data.canClaim);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const openGift = useCallback(async () => {
+    if (!boxId) return;
+    try {
+      setIsOpening(true);
+      const signature = await requestSignature();
+      const res = await ApiService.withoutKey().ryoshiDynasties.openLootBox(boxId, user.address as string, signature);
+      if (res) {
+        setOpened(true);
       }
-      setGift(d);
-    } catch (e) {
-      Sentry.captureException(e);
-      console.log(e);
-      presentPresent();
+    } catch (error) {
+      console.log(error);
     } finally {
-      setShowMessage(true);
+      setIsOpening(false);
     }
-  }
+  }, []);
 
-  const handleClaimNft = async (tokenId: number) => {
-    if (!user.address) return;
-
+  const claim = useCallback(async () => {
     try {
-      setIsClaimingToken(tokenId);
+      setIsShaking(true);
       const signature = await requestSignature();
-      const authorization = await ApiService.withoutKey().ryoshiDynasties.requestResourcesWithdrawalAuthorization(tokenId, 1, user.address, signature);
-      const {signature: approvalSignature, approval} = authorization.data;
-
-      const resourcesContract = new Contract(config.contracts.resources, Resources, user.provider.getSigner());
-      const tx = await resourcesContract.mintWithSig(approval, approvalSignature);
-      const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      const res = await ApiService.withoutKey().ryoshiDynasties.claimGift(user.address as string, signature);
+      if (res.open.lootbox) {
+        setBoxId(res.lootbox.id);
+        setShaked(true);
+      }
     } catch (e) {
-      Sentry.captureException(e);
       console.log(e);
-      toast.error(parseErrorMessage(e));
     } finally {
-      setIsClaimingToken(undefined);
+      setIsShaking(false);
     }
-  }
-
+  }, [setShaked]);
 
   useEffect(() => {
-    if (!isOpen) return;
-
-    if (user.address) {
-      // fetchGift();
-      presentPresent();
-    } else {
-      presentPresent();
-    }
+    if (user.address || isOpen) fetchGift();
   }, [isOpen, user.address]);
 
   return (
-    <RdModal
-      isOpen={isOpen}
-      onClose={onClose}
-      title='Gift from Ebisu Claus'
-    >
+    <RdModal isOpen={isOpen} onClose={onClose} title="Gift from Ebisu Claus">
       <RdModalAlert>
-        {showMessage ? (
+        {!isLoading ? (
           <>
-            {false ? (
-              <Box>
-                <VStack>
-                  {((gift?.nfts && gift?.nfts?.length > 0) || (!!gift?.frtn && gift.frtn > 0)) && (
-                    <Box fontWeight='bold'>Merry Christmas, you have received gifts!</Box>
-                  )}
-                  {!!gift?.frtn && gift.frtn > 0 && (
-                    <VStack>
-                      <FortuneIcon boxSize={10}/>
-                      <Box>{gift.frtn} $FRTN. Can be claimed in the bank</Box>
-                    </VStack>
-                  )}
-                  {gift?.nftData && gift?.nftData?.length > 0 ? (
-                    <>
-                      {gift.nftData.map((nft: any) => (
-                        <VStack>
-                          <Image
-                            src={ImageService.translate(nft.image).custom({width: 150, height: 150})}
-                            alt={nft.name}
-                            rounded="md"
-                          />
-                          <Box>{nft.description}</Box>
-                          <RdButton
-                            stickyIcon={true}
-                            onClick={() => handleClaimNft(parseInt(nft.id))}
-                            isLoading={isClaimingToken === parseInt(nft.id)}
-                            isDisabled={!!isClaimingToken}
-                            size='md'
-                          >
-                            Claim
-                          </RdButton>
-                        </VStack>
-                      ))}
-                    </>
-                  ) : (gift?.nfts && gift?.nfts?.length > 0) ? (
-                    <Box>A gift has been received but no info was provided yet. Check back later!</Box>
-                  ) : (
-                    <Box>No gifts received yet. Check back later!</Box>
-                  )}
-                </VStack>
-              </Box>
+            <Text>{getRandomMessage()}</Text>
+            {hasGift ? (
+              <VStack mt={2}>
+                {shaked ? (
+                  <>
+                    <Image
+                      w={40}
+                      h={40}
+                      src={`${opened ? '/img/lootbox/xmas_gift_no_loop.png' : '/img/lootbox/xmas_gift_no_loop_close.png'}`}
+                    ></Image>
+                    <Text>Congratulations! You can open your gift in the lootbox.</Text>
+                  </>
+                ) : (
+                  <>
+                    <RdButton
+                      w={'120px'}
+                      onClick={() => {
+                        if (!isShaking) claim();
+                      }}
+                    >
+                      {isShaking ? <Spinner /> : 'Shake'}
+                    </RdButton>
+                    <Text>You can shake the tree to get your present!</Text>
+                  </>
+                )}
+              </VStack>
             ) : (
-              <>
-                <Text>{presentMessage}</Text>
-                {/* <Text fontSize='sm' mt={4}>Connect your wallet for a surprise!</Text> */}
-              </>
+              <></>
             )}
           </>
         ) : (
@@ -178,12 +124,13 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
         )}
       </RdModalAlert>
       <RdModalFooter>
-        <Text textAlign={'center'} fontSize={'12'} textColor={'lightgray'}>Merry Christmas and Happy Holidays from the team at Ebisu's Bay</Text>
+        <Text textAlign={'center'} fontSize={'12'} textColor={'lightgray'}>
+          Merry Christmas and Happy Holidays from the team at Ebisu's Bay
+        </Text>
       </RdModalFooter>
     </RdModal>
-  )
-}
-
+  );
+};
 
 const keyframe_dot1 = keyframes`
   0% {
@@ -237,33 +184,32 @@ const keyframe_dot3 = keyframes`
   }
 `;
 
-
 const styles2 = {
   dot1: {
-    width: "10px",
-    height: "10px",
-    borderRadius: "5px",
-    backgroundColor: "#f9a50b",
-    color: "#f9a50b",
-    display: " inline-block",
-    margin: "0 2px"
+    width: '10px',
+    height: '10px',
+    borderRadius: '5px',
+    backgroundColor: '#f9a50b',
+    color: '#f9a50b',
+    display: ' inline-block',
+    margin: '0 2px',
   },
   dot2: {
-    width: "10px",
-    height: "10px",
-    borderRadius: "5px",
-    backgroundColor: "#f9a50b",
-    color: "#f9a50b",
-    display: "inline-block",
-    margin: "0 2px"
+    width: '10px',
+    height: '10px',
+    borderRadius: '5px',
+    backgroundColor: '#f9a50b',
+    color: '#f9a50b',
+    display: 'inline-block',
+    margin: '0 2px',
   },
 
   dot3: {
-    width: "10px",
-    height: "10px",
-    borderRadius: "5px",
-    backgroundColor: "#f9a50b",
-    display: "inline-block",
-    margin: "0 2px"
-  }
+    width: '10px',
+    height: '10px',
+    borderRadius: '5px',
+    backgroundColor: '#f9a50b',
+    display: 'inline-block',
+    margin: '0 2px',
+  },
 };
