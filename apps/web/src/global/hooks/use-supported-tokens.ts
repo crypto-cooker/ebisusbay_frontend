@@ -39,6 +39,12 @@ export function useDexTokens(chainId?: number) {
   return supportedTokens.filter(token => token.dex);
 }
 
+export function useDealsTokens(chainId?: number) {
+  const supportedTokens = useSupportedApiTokens(chainId);
+
+  return supportedTokens.filter(token => token.deals);
+}
+
 export function useCollectionTokens(chainId?: number) {
   const supportedTokens = useSupportedApiTokens(chainId);
 

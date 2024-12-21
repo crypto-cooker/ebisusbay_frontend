@@ -9,7 +9,6 @@ interface Step2ChooseItemsProps {
 }
 
 export const Step2ChooseItems = ({address}: Step2ChooseItemsProps) => {
-
   return (
     <>
       <Box my={4}>

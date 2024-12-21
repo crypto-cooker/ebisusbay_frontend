@@ -65,6 +65,11 @@ import NextLink from "next/link";
 import {commify} from "ethers/lib/utils";
 import {ItemType} from "@market/hooks/use-create-order-signer";
 import {SupportedChainId} from "@src/config/chains";
+import { ChainLogo } from '@dex/components/logo';
+import { useChainId } from 'wagmi';
+import { useChainById } from '@src/config/hooks';
+import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
+import { useSwitchNetwork } from '@eb-pancakeswap-web/hooks/useSwitchNetwork';
 
 const config = appConfig();
 
@@ -74,6 +79,7 @@ interface ManageDealProps {
 
 const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
   const user = useUser();
+  const { chainId: userChainId } = useActiveChainId()
   const {username: makerUsername, avatar: makerAvatar} = useGetProfilePreview(defaultDeal.maker);
   const {username: takerUsername, avatar: takerAvatar} = useGetProfilePreview(defaultDeal.taker);
   const initialFocusRef = useRef(null);
@@ -84,12 +90,15 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
   const { isOpen: isCompleteDialogOpen, onOpen: onOpenCompleteDialog, onClose: onCloseCompleteDialog } = useDisclosure();
   const [tx, setTx] = useState<ContractReceipt>();
   const [invalidIds, setInvalidIds] = useState<{maker: {invalid_items: string[]}, taker: {invalid_items: string[]}}>({maker: {invalid_items: []}, taker: {invalid_items: []}});
+  const { switchNetwork } = useSwitchNetwork();
 
   const {data: deal} = useQuery({
     queryKey: ['deal', defaultDeal.id],
     queryFn: async () => ApiService.withoutKey().getDeal(defaultDeal.id),
     initialData: defaultDeal,
   });
+
+  const chain = useChainById(deal?.chain ?? defaultDeal.chain);
 
   const handleDealAccepted = (tx?: ContractReceipt) => {
     setTx(tx);
@@ -124,6 +133,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
     const unknownTakerTokens = deal.taker_items.some((item) => hasUnknownToken(item));
     return unknownMakerTokens || unknownTakerTokens;
   }, [deal]);
+  const isWrongNetwork = !!user.address && userChainId !== deal.chain;
 
   useEffect(() => {
     if (deal) {
@@ -145,7 +155,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
         </NextLink>
       </Box>
       <Card>
-        <SimpleGrid columns={2}>
+        <SimpleGrid columns={2} gap={1}>
           <Box>Status</Box>
           <Box textAlign='end'>
             {deal.state === OrderState.ACTIVE ? (
@@ -162,6 +172,13 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
               <Badge fontSize='lg'>N/A</Badge>
             )}
           </Box>
+          <Box>Chain</Box>
+          <HStack justify='end'>
+            <Box textAlign="end">
+              {chain.name}
+            </Box>
+            <ChainLogo chainId={deal.chain} />
+          </HStack>
           <Box>Created</Box>
           <VStack align='end' spacing={0}>
             <Box>{getLengthOfTime(Math.floor(Date.now() / 1000) - deal.start_at)} ago</Box>
@@ -221,56 +238,79 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
       </Stack>
 
       {deal.state === OrderState.ACTIVE && (
-        <ApprovalsView deal={deal} />
+        <>
+          {isWrongNetwork ? (
+            <>
+              <Card mt={2}>
+                <Flex justify='space-between' align='center'>
+                  <Box>
+                    Please switch network to {chain.name}
+                  </Box>
+                  <Box>
+                    <PrimaryButton onClick={() => switchNetwork(deal.chain)}>
+                      Switch network
+                    </PrimaryButton>
+                  </Box>
+                </Flex>
+              </Card>
+            </>
+          ) : (
+            <>
+              <ApprovalsView deal={deal} />
+
+              {(isMaker || isTaker) && (
+                <ConditionalActionBar condition={isMobile ?? false}>
+                  {(!!deal.invalid || invalidIds.maker.invalid_items.length > 0 || invalidIds.taker.invalid_items.length > 0) && (
+                    <Alert status='warning' mb={4}>
+                      <AlertIcon />
+                      <AlertDescription>
+                        This deal has been marked as invalid and may not complete. Please check both sides have the correct items and quantities in their respective inventories.
+                      </AlertDescription>
+                    </Alert>
+                  )}
+                  {hasUnknownTokens && (
+                    <Alert status='warning' mb={4}>
+                      <AlertIcon />
+                      <AlertDescription>
+                        This deal contains tokens that have not been whitelisted by Ebisu's Bay. Please double check the token addresses and ensure they are legitimate. Trade these are your own risk.
+                      </AlertDescription>
+                    </Alert>
+                  )}
+                  {isTaker ? (
+                    <Flex>
+                      <RejectButtonView deal={deal} onSuccess={handleDealRejected}/>
+                      <Spacer />
+                      <ButtonGroup>
+                        <ValidateButtonView deal={deal} onSuccess={handleDealValidated} />
+                        <CounterOfferButtonView deal={deal} />
+                        <AcceptButtonView
+                          deal={deal}
+                          onSuccess={handleDealAccepted}
+                          onProgress={(isExecuting: boolean) => console.log('TODO', isExecuting)}
+                        />
+                      </ButtonGroup>
+                    </Flex>
+                  ) : isMaker && (
+                    <Flex justify='end'>
+                      <ButtonGroup>
+                        <ValidateButtonView deal={deal} onSuccess={handleDealValidated} />
+                        <CancelButtonView deal={deal} onSuccess={handleDealCancelled} />
+                      </ButtonGroup>
+                    </Flex>
+                  )}
+                </ConditionalActionBar>
+              )}
+
+              {isTaker && (
+                <Box fontSize='xs' textAlign='center' mt={2}>
+                  Users with {commify(2000)} or more Mitama can accept deals at no extra cost. Otherwise, a flat 20 CRO fee is applied upon acceptance of the deal. Earn Mitama by staking FRTN in the <NextLink href='/ryoshi' className='color fw-bold'>Ryoshi Dynasties Bank</NextLink>
+                </Box>
+              )}
+            </>
+          )}
+        </>
       )}
 
-      {(isMaker || isTaker) && deal.state === OrderState.ACTIVE && (
-        <ConditionalActionBar condition={isMobile ?? false}>
-          {(!!deal.invalid || invalidIds.maker.invalid_items.length > 0 || invalidIds.taker.invalid_items.length > 0) && (
-            <Alert status='warning' mb={4}>
-              <AlertIcon />
-              <AlertDescription>
-                This deal has been marked as invalid and may not complete. Please check both sides have the correct items and quantities in their respective inventories.
-              </AlertDescription>
-            </Alert>
-          )}
-          {hasUnknownTokens && (
-            <Alert status='warning' mb={4}>
-              <AlertIcon />
-              <AlertDescription>
-                This deal contains tokens that have not been whitelisted by Ebisu's Bay. Please double check the token addresses and ensure they are legitimate. Trade these are your own risk.
-              </AlertDescription>
-            </Alert>
-          )}
-          {isTaker ? (
-            <Flex>
-              <RejectButtonView deal={deal} onSuccess={handleDealRejected}/>
-              <Spacer />
-              <ButtonGroup>
-                <ValidateButtonView deal={deal} onSuccess={handleDealValidated} />
-                <CounterOfferButtonView deal={deal} />
-                <AcceptButtonView
-                  deal={deal}
-                  onSuccess={handleDealAccepted}
-                  onProgress={(isExecuting: boolean) => console.log('TODO', isExecuting)}
-                />
-              </ButtonGroup>
-            </Flex>
-          ) : isMaker && (
-            <Flex justify='end'>
-              <ButtonGroup>
-                <ValidateButtonView deal={deal} onSuccess={handleDealValidated} />
-                <CancelButtonView deal={deal} onSuccess={handleDealCancelled} />
-              </ButtonGroup>
-            </Flex>
-          )}
-        </ConditionalActionBar>
-      )}
-      {isTaker && deal.state === OrderState.ACTIVE && (
-        <Box fontSize='xs' textAlign='center' mt={2}>
-          Users with {commify(2000)} or more Mitama can accept deals at no extra cost. Otherwise, a flat 20 CRO fee is applied upon acceptance of the deal. Earn Mitama by staking FRTN in the <NextLink href='/ryoshi' className='color fw-bold'>Ryoshi Dynasties Bank</NextLink>
-        </Box>
-      )}
       <SuccessModal
         isOpen={isCompleteDialogOpen}
         onClose={onCloseCompleteDialog}

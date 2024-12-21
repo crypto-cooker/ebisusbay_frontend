@@ -25,7 +25,7 @@ import currencyId from '@eb-pancakeswap-web/utils/currencyId';
 import { useSwapActionHandlers } from '@eb-pancakeswap-web/state/swap/useSwapActionHandlers';
 import { useCurrencyBalance, useCurrencyBalances } from '@eb-pancakeswap-web/state/wallet/hooks';
 import { AdvancedSwapDetails } from '@dex/swap/components/tabs/swap/swap-details';
-import { useIsExpertMode, useUserSlippage } from '@pancakeswap/utils/user';
+import { useIsExpertMode, useUserSlippage, useUserSingleHopOnly } from '@pancakeswap/utils/user';
 import { TradePrice } from '@dex/swap/components/tabs/swap/trade-price';
 import { SwapInfo } from '@dex/swap/components/tabs/swap/swap-info';
 import { CommitButton } from '@dex/swap/components/tabs/swap/commit-button';
@@ -46,7 +46,6 @@ import AuthenticationGuard from '@src/components-v2/shared/authentication-guard'
 import { PrimaryButton } from '@src/components-v2/foundation/button';
 import useWrapCallback, { WrapType } from '@eb-pancakeswap-web/hooks/useWrapCallback';
 import { BIG_INT_ZERO } from '@dex/swap/constants/exchange';
-import { useUserSingleHopOnly } from '@dex/swap/state/user/hooks';
 import { useIsWrapping } from '@eb-pancakeswap-web/hooks/useIsWrapping';
 import * as Sentry from '@sentry/nextjs';
 import MirrorNFT from './mirrorNFT';

@@ -341,7 +341,7 @@ const cronosZkEVMConfig: AppChainConfig = {
   urls: {
     subgraph: {
       root: 'https://cronos-zkevm-graph.ebisusbay.com:18000/subgraphs/name/ebisusbay/zkcro/',
-      ryoshiDynasties: 'ryoshi-dynasties-lp-staking-fixed',
+      ryoshiDynasties: 'ryoshi-dynasties-lp-vaults',
       ryoshiPresale: '',
       stakedOwners: 'main',
       staking: '',
