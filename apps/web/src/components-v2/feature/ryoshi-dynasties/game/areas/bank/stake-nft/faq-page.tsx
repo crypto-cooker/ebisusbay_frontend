@@ -28,6 +28,7 @@ import {titleCase} from "@market/helpers/utils";
 import {useChainId} from "wagmi";
 import {useChainById} from "@src/config/hooks";
 import {ChainLogo} from "@dex/components/logo";
+import { RdModalBox } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-modal';
 
 const gothamBook = localFont({ src: '../../../../../../../global/assets/fonts/Gotham-Book.woff2' })
 
@@ -74,6 +75,28 @@ const FaqPage = () => {
               <Text>Some collections such as Ryoshi VIP earn additional troops on top of the base APR bonus. The amount depends on the rank of the NFT. Additional bonus troops may be given on top of this value but may have eligibility requirements. See collections below for more information.</Text>
             </AccordionPanel>
           </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                What is a Materialization Infusion Terminal?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text></Text>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                How do I stake Mystic Sea Dragons?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>Mystic Sea Dragons can be staked like any other NFT, but will only yield benefits if a Materialization Infusion Terminal (MIT) is also staked. Once a MIT is staked, dragon staking benefits will be based on specific NFT attributes.</Text>
+            </AccordionPanel>
+          </AccordionItem>
           <EligibilityCriteriaItem name='Ryoshi VIP' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-vip')!} />
           <EligibilityCriteriaItem name='Ryoshi Halloween' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-halloween')!} />
           <EligibilityCriteriaItem name='Ryoshi Christmas' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-christmas')!} />
@@ -82,6 +105,7 @@ const FaqPage = () => {
           <EligibilityCriteriaItem name='Ryoshi Tales (Celestial Celebration)' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales' && c.minId === 501 && c.maxId === 700)!} />
           <EligibilityCriteriaItem name='Pixel Ryoshi' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'pixel-ryoshi')!} />
           <EligibilityCriteriaItem name='Moggy Money Brokers' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'moggy-money-brokers')!} />
+          <EligibilityCriteriaItem name='Mystic Sea Dragons' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'mystic-sea-dragons')!} />
         </Accordion>
       </Box>
     </Stack>
@@ -108,60 +132,67 @@ const EligibilityCriteriaItem = ({ name, collectionStakingConfig }: { name: stri
             <Box>This collection is on <strong>{chain.name}</strong></Box>
           </HStack>
           {collectionStakingConfig.apr.multipliers.length > 0 && (
-            <>
+            <RdModalBox>
               <Text>{name} NFTs use the following rank-based <strong>multipliers</strong>:</Text>
               <UnorderedList>
                 {collectionStakingConfig.apr.multipliers.map((multiplier, i) => (
                   <ListItem key={i}>{multiplier.percentile}th percentile: x{commify(multiplier.value)}%</ListItem>
                 ))}
               </UnorderedList>
-            </>
+            </RdModalBox>
           )}
           {collectionStakingConfig.apr.adders.length > 0 && (
-            <>
+            <RdModalBox>
               <Text>{name} NFTs use the following rank-based <strong>adders</strong>:</Text>
               <UnorderedList>
                 {collectionStakingConfig.apr.adders.map((adder, i) => (
                   <ListItem key={i}>{adder.percentile}th percentile: +{commify(adder.value)}%</ListItem>
                 ))}
               </UnorderedList>
-            </>
+            </RdModalBox>
           )}
           {collectionStakingConfig.apr.ids.length > 0 && (
-            <>
+            <RdModalBox>
               <Text>Bonus for {name} NFTs are <strong>additive</strong> and based on the NFT ID:</Text>
               <UnorderedList>
                 {collectionStakingConfig.apr.ids.map((id, i) => (
                   <ListItem key={i}>ID {id.id}: +{commify(id.bonus)}%</ListItem>
                 ))}
               </UnorderedList>
-            </>
+            </RdModalBox>
           )}
           {!!collectionStakingConfig.troops && collectionStakingConfig.troops.values.length > 0 && (
-            <Box mt={2}>
-              <Text>Troops for {name} NFTs use the following rank-based <strong>values</strong>:</Text>
-              <UnorderedList>
-                {collectionStakingConfig.troops.values.map((multiplier, i) => (
-                  <ListItem key={i}>{multiplier.percentile}th percentile: x{commify(multiplier.value)}</ListItem>
-                ))}
-              </UnorderedList>
-
-              {collectionStakingConfig.troops.bonus.traits.length > 0 && (
-                <Box mt={2}>
-                  <Text>NFTs adhering to the following specific trait specifications will gain an additional <strong>{collectionStakingConfig.troops.bonus.value}</strong> troops:</Text>
-                  {collectionStakingConfig!.troops.bonus.traits.map((trait) => (
-                    <Box mt={2}>
-                      <Text>For the "{titleCase(trait.type)}" trait, NFTs must {trait.inclusion === RyoshiConfigTraitInclusionType.EXCLUDE && <>NOT</>} contain any of the following:</Text>
-                      <UnorderedList>
-                        {trait.values.map((value) => (
-                          <ListItem key={`${trait.type}${value}`}>{titleCase(value.toUpperCase())}</ListItem>
-                        ))}
-                      </UnorderedList>
-                    </Box>
+            <VStack align='stretch'>
+              <RdModalBox>
+                <Text>Troops for {name} NFTs use the following rank-based <strong>values</strong>:</Text>
+                <UnorderedList>
+                  {collectionStakingConfig.troops.values.map((multiplier, i) => (
+                    <ListItem key={i}>{multiplier.percentile}th percentile: x{commify(multiplier.value)}</ListItem>
                   ))}
-                </Box>
-              )}
-            </Box>
+                </UnorderedList>
+              </RdModalBox>
+
+              {collectionStakingConfig.troops.bonus.map((bonus) => (
+                <RdModalBox>
+                  {bonus.traits.length > 0 && (
+                    <Box mt={2}>
+                      <Text>NFTs adhering to the following specific trait specifications will gain an additional <strong>{bonus.value}</strong> troops:</Text>
+                      {bonus.traits.map((trait) => (
+                        <Box mt={2}>
+                          <Text>For the "{titleCase(trait.type)}" trait, NFTs must {trait.inclusion === RyoshiConfigTraitInclusionType.EXCLUDE && <>NOT</>} contain any of the following:</Text>
+                          <UnorderedList>
+                            {trait.values.map((value) => (
+                              <ListItem key={`${trait.type}${value}`}>{titleCase(value.toUpperCase())}</ListItem>
+                            ))}
+                          </UnorderedList>
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
+                </RdModalBox>
+              ))}
+
+            </VStack>
           )}
         </VStack>
       </AccordionPanel>

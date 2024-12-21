@@ -25,6 +25,7 @@ import {
   RyoshiConfigBarracksStakingNFTCollection,
   RyoshiConfigTraitInclusionType
 } from "@src/components-v2/feature/ryoshi-dynasties/game/types";
+import { RdModalBox } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-modal';
 
 const gothamBook = localFont({ src: '../../../../../../../global/assets/fonts/Gotham-Book.woff2' })
 const gothamXLight = localFont({ src: '../../../../../../../global/assets/fonts/Gotham-XLight.woff2' })
@@ -61,11 +62,35 @@ const FaqPage = () => {
               <Text>The amount of bonus troops depends on the collection type and rank of the NFT. See the below FAQ items for more information specific to each collection</Text>
             </AccordionPanel>
           </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                What is a Materialization Infusion Terminal?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text></Text>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionButton fontSize='sm' fontWeight='bold'>
+              <Box as="span" flex='1' textAlign='left' fontSize='sm'>
+                How do I stake Mystic Sea Dragons?
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text>Mystic Sea Dragons can be staked like any other NFT, but will only yield benefits if a Materialization Infusion Terminal (MIT) is also staked. Once a MIT is staked, dragon staking benefits will be based on specific NFT attributes.</Text>
+            </AccordionPanel>
+          </AccordionItem>
           <EligibilityCriteriaItem name='Ryoshi VIP' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-vip')!} />
           <EligibilityCriteriaItem name='Ryoshi Halloween' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-halloween')!} />
           <EligibilityCriteriaItem name='Ryoshi Christmas' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-christmas')!} />
           <EligibilityCriteriaItem name='Ryoshi Tales (Goblin Gala)' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales' && c.minId === 1 && c.maxId === 500)!} />
           <EligibilityCriteriaItem name='Ryoshi Tales (Celestial Celebration)' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales' && c.minId === 501 && c.maxId === 700)!} />
+          <EligibilityCriteriaItem name='Pixel Ryoshi' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'pixel-ryoshi')!} />
+          <EligibilityCriteriaItem name='Mystic Sea Dragons' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'mystic-sea-dragons')!} />
         </Accordion>
       </Box>
     </Stack>
@@ -84,7 +109,8 @@ const EligibilityCriteriaItem = ({ name, collectionStakingConfig }: { name: stri
         <AccordionIcon />
       </AccordionButton>
       <AccordionPanel pb={4}>
-        <Text>{name} NFTs must adhere to specific trait specifications:</Text>
+        <RdModalBox>
+          <Text>{name} NFTs must adhere to specific trait specifications:</Text>
           {collectionStakingConfig!.traits.map((trait) => (
             <Box mt={2}>
               <Text>For the "{titleCase(trait.type)}" trait, NFTs must {trait.inclusion === RyoshiConfigTraitInclusionType.EXCLUDE && <>NOT</>} contain any of the following:</Text>
@@ -95,16 +121,17 @@ const EligibilityCriteriaItem = ({ name, collectionStakingConfig }: { name: stri
               </UnorderedList>
             </Box>
           ))}
-        <Text mt={4}>Eligible NFTs will then be calculated:</Text>
-        <UnorderedList>
-          {collectionStakingConfig.multipliers.map((multiplier, i) => (
-            <ListItem key={i}>{multiplier.percentile}th percentile: {commify(multiplier.value)}</ListItem>
-          ))}
-        </UnorderedList>
+          <Text mt={4}>Eligible NFTs will then be calculated:</Text>
+          <UnorderedList>
+            {collectionStakingConfig.multipliers.map((multiplier, i) => (
+              <ListItem key={i}>{multiplier.percentile}th percentile: {commify(multiplier.value)}</ListItem>
+            ))}
+          </UnorderedList>
+        </RdModalBox>
         {collectionStakingConfig.bonus.length > 0 && (
           <Box mt={2}>
             {collectionStakingConfig!.bonus.sort((a, b) => a.value - b.value).map((bonus) => (
-              <Box mt={2}>
+              <RdModalBox mt={2}>
                 <Text>NFTs adhering to the following specific trait specifications will gain an additional <strong>{bonus.value}</strong> troops:</Text>
                 <Box mt={2}>
                   {bonus.traits.map((trait) => (
@@ -117,7 +144,7 @@ const EligibilityCriteriaItem = ({ name, collectionStakingConfig }: { name: stri
                     </>
                   ))}
                 </Box>
-              </Box>
+              </RdModalBox>
             ))}
           </Box>
         )}

@@ -65,17 +65,19 @@ export const useBankNftStakingHandlers = () => {
           .sort((a: any, b: any) => a.percentile - b.percentile)
           .find((m: any) => percentile <= m.percentile)?.value || 0 : 0;
 
-        const hasBonusTrait = nft.attributes?.some((attr: any) => {
-          const traitType = attr.trait_type.toLowerCase();
-          const value = attr.value.toString().toLowerCase();
+        for (const bonus of troopsConfig.bonus) {
+          const hasBonusTrait = nft.attributes.some((attr: any) => {
+            const traitType = attr.trait_type.toLowerCase();
+            const value = attr.value.toString().toLowerCase();
 
-          for (let traitRule of troopsConfig.bonus.traits) {
-            if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
-              return true;
+            for (const traitRule of bonus.traits) {
+              if (traitRule.inclusion === 'include' && traitRule.type === traitType && traitRule.values.includes(value)) {
+                return true;
+              }
             }
-          }
-        });
-        if (hasBonusTrait) troops += troopsConfig.bonus.value;
+          });
+          if (hasBonusTrait) troops += bonus.value
+        }
       }
 
       setPendingItems([...pendingItems.all, {

@@ -107,7 +107,7 @@ const StakePage = () => {
 
         let troops = 0;
         const troopsConfig = stakeConfig.troops;
-        console.log('TROOPS CONFIG', nft)
+
         if (troopsConfig) {
           troops = troopsConfig.values
             .sort((a: any, b: any) => a.percentile - b.percentile)
@@ -126,19 +126,6 @@ const StakePage = () => {
             });
             if (hasBonusTrait) troops += bonus.value
           }
-
-          // const hasBonusTrait = nft.nft.attributes?.some((attr: any) => {
-          //   const traitType = attr.trait_type.toLowerCase();
-          //   const value = attr.value.toString().toLowerCase();
-          //
-          //   return troopsConfig.bonus.traits.some((traitRule: any) =>
-          //     traitRule.inclusion === 'include' &&
-          //     traitRule.type === traitType &&
-          //     traitRule.values.includes(value)
-          //   );
-          // });
-          //
-          // if (hasBonusTrait) troops += troopsConfig.bonus.value;
         }
 
         for (let i = 0; i < Number(token.amount); i++) {
