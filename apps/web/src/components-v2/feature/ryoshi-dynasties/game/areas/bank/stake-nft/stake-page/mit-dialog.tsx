@@ -105,7 +105,7 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody color='white'>
-          <Text fontSize='sm'>Earn additional Ryoshi troops by staking a Materialization Infusion Terminal (MIT)</Text>
+          <Text fontSize='sm'>Earn additional APR and Ryoshi troops by staking a Materialization Infusion Terminal (MIT)</Text>
           <Box
             bg='#453e3b'
             rounded='lg'

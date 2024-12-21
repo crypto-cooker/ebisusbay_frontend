@@ -34,6 +34,14 @@ import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
 import { toast } from 'react-toastify';
 import useMitMatcher from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-mit-matcher';
 
+enum ActiveStatus {
+  ACTIVE,
+  INACTIVE,
+  INACTIVE_COLLECTION,
+  INACTIVE_MIT_STAKED_INELIGIBLE,
+  INACTIVE_MIT_UNSTAKED_INELIGIBLE
+}
+
 interface StakingSlotProps {
   pendingNft?: PendingNft;
   isUnlocked: boolean;
@@ -58,14 +66,22 @@ const StakingSlot = ({pendingNft, isUnlocked, onSelect, isInDialog}: StakingSlot
     onSelect();
   };
 
-  const isEarning = useMemo(() => {
-    if (!pendingNft) return false;
+  const activeStatus = useMemo(() => {
+    if (!pendingNft) return ActiveStatus.INACTIVE;
 
     const { isActive } = pendingNft.stake;
-    const hasMitDependency = isMitDependency(pendingNft.nft);
+    if (!isActive) return ActiveStatus.INACTIVE_COLLECTION;
 
-    return hasMitDependency ? !!pendingItems.mit && isActive : isActive;
+    const mitStaked = !!pendingItems.mit;
+    const _isMitDependency = isMitDependency(pendingNft.nft);
+    if (mitStaked) {
+      return _isMitDependency ? ActiveStatus.ACTIVE : ActiveStatus.INACTIVE_MIT_STAKED_INELIGIBLE;
+    } else {
+      return !_isMitDependency ? ActiveStatus.ACTIVE : ActiveStatus.INACTIVE_MIT_UNSTAKED_INELIGIBLE;
+    }
   }, [pendingNft, pendingItems.mit]);
+
+  const isEarning = useMemo(() => activeStatus < ActiveStatus.INACTIVE, [activeStatus]);
 
   return (
     <Box w='120px'>
@@ -150,15 +166,18 @@ const StakingSlot = ({pendingNft, isUnlocked, onSelect, isInDialog}: StakingSlot
           {!isEarning && (
             <PopoverContent>
               <PopoverArrow />
-              <PopoverCloseButton />
               <PopoverBody fontSize='sm'>
-                {!pendingNft.stake.isActive ? (
+                {activeStatus === ActiveStatus.INACTIVE_COLLECTION ? (
                   <Text>
-                    The Bank no longer supports this collection for staking. Any benefits will be removed next game
+                    The Bank no longer supports this collection for staking. Benefits will not continue
                   </Text>
-                ) : (isMitDependency(pendingNft.nft) && !pendingItems.mit) && (
+                ) : activeStatus === ActiveStatus.INACTIVE_MIT_UNSTAKED_INELIGIBLE ? (
                   <Text>
                     A Materialization Infusion Terminal (MIT) is required to be staked before this NFT can yield any benefits
+                  </Text>
+                ) : activeStatus === ActiveStatus.INACTIVE_MIT_STAKED_INELIGIBLE && (
+                  <Text>
+                    This NFT is not yielding any benefits while a A Materialization Infusion Terminal (MIT) is staked
                   </Text>
                 )}
               </PopoverBody>
