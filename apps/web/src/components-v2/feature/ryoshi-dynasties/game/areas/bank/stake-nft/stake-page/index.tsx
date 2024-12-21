@@ -218,6 +218,7 @@ const StakePage = () => {
         <Flex direction='row' justify='center' mb={2}>
           {SUPPORTED_RD_CHAIN_CONFIGS.map(({name, chain}) => (
             <RdTabButton
+              key={chain.id}
               isActive={selectedChainId === chain.id}
               onClick={() => handleChainChange(chain.id)}
             >
