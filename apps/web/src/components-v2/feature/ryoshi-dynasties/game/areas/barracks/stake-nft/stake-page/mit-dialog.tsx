@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { toast } from 'react-toastify';
 import { parseErrorMessage } from '@src/helpers/validator';
 import {
@@ -39,6 +39,9 @@ import {
   queryKeys
 } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/constants';
 import { useMitMatcher } from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-mit-matcher';
+import {
+  useBarracksNftStakingHandlers
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/hooks';
 
 const gothamBook = localFont({ src: '../../../../../../../../../src/global/assets/fonts/Gotham-Book.woff2' });
 
@@ -57,7 +60,7 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
   const user = useUser();
   const { config: appConfig } = useAppConfig();
   const { config: mitChainConfig } = useAppChainConfig(appConfig.mit.chainId);
-  const { stakedItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
+  const { stakedItems, pendingItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
 
   // Only query for a random MIT if none explicitly provided to the component
   const { data: userMits } = useQuery({
@@ -88,6 +91,12 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
     onRemoved?.();
     onClose();
   }
+
+  const statusText = useMemo(() => {
+    if (!!stakedItems.mit) return 'Staked';
+    else if (pendingItems.mit) return 'Pending';
+    else return 'Unstaked';
+  }, [stakedItems, pendingItems]);
 
   return (
     <Modal
@@ -123,13 +132,13 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
                 <Box fontWeight='bold'>Current inventory</Box>
                 <Spacer />
                 <Box fontSize='sm'>Required: 1</Box>
-                <Box fontSize='sm'>Staked: {!!stakedItems.mit ? 'Yes' : 'No'}</Box>
+                <Box fontSize='sm'>Status: {statusText}</Box>
               </VStack>
             </Stack>
           </Box>
         </ModalBody>
         <ModalFooter bg='#292626'>
-          {!!stakedItems.mit ? (
+          {(!!stakedItems.mit || !!pendingItems.mit) ? (
             <UnstakeActionBar onComplete={handleRemoved} />
           ) : (
             <StakeActionBar onComplete={handleConfirmAdd} />
@@ -200,7 +209,7 @@ const UnstakeActionBar = ({onComplete}: {onComplete: () => void}) => {
   const user = useUser();
   const { config: appConfig } = useAppConfig();
   const { config: mitChainConfig } = useAppChainConfig(appConfig.mit.chainId);
-  const { stakedItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
+  const { stakedItems, pendingItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
 
   const {chainId} = useActiveChainId();
   const { switchNetworkAsync } = useSwitchNetwork();
@@ -208,6 +217,10 @@ const UnstakeActionBar = ({onComplete}: {onComplete: () => void}) => {
   const { unstakeMit } = useBarracksStakeMit();
   const queryClient = useQueryClient();
   const { isMitNft } = useMitMatcher();
+  const { removeNft } = useBarracksNftStakingHandlers();
+
+  const isUnstake = !!stakedItems.mit;
+  const isUnapply = !stakedItems.mit && !!pendingItems.mit;
 
   const handleSyncNetwork = async () => {
     if (isWrongNetwork) {
@@ -216,6 +229,8 @@ const UnstakeActionBar = ({onComplete}: {onComplete: () => void}) => {
   }
 
   const unstake = async () => {
+    if (!isUnstake && isUnapply) return;
+
     await handleSyncNetwork();
 
     if (!stakedItems.mit) {
@@ -236,14 +251,18 @@ const UnstakeActionBar = ({onComplete}: {onComplete: () => void}) => {
   const { mutate: handleStake, isPending: isExecuting } = useMutation({
     mutationFn: unstake,
     onSuccess: () => {
-      queryClient.setQueryData(queryKeys.barracksStakedNfts(user.address!), (oldData: any) => {
-        return {
-          ...oldData,
-          staked: oldData.staked.filter((nft: any) => !isMitNft(nft))
-        }
-      });
+      if (isUnstake) {
+        queryClient.setQueryData(queryKeys.barracksStakedNfts(user.address!), (oldData: any) => {
+          return {
+            ...oldData,
+            staked: oldData.staked.filter((nft: any) => !isMitNft(nft))
+          }
+        });
+        toast.success('MIT unstaked!');
+      } else if (isUnapply) {
+        removeNft(pendingItems.mit!.nft.nftAddress, pendingItems.mit!.nft.nftId);
+      }
 
-      toast.success('MIT unstaked!');
       onComplete();
     },
     onError: (error) => {
@@ -266,7 +285,13 @@ const UnstakeActionBar = ({onComplete}: {onComplete: () => void}) => {
         </Stack>
       ) : (
         <Stack direction='row' w='full' justify='space-between' align='center'>
-          <Text fontSize='sm'>A MIT has already been staked</Text>
+          <Text fontSize='sm'>
+            {isUnstake ? (
+              <>A MIT has already been staked</>
+            ) : (
+              <>A MIT is queued for staking</>
+            )}
+          </Text>
           <Button
             size='md'
             onClick={() => handleStake()}
@@ -275,7 +300,7 @@ const UnstakeActionBar = ({onComplete}: {onComplete: () => void}) => {
             isDisabled={isExecuting}
             loadingText='Unstaking'
           >
-            Unstake MIT
+            {isUnstake ? 'Unstake' : 'Remove'} MIT
           </Button>
         </Stack>
       )}
