@@ -83,7 +83,9 @@ const FaqPage = () => {
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-              <Text></Text>
+              <Text>
+                The Materialization Infusion Terminal (MIT) harnesses the power of sea crystals, enabling Mystic Sea Dragons to materialize and stake within buildings in the Ryoshi Realm. Its energy field excludes non-armored Ryoshi unless equipped with special dragon armor or artifacts.
+              </Text>
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem>

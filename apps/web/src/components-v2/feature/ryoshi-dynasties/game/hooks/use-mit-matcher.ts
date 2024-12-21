@@ -1,5 +1,6 @@
 import { useAppConfig } from '@src/config/hooks';
 import { ciEquals } from '@market/helpers/utils';
+import { ChainId } from '@pancakeswap/chains';
 
 
 export const useMitMatcher = () => {
@@ -11,8 +12,25 @@ export const useMitMatcher = () => {
     return ciEquals(nftAddress, appConfig.mit.address) && chainId === appConfig.mit.chainId;
   }
 
+  const isMitDependency = (nft: any) => {
+    const dependencies = [
+      {
+        address: '0x613e49aabe1a18d6ec50aa427c60adb1ae153872', // Mystic Sea Dragons - Cronos Testnet
+        chainId: ChainId.CRONOS_TESTNET
+      },
+      {
+        address: '0xb34a19ba70c865edae4696735904a414f37f48ab', // Mystic Sea Dragons - Cronos ZKEVM
+        chainId: ChainId.CRONOS_ZKEVM
+      }
+    ];
+
+    const nftAddress = nft.contractAddress ?? nft.nftAddress;
+    return dependencies.some((d) => ciEquals(d.address, nftAddress));
+  }
+
   return {
-    isMitNft
+    isMitNft,
+    isMitDependency
   }
 }
 
