@@ -12,25 +12,35 @@ import {
   PopoverCloseButton,
   PopoverContent,
   PopoverTrigger,
+  Text,
   VStack
-} from "@chakra-ui/react";
-import ImageService from "@src/core/services/image";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAward} from "@fortawesome/free-solid-svg-icons";
-import {CloseIcon} from "@chakra-ui/icons";
-import ShrineIcon from "@src/components-v2/shared/icons/shrine";
-import React, {useContext} from "react";
-import {PendingNft} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/types";
+} from '@chakra-ui/react';
+import ImageService from '@src/core/services/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAward } from '@fortawesome/free-solid-svg-icons';
+import { CloseIcon } from '@chakra-ui/icons';
+import ShrineIcon from '@src/components-v2/shared/icons/shrine';
+import React, { useContext, useMemo } from 'react';
+import { PendingNft } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/types';
 import {
   BarracksStakeNftContext,
   BarracksStakeNftContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context";
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context';
 import {
   useBarracksNftStakingHandlers
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/hooks";
-import {ChainLogo} from "@dex/components/logo";
-import {toast} from "react-toastify";
-import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/hooks';
+import { ChainLogo } from '@dex/components/logo';
+import { toast } from 'react-toastify';
+import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
+import useMitMatcher from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-mit-matcher';
+
+enum ActiveStatus {
+  ACTIVE,
+  INACTIVE,
+  INACTIVE_COLLECTION,
+  INACTIVE_MIT_STAKED_INELIGIBLE,
+  INACTIVE_MIT_UNSTAKED_INELIGIBLE
+}
 
 interface StakingSlotProps {
   pendingNft?: PendingNft;
@@ -40,9 +50,10 @@ interface StakingSlotProps {
 }
 
 const StakingSlot = ({pendingNft, isUnlocked, onSelect, isInDialog}: StakingSlotProps) => {
-  const {selectedChainId} = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
+  const { selectedChainId, pendingItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
   const { chainId: activeChainId} = useActiveChainId();
-  const {removeNft} = useBarracksNftStakingHandlers();
+  const { removeNft } = useBarracksNftStakingHandlers();
+  const { isMitDependency, isMitRequirementEnabled } = useMitMatcher();
 
   const isNftOnWrongChain = pendingNft && pendingNft.chainId !== selectedChainId;
 
@@ -55,6 +66,23 @@ const StakingSlot = ({pendingNft, isUnlocked, onSelect, isInDialog}: StakingSlot
     onSelect();
   };
 
+  const activeStatus = useMemo(() => {
+    if (!pendingNft) return ActiveStatus.INACTIVE;
+
+    const { isActive } = pendingNft.stake;
+    if (!isActive) return ActiveStatus.INACTIVE_COLLECTION;
+
+    const mitStaked = !!pendingItems.mit;
+    const _isMitDependency = isMitDependency(pendingNft.nft);
+    if (mitStaked && isMitRequirementEnabled('barracks')) {
+      return _isMitDependency ? ActiveStatus.ACTIVE : ActiveStatus.INACTIVE_MIT_STAKED_INELIGIBLE;
+    } else {
+      return !_isMitDependency ? ActiveStatus.ACTIVE : ActiveStatus.INACTIVE_MIT_UNSTAKED_INELIGIBLE;
+    }
+  }, [pendingNft, pendingItems.mit]);
+
+  const isEarning = useMemo(() => activeStatus < ActiveStatus.INACTIVE, [activeStatus]);
+
   return (
     <Box w='120px'>
       {!!pendingNft ? (
@@ -62,23 +90,23 @@ const StakingSlot = ({pendingNft, isUnlocked, onSelect, isInDialog}: StakingSlot
           <PopoverTrigger>
             <Box position='relative'>
               <Box
-                bg={pendingNft.stake.isActive ? '#376dcf' : '#716A67'}
+                bg={isEarning ? '#376dcf' : '#716A67'}
                 p={2}
                 rounded='xl'
                 border='2px dashed'
                 borderColor={pendingNft.stake.isAlreadyStaked ? 'transparent' : '#ffa71c'}
-                cursor={pendingNft.stake.isActive ? 'auto' : 'pointer'}
+                cursor={isEarning ? 'auto' : 'pointer'}
               >
                 <Box
                   width={100}
                   height={100}
-                  filter={pendingNft.stake.isActive ? 'auto' : 'grayscale(80%)'}
-                  opacity={pendingNft.stake.isActive ? 'auto' : 0.8}
+                  filter={isEarning ? 'auto' : 'grayscale(80%)'}
+                  opacity={isEarning ? 'auto' : 0.8}
                 >
                   <Image src={ImageService.translate(pendingNft.nft.image).fixedWidth(100, 100)} rounded='lg'/>
                 </Box>
                 <Flex fontSize='xs' justify='space-between' mt={1}>
-                  {pendingNft.stake.isActive ? (
+                  {isEarning ? (
                     <>
                       <Box verticalAlign='top'>
                         {pendingNft.nft.rank && (
@@ -129,11 +157,24 @@ const StakingSlot = ({pendingNft, isUnlocked, onSelect, isInDialog}: StakingSlot
             </Box>
           </PopoverTrigger>
 
-          {!pendingNft.stake.isActive && (
+          {!isEarning && (
             <PopoverContent>
               <PopoverArrow />
-              <PopoverCloseButton />
-              <PopoverBody>The Barracks no longer supports this collection for staking. Any benefits will be removed next game</PopoverBody>
+              <PopoverBody fontSize='sm'>
+                {activeStatus === ActiveStatus.INACTIVE_COLLECTION ? (
+                  <Text>
+                    The Barracks no longer supports this collection for staking. Benefits will not continue
+                  </Text>
+                ) : activeStatus === ActiveStatus.INACTIVE_MIT_UNSTAKED_INELIGIBLE ? (
+                  <Text>
+                    A Materialization Infusion Terminal (MIT) is required to be staked before this NFT can yield any benefits
+                  </Text>
+                ) : activeStatus === ActiveStatus.INACTIVE_MIT_STAKED_INELIGIBLE && (
+                  <Text>
+                    This NFT is not yielding any benefits while a A Materialization Infusion Terminal (MIT) is staked
+                  </Text>
+                )}
+              </PopoverBody>
             </PopoverContent>
           )}
         </Popover>

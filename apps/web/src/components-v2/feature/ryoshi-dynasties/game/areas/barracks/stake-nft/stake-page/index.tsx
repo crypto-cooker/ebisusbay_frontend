@@ -1,41 +1,50 @@
-import {useUser} from "@src/components-v2/useUser";
-import React, {ChangeEvent, useContext, useEffect, useMemo, useState} from "react";
+import { useUser } from '@src/components-v2/useUser';
+import React, { ChangeEvent, useContext, useEffect, useMemo, useState } from 'react';
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {useAppConfig} from "@src/config/hooks";
-import {useQuery, useQueryClient} from "@tanstack/react-query";
-import {DEFAULT_CHAIN_ID, SUPPORTED_RD_CHAIN_CONFIGS} from "@src/config/chains";
-import {NextSlot, PendingNft} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/types";
-import {StakedToken} from "@src/core/services/api-service/graph/types";
-import {ApiService} from "@src/core/services/api-service";
-import {StakedTokenType} from "@src/core/services/api-service/types";
+} from '@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { DEFAULT_CHAIN_ID, SUPPORTED_RD_CHAIN_CONFIGS } from '@src/config/chains';
+import { NextSlot, PendingNft } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/types';
+import { StakedToken } from '@src/core/services/api-service/graph/types';
+import { ApiService } from '@src/core/services/api-service';
+import { StakedTokenType } from '@src/core/services/api-service/types';
 import {
   queryKeys
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/constants";
-import {getNft} from "@src/core/api/endpoints/nft";
-import {ciEquals} from "@market/helpers/utils";
-import {BarracksStakeNftContext} from "../context";
-import {RdModalBox} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import {Box, Flex, Select, Stack} from "@chakra-ui/react";
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/constants';
+import { getNft } from '@src/core/api/endpoints/nft';
+import { ciEquals } from '@market/helpers/utils';
+import { BarracksStakeNftContext, PendingItems, StakedItems } from '../context';
+import { RdModalBox } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-modal';
+import { Box, Flex, Select, Stack } from '@chakra-ui/react';
 import StakingBlock
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/staking-block";
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/staking-block';
 import UnstakedNfts
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/unstaked-nfts";
-import RdTabButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button";
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/unstaked-nfts';
+import RdTabButton from '@src/components-v2/feature/ryoshi-dynasties/components/rd-tab-button';
+import { useMitMatcher } from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-mit-matcher';
 
 const StakePage = () => {
   const user = useUser();
   const rdContext = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const {config: appConfig} = useAppConfig();
   const queryClient = useQueryClient();
 
   const [selectedChainId, setSelectedChainId] = useState(DEFAULT_CHAIN_ID);
-  const [pendingNfts, setPendingNfts] = useState<PendingNft[]>([]);
   const [originalPendingNfts, setOriginalPendingNfts] = useState<PendingNft[]>([]);
-  const [stakedNfts, setStakedNfts] = useState<StakedToken[]>([]);
   const [nextSlot, setNextSlot] = useState<NextSlot>();
+
+  const [stakedItems, setStakedItems] = useState<StakedItems>({ all: [], common: [] });
+  const [pendingItems, setPendingItems] = useState<PendingItems>({ all: [], common: [] });
+  const { isMitNft } = useMitMatcher();
+
+  const handleSetPendingItems = (items: PendingNft[]) => {
+    setPendingItems({
+      all: items,
+      common: items.filter((item) => !isMitNft(item.nft)),
+      mit: items.find((item) => isMitNft(item.nft))
+    })
+  }
 
   const uniqueCollections = useMemo(() => {
     return Array.from(
@@ -122,12 +131,18 @@ const StakePage = () => {
   };
 
   const handleChainChange = (chainId: number) => {
+    if (chainId === selectedChainId) return;
+    
     setSelectedChainId(chainId);
 
     const collection = uniqueCollections.find((c) => c.chainId === chainId);
     setCurrentCollection(collection);
 
-    setPendingNfts(originalPendingNfts);
+    setPendingItems({
+      all: originalPendingNfts,
+      common: originalPendingNfts.filter(item => !isMitNft(item.nft)),
+      mit: originalPendingNfts.find((item) => isMitNft(item.nft))
+    });
   }
 
   const handleNftsStaked = async (newStakedNfts: PendingNft[]) => {
@@ -146,24 +161,33 @@ const StakePage = () => {
     if (!stakeInfo) return;
 
     (async () => {
-      setStakedNfts(stakeInfo.staked);
       const nfts = await mapStakedTokensToPending(stakeInfo.staked);
-      setPendingNfts(nfts);
       setOriginalPendingNfts(nfts);
       setNextSlot(stakeInfo.nextSlot);
+
+      setStakedItems({
+        all: stakeInfo.staked,
+        common: stakeInfo.staked.filter(item => !isMitNft(item)),
+        mit: stakeInfo.staked.find(isMitNft)
+      });
+      setPendingItems({
+        all: nfts,
+        common: nfts.filter(item => !isMitNft(item.nft)),
+        mit: nfts.find((item) => isMitNft(item.nft))
+      });
     })();
   }, [stakeInfo]);
 
   return (
     <BarracksStakeNftContext.Provider
       value={{
-        stakedNfts,
-        pendingNfts,
-        setPendingNfts,
         nextSlot,
         selectedChainId,
         collections: uniqueCollections,
-        onNftsStaked: handleNftsStaked
+        onNftsStaked: handleNftsStaked,
+        stakedItems,
+        pendingItems,
+        setPendingItems: handleSetPendingItems
       }}
     >
       <RdModalBox mx={1} textAlign='center'>
@@ -173,6 +197,7 @@ const StakePage = () => {
         <Flex direction='row' justify='center' mb={2}>
           {SUPPORTED_RD_CHAIN_CONFIGS.map(({name, chain}) => (
             <RdTabButton
+              key={chain.id}
               isActive={selectedChainId === chain.id}
               onClick={() => handleChainChange(chain.id)}
             >
@@ -181,7 +206,10 @@ const StakePage = () => {
           ))}
         </Flex>
       </Box>
-      <StakingBlock refetchSlotUnlockContext={refetch} />
+      <StakingBlock
+        refetchSlotUnlockContext={refetch}
+        onRequireChainChange={handleChainChange}
+      />
       <Box p={4}>
         <Stack direction='row' justify='space-between' mb={2}>
           <Select onChange={handleCollectionChange} maxW='250px' value={currentCollection?.slug}>
