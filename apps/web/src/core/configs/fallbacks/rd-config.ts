@@ -73,7 +73,20 @@ const mainnetCollections: RyoshiConfigCollections[] = [
     address: '0xe1f306e5053663a5f8127d1240dd7e3d22de7313',
     chainId: 388
   },
+  {
+    name: 'Mystic Sea Dragons',
+    slug: 'mystic-sea-dragons',
+    address: '0xb34a19ba70c865edae4696735904a414f37f48ab',
+    chainId: 388
+  },
+  {
+    name: 'Materialization Infusion Terminal',
+    slug: 'materialization-infusion-terminal',
+    address: '0x36fc7f007e05449d07a8129a3aca9be87b5bba01',
+    chainId: 388
+  }
 ];
+
 const testnetCollections: RyoshiConfigCollections[] = [
   {
     name: 'Ryoshi Tales: VIP',
@@ -140,6 +153,18 @@ const testnetCollections: RyoshiConfigCollections[] = [
     slug: 'moggy-money-brokers',
     address: '0x0500aff9876f3df33e126238365c58d2733bb22a',
     chainId: 282
+  },
+  {
+    name: 'Mystic Sea Dragons',
+    slug: 'mystic-sea-dragons',
+    address: '0x613e49aabe1a18d6ec50aa427c60adb1ae153872',
+    chainId: 338
+  },
+  {
+    name: 'Materialization Infusion Terminal',
+    slug: 'materialization-infusion-terminal',
+    address: '0xb115c623109b7998e497837ae6200ff79e49e1ee',
+    chainId: 338
   }
 ];
 const collections = isTestnet() ? testnetCollections : mainnetCollections;
@@ -243,6 +268,20 @@ export const ryoshiConfig: RyoshiConfig = {
           4: 0.3,
           8: 0.85,
           12: 1.35,
+        },
+        lpApr : {
+          1: 0.1,
+          2: 0.12,
+          3: 0.14,
+          4: 0.16,
+          5: 0.18,
+          6: 0.20,
+          7: 0.22,
+          8: 0.24,
+          9: 0.50,
+          10: 0.75,
+          11: 1.2,
+          12: 1.5
         }
       },
       nft: {
@@ -281,7 +320,7 @@ export const ryoshiConfig: RyoshiConfig = {
                 { percentile: 20, value: 20 },
                 { percentile: 100, value: 10 },
               ],
-              bonus: {
+              bonus: [{
                 value: 10,
                 traits: [
                   {
@@ -314,7 +353,7 @@ export const ryoshiConfig: RyoshiConfig = {
                     ]
                   }
                 ]
-              }
+              }]
             }
           },
           {
@@ -436,7 +475,7 @@ export const ryoshiConfig: RyoshiConfig = {
                 { percentile: 20, value: 15 },
                 { percentile: 100, value: 10 },
               ],
-              bonus: {
+              bonus: [{
                 value: 10,
                 traits: [
                   {
@@ -469,7 +508,118 @@ export const ryoshiConfig: RyoshiConfig = {
                     ]
                   }
                 ]
-              }
+              }]
+            }
+          },
+          {
+            ...collections.find(c => c.slug === 'mystic-sea-dragons')!,
+            active: true,
+            minId: 1,
+            maxId: 4000,
+            apr: {
+              multipliers: [
+                { percentile: 5, value: 0.5 },
+                { percentile: 10, value: 0.3 },
+                { percentile: 100, value: 0.2 },
+              ],
+              adders: [],
+              ids: []
+            },
+            troops: {
+              values: [
+                { percentile: 5, value: 50 },
+                { percentile: 10, value: 30 },
+                { percentile: 100, value: 20 },
+              ],
+              bonus: [
+                {
+                  value: 25,
+                  traits: [
+                    {
+                      inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                      type: 'mouth',
+                      values: [
+                        'grillz'
+                      ]
+                    },
+                    {
+                      inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                      type: 'head',
+                      values: [
+                        'glamour',
+                        'fortune horns',
+                        'crown'
+                      ]
+                    },
+                    {
+                      inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                      type: 'eyewear',
+                      values: [
+                        'monacle',
+                        'deal-with-it',
+                        'deal with it'
+                      ]
+                    },
+                    {
+                      inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                      type: 'eyes',
+                      values: [
+                        'cyberpunk',
+                        'fortune',
+                        'sea crystals'
+                      ]
+                    },
+                    {
+                      inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                      type: 'clothes',
+                      values: [
+                        'cyberpunk',
+                        'fortune shirt',
+                        'sea crystals',
+                        'white collar',
+                        'ryoshi with knife medallion',
+                      ]
+                    },
+                    {
+                      inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                      type: 'background',
+                      values: [
+                        'library',
+                      ]
+                    },
+                  ]
+                },
+                {
+                  value: 3000,
+                  traits: [
+                    {
+                      inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                      type: 'legendary',
+                      values: [
+                        'dr4-gon',
+                        'moggy dragon mount'
+                      ]
+                    }
+                  ]
+                },
+                {
+                  value: 1000,
+                  traits: [
+                    {
+                      inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                      type: 'legendary',
+                      values: [
+                        'mad scientist',
+                        'moon dweller',
+                        'mavriks tough boy',
+                        'kotori',
+                        'zephyr drake',
+                        'ethereal cloud serpent'
+                      ]
+                    }
+                  ]
+                },
+              ],
             }
           },
           {
@@ -488,6 +638,17 @@ export const ryoshiConfig: RyoshiConfig = {
               ]
             }
           },
+          {
+            ...collections.find(c => c.slug === 'materialization-infusion-terminal')!,
+            active: true,
+            minId: 1,
+            maxId: 2500,
+            apr: {
+              multipliers: [],
+              adders: [],
+              ids: []
+            }
+          }
         ],
       }
     }
@@ -819,6 +980,168 @@ export const ryoshiConfig: RyoshiConfig = {
               }
             ]
           },
+          {
+            ...collections.find(c => c.slug === 'mystic-sea-dragons')!,
+            active: true,
+            minId: 1,
+            maxId: 4000,
+            traits: [],
+            multipliers: [
+              { percentile: 5, value: 1000 },
+              { percentile: 10, value: 300 },
+              { percentile: 100, value: 275 },
+            ],
+            ids: [],
+            bonus: [
+              {
+                value: 100,
+                traits: [
+                  {
+                    type: 'background',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'washitsu'
+                    ]
+                  },
+                  {
+                    type: 'body',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'aligator',
+                      'magma',
+                      'rock',
+                      'saiya-jin',
+                      'chrono'
+                    ]
+                  },
+                  {
+                    type: 'clothes',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'admiral',
+                      "king's cloak",
+                      "royal guard's armor",
+                      'saiya-jin'
+                    ]
+                  },
+                  {
+                    type: 'eyes',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'saiya-jin',
+                      'chrono'
+                    ]
+                  },
+                  {
+                    type: 'head',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'chrono'
+                    ]
+                  },
+                ]
+              },
+              {
+                value: 300,
+                traits: [
+                  {
+                    type: 'body',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'cosmic'
+                    ]
+                  },
+                  {
+                    type: 'head',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'cosmic horns'
+                    ]
+                  },
+                ]
+              },
+              {
+                value: 50,
+                traits: [
+                  {
+                    type: 'clothes',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'mad scientist'
+                    ]
+                  },
+                ]
+              },
+              {
+                value: 200,
+                traits: [
+                  {
+                    type: 'clothes',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'waterminator',
+                      'wa-terminator'
+                    ]
+                  },
+                  {
+                    type: 'eyes',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'waterminator',
+                      'wa-terminator'
+                    ]
+                  },
+                  {
+                    type: 'eyewear',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'laser visor',
+                    ]
+                  },
+                ]
+              },
+              {
+                value: 3000,
+                traits: [
+                  {
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    type: 'legendary',
+                    values: [
+                      'dr4-gon',
+                      'moggy dragon mount'
+                    ]
+                  }
+                ]
+              },
+              {
+                value: 1000,
+                traits: [
+                  {
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    type: 'legendary',
+                    values: [
+                      'mad scientist',
+                      'moon dweller',
+                      'mavriks tough boy',
+                      'kotori',
+                      'zephyr drake',
+                      'ethereal cloud serpent'
+                    ]
+                  }
+                ]
+              },
+            ]
+          },
+          {
+            ...collections.find(c => c.slug === 'materialization-infusion-terminal')!,
+            active: true,
+            minId: 1,
+            maxId: 2500,
+            traits: [],
+            multipliers: [],
+            ids: [],
+            bonus: []
+          }
         ]
       }
     }

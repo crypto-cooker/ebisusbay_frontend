@@ -29,8 +29,6 @@ const useBarracksStakeNfts = () => {
   const {requestSignature} = useEnforceSignature();
   const user = useUser();
 
-  const { Features } = Constants;
-
   const stakeNfts = async (pendingNfts: StakablePendingNft[], stakedNfts: StakedToken[], chainId: number) => {
     if (!user.address) throw 'User is not logged in';
 

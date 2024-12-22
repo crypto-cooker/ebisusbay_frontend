@@ -1,14 +1,18 @@
-import {useInfiniteQuery} from "@tanstack/react-query";
-import InfiniteScroll from "react-infinite-scroll-component";
-import {Box, Center, SimpleGrid, Spinner, Text} from "@chakra-ui/react";
-import React from "react";
+import { useInfiniteQuery } from '@tanstack/react-query';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Box, Center, SimpleGrid, Spinner, Text, useDisclosure } from '@chakra-ui/react';
+import React, { useState } from 'react';
 import StakingNftCard
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/staking-nft-card";
-import {ApiService} from "@src/core/services/api-service";
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/staking-nft-card';
+import { ApiService } from '@src/core/services/api-service';
 import {
   useBankNftStakingHandlers
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/hooks";
-import {queryKeys} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/constants";
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/hooks';
+import { queryKeys } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/constants';
+import { useAppConfig } from '@src/config/hooks';
+import WalletNft from '@src/core/models/wallet-nft';
+import { ciEquals } from '@market/helpers/utils';
+import MitDialog from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/mit-dialog';
 
 interface UnstakedNftsProps {
   isReady: boolean;
@@ -18,6 +22,9 @@ interface UnstakedNftsProps {
 
 const UnstakedNfts = ({isReady, address, collection}: UnstakedNftsProps) => {
   const {addNft, removeNft} = useBankNftStakingHandlers();
+  const { isOpen: isMitOpen, onOpen: onOpenMit, onClose: onCloseMit } = useDisclosure();
+  const { config: appConfig } = useAppConfig();
+  const [selectedMit, setSelectedMit] = useState<WalletNft>();
 
   const { data, status, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: queryKeys.bankUnstakedNfts(address!, collection),
@@ -33,6 +40,26 @@ const UnstakedNfts = ({isReady, address, collection}: UnstakedNftsProps) => {
     refetchOnWindowFocus: false,
     enabled: !!address && isReady && !!collection
   });
+
+  const handleAddNft = (nft: WalletNft) => {
+    const isMit = ciEquals(nft.nftAddress, appConfig.mit.address) && nft.chain === appConfig.mit.chainId;
+    if (isMit) {
+      setSelectedMit(nft);
+      onOpenMit();
+    } else {
+      setSelectedMit(undefined);
+      addNft(nft);
+    }
+  }
+
+  const handleRemoveNft = (nft: WalletNft) =>  {
+    setSelectedMit(undefined);
+    removeNft(nft.nftAddress, nft.nftId);
+  }
+
+  const handleAddMitNft = (nft: WalletNft) =>  {
+    addNft(nft);
+  }
 
   return (
     <>
@@ -64,8 +91,8 @@ const UnstakedNfts = ({isReady, address, collection}: UnstakedNftsProps) => {
                   <StakingNftCard
                     key={nft.name}
                     nft={nft}
-                    onAdd={() => addNft(nft)}
-                    onRemove={() => removeNft(nft.nftAddress, nft.nftId)}
+                    onAdd={() => handleAddNft(nft)}
+                    onRemove={() => handleRemoveNft(nft)}
                   />
                 ))}
               </React.Fragment>
@@ -77,6 +104,12 @@ const UnstakedNfts = ({isReady, address, collection}: UnstakedNftsProps) => {
           </Box>
         )}
       </InfiniteScroll>
+      <MitDialog
+        isOpen={isMitOpen}
+        onClose={onCloseMit}
+        mitNft={selectedMit}
+        onConfirmAdd={handleAddMitNft}
+      />
     </>
   )
 }

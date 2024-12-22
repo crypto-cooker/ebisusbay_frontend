@@ -58,7 +58,11 @@ interface AppEnvironmentConfig {
       postUrl: string
     }
   },
-  currencies: AppCurrencies
+  currencies: AppCurrencies,
+  mit: {
+    chainId: SupportedChainId,
+    address: string;
+  }
 }
 
 const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
@@ -330,6 +334,10 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
         },
         deals: []
       }
+    },
+    mit: {
+      chainId: ChainId.CRONOS_ZKEVM,
+      address: '0x36fc7f007e05449d07a8129a3aca9be87b5bba01'
     }
   },
   [AppEnvironment.DEVELOPMENT]: {
@@ -511,6 +519,10 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
         },
         deals: []
       }
+    },
+    mit: {
+      chainId: ChainId.CRONOS_ZKEVM,
+      address: '0x36fc7f007e05449d07a8129a3aca9be87b5bba01'
     }
   },
   [AppEnvironment.TESTNET]: {
@@ -590,6 +602,10 @@ const remoteConfigs: Omit<AppConfigMap, AppEnvironment.LOCAL> = {
         },
         deals: []
       }
+    },
+    mit: {
+      chainId: ChainId.CRONOS_TESTNET,
+      address: '0xb115c623109b7998e497837ae6200ff79e49e1ee'
     }
   }
 }

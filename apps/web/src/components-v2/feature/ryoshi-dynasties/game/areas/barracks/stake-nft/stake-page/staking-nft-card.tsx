@@ -1,19 +1,19 @@
-import React, {memo, useContext} from 'react';
-import {useRouter} from 'next/router';
-import {toast} from 'react-toastify';
-import {faInfoCircle, faLink, faMinus, faPlus, faPlusCircle} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {MenuPopup} from '@src/Components/components/chakra-components';
-import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {nftCardUrl} from "@src/helpers/image";
-import {Box, Flex, Heading, Spacer, useClipboard, useColorModeValue} from "@chakra-ui/react";
-import {appUrl, ciEquals} from "@market/helpers/utils";
-import {faCheckCircle} from "@fortawesome/free-regular-svg-icons";
+import React, { memo, useContext } from 'react';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import { faInfoCircle, faLink, faMinus, faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { MenuPopup } from '@src/Components/components/chakra-components';
+import { AnyMedia } from '@src/components-v2/shared/media/any-media';
+import { nftCardUrl } from '@src/helpers/image';
+import { Box, Flex, Heading, Spacer, useClipboard, useColorModeValue } from '@chakra-ui/react';
+import { appUrl, ciEquals } from '@market/helpers/utils';
+import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import {
   BarracksStakeNftContext,
   BarracksStakeNftContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context";
-import WalletNft from "@src/core/models/wallet-nft";
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context';
+import WalletNft from '@src/core/models/wallet-nft';
 
 interface StakingNftCardProps {
   nft: WalletNft;
@@ -86,11 +86,11 @@ const StakingNftCard = ({
   };
 
   const cartCount = () => {
-    return barracksStakeNftContext.pendingNfts.filter((o) => o.nftId === nft.nftId && ciEquals(o.nftAddress, nft.nftAddress)).length;
+    return barracksStakeNftContext.pendingItems.all.filter((o) => o.nft.nftId === nft.nftId && ciEquals(o.nft.nftAddress, nft.nftAddress)).length;
   };
 
   const stakedCount = () => {
-    return barracksStakeNftContext.stakedNfts.reduce((acc, o) => {
+    return barracksStakeNftContext.stakedItems.all.reduce((acc, o) => {
       if (o.tokenId === nft.nftId && ciEquals(o.contractAddress, nft.nftAddress)) {
         return acc + parseInt(o.amount);
       }
