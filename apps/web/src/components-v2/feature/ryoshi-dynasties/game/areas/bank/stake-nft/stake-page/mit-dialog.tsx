@@ -145,7 +145,7 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
               {!_isMitRequirementEnabled && (
                 <Alert status='warning'>
                   <AlertIcon />
-                  MIT staking is currently not active and is not yielding rewards
+                  MIT staking is currently not available and is not yielding rewards
                 </Alert>
               )}
               <UnstakeActionBar onComplete={handleRemoved} />
@@ -155,7 +155,7 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
           ) : (
             <Alert status='warning'>
               <AlertIcon />
-              MIT staking not active
+              MIT staking not available
             </Alert>
           )}
         </ModalFooter>
