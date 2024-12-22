@@ -41,6 +41,7 @@ import useBankStakeMit from '@src/components-v2/feature/ryoshi-dynasties/game/ho
 import {
   useBankNftStakingHandlers
 } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/stake-page/hooks';
+import Link from 'next/link';
 
 const gothamBook = localFont({ src: '../../../../../../../../../src/global/assets/fonts/Gotham-Book.woff2' });
 
@@ -153,7 +154,10 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
               {availableMit ? (
                 <StakeActionBar onComplete={handleConfirmAdd} />
               ) : (
-                <Text textAlign='center' w='full'>No available MITs to stake</Text>
+                <Box textAlign='center' w='full'>
+                  No available MITs to stake.
+                  Buy one in the <strong><Link href='/collection/cronos-zk/materialization-infusion-terminal' className='color'>marketplace</Link></strong>
+                </Box>
               )}
             </>
           ) : (
@@ -186,7 +190,7 @@ const StakeActionBar = ({onComplete}: {onComplete: () => void}) => {
 
   return (
     <>
-      {(isWrongNetwork && isReadyForStake) ? (
+      {isWrongNetwork ? (
         <Stack direction='row' align='center' justify='space-between' w='full'>
           <Text fontSize='sm'>Please switch to Cronos zkEVM</Text>
           <Button
