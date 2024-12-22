@@ -75,17 +75,15 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
     enabled: !!user.address && !mitNft
   });
 
+  const availableMit = mitNft ?? userMits?.data[0];
+
   const handleConfirmAdd = () => {
-    let nft = mitNft;
-    if (!nft) {
-      nft = userMits?.data[0];
-      if (!nft) {
-        toast.error('Cannot find MIT to stake');
-        return;
-      }
+    if (!availableMit) {
+      toast.error('Cannot find MIT to stake');
+      return;
     }
 
-    onConfirmAdd(nft);
+    onConfirmAdd(availableMit);
     onClose();
   }
 
@@ -112,7 +110,7 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
         <ModalHeader>
           <Center>
             <HStack>
-              <Text>Special Staking</Text>
+              <Text>MIT Staking</Text>
             </HStack>
           </Center>
         </ModalHeader>
@@ -151,7 +149,13 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
               <UnstakeActionBar onComplete={handleRemoved} />
             </VStack>
           ) : _isMitRequirementEnabled ? (
-            <StakeActionBar onComplete={handleConfirmAdd} />
+            <>
+              {availableMit ? (
+                <StakeActionBar onComplete={handleConfirmAdd} />
+              ) : (
+                <Text textAlign='center' w='full'>No available MITs to stake</Text>
+              )}
+            </>
           ) : (
             <Alert status='warning'>
               <AlertIcon />
