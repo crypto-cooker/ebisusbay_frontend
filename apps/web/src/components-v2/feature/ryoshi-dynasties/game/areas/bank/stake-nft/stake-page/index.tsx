@@ -154,6 +154,8 @@ const StakePage = () => {
   };
 
   const handleChainChange = (chainId: number) => {
+    if (chainId === selectedChainId) return;
+
     setSelectedChainId(chainId);
 
     const collection = uniqueCollections.find((c) => c.chainId === chainId);
@@ -227,7 +229,10 @@ const StakePage = () => {
           ))}
         </Flex>
       </Box>
-      <StakingBlock refetchSlotUnlockContext={refetch} />
+      <StakingBlock
+        refetchSlotUnlockContext={refetch}
+        onRequireChainChange={handleChainChange}
+      />
       <Box p={4}>
         <Stack direction='row' justify='space-between' mb={2}>
           <Select onChange={handleCollectionChange} maxW='250px' value={currentCollection?.slug}>

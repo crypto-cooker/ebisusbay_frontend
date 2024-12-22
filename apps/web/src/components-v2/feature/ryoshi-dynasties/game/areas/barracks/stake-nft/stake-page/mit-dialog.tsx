@@ -133,7 +133,7 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
                 alt="Materialization Infusion Terminal"
               />
               <VStack align='end' gap={0}>
-                <Box fontWeight='bold'>Current inventory</Box>
+                <Box fontWeight='bold' textAlign='end'>Current inventory</Box>
                 <Spacer />
                 <Box fontSize='sm'>Required: 1</Box>
                 <Box fontSize='sm'>Status: {statusText}</Box>
@@ -157,7 +157,7 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
           ) : (
             <Alert status='warning'>
               <AlertIcon />
-              MIT staking not active
+              MIT staking currently not available
             </Alert>
           )}
         </ModalFooter>

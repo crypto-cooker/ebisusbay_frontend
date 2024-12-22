@@ -8,7 +8,7 @@ import { parseErrorMessage } from '@src/helpers/validator';
 import Fortune from '@src/global/contracts/Fortune.json';
 import { Box, SimpleGrid, Stack, useDisclosure, VStack } from '@chakra-ui/react';
 import { RdButton } from '@src/components-v2/feature/ryoshi-dynasties/components';
-import { useAppChainConfig } from '@src/config/hooks';
+import { useAppChainConfig, useAppConfig } from '@src/config/hooks';
 import { useJsonRpcProviderForChain } from '@src/global/hooks/use-ethers-provider-for-chain';
 import {
   BarracksStakeNftContext,
@@ -27,14 +27,17 @@ import MitDialog from '@src/components-v2/feature/ryoshi-dynasties/game/areas/ba
 import {
   useBarracksNftStakingHandlers
 } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/stake-page/hooks';
+import WalletNft from '@src/core/models/wallet-nft';
 
 interface StakingBlockProps {
   refetchSlotUnlockContext: () => void;
+  onRequireChainChange: (chainId: number) => void;
 }
 
-const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
+const StakingBlock = ({refetchSlotUnlockContext, onRequireChainChange}: StakingBlockProps) => {
   const user = useUser();
   const { config: appChainConfig } = useAppChainConfig();
+  const { config: appConfig } = useAppConfig();
   const readProvider = useJsonRpcProviderForChain(appChainConfig.chain.id);
 
   const { pendingItems, stakedItems, nextSlot, onNftsStaked, selectedChainId } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
@@ -116,6 +119,11 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
     mutation.mutate();
   }
 
+  const handleOpenMit = async () => {
+    onRequireChainChange(appConfig.mit.chainId);
+    onOpenMit();
+  }
+
   // Syncs wallet network to target network
   const handleSyncNetwork = async () => {
     if (needsNetworkChange) {
@@ -134,7 +142,7 @@ const StakingBlock = ({refetchSlotUnlockContext}: StakingBlockProps) => {
     <Box>
       <VStack my={6} px={4} spacing={8}>
         <SimpleGrid columns={{base: 2, sm: 3, md: 6}} gap={2}>
-          <StakingSlotMit onSelect={onOpenMit} />
+          <StakingSlotMit onSelect={handleOpenMit} />
           {[...Array(5).fill(0)].map((_, index) => (
             <StakingSlot
               key={index}
