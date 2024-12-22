@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo } from 'react';
 import { toast } from 'react-toastify';
 import { parseErrorMessage } from '@src/helpers/validator';
 import {
+  Alert, AlertIcon,
   Box,
   Button,
   Center,
@@ -59,6 +60,9 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
   const { config: appConfig } = useAppConfig();
   const { config: mitChainConfig } = useAppChainConfig(appConfig.mit.chainId);
   const { stakedItems, pendingItems } = useContext(BankStakeNftContext) as BankStakeNftContextProps;
+  const { isMitRequirementEnabled } = useMitMatcher();
+
+  const _isMitRequirementEnabled = isMitRequirementEnabled('bank');
 
   // Only query for a random MIT if none explicitly provided to the component
   const { data: userMits } = useQuery({
@@ -135,11 +139,24 @@ const MitStakingDialog = ({isOpen, onClose, mitNft, onConfirmAdd, onRemoved}: Mi
             </Stack>
           </Box>
         </ModalBody>
-        <ModalFooter bg='#292626'>
+        <ModalFooter bg='#292626' fontSize='sm'>
           {(!!stakedItems.mit || !!pendingItems.mit) ? (
-            <UnstakeActionBar onComplete={handleRemoved} />
-          ) : (
+            <VStack w='full'>
+              {!_isMitRequirementEnabled && (
+                <Alert status='warning'>
+                  <AlertIcon />
+                  MIT staking is currently not active and is not yielding rewards
+                </Alert>
+              )}
+              <UnstakeActionBar onComplete={handleRemoved} />
+            </VStack>
+          ) : _isMitRequirementEnabled ? (
             <StakeActionBar onComplete={handleConfirmAdd} />
+          ) : (
+            <Alert status='warning'>
+              <AlertIcon />
+              MIT staking not active
+            </Alert>
           )}
         </ModalFooter>
       </ModalContent>

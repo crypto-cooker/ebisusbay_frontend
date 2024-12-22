@@ -53,7 +53,7 @@ const StakingSlot = ({pendingNft, isUnlocked, onSelect, isInDialog}: StakingSlot
   const { selectedChainId, pendingItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
   const { chainId: activeChainId} = useActiveChainId();
   const { removeNft } = useBarracksNftStakingHandlers();
-  const { isMitDependency } = useMitMatcher();
+  const { isMitDependency, isMitRequirementEnabled } = useMitMatcher();
 
   const isNftOnWrongChain = pendingNft && pendingNft.chainId !== selectedChainId;
 
@@ -74,7 +74,7 @@ const StakingSlot = ({pendingNft, isUnlocked, onSelect, isInDialog}: StakingSlot
 
     const mitStaked = !!pendingItems.mit;
     const _isMitDependency = isMitDependency(pendingNft.nft);
-    if (mitStaked) {
+    if (mitStaked && isMitRequirementEnabled('barracks')) {
       return _isMitDependency ? ActiveStatus.ACTIVE : ActiveStatus.INACTIVE_MIT_STAKED_INELIGIBLE;
     } else {
       return !_isMitDependency ? ActiveStatus.ACTIVE : ActiveStatus.INACTIVE_MIT_UNSTAKED_INELIGIBLE;

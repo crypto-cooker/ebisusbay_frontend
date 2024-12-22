@@ -4,6 +4,8 @@ import {
   BarracksStakeNftContext,
   BarracksStakeNftContextProps
 } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks/stake-nft/context';
+import useMitMatcher from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-mit-matcher';
+import { WarningIcon } from '@chakra-ui/icons';
 
 interface StakingSlotProps {
   onSelect: () => void;
@@ -11,6 +13,9 @@ interface StakingSlotProps {
 
 const StakingSlotMit = ({onSelect}: StakingSlotProps) => {
   const { pendingItems } = useContext(BarracksStakeNftContext) as BarracksStakeNftContextProps;
+  const { isMitRequirementEnabled } = useMitMatcher();
+
+  const _isMitRequirementEnabled = isMitRequirementEnabled('barracks');
 
   const handleClick = () => {
     onSelect();
@@ -18,12 +23,9 @@ const StakingSlotMit = ({onSelect}: StakingSlotProps) => {
 
   return (
     <Box w='120px'>
-      {!!pendingItems.mit ? (
-        <Box position='relative'>
-          <Box
-            p={2}
-            cursor='pointer'
-          >
+      {!!pendingItems.mit && _isMitRequirementEnabled ? (
+        <Box>
+          <Box p={2} cursor='pointer'>
             <Box
               width={100}
               height={100}
@@ -39,15 +41,13 @@ const StakingSlotMit = ({onSelect}: StakingSlotProps) => {
           </Box>
         </Box>
       ) : (
-        <Box position='relative' overflow='hidden'>
-          <Box
-            p={2}
-            cursor='pointer'
-          >
+        <Box overflow='hidden'>
+          <Box p={2} cursor='pointer'>
             <Box
               width={100}
               height={100}
               onClick={handleClick}
+              position='relative'
             >
               <Image
                 src={'/img/ryoshi-dynasties/icons/mit-inactive.png'}
@@ -55,6 +55,16 @@ const StakingSlotMit = ({onSelect}: StakingSlotProps) => {
                 alt="Materialization Infusion Terminal"
                 boxSize='100%'
               />
+              {!_isMitRequirementEnabled && (
+                <WarningIcon
+                  boxSize={6}
+                  color='#F48F0C'
+                  position='absolute'
+                  top='50%'
+                  left='50%'
+                  transform='translate(-50%, -50%)'
+                />
+              )}
             </Box>
           </Box>
         </Box>

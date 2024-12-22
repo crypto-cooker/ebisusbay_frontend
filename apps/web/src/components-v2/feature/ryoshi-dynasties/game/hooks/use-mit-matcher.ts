@@ -1,10 +1,16 @@
 import { useAppConfig } from '@src/config/hooks';
 import { ciEquals } from '@market/helpers/utils';
 import { ChainId } from '@pancakeswap/chains';
+import { useContext } from 'react';
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from '@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context';
 
 
 export const useMitMatcher = () => {
   const { config: appConfig } = useAppConfig();
+  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
 
   const isMitNft = (nft: any) => {
     const nftAddress = nft.contractAddress ?? nft.nftAddress;
@@ -28,9 +34,18 @@ export const useMitMatcher = () => {
     return dependencies.some((d) => ciEquals(d.address, nftAddress));
   }
 
+  const isMitRequirementEnabled = (type: 'bank' | 'barracks') => {
+    if (!rdConfig) return false;
+    const buildingConfig = type === 'bank' ? rdConfig.bank : rdConfig.barracks;
+    const mitConfig = buildingConfig.staking.nft.collections.find((c) => c.slug === 'materialization-infusion-terminal');
+
+    return mitConfig?.active ?? false;
+  }
+
   return {
     isMitNft,
-    isMitDependency
+    isMitDependency,
+    isMitRequirementEnabled
   }
 }
 
