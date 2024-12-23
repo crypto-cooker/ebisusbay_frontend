@@ -4,10 +4,7 @@ import { useMemo } from 'react';
 export const LootboxItem = ({ item }: { item: any }) => {
   const { loot, probability, quantity } = item;
 
-  const quantityText = useMemo(() => {
-    if (quantity === null)  return '∞';
-    return quantity
-  }, [quantity]);
+  const quantityText = quantity === null ? '∞' : quantity;
 
   return (
     <VStack p={2} bg='#33302F' rounded='md' justify='space-between' align='stretch'>
