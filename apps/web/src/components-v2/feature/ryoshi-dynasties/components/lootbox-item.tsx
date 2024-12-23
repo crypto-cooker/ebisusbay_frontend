@@ -1,16 +1,31 @@
-import { Box, HStack, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, HStack, Image, SimpleGrid, Spacer, Stack, Text, VStack } from '@chakra-ui/react';
+import { useMemo } from 'react';
 
 export const LootboxItem = ({ item }: { item: any }) => {
-  const { loot } = item;
+  const { loot, probability, quantity } = item;
+
+  const quantityText = useMemo(() => {
+    if (quantity === null)  return '∞';
+    return quantity
+  }, [quantity]);
+
   return (
-    <Box padding={2} h='full'>
-      <Box w={16} h={16} justifyItems={'center'} alignItems={"center"}>
-        {loot.image ? <Image src={loot.image} /> : <Image src="/img/xp_coin.png" />}
-      </Box>
+    <VStack p={2} bg='#33302F' rounded='md' justify='space-between' align='stretch'>
       <Box>
-        <Text textAlign='center' w={16}>{loot.name}</Text>
+        <Stack direction={{base: 'column', sm: 'row'}} justify='space-between' align='top'>
+          <Box w={20}>
+            {loot.image ? <Image src={loot.image} rounded='md' /> : <Image src="/img/xp_coin.png" rounded='md' />}
+          </Box>
+          <Text textAlign={{base: 'start', sm: 'end'}} fontSize='sm' w='full'>{loot.name}</Text>
+        </Stack>
       </Box>
-    </Box>
+      <SimpleGrid columns={2} mt={4} fontSize='xs' color='#E2E8F0'>
+        <Box >available</Box>
+        <Box textAlign='end'>{quantityText}</Box>
+        <Box>probability</Box>
+        <Box textAlign='end'>{probability * 100}%</Box>
+      </SimpleGrid>
+    </VStack>
   );
 };
 

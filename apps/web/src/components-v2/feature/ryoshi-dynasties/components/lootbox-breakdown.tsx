@@ -19,14 +19,12 @@ const LootBoxBreakdown = () => {
   const { data: items, isLoading, refetch } = useLootBoxBalance();
   return (
     <>
-      {items ? (
+      {!!items && (
         <Accordion w="full" mt={2} allowMultiple>
           {items.map((item:any, index:number) => (
             <LootBox key={index} item={item} onChange={refetch}/>
           ))}
         </Accordion>
-      ) : (
-        <></>
       )}
     </>
   );
