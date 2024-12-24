@@ -24,6 +24,7 @@ import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/de
 import {MerchantItem} from "@src/core/services/api-service/cms/response-types";
 import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
 import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
+import { Address } from "viem";
 
 export interface Api {
     getListings(query?: ListingsQueryParams): Promise<PagedList<Listing>>;
@@ -95,6 +96,12 @@ export interface RyoshiDynastiesApi {
     boostVault(vaultId: number, chainId: number, troops: number, address: string, signature: string): Promise<any>;
     getVaultBoosts(address: string): Promise<any>;
     claimVaultBoost(vaultId: number, address: string, signature: string): Promise<any>;
+    getLootBoxList():Promise<any>;
+    getLootBoxBalance(walletAddress:string): Promise<any>;
+    getLootBoxInfo(id:number): Promise<any>;
+    openLootBox(id:number, address:string, signature: string): Promise<any>;
+    checkGift(address: string, signature: string): Promise<any>;
+    claimGift(address: string, signature: string): Promise<any>;
 }
 
 // @deprecated move to OrderState once MAPI migrated

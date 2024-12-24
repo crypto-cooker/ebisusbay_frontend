@@ -52,6 +52,7 @@ import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-
 import {VillageMerchant} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/merchant";
 import {ShakeTreeDialog} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/christmas";
 import {ValentinesDayDialog} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/valentines";
+import LootBoxModal from "../../modals/loot-box";
 
 
 const config = appConfig();
@@ -78,6 +79,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   const buildingButtonRef = useRef<any>(null)
   const { isOpen: isOpenBuildings, onOpen: onOpenBuildings, onClose: onCloseBuildings } = useDisclosure();
   const { isOpen: isOpenAnnouncementBoard, onOpen: onOpenAnnouncementBoard, onClose: onCloseAnnouncementBoard } = useDisclosure();
+  const { isOpen: isOpenLootBoxModal, onOpen: onOpenLootBoxModal, onClose: onCloseLootBoxModal } = useDisclosure();
   const { isOpen: isOpenDailyCheckin, onOpen: onOpenDailyCheckin, onClose: onCloseDailyCheckin } = useDisclosure();
   const { isOpen: isOpenMerchant, onOpen: onOpenMerchant, onClose: onCloseMerchant } = useDisclosure();
   const [forceRefreshBool, setForceRefreshBool] = useState(false);
@@ -512,12 +514,14 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
             onOpenBuildings={onOpenBuildings}
             onOpenDailyCheckin={onOpenDailyCheckin}
             onOpenBattleLog={onOpenBattleLog}
+            onOpenLootBoxModal={onOpenLootBoxModal}
             onOpenXPLeaderboard={onOpenXPLeaderboard}
             forceRefresh={forceRefreshBool}
           />
         </Box>
 
         <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard} onOpenDailyCheckin={onOpenDailyCheckin}/>
+        <LootBoxModal isOpen={isOpenLootBoxModal} onClose={onCloseLootBoxModal} />
         <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
         <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
         <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
