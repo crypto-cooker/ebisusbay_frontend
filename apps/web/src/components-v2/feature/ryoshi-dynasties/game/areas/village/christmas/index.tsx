@@ -1,14 +1,23 @@
 import { useUser } from '@src/components-v2/useUser';
 import useEnforceSigner from '@src/Components/Account/Settings/hooks/useEnforceSigner';
-import { Box, Image, keyframes, Spinner, Text, usePrefersReducedMotion, VStack } from '@chakra-ui/react';
+import { Box, HStack, Image, keyframes, Spinner, Text, usePrefersReducedMotion, VStack } from '@chakra-ui/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import xmasMessages from '@src/components-v2/feature/ryoshi-dynasties/game/areas/village/xmasMessages.json';
 import { ApiService } from '@src/core/services/api-service';
 import { RdModal } from '@src/components-v2/feature/ryoshi-dynasties/components';
-import { RdModalAlert } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-modal';
+import { RdModalAlert, RdModalBox } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-modal';
 import RdButton from '../../../../components/rd-button';
 import { RdModalFooter } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-announcement-modal';
 import useEnforceSignature from '@src/Components/Account/Settings/hooks/useEnforceSigner';
+import ImageService from '@src/core/services/image';
+import StaticAPNG from '@src/components-v2/shared/media/static-apng';
+
+interface LootBox {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+}
 
 export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const user = useUser();
@@ -25,11 +34,11 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
 
   const [hasGift, setHasGift] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [shaked, setShaked] = useState<boolean>(false);
   const [isShaking, setIsShaking] = useState<boolean>(false);
   const [opened, setOpened] = useState<boolean>(false);
   const [isOpening, setIsOpening] = useState<boolean>(false);
-  const [boxId, setBoxId] = useState<number>(0);
+  const [box, setBox] = useState<LootBox>();
+  const [boxContents, setBoxContents] = useState<LootBox>();
 
   const fetchGift = async () => {
     try {
@@ -44,21 +53,24 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
     }
   };
 
-  const openGift = useCallback(async () => {
-    if (!boxId) return;
+  const openGift = async () => {
+    if (!box) return;
     try {
       setIsOpening(true);
+      await new Promise(r => setTimeout(r, 5000));
+
       const signature = await requestSignature();
-      const res = await ApiService.withoutKey().ryoshiDynasties.openLootBox(boxId, user.address as string, signature);
+      const res = await ApiService.withoutKey().ryoshiDynasties.openLootBox(box.id, user.address as string, signature);
       if (res) {
         setOpened(true);
+        setBoxContents(res.data.reward.loot);
       }
     } catch (error) {
       console.log(error);
     } finally {
       setIsOpening(false);
     }
-  }, []);
+  };
 
   const claim = useCallback(async () => {
     try {
@@ -66,37 +78,72 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
       const signature = await requestSignature();
       const res = await ApiService.withoutKey().ryoshiDynasties.claimGift(user.address as string, signature);
       if (res.data.lootbox) {
-        setBoxId(res.data.lootbox.id);
-        setShaked(true);
+        setBox(res.data.lootbox);
       }
     } catch (e) {
       console.log(e);
     } finally {
       setIsShaking(false);
     }
-  }, [setShaked]);
+  }, []);
+
+  const handleClose = () => {
+    setBox(undefined);
+    setOpened(false);
+    setBoxContents(undefined);
+    onClose();
+  }
 
   useEffect(() => {
     if (user.address || isOpen) fetchGift();
   }, [isOpen, user.address]);
 
   return (
-    <RdModal isOpen={isOpen} onClose={onClose} title="Gift from Ebisu Claus">
+    <RdModal isOpen={isOpen} onClose={handleClose} title="Gift from Ebisu Claus">
       <RdModalAlert>
+        <Text>{getRandomMessage()}</Text>
         {!isLoading ? (
           <>
-            <Text>{getRandomMessage()}</Text>
             {hasGift ? (
               <VStack mt={2}>
-                {shaked ? (
-                  <>
-                    <Image
-                      w={40}
-                      h={40}
-                      src={`${opened ? '/img/lootbox/xmas_gift_no_loop.png' : '/img/lootbox/xmas_gift_no_loop_close.png'}`}
+                {!!box ? (
+                  <VStack>
+                    <APNGBox
+                      imageSrc={ImageService.apng(box.image).custom({ width: 250 })}
+                      animate={isOpening || opened}
                     />
-                    <Text>Congratulations! You can open your gift in the lootbox.</Text>
-                  </>
+                    {opened ? (
+                      <>
+                        {boxContents && (
+                          <RdModalBox>
+                            <VStack align='stretch'>
+                              <Box fontWeight='bold'>You have received</Box>
+                              <HStack padding={2} h='full'>
+                                <Box w={10} h={10} justifyItems={'center'} alignItems={"center"}>
+                                  {boxContents.image ? <Image src={boxContents.image} /> : <Image src="/img/xp_coin.png" />}
+                                </Box>
+                                <Box>
+                                  <Text textAlign='center'>{boxContents.name}</Text>
+                                </Box>
+                              </HStack>
+                            </VStack>
+                          </RdModalBox>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <RdButton
+                          onClick={openGift}
+                          isDisabled={isOpening}
+                          isLoading={isOpening}
+                          loadingText='Opening'
+                        >
+                          Open Box
+                        </RdButton>
+                        <Text>Congratulations, You received a lootbox! Open it below to see what's inside.</Text>
+                      </>
+                    )}
+                  </VStack>
                 ) : (
                   <>
                     <RdButton
@@ -212,4 +259,31 @@ const styles2 = {
     display: 'inline-block',
     margin: '0 2px',
   },
+};
+
+
+interface APNGBoxProps {
+  imageSrc: string;
+  animate: boolean;
+}
+
+const APNGBox: React.FC<APNGBoxProps> = ({ imageSrc, animate }) => {
+  const [preloadedImage, setPreloadedImage] = useState<string | null>(null);
+
+  // Preload the animated APNG
+  useEffect(() => {
+    const preloadImage = new window.Image();
+    preloadImage.src = imageSrc;
+    preloadImage.onload = () => setPreloadedImage(imageSrc);
+  }, [imageSrc]);
+
+  return (
+    <Box h='198px'>
+      {animate && preloadedImage ? (
+        <Image src={preloadedImage} alt="Animated APNG" />
+      ) : (
+        <StaticAPNG src={imageSrc} alt="Static APNG" />
+      )}
+    </Box>
+  );
 };

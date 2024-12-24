@@ -83,7 +83,6 @@ export const LootBox = ({ item, onChange }: { item: any; onChange: () => void })
     ApiService.withoutKey()
       .ryoshiDynasties.openLootBox(lootboxId, user.address as string, signature)
       .then((res) => {
-        console.log(res.data, 'HHHHHHHHHHHHHHHHHHHHH');
         openBoxImage();
         onOpen();
         onChange();
