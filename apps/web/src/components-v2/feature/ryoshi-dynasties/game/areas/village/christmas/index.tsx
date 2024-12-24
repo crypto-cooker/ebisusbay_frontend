@@ -65,8 +65,8 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
       setIsShaking(true);
       const signature = await requestSignature();
       const res = await ApiService.withoutKey().ryoshiDynasties.claimGift(user.address as string, signature);
-      if (res.open.lootbox) {
-        setBoxId(res.lootbox.id);
+      if (res.data.lootbox) {
+        setBoxId(res.data.lootbox.id);
         setShaked(true);
       }
     } catch (e) {
