@@ -14,17 +14,16 @@ import {
   Image,
   SimpleGrid,
   Spinner,
-  useDisclosure,
-  VStack,
+  VStack
 } from '@chakra-ui/react';
+import useEnforceSignature from '@src/Components/Account/Settings/hooks/useEnforceSigner';
+import { useUser } from '@src/components-v2/useUser';
+import { ApiService } from '@src/core/services/api-service';
+import { useCallback, useState } from 'react';
+import styled from 'styled-components';
 import { useLootBoxInfo } from '../game/hooks/use-lootbox';
 import { LootboxItem, LootboxItemMini } from './lootbox-item';
 import RdButton from './rd-button';
-import { useCallback, useState } from 'react';
-import { ApiService } from '@src/core/services/api-service';
-import useEnforceSignature from '@src/Components/Account/Settings/hooks/useEnforceSigner';
-import { useUser } from '@src/components-v2/useUser';
-import styled from 'styled-components';
 
 export enum BOX_TYPE {
   COMMON = 'common',
@@ -58,7 +57,7 @@ export const getBoxType = (boxType: string) => {
   }
 };
 
-export const LootBox = ({ item, onChange }: { item: any; onChange: () => void }) => {
+export const LootBox = ({ item, onChange, onOpened }: { item: any; onChange: () => void, onOpened: (reward: any) => void }) => {
   const { lootboxId } = item;
   const { data: boxInfo, isLoading } = useLootBoxInfo(lootboxId);
   const lootboxItems = boxInfo?.lootboxItems;
@@ -67,8 +66,6 @@ export const LootBox = ({ item, onChange }: { item: any; onChange: () => void })
   const [isOpened, setIsOpened] = useState(false);
   const [rewardData, setRewardData] = useState<any>();
   const [isOpening, setIsOpening] = useState<boolean>(false);
-
-  const { isOpen, onClose, onOpen } = useDisclosure();
 
   const openBoxImage = async () => {
     setIsOpened(true);
@@ -84,9 +81,9 @@ export const LootBox = ({ item, onChange }: { item: any; onChange: () => void })
       .ryoshiDynasties.openLootBox(lootboxId, user.address as string, signature)
       .then((res) => {
         openBoxImage();
-        onOpen();
         onChange();
         setRewardData(res.data);
+        onOpened(res.data);
       })
       .catch((error) => console.log(error))
       .finally(() => {

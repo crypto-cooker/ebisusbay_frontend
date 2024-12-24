@@ -1,30 +1,33 @@
 import {
   Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Flex,
-  HStack,
-  Image,
-  SimpleGrid,
+  Box
 } from '@chakra-ui/react';
-import { indexOf } from 'lodash';
-import { LootBox } from './lootbox';
+import { useAtom } from 'jotai';
 import { useLootBoxBalance } from '../game/hooks/use-lootbox';
+import { openedLootboxAtom } from '../game/modals/loot-box';
+import { LootBox } from './lootbox';
 
 
 const LootBoxBreakdown = () => {
   const { data: items, isLoading, refetch } = useLootBoxBalance();
+  const itemsWithBalance = items?.filter((item: any) => item.balance > 0);
+  const [openedLootbox, setOpenedLootbox] = useAtom(openedLootboxAtom);
+
   return (
     <>
-      {!!items && (
+      {!!itemsWithBalance && itemsWithBalance.length > 0 ? (
         <Accordion w="full" mt={2} allowMultiple>
-          {items.map((item:any, index:number) => (
-            <LootBox key={index} item={item} onChange={refetch}/>
+          {itemsWithBalance.map((item:any, index:number) => (
+            <LootBox 
+              key={index} 
+              item={item} 
+              onChange={refetch}
+              onOpened={(reward: any) => setOpenedLootbox(reward)}
+            />
           ))}
         </Accordion>
+      ) : (
+        <Box textAlign='center'>You currently have no lootboxes to open</Box>
       )}
     </>
   );
