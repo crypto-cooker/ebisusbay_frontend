@@ -34,7 +34,7 @@ export enum BOX_TYPE {
 
 const BalanceBadge = styled(Badge)`
   position: absolute;
-  padding: 1px;
+  padding: 1px 5px;
   top: 0;
   right: 0;
   transform: translate(30%, -50%);
