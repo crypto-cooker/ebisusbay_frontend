@@ -154,7 +154,7 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
                     >
                       {isShaking ? <Spinner /> : 'Select Gift'}
                     </RdButton>
-                    <Text>You can shake the tree to get your present!</Text>
+                    <Text>Recieve your gift for Chrismas Day!</Text>
                   </>
                 )}
               </VStack>
