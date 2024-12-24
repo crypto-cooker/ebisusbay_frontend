@@ -1,7 +1,7 @@
 import { useUser } from '@src/components-v2/useUser';
 import useEnforceSigner from '@src/Components/Account/Settings/hooks/useEnforceSigner';
 import { Box, HStack, Image, keyframes, Spinner, Text, usePrefersReducedMotion, VStack } from '@chakra-ui/react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import xmasMessages from '@src/components-v2/feature/ryoshi-dynasties/game/areas/village/xmasMessages.json';
 import { ApiService } from '@src/core/services/api-service';
 import { RdModal } from '@src/components-v2/feature/ryoshi-dynasties/components';
@@ -39,6 +39,8 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
   const [isOpening, setIsOpening] = useState<boolean>(false);
   const [box, setBox] = useState<LootBox>();
   const [boxContents, setBoxContents] = useState<LootBox>();
+
+  const message = useMemo(() => getRandomMessage(), [isOpen]);
 
   const fetchGift = useCallback(async () => {
     try {
@@ -99,11 +101,10 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
     if (user.address && isOpen == true) fetchGift();
   }, [isOpen, user.address]);
 
-  console.log(hasGift, "HHHHHHHHHHHH")
   return (
     <RdModal isOpen={isOpen} onClose={handleClose} title="Gift from Ebisu Claus">
       <RdModalAlert>
-        <Text>{getRandomMessage()}</Text>
+        <Text>{message}</Text>
         {!isLoading ? (
           <>
             {hasGift ? (
