@@ -140,7 +140,7 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
                         >
                           Open Box
                         </RdButton>
-                        <Text>Congratulations, You received a lootbox! Open it below to see what's inside.</Text>
+                        <Text>Congratulations, You received a lootbox! Open it to see what's inside.</Text>
                       </>
                     )}
                   </VStack>
