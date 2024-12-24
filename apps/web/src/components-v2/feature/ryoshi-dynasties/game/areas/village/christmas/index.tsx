@@ -95,7 +95,7 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
   }
 
   useEffect(() => {
-    if (user.address || isOpen) fetchGift();
+    if (user.address && isOpen == true) fetchGift();
   }, [isOpen, user.address]);
 
   return (
