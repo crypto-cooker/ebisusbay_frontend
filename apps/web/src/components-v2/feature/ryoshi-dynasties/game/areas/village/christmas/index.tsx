@@ -1,5 +1,4 @@
 import { useUser } from '@src/components-v2/useUser';
-import useEnforceSigner from '@src/Components/Account/Settings/hooks/useEnforceSigner';
 import { Box, HStack, Image, keyframes, Spinner, Text, usePrefersReducedMotion, VStack } from '@chakra-ui/react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import xmasMessages from '@src/components-v2/feature/ryoshi-dynasties/game/areas/village/xmasMessages.json';
@@ -32,7 +31,7 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
     return xmasMessages[randomIndex];
   };
 
-  const [hasGift, setHasGift] = useState<boolean>(false);
+  const [canClaimGift, setCanClaimGift] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isShaking, setIsShaking] = useState<boolean>(false);
   const [opened, setOpened] = useState<boolean>(false);
@@ -47,10 +46,12 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
       setIsLoading(true);
       const signature = await requestSignature();
       const res = await ApiService.withoutKey().ryoshiDynasties.checkGift(user.address as string, signature);
-      setHasGift(res.data.canClaim);
+      setCanClaimGift(res.data.canClaim);
+      setBox(res.data.data?.lootbox);
     } catch (e) {
       console.log(e);
-      setHasGift(false);
+      setCanClaimGift(false);
+      setBox(undefined);
     } finally {
       setIsLoading(false);
     }
@@ -100,68 +101,69 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
   useEffect(() => {
     if (user.address && isOpen == true) fetchGift();
   }, [isOpen, user.address]);
-
+  
   return (
     <RdModal isOpen={isOpen} onClose={handleClose} title="Gift from Ebisu Claus">
       <RdModalAlert>
         <Text>{message}</Text>
         {!isLoading ? (
           <>
-            {hasGift ? (
-              <VStack mt={2}>
-                {!!box ? (
-                  <VStack>
-                    <APNGBox
-                      imageSrc={ImageService.apng(box.image).custom({ width: 250 })}
-                      animate={isOpening || opened}
-                    />
-                    {opened ? (
-                      <>
-                        {boxContents && (
-                          <RdModalBox>
-                            <VStack align="stretch">
-                              <Box fontWeight="bold">You have received</Box>
-                              <HStack padding={2} h="full">
-                                <Box w={10} h={10} justifyItems={'center'} alignItems={'center'}>
-                                  {boxContents.image ? (
-                                    <Image src={boxContents.image} />
-                                  ) : (
-                                    <Image src="/img/xp_coin.png" />
-                                  )}
-                                </Box>
-                                <Box>
-                                  <Text textAlign="center">{boxContents.name}</Text>
-                                </Box>
-                              </HStack>
-                            </VStack>
-                          </RdModalBox>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        <RdButton onClick={openGift} isDisabled={isOpening} isLoading={isOpening} loadingText="Opening">
-                          Open Box
-                        </RdButton>
-                        <Text>Congratulations, You received a lootbox! Open it to see what's inside.</Text>
-                      </>
-                    )}
-                  </VStack>
-                ) : (
-                  <>
-                    <RdButton
-                      w={'200px'}
-                      onClick={() => {
-                        if (!isShaking) claim();
-                      }}
-                    >
-                      {isShaking ? <Spinner /> : 'Select Gift'}
-                    </RdButton>
-                  </>
-                )}
-              </VStack>
-            ) : (
-              <></>
-            )}
+            <VStack mt={2}>
+              {!!box ? (
+                <VStack>
+                  {/*<APNGBox*/}
+                  {/*  imageSrc={ImageService.apng(box.image).custom({ width: 250 })}*/}
+                  {/*  animate={isOpening || opened}*/}
+                  {/*/>*/}
+                  <Image
+                    w={250}
+                    src={box.image}
+                    alt={''}
+                  />
+                  {opened ? (
+                    <>
+                      {boxContents && (
+                        <RdModalBox>
+                          <VStack align="stretch">
+                            <Box fontWeight="bold">You have received</Box>
+                            <HStack padding={2} h="full">
+                              <Box w={10} h={10} justifyItems={'center'} alignItems={'center'}>
+                                {boxContents.image ? (
+                                  <Image src={boxContents.image} />
+                                ) : (
+                                  <Image src="/img/xp_coin.png" />
+                                )}
+                              </Box>
+                              <Box>
+                                <Text textAlign="center">{boxContents.name}</Text>
+                              </Box>
+                            </HStack>
+                          </VStack>
+                        </RdModalBox>
+                      )}
+                    </>
+                  ) : canClaimGift && (
+                    <>
+                      <RdButton onClick={openGift} isDisabled={isOpening} isLoading={isOpening} loadingText="Opening">
+                        Open Box
+                      </RdButton>
+                      <Text>Congratulations, You received a lootbox! Open it to see what's inside.</Text>
+                    </>
+                  )}
+                </VStack>
+              ) : (
+                <>
+                  <RdButton
+                    w={'200px'}
+                    onClick={() => {
+                      if (!isShaking) claim();
+                    }}
+                  >
+                    {isShaking ? <Spinner /> : 'Select Gift'}
+                  </RdButton>
+                </>
+              )}
+            </VStack>
           </>
         ) : (
           <Box>
@@ -274,7 +276,14 @@ const APNGBox: React.FC<APNGBoxProps> = ({ imageSrc, animate }) => {
   useEffect(() => {
     const preloadImage = new window.Image();
     preloadImage.src = imageSrc;
-    preloadImage.onload = () => setPreloadedImage(imageSrc);
+
+    preloadImage.onload = () => {
+      setPreloadedImage(imageSrc);
+    };
+
+    preloadImage.onerror = (err) => {
+      console.error('Failed to preload image:', err);
+    };
   }, [imageSrc]);
 
   return (

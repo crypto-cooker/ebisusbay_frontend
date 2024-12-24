@@ -19,11 +19,11 @@ export const useLootBoxList = () => {
 }
 
 export const useLootBoxBalance = () => {
-  `  `
   const user = useUser();
   const { data, refetch, isLoading, error } = useQuery({
     queryKey: ['BoxBalance', user.address],
-    queryFn: async () => ApiService.withoutKey().ryoshiDynasties.getLootBoxBalance(user.address as string).then((res) => res.data).catch((error) => { console.log(error); return undefined })
+    queryFn: async () => ApiService.withoutKey().ryoshiDynasties.getLootBoxBalance(user.address as string).then((res) => res.data).catch((error) => { console.log(error); return undefined }),
+    refetchOnWindowFocus: false
   })
 
   return { data, refetch, isLoading, error }
