@@ -6,6 +6,7 @@ import {
 } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-nft/context';
 import useMitMatcher from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-mit-matcher';
 import { WarningIcon } from '@chakra-ui/icons';
+import ImageService from '@src/core/services/image';
 
 interface StakingSlotProps {
   onSelect: () => void;
@@ -34,8 +35,7 @@ const StakingSlotMit = ({onSelect}: StakingSlotProps) => {
               opacity={_isMitRequirementEnabled ? 'auto' : 0.8}
             >
               <Image
-                src={'/img/ryoshi-dynasties/icons/mit-active.gif'}
-                // src={ImageService.translate('/img/ryoshi-dynasties/icons/mit-active.gif').convert()}
+                src={ImageService.translate('/img/ryoshi-dynasties/icons/mit-active.gif').convert()}
                 alt="Materialization Infusion Terminal"
                 boxSize='100%'
               />
@@ -61,8 +61,7 @@ const StakingSlotMit = ({onSelect}: StakingSlotProps) => {
               onClick={handleClick}
             >
               <Image
-                src={'/img/ryoshi-dynasties/icons/mit-inactive.png'}
-                // src={ImageService.translate('/img/ryoshi-dynasties/icons/mit-inactive.png').convert()}
+                src={ImageService.translate('/img/ryoshi-dynasties/icons/mit-inactive.png').convert()}
                 alt="Materialization Infusion Terminal"
                 boxSize='100%'
               />

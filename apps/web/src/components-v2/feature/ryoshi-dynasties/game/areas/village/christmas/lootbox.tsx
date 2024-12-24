@@ -1,19 +1,6 @@
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Flex,
-  HStack,
-  Image,
-  SimpleGrid,
-} from '@chakra-ui/react';
-import { indexOf } from 'lodash';
-import { LootBox } from './lootbox';
-import { useLootBoxBalance } from '../game/hooks/use-lootbox';
-
+import { useLootBoxBalance } from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-lootbox';
+import { Accordion } from '@chakra-ui/react';
+import { LootBox } from '@src/components-v2/feature/ryoshi-dynasties/components/lootbox';
 
 const LootBoxBreakdown = () => {
   const { data: items, isLoading, refetch } = useLootBoxBalance();

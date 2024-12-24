@@ -64,26 +64,25 @@ export const LootBox = ({ item, onChange }: { item: any; onChange: () => void })
   const lootboxItems = boxInfo?.lootboxItems;
   const { requestSignature } = useEnforceSignature();
   const user = useUser();
-  const [isOpened, setIsOpend] = useState(false);
+  const [isOpened, setIsOpened] = useState(false);
   const [rewardData, setRewardData] = useState<any>();
   const [isOpening, setIsOpening] = useState<boolean>(false);
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const openBoxImage = async () => {
-    setIsOpend(true);
+    setIsOpened(true);
     setTimeout(() => {
-      setIsOpend(false);
+      setIsOpened(false);
     }, 5000);
   };
 
   const handleOpen = useCallback(async () => {
     const signature = await requestSignature();
     setIsOpening(true);
-    const res = ApiService.withoutKey()
+    ApiService.withoutKey()
       .ryoshiDynasties.openLootBox(lootboxId, user.address as string, signature)
       .then((res) => {
-        console.log(res.data, 'HHHHHHHHHHHHHHHHHHHHH');
         openBoxImage();
         onOpen();
         onChange();
@@ -98,13 +97,13 @@ export const LootBox = ({ item, onChange }: { item: any; onChange: () => void })
   const boxType = item.lootbox.name.split(' ')[0].toLowerCase();
 
   return (
-    <AccordionItem bgColor="#564D4A" rounded="md" my={1} w="full">
+    <AccordionItem bgColor="#292626" rounded="md" my={1} w="full">
       <AccordionButton w="full">
         <Flex justify="space-between" w="full">
           {/* Item Details */}
-          <VStack w="50%" display={{ base: 'none', sm: 'flex' }} justify="space-around">
-            <Flex alignItems="center">{item.lootbox.name}</Flex>
-            <Flex alignItems="center" fontSize={12}>
+          <VStack w="50%" display={{ base: 'none', sm: 'flex' }} justify='center' align='start'>
+            <Flex fontWeight='bold'>{item.lootbox.name}</Flex>
+            <Flex fontSize={12}>
               {item.lootbox.description}
             </Flex>
           </VStack>
@@ -126,14 +125,14 @@ export const LootBox = ({ item, onChange }: { item: any; onChange: () => void })
 
       {/* Accordion Panel */}
       <AccordionPanel>
-        <Flex justify="space-around" gap={1} flexWrap="wrap">
+        <SimpleGrid columns={{ base: 2, sm: 3 }} gap={2}>
           {lootboxItems
             ? lootboxItems.map((lootboxItem: any, index: number) => <LootboxItem item={lootboxItem} key={index} />)
             : null}
-        </Flex>
+        </SimpleGrid>
 
         {lootboxItems?.length > 0 && (
-          <Flex justify="center" mt={2}>
+          <Flex justify="center" mt={6}>
             <RdButton onClick={handleOpen} position="relative" width="120px">
               {isOpening ? <Spinner /> : 'Open'}
               {item.balance > 1 && <BalanceBadge>{item.balance}</BalanceBadge>}

@@ -18,9 +18,7 @@ const LootBoxModal = ({ isOpen, onClose }: LootBoxProps) => {
             quests and outright purchase.{' '}
           </Text>
         </Box>
-        <RdModalBox maxH="500px" overflow='auto'>
-          <LootBoxBreakdown />
-        </RdModalBox>
+        <LootBoxBreakdown />
       </RdModalBody>
     </RdModal>
   );
