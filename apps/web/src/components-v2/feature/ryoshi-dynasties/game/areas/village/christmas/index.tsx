@@ -85,7 +85,7 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
     } finally {
       setIsShaking(false);
     }
-  }, []);
+  }, [user.address]);
 
   const handleClose = () => {
     setBox(undefined);
@@ -152,7 +152,7 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
                         if (!isShaking) claim();
                       }}
                     >
-                      {isShaking ? <Spinner /> : 'Shake'}
+                      {isShaking ? <Spinner /> : 'Select Gift'}
                     </RdButton>
                     <Text>You can shake the tree to get your present!</Text>
                   </>
