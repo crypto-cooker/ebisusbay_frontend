@@ -40,7 +40,7 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
   const [box, setBox] = useState<LootBox>();
   const [boxContents, setBoxContents] = useState<LootBox>();
 
-  const fetchGift = async () => {
+  const fetchGift = useCallback(async () => {
     try {
       setIsLoading(true);
       const signature = await requestSignature();
@@ -48,16 +48,17 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
       setHasGift(res.data.canClaim);
     } catch (e) {
       console.log(e);
+      setHasGift(false);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user.address]);
 
   const openGift = async () => {
     if (!box) return;
     try {
       setIsOpening(true);
-      await new Promise(r => setTimeout(r, 5000));
+      await new Promise((r) => setTimeout(r, 5000));
 
       const signature = await requestSignature();
       const res = await ApiService.withoutKey().ryoshiDynasties.openLootBox(box.id, user.address as string, signature);
@@ -92,12 +93,13 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
     setOpened(false);
     setBoxContents(undefined);
     onClose();
-  }
+  };
 
   useEffect(() => {
     if (user.address && isOpen == true) fetchGift();
   }, [isOpen, user.address]);
 
+  console.log(hasGift, "HHHHHHHHHHHH")
   return (
     <RdModal isOpen={isOpen} onClose={handleClose} title="Gift from Ebisu Claus">
       <RdModalAlert>
@@ -116,14 +118,18 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
                       <>
                         {boxContents && (
                           <RdModalBox>
-                            <VStack align='stretch'>
-                              <Box fontWeight='bold'>You have received</Box>
-                              <HStack padding={2} h='full'>
-                                <Box w={10} h={10} justifyItems={'center'} alignItems={"center"}>
-                                  {boxContents.image ? <Image src={boxContents.image} /> : <Image src="/img/xp_coin.png" />}
+                            <VStack align="stretch">
+                              <Box fontWeight="bold">You have received</Box>
+                              <HStack padding={2} h="full">
+                                <Box w={10} h={10} justifyItems={'center'} alignItems={'center'}>
+                                  {boxContents.image ? (
+                                    <Image src={boxContents.image} />
+                                  ) : (
+                                    <Image src="/img/xp_coin.png" />
+                                  )}
                                 </Box>
                                 <Box>
-                                  <Text textAlign='center'>{boxContents.name}</Text>
+                                  <Text textAlign="center">{boxContents.name}</Text>
                                 </Box>
                               </HStack>
                             </VStack>
@@ -132,12 +138,7 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
                       </>
                     ) : (
                       <>
-                        <RdButton
-                          onClick={openGift}
-                          isDisabled={isOpening}
-                          isLoading={isOpening}
-                          loadingText='Opening'
-                        >
+                        <RdButton onClick={openGift} isDisabled={isOpening} isLoading={isOpening} loadingText="Opening">
                           Open Box
                         </RdButton>
                         <Text>Congratulations, You received a lootbox! Open it to see what's inside.</Text>
@@ -260,7 +261,6 @@ const styles2 = {
   },
 };
 
-
 interface APNGBoxProps {
   imageSrc: string;
   animate: boolean;
@@ -277,7 +277,7 @@ const APNGBox: React.FC<APNGBoxProps> = ({ imageSrc, animate }) => {
   }, [imageSrc]);
 
   return (
-    <Box h='198px'>
+    <Box h="198px">
       {animate && preloadedImage ? (
         <Image src={preloadedImage} alt="Animated APNG" />
       ) : (
