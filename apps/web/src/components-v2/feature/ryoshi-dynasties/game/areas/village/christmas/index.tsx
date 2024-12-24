@@ -147,7 +147,7 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
                 ) : (
                   <>
                     <RdButton
-                      w={'120px'}
+                      w={'200px'}
                       onClick={() => {
                         if (!isShaking) claim();
                       }}
