@@ -1,4 +1,3 @@
-import moment from 'moment';
 import blacklist from '../../../core/configs/blacklist.json';
 import attributes from '../../../core/configs/attributes.json';
 import IPFSGatewayTools from '@pinata/ipfs-gateway-tools/dist/node';
@@ -9,7 +8,6 @@ import ImageService from '@src/core/services/image';
 import { ethers } from 'ethers';
 import { MouseEventHandler } from 'react';
 import Decimal from 'decimal.js-light';
-import knownTokens from '@src/modules/dex/config/tokens.json';
 import { getBlockExplorerLink } from '@dex/utils';
 import { ChainId } from '@pancakeswap/chains';
 import { MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/types';
@@ -839,6 +837,58 @@ export function subscriptedDecimal(
     // Will catch if a non-numeric string
     return decimalStr;
   }
+}
+
+export function subscriptedDecimalStr(decimalStr: string | number, zeroThreshold: number = 5, maxDigitsWithSubscript: number = 4, maxDigitsWithoutSubscript: number = 8): string {
+  if (typeof decimalStr !== 'string') decimalStr = `${decimalStr}`;
+
+  // Handle special cases for zero input
+  if (new Decimal(decimalStr).isZero()) {
+    return "0";
+  }
+
+  if (new Decimal(decimalStr).gte(1)) {
+    return new Decimal(decimalStr).toFixed(2);
+  }
+
+  // This will convert any number in scientific notation to a proper formatted string
+  decimalStr = new Decimal(decimalStr).toFixed();
+
+  // Find the first non-zero digit after the decimal
+  const firstNonZeroIndex =
+    decimalStr.indexOf('.') + 1 + decimalStr.slice(decimalStr.indexOf('.') + 1).search(/[^0]/);
+
+  // Calculate the number of zeros following the decimal point
+  const zeroCount = firstNonZeroIndex - decimalStr.indexOf('.') - 1;
+
+  if (zeroCount >= zeroThreshold) {
+    // Use subscript notation
+    const subscriptNumbers = ['₀', '₁', '₂', '₃', '₄', '₅', '₆', '₇', '₈', '₉'];
+    const subscript = zeroCount.toString().split('').map(num => subscriptNumbers[parseInt(num)]).join('');
+    const significantDigits = decimalStr.slice(firstNonZeroIndex, firstNonZeroIndex + maxDigitsWithSubscript);
+    return `0.0${subscript}${significantDigits}`;
+  } else {
+    // Regular formatting, just truncate to the max digits without subscript
+    const start = decimalStr.indexOf('.') + 1;
+    // const end = start + zeroCount + maxDigitsWithoutSubscript;
+    const regularDigits = decimalStr.slice(start, maxDigitsWithoutSubscript);
+    return `0.${regularDigits}`;
+  }
+}
+
+/**
+ * Formats a very large or very small number
+ * Large numbers are commified and rounded
+ * Small numbers are subscripted to avoid scientific notation handling issues
+ *
+ * @param amount
+ * @param options
+ */
+export function formattedWideRangeAmount(amount: string | number, options?: {zeroThreshold?: number, roundingDecimals?: number}) {
+  const numericAmount = Number(amount);
+  return numericAmount < 1 ?
+    subscriptedDecimalStr(numericAmount, options?.zeroThreshold) :
+    commify(round(numericAmount, options?.roundingDecimals))
 }
 
 export const chunkArray = <T,>(array: T[], size: number): T[][] => {

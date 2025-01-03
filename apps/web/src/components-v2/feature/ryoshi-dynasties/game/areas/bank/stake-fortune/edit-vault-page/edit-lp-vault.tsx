@@ -21,10 +21,10 @@ import {commify} from "ethers/lib/utils";
 import {
   ciEquals,
   createSuccessfulTransactionToastContent,
-  findNextLowestNumber,
+  findNextLowestNumber, formattedWideRangeAmount,
   pluralize,
   round
-} from "@market/helpers/utils";
+} from '@market/helpers/utils';
 import {ethers} from "ethers";
 import moment from "moment/moment";
 import React, {ChangeEvent, useCallback, useContext, useEffect, useMemo, useState} from "react";
@@ -297,7 +297,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
         <SimpleGrid columns={{base: 2, sm: 4}} gap={2}>
           <Box>
             <Text fontSize='sm'>Staked</Text>
-            <Text fontWeight='bold'>{commify(round(Number(ethers.utils.formatEther(vault.balance)), 7))}</Text>
+            <Text fontWeight='bold'>{formattedWideRangeAmount(ethers.utils.formatEther(vault.balance), { roundingDecimals: 7 })}</Text>
           </Box>
           <Box>
             <Text fontSize='sm'>APR</Text>

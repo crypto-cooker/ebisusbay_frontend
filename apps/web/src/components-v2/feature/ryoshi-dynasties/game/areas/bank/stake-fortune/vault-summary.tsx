@@ -21,7 +21,12 @@ import { useCallWithGasPrice } from '@eb-pancakeswap-web/hooks/useCallWithGasPri
 import { useSwitchNetwork } from '@eb-pancakeswap-web/hooks/useSwitchNetwork';
 import { faGem, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { createSuccessfulTransactionToastContent, findNextLowestNumber, round, timeSince } from '@market/helpers/utils';
+import {
+  createSuccessfulTransactionToastContent,
+  findNextLowestNumber, formattedWideRangeAmount,
+  round,
+  timeSince
+} from '@market/helpers/utils';
 import {
   BankStakeTokenContext,
   BankStakeTokenContextProps,
@@ -239,10 +244,10 @@ const VaultHeading = ({ index, tokenIcon, duration, balance, apr, troops, type}:
               <HStack fontWeight='bold'>
                 {tokenIcon}
                 {type === VaultType.LP && (
-                  <Box>{commify(round(balance, 7))}</Box>
+                  <Box>{formattedWideRangeAmount(balance, { roundingDecimals: 7})}</Box>
                 )}
                 {type === VaultType.TOKEN && (
-                  <Box>{commify(round(balance))}</Box>
+                  <Box>{formattedWideRangeAmount(balance)}</Box>
                 )}
               </HStack>
               <Flex>

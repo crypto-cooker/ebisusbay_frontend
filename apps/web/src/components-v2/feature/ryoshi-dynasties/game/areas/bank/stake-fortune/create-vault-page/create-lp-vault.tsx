@@ -354,7 +354,7 @@ const CreateLpVault = ({vaultIndex, vaults, onSuccess}: CreateLpVaultProps) => {
                 troops={newTroops}
               />
               <RdModalBox mt={2}>
-                Flucuations of the price may cause the awarded amount of Mitama to change. This is the minimum amount to be accepted once the vault is created the amount of Mitama will not change.
+                Fluctuations of the price may cause the awarded amount of Mitama to change. This is the minimum amount to be accepted. Once the vault is created the amount of Mitama will not change.
               </RdModalBox>
               <Spacer h='8'/>
               <Flex alignContent={'center'} justifyContent={'center'}>
