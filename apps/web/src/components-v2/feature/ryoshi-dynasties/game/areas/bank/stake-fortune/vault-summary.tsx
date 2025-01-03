@@ -286,7 +286,7 @@ const VaultBody = ({ totalApr, baseApr, bonusApr, troops, mitama, endTime, vault
   return (
     <>
       <SimpleGrid columns={2}>
-        <Box>APR {vaultId}</Box>
+        <Box>APR</Box>
         <Box textAlign='end'>
           <VStack align='end' spacing={0}>
             <Box fontWeight='bold'>{round(totalApr, 2)}%</Box>
