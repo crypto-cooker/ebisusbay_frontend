@@ -18,6 +18,8 @@ import { useQuery } from '@tanstack/react-query';
 import { ApiService } from '@src/core/services/api-service';
 import { useUser } from '@src/components-v2/useUser';
 import { queryKeys } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/constants';
+import ConvertVaultPage
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/convert-vault-page';
 
 interface StakeFortuneProps {
   address: string;
@@ -86,6 +88,11 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
     setTitle('Boost Vault');
   }, [returnHome]);
 
+  const handleConvertVault = useCallback((vault: FortuneStakingAccount) => {
+    setPage(<ConvertVaultPage vault={vault} onReturn={returnHome} />);
+    setTitle('Convert Vault');
+  }, [returnHome]);
+
   const handleUpdateChainContext = useCallback((chainId: SupportedChainId) => {
     setCurrentChainId(chainId);
   }, []);
@@ -117,6 +124,7 @@ const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
             onWithdrawVault={handleWithdrawVault}
             onTokenizeVault={handleTokenizeVault}
             onBoostVault={handleBoostVault}
+            onConvertVault={handleConvertVault}
             initialChainId={currentChainId}
             onUpdateChainContext={handleUpdateChainContext}
             onUpdateVaultContext={handleUpdateVaultContext}

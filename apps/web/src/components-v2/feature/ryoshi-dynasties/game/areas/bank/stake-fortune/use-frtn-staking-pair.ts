@@ -9,7 +9,7 @@ import {useTokenByChainId} from "@eb-pancakeswap-web/hooks/tokens";
 import {useAppChainConfig} from "@src/config/hooks";
 import {ciEquals} from "@market/helpers/utils";
 
-const useStakingPair = ({ pairAddress, chainId }: {pairAddress: Address, chainId: number}) => {
+const useFrtnStakingPair = ({ pairAddress, chainId }: {pairAddress: Address, chainId: number}) => {
   const { config: chainConfig } = useAppChainConfig(chainId);
   const lpConfig = chainConfig.lpVaults.find((v) => ciEquals(v.pair, pairAddress));
 
@@ -37,6 +37,8 @@ const useStakingPair = ({ pairAddress, chainId }: {pairAddress: Address, chainId
   const liquidityToken = pair?.liquidityToken;
   const tokenContract = useTokenContract(liquidityToken?.address, chainId);
   const totalSupply = useTotalSupply(liquidityToken, chainId);
+  const frtnContract = useTokenContract(frtnCurrency?.address, chainId);
+  const otherContract = useTokenContract(otherCurrency?.address, chainId);
 
   return useMemo(() => {
     const frtnReserve = pair?.reserve0;
@@ -47,9 +49,13 @@ const useStakingPair = ({ pairAddress, chainId }: {pairAddress: Address, chainId
       tokenContract,
       totalSupply,
       frtnReserve,
-      derivedFrtn
+      derivedFrtn,
+      frtnCurrency,
+      otherCurrency,
+      frtnContract,
+      otherContract,
     }
-  }, [pair, chainId, liquidityToken, tokenContract, totalSupply]);
+  }, [pair, chainId, liquidityToken, tokenContract, totalSupply, frtnCurrency, otherCurrency, frtnContract, otherContract]);
 }
 
-export default useStakingPair;
+export default useFrtnStakingPair;
