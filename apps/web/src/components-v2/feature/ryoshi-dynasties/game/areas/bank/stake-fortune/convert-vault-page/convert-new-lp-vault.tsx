@@ -21,46 +21,50 @@ import { ChainLogo } from '@dex/components/logo';
 import React, { ChangeEvent, useContext, useEffect, useMemo, useState } from 'react';
 import {
   BankStakeTokenContext,
-  BankStakeTokenContextProps
+  BankStakeTokenContextProps,
+  VaultType
 } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context';
 import { useAppChainConfig } from '@src/config/hooks';
 import { useSwitchNetwork } from '@eb-pancakeswap-web/hooks/useSwitchNetwork';
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
-import { useBankContract, useTokenContract } from '@src/global/hooks/contracts';
+import { useBankContract } from '@src/global/hooks/contracts';
 import { useCallWithGasPrice } from '@eb-pancakeswap-web/hooks/useCallWithGasPrice';
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from '@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context';
-import {
-  ciEquals,
-  createSuccessfulTransactionToastContent,
-  findNextLowestNumber,
-  round,
-  timeSince
-} from '@market/helpers/utils';
+import { createSuccessfulTransactionToastContent, findNextLowestNumber, round } from '@market/helpers/utils';
 import useFrtnStakingPair
   from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/use-frtn-staking-pair';
 import StakePreview
   from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/create-vault-page/stake-preview';
-import { Address, formatEther, parseEther, parseUnits } from 'viem';
+import { Address, formatEther, parseEther } from 'viem';
 import { RdModalBox } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-modal';
 import { RdButton } from '@src/components-v2/feature/ryoshi-dynasties/components';
 import { useUser } from '@src/components-v2/useUser';
 import { useCurrencyByChainId } from '@eb-pancakeswap-web/hooks/tokens';
 import { CurrencyAmount, MaxUint256 } from '@pancakeswap/swap-sdk-core';
 import { commify } from 'ethers/lib/utils';
-import { Field } from '@eb-pancakeswap-web/state/mint/actions';
 import { toast } from 'react-toastify';
 import { parseErrorMessage } from '@src/helpers/validator';
 import useAuthedFunctionWithChainID from '@market/hooks/useAuthedFunctionWithChainID';
-import { Contract } from 'ethers';
-import Bank from "@src/global/contracts/Bank.json";
 import { useCurrencyBalance } from '@eb-pancakeswap-web/state/wallet/hooks';
 
 interface ImportVaultFormProps {
   vault: FortuneStakingAccount;
   onComplete: (amount: number, days: number) => void;
+}
+
+interface Benefits {
+  frtn: BenefitGroup;
+  lp: BenefitGroup;
+  diff: BenefitGroup;
+}
+
+interface BenefitGroup {
+  apr: number;
+  troops: number;
+  mitama: number;
 }
 
 const ConvertNewLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
@@ -84,13 +88,26 @@ const ConvertNewLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
   const currencyA = useCurrencyByChainId(pairConfig.address1, bankChainId);
   const currencyB = useCurrencyByChainId(pairConfig.address2, bankChainId);
   const currencyBBalance = useCurrencyBalance(user.address ?? undefined, currencyB ?? undefined);
-  
+
   const [isExecuting, setIsExecuting] = useState(false);
   const [executingLabel, setExecutingLabel] = useState('Converting...');
 
-  const [newApr, setNewApr] = useState(0);
-  const [newTroops, setNewTroops] = useState(0);
-  const [newMitama, setNewMitama] = useState(0);
+  const [benefits, setBenefits] = useState<Benefits>({
+    frtn: {
+      apr: 0,
+      troops: 0,
+      mitama: 0
+    },
+    lp: {
+      apr: 0,
+      troops: 0,
+      mitama: 0
+    },
+    diff: {
+      apr: 0,
+      troops: 0,
+      mitama: 0
+  }});
 
   const vaultBalanceEth = formatEther(BigInt(vault.balance));
   const [amountToStake, setAmountToStake] = useState(round(vaultBalanceEth).toString());
@@ -168,6 +185,10 @@ const ConvertNewLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
     const newAmount = valueAsNumber;
     // const newAmount = valueAsNumber > maxPossibleDependentAmount ? maxPossibleDependentAmount : valueAsNumber;
     setAmountToStake(round(newAmount).toString());
+  }
+
+  const handleMaxAmount = () => {
+    setAmountToStake(maxFormInput());
   }
 
   const handleMaxFromFrtnAmount = () => {
@@ -255,11 +276,16 @@ const ConvertNewLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
     }
   }
 
-  useEffect(() => {
+  const calculateLpBenefits = () => {
+    const benefitGroup: BenefitGroup = {
+      apr: 0,
+      troops: 0,
+      mitama: 0
+    }
     const numTerms = Math.floor(stakingDays / rdConfig.bank.staking.fortune.termLength);
     const availableAprs = rdConfig.bank.staking.fortune.lpApr;
     const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
-    setNewApr(availableAprs[aprKey] ?? availableAprs[1]);
+    benefitGroup.apr = availableAprs[aprKey] ?? availableAprs[1];
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
     const mitama = (Number(amountToStake) * stakingDays) / 1080;
@@ -267,8 +293,47 @@ const ConvertNewLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
 
     let newTroops = Math.floor(multipliedLpMitama / mitamaTroopsRatio);
     if (newTroops < 1 && Number(amountToStake) > 0) newTroops = 1;
-    setNewTroops(newTroops);
-    setNewMitama(multipliedLpMitama);
+    benefitGroup.troops = newTroops;
+    benefitGroup.mitama = multipliedLpMitama;
+
+    return benefitGroup;
+  }
+
+  const calculateFrtnBenefits = () => {
+    const benefitGroup: BenefitGroup = {
+      apr: 0,
+      troops: 0,
+      mitama: 0
+    }
+    const numTerms = Math.floor(stakingDays / rdConfig.bank.staking.fortune.termLength);
+    const availableAprs = (vaultType === VaultType.LP ?
+      rdConfig.bank.staking.fortune.lpApr :
+      rdConfig.bank.staking.fortune.apr) as any;
+    const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
+    benefitGroup.apr = availableAprs[aprKey] ?? availableAprs[1];
+
+    const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
+    const mitama = Math.floor(Number(amountToStake) / 1080);
+    let newTroops = Math.floor(mitama / mitamaTroopsRatio);
+    if (newTroops < 1 && Number(amountToStake) > 0) newTroops = 1;
+    benefitGroup.troops = newTroops;
+    benefitGroup.mitama = mitama;
+
+    return benefitGroup;
+  }
+
+  useEffect(() => {
+    const frtnBenefits = calculateFrtnBenefits();
+    const lpBenefits = calculateLpBenefits();
+    setBenefits({
+      frtn: frtnBenefits,
+      lp: lpBenefits,
+      diff: {
+        apr: lpBenefits.apr - frtnBenefits.apr,
+        troops: lpBenefits.troops - frtnBenefits.troops,
+        mitama: lpBenefits.mitama - frtnBenefits.mitama
+      }
+    });
   }, [vault.length, amountToStake, stakingDays]);
 
   return (
@@ -327,7 +392,7 @@ const ConvertNewLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
                 </NumberInput>
                 <FormErrorMessage>{inputError}</FormErrorMessage>
               </FormControl>
-              <Button textColor='#e2e8f0' fontSize='sm' onClick={handleMaxFromFrtnAmount}>MAX</Button>
+              <Button textColor='#e2e8f0' fontSize='sm' onClick={handleMaxAmount}>MAX</Button>
             </Stack>
             <Flex fontSize='xs'>
               {stakingPair.otherCurrency?.symbol} Required: {commify(dependentAmount ?? 0)}
@@ -342,29 +407,27 @@ const ConvertNewLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
               onClick={handleMaxFromDependentAmount}
               cursor='pointer'
             >
-              {currencyBBalance?.toSignificant(6)} (~{frtnAmountFromDependent(currencyBBalance?.toSignificant(6))} FRTN)
+              {currencyBBalance?.toSignificant(6)} <Text as='span' fontSize='sm'>(~{frtnAmountFromDependent(currencyBBalance?.toSignificant(6))} FRTN)</Text>
             </Text>
           </VStack>
         </SimpleGrid>
-
-        <RdModalBox mt={4}>
-          <Text fontWeight='bold' fontSize='sm'>Output changes</Text>
-         <SimpleGrid columns={2}>
-           <Box>APR</Box>
-           <Box textAlign='end'>+ 12%</Box>
-           <Box>Troops</Box>
-           <Box textAlign='end'>+ 345</Box>
-           <Box>Mitama</Box>
-           <Box textAlign='end'>+ 678</Box>
-         </SimpleGrid>
-        </RdModalBox>
         <StakePreview
           fortuneToStake={Number(amountToStake)}
           daysToStake={stakingDays}
-          vaultType={vaultType}
-          apr={newApr}
-          mitama={newMitama}
-          troops={newTroops}
+          vaultType={VaultType.TOKEN}
+          apr={benefits.frtn.apr}
+          mitama={benefits.frtn.mitama}
+          troops={benefits.frtn.troops}
+          title='Benefits converted from FRTN vault'
+        />
+        <StakePreview
+          fortuneToStake={Number(amountToStake)}
+          daysToStake={stakingDays}
+          vaultType={VaultType.LP}
+          apr={benefits.lp.apr}
+          mitama={benefits.lp.mitama}
+          troops={benefits.lp.troops}
+          title='Benefits based on LP vault'
         />
         <RdModalBox mt={2} fontSize='xs'>
            Values above are for the LP vault being created. These are estimates and may be subject to change based on current dex rates and slippage.

@@ -13,11 +13,17 @@ interface StakeFormProps {
   apr: number;
   mitama: number;
   troops: number;
+  title?: string;
 }
 
-const StakePreview = ({fortuneToStake, daysToStake, vaultType, apr, mitama, troops}: StakeFormProps) => {
+const StakePreview = ({fortuneToStake, daysToStake, vaultType, apr, mitama, troops, title}: StakeFormProps) => {
   return (
-    <Box bgColor='#292626' rounded='md' p={4} mt={4} textAlign='center'>
+    <Box bgColor='#292626' rounded='md' p={4} mt={4}>
+      {!!title && (
+        <Box fontWeight='bold' fontSize='sm' mb={3}>
+          {title}
+        </Box>
+      )}
       <SimpleGrid columns={{base:2, sm: 3}} gap={4}>
         <VStack spacing={0}>
           <FortuneIcon boxSize={6} />
