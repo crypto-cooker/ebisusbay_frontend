@@ -47,7 +47,7 @@ import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
-import useStakingPair from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/use-staking-pair";
+import useFrtnStakingPair from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/use-frtn-staking-pair";
 import { useTokenContract } from "@dex/swap/imported/pancakeswap/web/hooks/useContract";
 
 interface EditVaultPageProps {
@@ -90,7 +90,7 @@ const EditLpVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
   const [newMitama, setNewMitama] = useState(0);
   const [newWithdrawDate, setNewWithdrawDate] = useState(vault.endTime);
 
-  const stakingPair = useStakingPair({pairAddress: vaultConfig!.pair, chainId: bankChainId});
+  const stakingPair = useFrtnStakingPair({pairAddress: vaultConfig!.pair, chainId: bankChainId});
 
   const lpContract = useTokenContract(vaultConfig!.pair, bankChainId);
 

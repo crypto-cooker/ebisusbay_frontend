@@ -30,12 +30,13 @@ interface StakePageProps {
   onWithdrawVault: (vault: FortuneStakingAccount) => void;
   onTokenizeVault: (vault: FortuneStakingAccount) => void;
   onBoostVault: (vault: FortuneStakingAccount) => void;
+  onConvertVault: (vault: FortuneStakingAccount) => void;
   initialChainId: SupportedChainId;
   onUpdateChainContext: (chainId: SupportedChainId) => void;
   onUpdateVaultContext: (vaultType: VaultType) => void;
 }
 
-const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault, onBoostVault, initialChainId, onUpdateChainContext, onUpdateVaultContext}: StakePageProps) => {
+const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault, onBoostVault, onConvertVault, initialChainId, onUpdateChainContext, onUpdateVaultContext}: StakePageProps) => {
   const user = useUser();
   const [currentTab, setCurrentTab] = useState<SupportedChainId>(initialChainId);
   const [currentVaultType, setCurrentVaultType] = useState<VaultType>(VaultType.TOKEN);
@@ -133,6 +134,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
                               onWithdrawVault={() => onWithdrawVault(vault)}
                               onTokenizeVault={() => onTokenizeVault(vault)}
                               onBoostVault={() => onBoostVault(vault)}
+                              onConvertVault={() => onConvertVault(vault)}
                               onClosed={refetch}
                             />
                           </Box>
