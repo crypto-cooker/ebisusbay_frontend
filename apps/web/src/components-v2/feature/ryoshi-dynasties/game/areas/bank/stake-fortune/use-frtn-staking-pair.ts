@@ -9,7 +9,7 @@ import {useTokenByChainId} from "@eb-pancakeswap-web/hooks/tokens";
 import {useAppChainConfig} from "@src/config/hooks";
 import {ciEquals} from "@market/helpers/utils";
 
-const useFrtnStakingPair = ({ pairAddress, chainId }: {pairAddress: Address, chainId: number}) => {
+const useFrtnStakingPair = ({ pairAddress, chainId }: {pairAddress?: Address, chainId: number}) => {
   const { config: chainConfig } = useAppChainConfig(chainId);
   const lpConfig = chainConfig.lpVaults.find((v) => ciEquals(v.pair, pairAddress));
 
@@ -20,7 +20,10 @@ const useFrtnStakingPair = ({ pairAddress, chainId }: {pairAddress: Address, cha
     address: pairAddress,
     abi: pancakePairV2ABI,
     functionName: 'getReserves',
-    chainId
+    chainId,
+    query: {
+      enabled: !!pairAddress
+    }
   });
 
   const pair = useMemo(() => {

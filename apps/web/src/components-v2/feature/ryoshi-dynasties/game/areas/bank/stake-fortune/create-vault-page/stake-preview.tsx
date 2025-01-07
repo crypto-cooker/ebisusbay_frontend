@@ -14,9 +14,15 @@ interface StakeFormProps {
   mitama: number;
   troops: number;
   title?: string;
+  aprDiff?: number;
+  mitamaDiff?: number;
+  troopsDiff?: number;
 }
 
-const StakePreview = ({fortuneToStake, daysToStake, vaultType, apr, mitama, troops, title}: StakeFormProps) => {
+const StakePreview = ({fortuneToStake, daysToStake, vaultType, apr, mitama, troops, title, aprDiff, mitamaDiff, troopsDiff}: StakeFormProps) => {
+  const optionalPlus = (value: number) => value >= 0 ? `+${commify(round(value))}` : commify(round(value));
+  const diffColor = (value: number) => value >= 0 ? 'green' : 'red';
+
   return (
     <Box bgColor='#292626' rounded='md' p={4}>
       {!!title && (
@@ -29,19 +35,46 @@ const StakePreview = ({fortuneToStake, daysToStake, vaultType, apr, mitama, troo
           <FortuneIcon boxSize={6} />
           <Text>APR</Text>
           <Text fontSize={24} fontWeight='bold'>{apr * 100}%</Text>
-          <Text fontSize={12} color='#aaa'>{commify(daysToStake)} day commitment</Text>
+          {aprDiff !== undefined && (
+            <Text
+              fontSize={12}
+              fontWeight='bold'
+              color={diffColor(aprDiff)}
+            >
+              {optionalPlus(aprDiff)}%
+            </Text>
+          )}
+          <Text fontSize={12} color='#aaa' textAlign='center'>{commify(daysToStake)} day commitment</Text>
         </VStack>
         <VStack spacing={0}>
           <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/troops.png').convert()} alt="troopsIcon" boxSize={6}/>
           <Text>Troops</Text>
           <Text fontSize={24} fontWeight='bold'>{commify(round(troops))}</Text>
-          <Text fontSize={12} color='#aaa'>{commify(round(fortuneToStake, 3))} FRTN stake</Text>
+          {troopsDiff !== undefined && (
+            <Text
+              fontSize={12}
+              fontWeight='bold'
+              color={diffColor(troopsDiff)}
+            >
+              {optionalPlus(troopsDiff)}
+            </Text>
+          )}
+          <Text fontSize={12} color='#aaa' textAlign='center'>{commify(round(fortuneToStake, 3))} FRTN stake</Text>
         </VStack>
         <VStack spacing={0}>
           <Image src={ImageService.translate('/img/ryoshi-dynasties/icons/mitama.png').convert()} alt="troopsIcon" boxSize={6}/>
           <Text>Mitama</Text>
           <Text fontSize={24} fontWeight='bold'>{commify(mitama)}</Text>
-          <Text fontSize={12} color='#aaa'>{commify(round(fortuneToStake, 3))} FRTN stake</Text>
+          {mitamaDiff !== undefined && (
+            <Text
+              fontSize={12}
+              fontWeight='bold'
+              color={diffColor(mitamaDiff)}
+            >
+              {optionalPlus(mitamaDiff)}
+            </Text>
+          )}
+          <Text fontSize={12} color='#aaa' textAlign='center'>{commify(round(fortuneToStake, 3))} FRTN stake</Text>
         </VStack>
       </SimpleGrid>
     </Box>

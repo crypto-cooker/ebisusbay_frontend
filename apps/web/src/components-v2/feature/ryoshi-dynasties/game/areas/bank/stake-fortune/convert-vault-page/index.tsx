@@ -4,15 +4,19 @@ import { FortuneStakingAccount } from '@src/core/services/api-service/graph/type
 import RdButton from '../../../../../components/rd-button';
 import {
   BankStakeTokenContext,
-  BankStakeTokenContextProps,
-  VaultType
+  BankStakeTokenContextProps
 } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context';
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
 import { useSwitchNetwork } from '@eb-pancakeswap-web/hooks/useSwitchNetwork';
-import ConvertNewLpVault
-  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/convert-vault-page/convert-new-lp-vault';
-import ConvertExistingLpVault
-  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/convert-vault-page/convert-existing-lp-vault';
+import ConvertLpVault
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/convert-vault-page/convert-lp-vault';
+import {
+  TypeOption
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/convert-vault-page/types';
+import {
+  RyoshiDynastiesContext,
+  RyoshiDynastiesContextProps
+} from '@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context';
 
 const steps = {
   choice: 'choice',
@@ -27,10 +31,12 @@ interface ConvertVaultPageProps {
 }
 
 const ConvertVaultPage = ({ vault, onReturn }: ConvertVaultPageProps) => {
-  const { chainId: selectedChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { chainId: selectedChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const { chainId: activeChainId} = useActiveChainId();
   const { switchNetworkAsync } = useSwitchNetwork();
 
+  const [convertedFrtn, setConvertedFrtn] = useState(0);
   const [currentStep, setCurrentStep] = useState(steps.choice);
 
   const needsNetworkChange = activeChainId !== selectedChainId;
@@ -40,6 +46,12 @@ const ConvertVaultPage = ({ vault, onReturn }: ConvertVaultPageProps) => {
     if (needsNetworkChange) {
       await switchNetworkAsync(selectedChainId);
     }
+  }
+
+  const handleConvertVaultSuccess = (amount: number) => {
+    setConvertedFrtn(amount);
+    setCurrentStep(steps.complete);
+    refreshUser();
   }
 
   return (
@@ -76,23 +88,21 @@ const ConvertVaultPage = ({ vault, onReturn }: ConvertVaultPageProps) => {
           </Box>
         </Box>
       ) : currentStep === steps.createLp ? (
-        <ConvertNewLpVault
-          vault={vault}
-          toType='new'
-          onComplete={(amount: number, days: number) => setCurrentStep(steps.createLp)}
+        <ConvertLpVault
+          frtnVault={vault}
+          toType={TypeOption.New}
+          onComplete={handleConvertVaultSuccess}
         />
       ) : currentStep === steps.addToLp ? (
-        <ConvertNewLpVault
-          vault={vault}
-          toType='existing'
-          onComplete={() => setCurrentStep(steps.addToLp)}
+        <ConvertLpVault
+          frtnVault={vault}
+          toType={TypeOption.Existing}
+          onComplete={handleConvertVaultSuccess}
         />
       ) : currentStep === steps.complete && (
         <StakeComplete
-          amount={0}
-          duration={0}
+          amount={convertedFrtn}
           onReturn={onReturn}
-          vaultType={vaultType}
         />
       )}
     </Box>
@@ -102,16 +112,14 @@ const ConvertVaultPage = ({ vault, onReturn }: ConvertVaultPageProps) => {
 
 interface StakeCompleteProps {
   amount: number;
-  duration: number;
   onReturn: () => void;
-  vaultType: VaultType;
 }
 
-const StakeComplete = ({amount, duration, onReturn, vaultType}: StakeCompleteProps) => {
+const StakeComplete = ({amount, onReturn}: StakeCompleteProps) => {
   return (
     <Box py={4}>
       <Box textAlign='center' mt={2}>
-        {amount} {vaultType === VaultType.LP ? 'LP' : 'FRTN'} has now been staked for {duration} days!
+        {amount} FRTN has now been converted to an LP vault!
       </Box>
       <Box textAlign='center' mt={8} mx={2}>
         <Box ps='20px'>

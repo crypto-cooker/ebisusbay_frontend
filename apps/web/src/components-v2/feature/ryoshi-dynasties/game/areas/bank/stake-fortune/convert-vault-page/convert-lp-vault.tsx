@@ -11,14 +11,13 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
-  Select,
   SimpleGrid,
   Stack,
   Text,
   VStack
 } from '@chakra-ui/react';
 import { ChainLogo } from '@dex/components/logo';
-import React, { ChangeEvent, useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import {
   BankStakeTokenContext,
   BankStakeTokenContextProps,
@@ -49,16 +48,23 @@ import { toast } from 'react-toastify';
 import { parseErrorMessage } from '@src/helpers/validator';
 import useAuthedFunctionWithChainID from '@market/hooks/useAuthedFunctionWithChainID';
 import { useCurrencyBalance } from '@eb-pancakeswap-web/state/wallet/hooks';
+import LpContextSelection
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/convert-vault-page/lp-context-selection';
+import {
+  TypeOption
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/convert-vault-page/types';
 
 interface ImportVaultFormProps {
-  vault: FortuneStakingAccount;
-  onComplete: () => void;
+  frtnVault: FortuneStakingAccount;
+  toType: TypeOption;
+  onComplete: (amount: number) => void;
 }
 
 interface Benefits {
   frtn: BenefitGroup;
   lp: BenefitGroup;
-  diff: BenefitGroup;
+  referenceLp?: BenefitGroup;
+  diff?: BenefitGroup;
 }
 
 interface BenefitGroup {
@@ -67,10 +73,10 @@ interface BenefitGroup {
   mitama: number;
 }
 
-const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
+const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) => {
   const user = useUser();
-  const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const { chainId: bankChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const { config: chainConfig } = useAppChainConfig(bankChainId);
   const { switchNetworkAsync } = useSwitchNetwork();
   const { chainId: activeChainId} = useActiveChainId();
@@ -78,15 +84,16 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
   const { callWithGasPrice } = useCallWithGasPrice();
   const [runAuthedFunction] = useAuthedFunctionWithChainID(bankChainId);
 
-  const [pairConfig, setPairConfig] = useState(chainConfig.lpVaults[0]);
+  const [pairConfig, setPairConfig] = useState<{name: string, pair: Address, address1: Address, address2: Address}>();
+  const [targetLpVault, setTargetLpVault] = useState<FortuneStakingAccount>();
 
   const stakingPair = useFrtnStakingPair({
-    pairAddress: pairConfig.pair,
+    pairAddress: pairConfig?.pair,
     chainId: chainConfig.chain.id
   });
 
-  const currencyA = useCurrencyByChainId(pairConfig.address1, bankChainId);
-  const currencyB = useCurrencyByChainId(pairConfig.address2, bankChainId);
+  const currencyA = useCurrencyByChainId(pairConfig?.address1, bankChainId);
+  const currencyB = useCurrencyByChainId(pairConfig?.address2, bankChainId);
   const currencyBBalance = useCurrencyBalance(user.address ?? undefined, currencyB ?? undefined);
 
   const [isExecuting, setIsExecuting] = useState(false);
@@ -109,11 +116,11 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
       mitama: 0
   }});
 
-  const vaultBalanceEth = formatEther(BigInt(vault.balance));
+  const vaultBalanceEth = formatEther(BigInt(frtnVault.balance));
   const [amountToStake, setAmountToStake] = useState(vaultBalanceEth);
   const [inputError, setInputError] = useState('');
 
-  const stakingDays = vault.length / 86400;
+  const stakingDays = frtnVault.length / 86400;
 
   const dependentAmountFromInput = (amount: string) => {
     const tokenA = currencyA?.wrapped;
@@ -124,7 +131,6 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
     const inputCurrency = CurrencyAmount.fromRawAmount(tokenA, amountWei);
     const wrappedIndependentAmount = inputCurrency?.wrapped
     const dependentTokenAmount = stakingPair.pair.priceOf(stakingPair.frtnCurrency).quote(wrappedIndependentAmount);
-
 
     return dependentTokenAmount.toSignificant(6);
   }
@@ -160,23 +166,17 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
     return dependentAmountFromInput(amountToStake);
   }, [currencyA?.wrapped, currencyB?.wrapped, stakingPair.pair, pairConfig, amountToStake]);
 
-  const handleChangeToken = (e: ChangeEvent<HTMLSelectElement>) => {
-    const _pairConfig = chainConfig.lpVaults.find((v) => v.pair === e.target.value);
-    if (!_pairConfig) return;
-
-    setPairConfig(_pairConfig);
-  }
-
   const handleChangeTokenAmount = (valueAsString: string, valueAsNumber: number) => {
     const _dependentAmountFromInput = Number(dependentAmountFromInput(valueAsString));
     const maxPossibleDependentAmount = Number(currencyBBalance?.toSignificant(6) ?? 0);
 
     if (_dependentAmountFromInput > maxPossibleDependentAmount) {
-
+      // maybe adjust max?
     }
-    const newAmount = valueAsNumber;
+
+    // const newAmount = valueAsNumber;
     // const newAmount = valueAsNumber > maxPossibleDependentAmount ? maxPossibleDependentAmount : valueAsNumber;
-    setAmountToStake(round(newAmount).toString());
+    setAmountToStake(valueAsString);
   }
 
   const handleMaxAmount = () => {
@@ -192,18 +192,38 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
     setAmountToStake(amount);
   }
 
+  const handleChangeLpVaultOption = (pairConfig: any, vault?: any) => {
+    setPairConfig(pairConfig);
+    setTargetLpVault(vault);
+  }
+
   const validateInput = async () => {
     setExecutingLabel('Validating');
 
-    if (BigInt(vault.balance) < parseEther(amountToStake)) {
+    if (!stakingPair.pair) {
+      toast.error('Invalid LP pair');
+      return;
+    }
+
+    if (toType === TypeOption.Existing && !targetLpVault) {
+      toast.error('Target LP Vault not found');
+      return;
+    }
+
+    if (BigInt(frtnVault.balance) < parseEther(amountToStake)) {
       toast.error("Not enough balance in FRTN vault");
       return;
     }
 
-    if(Number(amountToStake) < rdConfig.bank.staking.fortune.minimum) {
-      setInputError(`At least ${rdConfig.bank.staking.fortune.minimum} in FRTN required`);
-      return false;
+    if (!currencyBBalance || BigInt(currencyBBalance.lessThan(parseEther(dependentAmount)))) {
+      toast.error(`Not enough ${currencyBBalance?.currency.symbol} balance`);
+      return;
     }
+
+    // if(Number(amountToStake) < rdConfig.bank.staking.fortune.minimum) {
+    //   setInputError(`At least ${rdConfig.bank.staking.fortune.minimum} in FRTN required`);
+    //   return false;
+    // }
     setInputError('');
 
     return true;
@@ -251,15 +271,28 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
       setExecutingLabel('Staking');
 
       const dependentAmountWei = parseEther(dependentAmount)
-      const tx = await callWithGasPrice(bankContract, 'convertFRTNVaultToNewLP', [
-        vault.index,
-        stakingPair.pair!.liquidityToken.address,
-        desiredLpAmount,
-        dependentAmountWei
-      ]);
+      if (toType === TypeOption.Existing) {
+        const tx = await callWithGasPrice(bankContract, 'convertFRTNVaultToExistingLP', [
+          frtnVault.index,
+          stakingPair.pair!.liquidityToken.address,
+          targetLpVault!.index,
+          desiredLpAmount,
+          dependentAmountWei
+        ]);
 
-      toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
-      onComplete(Number(amountToStake), stakingDays);
+        toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
+        onComplete(Number(amountToStake));
+      } else {
+        const tx = await callWithGasPrice(bankContract, 'convertFRTNVaultToNewLP', [
+          frtnVault.index,
+          stakingPair.pair!.liquidityToken.address,
+          desiredLpAmount,
+          dependentAmountWei
+        ]);
+
+        toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
+        onComplete(Number(amountToStake));
+      }
     } catch (error: any) {
       console.log(error);
       toast.error(parseErrorMessage(error));
@@ -268,7 +301,9 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
     }
   }
 
-  const calculateLpBenefits = () => {
+  const calculateLpBenefits = (amount: string | number) => {
+    if (typeof amount === 'string') amount = Number(amount);
+
     const benefitGroup: BenefitGroup = {
       apr: 0,
       troops: 0,
@@ -280,11 +315,11 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
     benefitGroup.apr = availableAprs[aprKey] ?? availableAprs[1];
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    const mitama = (Number(amountToStake) * stakingDays) / 1080;
+    const mitama = (amount * stakingDays) / 1080;
     const multipliedLpMitama = Math.floor(mitama * 2.5 * 0.98); // 2% slippage
 
     let newTroops = Math.floor(multipliedLpMitama / mitamaTroopsRatio);
-    if (newTroops < 1 && Number(amountToStake) > 0) newTroops = 1;
+    if (newTroops < 1 && amount > 0) newTroops = 1;
     benefitGroup.troops = newTroops;
     benefitGroup.mitama = multipliedLpMitama;
 
@@ -304,7 +339,6 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
     const mitama = Math.floor((Number(amountToStake) * stakingDays) / 1080);
-    console.log('MITAMA', mitama, amountToStake, Number(amountToStake), Number(amountToStake) / 1080)
     let newTroops = Math.floor(mitama / mitamaTroopsRatio);
     if (newTroops < 1 && Number(amountToStake) > 0) newTroops = 1;
     benefitGroup.troops = newTroops;
@@ -315,17 +349,30 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
 
   useEffect(() => {
     const frtnBenefits = calculateFrtnBenefits();
-    const lpBenefits = calculateLpBenefits();
+    let referenceLpBenefits = calculateLpBenefits(amountToStake);
+    let lpBenefits = referenceLpBenefits;
+    let lpDiff: BenefitGroup | undefined = undefined;
+
+    if (targetLpVault) {
+      // const derivedFrtnAmount = stakingPair.frtnReserve?.multiply(parseEther(`${amountToStake}`)).divide(stakingPair.totalSupply ?? 0).toExact() ?? '0';
+      const derivedReferenceFrtnAmount = stakingPair.frtnReserve?.multiply(targetLpVault.balance).divide(stakingPair.totalSupply ?? 0).toExact() ?? '0';
+
+      referenceLpBenefits =  calculateLpBenefits(derivedReferenceFrtnAmount);
+      lpBenefits = calculateLpBenefits(Number(derivedReferenceFrtnAmount) + Number(amountToStake));
+      lpDiff = {
+        apr: lpBenefits.apr - referenceLpBenefits.apr,
+        troops: lpBenefits.troops - referenceLpBenefits.troops,
+        mitama: lpBenefits.mitama - referenceLpBenefits.mitama
+      }
+    }
+
     setBenefits({
       frtn: frtnBenefits,
       lp: lpBenefits,
-      diff: {
-        apr: lpBenefits.apr - frtnBenefits.apr,
-        troops: lpBenefits.troops - frtnBenefits.troops,
-        mitama: lpBenefits.mitama - frtnBenefits.mitama
-      }
+      referenceLp: referenceLpBenefits,
+      diff: lpDiff
     });
-  }, [vault.length, amountToStake, stakingDays]);
+  }, [frtnVault.length, amountToStake, stakingDays, targetLpVault?.id]);
 
   return (
     <>
@@ -339,16 +386,16 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
           </Flex>
         </Box>
       </Box>
+      
+
       <Box px={6} pt={6}>
         <SimpleGrid columns={{ base: 1, sm: 2 }} fontSize='sm' gap={4}>
           <VStack align='stretch'>
-            <Text>LP Token</Text>
             <FormControl maxW='250px'>
-              <Select onChange={handleChangeToken} value={pairConfig.pair} bg='none'>
-                {chainConfig.lpVaults.map((vaultConfig) => (
-                  <option key={vaultConfig.pair} value={vaultConfig.pair}>{vaultConfig.name}</option>
-                ))}
-              </Select>
+              <LpContextSelection
+                type={toType}
+                onSelected={handleChangeLpVaultOption}
+              />
             </FormControl>
           </VStack>
           <VStack align='stretch'>
@@ -392,14 +439,20 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
 
           <VStack align='stretch'>
             <Text>{stakingPair.otherCurrency?.symbol} Balance</Text>
-            <Text
-              fontSize={{base: 'sm', sm: 'md'}}
-              mt={2}
-              onClick={handleMaxFromDependentAmount}
-              cursor='pointer'
-            >
-              {currencyBBalance?.toSignificant(6)} <Text as='span' fontSize='sm'>(~{frtnAmountFromDependent(currencyBBalance?.toSignificant(6))} FRTN)</Text>
-            </Text>
+            {!!currencyBBalance ? (
+              <Text
+                fontSize={{base: 'sm', sm: 'md'}}
+                mt={2}
+                onClick={handleMaxFromDependentAmount}
+                cursor='pointer'
+              >
+                {currencyBBalance?.toSignificant(6)} <Text as='span' fontSize='sm'>(~{frtnAmountFromDependent(currencyBBalance?.toSignificant(6))} FRTN)</Text>
+              </Text>
+            ) : (
+              <Text fontSize='sm' mt={2}>
+                Select an LP Vault
+              </Text>
+            )}
           </VStack>
         </SimpleGrid>
         <RdModalBox mt={2}>
@@ -422,6 +475,9 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
             mitama={benefits.lp.mitama}
             troops={benefits.lp.troops}
             title='Benefits based on LP vault'
+            aprDiff={benefits.diff?.apr}
+            mitamaDiff={benefits.diff?.mitama}
+            troopsDiff={benefits.diff?.troops}
           />
         </Box>
         <RdModalBox mt={2} fontSize='xs'>
@@ -449,4 +505,4 @@ const ConvertExistingLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
   )
 }
 
-export default ConvertExistingLpVault;
+export default ConvertLpVault;
