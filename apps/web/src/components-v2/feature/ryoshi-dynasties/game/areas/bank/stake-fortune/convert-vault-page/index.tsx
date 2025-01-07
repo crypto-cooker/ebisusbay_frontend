@@ -78,7 +78,7 @@ const ConvertVaultPage = ({ vault, onReturn }: ConvertVaultPageProps) => {
       ) : currentStep === steps.createLp ? (
         <ConvertNewLpVault
           vault={vault}
-          onComplete={() => setCurrentStep(steps.createLp)}
+          onComplete={(amount: number, days: number) => setCurrentStep(steps.createLp)}
         />
       ) : currentStep === steps.addToLp ? (
         <ConvertExistingLpVault
