@@ -52,6 +52,7 @@ import { PrimaryButton } from '@src/components-v2/foundation/button';
 import StyledAccordionItem
   from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/styled-accordion-item';
 import { CheckIcon } from '@chakra-ui/icons';
+import { useAppConfig } from '@src/config/hooks';
 
 interface VaultSummaryProps {
   vault: FortuneStakingAccount;
@@ -339,6 +340,7 @@ interface VaultActionButtonsProps {
 }
 
 const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onConvertVault, onVaultClosed, canTokenize }: VaultActionButtonsProps) => {
+  const { config: appConfig } = useAppConfig();
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useUser();
   const { chainId: bankChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
@@ -411,12 +413,14 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
                   Boost Vault
                 </Button>
               )}
-              <Button
-                leftIcon={<Icon as={FontAwesomeIcon} icon={faArrowRightArrowLeft} />}
-                onClick={onConvertVault}
-              >
-                Convert to LP Vault
-              </Button>
+              {vaultType === VaultType.TOKEN && bankChainId === appConfig.defaultChainId && (
+                <Button
+                  leftIcon={<Icon as={FontAwesomeIcon} icon={faArrowRightArrowLeft} />}
+                  onClick={onConvertVault}
+                >
+                  Convert to LP Vault
+                </Button>
+              )}
             </Wrap>
           </Center>
           <Center>
