@@ -345,14 +345,16 @@ const CreateLpVault = ({vaultIndex, vaults, onSuccess}: CreateLpVaultProps) => {
 
           {Number(tokenBalance) > 0 && (
             <>
-              <StakePreview
-                fortuneToStake={Number(derivedFrtnAmount)}
-                daysToStake={daysToStake}
-                vaultType={vaultType}
-                apr={newApr}
-                mitama={newMitama}
-                troops={newTroops}
-              />
+              <Box mt={4}>
+                <StakePreview
+                  fortuneToStake={Number(derivedFrtnAmount)}
+                  daysToStake={daysToStake}
+                  vaultType={vaultType}
+                  apr={newApr}
+                  mitama={newMitama}
+                  troops={newTroops}
+                />
+              </Box>
               <RdModalBox mt={2}>
                 Fluctuations of the price may cause the awarded amount of Mitama to change. This is the minimum amount to be accepted. Once the vault is created the amount of Mitama will not change.
               </RdModalBox>

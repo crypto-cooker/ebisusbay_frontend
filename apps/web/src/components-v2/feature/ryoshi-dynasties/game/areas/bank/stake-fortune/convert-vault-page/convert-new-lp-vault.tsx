@@ -33,7 +33,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from '@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context';
-import { createSuccessfulTransactionToastContent, findNextLowestNumber, round } from '@market/helpers/utils';
+import { ciEquals, createSuccessfulTransactionToastContent, findNextLowestNumber, round } from '@market/helpers/utils';
 import useFrtnStakingPair
   from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/use-frtn-staking-pair';
 import StakePreview
@@ -49,15 +49,19 @@ import { toast } from 'react-toastify';
 import { parseErrorMessage } from '@src/helpers/validator';
 import useAuthedFunctionWithChainID from '@market/hooks/useAuthedFunctionWithChainID';
 import { useCurrencyBalance } from '@eb-pancakeswap-web/state/wallet/hooks';
+import { useQuery } from '@tanstack/react-query';
+import { ApiService } from '@src/core/services/api-service';
 
 interface ImportVaultFormProps {
   vault: FortuneStakingAccount;
+  toType: 'new' | 'existing';
   onComplete: (amount: number, days: number) => void;
 }
 
 interface Benefits {
   frtn: BenefitGroup;
   lp: BenefitGroup;
+  lp2?: BenefitGroup;
   diff: BenefitGroup;
 }
 
@@ -67,10 +71,77 @@ interface BenefitGroup {
   mitama: number;
 }
 
-const ConvertNewLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
+enum TypeTab {
+  new = 'new',
+  existing = 'existing'
+}
+
+interface LpContextSelectionProps {
+  type: TypeTab;
+  onSelected: (pairConfig: any, lpVault?: any) => void;
+}
+
+const LpContextSelection = ({ type, onSelected }: LpContextSelectionProps) => {
+
+  const user = useUser();
+  const { chainId: bankChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { config: chainConfig } = useAppChainConfig(bankChainId);
+
+  const [pairConfig, setPairConfig] = useState(chainConfig.lpVaults[0]);
+
+  const { data: stakingAccount, status, error, refetch } = useQuery({
+    queryKey: ['UserStakeAccount', user.address, bankChainId, 'LP'],
+    queryFn: () => ApiService.forChain(bankChainId).ryoshiDynasties.getBankStakingAccount(user.address!),
+    enabled: !!user.address,
+  });
+
+  const handleChangeToken = (e: ChangeEvent<HTMLSelectElement>) => {
+    if (type === TypeTab.existing) {
+      const vault = stakingAccount?.lpVaults.find((vault) => vault.vaultId === e.target.value);
+      if (!vault) return;
+
+      const _pairConfig = chainConfig.lpVaults.find((v) => ciEquals(v.pair, vault.pool));
+      if (!_pairConfig) return;
+  
+      setPairConfig(_pairConfig);
+      onSelected(_pairConfig, vault);
+    } else {
+      const _pairConfig = chainConfig.lpVaults.find((v) => v.pair === e.target.value);
+      if (!_pairConfig) return;
+  
+      setPairConfig(_pairConfig);
+      onSelected(_pairConfig)
+    }
+  }
+
+  return (
+    <VStack align='stretch'>
+      <Box>LP Vault</Box>
+      <FormControl maxW='250px'>
+        {type === TypeTab.existing ? (
+          <Select onChange={handleChangeToken} value={pairConfig.pair} bg='none'>
+            {stakingAccount?.lpVaults.map((vault) => (
+              <option key={vault.vaultId} value={vault.vaultId}>
+                ID: {vault.index}, Bal: {round(formatEther(vault.balance))}
+              </option>
+            ))}
+          </Select>
+        ) : type === TypeTab.new && (
+          <Select onChange={handleChangeToken} value={pairConfig.pair} bg='none'>
+            {chainConfig.lpVaults.map((vaultConfig) => (
+              <option key={vaultConfig.pair} value={vaultConfig.pair}>{vaultConfig.name}</option>
+            ))}
+          </Select>
+        )}
+      </FormControl>
+    </VStack>
+  )
+}
+
+const ConvertNewLpVault = ({vault, toType, onComplete}: ImportVaultFormProps) => {
   const user = useUser();
   const { config: rdConfig, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
-  const { chainId: bankChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
+  const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const { config: chainConfig } = useAppChainConfig(bankChainId);
   const { switchNetworkAsync } = useSwitchNetwork();
   const { chainId: activeChainId} = useActiveChainId();
@@ -110,7 +181,7 @@ const ConvertNewLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
   }});
 
   const vaultBalanceEth = formatEther(BigInt(vault.balance));
-  const [amountToStake, setAmountToStake] = useState(round(vaultBalanceEth).toString());
+  const [amountToStake, setAmountToStake] = useState(vaultBalanceEth);
   const [inputError, setInputError] = useState('');
 
   const stakingDays = vault.length / 86400;
@@ -306,14 +377,13 @@ const ConvertNewLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
       mitama: 0
     }
     const numTerms = Math.floor(stakingDays / rdConfig.bank.staking.fortune.termLength);
-    const availableAprs = (vaultType === VaultType.LP ?
-      rdConfig.bank.staking.fortune.lpApr :
-      rdConfig.bank.staking.fortune.apr) as any;
+    const availableAprs = rdConfig.bank.staking.fortune.apr;
     const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
     benefitGroup.apr = availableAprs[aprKey] ?? availableAprs[1];
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    const mitama = Math.floor(Number(amountToStake) / 1080);
+    const mitama = Math.floor((Number(amountToStake) * stakingDays) / 1080);
+    console.log('MITAMA', mitama, amountToStake, Number(amountToStake), Number(amountToStake) / 1080)
     let newTroops = Math.floor(mitama / mitamaTroopsRatio);
     if (newTroops < 1 && Number(amountToStake) > 0) newTroops = 1;
     benefitGroup.troops = newTroops;
@@ -348,6 +418,11 @@ const ConvertNewLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
           </Flex>
         </Box>
       </Box>
+      
+      <LpContextSelection 
+        type={toType}
+        onSelected={() => console.log('hi')}
+      />
       <Box px={6} pt={6}>
         <SimpleGrid columns={{ base: 1, sm: 2 }} fontSize='sm' gap={4}>
           <VStack align='stretch'>
@@ -411,24 +486,28 @@ const ConvertNewLpVault = ({vault, onComplete}: ImportVaultFormProps) => {
             </Text>
           </VStack>
         </SimpleGrid>
-        <StakePreview
-          fortuneToStake={Number(amountToStake)}
-          daysToStake={stakingDays}
-          vaultType={VaultType.TOKEN}
-          apr={benefits.frtn.apr}
-          mitama={benefits.frtn.mitama}
-          troops={benefits.frtn.troops}
-          title='Benefits converted from FRTN vault'
-        />
-        <StakePreview
-          fortuneToStake={Number(amountToStake)}
-          daysToStake={stakingDays}
-          vaultType={VaultType.LP}
-          apr={benefits.lp.apr}
-          mitama={benefits.lp.mitama}
-          troops={benefits.lp.troops}
-          title='Benefits based on LP vault'
-        />
+        <RdModalBox mt={2}>
+          <Text fontWeight='bold' fontSize='sm'>Benefits converted from FRTN vault</Text>
+         <SimpleGrid columns={2}>
+           <Box>APR</Box>
+           <Box textAlign='end'>{benefits.frtn.apr * 100}%</Box>
+           <Box>Troops</Box>
+           <Box textAlign='end'>{commify(benefits.frtn.mitama)}</Box>
+           <Box>Mitama</Box>
+           <Box textAlign='end'>{commify(benefits.frtn.troops)}</Box>
+         </SimpleGrid>
+        </RdModalBox>
+        <Box mt={2}>
+          <StakePreview
+            fortuneToStake={Number(amountToStake)}
+            daysToStake={stakingDays}
+            vaultType={VaultType.LP}
+            apr={benefits.lp.apr}
+            mitama={benefits.lp.mitama}
+            troops={benefits.lp.troops}
+            title='Benefits based on LP vault'
+          />
+        </Box>
         <RdModalBox mt={2} fontSize='xs'>
            Values above are for the LP vault being created. These are estimates and may be subject to change based on current dex rates and slippage.
         </RdModalBox>

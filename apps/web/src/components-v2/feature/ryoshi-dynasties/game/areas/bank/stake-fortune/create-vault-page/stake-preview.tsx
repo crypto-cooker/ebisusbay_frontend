@@ -18,7 +18,7 @@ interface StakeFormProps {
 
 const StakePreview = ({fortuneToStake, daysToStake, vaultType, apr, mitama, troops, title}: StakeFormProps) => {
   return (
-    <Box bgColor='#292626' rounded='md' p={4} mt={4}>
+    <Box bgColor='#292626' rounded='md' p={4}>
       {!!title && (
         <Box fontWeight='bold' fontSize='sm' mb={3}>
           {title}
