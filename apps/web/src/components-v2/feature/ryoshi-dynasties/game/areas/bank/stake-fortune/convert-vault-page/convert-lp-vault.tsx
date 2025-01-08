@@ -1,4 +1,3 @@
-import { FortuneStakingAccount } from '@src/core/services/api-service/graph/types';
 import {
   Box,
   Button,
@@ -6,53 +5,48 @@ import {
   FormControl,
   FormErrorMessage,
   HStack,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
   NumberInput,
   NumberInputField,
-  NumberInputStepper,
   SimpleGrid,
   Stack,
   Text,
   VStack
 } from '@chakra-ui/react';
 import { ChainLogo } from '@dex/components/logo';
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useCurrencyByChainId } from '@eb-pancakeswap-web/hooks/tokens';
+import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
+import { useCallWithGasPrice } from '@eb-pancakeswap-web/hooks/useCallWithGasPrice';
+import { useSwitchNetwork } from '@eb-pancakeswap-web/hooks/useSwitchNetwork';
+import { useCurrencyBalance } from '@eb-pancakeswap-web/state/wallet/hooks';
+import { createSuccessfulTransactionToastContent, findNextLowestNumber, round } from '@market/helpers/utils';
+import useAuthedFunctionWithChainID from '@market/hooks/useAuthedFunctionWithChainID';
+import { CurrencyAmount, MaxUint256 } from '@pancakeswap/swap-sdk-core';
+import { RdButton } from '@src/components-v2/feature/ryoshi-dynasties/components';
+import { RdModalBox } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-modal';
 import {
   BankStakeTokenContext,
   BankStakeTokenContextProps,
   VaultType
 } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/context';
-import { useAppChainConfig } from '@src/config/hooks';
-import { useSwitchNetwork } from '@eb-pancakeswap-web/hooks/useSwitchNetwork';
-import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
-import { useBankContract } from '@src/global/hooks/contracts';
-import { useCallWithGasPrice } from '@eb-pancakeswap-web/hooks/useCallWithGasPrice';
+import LpContextSelection from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/convert-vault-page/lp-context-selection';
+import {
+  TypeOption
+} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/convert-vault-page/types';
+import StakePreview from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/create-vault-page/stake-preview';
+import useFrtnStakingPair from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/use-frtn-staking-pair';
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from '@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context';
-import { ciEquals, createSuccessfulTransactionToastContent, findNextLowestNumber, round } from '@market/helpers/utils';
-import useFrtnStakingPair
-  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/use-frtn-staking-pair';
-import StakePreview
-  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/create-vault-page/stake-preview';
-import { Address, formatEther, parseEther } from 'viem';
-import { RdModalBox } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-modal';
-import { RdButton } from '@src/components-v2/feature/ryoshi-dynasties/components';
 import { useUser } from '@src/components-v2/useUser';
-import { useCurrencyByChainId } from '@eb-pancakeswap-web/hooks/tokens';
-import { CurrencyAmount, MaxUint256 } from '@pancakeswap/swap-sdk-core';
-import { commify } from 'ethers/lib/utils';
-import { toast } from 'react-toastify';
+import { useAppChainConfig } from '@src/config/hooks';
+import { FortuneStakingAccount } from '@src/core/services/api-service/graph/types';
+import { useBankContract } from '@src/global/hooks/contracts';
 import { parseErrorMessage } from '@src/helpers/validator';
-import useAuthedFunctionWithChainID from '@market/hooks/useAuthedFunctionWithChainID';
-import { useCurrencyBalance } from '@eb-pancakeswap-web/state/wallet/hooks';
-import LpContextSelection
-  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/convert-vault-page/lp-context-selection';
-import {
-  TypeOption
-} from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/convert-vault-page/types';
+import { commify } from 'ethers/lib/utils';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
+import { Address, formatEther, parseEther, parseUnits } from 'viem';
 
 interface ImportVaultFormProps {
   frtnVault: FortuneStakingAccount;
@@ -92,6 +86,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
     chainId: chainConfig.chain.id
   });
 
+  // Convention: address1 is always FRTN, address2 is always the other side of the pair
   const currencyA = useCurrencyByChainId(pairConfig?.address1, bankChainId);
   const currencyB = useCurrencyByChainId(pairConfig?.address2, bankChainId);
   const currencyBBalance = useCurrencyBalance(user.address ?? undefined, currencyB ?? undefined);
@@ -145,7 +140,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
     const tokenB = currencyB?.wrapped;
     if (!tokenA || !tokenB || !stakingPair.pair) return '0';
 
-    const amountWei = parseEther(dependentAmount);
+    const amountWei = parseUnits(dependentAmount, tokenB.decimals);
     const inputCurrency = CurrencyAmount.fromRawAmount(tokenB, amountWei);
     const wrappedIndependentAmount = inputCurrency?.wrapped
     const dependentTokenAmount = stakingPair.pair.priceOf(stakingPair.otherCurrency).quote(wrappedIndependentAmount);
@@ -161,12 +156,14 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
     if (frtnBalance > dependentAmountInFrtn) {
       return {
         frtn: dependentAmountInFrtn,
-        dependent: dependentBalance
+        dependent: dependentBalance,
+        side: 'dependent'
       }
     } else {
       return {
         frtn: frtnBalance,
-        dependent: Number(dependentAmountFromFrtn(frtnBalance.toString()))
+        dependent: Number(dependentAmountFromFrtn(frtnBalance.toString())),
+        side: 'frtn'
       }
     }
   }, [vaultBalanceEth, currencyBBalance]);
@@ -196,6 +193,13 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
 
   const validateInput = async () => {
     setExecutingLabel('Validating');
+    setFrtnInputError('');
+    setDependentInputError('');
+
+    if (!currencyB) {
+      toast.error('Invalid currency');
+      return;
+    }
 
     if (!stakingPair.pair) {
       toast.error('Invalid LP pair');
@@ -212,17 +216,15 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
       return;
     }
 
-    if (!currencyBBalance || BigInt(currencyBBalance.lessThan(parseEther(dependentInputAmount)))) {
+    if (!currencyBBalance || BigInt(currencyBBalance.lessThan(parseUnits(dependentInputAmount, currencyB.decimals)))) {
       toast.error(`Not enough ${currencyBBalance?.currency.symbol} balance`);
       return;
     }
 
-    // if(Number(amountToStake) < rdConfig.bank.staking.fortune.minimum) {
-    //   setInputError(`At least ${rdConfig.bank.staking.fortune.minimum} in FRTN required`);
-    //   return false;
-    // }
-    setFrtnInputError('');
-    setDependentInputError('');
+    if(Number(frtnInputAmount) < rdConfig.bank.staking.fortune.minimum) {
+      setFrtnInputError(`At least ${rdConfig.bank.staking.fortune.minimum} in FRTN required`);
+      return false;
+    }
 
     return true;
   }
@@ -268,7 +270,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
 
       setExecutingLabel('Staking');
 
-      const dependentAmountWei = parseEther(dependentInputAmount)
+      const dependentAmountWei = parseUnits(dependentInputAmount, currencyB!.decimals)
       if (toType === TypeOption.Existing) {
         const tx = await callWithGasPrice(bankContract, 'convertFRTNVaultToExistingLP', [
           frtnVault.index,
@@ -416,19 +418,25 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
             </FormControl>
           </VStack>
           <VStack align='stretch'>
-            {maxFormInput.frtn > 0 && (
-              <>
-                <Text>Max Stake</Text>
-                <Text
-                  fontSize={{base: 'sm', sm: 'md'}}
-                  my='auto'
-                  onClick={handleMaxAmount}
-                  cursor='pointer'
-                >
-                  {maxFormInput.frtn} FRTN <Text as='span' fontSize='sm'>(~{maxFormInput.dependent} {currencyBBalance?.currency.symbol})</Text>
-                </Text>
-              </>
-            )}
+            <Text>Max Stake</Text>
+            <Text
+              fontSize={{base: 'sm', sm: 'md'}}
+              my='auto'
+              onClick={handleMaxAmount}
+              cursor='pointer'
+            >
+              {maxFormInput.side === 'frtn' ? (
+                <>
+                  {maxFormInput.frtn} FRTN 
+                  {maxFormInput.frtn > 0 && <Text as='span' fontSize='sm'> (~{maxFormInput.dependent} {currencyBBalance?.currency.symbol})</Text>}
+                </>
+              ) : (
+                <>
+                  {maxFormInput.dependent} {currencyBBalance?.currency.symbol} 
+                  {maxFormInput.dependent > 0 && <Text as='span' fontSize='sm'> (~{maxFormInput.frtn} FRTN)</Text>}
+                </>
+              )}
+            </Text>
           </VStack>
           <VStack align='stretch'>
             <Text>FRTN to stake</Text>
@@ -448,7 +456,11 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
               </FormControl>
               <Button textColor='#e2e8f0' fontSize='sm' onClick={handleMaxFromFrtnAmount}>MAX</Button>
             </Stack>
-            <Text fontSize='xs'>
+            <Text
+              fontSize='xs'
+              onClick={handleMaxFromFrtnAmount}
+              cursor='pointer'
+            >
               Vault Balance: {commify(round(vaultBalanceEth, 4))}
             </Text>
           </VStack>
