@@ -17,7 +17,7 @@ import {
   VStack
 } from '@chakra-ui/react';
 import { ChainLogo } from '@dex/components/logo';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BankStakeTokenContext,
   BankStakeTokenContextProps,
@@ -32,7 +32,7 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from '@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context';
-import { createSuccessfulTransactionToastContent, findNextLowestNumber, round } from '@market/helpers/utils';
+import { ciEquals, createSuccessfulTransactionToastContent, findNextLowestNumber, round } from '@market/helpers/utils';
 import useFrtnStakingPair
   from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/use-frtn-staking-pair';
 import StakePreview
@@ -117,12 +117,15 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
   }});
 
   const vaultBalanceEth = formatEther(BigInt(frtnVault.balance));
-  const [amountToStake, setAmountToStake] = useState(vaultBalanceEth);
-  const [inputError, setInputError] = useState('');
+  const [frtnInputAmount, setFrtnInputAmount] = useState(vaultBalanceEth);
+  const [dependentInputAmount, setDependentInputAmount] = useState('');
+  const [frtnInputError, setFrtnInputError] = useState('');
+  const [dependentInputError, setDependentInputError] = useState('');
+  const prevLpAddressRef = useRef<string>();
 
   const stakingDays = frtnVault.length / 86400;
 
-  const dependentAmountFromInput = (amount: string) => {
+  const dependentAmountFromFrtn = (amount: string) => {
     const tokenA = currencyA?.wrapped;
     const tokenB = currencyB?.wrapped;
     if (!tokenA || !tokenB || !stakingPair.pair) return '0';
@@ -150,51 +153,45 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
     return dependentTokenAmount.toSignificant(6);
   }
 
-  const maxFormInput = ()  => {
+  const maxFormInput = useMemo(()  => {
     const frtnBalance = Number(vaultBalanceEth);
     const dependentBalance = Number(currencyBBalance?.toSignificant(6) ?? 0);
     const dependentAmountInFrtn = Number(frtnAmountFromDependent(dependentBalance.toString()));
 
     if (frtnBalance > dependentAmountInFrtn) {
-      return dependentAmountInFrtn.toString();
+      return {
+        frtn: dependentAmountInFrtn,
+        dependent: dependentBalance
+      }
     } else {
-      return vaultBalanceEth;
+      return {
+        frtn: frtnBalance,
+        dependent: Number(dependentAmountFromFrtn(frtnBalance.toString()))
+      }
     }
+  }, [vaultBalanceEth, currencyBBalance]);
+
+  const syncAmountsFromFrtn = (frtnAmount: string | number) => {
+    if (typeof frtnAmount === 'number') frtnAmount = frtnAmount.toString();
+    setFrtnInputAmount(frtnAmount);
+    setDependentInputAmount(dependentAmountFromFrtn(frtnAmount));
   }
 
-  const dependentAmount = useMemo(() => {
-    return dependentAmountFromInput(amountToStake);
-  }, [currencyA?.wrapped, currencyB?.wrapped, stakingPair.pair, pairConfig, amountToStake]);
-
-  const handleChangeTokenAmount = (valueAsString: string, valueAsNumber: number) => {
-    const _dependentAmountFromInput = Number(dependentAmountFromInput(valueAsString));
-    const maxPossibleDependentAmount = Number(currencyBBalance?.toSignificant(6) ?? 0);
-
-    if (_dependentAmountFromInput > maxPossibleDependentAmount) {
-      // maybe adjust max?
-    }
-
-    // const newAmount = valueAsNumber;
-    // const newAmount = valueAsNumber > maxPossibleDependentAmount ? maxPossibleDependentAmount : valueAsNumber;
-    setAmountToStake(valueAsString);
+  const syncAmountsFromDependent = (dependentAmount: string | number) => {
+    if (typeof dependentAmount === 'number') dependentAmount = dependentAmount.toString();
+    setDependentInputAmount(dependentAmount);
+    setFrtnInputAmount(frtnAmountFromDependent(dependentAmount));
   }
 
-  const handleMaxAmount = () => {
-    setAmountToStake(maxFormInput());
-  }
+  const handleChangeFrtnAmount = (valueAsString: string) => syncAmountsFromFrtn(valueAsString);
+  const handleChangeDependentAmount = (valueAsString: string) => syncAmountsFromDependent(valueAsString);
+  const handleMaxAmount = () => syncAmountsFromFrtn(maxFormInput.frtn);
+  const handleMaxFromFrtnAmount = () => syncAmountsFromFrtn(vaultBalanceEth);
+  const handleMaxFromDependentAmount = () => syncAmountsFromDependent(currencyBBalance?.toSignificant(6) ?? '0');
 
-  const handleMaxFromFrtnAmount = () => {
-    setAmountToStake(vaultBalanceEth);
-  }
-
-  const handleMaxFromDependentAmount = () => {
-    const amount = frtnAmountFromDependent(currencyBBalance?.toSignificant(6) ?? '0')
-    setAmountToStake(amount);
-  }
-
-  const handleChangeLpVaultOption = (pairConfig: any, vault?: any) => {
-    setPairConfig(pairConfig);
-    setTargetLpVault(vault);
+  const handleChangeLpVaultOption = (newPairConfig: any, newVault?: any) => {
+    setPairConfig(newPairConfig);
+    setTargetLpVault(newVault);
   }
 
   const validateInput = async () => {
@@ -210,12 +207,12 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
       return;
     }
 
-    if (BigInt(frtnVault.balance) < parseEther(amountToStake)) {
+    if (BigInt(frtnVault.balance) < parseEther(frtnInputAmount)) {
       toast.error("Not enough balance in FRTN vault");
       return;
     }
 
-    if (!currencyBBalance || BigInt(currencyBBalance.lessThan(parseEther(dependentAmount)))) {
+    if (!currencyBBalance || BigInt(currencyBBalance.lessThan(parseEther(dependentInputAmount)))) {
       toast.error(`Not enough ${currencyBBalance?.currency.symbol} balance`);
       return;
     }
@@ -224,7 +221,8 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
     //   setInputError(`At least ${rdConfig.bank.staking.fortune.minimum} in FRTN required`);
     //   return false;
     // }
-    setInputError('');
+    setFrtnInputError('');
+    setDependentInputError('');
 
     return true;
   }
@@ -255,7 +253,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
 
       //check for approval
       const totalApproved = await checkForApproval();
-      const desiredLpAmount = parseEther(amountToStake.toString());
+      const desiredLpAmount = parseEther(frtnInputAmount.toString());
 
       if (totalApproved < MaxUint256) {
         const txHash = await stakingPair.otherContract?.write.approve(
@@ -270,7 +268,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
 
       setExecutingLabel('Staking');
 
-      const dependentAmountWei = parseEther(dependentAmount)
+      const dependentAmountWei = parseEther(dependentInputAmount)
       if (toType === TypeOption.Existing) {
         const tx = await callWithGasPrice(bankContract, 'convertFRTNVaultToExistingLP', [
           frtnVault.index,
@@ -281,7 +279,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
         ]);
 
         toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
-        onComplete(Number(amountToStake));
+        onComplete(Number(frtnInputAmount));
       } else {
         const tx = await callWithGasPrice(bankContract, 'convertFRTNVaultToNewLP', [
           frtnVault.index,
@@ -291,7 +289,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
         ]);
 
         toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
-        onComplete(Number(amountToStake));
+        onComplete(Number(frtnInputAmount));
       }
     } catch (error: any) {
       console.log(error);
@@ -338,18 +336,19 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
     benefitGroup.apr = availableAprs[aprKey] ?? availableAprs[1];
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    const mitama = Math.floor((Number(amountToStake) * stakingDays) / 1080);
+    const mitama = Math.floor((Number(frtnInputAmount) * stakingDays) / 1080);
     let newTroops = Math.floor(mitama / mitamaTroopsRatio);
-    if (newTroops < 1 && Number(amountToStake) > 0) newTroops = 1;
+    if (newTroops < 1 && Number(frtnInputAmount) > 0) newTroops = 1;
     benefitGroup.troops = newTroops;
     benefitGroup.mitama = mitama;
 
     return benefitGroup;
   }
 
+  // Set the benefits preview values
   useEffect(() => {
     const frtnBenefits = calculateFrtnBenefits();
-    let referenceLpBenefits = calculateLpBenefits(amountToStake);
+    let referenceLpBenefits = calculateLpBenefits(frtnInputAmount);
     let lpBenefits = referenceLpBenefits;
     let lpDiff: BenefitGroup | undefined = undefined;
 
@@ -358,7 +357,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
       const derivedReferenceFrtnAmount = stakingPair.frtnReserve?.multiply(targetLpVault.balance).divide(stakingPair.totalSupply ?? 0).toExact() ?? '0';
 
       referenceLpBenefits =  calculateLpBenefits(derivedReferenceFrtnAmount);
-      lpBenefits = calculateLpBenefits(Number(derivedReferenceFrtnAmount) + Number(amountToStake));
+      lpBenefits = calculateLpBenefits(Number(derivedReferenceFrtnAmount) + Number(frtnInputAmount));
       lpDiff = {
         apr: lpBenefits.apr - referenceLpBenefits.apr,
         troops: lpBenefits.troops - referenceLpBenefits.troops,
@@ -372,7 +371,25 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
       referenceLp: referenceLpBenefits,
       diff: lpDiff
     });
-  }, [frtnVault.length, amountToStake, stakingDays, targetLpVault?.id]);
+  }, [frtnVault.length, frtnInputAmount, stakingDays, targetLpVault?.id]);
+
+  // Initialize form values
+  useEffect(() => {
+    syncAmountsFromFrtn(vaultBalanceEth);
+  }, []);
+
+  // Set dependent amount when LP pair changes
+  useEffect(() => {
+    const newLpAddress = pairConfig?.pair;
+    const prevLpAddress = prevLpAddressRef.current;
+
+    if (prevLpAddress === null || prevLpAddress !== newLpAddress) {
+      setDependentInputAmount(dependentAmountFromFrtn(frtnInputAmount));
+
+      prevLpAddressRef.current = newLpAddress;
+    }
+  }, [pairConfig?.pair, frtnInputAmount]);
+
 
   return (
     <>
@@ -399,59 +416,71 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
             </FormControl>
           </VStack>
           <VStack align='stretch'>
-            <Text>FRTN Vault Balance</Text>
-            <Text
-              fontSize={{base: 'sm', sm: 'md'}}
-              my='auto'
-              onClick={handleMaxFromFrtnAmount}
-              cursor='pointer'
-            >
-              {commify(round(vaultBalanceEth, 4))}
-            </Text>
+            {maxFormInput.frtn > 0 && (
+              <>
+                <Text>Max Stake</Text>
+                <Text
+                  fontSize={{base: 'sm', sm: 'md'}}
+                  my='auto'
+                  onClick={handleMaxAmount}
+                  cursor='pointer'
+                >
+                  {maxFormInput.frtn} FRTN <Text as='span' fontSize='sm'>(~{maxFormInput.dependent} {currencyBBalance?.currency.symbol})</Text>
+                </Text>
+              </>
+            )}
           </VStack>
           <VStack align='stretch'>
             <Text>FRTN to stake</Text>
             <Stack direction='row'>
-              <FormControl maxW='200px' isInvalid={!!inputError}>
+              <FormControl maxW='200px' isInvalid={!!frtnInputError}>
                 <NumberInput
-                  defaultValue={vaultBalanceEth}
                   min={1}
-                  max={parseFloat(maxFormInput())}
+                  max={maxFormInput.frtn}
                   name="quantity"
-                  onChange={handleChangeTokenAmount}
-                  value={amountToStake}
+                  onChange={handleChangeFrtnAmount}
+                  value={frtnInputAmount}
                   precision={7}
                 >
                   <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper color='#ffffffcc' />
-                    <NumberDecrementStepper color='#ffffffcc'/>
-                  </NumberInputStepper>
                 </NumberInput>
-                <FormErrorMessage>{inputError}</FormErrorMessage>
+                <FormErrorMessage>{frtnInputError}</FormErrorMessage>
               </FormControl>
-              <Button textColor='#e2e8f0' fontSize='sm' onClick={handleMaxAmount}>MAX</Button>
+              <Button textColor='#e2e8f0' fontSize='sm' onClick={handleMaxFromFrtnAmount}>MAX</Button>
             </Stack>
-            <Flex fontSize='xs'>
-              {stakingPair.otherCurrency?.symbol} Required: {commify(dependentAmount ?? 0)}
-            </Flex>
+            <Text fontSize='xs'>
+              Vault Balance: {commify(round(vaultBalanceEth, 4))}
+            </Text>
           </VStack>
 
           <VStack align='stretch'>
-            <Text>{stakingPair.otherCurrency?.symbol} Balance</Text>
-            {!!currencyBBalance ? (
-              <Text
-                fontSize={{base: 'sm', sm: 'md'}}
-                mt={2}
-                onClick={handleMaxFromDependentAmount}
-                cursor='pointer'
-              >
-                {currencyBBalance?.toSignificant(6)} <Text as='span' fontSize='sm'>(~{frtnAmountFromDependent(currencyBBalance?.toSignificant(6))} FRTN)</Text>
-              </Text>
-            ) : (
-              <Text fontSize='sm' mt={2}>
-                Select an LP Vault
-              </Text>
+            <Text visibility={!!currencyBBalance ? 'visible' : 'hidden'}>{stakingPair.otherCurrency?.symbol} to stake</Text>
+            {!!currencyBBalance && (
+              <>
+                <Stack direction='row'>
+                  <FormControl maxW='200px' isInvalid={!!dependentInputError}>
+                    <NumberInput
+                      min={1}
+                      max={maxFormInput.dependent}
+                      name="quantity"
+                      onChange={handleChangeDependentAmount}
+                      value={dependentInputAmount}
+                      precision={7}
+                    >
+                      <NumberInputField />
+                    </NumberInput>
+                    <FormErrorMessage>{dependentInputError}</FormErrorMessage>
+                  </FormControl>
+                  <Button textColor='#e2e8f0' fontSize='sm' onClick={handleMaxFromDependentAmount}>MAX</Button>
+                </Stack>
+                <Text
+                  fontSize='xs'
+                  onClick={handleMaxFromDependentAmount}
+                  cursor='pointer'
+                >
+                  {stakingPair.otherCurrency?.symbol} Balance: {currencyBBalance?.toSignificant(6)}
+                </Text>
+              </>
             )}
           </VStack>
         </SimpleGrid>
@@ -468,7 +497,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
         </RdModalBox>
         <Box mt={2}>
           <StakePreview
-            fortuneToStake={Number(amountToStake)}
+            fortuneToStake={Number(frtnInputAmount)}
             daysToStake={stakingDays}
             vaultType={VaultType.LP}
             apr={benefits.lp.apr}

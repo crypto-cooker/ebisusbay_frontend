@@ -20,7 +20,7 @@ interface StakeFormProps {
 }
 
 const StakePreview = ({fortuneToStake, daysToStake, vaultType, apr, mitama, troops, title, aprDiff, mitamaDiff, troopsDiff}: StakeFormProps) => {
-  const optionalPlus = (value: number) => value >= 0 ? `+${commify(round(value))}` : commify(round(value));
+  const optionalPlus = (value: number) => value >= 0 ? `+ ${commify(round(value))}` : commify(round(value));
   const diffColor = (value: number) => value >= 0 ? 'green' : 'red';
 
   return (
@@ -41,7 +41,7 @@ const StakePreview = ({fortuneToStake, daysToStake, vaultType, apr, mitama, troo
               fontWeight='bold'
               color={diffColor(aprDiff)}
             >
-              {optionalPlus(aprDiff)}%
+              ({optionalPlus(aprDiff)}%)
             </Text>
           )}
           <Text fontSize={12} color='#aaa' textAlign='center'>{commify(daysToStake)} day commitment</Text>
@@ -56,7 +56,7 @@ const StakePreview = ({fortuneToStake, daysToStake, vaultType, apr, mitama, troo
               fontWeight='bold'
               color={diffColor(troopsDiff)}
             >
-              {optionalPlus(troopsDiff)}
+              ({optionalPlus(troopsDiff)})
             </Text>
           )}
           <Text fontSize={12} color='#aaa' textAlign='center'>{commify(round(fortuneToStake, 3))} FRTN stake</Text>
@@ -71,7 +71,7 @@ const StakePreview = ({fortuneToStake, daysToStake, vaultType, apr, mitama, troo
               fontWeight='bold'
               color={diffColor(mitamaDiff)}
             >
-              {optionalPlus(mitamaDiff)}
+              ({optionalPlus(mitamaDiff)})
             </Text>
           )}
           <Text fontSize={12} color='#aaa' textAlign='center'>{commify(round(fortuneToStake, 3))} FRTN stake</Text>
