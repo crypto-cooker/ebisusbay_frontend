@@ -144,7 +144,7 @@ export default function MadeOffers({ address, filtersVisible, setFiltersVisible,
         <ResponsiveAcceptOfferDialog
           isOpen={!!offerAction}
           onClose={handleCloseDialog}
-          collection={selectedOffer.collectionData || selectedOffer.collection}
+          collection={selectedOffer.collection}
           isCollectionOffer={!selectedOffer.nftId}
           offer={selectedOffer}
         />
@@ -153,7 +153,7 @@ export default function MadeOffers({ address, filtersVisible, setFiltersVisible,
         <ResponsiveRejectOfferDialog
           isOpen={!!offerAction}
           onClose={handleCloseDialog}
-          collection={selectedOffer.collectionData || selectedOffer.collection}
+          collection={selectedOffer.collection}
           isCollectionOffer={!selectedOffer.nftId}
           offer={selectedOffer}
         />

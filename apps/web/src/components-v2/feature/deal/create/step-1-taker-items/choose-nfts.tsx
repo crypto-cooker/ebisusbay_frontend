@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/react";
 import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
 import {ApiService} from "@src/core/services/api-service";
-import {ciEquals, findCollectionByAddress} from "@market/helpers/utils";
+import { ciEquals, round } from '@market/helpers/utils';
 import {useInfiniteQuery} from "@tanstack/react-query";
 import {getTheme} from "@src/global/theme/theme";
 import {DealNftCard} from "@src/components-v2/shared/nft-card2";
@@ -190,14 +190,12 @@ export const ChooseNftsTab = ({address}: {address: string}) => {
       const result = await getWalletOverview(address);
       setCollections(result.data
         .reduce((arr: any, item: any) => {
-          const coll = findCollectionByAddress(item.nftAddress, item.nftId);
-          if (!coll) return arr;
-          const existingIndex = arr.findIndex((c: any) => ciEquals(coll.address, c.address));
+          const existingIndex = arr.findIndex((c: any) => ciEquals(item.address, c.address));
           if (existingIndex >= 0) {
-            arr[existingIndex].balance += Number(item.balance);
+            arr[existingIndex].balance += round(Number(item.balance));
           } else {
-            coll.balance = Number(item.balance);
-            arr.push(coll);
+            item.balance = Number(item.balance);
+            arr.push(item);
           }
           return arr;
         }, [])
