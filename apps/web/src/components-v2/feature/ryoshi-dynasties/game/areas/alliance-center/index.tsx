@@ -25,8 +25,8 @@ import BankerBubbleBox, {
 } from '@src/components-v2/feature/ryoshi-dynasties/components/banker-bubble-box';
 
 const greeterImages = {
-  idle: '/img/ryoshi-dynasties/village/buildings/alliance-center/girl.png',
-  talking: '/img/ryoshi-dynasties/village/buildings/alliance-center/girl.png',
+  idle: '/img/ryoshi-dynasties/village/buildings/alliance-center/greeter-idle.png',
+  talking: '/img/ryoshi-dynasties/village/buildings/alliance-center/greeter-talking.png',
 };
 
 const greetings = [

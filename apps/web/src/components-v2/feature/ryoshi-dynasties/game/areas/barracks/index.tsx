@@ -18,8 +18,8 @@ import BankerBubbleBox, {
 import { useWindowSize } from '@market/hooks/useWindowSize';
 
 const greeterImages = {
-  idle: '/img/ryoshi-dynasties/village/buildings/barracks/commander.png',
-  talking: '/img/ryoshi-dynasties/village/buildings/barracks/commander.png',
+  idle: '/img/ryoshi-dynasties/village/buildings/barracks/greeter-idle.png',
+  talking: '/img/ryoshi-dynasties/village/buildings/barracks/greeter-idle.png',
 };
 
 const greetings = [
