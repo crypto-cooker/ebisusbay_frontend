@@ -27,7 +27,7 @@ interface StakeFortuneProps {
   onClose: () => void;
 }
 
-const BOOSTS_ENABLED = true;
+const BOOSTS_ENABLED = false;
 
 const StakeFortune = ({address, isOpen, onClose}: StakeFortuneProps) => {
   const [page, setPage] = useState<ReactElement | null>(null);

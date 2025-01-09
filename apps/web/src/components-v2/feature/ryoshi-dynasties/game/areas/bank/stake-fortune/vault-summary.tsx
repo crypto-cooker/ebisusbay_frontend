@@ -66,7 +66,7 @@ interface VaultSummaryProps {
   onClosed: () => void;
 }
 
-const BOOSTS_ENABLED = true;
+const BOOSTS_ENABLED = false;
 const VAULT_CONVERSION_ENABLED = false;
 
 const VaultSummary = (props: VaultSummaryProps) => {
