@@ -16,7 +16,6 @@ import WalletsQuery, {WalletsQueryParams} from "@src/core/services/api-service/m
 import WalletsRepository from "@src/core/services/api-service/mapi/repositories/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
 import {enrichOwnerListing, enrichWalletNft} from "@src/core/services/api-service/mapi/enrichment";
-import {findCollectionByAddress} from "@market/helpers/utils";
 import CollectionsRepository from "@src/core/services/api-service/mapi/repositories/collections";
 import {
   CollectionInfoQuery,

@@ -1,7 +1,6 @@
 import {
   ciEquals,
   convertIpfsResource,
-  findCollectionByAddress as findLegacyCollectionByAddress,
   isAntMintPassCollection,
   isBundle, isCollectionListable, isCroSwapQuartermastersCollection,
   isNftBlacklisted,

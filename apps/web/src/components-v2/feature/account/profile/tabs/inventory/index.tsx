@@ -3,7 +3,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import MyNftCard from "@src/Components/components/MyNftCard";
 import {
   ciEquals,
-  findCollectionByAddress,
   isBundle,
   isCollectionListable,
   isNftBlacklisted,

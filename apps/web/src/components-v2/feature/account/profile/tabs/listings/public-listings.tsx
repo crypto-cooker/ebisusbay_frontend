@@ -15,7 +15,7 @@ import ListingsFilterContainer
   from "@src/components-v2/feature/account/profile/tabs/listings/listings-filter-container";
 import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
-import { ciEquals, findCollectionByAddress, round } from '@market/helpers/utils';
+import { ciEquals, round } from '@market/helpers/utils';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faFilter, faSort} from "@fortawesome/free-solid-svg-icons";
 import useDebounce from "@src/core/hooks/useDebounce";

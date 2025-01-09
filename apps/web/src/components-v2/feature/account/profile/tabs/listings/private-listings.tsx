@@ -29,7 +29,7 @@ import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/l
 import nextApiService from "@src/core/services/api-service/next";
 import {InvalidState} from "@src/core/services/api-service/types";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
-import { ciEquals, findCollectionByAddress, round } from '@market/helpers/utils';
+import { ciEquals, round } from '@market/helpers/utils';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faCheckDouble, faFilter} from "@fortawesome/free-solid-svg-icons";
 import useDebounce from "@src/core/hooks/useDebounce";
