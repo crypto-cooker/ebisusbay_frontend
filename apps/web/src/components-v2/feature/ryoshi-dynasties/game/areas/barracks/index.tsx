@@ -1,8 +1,8 @@
-import { AspectRatio, Box, Icon, Image, useDisclosure, VStack } from '@chakra-ui/react';
+import { AspectRatio, Box, Icon, Image, useDisclosure, useMediaQuery, VStack } from '@chakra-ui/react';
 import { RdButton } from '@src/components-v2/feature/ryoshi-dynasties/components';
 
 import useAuthedFunction from '@market/hooks/useAuthedFunction';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import ImageService from '@src/core/services/image';
 
@@ -11,7 +11,20 @@ import ClaimRewards from '@src/components-v2/feature/ryoshi-dynasties/game/areas
 import useAuthedFunctionWithChainID from '@market/hooks/useAuthedFunctionWithChainID';
 import { SUPPORTED_RD_CHAIN_CONFIGS } from '@src/config/chains';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faImage } from '@fortawesome/free-solid-svg-icons';
+import BankerBubbleBox, {
+  TypewriterText
+} from '@src/components-v2/feature/ryoshi-dynasties/components/banker-bubble-box';
+import { useWindowSize } from '@market/hooks/useWindowSize';
+
+const greeterImages = {
+  idle: '/img/ryoshi-dynasties/village/buildings/barracks/commander.png',
+  talking: '/img/ryoshi-dynasties/village/buildings/barracks/commander.png',
+};
+
+const greetings = [
+  'My Lord which generals should I dispatch?',
+];
 
 interface BarracksProps {
   onBack: () => void;
@@ -20,7 +33,11 @@ interface BarracksProps {
 const Barracks = ({onBack}: BarracksProps) => {
   const [handleDefaultAuthedNavigation] = useAuthedFunction();
   const [handleChainAuthedNavigation] = useAuthedFunctionWithChainID(SUPPORTED_RD_CHAIN_CONFIGS.map(({chain}) => chain.id));
+  const windowSize = useWindowSize();
+
+  const [greeterImage, setGreeterImage] = useState(greeterImages.talking);
   const [abbreviateButtonText, setAbbreviateButtonText] = useState(false);
+  const [shouldAbbreviateHorizontal] = useMediaQuery('(max-width: 800px)');
 
   const onClaimedRewards = () => {
     onCloseClaimRewards();
@@ -37,6 +54,11 @@ const Barracks = ({onBack}: BarracksProps) => {
      }
   }
 
+  useEffect(() => {
+    const shouldAbbreviateVertical = !!windowSize.height && windowSize.height < 800;
+    setAbbreviateButtonText(shouldAbbreviateVertical && shouldAbbreviateHorizontal);
+  }, [windowSize, shouldAbbreviateHorizontal]);
+
   return (
     <Box
       position='relative'
@@ -48,15 +70,12 @@ const Barracks = ({onBack}: BarracksProps) => {
         initial="hidden"
         animate="show"
       >
-
         <Box
           position='absolute'
           right={-1}
-          bottom={{ base: undefined, sm: 20 }}
-          top={{ base: 10, sm: undefined }}
+          bottom={20}
           zIndex={10}
-          h='auto'
-          w={{ base: '200px', sm: '269px' }}
+          w={abbreviateButtonText ? '60px' : '269px'}
         >
           <VStack spacing={4} align='end' h='full'>
             <RdButton
@@ -64,14 +83,11 @@ const Barracks = ({onBack}: BarracksProps) => {
               w='full'
               onClick={() => handleChainAuthedNavigation(onOpenStakeNFTs)}
             >
-              Stake NFTs
-            </RdButton>
-            <RdButton
-              size={{ base: 'md', sm: 'lg' }}
-              w='full'
-              onClick={() => handleDefaultAuthedNavigation(onOpenClaimRewards)}
-            >
-              Battle Rewards
+              {abbreviateButtonText ? (
+                <Icon as={FontAwesomeIcon} icon={faImage} />
+              ) : (
+                <>Stake NFTs</>
+              )}
             </RdButton>
             <RdButton size={{ base: 'md', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
               {abbreviateButtonText ? (
@@ -97,12 +113,34 @@ const Barracks = ({onBack}: BarracksProps) => {
         </AspectRatio>
 
         <Image
-          src={ImageService.translate('/img/ryoshi-dynasties/village/buildings/barracks/commander.png').convert()}
+          src={ImageService.translate(greeterImage).convert()}
           w='800px'
           position='absolute'
           bottom={{ base: 12, md: 0 }}
           left={0}
         />
+
+        <Box
+          position='absolute'
+          top={{base: 5, md: 10, lg: 16}}
+          left={{base: 0, md: 10, lg: 16}}
+          w={{base: 'full', md: '600px'}}
+          pe={!!windowSize.height && windowSize.height < 800 ? {base: '60px', sm: '150px', md: '0px'} : {base: '5px', md: '0px'}}
+          ps={{base: '5px', md: '0px'}}
+          rounded='lg'
+        >
+          <BankerBubbleBox fontSize={{base: 'md', sm: 'lg', md: 'xl'}} color='white'>
+            {(
+              <TypewriterText
+                text={[
+                  greetings[Math.floor(Math.random() * greetings.length)],
+                  '<br /><br />Press Stake NFTs to select your Ryoshi Tales and get them onto the battle lines.'
+                ]}
+                onComplete={() => setGreeterImage(greeterImages.idle)}
+              />
+            )}
+          </BankerBubbleBox>
+        </Box>
       </motion.div>
     </Box>
   )

@@ -22,31 +22,42 @@ import {DEFAULT_CHAIN_ID, SUPPORTED_RD_CHAIN_CONFIGS} from "@src/config/chains";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 
+
+
+const greeterImages = {
+  idle: '/img/battle-bay/gifBanker/eyeblink.gif',
+  talking: '/img/battle-bay/gifBanker/mouth.gif',
+};
+
+const greetings = [
+  'Greetings, traveler. I am the best person to talk to when it comes to your $Fortune possessions… or lack-thereof… which I could help you address.',
+  'Hail, brave hero! How may I assist you with your $Fortune possessions today? Stake, purchase, or withdraw?',
+  'Welcome, honored guest! Ready to ride the waves of fortune? Stake, purchase, or withdraw your tokens with me.',
+  'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, that our world has gone through quite an evolution.',
+  'I am here to help all citizens of the Lotus Galaxy stake, purchase or withdraw their tokens. How may I help?',
+  'Blessings, traveler! Let me guess, you want me to help with your Fortune possessions. Say no more. What can I do for you today?'
+]
+
 interface BankerSceneProps {
   address: string;
   onBack: () => void;
 }
 
-const bankerImages = {
-  idle: '/img/battle-bay/gifBanker/eyeblink.gif',
-  talking: '/img/battle-bay/gifBanker/mouth.gif',
-};
-
 const Bank = ({address, onBack} : BankerSceneProps) => {
   const [runAuthedFunction] = useAuthedFunctionWithChainID(SUPPORTED_RD_CHAIN_CONFIGS.map(({chain}) => chain.id));
+  const windowSize = useWindowSize();
+  const user = useUser();
+  const { chainId: activeChainId} = useActiveChainId();
+  const { switchNetworkAsync } = useSwitchNetwork();
+
+  const [greeterImage, setGreeterImage] = useState(greeterImages.talking);
+  const [abbreviateButtonText, setAbbreviateButtonText] = useState(false);
+  const [shouldAbbreviateHorizontal] = useMediaQuery('(max-width: 800px)');
 
   const { isOpen: isOpenStakeFortune, onOpen: onOpenStakeFortune, onClose: onCloseStakeFortune} = useDisclosure();
   const { isOpen: isOpenStakeNFTs, onOpen: onOpenStakeNFTs, onClose: onCloseStakeNFTs} = useDisclosure();
   const { isOpen: isOpenWithdraw, onOpen: onOpenWithdraw, onClose: onCloseRewards} = useDisclosure();
   const { isOpen: isBlockingModalOpen, onOpen: onOpenBlockingModal, onClose: onCloseBlockingModal } = useDisclosure();
-
-  const [bankerImage, setBankerImage] = useState(bankerImages.talking);
-  const user = useUser();
-  const windowSize = useWindowSize();
-  const [shouldAbbreviateHorizontal] = useMediaQuery('(max-width: 800px)');
-  const [abbreviateButtonText, setAbbreviateButtonText] = useState(false);
-  const { chainId: activeChainId} = useActiveChainId();
-  const { switchNetworkAsync } = useSwitchNetwork();
 
   useEffect(() => {
     const shouldAbbreviateVertical = !!windowSize.height && windowSize.height < 800;
@@ -60,13 +71,6 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
 
     onBack();
   }, []);
-
-  const greetings = ['Greetings, traveler. I am the best person to talk to when it comes to your $Fortune possessions… or lack-thereof… which I could help you address.',
-                  'Hail, brave hero! How may I assist you with your $Fortune possessions today? Stake, purchase, or withdraw?',
-                  'Welcome, honored guest! Ready to ride the waves of fortune? Stake, purchase, or withdraw your tokens with me.',
-                  'Welcome, traveler. It seems that since Ebisu has created all these Fortune tokens, that our world has gone through quite an evolution.', 
-                  'I am here to help all citizens of the Lotus Galaxy stake, purchase or withdraw their tokens. How may I help?',
-                  'Blessings, traveler! Let me guess, you want me to help with your Fortune possessions. Say no more. What can I do for you today?']
 
   const handleAuthedNavigation = useCallback((fn: () => void) => {
     runAuthedFunction(fn);
@@ -113,7 +117,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
           />
         </AspectRatio>
         <Image
-          src={bankerImage}
+          src={greeterImage}
           w='800px'
           position='absolute'
           bottom={0}
@@ -136,7 +140,7 @@ const Bank = ({address, onBack} : BankerSceneProps) => {
                   greetings[Math.floor(Math.random() * greetings.length)],
                   '<br /><br />Stake Fortune to stake your Fortune tokens and earn troops. Stake NFTs to boost your staking APR. Go to "Rewards" to claim your Fortune rewards.'
                 ]}
-                onComplete={() => setBankerImage(bankerImages.idle)}
+                onComplete={() => setGreeterImage(greeterImages.idle)}
               />
             )}
           </BankerBubbleBox>
