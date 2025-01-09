@@ -257,14 +257,16 @@ const CreateTokenVault = ({vaultIndex, onSuccess}: CreateTokenVaultProps) => {
             </VStack>
           </SimpleGrid>
 
-          <StakePreview
-            fortuneToStake={fortuneToStake}
-            daysToStake={daysToStake}
-            vaultType={vaultType}
-            apr={newApr}
-            mitama={newMitama}
-            troops={newTroops}
-          />
+          <Box mt={4}>
+            <StakePreview
+              fortuneToStake={fortuneToStake}
+              daysToStake={daysToStake}
+              vaultType={vaultType}
+              apr={newApr}
+              mitama={newMitama}
+              troops={newTroops}
+            />
+          </Box>
 
           <Spacer h='8'/>
           <Flex alignContent={'center'} justifyContent={'center'}>

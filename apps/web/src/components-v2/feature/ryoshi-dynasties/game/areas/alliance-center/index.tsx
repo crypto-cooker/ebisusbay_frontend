@@ -1,26 +1,26 @@
-import useAuthedFunction from "@market/hooks/useAuthedFunction";
-import {Box, Icon, useDisclosure, VStack} from "@chakra-ui/react";
-import ImageService from "@src/core/services/image";
-import RdButton from "../../../components/rd-button";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRightFromBracket, faShield} from "@fortawesome/free-solid-svg-icons";
-import React, {useContext, useState} from "react";
-import {useWindowSize} from "@market/hooks/useWindowSize";
+import useAuthedFunction from '@market/hooks/useAuthedFunction';
+import { AspectRatio, Box, Flex, Icon, Image, useDisclosure, VStack } from '@chakra-ui/react';
+import ImageService from '@src/core/services/image';
+import RdButton from '../../../components/rd-button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRightFromBracket, faShield } from '@fortawesome/free-solid-svg-icons';
+import React, { useContext, useState } from 'react';
+import { useWindowSize } from '@market/hooks/useWindowSize';
 import EditFactionForm
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-faction/edit";
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-faction/edit';
 import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
-} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {useUser} from "@src/components-v2/useUser";
+} from '@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context';
+import { useUser } from '@src/components-v2/useUser';
 import CreateFactionForm
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-faction/create";
-import RyoshiTotals
-  from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-ryoshi";
-import Diplomacy from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/diplomacy";
-import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
-import {toast} from "react-toastify";
-import * as Sentry from "@sentry/nextjs";
+  from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-faction/create';
+import RyoshiTotals from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/manage-ryoshi';
+import Diplomacy from '@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center/diplomacy';
+import useEnforceSignature from '@src/Components/Account/Settings/hooks/useEnforceSigner';
+import { toast } from 'react-toastify';
+import * as Sentry from '@sentry/nextjs';
+import { motion } from 'framer-motion';
 
 interface AllianceCenterSceneProps {
   onBack: () => void;
@@ -72,83 +72,88 @@ const AllianceCenter = ({onBack}: AllianceCenterSceneProps) => {
       h='calc(100vh - 74px)'
       overflow='hidden'
     >
-      <Box width='100vw' height='100vh' position='relative'>
+      <motion.div
+        variants={item}
+        initial="hidden"
+        animate="show"
+      >
         <Box
           position='absolute'
-          width='100%'
-          height='100%'
-          bgImage={`url(${ImageService.translate('/img/ryoshi-dynasties/village/background-alliance-center.webp').convert()})`}
-          bgPosition='center'
-          bgRepeat='no-repeat'
-          bgSize='cover'
-          opacity={0.2}
+          right={-1}
+          bottom={{ base: undefined, sm: 20 }}
+          top={{ base: 10, sm: undefined }}
+          zIndex={10}
+          h='auto'
+          w={{ base: '200px', sm: '269px' }}
+        >
+          <VStack spacing={4} align='end' h='full'>
+            <RdButton size={{ base: 'md', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText}
+                      onClick={() => handleAuthedNavigation(handleManageFaction)}>
+              {abbreviateButtonText ? (
+                <Icon as={FontAwesomeIcon} icon={faShield} />
+              ) : (
+                <>Manage Faction</>
+              )}
+            </RdButton>
+            <RdButton size={{ base: 'md', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText}
+                      onClick={() => handleAuthedNavigation(onOpenRyoshiTotals)}>
+              {abbreviateButtonText ? (
+                <Icon as={FontAwesomeIcon} icon={faShield} />
+              ) : (
+                <>Ryoshi Dispatch</>
+              )}
+            </RdButton>
+            <RdButton size={{ base: 'md', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText}
+                      onClick={() => handleAuthedNavigation(onOpenDiplomacy)}>
+              {abbreviateButtonText ? (
+                <Icon as={FontAwesomeIcon} icon={faShield} />
+              ) : (
+                <>Diplomacy</>
+              )}
+            </RdButton>
+            <RdButton size={{ base: 'md', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
+              {abbreviateButtonText ? (
+                <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
+              ) : (
+                <>Exit</>
+              )}
+            </RdButton>
+          </VStack>
+        </Box>
+
+        {!!rdContext.user && (
+          <>
+            {!!rdContext.user.faction && (
+              <EditFactionForm isOpen={isOpenEditFaction} onClose={onCloseEditFaction} faction={rdContext.user.faction}
+                               isRegistered={!!rdContext.user.season.faction} />
+            )}
+            <CreateFactionForm isOpen={isOpenCreateFaction} onClose={onCloseCreateFaction}
+                               handleClose={onCloseCreateFaction} />
+            <RyoshiTotals isOpen={isOpenRyoshiTotals} onClose={onCloseRyoshiTotals} />
+            <Diplomacy isOpen={isOpenDiplomacy} onClose={onCloseDiplomacy} />
+          </>
+        )}
+
+        <AspectRatio ratio={1920/1080} overflow='visible' >
+          <Image
+            position={'absolute'}
+            opacity={0.9}
+            zIndex={0}
+            src={ImageService.translate('/img/ryoshi-dynasties/village/background-alliance-center.webp').convert()}
+            minH='calc(100vh - 74px)'
+          />
+        </AspectRatio>
+
+        <Image
+          src={ImageService.translate('/img/ryoshi-dynasties/village/buildings/alliance-center/girl.png').convert()}
+          w='800px'
+          position='absolute'
+          bottom={{ base: 12, md: 0 }}
+          left={0}
         />
-        {/*<Box>*/}
-        {/*  asdf*/}
-        {/*</Box>*/}
-        {/*<Flex*/}
-        {/*  position='relative'*/}
-        {/*  width='100%'*/}
-        {/*  height='100%'*/}
-        {/*  align='center'*/}
-        {/*  justify='center'*/}
-        {/*  direction='column'*/}
-        {/*  zIndex='docked'*/}
-        {/*>*/}
-        {/*  asdaasdasdd*/}
-        {/*</Flex>*/}
-      </Box>
-      <Box
-        position='absolute'
-        right={-1}
-        bottom={20}
-        zIndex={10}
-        h='auto'
-        w={{base: '200px', sm: '269px'}}
-      >
-        <VStack spacing={4} align='end' h='full'>
-          <RdButton size={{base: 'sm', sm: 'lg'}} w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(handleManageFaction)}>
-            {abbreviateButtonText ? (
-              <Icon as={FontAwesomeIcon} icon={faShield} />
-            ) : (
-              <>Manage Faction</>
-            )}
-          </RdButton>
-          <RdButton size={{base: 'sm', sm: 'lg'}} w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenRyoshiTotals)}>
-            {abbreviateButtonText ? (
-              <Icon as={FontAwesomeIcon} icon={faShield} />
-            ) : (
-              <>Ryoshi Dispatch</>
-            )}
-          </RdButton>
-          <RdButton size={{base: 'sm', sm: 'lg'}} w='full' hoverIcon={!abbreviateButtonText} onClick={() => handleAuthedNavigation(onOpenDiplomacy)}>
-            {abbreviateButtonText ? (
-              <Icon as={FontAwesomeIcon} icon={faShield} />
-            ) : (
-              <>Diplomacy</>
-            )}
-          </RdButton>
-          <RdButton size={{base: 'sm', sm: 'lg'}} w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
-            {abbreviateButtonText ? (
-              <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
-            ) : (
-              <>Exit</>
-            )}
-          </RdButton>
-        </VStack>
-      </Box>
-      {!!rdContext.user && (
-        <>
-          {!!rdContext.user.faction && (
-            <EditFactionForm isOpen={isOpenEditFaction} onClose={onCloseEditFaction} faction={rdContext.user.faction} isRegistered={!!rdContext.user.season.faction} />
-          )}
-          <CreateFactionForm isOpen={isOpenCreateFaction} onClose={onCloseCreateFaction} handleClose={onCloseCreateFaction} />
-          <RyoshiTotals isOpen={isOpenRyoshiTotals} onClose={onCloseRyoshiTotals} />
-          <Diplomacy isOpen={isOpenDiplomacy} onClose={onCloseDiplomacy} />
-        </>
-      )}
+      </motion.div>
     </Box>
-  );
+);
 }
 
 export default AllianceCenter;

@@ -1,2103 +1,2228 @@
 [
   {
-    "inputs": [],
+    "type": "constructor",
+    "payable": false,
+    "inputs": []
+  },
+  {
+    "type": "error",
     "name": "BankVaultNotSet",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "DepositNotMature",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "DepositTimeTooLong",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "DepositTimeTooShort",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "DepositTooSmall",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "EmergencyCloseNotAvailable",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "ExpectingMoreMitama",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "FortuneTokenNotFound",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "InvalidAmount",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "InvalidArrayLengths",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "InvalidCaller",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "InvalidContract",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
+    "name": "InvalidImplementation",
+    "inputs": []
+  },
+  {
+    "type": "error",
     "name": "InvalidIndex",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "InvalidNonce",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "InvalidOperator",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "InvalidPair",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "InvalidSignature",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "InvalidUser",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "NoContracts",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "NoDepositFound",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "NotImplemented",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "PairAlreadyAdded",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "PoolNotRegistered",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
+    "name": "SelectorAlreadyRegistered",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "selector"
+      }
+    ]
+  },
+  {
+    "type": "error",
     "name": "StakeAlreadyExists",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
     "name": "StakeExpired",
-    "type": "error"
+    "inputs": []
   },
   {
-    "inputs": [],
+    "type": "error",
+    "name": "UnregisteredSelector",
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "selector"
+      }
+    ]
+  },
+  {
+    "type": "error",
     "name": "VaultAlreadyExists",
-    "type": "error"
+    "inputs": []
   },
   {
+    "type": "event",
     "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      }
-    ],
     "name": "AccountClosed",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
+        "type": "address",
         "name": "user",
-        "type": "address"
+        "indexed": true
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
+        "type": "uint256",
         "name": "id",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "admin",
-        "type": "address"
+        "indexed": false
       }
-    ],
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
     "name": "AccountClosedByAdmin",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
+        "type": "address",
         "name": "user",
-        "type": "address"
+        "indexed": true
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
+        "type": "uint256",
         "name": "id",
-        "type": "uint256"
+        "indexed": false
+      },
+      {
+        "type": "address",
+        "name": "admin",
+        "indexed": false
       }
-    ],
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
     "name": "AccountOpened",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
+        "type": "address",
         "name": "user",
-        "type": "address"
+        "indexed": true
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
+        "type": "uint256",
         "name": "index",
-        "type": "uint256"
+        "indexed": false
       },
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "depositLength",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct Bank.Vault",
-        "name": "deposit",
-        "type": "tuple"
+        "type": "uint256",
+        "name": "id",
+        "indexed": false
       }
-    ],
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
     "name": "AccountUpdate",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "address",
-        "name": "previousAdmin",
-        "type": "address"
+        "type": "address",
+        "name": "user",
+        "indexed": true
       },
       {
+        "type": "uint256",
+        "name": "index",
+        "indexed": false
+      },
+      {
+        "type": "tuple",
+        "name": "deposit",
         "indexed": false,
-        "internalType": "address",
-        "name": "newAdmin",
-        "type": "address"
+        "components": [
+          {
+            "type": "uint256",
+            "name": "id"
+          },
+          {
+            "type": "uint256",
+            "name": "amount"
+          },
+          {
+            "type": "uint256",
+            "name": "depositLength"
+          },
+          {
+            "type": "uint256",
+            "name": "startTime"
+          }
+        ]
       }
-    ],
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
     "name": "AdminChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "beacon",
-        "type": "address"
+        "type": "address",
+        "name": "previousAdmin",
+        "indexed": false
+      },
+      {
+        "type": "address",
+        "name": "newAdmin",
+        "indexed": false
       }
-    ],
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
     "name": "BeaconUpgraded",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [],
-    "name": "EIP712DomainChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "newIndex",
-        "type": "uint256"
+        "type": "address",
+        "name": "beacon",
+        "indexed": true
       }
-    ],
-    "name": "IndexChanged",
-    "type": "event"
+    ]
   },
   {
+    "type": "event",
     "anonymous": false,
+    "name": "DelegateRegistered",
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "uint8",
-        "name": "version",
-        "type": "uint8"
-      }
-    ],
-    "name": "Initialized",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
+        "type": "bytes4",
+        "name": "selector",
+        "indexed": true
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "pool",
-        "type": "address"
-      }
-    ],
-    "name": "LiquidityAccountClosed",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "pool",
-        "type": "address"
-      }
-    ],
-    "name": "LiquidityAccountClosedByAdmin",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "pool",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "newIndex",
-        "type": "uint256"
-      }
-    ],
-    "name": "LiquidityAccountIndexUpdate",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "pool",
-        "type": "address"
-      }
-    ],
-    "name": "LiquidityAccountOpened",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "pool",
-        "type": "address"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amountDeposit",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amountFRTN",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "depositLength",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct BankAnex.LiquidityVault",
-        "name": "vault",
-        "type": "tuple"
-      }
-    ],
-    "name": "LiquidityAccountUpdate",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "previousAdminRole",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "newAdminRole",
-        "type": "bytes32"
-      }
-    ],
-    "name": "RoleAdminChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      }
-    ],
-    "name": "RoleGranted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      }
-    ],
-    "name": "RoleRevoked",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "contractAddress",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "Staked",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "contractAddress",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "Unstaked",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
+        "type": "address",
         "name": "implementation",
-        "type": "address"
+        "indexed": false
       }
-    ],
-    "name": "Upgraded",
-    "type": "event"
+    ]
   },
   {
-    "inputs": [],
-    "name": "DEFAULT_ADMIN_ROLE",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "STAKE_APPROVAL_TYPEHASH",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
+    "type": "event",
+    "anonymous": false,
+    "name": "DelegateRemoved",
     "inputs": [
       {
-        "internalType": "address",
-        "name": "pair",
-        "type": "address"
+        "type": "bytes4",
+        "name": "selector",
+        "indexed": true
       }
-    ],
-    "name": "addPool",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    ]
   },
   {
-    "inputs": [],
-    "name": "bankVault",
-    "outputs": [
-      {
-        "internalType": "contract IBankVault",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    "type": "event",
+    "anonymous": false,
+    "name": "EIP712DomainChanged",
+    "inputs": []
   },
   {
+    "type": "event",
+    "anonymous": false,
+    "name": "IndexChanged",
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "boxAccount",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "boxFee",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "name": "closeHashes",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_index",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_pool",
-        "type": "address"
-      }
-    ],
-    "name": "closeLPAccount",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_user",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_index",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_pool",
-        "type": "address"
-      }
-    ],
-    "name": "closeLPByAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "account",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "index",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct Bank.CloseData",
-        "name": "_data",
-        "type": "tuple"
-      },
-      {
-        "internalType": "bytes",
-        "name": "_signature",
-        "type": "bytes"
-      }
-    ],
-    "name": "closeOverride",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "closeOverrideAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "closeVault",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
+        "type": "address",
         "name": "user",
-        "type": "address"
+        "indexed": true
       },
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "compoundRewardsUsingVault",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_account",
-        "type": "address"
-      }
-    ],
-    "name": "correctMitama",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "deposits",
-    "outputs": [
-      {
-        "internalType": "uint256",
+        "type": "uint256",
         "name": "id",
-        "type": "uint256"
+        "indexed": false
       },
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "depositLength",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startTime",
-        "type": "uint256"
+        "type": "uint256",
+        "name": "newIndex",
+        "indexed": false
       }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    ]
   },
   {
+    "type": "event",
+    "anonymous": false,
+    "name": "Initialized",
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "name": "digestsCompleted",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "eip712Domain",
-    "outputs": [
-      {
-        "internalType": "bytes1",
-        "name": "fields",
-        "type": "bytes1"
-      },
-      {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
+        "type": "uint8",
         "name": "version",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "chainId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "verifyingContract",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "salt",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "extensions",
-        "type": "uint256[]"
+        "indexed": false
       }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    ]
   },
   {
+    "type": "event",
+    "anonymous": false,
+    "name": "LiquidityAccountClosed",
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "emergencyClose",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_index",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_pool",
-        "type": "address"
-      }
-    ],
-    "name": "emergencyCloseLPVault",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          },
-          {
-            "internalType": "address[]",
-            "name": "contractAddress",
-            "type": "address[]"
-          },
-          {
-            "internalType": "uint256[]",
-            "name": "tokenId",
-            "type": "uint256[]"
-          },
-          {
-            "internalType": "uint256[]",
-            "name": "amount",
-            "type": "uint256[]"
-          },
-          {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "deadline",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct RyoshiStaker.StakeApproval",
-        "name": "_approval",
-        "type": "tuple"
-      },
-      {
-        "internalType": "bytes",
-        "name": "signature",
-        "type": "bytes"
-      }
-    ],
-    "name": "endStake",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "fortuneToken",
-    "outputs": [
-      {
-        "internalType": "contract IERC20Burnable",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_account",
-        "type": "address"
-      }
-    ],
-    "name": "getMitamaFor",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      }
-    ],
-    "name": "getRoleAdmin",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
+        "type": "address",
         "name": "user",
-        "type": "address"
+        "indexed": true
       },
       {
-        "internalType": "address",
+        "type": "uint256",
+        "name": "index",
+        "indexed": false
+      },
+      {
+        "type": "uint256",
+        "name": "id",
+        "indexed": false
+      },
+      {
+        "type": "address",
+        "name": "pool",
+        "indexed": false
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "LiquidityAccountClosedByAdmin",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "index",
+        "indexed": false
+      },
+      {
+        "type": "uint256",
+        "name": "id",
+        "indexed": false
+      },
+      {
+        "type": "address",
+        "name": "pool",
+        "indexed": false
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "LiquidityAccountIndexUpdate",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "pool",
+        "indexed": false
+      },
+      {
+        "type": "uint256",
+        "name": "id",
+        "indexed": false
+      },
+      {
+        "type": "uint256",
+        "name": "newIndex",
+        "indexed": false
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "LiquidityAccountOpened",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "index",
+        "indexed": false
+      },
+      {
+        "type": "uint256",
+        "name": "id",
+        "indexed": false
+      },
+      {
+        "type": "address",
+        "name": "pool",
+        "indexed": false
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "LiquidityAccountUpdate",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "index",
+        "indexed": false
+      },
+      {
+        "type": "address",
+        "name": "pool",
+        "indexed": false
+      },
+      {
+        "type": "tuple",
+        "name": "vault",
+        "indexed": false,
+        "components": [
+          {
+            "type": "uint256",
+            "name": "id"
+          },
+          {
+            "type": "uint256",
+            "name": "amountDeposit"
+          },
+          {
+            "type": "uint256",
+            "name": "amountFRTN"
+          },
+          {
+            "type": "uint256",
+            "name": "depositLength"
+          },
+          {
+            "type": "uint256",
+            "name": "startTime"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "RoleAdminChanged",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "previousAdminRole",
+        "indexed": true
+      },
+      {
+        "type": "bytes32",
+        "name": "newAdminRole",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "RoleGranted",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "RoleRevoked",
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "account",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "sender",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "Staked",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "address",
         "name": "contractAddress",
-        "type": "address"
+        "indexed": true
       },
       {
-        "internalType": "uint256",
+        "type": "uint256",
         "name": "tokenId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount",
+        "indexed": false
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "Unstaked",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "contractAddress",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "amount",
+        "indexed": false
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "Upgraded",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "implementation",
+        "indexed": true
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "DEFAULT_ADMIN_ROLE",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "STAKE_APPROVAL_TYPEHASH",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "bankVault",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "boxFee",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "closeHashes",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "deposits",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
         "type": "uint256"
       }
     ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "depositLength"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "digestsCompleted",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      {
+        "type": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "eip712Domain",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes1",
+        "name": "fields"
+      },
+      {
+        "type": "string",
+        "name": "name"
+      },
+      {
+        "type": "string",
+        "name": "version"
+      },
+      {
+        "type": "uint256",
+        "name": "chainId"
+      },
+      {
+        "type": "address",
+        "name": "verifyingContract"
+      },
+      {
+        "type": "bytes32",
+        "name": "salt"
+      },
+      {
+        "type": "uint256[]",
+        "name": "extensions"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "endStake",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "_approval",
+        "components": [
+          {
+            "type": "address",
+            "name": "user"
+          },
+          {
+            "type": "address[]",
+            "name": "contractAddress"
+          },
+          {
+            "type": "uint256[]",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256[]",
+            "name": "amount"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "deadline"
+          }
+        ]
+      },
+      {
+        "type": "bytes",
+        "name": "signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "fortuneToken",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "getLPVault",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_account"
+      },
+      {
+        "type": "address",
+        "name": "_pool"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "id"
+          },
+          {
+            "type": "uint256",
+            "name": "amountDeposit"
+          },
+          {
+            "type": "uint256",
+            "name": "amountFRTN"
+          },
+          {
+            "type": "uint256",
+            "name": "depositLength"
+          },
+          {
+            "type": "uint256",
+            "name": "startTime"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "getMitamaFor",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_account"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "getRoleAdmin",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "type": "function",
     "name": "getStakedAmount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "constant": true,
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
+    "payable": false,
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
-      }
-    ],
-    "name": "getVault",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "depositLength",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct Bank.Vault",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_account",
-        "type": "address"
+        "type": "address",
+        "name": "user"
       },
       {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
+        "type": "address",
+        "name": "contractAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "tokenId"
       }
     ],
-    "name": "getVault",
     "outputs": [
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "depositLength",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct Bank.Vault",
-        "name": "",
-        "type": "tuple"
+        "type": "uint256"
       }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    ]
   },
   {
+    "type": "function",
+    "name": "getVault",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_account",
-        "type": "address"
+        "type": "uint256",
+        "name": "_id"
       }
     ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "id"
+          },
+          {
+            "type": "uint256",
+            "name": "amount"
+          },
+          {
+            "type": "uint256",
+            "name": "depositLength"
+          },
+          {
+            "type": "uint256",
+            "name": "startTime"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "getVault",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_account"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          {
+            "type": "uint256",
+            "name": "id"
+          },
+          {
+            "type": "uint256",
+            "name": "amount"
+          },
+          {
+            "type": "uint256",
+            "name": "depositLength"
+          },
+          {
+            "type": "uint256",
+            "name": "startTime"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "function",
     "name": "getVaultsLength",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "constant": true,
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
+    "payable": false,
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
+        "type": "address",
+        "name": "_account"
       }
     ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
     "name": "grantRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
+    "constant": false,
+    "payable": false,
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
+        "type": "bytes32",
+        "name": "role"
       },
       {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
+        "type": "address",
+        "name": "account"
       }
     ],
+    "outputs": []
+  },
+  {
+    "type": "function",
     "name": "hasRole",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "constant": true,
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
+    "payable": false,
     "inputs": [
       {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          },
-          {
-            "internalType": "address[]",
-            "name": "contractAddress",
-            "type": "address[]"
-          },
-          {
-            "internalType": "uint256[]",
-            "name": "tokenId",
-            "type": "uint256[]"
-          },
-          {
-            "internalType": "uint256[]",
-            "name": "amount",
-            "type": "uint256[]"
-          },
-          {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "deadline",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct RyoshiStaker.StakeApproval",
-        "name": "_approval",
-        "type": "tuple"
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
       }
     ],
+    "outputs": [
+      {
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "type": "function",
     "name": "hashApproval",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
+    "constant": true,
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
+    "payable": false,
     "inputs": [
       {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "account",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "index",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct Bank.CloseData",
-        "name": "_data",
-        "type": "tuple"
-      }
-    ],
-    "name": "hashCloseData",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "pool",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "expectedMitama",
-        "type": "uint256"
-      }
-    ],
-    "name": "increaseDepositForLPVault",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "increaseDepositForVault",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "depositTime",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "pool",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "increaseLengthForLPVault",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "depositTime",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "increaseLengthForVault",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IERC20Burnable",
-        "name": "_fortune",
-        "type": "address"
-      },
-      {
-        "internalType": "contract SoulboundERC20",
-        "name": "_mitama",
-        "type": "address"
-      }
-    ],
-    "name": "initialize",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      }
-    ],
-    "name": "installBox",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "lpDeposits",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amountDeposit",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amountFRTN",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "depositLength",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startTime",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "maxDepositTime",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "minDeposit",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "minDepositTime",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_lpTokenAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_pairAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_time",
-        "type": "uint256"
-      }
-    ],
-    "name": "mitamaForLp",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "mitamaToken",
-    "outputs": [
-      {
-        "internalType": "contract SoulboundERC20",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "bytes",
-        "name": "",
-        "type": "bytes"
-      }
-    ],
-    "name": "onERC1155BatchReceived",
-    "outputs": [
-      {
-        "internalType": "bytes4",
-        "name": "",
-        "type": "bytes4"
-      }
-    ],
-    "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "operator",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bytes",
-        "name": "",
-        "type": "bytes"
-      }
-    ],
-    "name": "onERC1155Received",
-    "outputs": [
-      {
-        "internalType": "bytes4",
-        "name": "",
-        "type": "bytes4"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "operator",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bytes",
-        "name": "",
-        "type": "bytes"
-      }
-    ],
-    "name": "onERC721Received",
-    "outputs": [
-      {
-        "internalType": "bytes4",
-        "name": "",
-        "type": "bytes4"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "depositLength",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "pool",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "expectedIndex",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "expectedMitama",
-        "type": "uint256"
-      }
-    ],
-    "name": "openLPVault",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "depositLength",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "expectedIndex",
-        "type": "uint256"
-      }
-    ],
-    "name": "openVault",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "platformRewards",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "pools",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "proxiableUUID",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "renounceRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "revokeRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract IBankVault",
-        "name": "_bankVault",
-        "type": "address"
-      }
-    ],
-    "name": "setBankVault",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_boxFee",
-        "type": "uint256"
-      }
-    ],
-    "name": "setBoxFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_maxDepositTime",
-        "type": "uint256"
-      }
-    ],
-    "name": "setMaxDepositTime",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_minDepositTime",
-        "type": "uint256"
-      }
-    ],
-    "name": "setMinDepositTime",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_address",
-        "type": "address"
-      }
-    ],
-    "name": "setPlatformRewards",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "user",
-            "type": "address"
-          },
-          {
-            "internalType": "address[]",
-            "name": "contractAddress",
-            "type": "address[]"
-          },
-          {
-            "internalType": "uint256[]",
-            "name": "tokenId",
-            "type": "uint256[]"
-          },
-          {
-            "internalType": "uint256[]",
-            "name": "amount",
-            "type": "uint256[]"
-          },
-          {
-            "internalType": "uint256",
-            "name": "nonce",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "deadline",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct RyoshiStaker.StakeApproval",
+        "type": "tuple",
         "name": "_approval",
-        "type": "tuple"
+        "components": [
+          {
+            "type": "address",
+            "name": "user"
+          },
+          {
+            "type": "address[]",
+            "name": "contractAddress"
+          },
+          {
+            "type": "uint256[]",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256[]",
+            "name": "amount"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "deadline"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "initialize",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_fortune"
       },
       {
-        "internalType": "bytes",
-        "name": "signature",
+        "type": "address",
+        "name": "_mitama"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "lpDeposits",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      },
+      {
+        "type": "uint256",
+        "name": "amountDeposit"
+      },
+      {
+        "type": "uint256",
+        "name": "amountFRTN"
+      },
+      {
+        "type": "uint256",
+        "name": "depositLength"
+      },
+      {
+        "type": "uint256",
+        "name": "startTime"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "maxDepositTime",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "minDeposit",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "minDepositTime",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "mitamaToken",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "onERC1155BatchReceived",
+    "constant": true,
+    "stateMutability": "pure",
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256[]"
+      },
+      {
+        "type": "uint256[]"
+      },
+      {
         "type": "bytes"
       }
     ],
-    "name": "startStake",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes4",
-        "name": "interfaceId",
-        "type": "bytes4"
-      }
-    ],
-    "name": "supportsInterface",
     "outputs": [
       {
-        "internalType": "bool",
-        "name": "",
+        "type": "bytes4"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "onERC1155Received",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "bytes"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes4"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "onERC721Received",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "operator"
+      },
+      {
+        "type": "address"
+      },
+      {
+        "type": "uint256"
+      },
+      {
+        "type": "bytes"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes4"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "platformRewards",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "pools",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "proxiableUUID",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "registerLogic",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_implementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "removeLogic",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_implementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "renounceRole",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "revokeRole",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "bytes32",
+        "name": "role"
+      },
+      {
+        "type": "address",
+        "name": "account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "setBankVault",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_bankVault"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "setBoxFee",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_boxFee"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "setMaxDepositTime",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_maxDepositTime"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "setMinDepositTime",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_minDepositTime"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "setPlatformRewards",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_address"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "startStake",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "_approval",
+        "components": [
+          {
+            "type": "address",
+            "name": "user"
+          },
+          {
+            "type": "address[]",
+            "name": "contractAddress"
+          },
+          {
+            "type": "uint256[]",
+            "name": "tokenId"
+          },
+          {
+            "type": "uint256[]",
+            "name": "amount"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          },
+          {
+            "type": "uint256",
+            "name": "deadline"
+          }
+        ]
+      },
+      {
+        "type": "bytes",
+        "name": "signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "supportsInterface",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      {
+        "type": "bytes4",
+        "name": "interfaceId"
+      }
+    ],
+    "outputs": [
+      {
         "type": "bool"
       }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    ]
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "type": "function",
     "name": "totalMitama",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
+    "constant": true,
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
+    "payable": false,
     "inputs": [
       {
-        "internalType": "address",
-        "name": "newImplementation",
         "type": "address"
       }
     ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "upgradeLogic",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_old"
+      },
+      {
+        "type": "address",
+        "name": "_implementation"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
     "name": "upgradeTo",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
+    "constant": false,
+    "payable": false,
     "inputs": [
       {
-        "internalType": "address",
-        "name": "newImplementation",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes",
-        "name": "data",
-        "type": "bytes"
+        "type": "address",
+        "name": "newImplementation"
       }
     ],
-    "name": "upgradeToAndCall",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
+    "outputs": []
   },
   {
+    "type": "function",
+    "name": "upgradeToAndCall",
+    "constant": false,
+    "stateMutability": "payable",
+    "payable": true,
     "inputs": [
       {
-        "internalType": "address",
-        "name": "",
+        "type": "address",
+        "name": "newImplementation"
+      },
+      {
+        "type": "bytes",
+        "name": "data"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "userStakes",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      {
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "",
         "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "userStakes",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "",
         "type": "uint256"
       }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "boxAccount",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "index"
+      }
     ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "closeOverride",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "_data",
+        "components": [
+          {
+            "type": "address",
+            "name": "account"
+          },
+          {
+            "type": "uint256",
+            "name": "index"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          }
+        ]
+      },
+      {
+        "type": "bytes",
+        "name": "_signature"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "closeOverrideAdmin",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "account"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "closeVault",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "compoundRewardsUsingVault",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "correctMitama",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_account"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "emergencyClose",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "getSelectors",
+    "constant": true,
+    "stateMutability": "pure",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bytes4[]"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "hashCloseData",
+    "constant": true,
     "stateMutability": "view",
-    "type": "function"
+    "payable": false,
+    "inputs": [
+      {
+        "type": "tuple",
+        "name": "_data",
+        "components": [
+          {
+            "type": "address",
+            "name": "account"
+          },
+          {
+            "type": "uint256",
+            "name": "index"
+          },
+          {
+            "type": "uint256",
+            "name": "nonce"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "increaseDepositForVault",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "increaseLengthForVault",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "depositTime"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "installBox",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "id"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "openVault",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "depositLength"
+      },
+      {
+        "type": "uint256",
+        "name": "expectedIndex"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "addPool",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "pair"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "closeLPAccount",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_index"
+      },
+      {
+        "type": "address",
+        "name": "_pool"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "closeLPByAdmin",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_user"
+      },
+      {
+        "type": "uint256",
+        "name": "_index"
+      },
+      {
+        "type": "address",
+        "name": "_pool"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "emergencyCloseLPVault",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_index"
+      },
+      {
+        "type": "address",
+        "name": "_pool"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "increaseDepositForLPVault",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      },
+      {
+        "type": "address",
+        "name": "pool"
+      },
+      {
+        "type": "uint256",
+        "name": "expectedMitama"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "increaseLengthForLPVault",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "depositTime"
+      },
+      {
+        "type": "address",
+        "name": "pool"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "mitamaForLp",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_lpTokenAmount"
+      },
+      {
+        "type": "address",
+        "name": "_pairAddress"
+      },
+      {
+        "type": "uint256",
+        "name": "_time"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "openLPVault",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "amount"
+      },
+      {
+        "type": "uint256",
+        "name": "depositLength"
+      },
+      {
+        "type": "address",
+        "name": "pool"
+      },
+      {
+        "type": "uint256",
+        "name": "expectedIndex"
+      },
+      {
+        "type": "uint256",
+        "name": "expectedMitama"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "error",
+    "name": "InsufficientFRTN",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InsufficientOtherToken",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "LPVaultNotFound",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "RouterNotSet",
+    "inputs": []
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "VaultConverted",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "vaultId",
+        "indexed": false
+      },
+      {
+        "type": "address",
+        "name": "pool",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "lpAmount",
+        "indexed": false
+      },
+      {
+        "type": "uint256",
+        "name": "frtnUsed",
+        "indexed": false
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "VaultConvertedToExisting",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "user",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "vaultId",
+        "indexed": false
+      },
+      {
+        "type": "uint256",
+        "name": "lpVaultIndex",
+        "indexed": false
+      },
+      {
+        "type": "address",
+        "name": "pool",
+        "indexed": true
+      },
+      {
+        "type": "uint256",
+        "name": "lpAmount",
+        "indexed": false
+      },
+      {
+        "type": "uint256",
+        "name": "frtnUsed",
+        "indexed": false
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "convertFRTNVaultToExistingLP",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "frtnVaultIndex"
+      },
+      {
+        "type": "address",
+        "name": "pool"
+      },
+      {
+        "type": "uint256",
+        "name": "lpVaultIndex"
+      },
+      {
+        "type": "uint256",
+        "name": "frtnAmount"
+      },
+      {
+        "type": "uint256",
+        "name": "otherTokenAmount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "convertFRTNVaultToNewLP",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "frtnVaultIndex"
+      },
+      {
+        "type": "address",
+        "name": "pool"
+      },
+      {
+        "type": "uint256",
+        "name": "frtnAmount"
+      },
+      {
+        "type": "uint256",
+        "name": "otherTokenAmount"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "setRouter",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_router"
+      }
+    ],
+    "outputs": []
   }
 ]

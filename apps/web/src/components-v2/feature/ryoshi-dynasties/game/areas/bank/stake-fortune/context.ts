@@ -2,7 +2,7 @@ import {SupportedChainId} from "@src/config/chains";
 import {createContext} from "react";
 
 export enum VaultType {
-  TOKEN = 'token',
+  TOKEN = 'TOKEN',
   LP = 'LP'
 }
 

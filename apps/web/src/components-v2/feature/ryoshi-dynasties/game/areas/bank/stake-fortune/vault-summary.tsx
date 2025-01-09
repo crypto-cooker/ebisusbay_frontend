@@ -19,7 +19,7 @@ import {
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
 import { useCallWithGasPrice } from '@eb-pancakeswap-web/hooks/useCallWithGasPrice';
 import { useSwitchNetwork } from '@eb-pancakeswap-web/hooks/useSwitchNetwork';
-import { faGem, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightArrowLeft, faGem, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   createSuccessfulTransactionToastContent,
@@ -52,6 +52,7 @@ import { PrimaryButton } from '@src/components-v2/foundation/button';
 import StyledAccordionItem
   from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/styled-accordion-item';
 import { CheckIcon } from '@chakra-ui/icons';
+import { useAppConfig } from '@src/config/hooks';
 
 interface VaultSummaryProps {
   vault: FortuneStakingAccount;
@@ -61,6 +62,7 @@ interface VaultSummaryProps {
   onWithdrawVault: () => void;
   onTokenizeVault: () => void;
   onBoostVault: () => void;
+  onConvertVault: () => void;
   onClosed: () => void;
 }
 
@@ -71,7 +73,7 @@ const VaultSummary = (props: VaultSummaryProps) => {
 }
 
 
-const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onClosed }: VaultSummaryProps) => {
+const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onConvertVault, onClosed }: VaultSummaryProps) => {
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { boost: activeBoost } = useUserVaultBoost(+vault.vaultId);
 
@@ -137,6 +139,7 @@ const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVaul
           onWithdrawVault={onWithdrawVault}
           onTokenizeVault={onTokenizeVault}
           onBoostVault={onBoostVault}
+          onConvertVault={onConvertVault}
           onVaultClosed={onClosed}
           canTokenize={true}
         />
@@ -145,7 +148,7 @@ const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVaul
   )
 }
 
-const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onClosed }: VaultSummaryProps) => {
+const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onConvertVault, onClosed }: VaultSummaryProps) => {
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { boost: activeBoost } = useUserVaultBoost(+vault.vaultId);
 
@@ -212,6 +215,7 @@ const LpVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, 
           onWithdrawVault={onWithdrawVault}
           onTokenizeVault={onTokenizeVault}
           onBoostVault={onBoostVault}
+          onConvertVault={onConvertVault}
           onVaultClosed={onClosed}
           canTokenize={false}
         />
@@ -330,11 +334,13 @@ interface VaultActionButtonsProps {
   onWithdrawVault: () => void;
   onTokenizeVault: () => void;
   onBoostVault: () => void;
+  onConvertVault: () => void;
   onVaultClosed: () => void;
   canTokenize: boolean;
 }
 
-const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onVaultClosed, canTokenize }: VaultActionButtonsProps) => {
+const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onConvertVault, onVaultClosed, canTokenize }: VaultActionButtonsProps) => {
+  const { config: appConfig } = useAppConfig();
   const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useUser();
   const { chainId: bankChainId, vaultType } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
@@ -405,6 +411,14 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
                   onClick={onBoostVault}
                 >
                   Boost Vault
+                </Button>
+              )}
+              {vaultType === VaultType.TOKEN && bankChainId === appConfig.defaultChainId && (
+                <Button
+                  leftIcon={<Icon as={FontAwesomeIcon} icon={faArrowRightArrowLeft} />}
+                  onClick={onConvertVault}
+                >
+                  Convert to LP Vault
                 </Button>
               )}
             </Wrap>

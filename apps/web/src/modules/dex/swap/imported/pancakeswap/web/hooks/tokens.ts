@@ -263,12 +263,18 @@ export function useTokenByChainId(tokenAddress?: string, chainId?: number): ERC2
 // }
 
 export function useCurrency(currencyId: string | undefined): UnsafeCurrency {
+  const { chainId } = useActiveChainId();
+  return useCurrencyByChainId(currencyId, chainId);
+}
+
+export function useCurrencyByChainId(currencyId: string | undefined, chainId: number): UnsafeCurrency {
   const native: NativeCurrency = useNativeCurrency()
   const isNative = currencyId?.toUpperCase() === native.symbol?.toUpperCase()
 
-  const token = useToken(isNative ? undefined : currencyId)
+  const token = useTokenByChainId(isNative ? undefined : currencyId, chainId)
   return isNative ? native : token
 }
+
 //
 // export function useOnRampCurrency(currencyId: string | undefined): NativeCurrency | Currency | null | undefined {
 //   const native: NativeCurrency = useNativeCurrency()
