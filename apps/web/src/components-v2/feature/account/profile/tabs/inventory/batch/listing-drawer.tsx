@@ -75,6 +75,7 @@ import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wa
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import {ChainId} from "@pancakeswap/chains";
+import { useActiveChainId } from "@dex/swap/imported/pancakeswap/web/hooks/useActiveChainId";
 
 const config = appConfig();
 const MAX_NFTS_IN_GAS_CART = 100;
@@ -85,6 +86,7 @@ const numberRegexValidation = /^[1-9]+[0-9]*$/;
 export const ListingDrawer = () => {
   const dispatch = useAppDispatch();
   const user = useUser();
+  const chain = useActiveChainId();
   const contractService = useContractService();
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
@@ -96,7 +98,7 @@ export const ListingDrawer = () => {
   const [expirationDateAllOption, setExpirationDateAllOption] = useState<string>();
   const [currencyAllOption, setCurrencyAllOption] = useState<string>();
 
-  const [upsertGaslessListings, responseUpdate] = useUpsertGaslessListings();
+  const [upsertGaslessListings, responseUpdate] = useUpsertGaslessListings(chain.chainId);
   const [cancelGaslessListing, response] = useCancelGaslessListing();
   const { tokenToCroValue } = useExchangeRate();
 
@@ -266,7 +268,7 @@ export const ListingDrawer = () => {
       expirationDate: new Date().getTime() + item.expiration!,
       is1155: item.nft.is1155,
       currencySymbol: item.currency,
-      chainId: ChainId.CRONOS
+      chainId: chain.chainId
     })))
     toast.success("Listings Successful");
   }
@@ -379,8 +381,10 @@ export const ListingDrawer = () => {
       }});
       const price = ethers.utils.parseEther(values.price.toString());
 
-      const bundleContract = new Contract(config.contracts.bundle, Bundle.abi, user.provider.getSigner());
-      const tx = await bundleContract.wrapAndList(nftAddresses, nftIds, values.title, values.description, price)
+      const tx = await contractService?.bundle.wrapAndList(nftAddresses, nftIds, values.title, values.description, price);
+
+      // const bundleContract = new Contract(config.contracts.bundle, Bundle.abi, user.provider.getSigner());
+      // const tx = await bundleContract.wrapAndList(nftAddresses, nftIds, values.title, values.description, price)
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       resetDrawer();
@@ -393,10 +397,10 @@ export const ListingDrawer = () => {
     <>
       <GridItem p={4} overflowY="auto">
         <FormControl display='flex' alignItems='center' mb={2}>
-          <FormLabel htmlFor='list-bundle-toggle' mb='0'>
+          <FormLabel htmlFor='list-bundle-toggle' mb='0' disabled={chain.chainId != ChainId.CRONOS}>
             List as bundle
           </FormLabel>
-          <Switch id='list-bundle-toggle' isChecked={isBundling} onChange={onBundleToggled}/>
+          <Switch id='list-bundle-toggle' isChecked={isBundling} onChange={onBundleToggled} disabled={chain.chainId != ChainId.CRONOS}/>
         </FormControl>
         <FormControl display='flex' alignItems='center'>
           <FormLabel htmlFor='debug-legacy-toggle' mb='0'>
