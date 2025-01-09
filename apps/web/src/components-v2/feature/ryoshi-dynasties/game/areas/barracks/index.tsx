@@ -1,7 +1,6 @@
 import { AspectRatio, Box, Icon, Image, useDisclosure, VStack } from '@chakra-ui/react';
 import { RdButton } from '@src/components-v2/feature/ryoshi-dynasties/components';
 
-import localFont from 'next/font/local';
 import useAuthedFunction from '@market/hooks/useAuthedFunction';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -13,11 +12,6 @@ import useAuthedFunctionWithChainID from '@market/hooks/useAuthedFunctionWithCha
 import { SUPPORTED_RD_CHAIN_CONFIGS } from '@src/config/chains';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-
-const gothamBook = localFont({
-  src: '../../../../../../global/assets/fonts/Gotham-Book.woff2',
-  fallback: ['Roboto', 'system-ui', 'arial'],
-})
 
 interface BarracksProps {
   onBack: () => void;
@@ -58,27 +52,28 @@ const Barracks = ({onBack}: BarracksProps) => {
         <Box
           position='absolute'
           right={-1}
-          bottom={20}
+          bottom={{ base: undefined, sm: 20 }}
+          top={{ base: 10, sm: undefined }}
           zIndex={10}
           h='auto'
           w={{ base: '200px', sm: '269px' }}
         >
           <VStack spacing={4} align='end' h='full'>
             <RdButton
-              size={{ base: 'sm', sm: 'lg' }}
+              size={{ base: 'md', sm: 'lg' }}
               w='full'
               onClick={() => handleChainAuthedNavigation(onOpenStakeNFTs)}
             >
               Stake NFTs
             </RdButton>
             <RdButton
-              size={{ base: 'sm', sm: 'lg' }}
+              size={{ base: 'md', sm: 'lg' }}
               w='full'
               onClick={() => handleDefaultAuthedNavigation(onOpenClaimRewards)}
             >
               Battle Rewards
             </RdButton>
-            <RdButton size={{ base: 'sm', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
+            <RdButton size={{ base: 'md', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
               ) : (
@@ -101,6 +96,13 @@ const Barracks = ({onBack}: BarracksProps) => {
           />
         </AspectRatio>
 
+        <Image
+          src={ImageService.translate('/img/ryoshi-dynasties/village/buildings/barracks/commander.png').convert()}
+          w='800px'
+          position='absolute'
+          bottom={{ base: 12, md: 0 }}
+          left={0}
+        />
       </motion.div>
     </Box>
   )

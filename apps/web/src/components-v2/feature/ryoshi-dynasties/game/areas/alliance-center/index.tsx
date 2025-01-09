@@ -1,5 +1,5 @@
 import useAuthedFunction from '@market/hooks/useAuthedFunction';
-import { AspectRatio, Box, Icon, Image, useDisclosure, VStack } from '@chakra-ui/react';
+import { AspectRatio, Box, Flex, Icon, Image, useDisclosure, VStack } from '@chakra-ui/react';
 import ImageService from '@src/core/services/image';
 import RdButton from '../../../components/rd-button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -80,13 +80,14 @@ const AllianceCenter = ({onBack}: AllianceCenterSceneProps) => {
         <Box
           position='absolute'
           right={-1}
-          bottom={20}
+          bottom={{ base: undefined, sm: 20 }}
+          top={{ base: 10, sm: undefined }}
           zIndex={10}
           h='auto'
           w={{ base: '200px', sm: '269px' }}
         >
           <VStack spacing={4} align='end' h='full'>
-            <RdButton size={{ base: 'sm', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText}
+            <RdButton size={{ base: 'md', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText}
                       onClick={() => handleAuthedNavigation(handleManageFaction)}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faShield} />
@@ -94,7 +95,7 @@ const AllianceCenter = ({onBack}: AllianceCenterSceneProps) => {
                 <>Manage Faction</>
               )}
             </RdButton>
-            <RdButton size={{ base: 'sm', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText}
+            <RdButton size={{ base: 'md', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText}
                       onClick={() => handleAuthedNavigation(onOpenRyoshiTotals)}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faShield} />
@@ -102,7 +103,7 @@ const AllianceCenter = ({onBack}: AllianceCenterSceneProps) => {
                 <>Ryoshi Dispatch</>
               )}
             </RdButton>
-            <RdButton size={{ base: 'sm', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText}
+            <RdButton size={{ base: 'md', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText}
                       onClick={() => handleAuthedNavigation(onOpenDiplomacy)}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faShield} />
@@ -110,7 +111,7 @@ const AllianceCenter = ({onBack}: AllianceCenterSceneProps) => {
                 <>Diplomacy</>
               )}
             </RdButton>
-            <RdButton size={{ base: 'sm', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
+            <RdButton size={{ base: 'md', sm: 'lg' }} w='full' hoverIcon={!abbreviateButtonText} onClick={onBack}>
               {abbreviateButtonText ? (
                 <Icon as={FontAwesomeIcon} icon={faArrowRightFromBracket} />
               ) : (
@@ -143,6 +144,13 @@ const AllianceCenter = ({onBack}: AllianceCenterSceneProps) => {
           />
         </AspectRatio>
 
+        <Image
+          src={ImageService.translate('/img/ryoshi-dynasties/village/buildings/alliance-center/girl.png').convert()}
+          w='800px'
+          position='absolute'
+          bottom={{ base: 12, md: 0 }}
+          left={0}
+        />
       </motion.div>
     </Box>
 );
