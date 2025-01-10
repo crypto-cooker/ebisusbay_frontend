@@ -226,6 +226,11 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
       return false;
     }
 
+    if(toType === TypeOption.Existing && Number(frtnInputAmount) < 1) {
+      setFrtnInputError(`At least 1 FRTN required`);
+      return false;
+    }
+
     return true;
   }
 
