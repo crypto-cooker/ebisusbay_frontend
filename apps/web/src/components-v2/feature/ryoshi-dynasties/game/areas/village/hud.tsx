@@ -34,6 +34,7 @@ import { useUser } from '@src/components-v2/useUser';
 import { useChainId } from 'wagmi';
 import { CHAIN_IDS } from '@src/wagmi';
 import styled from 'styled-components';
+import {commify} from "ethers/lib/utils";
 
 const LootBoxImage = styled(Image)`
   transform: scale(1.3);
@@ -154,7 +155,7 @@ export const VillageHud = ({
     const currentLevelEnd = nextLevel.min;
     const currentLevelProgress = (currentExp - currentLevelStart) / (currentLevelEnd - currentLevelStart);
 
-    setLevelProgressString(round(currentExp - currentLevelStart, 1) + '/' + (currentLevelEnd - currentLevelStart));
+    setLevelProgressString(`${commify(round(currentExp, 1))} / ${commify(currentLevelEnd)}`);
     setPlayerLevel(rdUserContext.experience.level);
     setCurrentLevelProgress(currentLevelProgress * 100);
   };

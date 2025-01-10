@@ -3,12 +3,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import MyNftCard from "@src/Components/components/MyNftCard";
 import {
   ciEquals,
-  findCollectionByAddress,
   isBundle,
   isCollectionListable,
   isNftBlacklisted,
-  isVaultCollection
-} from "@market/helpers/utils";
+  isVaultCollection, round
+} from '@market/helpers/utils';
 import NftBundleCard from "@src/Components/components/NftBundleCard";
 import {ResponsiveCancelListingDialog} from "@src/components-v2/shared/dialogs/cancel-listing";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
@@ -119,14 +118,12 @@ export default function Inventory({ address }: InventoryProps) {
       const result = await getWalletOverview(address);
       setCollections(result.data
         .reduce((arr: any, item: any) => {
-          const coll = findCollectionByAddress(item.nftAddress, item.nftId);
-          if (!coll) return arr;
-          const existingIndex = arr.findIndex((c: any) => ciEquals(coll.address, c.address));
+          const existingIndex = arr.findIndex((c: any) => ciEquals(item.address, c.address));
           if (existingIndex >= 0) {
-            arr[existingIndex].balance += Number(item.balance);
+            arr[existingIndex].balance += round(Number(item.balance));
           } else {
-            coll.balance = Number(item.balance);
-            arr.push(coll);
+            item.balance = Number(item.balance);
+            arr.push(item);
           }
           return arr;
         }, [])

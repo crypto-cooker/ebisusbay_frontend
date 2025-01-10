@@ -1,9 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCollectionMetadata } from '../../../../../core/api';
-import {findCollectionByAddress, isNumeric} from '../../../helpers/utils';
-
-import Constants from '../../../../../constants'
-import useFeatureFlag from '@market/hooks/useFeatureFlag';
+import { getCollectionMetadata } from '@src/core/api';
+import {isNumeric} from '@market/helpers/utils';
 
 const collectionsSlice = createSlice({
   name: 'collections',
