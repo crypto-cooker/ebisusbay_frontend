@@ -31,9 +31,15 @@ const useFrtnStakingPair = ({ pairAddress, chainId }: {pairAddress?: Address, ch
 
     const [reserve0, reserve1] = pairData
 
+    // ensure that the reserves are in the same order as the tokens in the pair
+    // otherwise, derived amounts will be incorrect
+    const [token0, token1] = frtnCurrency.sortsBefore(otherCurrency) ?
+      [frtnCurrency, otherCurrency] :
+      [otherCurrency, frtnCurrency];
+
     return new Pair(
-      CurrencyAmount.fromRawAmount(frtnCurrency, reserve0.toString()),
-      CurrencyAmount.fromRawAmount(otherCurrency, reserve1.toString()),
+      CurrencyAmount.fromRawAmount(token0, reserve0.toString()),
+      CurrencyAmount.fromRawAmount(token1, reserve1.toString()),
     )
   }, [frtnCurrency, otherCurrency, pairData]);
 

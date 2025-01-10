@@ -142,10 +142,10 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
 
     const amountWei = parseUnits(dependentAmount, tokenB.decimals);
     const inputCurrency = CurrencyAmount.fromRawAmount(tokenB, amountWei);
-    const wrappedIndependentAmount = inputCurrency?.wrapped
-    const dependentTokenAmount = stakingPair.pair.priceOf(stakingPair.otherCurrency).quote(wrappedIndependentAmount);
+    const wrappedDependentAmount = inputCurrency?.wrapped
+    const frtnTokenAmount = stakingPair.pair.priceOf(stakingPair.otherCurrency).quote(wrappedDependentAmount);
 
-    return dependentTokenAmount.toSignificant(6);
+    return frtnTokenAmount.toSignificant(6);
   }
 
   const maxFormInput = useMemo(()  => {
