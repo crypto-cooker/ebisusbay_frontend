@@ -47,6 +47,8 @@ import { commify } from 'ethers/lib/utils';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Address, formatEther, parseEther, parseUnits } from 'viem';
+import { queryKeys } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/constants';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface ImportVaultFormProps {
   frtnVault: FortuneStakingAccount;
@@ -77,6 +79,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
   const bankContract = useBankContract(bankChainId);
   const { callWithGasPrice } = useCallWithGasPrice();
   const [runAuthedFunction] = useAuthedFunctionWithChainID(bankChainId);
+  const queryClient = useQueryClient();
 
   const [pairConfig, setPairConfig] = useState<{name: string, pair: Address, address1: Address, address2: Address}>();
   const [targetLpVault, setTargetLpVault] = useState<FortuneStakingAccount>();
@@ -285,8 +288,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
           dependentAmountWei
         ]);
 
-        toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
-        onComplete(Number(frtnInputAmount));
+        completeConvert(Number(frtnInputAmount), tx.hash);
       } else {
         const tx = await callWithGasPrice(bankContract, 'convertFRTNVaultToNewLP', [
           frtnVault.index,
@@ -295,8 +297,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
           dependentAmountWei
         ]);
 
-        toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
-        onComplete(Number(frtnInputAmount));
+        completeConvert(Number(frtnInputAmount), tx.hash);
       }
     } catch (error: any) {
       console.log(error);
@@ -304,6 +305,12 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
     } finally {
       setIsExecuting(false);
     }
+  }
+
+  const completeConvert = (amount: number, tx: string) => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.bankUserVaultBoosts(user.address) });
+    toast.success(createSuccessfulTransactionToastContent(tx, bankChainId));
+    onComplete(amount);
   }
 
   const calculateLpBenefits = (amount: string | number) => {
