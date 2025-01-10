@@ -221,7 +221,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
       return;
     }
 
-    if(Number(frtnInputAmount) < rdConfig.bank.staking.fortune.minimum) {
+    if(toType === TypeOption.New && Number(frtnInputAmount) < rdConfig.bank.staking.fortune.minimum) {
       setFrtnInputError(`At least ${rdConfig.bank.staking.fortune.minimum} in FRTN required`);
       return false;
     }

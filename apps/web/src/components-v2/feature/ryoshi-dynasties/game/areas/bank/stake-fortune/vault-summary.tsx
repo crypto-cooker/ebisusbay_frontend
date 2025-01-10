@@ -67,7 +67,7 @@ interface VaultSummaryProps {
 }
 
 const BOOSTS_ENABLED = false;
-const VAULT_CONVERSION_ENABLED = false;
+const VAULT_CONVERSION_ENABLED = true;
 
 const VaultSummary = (props: VaultSummaryProps) => {
   return props.vaultType === VaultType.LP ? <LpVaultSummary {...props} /> : <TokenVaultSummary {...props} />;
