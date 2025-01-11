@@ -414,7 +414,7 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
                   Boost Vault
                 </Button>
               )}
-              {vaultType === VaultType.TOKEN && bankChainId === appConfig.defaultChainId && VAULT_CONVERSION_ENABLED && (
+              {vaultType === VaultType.TOKEN && VAULT_CONVERSION_ENABLED && (
                 <Button
                   leftIcon={<Icon as={FontAwesomeIcon} icon={faArrowRightArrowLeft} />}
                   onClick={onConvertVault}
