@@ -315,7 +315,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
 
   const calculateLpBenefits = (amount: string | number) => {
     if (typeof amount === 'string') amount = Number(amount);
-    const lpVaultDays = (Number(targetLpVault?.length ?? 0)) / 86400;
+    const lpVaultDays = targetLpVault ? (Number(targetLpVault.length) / 86400) : stakingDays;
 
     const benefitGroup: BenefitGroup = {
       apr: 0,
