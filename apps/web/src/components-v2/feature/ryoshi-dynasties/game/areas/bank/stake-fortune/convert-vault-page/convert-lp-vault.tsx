@@ -71,7 +71,7 @@ interface BenefitGroup {
 
 const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) => {
   const user = useUser();
-  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const { config: chainConfig } = useAppChainConfig(bankChainId);
   const { switchNetworkAsync } = useSwitchNetwork();
@@ -315,19 +315,26 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
 
   const calculateLpBenefits = (amount: string | number) => {
     if (typeof amount === 'string') amount = Number(amount);
+    const lpVaultDays = (Number(targetLpVault?.length ?? 0)) / 86400;
 
     const benefitGroup: BenefitGroup = {
       apr: 0,
       troops: 0,
       mitama: 0
     }
-    const numTerms = Math.floor(stakingDays / rdConfig.bank.staking.fortune.termLength);
+    const numTerms = Math.floor(lpVaultDays / rdConfig.bank.staking.fortune.termLength);
     const availableAprs = rdConfig.bank.staking.fortune.lpApr;
     const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
-    benefitGroup.apr = availableAprs[aprKey] ?? availableAprs[1];
+    benefitGroup.apr = (availableAprs[aprKey] ?? availableAprs[1]) * 100;
+
+    if (rdUser) {
+      const total = (benefitGroup.apr + rdUser.bank.bonus.aApr) * (1 + rdUser.bank.bonus.mApr);
+      const bonus = total - benefitGroup.apr;
+      benefitGroup.apr += bonus;
+    }
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    const mitama = (amount * stakingDays) / 1080;
+    const mitama = (amount * lpVaultDays) / 1080;
     const multipliedLpMitama = Math.floor(mitama * 2.5 * 0.98); // 2% slippage
 
     let newTroops = Math.floor(multipliedLpMitama / mitamaTroopsRatio);
@@ -524,7 +531,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
             fortuneToStake={Number(frtnInputAmount)}
             daysToStake={stakingDays}
             vaultType={VaultType.LP}
-            apr={benefits.lp.apr}
+            apr={benefits.lp.apr / 100}
             mitama={benefits.lp.mitama}
             troops={benefits.lp.troops}
             title='Benefits based on LP vault'
