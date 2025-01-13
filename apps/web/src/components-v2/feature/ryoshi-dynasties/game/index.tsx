@@ -105,7 +105,7 @@ const RyoshiDynasties = ({initialRdConfig, initialScene}: {initialRdConfig: Ryos
           <Box ref={currentModalRef} position='relative'>
             {currentPage === 'barracks' ? (
               <Barracks onBack={returnToPreviousPage} />
-            ) : currentPage === 'battleMap' ? (
+            ) : (currentPage === 'battleMap' || currentPage === 'battle-map') ? (
               // <Suspense fallback={<Center><Spinner/></Center>}>
               <BattleMap 
                 onChange={returnToPreviousPage} 

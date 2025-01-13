@@ -518,8 +518,8 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
         <RdModalBox mt={2}>
           <Text fontWeight='bold' fontSize='sm'>Benefits converted from FRTN vault</Text>
          <SimpleGrid columns={2}>
-           <Box>APR</Box>
-           <Box textAlign='end'>{benefits.frtn.apr * 100}%</Box>
+           {/*<Box>APR</Box>*/}
+           {/*<Box textAlign='end'>{benefits.frtn.apr * 100}%</Box>*/}
            <Box>Troops</Box>
            <Box textAlign='end'>{commify(benefits.frtn.troops)}</Box>
            <Box>Mitama</Box>

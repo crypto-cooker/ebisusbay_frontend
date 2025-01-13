@@ -75,6 +75,8 @@ function App({ Component, ...pageProps }: AppProps) {
 
   const GlobalAppHooks = isDexRoute ? GlobalDexHooks : GlobalHooks;
 
+  const hideFooter = router.pathname === '/' || router.pathname === '/ryoshi';
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const loader = document.getElementById('initialLoader');
@@ -108,8 +110,12 @@ function App({ Component, ...pageProps }: AppProps) {
           <div style={{paddingTop:'74px'}}>
             <Component {...pageProps} />
           </div>
-          <Footer />
-          <ScrollToTopBtn />
+          {!hideFooter && (
+            <>
+              <Footer />
+              <ScrollToTopBtn />
+            </>
+          )}
           <ToastContainer
             position={toast.POSITION.BOTTOM_LEFT}
             hideProgressBar={true}

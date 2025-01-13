@@ -161,7 +161,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   }
 
   const handleEnterScene = async (elementId: string) => {
-    if (elementId === 'battleMap') {
+    if (elementId === 'battle-map') {
       const blockableStates = [RdGameState.IN_MAINTENANCE, RdGameState.NOT_STARTED];
       if (!rdGameContext?.state || blockableStates.includes(rdGameContext?.state)) {
         onOpenBlockingModal();
@@ -339,7 +339,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         image={ImageService.translate(`/img/battle-bay/mapImages/academy${xmasTheme}.png`).convert()}
                       />
                       <Sprite
-                        id='battleMap'
+                        id='battle-map'
                         position={{x: buildings.boat.left, y: buildings.boat.top}}
                         image={ImageService.translate(`/img/battle-bay/mapImages/boat${xmasTheme}.apng`).convert()}
                         onClick={handleEnterScene}
