@@ -68,7 +68,7 @@ const NavMenu = (props: any) => {
             <MenuItem as={NextLink} href="/staking" _hover={{ color: 'inherit' }} justifyContent="space-between">
               Staking
             </MenuItem>
-            <MenuItem as={NextLink} href="/ryoshi?area=bank" _hover={{ color: 'inherit' }} justifyContent="space-between">
+            <MenuItem as={NextLink} href="/ryoshi/bank" _hover={{ color: 'inherit' }} justifyContent="space-between">
               Bank
             </MenuItem>
             <MenuItem as={NextLink} href="/rewards" _hover={{ color: 'inherit' }} justifyContent="space-between">
@@ -84,7 +84,7 @@ const NavMenu = (props: any) => {
             </VStack>
           </MenuButton>
           <MenuList>
-            <MenuItem as={NextLink} href="/ryoshi?area=battle-map" _hover={{ color: 'inherit' }} justifyContent="space-between">
+            <MenuItem as={NextLink} href="/ryoshi/battle-map" _hover={{ color: 'inherit' }} justifyContent="space-between">
               Ryoshi Dynasties
             </MenuItem>
             <MenuItem
