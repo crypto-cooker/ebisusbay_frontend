@@ -153,7 +153,8 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
 
   const maxFormInput = useMemo(()  => {
     const frtnBalance = Number(vaultBalanceEth);
-    const dependentBalance = Number(currencyBBalance?.toSignificant(6) ?? 0);
+    let dependentBalance = Number(currencyBBalance?.toSignificant(6) ?? 0);
+    if (dependentBalance < 0.001) dependentBalance = 0;
     const dependentAmountInFrtn = Number(frtnAmountFromDependent(dependentBalance.toString()));
 
     if (frtnBalance > dependentAmountInFrtn) {
