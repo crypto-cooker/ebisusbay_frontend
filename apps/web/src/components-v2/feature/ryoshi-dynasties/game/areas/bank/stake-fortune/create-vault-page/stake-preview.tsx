@@ -34,7 +34,7 @@ const StakePreview = ({fortuneToStake, daysToStake, vaultType, apr, mitama, troo
         <VStack spacing={0}>
           <FortuneIcon boxSize={6} />
           <Text>APR</Text>
-          <Text fontSize={24} fontWeight='bold'>{apr * 100}%</Text>
+          <Text fontSize={24} fontWeight='bold'>{round(apr * 100, 1)}%</Text>
           {aprDiff !== undefined && (
             <Text
               fontSize={12}

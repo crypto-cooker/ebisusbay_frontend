@@ -8,7 +8,6 @@ import {ethers} from "ethers";
 import {JotaiUser, UserActionType, userAtom} from "@market/state/jotai/atoms/user";
 import {useAtom} from "jotai";
 import {RESET} from "jotai/utils";
-import {isUserBlacklisted} from "@market/helpers/utils";
 import {useColorMode} from "@chakra-ui/react";
 import { useAppKitTheme } from '@reown/appkit/react'
 import {storageSignerAtom} from "@market/state/jotai/atoms/storage";
@@ -110,11 +109,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     if (!address) return;
     try {
       dispatch({ type: UserActionType.SET_INITIALIZING, payload: { initializing: true, initialized: false } });
-
-      if (isUserBlacklisted(address)) {
-        disconnect();
-        throw {err: 'Unable to connect'};
-      }
 
       const data = await readContracts(wagmiConfig, {
         contracts: [

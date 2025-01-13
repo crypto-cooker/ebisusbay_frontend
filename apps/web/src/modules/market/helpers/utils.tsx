@@ -496,28 +496,6 @@ export const relativePrecision = (num: number, minDecimals = 1) => {
   return Math.round(num * 100 * multiplier) / multiplier;
 };
 
-/**
- * Lookup a collection by address instead of slug
- *
- * @param address
- * @param tokenId
- * @returns {*}
- */
-export const findCollectionByAddress = (address: string, tokenId?: string) => {
-  return legacyCollections.find((c) => {
-    // const matchesAddress = ciEquals(c.address, address);
-    // if (!tokenId) return matchesAddress;
-    //
-    // if (c.is1155 && c.slug !== 'ryoshi-resources') {
-    //   const ids = c.tokens?.map((t: any) => t.id) ?? [c.id];
-    //   const matchesToken = ids.includes(parseInt(tokenId));
-    //   return matchesAddress && matchesToken;
-    // }
-
-    return ciEquals(c.address, address);
-  });
-};
-
 export const round = (num?: number | string, decimals?: number) => {
   if (!num) return 0;
   if (typeof num === 'string') num = parseFloat(num);

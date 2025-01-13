@@ -9,7 +9,7 @@ import {
   isBundle,
   isGaslessListing,
   isNativeCro,
-  isRyoshiResourceToken,
+  isRyoshiResourceToken, isUserBlacklisted,
   round,
   usdFormat
 } from '@market/helpers/utils';
@@ -341,6 +341,11 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   }
 
   const validateInput = () => {
+    if (user.address && isUserBlacklisted(user.address)) {
+      toast.error('This wallet is blacklisted');
+      return false;
+    }
+
     if (nft.balance > 1 && (Number(quantity) < 1 || Number(quantity) > nft.balance)) {
       setQuantityError('Quantity out of range');
       return false;

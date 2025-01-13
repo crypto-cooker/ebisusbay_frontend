@@ -23,6 +23,7 @@ import { SUPPORTED_RD_CHAIN_CONFIGS, SupportedChainId } from "@src/config/chains
 import { ApiService } from "@src/core/services/api-service";
 import { FortuneStakingAccount } from "@src/core/services/api-service/graph/types";
 import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/constants';
 
 interface StakePageProps {
   onEditVault: (vault: FortuneStakingAccount, vaultType: VaultType, targetField: string) => void;
@@ -42,7 +43,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
   const [currentVaultType, setCurrentVaultType] = useState<VaultType>(VaultType.TOKEN);
 
   const { data: account, status, error, refetch } = useQuery({
-    queryKey: ['UserStakeAccount', user.address, currentTab, currentVaultType],
+    queryKey: queryKeys.bankUserAccount(user.address, currentTab, currentVaultType),
     queryFn: () => ApiService.forChain(currentTab).ryoshiDynasties.getBankStakingAccount(user.address!),
     enabled: !!user.address && !!currentTab,
   });

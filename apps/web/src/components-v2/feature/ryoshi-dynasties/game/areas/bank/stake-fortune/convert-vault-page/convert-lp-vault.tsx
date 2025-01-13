@@ -47,6 +47,8 @@ import { commify } from 'ethers/lib/utils';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Address, formatEther, parseEther, parseUnits } from 'viem';
+import { queryKeys } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/constants';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface ImportVaultFormProps {
   frtnVault: FortuneStakingAccount;
@@ -69,7 +71,7 @@ interface BenefitGroup {
 
 const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) => {
   const user = useUser();
-  const { config: rdConfig } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { chainId: bankChainId } = useContext(BankStakeTokenContext) as BankStakeTokenContextProps;
   const { config: chainConfig } = useAppChainConfig(bankChainId);
   const { switchNetworkAsync } = useSwitchNetwork();
@@ -77,6 +79,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
   const bankContract = useBankContract(bankChainId);
   const { callWithGasPrice } = useCallWithGasPrice();
   const [runAuthedFunction] = useAuthedFunctionWithChainID(bankChainId);
+  const queryClient = useQueryClient();
 
   const [pairConfig, setPairConfig] = useState<{name: string, pair: Address, address1: Address, address2: Address}>();
   const [targetLpVault, setTargetLpVault] = useState<FortuneStakingAccount>();
@@ -142,10 +145,10 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
 
     const amountWei = parseUnits(dependentAmount, tokenB.decimals);
     const inputCurrency = CurrencyAmount.fromRawAmount(tokenB, amountWei);
-    const wrappedIndependentAmount = inputCurrency?.wrapped
-    const dependentTokenAmount = stakingPair.pair.priceOf(stakingPair.otherCurrency).quote(wrappedIndependentAmount);
+    const wrappedDependentAmount = inputCurrency?.wrapped
+    const frtnTokenAmount = stakingPair.pair.priceOf(stakingPair.otherCurrency).quote(wrappedDependentAmount);
 
-    return dependentTokenAmount.toSignificant(6);
+    return frtnTokenAmount.toSignificant(6);
   }
 
   const maxFormInput = useMemo(()  => {
@@ -221,8 +224,13 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
       return;
     }
 
-    if(Number(frtnInputAmount) < rdConfig.bank.staking.fortune.minimum) {
+    if(toType === TypeOption.New && Number(frtnInputAmount) < rdConfig.bank.staking.fortune.minimum) {
       setFrtnInputError(`At least ${rdConfig.bank.staking.fortune.minimum} in FRTN required`);
+      return false;
+    }
+
+    if(toType === TypeOption.Existing && Number(frtnInputAmount) < 1) {
+      setFrtnInputError(`At least 1 FRTN required`);
       return false;
     }
 
@@ -280,8 +288,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
           dependentAmountWei
         ]);
 
-        toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
-        onComplete(Number(frtnInputAmount));
+        completeConvert(Number(frtnInputAmount), tx.hash);
       } else {
         const tx = await callWithGasPrice(bankContract, 'convertFRTNVaultToNewLP', [
           frtnVault.index,
@@ -290,8 +297,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
           dependentAmountWei
         ]);
 
-        toast.success(createSuccessfulTransactionToastContent(tx?.hash, bankChainId));
-        onComplete(Number(frtnInputAmount));
+        completeConvert(Number(frtnInputAmount), tx.hash);
       }
     } catch (error: any) {
       console.log(error);
@@ -301,21 +307,34 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
     }
   }
 
+  const completeConvert = (amount: number, tx: string) => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.bankUserVaultBoosts(user.address) });
+    toast.success(createSuccessfulTransactionToastContent(tx, bankChainId));
+    onComplete(amount);
+  }
+
   const calculateLpBenefits = (amount: string | number) => {
     if (typeof amount === 'string') amount = Number(amount);
+    const lpVaultDays = targetLpVault ? (Number(targetLpVault.length) / 86400) : stakingDays;
 
     const benefitGroup: BenefitGroup = {
       apr: 0,
       troops: 0,
       mitama: 0
     }
-    const numTerms = Math.floor(stakingDays / rdConfig.bank.staking.fortune.termLength);
+    const numTerms = Math.floor(lpVaultDays / rdConfig.bank.staking.fortune.termLength);
     const availableAprs = rdConfig.bank.staking.fortune.lpApr;
     const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
-    benefitGroup.apr = availableAprs[aprKey] ?? availableAprs[1];
+    benefitGroup.apr = (availableAprs[aprKey] ?? availableAprs[1]) * 100;
+
+    if (rdUser) {
+      const total = (benefitGroup.apr + rdUser.bank.bonus.aApr) * (1 + rdUser.bank.bonus.mApr);
+      const bonus = total - benefitGroup.apr;
+      benefitGroup.apr += bonus;
+    }
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
-    const mitama = (amount * stakingDays) / 1080;
+    const mitama = (amount * lpVaultDays) / 1080;
     const multipliedLpMitama = Math.floor(mitama * 2.5 * 0.98); // 2% slippage
 
     let newTroops = Math.floor(multipliedLpMitama / mitamaTroopsRatio);
@@ -502,9 +521,9 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
            <Box>APR</Box>
            <Box textAlign='end'>{benefits.frtn.apr * 100}%</Box>
            <Box>Troops</Box>
-           <Box textAlign='end'>{commify(benefits.frtn.mitama)}</Box>
-           <Box>Mitama</Box>
            <Box textAlign='end'>{commify(benefits.frtn.troops)}</Box>
+           <Box>Mitama</Box>
+           <Box textAlign='end'>{commify(benefits.frtn.mitama)}</Box>
          </SimpleGrid>
         </RdModalBox>
         <Box mt={2}>
@@ -512,7 +531,7 @@ const ConvertLpVault = ({frtnVault, toType, onComplete}: ImportVaultFormProps) =
             fortuneToStake={Number(frtnInputAmount)}
             daysToStake={stakingDays}
             vaultType={VaultType.LP}
-            apr={benefits.lp.apr}
+            apr={benefits.lp.apr / 100}
             mitama={benefits.lp.mitama}
             troops={benefits.lp.troops}
             title='Benefits based on LP vault'

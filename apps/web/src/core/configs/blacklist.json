@@ -21,5 +21,10 @@
       }
     ],
     "reason": "Possible exploit in Ryoshi Playing Cards"
+  },
+  {
+    "users": [],
+    "tokens": [],
+    "reason": "Excessive Koban farming"
   }
 ]
