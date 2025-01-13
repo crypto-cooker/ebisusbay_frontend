@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {useRouter} from 'next/router';
 import Link from 'next/link';
 import {keyframes} from '@emotion/react';
@@ -26,6 +26,7 @@ import {ApiService} from "@src/core/services/api-service";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import fallbackConfig from "@src/core/configs/fallbacks/rd-config";
 import {useUser} from "@src/components-v2/useUser";
+import { useSearchParams } from 'next/navigation';
 
 const fadeInUp = keyframes`
   0% {
@@ -134,6 +135,8 @@ const featuredAd = ads
 const Home = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
   const history = useRouter();
   const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
+  const initialScene = useMemo(() => searchParams.get('scene') ?? searchParams.get('area') ?? undefined, [searchParams]) ;
 
   const [mobile, setMobile] = useState(typeof window !== 'undefined' && window.innerWidth < theme.breakpointsNum.md);
 
@@ -255,7 +258,7 @@ const Home = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
       {/*  </div>*/}
       {/*</section>*/}
       {/*<TokenSale />*/}
-      <RyoshiDynasties initialRdConfig={rdConfig}/>
+      <RyoshiDynasties initialRdConfig={rdConfig} initialScene={initialScene} />
       <Jumbotron.Host isDark={userTheme === 'dark'}>
         {!mobile && <div className="container">{JumbotronData()}</div>}
       </Jumbotron.Host>
