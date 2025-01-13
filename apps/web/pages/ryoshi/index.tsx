@@ -7,7 +7,7 @@ import ImageService from "@src/core/services/image";
 import fallbackConfig from "@src/core/configs/fallbacks/rd-config";
 import { useSearchParams } from 'next/navigation';
 
-const BattleBay = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
+const Ryoshi = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
   const searchParams = useSearchParams();
   const initialScene = useMemo(() => searchParams.get('scene') ?? searchParams.get('area') ?? undefined, [searchParams]) ;
 
@@ -25,7 +25,7 @@ const BattleBay = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
 }
 
 
-export default BattleBay;
+export default Ryoshi;
 
 export const getStaticProps = async () => {
 
