@@ -312,7 +312,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       </map>
 
                       <Sprite
-                        id='allianceCenter'
+                        id='alliance-center'
                         position={{x: buildings.allianceCenter.left, y: buildings.allianceCenter.top}}
                         image={ImageService.translate(`/img/battle-bay/mapImages/alliancecenter${xmasTheme}.png`).convert()}
                         onClick={handleEnterScene}

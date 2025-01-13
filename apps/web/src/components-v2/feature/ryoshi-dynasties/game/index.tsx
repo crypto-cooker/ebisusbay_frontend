@@ -120,7 +120,7 @@ const RyoshiDynasties = ({initialRdConfig, initialScene}: {initialRdConfig: Ryos
               //   <Leaderboard onBack={returnToPreviousPage}/>
             ) : currentPage === 'bank' ? (
               <Bank address={user.address ?? ''} onBack={returnToPreviousPage} />
-            ) : currentPage === 'allianceCenter' ? (
+            ) : currentPage === 'alliance-center' ? (
               <AllianceCenter onBack={returnToPreviousPage} />
             ) : currentPage === 'academy' ? (
               <Academy onBack={returnToPreviousPage} />
