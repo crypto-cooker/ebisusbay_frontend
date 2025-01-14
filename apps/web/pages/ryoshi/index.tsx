@@ -1,12 +1,16 @@
 import PageHead from "@src/components-v2/shared/layout/page-head";
-import React from "react";
+import React, { useMemo } from 'react';
 import RyoshiDynasties from "@src/components-v2/feature/ryoshi-dynasties/game";
 import {ApiService} from "@src/core/services/api-service";
 import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import ImageService from "@src/core/services/image";
 import fallbackConfig from "@src/core/configs/fallbacks/rd-config";
+import { useSearchParams } from 'next/navigation';
 
-const BattleBay = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
+const Ryoshi = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
+  const searchParams = useSearchParams();
+  const initialScene = useMemo(() => searchParams.get('scene') ?? searchParams.get('area') ?? undefined, [searchParams]) ;
+
   return (
     <>
       <PageHead
@@ -15,13 +19,13 @@ const BattleBay = ({rdConfig}: {rdConfig: RyoshiConfig}) => {
         url={`/ryoshi`}
         image={ImageService.translate('/img/ryoshi-dynasties/banner.webp').convert()}
       />
-      <RyoshiDynasties initialRdConfig={rdConfig}/>
+      <RyoshiDynasties initialRdConfig={rdConfig} initialScene={initialScene} />
     </>
   )
 }
 
 
-export default BattleBay;
+export default Ryoshi;
 
 export const getStaticProps = async () => {
 

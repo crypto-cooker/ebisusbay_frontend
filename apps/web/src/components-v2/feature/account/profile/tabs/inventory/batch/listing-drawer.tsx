@@ -51,9 +51,9 @@ import {
   createSuccessfulTransactionToastContent,
   isBundle,
   isCollectionListable,
-  isGaslessListing,
+  isGaslessListing, isUserBlacklisted,
   pluralize
-} from "@market/helpers/utils";
+} from '@market/helpers/utils';
 import * as Sentry from "@sentry/react";
 import {appConfig} from "@src/config";
 import {ListingDrawerItem} from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-drawer-item";
@@ -301,6 +301,11 @@ export const ListingDrawer = () => {
 
   const prepareListing = async () => {
     try {
+      if (user.address && isUserBlacklisted(user.address)) {
+        toast.error('This wallet is blacklisted');
+        return false;
+      }
+
       if (isBundling) {
         formRef.current?.submitForm();
         return;

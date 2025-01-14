@@ -21,10 +21,12 @@ import Tavern from "@src/components-v2/feature/ryoshi-dynasties/game/areas/taver
 import TownHall from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall";
 import {useUser} from "@src/components-v2/useUser";
 
-const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig}) => {
+const DEFAULT_SCENE = 'village';
+
+const RyoshiDynasties = ({initialRdConfig, initialScene}: {initialRdConfig: RyoshiConfig, initialScene?: string}) => {
   const user = useUser();
 
-  const [currentPage, setCurrentPage] = useState<string>('village');
+  const [currentPage, setCurrentPage] = useState<string>(initialScene ?? DEFAULT_SCENE);
   const [previousPage, setPreviousPage] = useState<string>();
   const [firstRun, setFirstRun] = useState<boolean>(false);
   const [currentModalRef, setCurrentModalRef] = useState<React.RefObject<HTMLDivElement> | null>(null);
@@ -36,12 +38,20 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig}) => 
   };
 
   const returnToPreviousPage = () => {
-    setCurrentPage(previousPage ?? 'village')
+    setCurrentPage(previousPage ?? DEFAULT_SCENE)
   };
 
   useEffect(() => {
     setCurrentModalRef(ref);
   }, [ref]);
+
+  // Query param fetch can  be delayed so it needs to be an effect instead of initializer
+  useEffect(() => {
+    if (initialScene) {
+      setCurrentPage(initialScene ?? DEFAULT_SCENE)
+    }
+  }, [initialScene]);
+
 
   const mapProps = useBreakpointValue<MapProps>(
     {
@@ -95,7 +105,7 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig}) => 
           <Box ref={currentModalRef} position='relative'>
             {currentPage === 'barracks' ? (
               <Barracks onBack={returnToPreviousPage} />
-            ) : currentPage === 'battleMap' ? (
+            ) : (currentPage === 'battleMap' || currentPage === 'battle-map') ? (
               // <Suspense fallback={<Center><Spinner/></Center>}>
               <BattleMap 
                 onChange={returnToPreviousPage} 
@@ -110,7 +120,7 @@ const RyoshiDynasties = ({initialRdConfig}: {initialRdConfig: RyoshiConfig}) => 
               //   <Leaderboard onBack={returnToPreviousPage}/>
             ) : currentPage === 'bank' ? (
               <Bank address={user.address ?? ''} onBack={returnToPreviousPage} />
-            ) : currentPage === 'allianceCenter' ? (
+            ) : currentPage === 'alliance-center' ? (
               <AllianceCenter onBack={returnToPreviousPage} />
             ) : currentPage === 'academy' ? (
               <Academy onBack={returnToPreviousPage} />

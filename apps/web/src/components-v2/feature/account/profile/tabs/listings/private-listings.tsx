@@ -29,7 +29,7 @@ import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/l
 import nextApiService from "@src/core/services/api-service/next";
 import {InvalidState} from "@src/core/services/api-service/types";
 import {getWalletOverview} from "@src/core/api/endpoints/walletoverview";
-import {ciEquals, findCollectionByAddress} from "@market/helpers/utils";
+import { ciEquals, round } from '@market/helpers/utils';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleLeft, faCheckDouble, faFilter} from "@fortawesome/free-solid-svg-icons";
 import useDebounce from "@src/core/hooks/useDebounce";
@@ -139,14 +139,12 @@ const UserPrivateListings = ({ walletAddress }: UserPrivateListingsProps) => {
       const result = await getWalletOverview(walletAddress);
       setCollections(result.data
         .reduce((arr: any, item: any) => {
-          const coll = findCollectionByAddress(item.nftAddress, item.nftId);
-          if (!coll) return arr;
-          const existingIndex = arr.findIndex((c: any) => ciEquals(coll.address, c.address));
+          const existingIndex = arr.findIndex((c: any) => ciEquals(item.address, c.address));
           if (existingIndex >= 0) {
-            arr[existingIndex].balance += Number(item.balance);
+            arr[existingIndex].balance += round(Number(item.balance));
           } else {
-            coll.balance = Number(item.balance);
-            arr.push(coll);
+            item.balance = Number(item.balance);
+            arr.push(item);
           }
           return arr;
         }, [])
