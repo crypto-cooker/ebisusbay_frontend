@@ -66,8 +66,8 @@ interface VaultSummaryProps {
   onClosed: () => void;
 }
 
-const BOOSTS_ENABLED = true;
-const VAULT_CONVERSION_ENABLED = false;
+const BOOSTS_ENABLED = false;
+const VAULT_CONVERSION_ENABLED = true;
 
 const VaultSummary = (props: VaultSummaryProps) => {
   return props.vaultType === VaultType.LP ? <LpVaultSummary {...props} /> : <TokenVaultSummary {...props} />;
@@ -414,7 +414,7 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
                   Boost Vault
                 </Button>
               )}
-              {vaultType === VaultType.TOKEN && bankChainId === appConfig.defaultChainId && VAULT_CONVERSION_ENABLED && (
+              {vaultType === VaultType.TOKEN && VAULT_CONVERSION_ENABLED && (
                 <Button
                   leftIcon={<Icon as={FontAwesomeIcon} icon={faArrowRightArrowLeft} />}
                   onClick={onConvertVault}

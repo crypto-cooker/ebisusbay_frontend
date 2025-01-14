@@ -874,3 +874,7 @@ hr {
 w3m-modal {
   z-index: 5000;
 }
+
+statusiq-status-widget:empty {
+  display: none !important;
+}

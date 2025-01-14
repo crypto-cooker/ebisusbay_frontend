@@ -59,6 +59,7 @@ const config = appConfig();
 const xmasCutoffDate = new Date(Date.UTC(2025, 0, 8, 0, 0, 0));
 const currentDate = new Date();
 const isChristmasTime = currentDate < xmasCutoffDate;
+const isMerchantEnabled = false;
 
 interface VillageProps {
   onChange: (value: string) => void;
@@ -160,7 +161,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   }
 
   const handleEnterScene = async (elementId: string) => {
-    if (elementId === 'battleMap') {
+    if (elementId === 'battle-map') {
       const blockableStates = [RdGameState.IN_MAINTENANCE, RdGameState.NOT_STARTED];
       if (!rdGameContext?.state || blockableStates.includes(rdGameContext?.state)) {
         onOpenBlockingModal();
@@ -311,7 +312,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       </map>
 
                       <Sprite
-                        id='allianceCenter'
+                        id='alliance-center'
                         position={{x: buildings.allianceCenter.left, y: buildings.allianceCenter.top}}
                         image={ImageService.translate(`/img/battle-bay/mapImages/alliancecenter${xmasTheme}.png`).convert()}
                         onClick={handleEnterScene}
@@ -338,7 +339,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         image={ImageService.translate(`/img/battle-bay/mapImages/academy${xmasTheme}.png`).convert()}
                       />
                       <Sprite
-                        id='battleMap'
+                        id='battle-map'
                         position={{x: buildings.boat.left, y: buildings.boat.top}}
                         image={ImageService.translate(`/img/battle-bay/mapImages/boat${xmasTheme}.apng`).convert()}
                         onClick={handleEnterScene}
@@ -402,22 +403,27 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         image={ImageService.translate(`/img/battle-bay/mapImages/pond${xmasTheme}.apng`).convert()}
                         zIndex={8}
                       />
-                      <Sprite
-                        id='merchant'
-                        position={{x: buildings.merchant.left, y: buildings.merchant.top}}
-                        image={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-looped.apng`).convert()}
-                        zIndex={9}
-                        onClick={onOpenMerchant}
-                      />
 
-                      {  <Sprite
+                      <>
+                        {isMerchantEnabled && (
+                          <Sprite
+                            id='merchant'
+                            position={{x: buildings.merchant.left, y: buildings.merchant.top}}
+                            image={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-looped.apng`).convert()}
+                            zIndex={9}
+                            onClick={onOpenMerchant}
+                          />
+                        )}
+                      </>
+
+                      <Sprite
                         id='ryoshiwithknife'
                         position={{x: buildings.valentines.left, y: buildings.valentines.top}}
                         image={ImageService.translate(`/img/ryoshi-with-knife/ryoshiwithknife_village.apng`).convert()}
                         zIndex={9}
                         onClick={() => window.open('/dex/swap?outputCurrency=0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C', '_blank')}
                       />
-                      } 
+
                       {/*{isChristmasTime && (*/}
                       {/*  <EventSprite*/}
                       {/*    id='christmas'*/}
@@ -527,7 +533,10 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
         <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
         <ShakeTreeDialog isOpen={isPresentModalOpen} onClose={onClosePresentModal} />
         <ValentinesDayDialog isOpen={isOpenValentinesDialog} onClose={onCloseValentinesDialog} />
-        <VillageMerchant isOpen={isOpenMerchant} onClose={onCloseMerchant} forceRefresh={forceRefresh} />
+
+        {isMerchantEnabled && (
+          <VillageMerchant isOpen={isOpenMerchant} onClose={onCloseMerchant} forceRefresh={forceRefresh} />
+        )}
 
         <Fade in={isOpenOverlay}>
           <Modal
