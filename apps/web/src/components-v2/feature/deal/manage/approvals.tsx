@@ -1,6 +1,5 @@
 import {useUser} from "@src/components-v2/useUser";
 import useApprovalStatus from "@src/components-v2/feature/deal/use-approval-status";
-import useCurrencyBroker from "@market/hooks/use-currency-broker";
 import {ItemType} from "@market/hooks/use-create-order-signer";
 import {OrderState} from "@src/core/services/api-service/types";
 import React, {useEffect} from "react";
@@ -9,13 +8,13 @@ import {TitledCard} from "@src/components-v2/foundation/card";
 import {GridItem, SimpleGrid, Text} from "@chakra-ui/react";
 import {Erc20ApprovalButton, NftApprovalButton} from "@src/components-v2/feature/deal/approval-buttons";
 import {Deal} from "@src/core/services/api-service/mapi/types";
+import { useDealsTokens } from '@src/global/hooks/use-supported-tokens';
 
-const maxColumns = {base: 2, sm: 3, md: 5};
 
 const ApprovalsView = ({deal}: {deal: Deal}) => {
   const user = useUser();
   const {approvals, requiresApprovals, checkApprovalStatusesFromMapi: checkApprovalStatuses, updateApproval} = useApprovalStatus();
-  const { getByAddress  } = useCurrencyBroker();
+  const { search: findDealToken } = useDealsTokens(deal.chain);
 
   const isToken = (type: number) => [ItemType.NATIVE, ItemType.ERC20].includes(type);
   const isNft = (type: number) => [ItemType.ERC721, ItemType.ERC1155].includes(type);
@@ -59,7 +58,7 @@ const ApprovalsView = ({deal}: {deal: Deal}) => {
               <GridItem key={token.address}>
                 <Erc20ApprovalButton
                   token={{
-                    name: getByAddress(token.token)?.name ?? `Custom Token ${shortAddress(token.token)}`,
+                    name: findDealToken(token.token)?.name ?? `Custom Token ${shortAddress(token.token)}`,
                     address: token.token,
                     amountWei: token.start_amount
                   }}
