@@ -51,10 +51,6 @@ const useMultichainCurrencyBroker = (chainId: SupportedChainId) => {
     return knownCurrencies.find((currency) => ciEquals(currency.address, address));
   }
 
-  const isDealCurrency = (symbol: string) => {
-    return !!knownCurrencies.find((currency) => ciEquals(symbol, currency.symbol) && currency.deals);
-  }
-
   return {
     knownCurrencies,
     whitelistedDealCurrencies: knownCurrencies.filter((currency) => currency.deals),

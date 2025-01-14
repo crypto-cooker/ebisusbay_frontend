@@ -3,6 +3,14 @@ import {ciEquals, round} from "@market/helpers/utils";
 import WalletNft from "@src/core/models/wallet-nft";
 import {BrokerCurrency} from "@market/hooks/use-currency-broker";
 
+type BrokerCurrency = {
+  address: string;
+  symbol: string;
+  name: string;
+  image: any;
+  decimals: number;
+}
+
 export interface UserBatchItem {
   nft: WalletNft;
   quantity: number;

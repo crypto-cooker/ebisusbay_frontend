@@ -53,7 +53,6 @@ import {specialImageTransform} from "@market/helpers/hacks";
 import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import ImageService from "@src/core/services/image";
 import {useUser} from "@src/components-v2/useUser";
-import useCurrencyBroker from "@market/hooks/use-currency-broker";
 import { useCollectionListingTokens } from "@src/global/hooks/use-supported-tokens";
 
 const config = appConfig();
@@ -115,7 +114,6 @@ interface ListingDrawerItemProps {
 export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, onAddCollection, disabled, isBundling = false }: ListingDrawerItemProps) => {
   const dispatch = useAppDispatch();
   const user = useUser();
-  const {getByCollection:  currenciesByCollection} = useCurrencyBroker();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
@@ -241,7 +239,6 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
       setExecutingApproval(false);
     }
   }, [item.nft, user.address]);
-  const tokens = currenciesByCollection(item.nft.nftAddress);
 
   useEffect(() => {
     async function func() {
