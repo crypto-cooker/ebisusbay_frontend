@@ -59,7 +59,7 @@ const mapWithoutUrlsBySymbol = (tokenMap?: TokenAddressMap<ChainId>, chainId?: C
 export function useAllTokens(): { [address: string]: ERC20Token } {
   const { chainId } = useActiveChainId()
   const userAddedTokens = useUserAddedTokens()
-  const allTokens = useDexTokens();
+  const { tokens: allTokens } = useDexTokens();
   const puushTokens = useGraduatedPuushTokens();
 
   const tokenMap = allTokens.reduce((acc, token) => {

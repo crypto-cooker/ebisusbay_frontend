@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, { useMemo } from 'react';
 import {
   AccordionButton,
   AccordionIcon,
@@ -12,26 +12,24 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  useColorModeValue,
   VStack,
   Wrap
-} from "@chakra-ui/react";
-import ImageService from "@src/core/services/image";
-import {commify} from "ethers/lib/utils";
-import {ItemType} from "@market/hooks/use-create-order-signer";
-import useCurrencyBroker from "@market/hooks/use-currency-broker";
-import Link from "next/link";
-import {AnyMedia} from "@src/components-v2/shared/media/any-media";
-import {DealItem} from "@src/core/services/api-service/mapi/types";
-import { ciEquals, isAddress, shortAddress, shortString } from '@market/helpers/utils';
-import {ethers} from "ethers";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAward} from "@fortawesome/free-solid-svg-icons";
-import Properties from "@src/components-v2/feature/nft/tabs/properties";
-import Trait from "@src/components-v2/feature/nft/tabs/properties/trait";
-import {useChainSlugById} from "@src/config/hooks";
-import {SupportedChainId} from "@src/config/chains";
-import { CurrencyLogoByAddress } from '@dex/components/logo';
+} from '@chakra-ui/react';
+import ImageService from '@src/core/services/image';
+import { commify } from 'ethers/lib/utils';
+import { ItemType } from '@market/hooks/use-create-order-signer';
+import Link from 'next/link';
+import { AnyMedia } from '@src/components-v2/shared/media/any-media';
+import { DealItem } from '@src/core/services/api-service/mapi/types';
+import { isAddress, shortAddress, shortString } from '@market/helpers/utils';
+import { ethers } from 'ethers';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAward } from '@fortawesome/free-solid-svg-icons';
+import Properties from '@src/components-v2/feature/nft/tabs/properties';
+import Trait from '@src/components-v2/feature/nft/tabs/properties/trait';
+import { useChainSlugById } from '@src/config/hooks';
+import { SupportedChainId } from '@src/config/chains';
+import { CustomTokenLogo } from '@dex/components/logo';
 import { useDealsTokens } from '@src/global/hooks/use-supported-tokens';
 
 
@@ -69,7 +67,7 @@ export const GetDealItemPreview = ({item, invalid, chainId}: GetDealItemPreviewP
 
       return {
         name: item.token_symbol || token?.symbol || shortString(item.token, 5),
-        image: <CurrencyLogoByAddress address={item.token} chainId={chainId} size='24px' />,
+        image: <CustomTokenLogo src={token?.logo}/>,
         amount: ethers.utils.formatUnits(item.start_amount, item.token_decimals ?? 18),
         category: token ? token.name : 'Custom Token',
         categoryUrl: ``,

@@ -1,7 +1,7 @@
 import {ciEquals, isNativeCro} from '@market/helpers/utils';
 import {SupportedChainId} from "@src/config/chains";
 import {SerializedToken} from "@pancakeswap/swap-sdk-core";
-import { useDexTokens, useSupportedApiTokens } from '@src/global/hooks/use-supported-tokens';
+import { useSupportedApiTokens } from '@src/global/hooks/use-supported-tokens';
 import { useMemo } from 'react';
 import { ethers } from 'ethers';
 
