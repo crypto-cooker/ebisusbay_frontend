@@ -33,7 +33,7 @@ const InventoryFilterContainer = ({queryParams, collections, onFilter, filtersVi
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
   const [showTestnet] = useUserShowTestnet()
 
-  const dealTokens = useDealsTokens();
+  const { tokens: dealTokens } = useDealsTokens();
   const categorizedDealCurrencies = useMemo(() => {
     const map = new Map<string, { key: string; label: string; items: CmsToken[] }>();
 

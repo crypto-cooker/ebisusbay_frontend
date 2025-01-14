@@ -23,7 +23,7 @@ import useCurrencyBroker from "@market/hooks/use-currency-broker";
 import Link from "next/link";
 import {AnyMedia} from "@src/components-v2/shared/media/any-media";
 import {DealItem} from "@src/core/services/api-service/mapi/types";
-import {isAddress, shortAddress, shortString} from "@market/helpers/utils";
+import { ciEquals, isAddress, shortAddress, shortString } from '@market/helpers/utils';
 import {ethers} from "ethers";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAward} from "@fortawesome/free-solid-svg-icons";
@@ -31,6 +31,8 @@ import Properties from "@src/components-v2/feature/nft/tabs/properties";
 import Trait from "@src/components-v2/feature/nft/tabs/properties/trait";
 import {useChainSlugById} from "@src/config/hooks";
 import {SupportedChainId} from "@src/config/chains";
+import { CurrencyLogoByAddress } from '@dex/components/logo';
+import { useDealsTokens } from '@src/global/hooks/use-supported-tokens';
 
 
 interface GetDealItemPreviewProps {
@@ -40,9 +42,8 @@ interface GetDealItemPreviewProps {
 }
 
 export const GetDealItemPreview = ({item, invalid, chainId}: GetDealItemPreviewProps) => {
-  const { getByAddress  } = useCurrencyBroker();
   const chainSlug = useChainSlugById(chainId);
-  const hoverBackground = useColorModeValue('gray.100', '#424242');
+  const { search: findDealToken } = useDealsTokens(chainId);
 
   const isToken = [ItemType.NATIVE, ItemType.ERC20].includes(item.item_type);
   const isNft = [ItemType.ERC721, ItemType.ERC1155].includes(item.item_type);
@@ -64,11 +65,11 @@ export const GetDealItemPreview = ({item, invalid, chainId}: GetDealItemPreviewP
         custom: false
       }
     } else if (isToken) {
-      const token = getByAddress(item.token);
+      const token = findDealToken(item.token);
 
       return {
         name: item.token_symbol || token?.symbol || shortString(item.token, 5),
-        image: token?.image,
+        image: <CurrencyLogoByAddress address={item.token} chainId={chainId} size='24px' />,
         amount: ethers.utils.formatUnits(item.start_amount, item.token_decimals ?? 18),
         category: token ? token.name : 'Custom Token',
         categoryUrl: ``,

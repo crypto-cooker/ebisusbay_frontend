@@ -66,10 +66,10 @@ import {commify} from "ethers/lib/utils";
 import {ItemType} from "@market/hooks/use-create-order-signer";
 import {SupportedChainId} from "@src/config/chains";
 import { ChainLogo } from '@dex/components/logo';
-import { useChainId } from 'wagmi';
 import { useChainById } from '@src/config/hooks';
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
 import { useSwitchNetwork } from '@eb-pancakeswap-web/hooks/useSwitchNetwork';
+import { useDealsTokens } from '@src/global/hooks/use-supported-tokens';
 
 const config = appConfig();
 
@@ -82,15 +82,14 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
   const { chainId: userChainId } = useActiveChainId()
   const {username: makerUsername, avatar: makerAvatar} = useGetProfilePreview(defaultDeal.maker);
   const {username: takerUsername, avatar: takerAvatar} = useGetProfilePreview(defaultDeal.taker);
-  const initialFocusRef = useRef(null);
   const isMobile = useBreakpointValue({base: true, sm: false}, {fallback: 'sm'});
-  const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
   const [expiryDate, setExpiryDate] = useState<string>();
   const [creationDate, setCreationDate] = useState<string>();
   const { isOpen: isCompleteDialogOpen, onOpen: onOpenCompleteDialog, onClose: onCloseCompleteDialog } = useDisclosure();
   const [tx, setTx] = useState<ContractReceipt>();
   const [invalidIds, setInvalidIds] = useState<{maker: {invalid_items: string[]}, taker: {invalid_items: string[]}}>({maker: {invalid_items: []}, taker: {invalid_items: []}});
   const { switchNetwork } = useSwitchNetwork();
+  const { exists: isDealToken } = useDealsTokens(defaultDeal.chain);
 
   const {data: deal} = useQuery({
     queryKey: ['deal', defaultDeal.id],
@@ -126,8 +125,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
   const isTaker = !!user.address && ciEquals(user.address, deal.taker);
   const hasUnknownTokens = useMemo(() => {
     function hasUnknownToken(item: any) {
-      const knownTokens = Object.values(config.tokens) as Array<{address: string}>;
-      return item.item_type === ItemType.ERC20 && !knownTokens.find((knownToken: any) => ciEquals(knownToken.address, item.token));
+      return item.item_type === ItemType.ERC20 && !isDealToken(item.token);
     }
     const unknownMakerTokens = deal.maker_items.some((item) => hasUnknownToken(item));
     const unknownTakerTokens = deal.taker_items.some((item) => hasUnknownToken(item));
