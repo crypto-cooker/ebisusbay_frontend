@@ -2,6 +2,7 @@ import { useAtomValue } from 'jotai';
 import { globalTokensAtom } from '@src/components-v2/global-data-fetcher';
 import { useQuery } from '@tanstack/react-query';
 import { ApiService } from '@src/core/services/api-service';
+import { ciEquals } from '@market/helpers/utils';
 
 export function useSupportedApiTokens(chainId?: number) {
   const tokens = useAtomValue(globalTokensAtom) ?? [];
@@ -41,8 +42,12 @@ export function useDexTokens(chainId?: number) {
 
 export function useDealsTokens(chainId?: number) {
   const supportedTokens = useSupportedApiTokens(chainId);
+  const lookupActions = useLookupActions(supportedTokens);
 
-  return supportedTokens.filter(token => token.deals);
+  return {
+    tokens: supportedTokens.filter(token => token.deals),
+    ...lookupActions
+  };
 }
 
 export function useCollectionTokens(chainId?: number) {
@@ -73,4 +78,19 @@ export function useCollectionListingTokens(address: string, chainId: number) {
     isLoading,
     error
   };
+}
+
+const useLookupActions = (tokenList: Array<{address: string}>) => {
+  const search = (address: string) => {
+    return tokenList.find(token => ciEquals(token.address, address));
+  }
+
+  const exists = (address: string) => {
+    return !!search(address);
+  }
+
+  return {
+    search,
+    exists
+  }
 }
