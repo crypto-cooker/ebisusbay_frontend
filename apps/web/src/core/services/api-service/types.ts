@@ -98,6 +98,7 @@ export interface RyoshiDynastiesApi {
     claimVaultBoost(vaultId: number, address: string, signature: string): Promise<any>;
     getLootBoxList():Promise<any>;
     getLootBoxBalance(walletAddress:string): Promise<any>;
+    getLootBoxLogs(walletAddress:string, signature: string): Promise<any>;
     getLootBoxInfo(id:number): Promise<any>;
     openLootBox(id:number, address:string, signature: string): Promise<any>;
     checkGift(address: string, signature: string): Promise<any>;

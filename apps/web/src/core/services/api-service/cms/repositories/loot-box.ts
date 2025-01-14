@@ -22,6 +22,16 @@ class LootBoxRepository extends CmsRepository {
     return response.data;
   }
 
+  async getLootBoxLogs(address: string, signature: string) {
+    const response = await this.cms.get('lootbox/log', {
+      params: {
+        address, 
+        signature
+      }
+    })
+    return response.data
+  }
+
   async openLootBox(id: number, address: string, signature: string) {
     const response = await this.cms.post(`lootbox/open/${id}`, null, {
       params: {

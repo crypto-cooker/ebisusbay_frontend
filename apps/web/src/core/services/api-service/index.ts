@@ -622,6 +622,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.cms.getLootBoxBalances(walletAddress);
   }
 
+  async getLootBoxLogs(address: string, signature: string) {
+    return this.cms.getLootBoxLogs(address, signature);
+  }
+
   async getLootBoxInfo(id: number) {
     return this.cms.getLootBoxInfo(id);
   }

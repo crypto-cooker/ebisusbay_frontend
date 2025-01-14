@@ -307,6 +307,10 @@ class Cms {
     return this.lootBox.getLootBoxBalances(walletAddress);
   }
 
+  async getLootBoxLogs(address: string, signature: string) {
+    return this.lootBox.getLootBoxLogs(address, signature);
+  }
+
   async getLootBoxInfo(id:number) {
     return this.lootBox.getLootBoxInfo(id);
   }
