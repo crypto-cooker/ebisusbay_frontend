@@ -60,7 +60,7 @@ const LootBoxBreakdown = () => {
           ))}
         </Accordion>
       ) : (
-        <Box textAlign='center'>You currently have no lootboxes to open</Box>
+        <Box textAlign='center' mt={4}>You currently have no lootboxes to open</Box>
       )) : <LootBoxLog isOpen={selectedTab == TypeTab.log} />}
     </>
   );
@@ -99,9 +99,9 @@ const LootBoxLog = ({ isOpen }: { isOpen: boolean }) => {
       {items && items.length > 0 ? (
         items.map((item: any, index: number) => <LootBoxLogItem item={item} key={index} />)
       ) : !isLoading ? (
-        <p>No items available</p> // Render a message if items is empty or undefined
+        <Text textAlign='center' mt={4}>No items available</Text> // Render a message if items is empty or undefined
       ) : (
-        <Flex w="full" justify='center'>
+        <Flex w="full" justify='center' mt={4}>
           <Spinner/>
         </Flex>
       )}
