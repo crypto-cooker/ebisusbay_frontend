@@ -76,7 +76,7 @@ export default function PurchaseConfirmationDialog({ onClose, isOpen, listingId}
   const { config } = useAppConfig();
   const { chainId } = useActiveChainId()
   const { switchNetworkAsync } = useSwitchNetwork();
-  const knownMarketTokens = useMarketTokens();
+  const { tokens: knownMarketTokens } = useMarketTokens();
 
   const user = useUser();
 

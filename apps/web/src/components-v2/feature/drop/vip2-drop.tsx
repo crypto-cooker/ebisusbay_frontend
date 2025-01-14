@@ -459,7 +459,7 @@ const Vip2Drop = ({drop}: LandDropProps) => {
                           <>
                             {phase.mitamaAmount > 0 ? (
                               <>
-                                For users with <strong>{commify(phase.mitamaAmount)}+ Mitama</strong>. Earn Mitama by staking FRTN in the <Link href='/ryoshi' className='color fw-bold'>Ryoshi Dynasties Bank</Link>
+                                For users with <strong>{commify(phase.mitamaAmount)}+ Mitama</strong>. Earn Mitama by staking FRTN in the <Link href='/ryoshi/bank' className='color fw-bold'>Ryoshi Dynasties Bank</Link>
                               </>
                             ) : (
                               <>

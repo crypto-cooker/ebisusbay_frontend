@@ -58,7 +58,7 @@ const ApprovalsView = ({deal}: {deal: Deal}) => {
               <GridItem key={token.address}>
                 <Erc20ApprovalButton
                   token={{
-                    name: findDealToken(token.token)?.name ?? `Custom Token ${shortAddress(token.token)}`,
+                    name: findDealToken({address: token.token})?.name ?? `Custom Token ${shortAddress(token.token)}`,
                     address: token.token,
                     amountWei: token.start_amount
                   }}

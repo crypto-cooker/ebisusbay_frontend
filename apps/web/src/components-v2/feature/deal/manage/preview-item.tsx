@@ -41,7 +41,7 @@ interface GetDealItemPreviewProps {
 
 export const GetDealItemPreview = ({item, invalid, chainId}: GetDealItemPreviewProps) => {
   const chainSlug = useChainSlugById(chainId);
-  const { search: findDealToken } = useDealsTokens(chainId);
+  const { tokens: dealTokens, search: findDealToken } = useDealsTokens(chainId);
 
   const isToken = [ItemType.NATIVE, ItemType.ERC20].includes(item.item_type);
   const isNft = [ItemType.ERC721, ItemType.ERC1155].includes(item.item_type);
@@ -63,11 +63,11 @@ export const GetDealItemPreview = ({item, invalid, chainId}: GetDealItemPreviewP
         custom: false
       }
     } else if (isToken) {
-      const token = findDealToken(item.token);
+      const token = findDealToken({address: item.token});
 
       return {
         name: item.token_symbol || token?.symbol || shortString(item.token, 5),
-        image: <CustomTokenLogo src={token?.logo}/>,
+        image: token?.logo ? <CustomTokenLogo src={token.logo}/> : undefined,
         amount: ethers.utils.formatUnits(item.start_amount, item.token_decimals ?? 18),
         category: token ? token.name : 'Custom Token',
         categoryUrl: ``,
@@ -75,7 +75,7 @@ export const GetDealItemPreview = ({item, invalid, chainId}: GetDealItemPreviewP
         custom: !token
       }
     }
-  }, [item.token]);
+  }, [item.token, dealTokens]);
 
   if (!normalizedItem) return;
 
