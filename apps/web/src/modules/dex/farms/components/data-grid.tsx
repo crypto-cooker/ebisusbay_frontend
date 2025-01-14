@@ -4,7 +4,6 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Avatar,
   Box,
   Flex,
   HStack,
@@ -38,16 +37,15 @@ import UnstakeLpTokensDialog from "@dex/farms/components/unstake-lp-tokens-dialo
 import {useUserFarmBoost, useUserFarmsRefetch} from "@dex/farms/hooks/user-farms";
 import {useUser} from "@src/components-v2/useUser";
 import {getTheme} from "@src/global/theme/theme";
-import {useExchangeRate} from "@market/hooks/useGlobalPrices";
 import {useAppChainConfig} from "@src/config/hooks";
 import {getBlockExplorerLink} from "@dex/utils";
-import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
 import {DoubleCurrencyLayeredLogo} from "@dex/components/logo";
 import {SpinnerIcon, StarIcon} from "@chakra-ui/icons";
 import {toast} from "react-toastify";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import BoostFarmDialog from "@dex/farms/components/boost-farm-dialog";
 import { parseErrorMessage } from "@src/helpers/validator";
+import { useDexTokens } from '@src/global/hooks/use-supported-tokens';
 
 export type DataGridProps = {
   data: DerivedFarm[];
@@ -69,7 +67,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
   const user = useUser();
   const {config: appChainConfig} = useAppChainConfig();
 
-  const {getByAddress} = useMultichainCurrencyBroker(appChainConfig.chain.id);
+  const { search: findDexToken } = useDexTokens(appChainConfig.chain.id);
   const [enableFarm, enablingFarm] = useEnableFarm();
   const { refetchBalances, refetchBoosts } = useUserFarmsRefetch();
   const borderColor = useColorModeValue('#bbb', '#ffffff33');
@@ -197,7 +195,7 @@ function GridItem({farm, userData}: {farm: DerivedFarm, userData: UserFarmState}
             <Box fontSize='sm' fontWeight='bold'>EARNED REWARDS</Box>
             <Wrap justify='space-between' align='center'>
               {userData?.earnings.map((earning, i) => {
-                const token = getByAddress(earning.address);
+                const token = findDexToken({address: earning.address});
                 const rewarder = farm.data.rewarders.find(r => ciEquals(r.token, earning.address));
                 const isMultiYield = rewarder && farm.data.rewarders.length > 1;
                 const isActiveNativeYield = rewarder && rewarder.isMain && rewarder.allocPoint > 0;

@@ -53,7 +53,7 @@ import {specialImageTransform} from "@market/helpers/hacks";
 import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import ImageService from "@src/core/services/image";
 import {useUser} from "@src/components-v2/useUser";
-import useCurrencyBroker from "@market/hooks/use-currency-broker";
+import { useCollectionListingTokens } from "@src/global/hooks/use-supported-tokens";
 
 const config = appConfig();
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
@@ -114,7 +114,6 @@ interface ListingDrawerItemProps {
 export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSelected, onAddCollection, disabled, isBundling = false }: ListingDrawerItemProps) => {
   const dispatch = useAppDispatch();
   const user = useUser();
-  const {getByCollection:  currenciesByCollection} = useCurrencyBroker();
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
@@ -135,7 +134,8 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
   const { approval: approvalStatus, canList } = extras;
   const [executingApproval, setExecutingApproval] = useState(false);
   const [initializing, setInitializing] = useState(false);
-
+  const { tokens: collectionMarketTokens } = useCollectionListingTokens(item.nft.nftAddress, item.nft.chain);
+  
   const handleRemoveItem = () => {
     dispatch(removeFromBatchListingCart(item.nft));
   };
@@ -255,9 +255,16 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
 
         newExtras.royalty = await collectionRoyaltyPercent(item.nft.nftAddress, item.nft.nftId, item.nft.chain);
         newExtras.canList = isCollectionListable(item.nft.collection) && !item.nft.isStaked && (!isBundling || !isKoban(item.nft.nftAddress, item.nft.nftId));
-        newExtras.availableCurrencies = currenciesByCollection(item.nft.nftAddress);
-
-        setCurrency(newExtras.availableCurrencies[0].symbol);
+        // newExtras.availableCurrencies = currenciesByCollection(item.nft.nftAddress);
+        newExtras.availableCurrencies = collectionMarketTokens.map((token) => ({
+          address: token.address,
+          name: token.name,
+          decimals: token.decimals,
+          symbol: token.symbol,
+          image: token.logo
+        }))
+        // newExtras.availableCurrencies = collectionMarketTokens;
+        setCurrency(newExtras.availableCurrencies[0]?.symbol);
         dispatch(setExtras(newExtras));
       } finally {
         setInitializing(false);
