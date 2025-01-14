@@ -1,8 +1,9 @@
 import { useAtomValue } from 'jotai';
-import { globalTokensAtom } from '@src/components-v2/global-data-fetcher';
+import { CmsToken, globalTokensAtom } from '@src/components-v2/global-data-fetcher';
 import { useQuery } from '@tanstack/react-query';
 import { ApiService } from '@src/core/services/api-service';
 import { ciEquals } from '@market/helpers/utils';
+import { useMemo } from 'react';
 
 type MarketTokenFilterKeys = 'marketDefault' | 'dex' | 'listings' | 'offers' | 'deals'; // Extendable
 
@@ -73,23 +74,25 @@ export function useFilteredTokens(
   const supportedTokens = useSupportedApiTokens(chainId);
 
   const keys = Array.isArray(filterKeys) ? filterKeys : [filterKeys];
-  const tokens = supportedTokens.filter(token => keys.some(key => token[key]));
+
+  const tokens = useMemo(() =>
+      supportedTokens.filter(token => keys.some(key => token[key])),
+    [supportedTokens, JSON.stringify(keys)]
+  );
+
   const lookupActions = useLookupActions(tokens);
 
   return { tokens, ...lookupActions };
 }
 
-const useLookupActions = (tokenList: Array<{address: string}>) => {
-  const search = (address: string) => {
-    return tokenList.find(token => ciEquals(token.address, address));
-  }
+const useLookupActions = (tokenList: CmsToken[]) => {
+  const search = ({ address, symbol }: { address?: string; symbol?: string }) =>
+    tokenList.find(token =>
+      (address?.trim() && ciEquals(token.address, address)) ||
+      (symbol?.trim() && ciEquals(token.symbol, symbol))
+    );
 
-  const exists = (address: string) => {
-    return !!search(address);
-  }
+  const exists = (params: { address?: string; symbol?: string }) => !!search(params);
 
-  return {
-    search,
-    exists
-  }
+  return { search, exists };
 }

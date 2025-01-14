@@ -13,7 +13,7 @@ import {ethers} from "ethers";
 import {chains} from "@src/wagmi";
 import {useUserShowTestnet} from "@eb-pancakeswap-web/state/user/hooks/useUserShowTestnet";
 import {ChainLogo} from "@dex/components/logo";
-import { useDealsTokens, useMarketTokens } from '@src/global/hooks/use-supported-tokens';
+import { useDealsTokens } from '@src/global/hooks/use-supported-tokens';
 import { CmsToken } from '@src/components-v2/global-data-fetcher';
 import { getChainById } from '@src/helpers';
 

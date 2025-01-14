@@ -89,7 +89,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
   const [tx, setTx] = useState<ContractReceipt>();
   const [invalidIds, setInvalidIds] = useState<{maker: {invalid_items: string[]}, taker: {invalid_items: string[]}}>({maker: {invalid_items: []}, taker: {invalid_items: []}});
   const { switchNetwork } = useSwitchNetwork();
-  const { exists: isDealToken } = useDealsTokens(defaultDeal.chain);
+  const { exists: isDealToken, tokens: dealTokens } = useDealsTokens(defaultDeal.chain);
 
   const {data: deal} = useQuery({
     queryKey: ['deal', defaultDeal.id],
@@ -125,12 +125,12 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
   const isTaker = !!user.address && ciEquals(user.address, deal.taker);
   const hasUnknownTokens = useMemo(() => {
     function hasUnknownToken(item: any) {
-      return item.item_type === ItemType.ERC20 && !isDealToken(item.token);
+      return item.item_type === ItemType.ERC20 && !isDealToken({address: item.token});
     }
     const unknownMakerTokens = deal.maker_items.some((item) => hasUnknownToken(item));
     const unknownTakerTokens = deal.taker_items.some((item) => hasUnknownToken(item));
     return unknownMakerTokens || unknownTakerTokens;
-  }, [deal]);
+  }, [deal, dealTokens]);
   const isWrongNetwork = !!user.address && userChainId !== deal.chain;
 
   useEffect(() => {
@@ -301,7 +301,7 @@ const ManageDeal = ({deal: defaultDeal}: ManageDealProps) => {
 
               {isTaker && (
                 <Box fontSize='xs' textAlign='center' mt={2}>
-                  Users with {commify(2000)} or more Mitama can accept deals at no extra cost. Otherwise, a flat 20 CRO fee is applied upon acceptance of the deal. Earn Mitama by staking FRTN in the <NextLink href='/ryoshi' className='color fw-bold'>Ryoshi Dynasties Bank</NextLink>
+                  Users with {commify(2000)} or more Mitama can accept deals at no extra cost. Otherwise, a flat 20 CRO fee is applied upon acceptance of the deal. Earn Mitama by staking FRTN in the <NextLink href='/ryoshi/bank' className='color fw-bold'>Ryoshi Dynasties Bank</NextLink>
                 </Box>
               )}
             </>
