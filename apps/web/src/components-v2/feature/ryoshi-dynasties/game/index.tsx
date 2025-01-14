@@ -105,7 +105,7 @@ const RyoshiDynasties = ({initialRdConfig, initialScene}: {initialRdConfig: Ryos
           <Box ref={currentModalRef} position='relative'>
             {currentPage === 'barracks' ? (
               <Barracks onBack={returnToPreviousPage} />
-            ) : currentPage === 'battleMap' ? (
+            ) : (currentPage === 'battleMap' || currentPage === 'battle-map') ? (
               // <Suspense fallback={<Center><Spinner/></Center>}>
               <BattleMap 
                 onChange={returnToPreviousPage} 
@@ -120,7 +120,7 @@ const RyoshiDynasties = ({initialRdConfig, initialScene}: {initialRdConfig: Ryos
               //   <Leaderboard onBack={returnToPreviousPage}/>
             ) : currentPage === 'bank' ? (
               <Bank address={user.address ?? ''} onBack={returnToPreviousPage} />
-            ) : currentPage === 'allianceCenter' ? (
+            ) : currentPage === 'alliance-center' ? (
               <AllianceCenter onBack={returnToPreviousPage} />
             ) : currentPage === 'academy' ? (
               <Academy onBack={returnToPreviousPage} />

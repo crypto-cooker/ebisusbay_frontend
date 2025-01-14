@@ -61,7 +61,7 @@ const Cart = function () {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const { isOpen: isOpenGasToken, onOpen: onOpenGasToken, onClose: onCloseGasToken } = useDisclosure()
   const [openUnverifiedCollectionDialog, setOpenUnverifiedCollectionDialog] = useState<any[]>([]);
-  const knownMarketTokens = useMarketTokens();
+  const { tokens: knownMarketTokens } = useMarketTokens();
 
   const handleTabsChange = (index: number) => {
     setSelectedChain(cartChains[index]);

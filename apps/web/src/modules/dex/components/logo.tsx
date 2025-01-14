@@ -1,5 +1,4 @@
-import { WrappedTokenInfo } from '@dex/hooks/use-supported-tokens';
-import { Image, Flex, SpaceProps, Box, Avatar, BoxProps, HStack } from '@chakra-ui/react';
+import { Image, Flex, SpaceProps, Box, BoxProps } from '@chakra-ui/react';
 import React, { memo, useMemo, useState } from 'react';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import { isChainSupported } from '@src/wagmi';
@@ -107,6 +106,18 @@ export interface TokenLogoProps extends React.ImgHTMLAttributes<HTMLImageElement
   srcs: string[];
   useFilledIcon?: boolean;
   size: string;
+}
+
+export const CustomTokenLogo = ({ src }: { src: string }) => {
+  const srcs = useHttpLocations(src);
+  const size = '30px';
+
+  return <TokenLogo
+    srcs={srcs}
+    size={size}
+    width={size}
+    height={size}
+  />;
 }
 
 const TokenLogo: React.FC<React.PropsWithChildren<TokenLogoProps>> = ({ srcs, useFilledIcon, size, alt, ...rest }) => {

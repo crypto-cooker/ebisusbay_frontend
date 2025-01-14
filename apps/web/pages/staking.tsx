@@ -94,7 +94,7 @@ const MyStaking = () => {
           >
             <AlertIcon  />
             <AlertDescription >
-              From 13 Dec 2023, staking rewards are now issued in <strong>$FRTN</strong>. Visit the <Link as={NextLink} href='/ryoshi' className='color' color='auto' fontWeight='bold'>Ryoshi Dynasties Bank</Link> to claim
+              From 13 Dec 2023, staking rewards are now issued in <strong>$FRTN</strong>. Visit the <Link as={NextLink} href='/ryoshi/bank' className='color' color='auto' fontWeight='bold'>Ryoshi Dynasties Bank</Link> to claim
             </AlertDescription>
           </Alert>
 

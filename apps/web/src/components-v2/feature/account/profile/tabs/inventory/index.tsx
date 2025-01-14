@@ -100,7 +100,7 @@ export default function Inventory({ address }: InventoryProps) {
   };
 
   const {data, error, fetchNextPage, hasNextPage, status, refetch} = useInfiniteQuery({
-    queryKey: ['Inventory', address, queryParams],
+    queryKey: ['Inventory', address, queryParams, chain?.id],
     queryFn: fetcher,
     initialPageParam: 1,
     getNextPageParam: (lastPage, pages) => {
@@ -161,13 +161,9 @@ export default function Inventory({ address }: InventoryProps) {
   const [createListingNft, setCreateListingNft] = useState<any>(null);
 
   const handleAddToBatch = (nft: any) => {
-    if (![ChainId.CRONOS, ChainId.CRONOS_TESTNET].includes(chain?.id)) {
-      toast.error('Please switch to Cronos Mainnet');
-      return;
-    }
 
-    if (![ChainId.CRONOS, ChainId.CRONOS_TESTNET].includes(nft.chain)) {
-      toast.error('Feature only available for NFTs on Cronos Mainnet');
+    if(nft.chain != chain?.id){
+      toast.error("Select assets of the connected chain");
       return;
     }
 

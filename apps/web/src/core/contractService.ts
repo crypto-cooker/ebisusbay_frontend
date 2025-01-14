@@ -1,5 +1,6 @@
 import {Contract, ethers, Signer} from "ethers";
 import Market from "@src/global/contracts/Marketplace.json";
+import Bundle from "@src/global/contracts/Bundle.json";
 import {appConfig} from "@src/config";
 import Auction from "@src/global/contracts/DegenAuction.json";
 import Offer from "@src/global/contracts/Offer.json";
@@ -10,6 +11,7 @@ import gdcAbi from "@src/global/contracts/GDC.json";
 import PlatformRewards from "@src/global/contracts/PlatformRewards.json";
 import PresaleVaults from "@src/global/contracts/PresaleVaults.json";
 import {ERC20} from "@src/global/contracts/Abis";
+import { i } from "@tanstack/query-core/build/legacy/hydration-DTVzC0E7";
 
 const defaultConfig = appConfig();
 
@@ -19,6 +21,7 @@ class UserContractService {
   private erc20Tokens: { [key: string]: Contract } = {};
 
   private _market?: Contract;
+  private _bundle?: Contract;
   private _auction?: Contract;
   private _offer?: Contract;
   private _staking?: Contract;
@@ -40,6 +43,13 @@ class UserContractService {
       this._market = new Contract(this.config.contracts.market, Market.abi, this.signer)
     }
     return this._market;
+  }
+
+  get bundle() {
+    if(!this._bundle) {
+      this._bundle = new Contract(this.config.contracts.bundle, Bundle.abi, this.signer)
+    }
+    return this._bundle;
   }
 
   get auction() {

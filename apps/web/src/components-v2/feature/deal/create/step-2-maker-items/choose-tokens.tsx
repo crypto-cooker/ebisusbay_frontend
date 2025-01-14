@@ -28,10 +28,11 @@ import { BarterToken } from '@market/state/jotai/atoms/deal';
 import { CustomTokenPicker } from '@src/components-v2/feature/deal/create/custom-token-picker';
 import { commify } from 'ethers/lib/utils';
 import { useBalance, useReadContract } from 'wagmi';
-import useMultichainCurrencyBroker, { MultichainBrokerCurrency } from '@market/hooks/use-multichain-currency-broker';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
-import { erc20Abi } from 'viem';
+import { Address, erc20Abi } from 'viem';
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
+import { useDealsTokens } from '@src/global/hooks/use-supported-tokens';
+import { CmsToken } from '@src/components-v2/global-data-fetcher';
 
 
 export const ChooseTokensTab = ({address}: {address: string}) => {
@@ -58,11 +59,11 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
   const { toggleOfferERC20, barterState } = useBarterDeal();
   const chainId = barterState.chainId;
 
-  const { whitelistedERC20DealCurrencies } = useMultichainCurrencyBroker(chainId);
+  const { tokens: dealTokens } = useDealsTokens(chainId);
   const [quantity, setQuantity] = useState<string>();
   const [isWrapping, setIsWrapping] = useState(false);
 
-  const sortedWhitelistedERC20DealCurrencies = whitelistedERC20DealCurrencies.sort((a, b) => {
+  const sortedWhitelistedERC20DealCurrencies = dealTokens.sort((a, b) => {
     // Place FRTN first
     if (ciEquals(a.symbol, config.tokens.frtn.symbol)) return -1;
     if (ciEquals(b.symbol, config.tokens.frtn.symbol)) return 1;
@@ -79,10 +80,10 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
     return a.symbol.localeCompare(b.symbol);
   });
 
-  const [selectedCurrency, setSelectedCurrency] = useState<MultichainBrokerCurrency>(sortedWhitelistedERC20DealCurrencies[0]);
+  const [selectedCurrency, setSelectedCurrency] = useState<CmsToken>(dealTokens[0]);
 
   const { data: tokenBalanceData, isLoading: isTokenBalanceLoading, error } = useReadContract({
-    address: selectedCurrency?.address,
+    address: selectedCurrency?.address as Address,
     abi: erc20Abi,
     functionName: 'balanceOf',
     args: [balanceCheckAddress as `0x${string}`],
@@ -114,7 +115,7 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
 
   const availableBalance = { native, selected };
 
-  const handleCurrencyChange = useCallback((currency: SingleValue<MultichainBrokerCurrency>) => {
+  const handleCurrencyChange = useCallback((currency: SingleValue<CmsToken>) => {
     if (!currency) return;
 
     setSelectedCurrency(currency);
