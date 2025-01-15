@@ -12,6 +12,7 @@ import { getBlockExplorerLink } from '@dex/utils';
 import { ChainId } from '@pancakeswap/chains';
 import { MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/types';
 import { CmsToken } from '@src/components-v2/global-data-fetcher';
+import { getAppChainConfig } from '@src/config/hooks';
 
 const config = appConfig();
 const drops = config.drops;
@@ -748,8 +749,10 @@ export const isNativeCro = (address: string) => {
   return ciEquals(address, ethers.constants.AddressZero);
 };
 
-export const isWrappedeCro = (address: string) => {
-  return ciEquals(address, config.tokens.wcro.address);
+export const isWrappedNative = (address: string, chainId: number) => {
+  const { namedTokens } = getAppChainConfig(chainId);
+
+  return ciEquals(address, namedTokens.wrappedNative.address);
 };
 
 export const uniqueNftId = (nft: any) => {

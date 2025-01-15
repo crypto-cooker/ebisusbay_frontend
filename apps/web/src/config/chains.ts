@@ -1,15 +1,16 @@
-import { ChainId, chainNames, isTestnetChainId } from '@pancakeswap/chains'
-import memoize from 'lodash/memoize'
+import { ChainId, chainNames, isTestnetChainId } from '@pancakeswap/chains';
+import memoize from 'lodash/memoize';
 import {
   Chain,
-  cronosTestnet as cronosTestnet_,
   cronos as cronos_,
-  cronoszkEVMTestnet as cronoszkEVMTestnet_,
+  cronosTestnet as cronosTestnet_,
   cronoszkEVM as cronoszkEVM_,
-} from 'wagmi/chains'
-import {chainConfig} from "viem/zksync";
-import {Address} from "viem";
-import { createConfig, http } from 'wagmi';
+  cronoszkEVMTestnet as cronoszkEVMTestnet_
+} from 'wagmi/chains';
+import { chainConfig } from 'viem/zksync';
+import { Address } from 'viem';
+import { cronosTestnetTokens, cronosTokens, cronosZkEvmTestnetTokens, cronosZkEvmTokens } from '@pancakeswap/tokens';
+import { NATIVE } from '@pancakeswap/swap-sdk-evm';
 
 export const CHAIN_QUERY_NAME = chainNames
 
@@ -103,6 +104,11 @@ export const L2_CHAIN_IDS: ChainId[] = [
 
 
 type HexString = `0x${string}` & string;
+type SerializedKnownToken = {
+  address: HexString;
+  decimals: number;
+  symbol: string;
+}
 
 export type AppChainConfig = {
   name: string; // wagmi chain name is too verbose
@@ -147,8 +153,14 @@ export type AppChainConfig = {
     farms: HexString;
     frtnRewarder: HexString;
   };
-  lpVaults: Array<{name: string, pair: Address, address1: Address, address2: Address}>
-  bridges: Array<{currencyId: string, address: Address}>
+  lpVaults: Array<{name: string, pair: Address, address1: Address, address2: Address}>;
+  bridges: Array<{currencyId: string, address: Address}>;
+  namedTokens: {
+    native: { name: string, symbol: string, decimals: number };
+    wrappedNative: SerializedKnownToken;
+    usdc: SerializedKnownToken;
+    frtn: SerializedKnownToken;
+  }
 }
 
 const cronosConfig: AppChainConfig = {
@@ -213,7 +225,13 @@ const cronosConfig: AppChainConfig = {
       currencyId: '0xaF02D78F39C0002D14b95A3bE272DA02379AfF21',
       address: '0x632FdbC1Fd2e81b44CF00da182984d9F6c2bB2B3'
     }
-  ]
+  ],
+  namedTokens: {
+    native: NATIVE[ChainId.CRONOS],
+    wrappedNative: cronosTokens.wcro,
+    usdc: cronosTokens.usdc,
+    frtn: cronosTokens.frtn
+  }
 }
 
 const cronosTestnetConfig: AppChainConfig = {
@@ -272,7 +290,13 @@ const cronosTestnetConfig: AppChainConfig = {
       currencyId: '0x119adb5E05e85d55690BC4Da7b37c06BfEcF2071',
       address: '0x4B09F5d044e5Cf23DEF1c20cF668a0bAD9837faC'
     }
-  ]
+  ],
+  namedTokens: {
+    native: NATIVE[ChainId.CRONOS_TESTNET],
+    wrappedNative: cronosTestnetTokens.wcro,
+    usdc: cronosTestnetTokens.usdc,
+    frtn: cronosTestnetTokens.frtn
+  }
 }
 
 const cronosZkEVMTestnetConfig: AppChainConfig = {
@@ -331,7 +355,13 @@ const cronosZkEVMTestnetConfig: AppChainConfig = {
       currencyId: '0x6f3ff3c76b6dd1d2b4cfc3846f6f1bcba757bf24',
       address: '0x5BFa2B69D5EF18CefBF5CD471126DE5efc1460Fa'
     }
-  ]
+  ],
+  namedTokens: {
+    native: NATIVE[ChainId.CRONOS_ZKEVM_TESTNET],
+    wrappedNative: cronosZkEvmTestnetTokens.wcro,
+    usdc: cronosZkEvmTestnetTokens.vusd,
+    frtn: cronosZkEvmTestnetTokens.frtn
+  }
 }
 
 const cronosZkEVMConfig: AppChainConfig = {
@@ -390,7 +420,13 @@ const cronosZkEVMConfig: AppChainConfig = {
       currencyId: '0x96e03fa6c5ab3a7f2e7098dd07c8935493294e26',
       address: '0x7C306fc3B6Cd7A5A9A798695abe8690D29495065'
     }
-  ]
+  ],
+  namedTokens: {
+    native: NATIVE[ChainId.CRONOS_ZKEVM],
+    wrappedNative: cronosZkEvmTokens.wcro,
+    usdc: cronosZkEvmTokens.vusd,
+    frtn: cronosZkEvmTokens.frtn
+  }
 }
 
 export const SUPPORTED_CHAIN_IDS = [
