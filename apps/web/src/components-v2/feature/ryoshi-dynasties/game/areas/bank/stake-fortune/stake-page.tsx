@@ -24,6 +24,7 @@ import { ApiService } from "@src/core/services/api-service";
 import { FortuneStakingAccount } from "@src/core/services/api-service/graph/types";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/constants';
+import { useFrRewardsInfo } from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-fr-rewards-info"
 
 interface StakePageProps {
   onEditVault: (vault: FortuneStakingAccount, vaultType: VaultType, targetField: string) => void;
@@ -53,6 +54,8 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
   const handleConnect = async () => {
     user.connect();
   }
+
+  const {data:frRewardsInfo} = useFrRewardsInfo();
 
   const handleTabChange = useCallback((chainId: SupportedChainId) => {
     setCurrentTab(chainId);
@@ -129,6 +132,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
                           <Box key={`${currentTab}${vault.vaultId}`} mt={2}>
                             <VaultSummary
                               vault={vault}
+                              rewardsInfo={frRewardsInfo}
                               vaultType={currentVaultType}
                               index={index}
                               onEditVault={(type: string) => onEditVault(vault, currentVaultType, type)}

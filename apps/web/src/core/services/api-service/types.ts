@@ -1,10 +1,10 @@
-import {ListingsQueryParams} from "@src/core/services/api-service/mapi/queries/listings";
-import {PagedList} from "@src/core/services/api-service/paginated-list";
+import { ListingsQueryParams } from "@src/core/services/api-service/mapi/queries/listings";
+import { PagedList } from "@src/core/services/api-service/paginated-list";
 import SearchQuery from "@src/core/services/api-service/mapi/queries/search";
-import {OffersQueryParams} from "@src/core/services/api-service/mapi/queries/offers";
-import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wallets";
+import { OffersQueryParams } from "@src/core/services/api-service/mapi/queries/offers";
+import { WalletsQueryParams } from "@src/core/services/api-service/mapi/queries/wallets";
 import WalletNft from "@src/core/models/wallet-nft";
-import {Listing} from "@src/core/models/listing";
+import { Listing } from "@src/core/models/listing";
 import {
     Erc20Account,
     FortuneStakingAccount,
@@ -13,17 +13,17 @@ import {
     StakedToken,
     StakingAccount
 } from "@src/core/services/api-service/graph/types";
-import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
-import {GetBattleLog} from "@src/core/services/api-service/cms/queries/battle-log";
+import { RyoshiConfig } from "@src/components-v2/feature/ryoshi-dynasties/game/types";
+import { GetBattleLog } from "@src/core/services/api-service/cms/queries/battle-log";
 import {
     TownHallStakeRequest,
     TownHallUnstakeRequest
 } from "@src/core/services/api-service/cms/queries/staking/town-hall";
-import {FactionUpdateRequest} from "@src/core/services/api-service/cms/queries/faction";
-import {DeployTroopsRequest} from "@src/core/services/api-service/cms/queries/deploy";
-import {MerchantItem} from "@src/core/services/api-service/cms/response-types";
-import {MerchantPurchaseRequest} from "@src/core/services/api-service/cms/queries/merchant-purchase";
-import {AttackRequest} from "@src/core/services/api-service/cms/queries/attack";
+import { FactionUpdateRequest } from "@src/core/services/api-service/cms/queries/faction";
+import { DeployTroopsRequest } from "@src/core/services/api-service/cms/queries/deploy";
+import { MerchantItem } from "@src/core/services/api-service/cms/response-types";
+import { MerchantPurchaseRequest } from "@src/core/services/api-service/cms/queries/merchant-purchase";
+import { AttackRequest } from "@src/core/services/api-service/cms/queries/attack";
 import { Address } from "viem";
 
 export interface Api {
@@ -43,10 +43,10 @@ export interface RyoshiDynastiesApi {
     presaleVault(address: string): Promise<PresaleVault | null>
     getUserStakedFortune(address: string): Promise<FortuneStakingAccount | null>;
     getErc20Account(address: string): Promise<Erc20Account | null>;
-    getStakedTokens(address: string, type: StakedTokenType): Promise<{ staked: StakedToken[], nextSlot?: {index: number, cost: {frtn: number, koban: number}} }>;
+    getStakedTokens(address: string, type: StakedTokenType): Promise<{ staked: StakedToken[], nextSlot?: { index: number, cost: { frtn: number, koban: number } } }>;
     getTownHallUserStaked(address: string, collection: string, signature: string): Promise<StakedToken[]>;
     getTownHallUserInvalidStaked(address: string, signature: string): Promise<StakedToken[]>;
-    getStakedTokenTotals(type: StakedTokenType): Promise<{[key: string]: number}>;
+    getStakedTokenTotals(type: StakedTokenType): Promise<{ [key: string]: number }>;
     requestBankStakeAuthorization(nfts: BankStakeNft[], address: string, signature: string, chainId: number): Promise<any>;
     requestBankUnstakeAuthorization(nfts: BankStakeNft[], address: string, signature: string, chainId: number): Promise<any>;
     requestBarracksStakeAuthorization(nfts: BarracksStakeNft[], address: string, signature: string, chainId: number): Promise<any>;
@@ -56,8 +56,9 @@ export interface RyoshiDynastiesApi {
     requestRewardsSpendAuthorization(cost: number | string, quantity: number, id: string, address: string, signature: string): Promise<any>;
     getDailyRewards(address: string): Promise<any>
     getSeasonalRewards(address: string, seasonId?: number): Promise<any>
+    getFortuneRewardsInfo(): Promise<any>
     claimDailyRewards(address: string, signature: string): Promise<any>
-    getResourcesBalances(address: string, signature: string): Promise<Array<{tokenId: number, amount: number}>>;
+    getResourcesBalances(address: string, signature: string): Promise<Array<{ tokenId: number, amount: number }>>;
     requestResourcesWithdrawalAuthorization(tokenId: number, amount: number, address: string, signature: string): Promise<any>;
     requestSeasonalRewardsClaimAuthorization(address: string, amount: number, signature: string, chainId: number): Promise<any>;
     requestSeasonalRewardsCompoundAuthorization(address: string, amount: number, vaultIndex: number, signature: string, chainId: number): Promise<any>;
@@ -83,23 +84,23 @@ export interface RyoshiDynastiesApi {
     getMerchantItems(): Promise<MerchantItem[]>;
     requestMerchantPurchaseAuthorization(payload: MerchantPurchaseRequest, address: string, signature: string): Promise<any>;
     attack(request: AttackRequest, address: string, signature: string): Promise<any>;
-    getBattleCardsByWallet(address: string, signature: string): Promise<Array<{tokenId: number, amount: number}>>;
+    getBattleCardsByWallet(address: string, signature: string): Promise<Array<{ tokenId: number, amount: number }>>;
     requestBattleCardsWithdrawalAuthorization(address: string, signature: string): Promise<any>;
     requestSlotUnlockAuthorization(type: number, chainId: number, address: string, signature: string): Promise<any>;
     sendTroopsToFarm(farmId: number, chainId: number, troops: string, address: string, signature: string): Promise<any>;
     getFarmBoosts(address: string, active: boolean): Promise<any>;
     claimFarmBoost(farmId: number, address: string, signature: string): Promise<any>;
     getUserDailyFrtnRewards(address: string): Promise<{ totalRewards: number, maxRewards: number }>;
-    getUserPredictedFrtnRewards(farmId: number, chainId: number, address: string, signature: string): Promise<{chainId: number, farmId: number, boostValue: number, depositedLiquidityUSD: number, frtnPerOneTroop: number}>;
+    getUserPredictedFrtnRewards(farmId: number, chainId: number, address: string, signature: string): Promise<{ chainId: number, farmId: number, boostValue: number, depositedLiquidityUSD: number, frtnPerOneTroop: number }>;
     upkeepMeeple(amount: number, address: string, signature: string): Promise<any>;
     resetMeepleUpkeep(address: string, signature: string): Promise<any>;
     boostVault(vaultId: number, chainId: number, troops: number, address: string, signature: string): Promise<any>;
     getVaultBoosts(address: string): Promise<any>;
     claimVaultBoost(vaultId: number, address: string, signature: string): Promise<any>;
-    getLootBoxList():Promise<any>;
-    getLootBoxBalance(walletAddress:string): Promise<any>;
-    getLootBoxInfo(id:number): Promise<any>;
-    openLootBox(id:number, address:string, signature: string): Promise<any>;
+    getLootBoxList(): Promise<any>;
+    getLootBoxBalance(walletAddress: string): Promise<any>;
+    getLootBoxInfo(id: number): Promise<any>;
+    openLootBox(id: number, address: string, signature: string): Promise<any>;
     checkGift(address: string, signature: string): Promise<any>;
     claimGift(address: string, signature: string): Promise<any>;
 }
@@ -483,8 +484,8 @@ export interface RdBattleLog {
     pastTroops: number;
 }
 
-export enum PokerCollection{
-    Diamonds = 'Diamonds', 
+export enum PokerCollection {
+    Diamonds = 'Diamonds',
     Clubs = 'Clubs',
     Hearts = 'Hearts',
     Spades = 'Spades',
@@ -498,4 +499,12 @@ export interface XPProfile {
     experience: number;
     level: number;
     rank: number;
+}
+
+export type RewardsInfo = {
+    frtnVaultRewards: string,
+    lpVaultRewards: string,
+    totalRewards: string,
+    frtnVaultReductionFactor: string,
+    lpVaultReductionFactor: string
 }
