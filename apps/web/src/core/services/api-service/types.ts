@@ -97,18 +97,11 @@ export interface RyoshiDynastiesApi {
     boostVault(vaultId: number, chainId: number, troops: number, address: string, signature: string): Promise<any>;
     getVaultBoosts(address: string): Promise<any>;
     claimVaultBoost(vaultId: number, address: string, signature: string): Promise<any>;
-<<<<<<< HEAD
-    getLootBoxList(): Promise<any>;
-    getLootBoxBalance(walletAddress: string): Promise<any>;
-    getLootBoxInfo(id: number): Promise<any>;
-    openLootBox(id: number, address: string, signature: string): Promise<any>;
-=======
     getLootBoxList():Promise<any>;
     getLootBoxBalance(walletAddress:string): Promise<any>;
     getLootBoxLogs(walletAddress:string, signature: string): Promise<any>;
     getLootBoxInfo(id:number): Promise<any>;
     openLootBox(id:number, address:string, signature: string): Promise<any>;
->>>>>>> 515cb8954f0a4e5b7f775185ceaeec96c6c827ab
     checkGift(address: string, signature: string): Promise<any>;
     claimGift(address: string, signature: string): Promise<any>;
 }
