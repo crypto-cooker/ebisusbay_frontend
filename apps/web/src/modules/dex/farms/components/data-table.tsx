@@ -24,7 +24,7 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
-  SimpleGrid, Spinner,
+  SimpleGrid,
   Stack,
   Table,
   Tbody,
@@ -55,11 +55,12 @@ import {useUserFarmBoost, useUserFarmsRefetch} from '@dex/farms/hooks/user-farms
 import {useAppChainConfig} from "@src/config/hooks";
 import {getBlockExplorerLink} from "@dex/utils";
 import {CurrencyLogo, DoubleCurrencyLayeredLogo} from "@dex/components/logo";
-import useMultichainCurrencyBroker, {MultichainBrokerCurrency} from "@market/hooks/use-multichain-currency-broker";
 import BoostFarmDialog from "@dex/farms/components/boost-farm-dialog";
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {toast} from "react-toastify";
 import { parseErrorMessage } from '@src/helpers/validator';
+import { useDexTokens } from '@src/global/hooks/use-supported-tokens';
+import { CmsToken } from '@src/components-v2/global-data-fetcher';
 
 export type DataTableProps = {
   data: DerivedFarm[];
@@ -122,7 +123,7 @@ export default function DataTable({ data, userData }: DataTableProps) {
 function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row<DerivedFarm>, isSmallScreen: boolean, showLiquidityColumn: boolean, userData?: UserFarmState}) {
   const user = useUser();
   const {config: appChainConfig} = useAppChainConfig();
-  const {getByAddress} = useMultichainCurrencyBroker(appChainConfig.chain.id);
+  const { search: findDexToken } = useDexTokens(appChainConfig.chain.id);
   const [enableFarm, enablingFarm] = useEnableFarm();
   const { refetchBalances, refetchBoosts } = useUserFarmsRefetch();
   const [harvestRewards, harvestingRewards] = useHarvestRewards();
@@ -305,7 +306,7 @@ function TableRow({row, isSmallScreen, showLiquidityColumn, userData}: {row: Row
                   <Box fontSize='sm' fontWeight='bold' mb={2}>EARNED REWARDS</Box>
                   <Wrap justify='space-between' align='center'>
                     {userData?.earnings.map((earning, i) => {
-                      const token = getByAddress(earning.address);
+                      const token = findDexToken({address: earning.address});
                       const rewarder = row.original.data.rewarders.find(r => ciEquals(r.token, earning.address));
                       const isMultiYield = rewarder && row.original.data.rewarders.length > 1;
                       const isActiveNativeYield = rewarder && rewarder.isMain && rewarder.allocPoint > 0;
@@ -461,7 +462,7 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
               <Popover>
                 <PopoverTrigger>
                   <AvatarGroup size='md' max={3} spacing={-2} onClick={handleClick}>
-                    {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: MultichainBrokerCurrency, amount: string }, i: number) => (
+                    {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: CmsToken, amount: string }, i: number) => (
                       <Avatar border='none' boxSize={6} key={i} src={`https://cdn-prod.ebisusbay.com/files/dex/images/tokens/${reward.token.symbol.toLowerCase()}.webp`} />
                     ))}
                   </AvatarGroup>
@@ -471,13 +472,13 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
                   <PopoverBody>
                     <VStack align='start'>
                       <Flex justify='space-between' w='full' fontSize='sm' fontWeight='bold'>
-                        <Box>{info.getValue().map((reward: { token: MultichainBrokerCurrency }) => reward.token.symbol).join('/')}</Box>
+                        <Box>{info.getValue().map((reward: { token: CmsToken }) => reward.token.symbol).join('/')}</Box>
                         <HStack>
                           <Icon as={FontAwesomeIcon} icon={faStopwatch} />
                           <Box>End Date</Box>
                         </HStack>
                       </Flex>
-                      {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: MultichainBrokerCurrency, amount: string }, i: number) => (
+                      {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: CmsToken, amount: string }, i: number) => (
                         <Flex key={i} justify='space-between' w='full'>
                           <HStack key={i} fontWeight='bold'>
                             <CurrencyLogo currency={reward.token} size={'24px'} />
@@ -499,7 +500,7 @@ const columns: ColumnDef<DerivedFarm, any>[] = [
               </Popover>
             ) : (
               <Wrap>
-                {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: MultichainBrokerCurrency, amount: string }, i: number) => (
+                {info.getValue().map((reward: { rewarder: MapiFarmRewarder, token: CmsToken, amount: string }, i: number) => (
                   <React.Fragment key={i}>
                     <HStack key={i} fontWeight='bold'>
                       <CurrencyLogo currency={reward.token} size={'24px'} />

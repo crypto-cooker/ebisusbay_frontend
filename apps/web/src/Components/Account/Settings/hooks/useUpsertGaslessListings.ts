@@ -42,7 +42,7 @@ const useUpsertGaslessListings = (chainId?: number) => {
 
   const user = useUser();
   const contractService = useContractService();
-  const listableCurrencies = useListingsTokens(chainId ?? ChainId.CRONOS);
+  const { tokens: listableCurrencies } = useListingsTokens(chainId ?? ChainId.CRONOS);
 
   const upsertGaslessListings = async (pendingListings: PendingListing[] | PendingListing, secureCancel: boolean = false) => {
     if (!Array.isArray(pendingListings)) pendingListings = [pendingListings];

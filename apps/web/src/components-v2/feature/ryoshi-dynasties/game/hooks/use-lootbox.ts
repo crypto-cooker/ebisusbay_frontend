@@ -1,6 +1,7 @@
 import { useUser } from "@src/components-v2/useUser";
 import { ApiService } from "@src/core/services/api-service";
 import { useQuery } from "@tanstack/react-query"
+import { useCallback } from "react";
 
 
 export const useLootBoxList = () => {
@@ -29,6 +30,17 @@ export const useLootBoxBalance = () => {
   return { data, refetch, isLoading, error }
 }
 
+export const useLootBoxLog = (address: string, signature: string) => {
+  const Fn = useCallback(async () => ApiService.withoutKey().ryoshiDynasties.getLootBoxLogs(address as string, signature).then((res) => res.data).catch((error) => { console.log(error); return undefined }), [address, signature])
+
+  const { data, refetch, isLoading, error } = useQuery({
+    queryKey: ['LootboxOpenLogs', address, signature],
+    queryFn: Fn
+  })
+
+  return { data, refetch, isLoading, error }
+}
+
 
 export const useLootBoxInfo = (id: number) => {
   const { data, refetch, isLoading, error } = useQuery({
@@ -39,7 +51,7 @@ export const useLootBoxInfo = (id: number) => {
   return { data, refetch, isLoading, error }
 }
 
-export const openLootBox = async (id: number, address:string, signature: string) => {
+export const openLootBox = async (id: number, address: string, signature: string) => {
   try {
     const res = await ApiService.withoutKey().ryoshiDynasties.openLootBox(id, address, signature);
     return res;

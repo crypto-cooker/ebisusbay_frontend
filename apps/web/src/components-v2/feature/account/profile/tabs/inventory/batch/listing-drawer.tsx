@@ -30,7 +30,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
-import React, {ChangeEvent, useCallback, useMemo, useRef, useState} from "react";
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   addToBatchListingCart,
   applyCurrencyToAll,
@@ -397,6 +397,13 @@ export const ListingDrawer = () => {
       setExecutingCreateListing(false);
     }
   };
+
+  // Clear cart if chain changes to avoid mixing chains
+  useEffect(() => {
+    if (batchListingCart.items.some((item) => item.nft.chain !== chain.chainId)) {
+      handleClearCart();
+    }
+  }, [chain.chainId]);
 
   return (
     <>

@@ -5,12 +5,13 @@ import {FarmsQueryParams} from "@src/core/services/api-service/mapi/queries/farm
 import {ApiService} from "@src/core/services/api-service";
 import {ciEquals, hasDatePassedSeconds, round} from "@market/helpers/utils";
 import {commify} from "ethers/lib/utils";
-import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
 import {Address} from "viem";
 import {getAppChainConfig} from "@src/config/hooks";
+import { useDexTokens } from '@src/global/hooks/use-supported-tokens';
+import { CmsToken } from '@src/components-v2/global-data-fetcher';
 
 export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
-  const { getByAddress } = useMultichainCurrencyBroker(queryParams.chain);
+  const { search: getDexToken } = useDexTokens(queryParams.chain);
 
   const query = async () => {
     let data = await ApiService.withoutKey().getFarms(queryParams);
@@ -42,16 +43,14 @@ export function getFarmsUsingMapi(queryParams: FarmsQueryParams) {
           pairFarm.rewarders
             .filter((rewarder) => pairFarm.rewarders.length === 1 || (!rewarder.isMain || rewarder.allocPoint > 0))
             .map(async (rewarder) => {
-              let token = getByAddress(rewarder.token);
+              let token: Partial<CmsToken> | undefined = getDexToken({address: rewarder.token});
               if (!token) {
                 token = {
                   address: rewarder.token as Address,
                   symbol: '?',
                   name: '?',
                   decimals: 18,
-                  chainId: queryParams.chain,
-                  isToken: true,
-                  isNative: false
+                  chainId: queryParams.chain
                 }
                 // throw new Error(`Token not found for rewarder address: ${rewarder.token}`);
               }
