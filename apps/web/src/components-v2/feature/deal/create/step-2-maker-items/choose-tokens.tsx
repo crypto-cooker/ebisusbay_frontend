@@ -3,7 +3,7 @@ import useBarterDeal from '@src/components-v2/feature/deal/use-barter-deal';
 import React, { useCallback, useMemo, useState } from 'react';
 import ReactSelect, { SingleValue } from 'react-select';
 import { toast } from 'react-toastify';
-import { ciEquals, isWrappedeCro, round } from '@market/helpers/utils';
+import { ciEquals, isWrappedNative, round } from '@market/helpers/utils';
 import { Contract, ethers } from 'ethers';
 import WCRO from '@src/global/contracts/WCRO.json';
 import { parseErrorMessage } from '@src/helpers/validator';
@@ -23,7 +23,6 @@ import {
 } from '@chakra-ui/react';
 import { TitledCard } from '@src/components-v2/foundation/card';
 import { PrimaryButton } from '@src/components-v2/foundation/button';
-import { appConfig } from '@src/config';
 import { BarterToken } from '@market/state/jotai/atoms/deal';
 import { CustomTokenPicker } from '@src/components-v2/feature/deal/create/custom-token-picker';
 import { commify } from 'ethers/lib/utils';
@@ -33,6 +32,7 @@ import { Address, erc20Abi } from 'viem';
 import { useActiveChainId } from '@eb-pancakeswap-web/hooks/useActiveChainId';
 import { useDealsTokens } from '@src/global/hooks/use-supported-tokens';
 import { CmsToken } from '@src/components-v2/global-data-fetcher';
+import { getAppChainConfig } from '@src/config/hooks';
 
 
 export const ChooseTokensTab = ({address}: {address: string}) => {
@@ -55,9 +55,9 @@ export const ChooseTokensTab = ({address}: {address: string}) => {
 const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: string}) => {
   const user = useUser();
   const { chainId: userChainId } = useActiveChainId();
-  const config = appConfig();
   const { toggleOfferERC20, barterState } = useBarterDeal();
   const chainId = barterState.chainId;
+  const { namedTokens } = getAppChainConfig(barterState.chainId)
 
   const { tokens: dealTokens } = useDealsTokens(chainId);
   const [quantity, setQuantity] = useState<string>();
@@ -65,24 +65,25 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
 
   const sortedWhitelistedERC20DealCurrencies = dealTokens.sort((a, b) => {
     // Place FRTN first
-    if (ciEquals(a.symbol, config.tokens.frtn.symbol)) return -1;
-    if (ciEquals(b.symbol, config.tokens.frtn.symbol)) return 1;
+    if (ciEquals(a.symbol, namedTokens.frtn.symbol)) return -1;
+    if (ciEquals(b.symbol, namedTokens.frtn.symbol)) return 1;
 
     // Place WCRO second
-    if (ciEquals(a.symbol, config.tokens.wcro.symbol)) return -1;
-    if (ciEquals(b.symbol, config.tokens.wcro.symbol)) return 1;
+    if (ciEquals(a.symbol, namedTokens.wrappedNative.symbol)) return -1;
+    if (ciEquals(b.symbol, namedTokens.wrappedNative.symbol)) return 1;
 
     // Place USDC third
-    if (ciEquals(a.symbol, config.tokens.usdc.symbol)) return -1;
-    if (ciEquals(b.symbol, config.tokens.usdc.symbol)) return 1;
+    if (ciEquals(a.symbol, namedTokens.usdc.symbol)) return -1;
+    if (ciEquals(b.symbol, namedTokens.usdc.symbol)) return 1;
 
     // Alphabetically sort the rest
     return a.symbol.localeCompare(b.symbol);
   });
 
   const [selectedCurrency, setSelectedCurrency] = useState<CmsToken>(dealTokens[0]);
+  const isWrappedNativeSelected = isWrappedNative(selectedCurrency.address, barterState.chainId);
 
-  const { data: tokenBalanceData, isLoading: isTokenBalanceLoading, error } = useReadContract({
+  const { data: tokenBalanceData, isLoading: isTokenBalanceLoading, refetch: refetchTokenBalance } = useReadContract({
     address: selectedCurrency?.address as Address,
     abi: erc20Abi,
     functionName: 'balanceOf',
@@ -93,20 +94,20 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
     }
   })
 
-  const { data: nativeBalanceData, isLoading: isNativeBalanceLoading } = useBalance({
+  const { data: nativeBalanceData, isLoading: isNativeBalanceLoading, refetch: refetchNativeBalance } = useBalance({
     address: balanceCheckAddress as `0x${string}`,
     chainId,
     query: {
-      enabled: !!selectedCurrency && isWrappedeCro(selectedCurrency.address)
+      enabled: !!selectedCurrency && isWrappedNativeSelected
     }
   })
 
   const isLoading = isTokenBalanceLoading || isNativeBalanceLoading
 
   const native = useMemo(() => {
-    if (!isWrappedeCro(selectedCurrency?.address) || !nativeBalanceData) return 0
+    if (!isWrappedNativeSelected || !nativeBalanceData) return 0
     return Number(ethers.utils.formatEther(nativeBalanceData.value))
-  }, [nativeBalanceData, selectedCurrency])
+  }, [nativeBalanceData, selectedCurrency, isWrappedNativeSelected])
 
   const selected = useMemo(() => {
     if (!tokenBalanceData) return 0
@@ -146,8 +147,8 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
       return;
     }
 
-    if (!isWrappedeCro(selectedCurrency.address)) {
-      toast.error('CRO must be selected for this action');
+    if (!isWrappedNativeSelected) {
+      toast.error(`${namedTokens.native.symbol} must be selected for this action`);
       return;
     }
 
@@ -164,17 +165,19 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
     try {
       setIsWrapping(true);
       const amountInWei = ethers.utils.parseEther(quantity);
-      const contract = new Contract(config.tokens.wcro.address, WCRO, user.provider.signer)
+      const contract = new Contract(namedTokens.wrappedNative.address, WCRO, user.provider.signer)
       const tx = await contract.deposit({ value: amountInWei });
       await tx.wait();
 
-      toast.success('CRO wrapped successfully to WCRO');
+      toast.success(`${namedTokens.native.symbol} wrapped successfully to ${namedTokens.wrappedNative.symbol}`);
       toggleOfferERC20({
         ...selectedCurrency,
         name: selectedCurrency.name!,
         chainId,
         amount: Math.floor(parseInt(quantity)),
       });
+      refetchNativeBalance();
+      refetchTokenBalance();
     } catch (e) {
       console.log(e);
       toast.error(parseErrorMessage(e));
@@ -256,7 +259,7 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
             <VStack align='start' spacing={0}>
               {!!availableBalance && availableBalance.native > 0 && (
                 <HStack fontSize='sm'>
-                  <Box fontWeight='bold'>CRO Balance:</Box>
+                  <Box fontWeight='bold'>{namedTokens.native.symbol} Balance:</Box>
                   <Box>{isLoading ? <Spinner size='sm' /> : commify(round(availableBalance.native || 0))}</Box>
                 </HStack>
               )}
@@ -268,7 +271,7 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
           )}
         </Box>
         <Stack direction={{base: 'column', sm: 'row'}} justify='end' mt={2}>
-          {isWrappedeCro(selectedCurrency.address) && (
+          {isWrappedNativeSelected && (
             <>
               <PrimaryButton
                 onClick={handleWrapCro}
@@ -288,8 +291,8 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
         </Stack>
       </Stack>
 
-      {isWrappedeCro(selectedCurrency.address) && (
-        <Box fontSize='sm' mt={2}>If wanting to use native CRO for the deal, you can choose to wrap to WCRO</Box>
+      {isWrappedNativeSelected && (
+        <Box fontSize='sm' mt={2}>If wanting to use native {namedTokens.native.symbol} for the deal, you can choose to wrap to {namedTokens.wrappedNative.symbol}</Box>
       )}
     </TitledCard>
   )
