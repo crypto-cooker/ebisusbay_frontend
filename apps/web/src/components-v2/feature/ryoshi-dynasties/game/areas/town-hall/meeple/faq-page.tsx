@@ -75,7 +75,7 @@ const FaqPage = () => {
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel pb={4}>
-              <Text>There is no limit to how may Ryoshi can be kept on duty. However, if a user has more than the restock cutoff of <strong>{commify(rdConfig.townHall.ryoshi.restockCutoff)}</strong> Ryoshi, they will not receive additional Ryoshi for the next game. Should a user go over the limit they will have to either withdraw them from the platform or to spend them in battles and resource gathering before the next game in order to resume receiving weekly top ups.</Text>
+              <Text>There is no limit to how may Ryoshi can be kept on duty. However, if a user has more than the restock cutoff of <strong>{commify(rdConfig.townHall.ryoshi.restockCutoff)}</strong> Ryoshi, they will not receive additional Ryoshi for the next game. A snapshot is taken immediately at the end of the current game and is used to calculate distribution for the next game. Should a user go over the limit they will have to either withdraw them from the platform or to spend them in battles and resource gathering before the next game in order to resume receiving weekly top ups.</Text>
             </AccordionPanel>
           </AccordionItem>
 
