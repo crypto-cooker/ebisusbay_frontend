@@ -80,7 +80,6 @@ const TokenVaultSummary = ({ vault, rewardsInfo, onEditVault, onWithdrawVault, o
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { boost: activeBoost } = useUserVaultBoost(+vault.vaultId);
   const {frtnVaultReductionFactor} = rewardsInfo;
-  console.log(rdConfig, rdUser, "HHHHHHHHHHHHH")
 
   const vaultBalance = Number(ethers.utils.formatEther(vault.balance));
   const daysToAdd = Number(vault.length / (86400));
