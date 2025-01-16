@@ -86,13 +86,21 @@ export function useFilteredTokens(
 }
 
 const useLookupActions = (tokenList: CmsToken[]) => {
-  const search = ({ address, symbol }: { address?: string; symbol?: string }) =>
-    tokenList.find(token =>
-      (address?.trim() && ciEquals(token.address, address)) ||
-      (symbol?.trim() && ciEquals(token.symbol, symbol))
-    );
+  const search = (params: string | { address?: string; symbol?: string }) => {
+    const searchObj = typeof params === 'string' ?
+      { address: params, symbol: params } :
+      params;
 
-  const exists = (params: { address?: string; symbol?: string }) => !!search(params);
+    const { address, symbol } = searchObj;
+    return tokenList.find(token =>
+      (address?.trim() && ciEquals(token.address.toLowerCase(), address.toLowerCase())) ||
+      (symbol?.trim() && ciEquals(token.symbol.toLowerCase(), symbol.toLowerCase()))
+    );
+  };
+
+  const exists = (params: string | { address?: string; symbol?: string }) => {
+    return !!search(params);
+  };
 
   return { search, exists };
 }
