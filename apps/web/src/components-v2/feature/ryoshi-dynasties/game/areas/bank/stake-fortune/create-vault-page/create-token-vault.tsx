@@ -43,7 +43,7 @@ import {ChainLogo} from "@dex/components/logo";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
 import StakePreview
   from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/create-vault-page/stake-preview";
-import { useFrRewardsInfo } from "../../../../hooks/use-fr-rewards-info";
+import { useFrtnRewardsInfo } from "../../../../hooks/use-frtn-rewards-info";
 
 interface CreateTokenVaultProps {
   vaultIndex: number;
@@ -78,7 +78,7 @@ const CreateTokenVault = ({vaultIndex, onSuccess}: CreateTokenVaultProps) => {
   const [lengthError, setLengthError] = useState('');
   const [inputError, setInputError] = useState('');
 
-  const {data:frRewardsInfo} = useFrRewardsInfo();
+  const { data: frRewardsInfo } = useFrtnRewardsInfo();
 
 
   const handleChangeFortuneAmount = (valueAsString: string, valueAsNumber: number) => {

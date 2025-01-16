@@ -84,7 +84,7 @@ class Cms {
   }
 
   async getFortuneRewardsInfo(){
-    return this.ryoshiDynasties.getFrotuneRewardsInfo();
+    return this.ryoshiDynasties.getFortuneRewardsInfo();
   }
 
   async claimDailyRewards(address: string, signature: string) {
