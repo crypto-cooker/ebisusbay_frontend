@@ -26,7 +26,7 @@ const SalesCollection = ({
   const dispatch = useAppDispatch();
   const [searchTerms, setSearchTerms] = useState('');
   const debouncedSearch = useDebounce(searchTerms, 500);
-  const knownMarketTokens = useMarketTokens();
+  const { tokens: knownMarketTokens } = useMarketTokens();
 
   // const mobileListBreakpoint = 768;
   // const [tableMobileView, setTableMobileView] = useState(window.innerWidth > mobileListBreakpoint);

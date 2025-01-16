@@ -22,7 +22,6 @@ import { PrimaryButton } from '@src/components-v2/foundation/button';
 import { CustomTokenPicker } from '@src/components-v2/feature/deal/create/custom-token-picker';
 import { BarterToken } from '@market/state/jotai/atoms/deal';
 import { ciEquals } from '@market/helpers/utils';
-import { appConfig } from '@src/config';
 import { ethers } from 'ethers';
 import { commify } from 'ethers/lib/utils';
 import { useReadContract } from 'wagmi';
@@ -30,6 +29,7 @@ import { CurrencyLogoByAddress } from '@dex/components/logo';
 import { Address, erc20Abi } from 'viem';
 import { useDealsTokens } from '@src/global/hooks/use-supported-tokens';
 import { CmsToken } from '@src/components-v2/global-data-fetcher';
+import { getAppChainConfig } from '@src/config/hooks';
 
 export const ChooseTokensTab = ({ address }: { address: string }) => {
   const { toggleSelectionERC20 } = useBarterDeal();
@@ -50,24 +50,24 @@ export const ChooseTokensTab = ({ address }: { address: string }) => {
 
 const WhitelistedTokenPicker = ({ balanceCheckAddress }: { balanceCheckAddress: string }) => {
   const user = useUser();
-  const config = appConfig();
   const { toggleSelectionERC20, barterState } = useBarterDeal();
   const chainId = barterState.chainId;
   const [quantity, setQuantity] = useState<string>();
+  const { namedTokens } = getAppChainConfig(barterState.chainId);
 
   const { tokens: dealTokens } = useDealsTokens(chainId);
   const sortedWhitelistedERC20DealCurrencies = dealTokens.sort((a, b) => {
     // Place FRTN first
-    if (ciEquals(a.symbol, config.tokens.frtn.symbol)) return -1;
-    if (ciEquals(b.symbol, config.tokens.frtn.symbol)) return 1;
+    if (ciEquals(a.symbol, namedTokens.frtn.symbol)) return -1;
+    if (ciEquals(b.symbol, namedTokens.frtn.symbol)) return 1;
 
     // Place WCRO second
-    if (ciEquals(a.symbol, config.tokens.wcro.symbol)) return -1;
-    if (ciEquals(b.symbol, config.tokens.wcro.symbol)) return 1;
+    if (ciEquals(a.symbol, namedTokens.wrappedNative.symbol)) return -1;
+    if (ciEquals(b.symbol, namedTokens.wrappedNative.symbol)) return 1;
 
     // Place USDC third
-    if (ciEquals(a.symbol, config.tokens.usdc.symbol)) return -1;
-    if (ciEquals(b.symbol, config.tokens.usdc.symbol)) return 1;
+    if (ciEquals(a.symbol, namedTokens.usdc.symbol)) return -1;
+    if (ciEquals(b.symbol, namedTokens.usdc.symbol)) return 1;
 
     // Alphabetically sort the rest
     return a.symbol.localeCompare(b.symbol);

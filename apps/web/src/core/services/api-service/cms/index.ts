@@ -83,6 +83,10 @@ class Cms {
     return this.ryoshiDynasties.getSeasonalRewards(address, seasonId);
   }
 
+  async getFortuneRewardsInfo(){
+    return this.ryoshiDynasties.getFortuneRewardsInfo();
+  }
+
   async claimDailyRewards(address: string, signature: string) {
     return this.ryoshiDynasties.claimDailyRewards(address, signature);
   }

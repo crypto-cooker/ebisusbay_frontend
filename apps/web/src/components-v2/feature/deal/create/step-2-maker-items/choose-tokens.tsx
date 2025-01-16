@@ -57,7 +57,7 @@ const WhitelistedTokenPicker = ({balanceCheckAddress}: {balanceCheckAddress: str
   const { chainId: userChainId } = useActiveChainId();
   const { toggleOfferERC20, barterState } = useBarterDeal();
   const chainId = barterState.chainId;
-  const { namedTokens } = getAppChainConfig(barterState.chainId)
+  const { namedTokens } = getAppChainConfig(barterState.chainId);
 
   const { tokens: dealTokens } = useDealsTokens(chainId);
   const [quantity, setQuantity] = useState<string>();
