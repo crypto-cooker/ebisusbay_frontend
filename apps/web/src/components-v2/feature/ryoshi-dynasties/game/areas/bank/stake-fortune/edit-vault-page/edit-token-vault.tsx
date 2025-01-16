@@ -42,6 +42,7 @@ import {toast} from "react-toastify";
 import {parseErrorMessage} from "@src/helpers/validator";
 import {RdButton} from "@src/components-v2/feature/ryoshi-dynasties/components";
 import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
+import { useFrtnRewardsInfo } from '@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-frtn-rewards-info';
 
 interface EditVaultPageProps {
   vault: FortuneStakingAccount;
@@ -58,6 +59,7 @@ const EditTokenVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
   const { chainId: activeChainId} = useActiveChainId();
   const bankContract = useBankContract(bankChainId);
   const { callWithGasPrice } = useCallWithGasPrice();
+  const { data: frRewardsInfo } = useFrtnRewardsInfo();
 
   const user = useUser();
   const [runAuthedFunction] = useAuthedFunctionWithChainID(bankChainId);
@@ -192,7 +194,7 @@ const EditTokenVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
     const numTerms = Math.floor(totalDays / rdConfig.bank.staking.fortune.termLength);
     const availableAprs = rdConfig.bank.staking.fortune.apr as any;
     const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
-    setNewApr(availableAprs[aprKey] ?? availableAprs[1]);
+    setNewApr((availableAprs[aprKey] ?? availableAprs[1]) / +frRewardsInfo.frtnVaultReductionFactor);
 
     const mitamaTroopsRatio = rdConfig.bank.staking.fortune.mitamaTroopsRatio;
     const sumDays = Number(vault.length / (86400)) + (type === 'duration' ? daysToStake : 0);
@@ -324,7 +326,7 @@ const EditTokenVault = ({vault, type, onSuccess}: EditVaultPageProps) => {
 
       <SimpleGrid columns={2} my={4} px={1}>
         <Box>APR</Box>
-        <Box textAlign='end' fontWeight='bold'>{newApr * 100}%</Box>
+        <Box textAlign='end' fontWeight='bold'>{round(newApr * 100, 2)}%</Box>
         <Box>Troops</Box>
         <Box textAlign='end' fontWeight='bold'>{commify(newTroops)}</Box>
         <Box>Mitama</Box>
