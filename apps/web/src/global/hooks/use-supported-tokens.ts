@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ApiService } from '@src/core/services/api-service';
 import { ciEquals } from '@market/helpers/utils';
 import { useMemo } from 'react';
+import { getAppChainConfig } from '@src/config/hooks';
 
 type MarketTokenFilterKeys = 'marketDefault' | 'dex' | 'listings' | 'offers' | 'deals'; // Extendable
 
@@ -45,6 +46,7 @@ export function useCollectionTokens(chainId?: number) {
 
 export function useCollectionListingTokens(address: string, chainId: number) {
   const { tokens: marketDefaultTokens } = useMarketDefaultTokens(chainId);
+  const { namedTokens } = getAppChainConfig(chainId);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['CollectionMarketTokens', address, chainId],
@@ -60,8 +62,27 @@ export function useCollectionListingTokens(address: string, chainId: number) {
     enabled: !!address && !!chainId
   });
 
+  const sortedTokens = useMemo(() => {
+    return (data ?? []).sort((a, b) => {
+      // Place native first
+      if (ciEquals(a.symbol, namedTokens.native.symbol)) return -1;
+      if (ciEquals(b.symbol, namedTokens.native.symbol)) return 1;
+
+      // Place FRTN second
+      if (ciEquals(a.symbol, namedTokens.frtn.symbol)) return -1;
+      if (ciEquals(b.symbol, namedTokens.frtn.symbol)) return 1;
+
+      // Place USDC third
+      if (ciEquals(a.symbol, namedTokens.usdc.symbol)) return -1;
+      if (ciEquals(b.symbol, namedTokens.usdc.symbol)) return 1;
+
+      // Alphabetically sort the rest
+      return a.symbol.localeCompare(b.symbol);
+    });
+  }, [data]);
+
   return {
-    tokens: data ?? [],
+    tokens: sortedTokens,
     isLoading,
     error
   };
