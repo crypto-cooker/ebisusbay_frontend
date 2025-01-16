@@ -37,7 +37,7 @@
 
 //      "@pancakeswap/multicall": ["../../submodules/eb-pancake-frontend/packages/multicall/src"],
 //      "@pancakeswap/smart-router": ["../../submodules/eb-pancake-frontend/packages/smart-router/dist"],
-//      "@pancakeswap/chains": ["../../submodules/eb-pancake-frontend/packages/chains/src"],
+     "@pancakeswap/chains": ["../../submodules/eb-pancake-frontend/packages/chains/src"],
 //      "@pancakeswap/sdk": ["../../submodules/eb-pancake-frontend/packages/swap-sdk/src"],
 //      "@pancakeswap/swap-sdk-core": ["../../submodules/eb-pancake-frontend/packages/swap-sdk-core/src"],
 //      "@pancakeswap/swap-sdk-evm": ["../../submodules/eb-pancake-frontend/packages/swap-sdk-evm/src"],
