@@ -109,17 +109,17 @@ const DataTableLg = ({ data, onAddToCart, onSort }: Pick<ResponsiveNftListingsTa
           <Tr>
             <Th>
               <Button
-                backgroundColor='transparent'
-                color='gray.400'
                 position='relative'
-                border="none"
-                _hover={{ cursor: 'pointer' }}
-                onClick={onOpen}
                 w='120px'
                 px='0px'
+                border="none"
+                color='gray.400'
                 fontSize='sm'
+                backgroundColor='transparent'
                 justifyContent='space-between'
-                _active={{ backgournd: 'none' }}
+                _hover={{ cursor: 'pointer' }}
+                _active={{ background: 'none' }}
+                onClick={onOpen}
               >
                 {SORT_FIELD[sortField]}
                 {isOpen &&
