@@ -109,8 +109,8 @@ export default function EditProfile() {
         .shape({
           profilePicture: Yup.array().of(
             Yup.object().shape({
-              file: Yup.mixed().nullable().test('', 'Avatar must not exceed 1MB in size',
-                (file) => file && file.size? file.size <= 1000000 : true
+              file: Yup.mixed().nullable().test('', 'Avatar must not exceed 2MB in size',
+                (file) => file && file.size? file.size <= 2 * 1024 * 1024 : true
               )
             })
           )
@@ -123,7 +123,7 @@ export default function EditProfile() {
                 (size) => size ? size.width >= 800 && size.height >= 360 : true
               ),
               file: Yup.mixed().nullable().test('', 'Banner must not exceed 2MB in size',
-                (file) => file && file.size? file.size <= 2000000 : true
+                (file) => file && file.size? file.size <= 2 * 1024 * 1024 : true
               )
             })
           )
