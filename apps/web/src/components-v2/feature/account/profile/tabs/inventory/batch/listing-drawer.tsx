@@ -296,7 +296,7 @@ export const ListingDrawer = () => {
     let tx = await contractService!.market.makeListings(nftAddresses, nftIds, nftPrices);
     let receipt = await tx.wait();
 
-    toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+    toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash, chain.chainId));
   }
 
   const prepareListing = async () => {

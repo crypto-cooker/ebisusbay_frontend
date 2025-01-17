@@ -30,6 +30,7 @@ import {ethers} from "ethers";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {CurrencyLogoByAddress} from "@dex/components/logo";
+import { useActiveChainId } from "@dex/swap/imported/pancakeswap/web/hooks/useActiveChainId";
 
 type CancelListingDialogProps = {
   isOpen: boolean;
@@ -65,6 +66,7 @@ const DialogContent = ({isOpen, onClose, listing, listingId, DialogBody, DialogF
   const [isExecutingLegacyCancel, setIsExecutingLegacyCancel] = useState(false);
   const [secureCancel, setSecureCancel] = useState(false);
   const [targetListing, setTargetListing] = useState<any>();
+  const {chainId} = useActiveChainId();
 
   const { error, data: nft, isError, isLoading } = useQuery({
     queryKey: ['CancelListing', user.address, (listing ? listing.listingId : listingId)],
@@ -93,7 +95,7 @@ const DialogContent = ({isOpen, onClose, listing, listingId, DialogBody, DialogF
     try {
       let tx = await contractService!.market.cancelListing(targetListing.listingId);
       const receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash, chainId));
       onClose();
     } catch (error) {
       console.log(error);
