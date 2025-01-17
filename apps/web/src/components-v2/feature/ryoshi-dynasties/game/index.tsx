@@ -1,17 +1,17 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import BattleMap from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
 import Academy from "@src/components-v2/feature/ryoshi-dynasties/game/areas/academy";
 import Bank from "@src/components-v2/feature/ryoshi-dynasties/game/areas/bank";
 import Village from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village";
-import {useAppSelector} from "@market/state/redux/store/hooks";
-import {RyoshiConfig} from "@src/components-v2/feature/ryoshi-dynasties/game/types";
+import { useAppSelector } from "@market/state/redux/store/hooks";
+import { RyoshiConfig } from "@src/components-v2/feature/ryoshi-dynasties/game/types";
 import GameSync from "@src/components-v2/feature/ryoshi-dynasties/game/game-sync";
 import ImagePreloader from "@src/components-v2/feature/ryoshi-dynasties/game/image-preloader";
-import {InlineModalContext} from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/inline-modal-context";
-import {Box, useBreakpointValue} from "@chakra-ui/react";
+import { InlineModalContext } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/inline-modal-context";
+import { Box, useBreakpointValue } from "@chakra-ui/react";
 import DynastiesLands from "./areas/lands";
-import {MapProps} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
+import { MapProps } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/battle-map";
 
 import AllianceCenter from "@src/components-v2/feature/ryoshi-dynasties/game/areas/alliance-center";
 import Barracks from "@src/components-v2/feature/ryoshi-dynasties/game/areas/barracks";
@@ -19,12 +19,14 @@ import PortalModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/
 import FishMarketModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/fish-market";
 import Tavern from "@src/components-v2/feature/ryoshi-dynasties/game/areas/tavern";
 import TownHall from "@src/components-v2/feature/ryoshi-dynasties/game/areas/town-hall";
-import {useUser} from "@src/components-v2/useUser";
+import { useUser } from "@src/components-v2/useUser";
+import { useRouter } from "next/router";
 
-const DEFAULT_SCENE = 'village';
+const DEFAULT_SCENE = '';
 
-const RyoshiDynasties = ({initialRdConfig, initialScene}: {initialRdConfig: RyoshiConfig, initialScene?: string}) => {
+const RyoshiDynasties = ({ initialRdConfig, initialScene }: { initialRdConfig: RyoshiConfig, initialScene?: string }) => {
   const user = useUser();
+  const router = useRouter();
 
   const [currentPage, setCurrentPage] = useState<string>(initialScene ?? DEFAULT_SCENE);
   const [previousPage, setPreviousPage] = useState<string>();
@@ -34,11 +36,11 @@ const RyoshiDynasties = ({initialRdConfig, initialScene}: {initialRdConfig: Ryos
 
   const navigate = (page: string) => {
     setPreviousPage(currentPage)
-    setCurrentPage(page)
+    setCurrentPage(page);
   };
 
   const returnToPreviousPage = () => {
-    setCurrentPage(previousPage ?? DEFAULT_SCENE)
+    setCurrentPage(previousPage ?? DEFAULT_SCENE);
   };
 
   useEffect(() => {
@@ -107,11 +109,11 @@ const RyoshiDynasties = ({initialRdConfig, initialScene}: {initialRdConfig: Ryos
               <Barracks onBack={returnToPreviousPage} />
             ) : (currentPage === 'battleMap' || currentPage === 'battle-map') ? (
               // <Suspense fallback={<Center><Spinner/></Center>}>
-              <BattleMap 
-                onChange={returnToPreviousPage} 
-                showFullBattlePage={true} 
-                mapProps={mapProps} 
-                height={'calc(100vh - 74px)'} 
+              <BattleMap
+                onChange={returnToPreviousPage}
+                showFullBattlePage={true}
+                mapProps={mapProps}
+                height={'calc(100vh - 74px)'}
                 useCurrentGameId={true}
                 blockDeployments={false}
               />
@@ -129,15 +131,15 @@ const RyoshiDynasties = ({initialRdConfig, initialScene}: {initialRdConfig: Ryos
             ) : currentPage === 'moongate' ? (
               <PortalModal onBack={returnToPreviousPage} />
             ) : currentPage === 'lands' ? (
-              <DynastiesLands onBack={returnToPreviousPage} showBackButton={true}/>
+              <DynastiesLands onBack={returnToPreviousPage} showBackButton={true} />
               // ): currentPage === 'announcementBoard' ? (
               // <AnnouncementBoard onBack={returnToPreviousPage} />
             ) : currentPage === 'tavern' ? (
               <Tavern onBack={returnToPreviousPage} />
-            ) : currentPage === 'townHall' ? (
+            ) : currentPage === 'townHall' || currentPage == 'town-hall' ? (
               <TownHall onBack={returnToPreviousPage} />
             ) : (!currentPage || currentPage === 'village') && (
-              <Village onChange={navigate} firstRun={firstRun} onFirstRun={() => setFirstRun(true)}/>
+              <Village onChange={navigate} firstRun={firstRun} onFirstRun={() => setFirstRun(true)} />
               // <BattleMap onChange={navigate} />
             )}
           </Box>

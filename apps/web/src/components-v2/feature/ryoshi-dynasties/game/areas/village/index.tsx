@@ -14,14 +14,14 @@ import {
   VStack
 } from "@chakra-ui/react"
 
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import styles from '@src/Components/BattleBay/Areas/BattleBay.module.scss';
 
 //contracts
 import DailyCheckinModal from "@src/components-v2/feature/ryoshi-dynasties/game/modals/daily-checkin";
 import AnnouncementBoardModal from "@src/components-v2/feature/ryoshi-dynasties/game/areas/announcements/modal/inline";
-import {VillageHud} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/hud";
+import { VillageHud } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/hud";
 import BattleLog from "@src/components-v2/feature/ryoshi-dynasties/game/modals/battle-log";
 import Buildings from "@src/components-v2/feature/ryoshi-dynasties/game/modals/buildings";
 
@@ -31,28 +31,29 @@ import {
   RyoshiDynastiesContext,
   RyoshiDynastiesContextProps
 } from "@src/components-v2/feature/ryoshi-dynasties/game/contexts/rd-context";
-import {RdModal} from "@src/components-v2/feature/ryoshi-dynasties/components";
-import {RdModalAlert} from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
-import {RdGameState} from "@src/core/services/api-service/types";
-import {isRdAnnouncementDismissed, persistRdAnnouncementDismissal} from "@src/helpers/storage";
-import {motion} from "framer-motion";
+import { RdModal } from "@src/components-v2/feature/ryoshi-dynasties/components";
+import { RdModalAlert } from "@src/components-v2/feature/ryoshi-dynasties/components/rd-modal";
+import { RdGameState } from "@src/core/services/api-service/types";
+import { isRdAnnouncementDismissed, persistRdAnnouncementDismissal } from "@src/helpers/storage";
+import { motion } from "framer-motion";
 import xmasMessages from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/xmasMessages.json";
-import {RdModalFooter} from "../../../components/rd-announcement-modal";
-import {useUser} from "@src/components-v2/useUser";
-import {ApiService} from "@src/core/services/api-service";
+import { RdModalFooter } from "../../../components/rd-announcement-modal";
+import { useUser } from "@src/components-v2/useUser";
+import { ApiService } from "@src/core/services/api-service";
 import useEnforceSigner from "@src/Components/Account/Settings/hooks/useEnforceSigner";
-import {appConfig} from "@src/config";
+import { appConfig } from "@src/config";
 import FortuneIcon from "@src/components-v2/shared/icons/fortune";
-import {Contract} from "ethers";
+import { Contract } from "ethers";
 import Resources from "@src/global/contracts/Resources.json";
-import {parseErrorMessage} from "@src/helpers/validator";
-import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent} from "@market/helpers/utils";
+import { parseErrorMessage } from "@src/helpers/validator";
+import { toast } from "react-toastify";
+import { createSuccessfulTransactionToastContent } from "@market/helpers/utils";
 import RdButton from "@src/components-v2/feature/ryoshi-dynasties/components/rd-button";
-import {VillageMerchant} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/merchant";
-import {ShakeTreeDialog} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/christmas";
-import {ValentinesDayDialog} from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/valentines";
+import { VillageMerchant } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/merchant";
+import { ShakeTreeDialog } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/christmas";
+import { ValentinesDayDialog } from "@src/components-v2/feature/ryoshi-dynasties/game/areas/village/valentines";
 import LootBoxModal from "../../modals/loot-box";
+import { useRouter } from "next/router";
 
 
 const config = appConfig();
@@ -66,11 +67,11 @@ interface VillageProps {
   firstRun: boolean;
   onFirstRun: () => void;
 }
-const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
+const Village = ({ onChange, firstRun, onFirstRun }: VillageProps) => {
   const xmasTheme = isChristmasTime ? '_xmas' : '';
-  const { config: rdConfig, game: rdGameContext, user: rdUser, refreshUser} = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
+  const { config: rdConfig, game: rdGameContext, user: rdUser, refreshUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const user = useUser();
-  const { isOpen:isOpenOverlay, onToggle } = useDisclosure()
+  const { isOpen: isOpenOverlay, onToggle } = useDisclosure()
 
   const transformComponentRef = useRef<any>(null)
   const [elementToZoomTo, setElementToZoomTo] = useState("");
@@ -92,7 +93,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   }
 
 
-  const [openShakePresent,setOpenShakePresent ] = useState(false);
+  const [openShakePresent, setOpenShakePresent] = useState(false);
   const [presentMessage, setPresentMessage] = useState('');
   const [showMessage, setShowMessage] = useState(false);
 
@@ -120,45 +121,52 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
 
   const buildings = {
-    'allianceCenter': {height:438, width:554, top: '7%', left: '55%'},
-    'townhall': {height:607, width:707, top: '13.25%', left: '36.25%'},
-    'academy': {height: 792, width: 744, top: '4%', left: '74%'},
-    'tavern': {height: 500, width: 700, top: '2%', left: '17%'},
-    'tavernSpin': {height: 573, width: 725, top: '2%', left: '17.05%'},
+    'allianceCenter': { height: 438, width: 554, top: '7%', left: '55%' },
+    'townhall': { height: 607, width: 707, top: '13.25%', left: '36.25%' },
+    'academy': { height: 792, width: 744, top: '4%', left: '74%' },
+    'tavern': { height: 500, width: 700, top: '2%', left: '17%' },
+    'tavernSpin': { height: 573, width: 725, top: '2%', left: '17.05%' },
 
-    'water': {height: 703, width: 2880, top: '32%', left: '0%'},
-    'boat': {height: 613, width: 718, top: '34%', left: '3%'},
-    'ebisustatue': {height: 542, width: 279, top: '35%', left: '40%'},
-    'market': {height: 545, width: 793, top: '36.5%', left: '55%'},
-    'barracks': {height: 579, width: 832, top: '15.5%', left: '-0.5%'},
-    'swordsmen': {height: 270, width: 383, top: '34%', left: '50.5%'},
-    'xmas_tree': {height: 505, width: 344, top: '23%', left: '29%'},
+    'water': { height: 703, width: 2880, top: '32%', left: '0%' },
+    'boat': { height: 613, width: 718, top: '34%', left: '3%' },
+    'ebisustatue': { height: 542, width: 279, top: '35%', left: '40%' },
+    'market': { height: 545, width: 793, top: '36.5%', left: '55%' },
+    'barracks': { height: 579, width: 832, top: '15.5%', left: '-0.5%' },
+    'swordsmen': { height: 270, width: 383, top: '34%', left: '50.5%' },
+    'xmas_tree': { height: 505, width: 344, top: '23%', left: '29%' },
 
-    'flowers1': {height: 251, width: 229, top: '3%', left: '14%'},
-    'flowers2': {height: 251, width: 229, top: '3%', left: '14%'},
-    'flowers3': {height: 251, width: 229, top: '3%', left: '14%'},
+    'flowers1': { height: 251, width: 229, top: '3%', left: '14%' },
+    'flowers2': { height: 251, width: 229, top: '3%', left: '14%' },
+    'flowers3': { height: 251, width: 229, top: '3%', left: '14%' },
 
-    'bank': {height: 456, width: 579, top: '%', left: '36%', x: 444, y: 444, scale: 4},
-    'announcement': {height: 243, width: 206, top: '28%', left: '60%'},
+    'bank': { height: 456, width: 579, top: '%', left: '36%', x: 444, y: 444, scale: 4 },
+    'announcement': { height: 243, width: 206, top: '28%', left: '60%' },
 
-    'moongate': {height: 482, width: 443, top: '23%', left: '67%'},
-    'torii': {height: 201, width: 236, top: '6%', left: '0%'},
-    'pond': {height: 311, width: 783, top: '0%', left: '65%'},
+    'moongate': { height: 482, width: 443, top: '23%', left: '67%' },
+    'torii': { height: 201, width: 236, top: '6%', left: '0%' },
+    'pond': { height: 311, width: 783, top: '0%', left: '65%' },
 
-    'alliancecenter_label': {height: 438, width: 554, top: '0%', left: '0%'},
-    'announcementboard_label': {height: 243, width: 279, top: '28%', left: '60%'},
-    'moongate_label': {height: 482, width: 443, top: '23%', left: '67%'},
-    'academy_label': {height: 792, width: 744, top: '4%', left: '74%'},
-    'tavern_label': {height: 573, width: 725, top: '3%', left: '14%'},
+    'alliancecenter_label': { height: 438, width: 554, top: '0%', left: '0%' },
+    'announcementboard_label': { height: 243, width: 279, top: '28%', left: '60%' },
+    'moongate_label': { height: 482, width: 443, top: '23%', left: '67%' },
+    'academy_label': { height: 792, width: 744, top: '4%', left: '74%' },
+    'tavern_label': { height: 573, width: 725, top: '3%', left: '14%' },
 
-    'townhall_label': {height: 607, width: 707, top: '13%', left: '36%'},
-    'barracks_label': {height: 579, width: 832, top: '12.5%', left: '-0.5%'},
-    'fishmarket_label': {height: 545, width: 793, top: '36.5%', left: '55%'},
-    'bank_label': {height: 456, width: 579, top: '7%', left: '33%'},
+    'townhall_label': { height: 607, width: 707, top: '13%', left: '36%' },
+    'barracks_label': { height: 579, width: 832, top: '12.5%', left: '-0.5%' },
+    'fishmarket_label': { height: 545, width: 793, top: '36.5%', left: '55%' },
+    'bank_label': { height: 456, width: 579, top: '7%', left: '33%' },
 
-    'merchant': {top: '18.5%', left: '28.5%'},
-    'valentines': {top: '32%', left: '30%'}
+    'merchant': { top: '18.5%', left: '28.5%' },
+    'valentines': { top: '32%', left: '30%' }
   }
+
+  const router = useRouter();
+
+  const changeAreaPath = (newArea: string) => {
+    const updatedPath = `/ryoshi/${newArea}`;
+    router.replace(updatedPath, updatedPath, { shallow: true });
+  };
 
   const handleEnterScene = async (elementId: string) => {
     if (elementId === 'battle-map') {
@@ -174,15 +182,17 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
       }
     }
 
+    changeAreaPath(elementId);
+
     setElementToZoomTo(elementId);
     await enterScene(elementId);
   }
 
   function timeout(delay: number) {
-    return new Promise( res => setTimeout(res, delay) );
+    return new Promise(res => setTimeout(res, delay));
   }
 
-  const enterScene = async (thingToOpen:string) => {
+  const enterScene = async (thingToOpen: string) => {
     onToggle();
     await timeout(500); //for 0.5 sec delay
     onChange(thingToOpen);
@@ -209,10 +219,10 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
   }, []);
 
   useEffect(() => {
-    if(!transformComponentRef?.current || !mapInitialized || !dimensionsLoaded) return;
-    setElementToZoomTo('fancyMenu'); 
+    if (!transformComponentRef?.current || !mapInitialized || !dimensionsLoaded) return;
+    setElementToZoomTo('fancyMenu');
   }, [transformComponentRef?.current, mapInitialized, dimensionsLoaded]);
-  
+
   const mapProps = useBreakpointValue<MapProps>(
     {
       base: {
@@ -264,10 +274,11 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
   const item = {
     hidden: { opacity: 0 },
-    show: { opacity: 1,
+    show: {
+      opacity: 1,
       transition: {
       }
-     }
+    }
   }
 
   return (
@@ -297,11 +308,11 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                 <React.Fragment>
                   {/* <button onClick={zoomToImage}>Zoom to 1</button> */}
                   {/* <Controls {...utils} /> */}
-                  <TransformComponent wrapperStyle={{height: '100%', width: '100%', objectFit: 'cover'}}>
+                  <TransformComponent wrapperStyle={{ height: '100%', width: '100%', objectFit: 'cover' }}>
                     <MapFrame gridHeight={'50px 1fr 50px'} gridWidth={'50px 1fr 50px'}>
                       <Box
                         as='img'
-                        src={ImageService.translate(`/img/battle-bay/mapImages/background${xmasTheme}.png`).custom({width: 2880, height: 1620})}
+                        src={ImageService.translate(`/img/battle-bay/mapImages/background${xmasTheme}.png`).custom({ width: 2880, height: 1620 })}
                         maxW='none'
                         useMap="#image-map"
                         className={`${styles.mapImageArea}`}
@@ -313,93 +324,93 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
                       <Sprite
                         id='alliance-center'
-                        position={{x: buildings.allianceCenter.left, y: buildings.allianceCenter.top}}
+                        position={{ x: buildings.allianceCenter.left, y: buildings.allianceCenter.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/alliancecenter${xmasTheme}.png`).convert()}
                         onClick={handleEnterScene}
                       />
                       <Sprite
                         id='townHall'
-                        position={{x: buildings.townhall.left, y: buildings.townhall.top}}
+                        position={{ x: buildings.townhall.left, y: buildings.townhall.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/townhall${xmasTheme}.png`).convert()}
                         onClick={handleEnterScene}
                       />
                       <Sprite
                         id='tavern'
-                        position={{x: buildings.tavern.left, y: buildings.tavern.top}}
+                        position={{ x: buildings.tavern.left, y: buildings.tavern.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/tavern${xmasTheme}.png`).convert()}
                         layers={[{
                           image: ImageService.translate(`/img/battle-bay/mapImages/tavern_turbine.apng`).convert(),
-                          position: {x: 0, y: 0}
+                          position: { x: 0, y: 0 }
                         }]}
                         onClick={handleEnterScene}
                       />
                       <Sprite
                         id='academy'
-                        position={{x: buildings.academy.left, y: buildings.academy.top}}
+                        position={{ x: buildings.academy.left, y: buildings.academy.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/academy${xmasTheme}.png`).convert()}
                       />
                       <Sprite
                         id='battle-map'
-                        position={{x: buildings.boat.left, y: buildings.boat.top}}
+                        position={{ x: buildings.boat.left, y: buildings.boat.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/boat${xmasTheme}.apng`).convert()}
                         onClick={handleEnterScene}
                       />
                       <Sprite
                         id='statue'
-                        position={{x: buildings.ebisustatue.left, y: buildings.ebisustatue.top}}
+                        position={{ x: buildings.ebisustatue.left, y: buildings.ebisustatue.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/ebisustatue${xmasTheme}.png`).convert()}
                       />
                       <Sprite
                         id='market'
-                        position={{x: buildings.market.left, y: buildings.market.top}}
+                        position={{ x: buildings.market.left, y: buildings.market.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/fishmarket${xmasTheme}.apng`).convert()}
                         onClick={handleEnterScene}
                       />
                       <Sprite
                         id='water'
-                        position={{x: buildings.water.left, y: buildings.water.top}}
-                        image={ImageService.translate(`/img/battle-bay/mapImages/water.png`).custom({width: 2880, height: 703})}
+                        position={{ x: buildings.water.left, y: buildings.water.top }}
+                        image={ImageService.translate(`/img/battle-bay/mapImages/water.png`).custom({ width: 2880, height: 703 })}
                         zIndex={8}
                       />
                       <Sprite
                         id='bank'
-                        position={{x: buildings.bank.left, y: buildings.bank.top}}
+                        position={{ x: buildings.bank.left, y: buildings.bank.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/bank${xmasTheme}.png`).convert()}
                         onClick={handleEnterScene}
                         zIndex={8}
                       />
                       <Sprite
                         id='announcements'
-                        position={{x: buildings.announcement.left, y: buildings.announcement.top}}
+                        position={{ x: buildings.announcement.left, y: buildings.announcement.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/announcement${xmasTheme}.png`).convert()}
                         onClick={onOpenAnnouncementBoard}
                       />
                       <Sprite
                         id='barracks'
-                        position={{x: buildings.barracks.left, y: buildings.barracks.top}}
+                        position={{ x: buildings.barracks.left, y: buildings.barracks.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/barracks${xmasTheme}.png`).convert()}
                         layers={[{
                           image: ImageService.translate(`/img/battle-bay/mapImages/swordsmen.apng`).convert(),
-                          position: {x: buildings.swordsmen.left, y: buildings.swordsmen.top}
+                          position: { x: buildings.swordsmen.left, y: buildings.swordsmen.top }
                         }]}
                         onClick={handleEnterScene}
                       />
                       <Sprite
                         id='moongate'
-                        position={{x: buildings.moongate.left, y: buildings.moongate.top}}
+                        position={{ x: buildings.moongate.left, y: buildings.moongate.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/moongate${xmasTheme}.apng`).convert()}
                         onClick={handleEnterScene}
                       />
                       <Sprite
                         id='torii'
-                        position={{x: buildings.torii.left, y: buildings.torii.top}}
+                        position={{ x: buildings.torii.left, y: buildings.torii.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/torii${xmasTheme}.png`).convert()}
                         onClick={() => onChange('lands')}
                         zIndex={8}
                       />
                       <Sprite
                         id='pond'
-                        position={{x: buildings.pond.left, y: buildings.pond.top}}
+                        position={{ x: buildings.pond.left, y: buildings.pond.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/pond${xmasTheme}.apng`).convert()}
                         zIndex={8}
                       />
@@ -408,7 +419,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                         {isMerchantEnabled && (
                           <Sprite
                             id='merchant'
-                            position={{x: buildings.merchant.left, y: buildings.merchant.top}}
+                            position={{ x: buildings.merchant.left, y: buildings.merchant.top }}
                             image={ImageService.translate(`/img/ryoshi-dynasties/village/buildings/merchant-looped.apng`).convert()}
                             zIndex={9}
                             onClick={onOpenMerchant}
@@ -418,7 +429,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
                       <Sprite
                         id='ryoshiwithknife'
-                        position={{x: buildings.valentines.left, y: buildings.valentines.top}}
+                        position={{ x: buildings.valentines.left, y: buildings.valentines.top }}
                         image={ImageService.translate(`/img/ryoshi-with-knife/ryoshiwithknife_village.apng`).convert()}
                         zIndex={9}
                         onClick={() => window.open('/dex/swap?outputCurrency=0x055c517654d72A45B0d64Dc8733f8A38E27Fd49C', '_blank')}
@@ -436,58 +447,58 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
                       {/*  />*/}
                       {/*)}*/}
 
-                      { xmasTheme ? ( <>
-                          <Box
-                            as='img'
-                            src={ImageService.translate('/img/battle-bay/mapImages/snow_overlay.gif').custom({width: 2880, height: 1620})}
-                            maxW='none'
-                            useMap="#image-map"
-                            id="fancyMenu"
-                            onLoad={() => setDimensionsLoaded(true)}
-                            style={{position:"absolute", marginTop: 0, marginLeft: 0, zIndex:"10"}}
-                            pointerEvents={'none'}
-                          />
+                      {xmasTheme ? (<>
+                        <Box
+                          as='img'
+                          src={ImageService.translate('/img/battle-bay/mapImages/snow_overlay.gif').custom({ width: 2880, height: 1620 })}
+                          maxW='none'
+                          useMap="#image-map"
+                          id="fancyMenu"
+                          onLoad={() => setDimensionsLoaded(true)}
+                          style={{ position: "absolute", marginTop: 0, marginLeft: 0, zIndex: "10" }}
+                          pointerEvents={'none'}
+                        />
 
-                          <Box className={styles.enlarge} style={{position:"absolute", marginTop: xmasTreeTop, marginLeft: xmasTreeLeft, zIndex:"9"}}
-                            onClick={PresentPresent}>
-                              <VStack
-                                justifyContent={'center'}
-                                alignItems={'center'}
+                        <Box className={styles.enlarge} style={{ position: "absolute", marginTop: xmasTreeTop, marginLeft: xmasTreeLeft, zIndex: "9" }}
+                          onClick={PresentPresent}>
+                          <VStack
+                            justifyContent={'center'}
+                            alignItems={'center'}
+                          >
+                            <img src={ImageService.translate('/img/battle-bay/mapImages/xmas_tree.apng').convert()} />
+                            {openShakePresent && (
+                              <>
+                                <Box
+                                  position='absolute'
+                                  bgImage={'/img/battle-bay/mapImages/open_present.png'}
+                                  top={450}
+                                  rounded='full'
+                                  zIndex={13}
+                                  data-group
+                                  w={357}
+                                  h={81}
+                                  left={25}
                                 >
-                                <img src={ImageService.translate('/img/battle-bay/mapImages/xmas_tree.apng').convert()} />
-                                { openShakePresent && (
-                                  <>
-                                    <Box
-                                      position='absolute'
-                                      bgImage={'/img/battle-bay/mapImages/open_present.png'}
-                                      top={450}
-                                      rounded='full'
-                                      zIndex={13}
-                                      data-group
-                                      w={357}
-                                      h={81}
-                                      left={25}
-                                    >
-                                      <Button
-                                        bg={'transparent'}
-                                        w={357}
-                                        h={81}
-                                        fontSize='28px'
-                                        onClick={PresentPresent}
-                                        _groupHover={{
-                                          cursor: 'pointer',
-                                          bg: 'transparent',
-                                          bgImage:'/img/battle-bay/mapImages/open_present_hover.png',
-                                        }}
-                                      >
-                                      </Button>
-                                    </Box>
-                                  </>
-                                  )
-                                }
-                            </VStack>
-                          </Box>
-                      </>) : (<></>) }
+                                  <Button
+                                    bg={'transparent'}
+                                    w={357}
+                                    h={81}
+                                    fontSize='28px'
+                                    onClick={PresentPresent}
+                                    _groupHover={{
+                                      cursor: 'pointer',
+                                      bg: 'transparent',
+                                      bgImage: '/img/battle-bay/mapImages/open_present_hover.png',
+                                    }}
+                                  >
+                                  </Button>
+                                </Box>
+                              </>
+                            )
+                            }
+                          </VStack>
+                        </Box>
+                      </>) : (<></>)}
 
                       {/* <div className={[styles.enlarge]} style={{position:"absolute", marginTop: townhall_labelTop, marginLeft: townhall_labelLeft, zIndex:"20"}}>
                         <img src='/img/battle-bay/building_labels/townhall_label.png' width={townhall_labelWidth} height={townhall_labelHeight} /> </div>
@@ -526,11 +537,11 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
           />
         </Box>
 
-        <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard} onOpenDailyCheckin={onOpenDailyCheckin}/>
+        <AnnouncementBoardModal isOpen={isOpenAnnouncementBoard} onClose={onCloseAnnouncementBoard} onOpenDailyCheckin={onOpenDailyCheckin} />
         <LootBoxModal isOpen={isOpenLootBoxModal} onClose={onCloseLootBoxModal} />
-        <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh}/>
+        <DailyCheckinModal isOpen={isOpenDailyCheckin} onClose={onCloseDailyCheckin} forceRefresh={forceRefresh} />
         <BattleLog isOpen={isOpenBattleLog} onClose={onCloseBattleLog} />
-        <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo}/>
+        <Buildings isOpenBuildings={isOpenBuildings} onCloseBuildings={onCloseBuildings} buildingButtonRef={buildingButtonRef} setElementToZoomTo={setElementToZoomTo} />
         <ShakeTreeDialog isOpen={isPresentModalOpen} onClose={onClosePresentModal} />
         <ValentinesDayDialog isOpen={isOpenValentinesDialog} onClose={onCloseValentinesDialog} />
 
@@ -540,7 +551,7 @@ const Village = ({onChange, firstRun, onFirstRun}: VillageProps) => {
 
         <Fade in={isOpenOverlay}>
           <Modal
-            onClose={() => {}}
+            onClose={() => { }}
             isOpen={isOpenOverlay}
           >
             <ModalOverlay
@@ -609,7 +620,7 @@ interface SpriteLayerProps {
   image: string;
 }
 
-const Sprite = ({id, position, image, layers, zIndex, onClick}: SpriteProps) => {
+const Sprite = ({ id, position, image, layers, zIndex, onClick }: SpriteProps) => {
   return (
     <Box
       id={id}
@@ -636,8 +647,8 @@ interface EventSpriteProps extends SpriteProps {
   ctaImageHover?: string;
 }
 
-const EventSprite = ({id, position, image, ctaImage, ctaImageHover, zIndex, onClick}: EventSpriteProps) => {
-  const [showActionButton,setShowActionButton ] = useState(false);
+const EventSprite = ({ id, position, image, ctaImage, ctaImageHover, zIndex, onClick }: EventSpriteProps) => {
+  const [showActionButton, setShowActionButton] = useState(false);
 
   return (
     <Box
@@ -672,7 +683,7 @@ const EventSprite = ({id, position, image, ctaImage, ctaImageHover, zIndex, onCl
             _groupHover={{
               cursor: 'pointer',
               bg: 'transparent',
-              bgImage:ctaImageHover,
+              bgImage: ctaImageHover,
             }}
           >
           </Button>
