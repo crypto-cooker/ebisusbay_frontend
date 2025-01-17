@@ -216,7 +216,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft && user.wallet.address && appChainConfig, collectionMarketTokens.length > 0) {
+    if (nft && user.wallet.address && appChainConfig && collectionMarketTokens.length > 0) {
       asyncFunc();
     }
   }, [nft, user.wallet.address, appChainConfig, collectionMarketTokens]);
