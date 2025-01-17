@@ -5,8 +5,12 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  Button,
   Flex,
   HStack,
+  Modal,
+  ModalOverlay,
+  Select,
   SimpleGrid,
   Stack,
   Stat,
@@ -21,20 +25,24 @@ import {
   Thead,
   Tr,
   useBreakpointValue,
-  useColorModeValue
+  useColorModeValue,
+  useDisclosure,
+  useOutsideClick,
+  VStack
 } from "@chakra-ui/react";
-import React from "react";
-import {round, shortAddress, timeSince} from "@market/helpers/utils";
+import React, { ChangeEvent, RefObject, useCallback, useState } from "react";
+import { round, shortAddress, timeSince } from "@market/helpers/utils";
 import Link from "next/link";
 import ImageService from "@src/core/services/image";
-import {CdnImage} from "@src/components-v2/shared/media/cdn-image";
+import { CdnImage } from "@src/components-v2/shared/media/cdn-image";
 import Blockies from "react-blockies";
-import {commify} from "ethers/lib/utils";
-import {PrimaryButton} from "@src/components-v2/foundation/button";
+import { commify } from "ethers/lib/utils";
+import { PrimaryButton } from "@src/components-v2/foundation/button";
 import moment from "moment/moment";
-import {InfiniteData} from "@tanstack/query-core";
-import {IPaginatedList} from "@src/core/services/api-service/paginated-list";
-import {CurrencyLogoByAddress} from "@dex/components/logo";
+import { InfiniteData } from "@tanstack/query-core";
+import { IPaginatedList } from "@src/core/services/api-service/paginated-list";
+import { CurrencyLogoByAddress } from "@dex/components/logo";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 interface ResponsiveNftListingsTableProps {
   data: InfiniteData<IPaginatedList<any>>;
@@ -44,11 +52,11 @@ interface ResponsiveNftListingsTableProps {
   onAddToCart?: (offer: any) => void;
 }
 
-export type SortKeys = 'price' | 'amount';
+export type SortKeys = 'price' | 'amount' | 'pricePerItem';
 
-const ResponsiveNftListingsTable = ({data, breakpointValue, onAddToCart, onSort, primarySort}: ResponsiveNftListingsTableProps) => {
-  const shouldUseAccordion = useBreakpointValue({base: true, [breakpointValue ?? 'md']: false}, {fallback: 'lg'})
-  const size = useBreakpointValue({base: 1, lg: 2, xl: 3}, {fallback: 'lg'})
+const ResponsiveNftListingsTable = ({ data, breakpointValue, onAddToCart, onSort, primarySort }: ResponsiveNftListingsTableProps) => {
+  const shouldUseAccordion = useBreakpointValue({ base: true, [breakpointValue ?? 'md']: false }, { fallback: 'lg' })
+  const size = useBreakpointValue({ base: 1, lg: 2, xl: 3 }, { fallback: 'lg' })
 
   return size === 1 ? (
     <DataAccordion data={data} onAddToCart={onAddToCart} primarySort={primarySort} />
@@ -59,7 +67,12 @@ const ResponsiveNftListingsTable = ({data, breakpointValue, onAddToCart, onSort,
   );
 }
 
-const DataTableLg = ({data, onAddToCart, onSort}: Pick<ResponsiveNftListingsTableProps, 'data' | 'onAddToCart' | 'onSort'>) => {
+const SORT_FIELD: Record<string, string> = {
+  'price': 'Total Price',
+  'pricePerItem': 'Price Per Item'
+}
+
+const DataTableLg = ({ data, onAddToCart, onSort }: Pick<ResponsiveNftListingsTableProps, 'data' | 'onAddToCart' | 'onSort'>) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const textColor = useColorModeValue('#727272', '#a2a2a2');
 
@@ -67,12 +80,56 @@ const DataTableLg = ({data, onAddToCart, onSort}: Pick<ResponsiveNftListingsTabl
     return timeSince(new Date(timestamp * 1000));
   };
 
+  const [sortField, setSortField] = useState<string>('price');
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const sort = useCallback(
+    (sortBy: string) => {
+      onSort(sortBy); // Trigger the sorting logic
+      setSortField(sortBy); // Update the selected sort field
+
+      // Delay closing the dropdown slightly to avoid conflict with `useOutsideClick`
+      setTimeout(() => {
+        onClose();
+      }, 0);
+    },
+    [onSort, onClose]
+  );
+
+  const ref: RefObject<HTMLDivElement> = React.useRef(null);
+  useOutsideClick({
+    ref: ref,
+    handler: onClose,
+  });
+
   return (
     <TableContainer w='full'>
       <Table variant='simple' color={textColor}>
         <Thead>
           <Tr>
-            <Th onClick={() => onSort('price')} cursor='pointer'>Price</Th>
+            <Th>
+              <Button
+                position='relative'
+                w='120px'
+                px='0px'
+                border="none"
+                color='gray.400'
+                fontSize='sm'
+                backgroundColor='transparent'
+                justifyContent='space-between'
+                _hover={{ cursor: 'pointer' }}
+                _active={{ background: 'none' }}
+                onClick={onOpen}
+              >
+                {SORT_FIELD[sortField]}
+                {isOpen &&
+                  <VStack fontSize='sm' ref={ref} border='1px' rounded='sm' w='full' color='white' backgroundColor='gray.700' position='absolute' top='100%'>
+                    <Box w='full' rounded='sm' py='5px' _hover={{ backgroundColor: 'gray.400' }} onClick={() => { sort('price') }}>Total Price</Box>
+                    <Box w='full' rounded='sm' py='5px' _hover={{ backgroundColor: 'gray.400' }} onClick={() => { sort('pricePerItem') }}>Price Per Item</Box>
+                  </VStack>}
+                <ChevronDownIcon />
+              </Button>
+            </Th>
             <Th onClick={() => onSort('amount')} cursor='pointer'>Qty</Th>
             <Th colSpan={2}>User</Th>
             {!!onAddToCart && <Th></Th>}
@@ -82,11 +139,11 @@ const DataTableLg = ({data, onAddToCart, onSort}: Pick<ResponsiveNftListingsTabl
           {data.pages.map((page: any, pageIndex: number) => (
             <React.Fragment key={pageIndex}>
               {page.data.map((entity: any, index: number) => (
-                <Tr key={entity.listingId} _hover={{bg: hoverBackground}}>
+                <Tr key={entity.listingId} _hover={{ bg: hoverBackground }}>
                   <Td>
                     <HStack>
                       <CurrencyLogoByAddress address={entity.currency} chainId={entity.chain} size='16px' />
-                      <Box>{commify(round(entity.price, 2))}</Box>
+                      <Box>{commify(round(entity.price / (sortField == 'price' ? 1 : entity.amount), 2))}</Box>
                     </HStack>
                   </Td>
                   <Td>
@@ -130,11 +187,11 @@ const DataTableLg = ({data, onAddToCart, onSort}: Pick<ResponsiveNftListingsTabl
           ))}
         </Tbody>
       </Table>
-    </TableContainer>
+    </TableContainer >
   )
 };
 
-const DataTableSm = ({data, onAddToCart, onSort}: Pick<ResponsiveNftListingsTableProps, 'data' | 'onAddToCart' | 'onSort'>) => {
+const DataTableSm = ({ data, onAddToCart, onSort }: Pick<ResponsiveNftListingsTableProps, 'data' | 'onAddToCart' | 'onSort'>) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
   const textColor = useColorModeValue('#727272', '#a2a2a2');
 
@@ -156,7 +213,7 @@ const DataTableSm = ({data, onAddToCart, onSort}: Pick<ResponsiveNftListingsTabl
           {data.pages.map((page: any, pageIndex: number) => (
             <React.Fragment key={pageIndex}>
               {page.data.map((entity: any, index: number) => (
-                <Tr key={entity.listingId} _hover={{bg: hoverBackground}}>
+                <Tr key={entity.listingId} _hover={{ bg: hoverBackground }}>
                   <Td>
                     <HStack>
                       <CurrencyLogoByAddress address={entity.currency} chainId={entity.chain} size='16px' />
@@ -210,7 +267,7 @@ const DataTableSm = ({data, onAddToCart, onSort}: Pick<ResponsiveNftListingsTabl
   )
 };
 
-const DataAccordion = ({data, onAddToCart, primarySort}: Pick<ResponsiveNftListingsTableProps, 'data' | 'onAddToCart' | 'primarySort'>) => {
+const DataAccordion = ({ data, onAddToCart, primarySort }: Pick<ResponsiveNftListingsTableProps, 'data' | 'onAddToCart' | 'primarySort'>) => {
   const hoverBackground = useColorModeValue('gray.100', '#424242');
 
   const getTimeSince = (timestamp: number) => {
