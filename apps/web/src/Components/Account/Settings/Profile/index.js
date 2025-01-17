@@ -62,7 +62,8 @@ export default function EditProfile() {
       if (!value) return false;
 
       if (value.includes('.')) {
-        return value.endsWith('.cro');
+        const validTlds = ['.cro', '.caw'];
+        return validTlds.some(v => value.toLowerCase().endsWith(v));
       }
 
       if (value.startsWith('-') ||
