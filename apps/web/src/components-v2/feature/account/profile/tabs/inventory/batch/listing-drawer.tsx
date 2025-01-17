@@ -57,7 +57,6 @@ import {
 import * as Sentry from "@sentry/react";
 import {appConfig} from "@src/config";
 import {ListingDrawerItem} from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-drawer-item";
-import Bundle from "@src/global/contracts/Bundle.json";
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 import useCancelGaslessListing from "@src/Components/Account/Settings/hooks/useCancelGaslessListing";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
@@ -76,8 +75,8 @@ import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import {ChainId} from "@pancakeswap/chains";
 import { useActiveChainId } from "@dex/swap/imported/pancakeswap/web/hooks/useActiveChainId";
+import { useListingsTokens } from '@src/global/hooks/use-supported-tokens';
 
-const config = appConfig();
 const MAX_NFTS_IN_GAS_CART = 100;
 const MIN_NFTS_IN_BUNDLE = 2;
 const floorThreshold = 5;
@@ -101,11 +100,12 @@ export const ListingDrawer = () => {
   const [upsertGaslessListings, responseUpdate] = useUpsertGaslessListings(chain.chainId);
   const [cancelGaslessListing, response] = useCancelGaslessListing();
   const { tokenToCroValue } = useExchangeRate();
+  const { tokens: listableCurrencies, search: findListableToken, exists: isCurrencyListable } = useListingsTokens(chain.chainId);
 
   const currencies = useMemo(() => {
     return  ['cro', ...new Set(batchListingCart.items.map((item) => item.currency?.toLowerCase() ?? 'cro'))]
-      .filter((currencySymbol) => !!currencySymbol && config.listings.currencies.available.includes(currencySymbol));
-  }, [batchListingCart.items]);
+      .filter((currencySymbol) => !!currencySymbol && isCurrencyListable(currencySymbol));
+  }, [batchListingCart.items, listableCurrencies]);
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
@@ -126,15 +126,15 @@ export const ListingDrawer = () => {
 
   const getConvertedRates = async (targetSymbol: string, targetPrice?: number) => {
     const prices = await getPrices();
-    const inputToken = config.tokens[targetSymbol.toLowerCase()];
+    const inputToken = findListableToken(targetSymbol);
     const inputPrice = prices.find((price: any) => ciEquals(price.currency, inputToken ? inputToken.address : ethers.constants.AddressZero));
 
     // const usdPrice = targetPrice * Number(inputPrice?.usdPrice);
 
     return [...new Set(batchListingCart.items.map((item) => item.currency?.toLowerCase()))]
-      .filter((currencySymbol) => !!currencySymbol && config.listings.currencies.available.includes(currencySymbol))
+      .filter((currencySymbol) => !!currencySymbol && isCurrencyListable(currencySymbol))
       .map((currencySymbol) => {
-        const token = config.tokens[currencySymbol!];
+        const token = findListableToken(currencySymbol!);
         const tokenAddress = token ? token.address : ethers.constants.AddressZero;
         const price = prices.find((price: any) => ciEquals(price.currency, tokenAddress));
 
@@ -323,7 +323,7 @@ export const ListingDrawer = () => {
       const nftPrices = batchListingCart.items.map((o) => {
         const floorPriceObj = nftFloorPrices.find((fp) => ciEquals(fp.address, o.nft.nftAddress));
         const perUnitPrice = o.priceType === 'each' ? Number(o.price) : Number(o.price) / o.quantity;
-        const croPrice = tokenToCroValue(perUnitPrice, config.tokens[o.currency?.toLowerCase() ?? 'cro']?.address);
+        const croPrice = tokenToCroValue(perUnitPrice, findListableToken(o.currency?.toLowerCase() ?? 'cro')?.address);
         const isBelowFloor = !!floorPriceObj?.floorPrice && (floorPriceObj.floorPrice !== 0 && ((Number(floorPriceObj.floorPrice) - croPrice) / Number(floorPriceObj.floorPrice)) * 100 > floorThreshold);
         if (isBelowFloor) {
           floorWarning = true;
