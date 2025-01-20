@@ -45,7 +45,7 @@ interface StakeLpTokensDialogProps {
 }
 
 const MIN_TROOPS = 10;
-const SECONDS_PER_TROOP = 30;
+const SECONDS_PER_TROOP = 20;
 
 const BoostFarmDialog = ({isOpen, onClose, farm, onSuccess}: StakeLpTokensDialogProps) => {
   const user = useUser();

@@ -159,6 +159,11 @@ class RyoshiDynastiesRepository extends CmsRepository {
     return response.data;
   }
 
+  async getFortuneRewardsInfo () {
+    const response = await this.cms.get(`ryoshi-dynasties/fortune-rewards/info`);
+    return response.data.data;
+  }
+
   async claimDailyRewards(address: string, signature: string) {
     const response = await this.cms.get('ryoshi-dynasties/game-tokens/daily-reward/claim', {
       params: {

@@ -19,8 +19,8 @@ import {BarterToken} from "@market/state/jotai/atoms/deal";
 import { wagmiConfig } from '@src/wagmi';
 import { Address, erc20Abi } from 'viem';
 import {readContracts} from "@wagmi/core";
-import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
 import useBarterDeal from '@src/components-v2/feature/deal/use-barter-deal';
+import { useDealsTokens } from '@src/global/hooks/use-supported-tokens';
 
 interface CustomTokenPickerProps {
   onAdd: (token: BarterToken) => void;
@@ -30,7 +30,7 @@ export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
   const { barterState } = useBarterDeal();
   const chainId = barterState.chainId;
 
-  const { knownCurrencies  } = useMultichainCurrencyBroker(chainId);
+  const { search: findDealToken } = useDealsTokens(chainId);
   const [tokenAddress, setTokenAddress] = useState<string>();
   const [quantity, setQuantity] = useState<string>();
 
@@ -56,7 +56,7 @@ export const CustomTokenPicker = ({onAdd}: CustomTokenPickerProps) => {
     }
 
     try {
-      const knownToken = knownCurrencies.find((token) => ciEquals(token.address, tokenAddress));
+      const knownToken = findDealToken({address: tokenAddress});
       if (knownToken) {
         onAdd({
           ...knownToken,

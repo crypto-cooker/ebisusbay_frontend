@@ -1,5 +1,4 @@
-import {BrokerCurrency} from "@market/hooks/use-currency-broker";
-import {MultichainBrokerCurrency} from "@market/hooks/use-multichain-currency-broker";
+import { CmsToken } from '@src/components-v2/global-data-fetcher';
 
 export interface MapiFarm {
   pid: number;
@@ -79,7 +78,7 @@ export interface DerivedFarm {
 
 export interface FarmRow {
   name: string;
-  dailyRewards: Array<{rewarder: MapiFarmRewarder, token: MultichainBrokerCurrency, amount: string}>;
+  dailyRewards: Array<{rewarder: MapiFarmRewarder, token: Partial<CmsToken>, amount: string}>;
   stakedLiquidity: string;
   apr: string;
   state: FarmState;

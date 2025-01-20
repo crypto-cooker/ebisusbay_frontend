@@ -53,9 +53,11 @@ import StyledAccordionItem
   from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/styled-accordion-item';
 import { CheckIcon } from '@chakra-ui/icons';
 import { useAppConfig } from '@src/config/hooks';
+import { RewardsInfo } from '@src/core/services/api-service/types';
 
 interface VaultSummaryProps {
   vault: FortuneStakingAccount;
+  rewardsInfo: RewardsInfo;
   vaultType: VaultType;
   index: number;
   onEditVault: (type: string) => void;
@@ -67,23 +69,24 @@ interface VaultSummaryProps {
 }
 
 const BOOSTS_ENABLED = false;
-const VAULT_CONVERSION_ENABLED = false;
+const VAULT_CONVERSION_ENABLED = true;
 
 const VaultSummary = (props: VaultSummaryProps) => {
   return props.vaultType === VaultType.LP ? <LpVaultSummary {...props} /> : <TokenVaultSummary {...props} />;
 }
 
 
-const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onConvertVault, onClosed }: VaultSummaryProps) => {
+const TokenVaultSummary = ({ vault, rewardsInfo, onEditVault, onWithdrawVault, onTokenizeVault, onBoostVault, onConvertVault, onClosed }: VaultSummaryProps) => {
   const { config: rdConfig, user: rdUser } = useContext(RyoshiDynastiesContext) as RyoshiDynastiesContextProps;
   const { boost: activeBoost } = useUserVaultBoost(+vault.vaultId);
+  const {frtnVaultReductionFactor} = rewardsInfo;
 
   const vaultBalance = Number(ethers.utils.formatEther(vault.balance));
   const daysToAdd = Number(vault.length / (86400));
   const numTerms = Math.floor(daysToAdd / rdConfig.bank.staking.fortune.termLength);
   const availableAprs = rdConfig.bank.staking.fortune.apr as any;
   const aprKey = findNextLowestNumber(Object.keys(availableAprs), numTerms);
-  const baseApr = (availableAprs[aprKey] ?? availableAprs[1]) * 100;
+  const baseApr = (availableAprs[aprKey] ?? availableAprs[1]) * 100 / +frtnVaultReductionFactor;
   const endDate = moment(vault.endTime * 1000).format("MMM D yyyy");
 
   const [totalApr, setTotalApr] = useState(baseApr);
@@ -95,7 +98,7 @@ const TokenVaultSummary = ({ vault, onEditVault, onWithdrawVault, onTokenizeVaul
     let totalApr = 0;
     let bonusApr = 0;
     if (rdUser) {
-      totalApr = (baseApr + rdUser.bank.bonus.aApr) * (1 + rdUser.bank.bonus.mApr);
+      totalApr = (baseApr + rdUser.bank.bonus.aApr / +frtnVaultReductionFactor) * (1 + rdUser.bank.bonus.mApr / +frtnVaultReductionFactor);
       bonusApr = totalApr - baseApr;
     }
     setBonusApr(bonusApr);
@@ -414,7 +417,7 @@ const VaultActionButtons = ({ vault, onEditVault, onWithdrawVault, onTokenizeVau
                   Boost Vault
                 </Button>
               )}
-              {vaultType === VaultType.TOKEN && bankChainId === appConfig.defaultChainId && VAULT_CONVERSION_ENABLED && (
+              {vaultType === VaultType.TOKEN && VAULT_CONVERSION_ENABLED && (
                 <Button
                   leftIcon={<Icon as={FontAwesomeIcon} icon={faArrowRightArrowLeft} />}
                   onClick={onConvertVault}

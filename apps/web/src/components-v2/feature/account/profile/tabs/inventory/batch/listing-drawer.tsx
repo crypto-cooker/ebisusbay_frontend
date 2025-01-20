@@ -30,7 +30,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
-import React, {ChangeEvent, useCallback, useMemo, useRef, useState} from "react";
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   addToBatchListingCart,
   applyCurrencyToAll,
@@ -57,7 +57,6 @@ import {
 import * as Sentry from "@sentry/react";
 import {appConfig} from "@src/config";
 import {ListingDrawerItem} from "@src/components-v2/feature/account/profile/tabs/inventory/batch/listing-drawer-item";
-import Bundle from "@src/global/contracts/Bundle.json";
 import useUpsertGaslessListings from "@src/Components/Account/Settings/hooks/useUpsertGaslessListings";
 import useCancelGaslessListing from "@src/Components/Account/Settings/hooks/useCancelGaslessListing";
 import {QuestionOutlineIcon} from "@chakra-ui/icons";
@@ -75,8 +74,9 @@ import {WalletsQueryParams} from "@src/core/services/api-service/mapi/queries/wa
 import {PrimaryButton} from "@src/components-v2/foundation/button";
 import {useContractService, useUser} from "@src/components-v2/useUser";
 import {ChainId} from "@pancakeswap/chains";
+import { useActiveChainId } from "@dex/swap/imported/pancakeswap/web/hooks/useActiveChainId";
+import { useListingsTokens } from '@src/global/hooks/use-supported-tokens';
 
-const config = appConfig();
 const MAX_NFTS_IN_GAS_CART = 100;
 const MIN_NFTS_IN_BUNDLE = 2;
 const floorThreshold = 5;
@@ -85,6 +85,7 @@ const numberRegexValidation = /^[1-9]+[0-9]*$/;
 export const ListingDrawer = () => {
   const dispatch = useAppDispatch();
   const user = useUser();
+  const chain = useActiveChainId();
   const contractService = useContractService();
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
@@ -96,14 +97,15 @@ export const ListingDrawer = () => {
   const [expirationDateAllOption, setExpirationDateAllOption] = useState<string>();
   const [currencyAllOption, setCurrencyAllOption] = useState<string>();
 
-  const [upsertGaslessListings, responseUpdate] = useUpsertGaslessListings();
+  const [upsertGaslessListings, responseUpdate] = useUpsertGaslessListings(chain.chainId);
   const [cancelGaslessListing, response] = useCancelGaslessListing();
   const { tokenToCroValue } = useExchangeRate();
+  const { tokens: listableCurrencies, search: findListableToken, exists: isCurrencyListable } = useListingsTokens(chain.chainId);
 
   const currencies = useMemo(() => {
     return  ['cro', ...new Set(batchListingCart.items.map((item) => item.currency?.toLowerCase() ?? 'cro'))]
-      .filter((currencySymbol) => !!currencySymbol && config.listings.currencies.available.includes(currencySymbol));
-  }, [batchListingCart.items]);
+      .filter((currencySymbol) => !!currencySymbol && isCurrencyListable(currencySymbol));
+  }, [batchListingCart.items, listableCurrencies]);
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
@@ -124,15 +126,15 @@ export const ListingDrawer = () => {
 
   const getConvertedRates = async (targetSymbol: string, targetPrice?: number) => {
     const prices = await getPrices();
-    const inputToken = config.tokens[targetSymbol.toLowerCase()];
+    const inputToken = findListableToken(targetSymbol);
     const inputPrice = prices.find((price: any) => ciEquals(price.currency, inputToken ? inputToken.address : ethers.constants.AddressZero));
 
     // const usdPrice = targetPrice * Number(inputPrice?.usdPrice);
 
     return [...new Set(batchListingCart.items.map((item) => item.currency?.toLowerCase()))]
-      .filter((currencySymbol) => !!currencySymbol && config.listings.currencies.available.includes(currencySymbol))
+      .filter((currencySymbol) => !!currencySymbol && isCurrencyListable(currencySymbol))
       .map((currencySymbol) => {
-        const token = config.tokens[currencySymbol!];
+        const token = findListableToken(currencySymbol!);
         const tokenAddress = token ? token.address : ethers.constants.AddressZero;
         const price = prices.find((price: any) => ciEquals(price.currency, tokenAddress));
 
@@ -266,7 +268,7 @@ export const ListingDrawer = () => {
       expirationDate: new Date().getTime() + item.expiration!,
       is1155: item.nft.is1155,
       currencySymbol: item.currency,
-      chainId: ChainId.CRONOS
+      chainId: chain.chainId
     })))
     toast.success("Listings Successful");
   }
@@ -321,7 +323,7 @@ export const ListingDrawer = () => {
       const nftPrices = batchListingCart.items.map((o) => {
         const floorPriceObj = nftFloorPrices.find((fp) => ciEquals(fp.address, o.nft.nftAddress));
         const perUnitPrice = o.priceType === 'each' ? Number(o.price) : Number(o.price) / o.quantity;
-        const croPrice = tokenToCroValue(perUnitPrice, config.tokens[o.currency?.toLowerCase() ?? 'cro']?.address);
+        const croPrice = tokenToCroValue(perUnitPrice, findListableToken(o.currency?.toLowerCase() ?? 'cro')?.address);
         const isBelowFloor = !!floorPriceObj?.floorPrice && (floorPriceObj.floorPrice !== 0 && ((Number(floorPriceObj.floorPrice) - croPrice) / Number(floorPriceObj.floorPrice)) * 100 > floorThreshold);
         if (isBelowFloor) {
           floorWarning = true;
@@ -384,8 +386,10 @@ export const ListingDrawer = () => {
       }});
       const price = ethers.utils.parseEther(values.price.toString());
 
-      const bundleContract = new Contract(config.contracts.bundle, Bundle.abi, user.provider.getSigner());
-      const tx = await bundleContract.wrapAndList(nftAddresses, nftIds, values.title, values.description, price)
+      const tx = await contractService?.bundle.wrapAndList(nftAddresses, nftIds, values.title, values.description, price);
+
+      // const bundleContract = new Contract(config.contracts.bundle, Bundle.abi, user.provider.getSigner());
+      // const tx = await bundleContract.wrapAndList(nftAddresses, nftIds, values.title, values.description, price)
       const receipt = await tx.wait();
       toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
       resetDrawer();
@@ -394,14 +398,21 @@ export const ListingDrawer = () => {
     }
   };
 
+  // Clear cart if chain changes to avoid mixing chains
+  useEffect(() => {
+    if (batchListingCart.items.some((item) => item.nft.chain !== chain.chainId)) {
+      handleClearCart();
+    }
+  }, [chain.chainId]);
+
   return (
     <>
       <GridItem p={4} overflowY="auto">
         <FormControl display='flex' alignItems='center' mb={2}>
-          <FormLabel htmlFor='list-bundle-toggle' mb='0'>
+          <FormLabel htmlFor='list-bundle-toggle' mb='0' disabled={chain.chainId != ChainId.CRONOS}>
             List as bundle
           </FormLabel>
-          <Switch id='list-bundle-toggle' isChecked={isBundling} onChange={onBundleToggled}/>
+          <Switch id='list-bundle-toggle' isChecked={isBundling} onChange={onBundleToggled} disabled={chain.chainId != ChainId.CRONOS}/>
         </FormControl>
         <FormControl display='flex' alignItems='center'>
           <FormLabel htmlFor='debug-legacy-toggle' mb='0'>

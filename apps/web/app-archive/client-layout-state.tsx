@@ -1,3 +1,5 @@
+import { usePathname } from 'next/navigation';
+
 'use-client';
 
 import React from "react";
@@ -40,9 +42,12 @@ const GlobalStyles = createGlobalStyle`
 
 
 export default function ClientLayoutState({children}: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const exchangePrices = useGlobalPrices();
   const {theme: userTheme} = useUser();
   const { colorMode } = useColorMode()
+
+  const hideFooter = pathname === '/' || pathname === '/ryoshi';
 
   return (
     <ThemeProvider theme={getTheme(userTheme)}>
@@ -52,8 +57,12 @@ export default function ClientLayoutState({children}: { children: React.ReactNod
         <div style={{paddingTop: '74px'}}>
           {children}
         </div>
-        <Footer />
-        <ScrollToTopBtn />
+        {!hideFooter && (
+          <>
+            <Footer />
+            <ScrollToTopBtn />
+          </>
+        )}
         <ToastContainer
           position={toast.POSITION.BOTTOM_LEFT}
           hideProgressBar={true}

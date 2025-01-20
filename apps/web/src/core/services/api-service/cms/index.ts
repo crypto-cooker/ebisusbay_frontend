@@ -83,6 +83,10 @@ class Cms {
     return this.ryoshiDynasties.getSeasonalRewards(address, seasonId);
   }
 
+  async getFortuneRewardsInfo(){
+    return this.ryoshiDynasties.getFortuneRewardsInfo();
+  }
+
   async claimDailyRewards(address: string, signature: string) {
     return this.ryoshiDynasties.claimDailyRewards(address, signature);
   }
@@ -305,6 +309,10 @@ class Cms {
 
   async getLootBoxBalances(walletAddress:string) {
     return this.lootBox.getLootBoxBalances(walletAddress);
+  }
+
+  async getLootBoxLogs(address: string, signature: string) {
+    return this.lootBox.getLootBoxLogs(address, signature);
   }
 
   async getLootBoxInfo(id:number) {

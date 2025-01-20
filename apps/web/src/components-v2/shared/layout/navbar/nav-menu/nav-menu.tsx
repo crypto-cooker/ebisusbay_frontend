@@ -1,9 +1,22 @@
-import { HStack, Menu, MenuButton, MenuList, MenuItem, Button, Box, Icon, VStack } from '@chakra-ui/react';
+import {
+  HStack,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Button,
+  Box,
+  Icon,
+  VStack,
+  ButtonGroup,
+  IconButton
+} from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightArrowLeft, faGamepad, faSackDollar } from '@fortawesome/free-solid-svg-icons';
 import { memo } from 'react';
 import NextLink from "next/link";
+import { faDiscord, faInstagram, faTelegram, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 
 const NavMenu = (props: any) => {
   const { isMobile } = props;
@@ -55,7 +68,7 @@ const NavMenu = (props: any) => {
             <MenuItem as={NextLink} href="/staking" _hover={{ color: 'inherit' }} justifyContent="space-between">
               Staking
             </MenuItem>
-            <MenuItem as={NextLink} href="/ryoshi" _hover={{ color: 'inherit' }} justifyContent="space-between">
+            <MenuItem as={NextLink} href="/ryoshi/bank" _hover={{ color: 'inherit' }} justifyContent="space-between">
               Bank
             </MenuItem>
             <MenuItem as={NextLink} href="/rewards" _hover={{ color: 'inherit' }} justifyContent="space-between">
@@ -71,7 +84,7 @@ const NavMenu = (props: any) => {
             </VStack>
           </MenuButton>
           <MenuList>
-            <MenuItem as={NextLink} href="/ryoshi" _hover={{ color: 'inherit' }} justifyContent="space-between">
+            <MenuItem as={NextLink} href="/ryoshi/battle-map" _hover={{ color: 'inherit' }} justifyContent="space-between">
               Ryoshi Dynasties
             </MenuItem>
             <MenuItem
@@ -130,6 +143,22 @@ const NavMenu = (props: any) => {
             >
               Docs
               <ExternalLinkIcon />
+            </MenuItem>
+            <MenuItem justifyContent='center'>
+              <ButtonGroup>
+                <IconButton as={NextLink} aria-label='Discord' href='https://discord.gg/ebisusbay' target='_blank'>
+                  <FontAwesomeIcon icon={faDiscord} />
+                </IconButton>
+                <IconButton as={NextLink} aria-label='X' href='https://x.com/EbisusBay' target='_blank'>
+                  <FontAwesomeIcon icon={faXTwitter} />
+                </IconButton>
+                <IconButton as={NextLink} aria-label='Telegram' href='https://t.me/ebisusbay' target='_blank'>
+                  <FontAwesomeIcon icon={faTelegram} />
+                </IconButton>
+                <IconButton as={NextLink} aria-label='Instagram' href='https://www.instagram.com/ebisusbayofficial' target='_blank'>
+                  <FontAwesomeIcon icon={faInstagram} />
+                </IconButton>
+              </ButtonGroup>
             </MenuItem>
           </MenuList>
         </Menu>

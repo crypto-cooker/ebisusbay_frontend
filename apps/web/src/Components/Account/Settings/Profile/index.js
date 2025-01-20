@@ -70,7 +70,8 @@ export default function EditProfile() {
       if (!value) return false;
 
       if (value.includes('.')) {
-        return value.endsWith('.cro');
+        const validTlds = ['.cro', '.caw'];
+        return validTlds.some((v) => value.toLowerCase().endsWith(v));
       }
 
       if (value.startsWith('-') || value.startsWith('_') || value.startsWith('.')) return false;
@@ -114,8 +115,8 @@ export default function EditProfile() {
             Yup.object().shape({
               file: Yup.mixed()
                 .nullable()
-                .test('', 'Avatar must not exceed 1MB in size', (file) =>
-                  file && file.size ? file.size <= 1000000 : true,
+                .test('', 'Avatar must not exceed 2MB in size', (file) =>
+                  file && file.size ? file.size <= 2 * 1024 * 1024 : true,
                 ),
             }),
           ),
@@ -133,7 +134,7 @@ export default function EditProfile() {
               file: Yup.mixed()
                 .nullable()
                 .test('', 'Banner must not exceed 2MB in size', (file) =>
-                  file && file.size ? file.size <= 2000000 : true,
+                  file && file.size ? file.size <= 2 * 1024 * 1024 : true,
                 ),
             }),
           ),

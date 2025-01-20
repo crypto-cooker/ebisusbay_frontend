@@ -33,8 +33,7 @@ import {ChainLogo, CurrencyLogoByAddress} from "@dex/components/logo";
 import {ChainId} from "@pancakeswap/chains";
 import useAuthedFunctionWithChainID from "@market/hooks/useAuthedFunctionWithChainID";
 import {useAppChainConfig} from "@src/config/hooks";
-import useMultichainCurrencyBroker from "@market/hooks/use-multichain-currency-broker";
-import Countdown from 'react-countdown';
+import { useMarketTokens } from '@src/global/hooks/use-supported-tokens';
 
 const config = appConfig();
 const newInterfaceDrops = ['946-club', 'lil-mistery'];
@@ -70,7 +69,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   const [runAuthedFunction] = useAuthedFunctionWithChainID(drop.chainId);
   const { config: appChainConfig } = useAppChainConfig(drop.chainId)
   const readProvider = new ethers.providers.JsonRpcProvider(appChainConfig.chain.rpcUrls.default.http[0]);
-  const { getByAddress } = useMultichainCurrencyBroker(drop.chainId)
+  const { tokens: marketTokens, search: findMarketToken } = useMarketTokens(drop.chainId)
 
   const [mintingWithType, setMintingWithType] = useState<FundingType>();
   const [numToMint, setNumToMint] = useState(1);
@@ -270,7 +269,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
   useEffect(() => {
     const tokenKey = drop.erc20Token?.toLowerCase();
     if (tokenKey?.startsWith('0x')) {
-      const tokenValue = getByAddress(tokenKey);
+      const tokenValue = findMarketToken({address: tokenKey, symbol: tokenKey});
       if (tokenValue) {
         setErc20Token({
           name: tokenValue.name!,
@@ -285,7 +284,7 @@ export const MintBox = ({drop, abi, status, totalSupply, maxSupply, priceDescrip
         setErc20Token(tokenValue);
       }
     }
-  }, [drop]);
+  }, [drop, marketTokens]);
 
   const isNewInterfaceDrop = newInterfaceDrops.includes(drop.slug);
 

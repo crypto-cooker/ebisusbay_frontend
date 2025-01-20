@@ -22,13 +22,14 @@ import { PrimaryButton } from '@src/components-v2/foundation/button';
 import { CustomTokenPicker } from '@src/components-v2/feature/deal/create/custom-token-picker';
 import { BarterToken } from '@market/state/jotai/atoms/deal';
 import { ciEquals } from '@market/helpers/utils';
-import { appConfig } from '@src/config';
 import { ethers } from 'ethers';
 import { commify } from 'ethers/lib/utils';
-import useMultichainCurrencyBroker, { MultichainBrokerCurrency } from '@market/hooks/use-multichain-currency-broker';
 import { useReadContract } from 'wagmi';
 import { CurrencyLogoByAddress } from '@dex/components/logo';
-import { erc20Abi } from 'viem';
+import { Address, erc20Abi } from 'viem';
+import { useDealsTokens } from '@src/global/hooks/use-supported-tokens';
+import { CmsToken } from '@src/components-v2/global-data-fetcher';
+import { getAppChainConfig } from '@src/config/hooks';
 
 export const ChooseTokensTab = ({ address }: { address: string }) => {
   const { toggleSelectionERC20 } = useBarterDeal();
@@ -49,35 +50,33 @@ export const ChooseTokensTab = ({ address }: { address: string }) => {
 
 const WhitelistedTokenPicker = ({ balanceCheckAddress }: { balanceCheckAddress: string }) => {
   const user = useUser();
-  const config = appConfig();
   const { toggleSelectionERC20, barterState } = useBarterDeal();
   const chainId = barterState.chainId;
   const [quantity, setQuantity] = useState<string>();
+  const { namedTokens } = getAppChainConfig(barterState.chainId);
 
-  const { whitelistedERC20DealCurrencies } = useMultichainCurrencyBroker(chainId);
-  const sortedWhitelistedERC20DealCurrencies = whitelistedERC20DealCurrencies.sort((a, b) => {
+  const { tokens: dealTokens } = useDealsTokens(chainId);
+  const sortedWhitelistedERC20DealCurrencies = dealTokens.sort((a, b) => {
     // Place FRTN first
-    if (ciEquals(a.symbol, config.tokens.frtn.symbol)) return -1;
-    if (ciEquals(b.symbol, config.tokens.frtn.symbol)) return 1;
+    if (ciEquals(a.symbol, namedTokens.frtn.symbol)) return -1;
+    if (ciEquals(b.symbol, namedTokens.frtn.symbol)) return 1;
 
     // Place WCRO second
-    if (ciEquals(a.symbol, config.tokens.wcro.symbol)) return -1;
-    if (ciEquals(b.symbol, config.tokens.wcro.symbol)) return 1;
+    if (ciEquals(a.symbol, namedTokens.wrappedNative.symbol)) return -1;
+    if (ciEquals(b.symbol, namedTokens.wrappedNative.symbol)) return 1;
 
     // Place USDC third
-    if (ciEquals(a.symbol, config.tokens.usdc.symbol)) return -1;
-    if (ciEquals(b.symbol, config.tokens.usdc.symbol)) return 1;
+    if (ciEquals(a.symbol, namedTokens.usdc.symbol)) return -1;
+    if (ciEquals(b.symbol, namedTokens.usdc.symbol)) return 1;
 
     // Alphabetically sort the rest
     return a.symbol.localeCompare(b.symbol);
   });
 
-  const [selectedCurrency, setSelectedCurrency] = useState<MultichainBrokerCurrency>(
-    sortedWhitelistedERC20DealCurrencies[0],
-  );
+  const [selectedCurrency, setSelectedCurrency] = useState<CmsToken>(dealTokens[0]);
 
   const { data: tokenBalance, isLoading, error } = useReadContract({
-    address: selectedCurrency?.address,
+    address: selectedCurrency?.address as Address,
     abi: erc20Abi,
     functionName: 'balanceOf',
     chainId,
@@ -89,7 +88,7 @@ const WhitelistedTokenPicker = ({ balanceCheckAddress }: { balanceCheckAddress: 
   const availableBalanceEth = Number(ethers.utils.formatUnits(tokenBalance ?? 0, selectedCurrency?.decimals ?? 18))
 
   const handleCurrencyChange = useCallback(
-    (currency: SingleValue<MultichainBrokerCurrency>) => {
+    (currency: SingleValue<CmsToken>) => {
       if (!currency) return;
 
       setSelectedCurrency(currency);

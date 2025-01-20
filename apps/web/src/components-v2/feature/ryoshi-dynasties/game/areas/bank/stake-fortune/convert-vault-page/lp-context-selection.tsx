@@ -13,6 +13,7 @@ import { formatEther } from 'viem';
 import {
   TypeOption
 } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/convert-vault-page/types';
+import { FortuneStakingAccount } from '@src/core/services/api-service/graph/types';
 
 interface LpContextSelectionProps {
   type: TypeOption;
@@ -48,6 +49,10 @@ const LpContextSelection = ({ type, onSelected }: LpContextSelectionProps) => {
     }
   }
 
+  const vaultLpName = (vault: FortuneStakingAccount) => {
+    return chainConfig.lpVaults.find((v) => ciEquals(v.pair, vault.pool!))?.name;
+  }
+
   return (
     <VStack align='stretch'>
       <Box>LP Vault</Box>
@@ -56,7 +61,7 @@ const LpContextSelection = ({ type, onSelected }: LpContextSelectionProps) => {
           <Select onChange={handleChangeToken} bg='none' placeholder='--- Select a vault ---'>
             {stakingAccount?.lpVaults.map((vault) => (
               <option key={vault.vaultId} value={vault.vaultId}>
-                ID: {vault.index}, Bal: {formattedWideRangeAmount(formatEther(vault.balance))}
+                {vaultLpName(vault)} (ID {Number(vault.index) + 1}): Bal {formattedWideRangeAmount(formatEther(vault.balance))}
               </option>
             ))}
           </Select>

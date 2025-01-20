@@ -1,7 +1,12 @@
 import { useAtomValue } from 'jotai';
-import { globalTokensAtom } from '@src/components-v2/global-data-fetcher';
+import { CmsToken, globalTokensAtom } from '@src/components-v2/global-data-fetcher';
 import { useQuery } from '@tanstack/react-query';
 import { ApiService } from '@src/core/services/api-service';
+import { ciEquals } from '@market/helpers/utils';
+import { useMemo } from 'react';
+import { getAppChainConfig } from '@src/config/hooks';
+
+type MarketTokenFilterKeys = 'marketDefault' | 'dex' | 'listings' | 'offers' | 'deals'; // Extendable
 
 export function useSupportedApiTokens(chainId?: number) {
   const tokens = useAtomValue(globalTokensAtom) ?? [];
@@ -10,39 +15,27 @@ export function useSupportedApiTokens(chainId?: number) {
 }
 
 export function useMarketTokens(chainId?: number) {
-  const supportedTokens = useSupportedApiTokens(chainId);
-
-  return supportedTokens.filter(token => token.marketDefault || token.listings || token.offers);
+  return useFilteredTokens(['marketDefault', 'listings', 'offers'], chainId);
 }
 
 export function useMarketDefaultTokens(chainId?: number) {
-  const supportedTokens = useSupportedApiTokens(chainId);
-
-  return supportedTokens.filter(token => token.marketDefault);
+  return useFilteredTokens('marketDefault', chainId);
 }
 
 export function useListingsTokens(chainId?: number) {
-  const supportedTokens = useSupportedApiTokens(chainId);
-
-  return supportedTokens.filter(token => token.listings);
+  return useFilteredTokens('listings', chainId);
 }
 
 export function useOffersTokens(chainId?: number) {
-  const supportedTokens = useSupportedApiTokens(chainId);
-
-  return supportedTokens.filter(token => token.offers);
+  return useFilteredTokens('offers', chainId);
 }
 
 export function useDexTokens(chainId?: number) {
-  const supportedTokens = useSupportedApiTokens(chainId);
-
-  return supportedTokens.filter(token => token.dex);
+  return useFilteredTokens('dex', chainId);
 }
 
 export function useDealsTokens(chainId?: number) {
-  const supportedTokens = useSupportedApiTokens(chainId);
-
-  return supportedTokens.filter(token => token.deals);
+  return useFilteredTokens('deals', chainId);
 }
 
 export function useCollectionTokens(chainId?: number) {
@@ -52,7 +45,8 @@ export function useCollectionTokens(chainId?: number) {
 }
 
 export function useCollectionListingTokens(address: string, chainId: number) {
-  const marketDefaultTokens = useMarketDefaultTokens(chainId);
+  const { tokens: marketDefaultTokens } = useMarketDefaultTokens(chainId);
+  const { namedTokens } = getAppChainConfig(chainId);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['CollectionMarketTokens', address, chainId],
@@ -68,9 +62,66 @@ export function useCollectionListingTokens(address: string, chainId: number) {
     enabled: !!address && !!chainId
   });
 
+  const sortedTokens = useMemo(() => {
+    return (data ?? []).sort((a, b) => {
+      // Place native first
+      if (ciEquals(a.symbol, namedTokens.native.symbol)) return -1;
+      if (ciEquals(b.symbol, namedTokens.native.symbol)) return 1;
+
+      // Place FRTN second
+      if (ciEquals(a.symbol, namedTokens.frtn.symbol)) return -1;
+      if (ciEquals(b.symbol, namedTokens.frtn.symbol)) return 1;
+
+      // Place USDC third
+      if (ciEquals(a.symbol, namedTokens.usdc.symbol)) return -1;
+      if (ciEquals(b.symbol, namedTokens.usdc.symbol)) return 1;
+
+      // Alphabetically sort the rest
+      return a.symbol.localeCompare(b.symbol);
+    });
+  }, [data]);
+
   return {
-    tokens: data ?? [],
+    tokens: sortedTokens,
     isLoading,
     error
   };
+}
+
+export function useFilteredTokens(
+  filterKeys: MarketTokenFilterKeys[] | MarketTokenFilterKeys,
+  chainId?: number
+) {
+  const supportedTokens = useSupportedApiTokens(chainId);
+
+  const keys = Array.isArray(filterKeys) ? filterKeys : [filterKeys];
+
+  const tokens = useMemo(() =>
+      supportedTokens.filter(token => keys.some(key => token[key])),
+    [supportedTokens, JSON.stringify(keys)]
+  );
+
+  const lookupActions = useLookupActions(tokens);
+
+  return { tokens, ...lookupActions };
+}
+
+const useLookupActions = (tokenList: CmsToken[]) => {
+  const search = (params: string | { address?: string; symbol?: string }) => {
+    const searchObj = typeof params === 'string' ?
+      { address: params, symbol: params } :
+      params;
+
+    const { address, symbol } = searchObj;
+    return tokenList.find(token =>
+      (address?.trim() && ciEquals(token.address.toLowerCase(), address.toLowerCase())) ||
+      (symbol?.trim() && ciEquals(token.symbol.toLowerCase(), symbol.toLowerCase()))
+    );
+  };
+
+  const exists = (params: string | { address?: string; symbol?: string }) => {
+    return !!search(params);
+  };
+
+  return { search, exists };
 }

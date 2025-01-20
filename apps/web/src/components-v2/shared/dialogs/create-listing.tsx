@@ -60,16 +60,18 @@ import {DynamicNftImage} from '@src/components-v2/shared/media/dynamic-nft-image
 import {useUser} from '@src/components-v2/useUser';
 import * as Sentry from '@sentry/nextjs';
 import {QuestionOutlineIcon} from '@chakra-ui/icons';
-import {CurrencyLogo} from "@dex/components/logo";
+import { CurrencyLogo, CurrencyLogoByAddress } from '@dex/components/logo';
 import {useContract} from "@eb-pancakeswap-web/hooks/useContract";
 import {Address, erc721Abi} from "viem";
 import {useActiveChainId} from "@eb-pancakeswap-web/hooks/useActiveChainId";
 import {useSwitchNetwork} from "@eb-pancakeswap-web/hooks/useSwitchNetwork";
 import {useCallWithGasPrice} from "@eb-pancakeswap-web/hooks/useCallWithGasPrice";
 import {useAppChainConfig} from "@src/config/hooks";
-import {MultichainBrokerCurrency} from "@market/hooks/use-multichain-currency-broker";
 import { useCollectionListingTokens } from '@src/global/hooks/use-supported-tokens';
 import { useSerializedNativeCurrency } from '@src/global/hooks/use-serialized-native-currency';
+import { CmsToken } from '@src/components-v2/global-data-fetcher';
+import ImageService from '@src/core/services/image';
+import { cmsTokenToDexCurrency } from '@src/global/utils/app';
 
 const numberRegexValidation = /^[1-9]+[0-9]*$/;
 const floorThreshold = 5;
@@ -146,8 +148,17 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
   const [executingCreateListing, setExecutingCreateListing] = useState(false);
 
   const [showConfirmButton, setShowConfirmButton] = useState(false);
-  const [allowedCurrencies, setAllowedCurrencies] = useState<MultichainBrokerCurrency[]>([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<MultichainBrokerCurrency>(nativeCurrency);
+  const [allowedCurrencies, setAllowedCurrencies] = useState<CmsToken[]>([]);
+  const [selectedCurrency, setSelectedCurrency] = useState<CmsToken>({
+    ...nativeCurrency,
+    name: nativeCurrency?.name ?? 'CRO',
+    logo: ImageService.translate(`/files/dex/images/chains/${nft.chain}.webp`).convert(),
+    marketDefault: true,
+    dex: true,
+    listings: true,
+    offers: true,
+    deals: true
+  });
   const [secureCancel, setSecureCancel] = useState(false);
   const [isRyoshiToken, setIsRyoshiToken] = useState(false);
   const nftContract = useContract(nft.nftAddress, erc721Abi, { chainId: nft.chain });
@@ -205,7 +216,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     async function asyncFunc() {
       await getInitialProps();
     }
-    if (nft && user.wallet.address && appChainConfig, collectionMarketTokens.length > 0) {
+    if (nft && user.wallet.address && appChainConfig && collectionMarketTokens.length > 0) {
       asyncFunc();
     }
   }, [nft, user.wallet.address, appChainConfig, collectionMarketTokens]);
@@ -420,7 +431,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
     }),
   };
 
-  const handleCurrencyChange = useCallback((currency: SingleValue<MultichainBrokerCurrency>) => {
+  const handleCurrencyChange = useCallback((currency: SingleValue<CmsToken>) => {
     if (!currency) return;
 
     setSelectedCurrency(currency);
@@ -539,7 +550,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
                               options={allowedCurrencies}
                               formatOptionLabel={(currency) => (
                                 <HStack>
-                                  <CurrencyLogo currency={currency} />
+                                  <CurrencyLogo currency={cmsTokenToDexCurrency(currency)} />
                                   <span>{currency.symbol}</span>
                                 </HStack>
                               )}

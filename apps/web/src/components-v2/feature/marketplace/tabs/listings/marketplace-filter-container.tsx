@@ -32,7 +32,7 @@ interface MarketplaceFilterContainerProps {
 const MarketplaceFilterContainer = ({onFilter, filtersVisible, useMobileMenu, onMobileMenuClose, totalCount, children}: MarketplaceFilterContainerProps) => {
   const [filteredItems, setFilteredItems] = useState<FilteredItem[]>([]);
   const { queryParams, setQueryParams  } = useContext(MarketplacePageContext) as MarketplacePageContextProps;
-  const listingCurrencies = useMarketTokens();
+  const { tokens: listingCurrencies } = useMarketTokens();
 
   const categorizedListingCurrencies = useMemo(() => {
     const map = new Map<string, { key: string; label: string; items: CmsToken[] }>();

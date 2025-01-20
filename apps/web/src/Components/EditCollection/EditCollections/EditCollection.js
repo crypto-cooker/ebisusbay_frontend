@@ -149,7 +149,7 @@ const EditCollection = ({ address: collectionAddress }) => {
         collectionPicture: Yup.array().of(
           Yup.object().shape({
             file: Yup.mixed().nullable().test('', 'Avatar must not exceed 2MB in size',
-              (file) => file && file.size ? file.size <= 2000000 : true
+              (file) => file && file.size ? file.size <= 2 * 1024 * 1024 : true
             ),
             size: Yup.object().nullable().test('', 'Banner must be at least 500 x 500 px',
               (size) => size ? size.width <= 500 && size.height <= 500 : true
@@ -162,7 +162,7 @@ const EditCollection = ({ address: collectionAddress }) => {
         banner: Yup.array().of(
           Yup.object().shape({
             file: Yup.mixed().nullable().test('', 'Banner must not exceed 2MB in size',
-              (file) => file && file.size ? file.size <= 2000000 : true
+              (file) => file && file.size ? file.size <= 2 * 1024 * 1024 : true
             )
           })
         )
@@ -172,7 +172,7 @@ const EditCollection = ({ address: collectionAddress }) => {
         card: Yup.array().of(
           Yup.object().shape({
             file: Yup.mixed().nullable().test('', 'Card must not exceed 2MB in size',
-              (file) => file && file.size ? file.size <= 2000000 : true
+              (file) => file && file.size ? file.size <= 2 * 1024 * 1024 : true
             ),
             size: Yup.object().nullable().test('', 'Card must be 600 x 338 px',
             (size) => size ? size.width == 600 && size.height == 338 : true

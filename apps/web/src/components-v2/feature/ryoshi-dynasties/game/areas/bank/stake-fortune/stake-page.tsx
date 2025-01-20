@@ -23,6 +23,8 @@ import { SUPPORTED_RD_CHAIN_CONFIGS, SupportedChainId } from "@src/config/chains
 import { ApiService } from "@src/core/services/api-service";
 import { FortuneStakingAccount } from "@src/core/services/api-service/graph/types";
 import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from '@src/components-v2/feature/ryoshi-dynasties/game/areas/bank/stake-fortune/constants';
+import { useFrtnRewardsInfo } from "@src/components-v2/feature/ryoshi-dynasties/game/hooks/use-frtn-rewards-info"
 
 interface StakePageProps {
   onEditVault: (vault: FortuneStakingAccount, vaultType: VaultType, targetField: string) => void;
@@ -42,7 +44,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
   const [currentVaultType, setCurrentVaultType] = useState<VaultType>(VaultType.TOKEN);
 
   const { data: account, status, error, refetch } = useQuery({
-    queryKey: ['UserStakeAccount', user.address, currentTab, currentVaultType],
+    queryKey: queryKeys.bankUserAccount(user.address, currentTab, currentVaultType),
     queryFn: () => ApiService.forChain(currentTab).ryoshiDynasties.getBankStakingAccount(user.address!),
     enabled: !!user.address && !!currentTab,
   });
@@ -52,6 +54,8 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
   const handleConnect = async () => {
     user.connect();
   }
+
+  const {data:frRewardsInfo} = useFrtnRewardsInfo();
 
   const handleTabChange = useCallback((chainId: SupportedChainId) => {
     setCurrentTab(chainId);
@@ -128,6 +132,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
                           <Box key={`${currentTab}${vault.vaultId}`} mt={2}>
                             <VaultSummary
                               vault={vault}
+                              rewardsInfo={frRewardsInfo}
                               vaultType={currentVaultType}
                               index={index}
                               onEditVault={(type: string) => onEditVault(vault, currentVaultType, type)}
@@ -147,7 +152,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
                 </>
               )}
             </Box>
-            <Flex justifyContent='space-around' mt={8}>
+            <Flex justifyContent='space-around' mt={8} direction={{base: 'column', sm: 'row'}}>
               <RdButton
                 fontSize={{base: 'xl', sm: '2xl'}}
                 onClick={() => handleCreateVault(!!account ? account.vaults.length : 0, !!account ? account?.vaults : [], VaultType.TOKEN)}

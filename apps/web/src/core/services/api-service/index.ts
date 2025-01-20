@@ -431,6 +431,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
     return this.cms.getSeasonalRewards(address, seasonId);
   }
 
+  async getFortuneRewardsInfo(): Promise<any> {
+    return this.cms.getFortuneRewardsInfo();
+  }
+
   async claimDailyRewards(address: string, signature: string) {
     return this.cms.claimDailyRewards(address, signature);
   }
@@ -620,6 +624,10 @@ class RyoshiDynastiesGroup implements RyoshiDynastiesApi {
 
   async getLootBoxBalance(walletAddress:string) {
     return this.cms.getLootBoxBalances(walletAddress);
+  }
+
+  async getLootBoxLogs(address: string, signature: string) {
+    return this.cms.getLootBoxLogs(address, signature);
   }
 
   async getLootBoxInfo(id: number) {
