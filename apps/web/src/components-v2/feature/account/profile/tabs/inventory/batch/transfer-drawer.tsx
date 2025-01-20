@@ -211,7 +211,7 @@ const TransferDrawer = () => {
         {showConfirmButton ? (
           <>
             {!executingTransfer && (
-              <Alert status="error" mb={2}>
+              <Alert status="warning" mb={2}>
                 <AlertIcon />
                 <AlertDescription>Transferring {totalItemsPlusQuantity} {pluralize(totalItemsPlusQuantity, 'item')}. Please double check the receiving address before continuing</AlertDescription>
               </Alert>

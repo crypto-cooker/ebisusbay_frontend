@@ -567,7 +567,7 @@ export const ListingDrawer = () => {
         { showConfirmButton ? (
           <>
             {!executingCreateListing && (
-              <Alert status="error" mb={2}>
+              <Alert status="warning" mb={2}>
                 <AlertIcon />
                 <AlertDescription>Some items above are below their current floor price. Are you sure?</AlertDescription>
               </Alert>
