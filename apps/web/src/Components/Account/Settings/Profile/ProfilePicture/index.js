@@ -8,22 +8,36 @@ import { Accordion, AccordionItem, AccordionButton, AccordionPanel } from '@chak
 import { UploadPfp } from '@src/Components/Form';
 import { PrimaryButton } from '@src/components-v2/foundation/button';
 import { editProfileFormFields } from '@src/Components/Account/Settings/Profile/Form/constants';
+import { useGetLayerBooth } from '@src/Components/Account/Settings/hooks/useGetLayerBooth';
 
 import styles from '@src/Components/Account/Settings/Profile/Pfp/pfp.module.scss';
 
-import { getRandomNFT, host, traits } from './pfs';
+import { getRandomPfp } from './pfs';
+import { useUser } from "@src/components-v2/useUser";
 
 export default function ProfilePicture({ values, errors, touched, setFieldValue, setFieldTouched, onClose }) {
+  const user = useUser();
+
+  const [{ response: layersResponse }] = useGetLayerBooth(user?.address);
   const [hover, setHover] = useState(false);
 
   const [loading, setLoading] = useState(false);
-  const [generatedPfp, setGeneratedPfp] = useState(getRandomNFT());
+  const [layers, setLayers] = useState([]);
+  const [generatedPfp, setGeneratedPfp] = useState([]);
+
+  useEffect(() => {
+    if (layersResponse?.data) setLayers(layersResponse.data);
+  }, [layersResponse]);
+
+  useEffect(() => {
+    setGeneratedPfp(getRandomPfp(layers))
+  }, [layers]);
 
   const { isOpen: isGenerateModalOpen, onOpen: onOpenGenerateModal, onClose: onCloseGenerateModal } = useDisclosure();
 
   const handleTraitSelect = (traitType, item) => {
     const newPfp = [...generatedPfp];
-    const index = traits.findIndex((trait) => trait.name === traitType);
+    const index = layers.findIndex((trait) => trait.name === traitType);
     newPfp[index] = item;
     setGeneratedPfp(newPfp);
   };
@@ -41,7 +55,7 @@ export default function ProfilePicture({ values, errors, touched, setFieldValue,
       for (const pfp of generatedPfp) {
         const img = new Image();
         img.crossOrigin = 'anonymous';
-        img.src = `${host}/${pfp.link}`;
+        img.src = pfp.image;
         await new Promise((resolve, reject) => {
           img.onload = () => {
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -125,7 +139,7 @@ export default function ProfilePicture({ values, errors, touched, setFieldValue,
                 {generatedPfp.map((pfp, index) => (
                   <CImage
                     key={index}
-                    src={`${host}/${pfp.link}`}
+                    src={pfp.image}
                     alt={pfp.name}
                     className="cursor-pointer"
                     position="absolute"
@@ -143,19 +157,19 @@ export default function ProfilePicture({ values, errors, touched, setFieldValue,
           {isGenerateModalOpen && (
             <Flex width="100%" flexDirection="column" gap={2}>
               <Accordion collapsible allowToggle>
-                {traits.map((trait) => (
+                {layers.map((trait) => (
                   <AccordionItem key={trait.name}>
                     <AccordionButton>{trait.name}</AccordionButton>
 
                     <AccordionPanel maxHeight="200px" overflowY="scroll">
                       <SimpleGrid columns={4} gap={2}>
                         {trait.items.map((t, index) => {
-                          const isSelectedTrait = generatedPfp.some((pfp) => pfp.link === t.link);
+                          const isSelectedTrait = generatedPfp.some((pfp) => pfp.image === t.image);
 
                           return (
                             <CImage
                               key={index}
-                              src={`${host}/${t.link}`}
+                              src={t.image}
                               alt={t.name}
                               className={isSelectedTrait ? 'cursor-pointer' : 'cursor-not-allowed'}
                               onClick={() => (isSelectedTrait ? null : handleTraitSelect(trait.name, t))}
