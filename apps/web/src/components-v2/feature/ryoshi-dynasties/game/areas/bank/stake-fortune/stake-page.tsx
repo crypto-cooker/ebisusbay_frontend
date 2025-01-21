@@ -152,7 +152,7 @@ const StakePage = ({onEditVault, onCreateVault, onWithdrawVault, onTokenizeVault
                 </>
               )}
             </Box>
-            <Flex justifyContent='space-around' mt={8}>
+            <Flex justifyContent='space-around' mt={8} direction={{base: 'column', sm: 'row'}}>
               <RdButton
                 fontSize={{base: 'xl', sm: '2xl'}}
                 onClick={() => handleCreateVault(!!account ? account.vaults.length : 0, !!account ? account?.vaults : [], VaultType.TOKEN)}

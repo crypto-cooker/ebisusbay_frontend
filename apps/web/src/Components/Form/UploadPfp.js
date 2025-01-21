@@ -2,7 +2,7 @@ import React from 'react';
 
 import { deepValidation } from '../../helpers/validator';
 import UploadAssetPfp from './UploadAssetPfp';
-import {FormControl, FormErrorMessage} from "@chakra-ui/react";
+import { Box, FormControl, FormErrorMessage } from '@chakra-ui/react';
 
 const UploadPfp = ({
   value = [],
@@ -35,6 +35,7 @@ const UploadPfp = ({
   };
 
   const getErrorMessage = (error) => {
+    if (typeof error === 'string') return error;
     const [key] = Object.keys(error);
     return error[key];
   };
@@ -58,9 +59,9 @@ const UploadPfp = ({
           );
         })}
       </div>
-      <FormErrorMessage className="field-description text-muted">
+      <Box className="field-description text-muted">
         {error ? (typeof error === 'string' ? error : getErrorMessage(error[error.length - 1])) : description}
-      </FormErrorMessage>
+      </Box>
     </FormControl>
   );
 };

@@ -60,7 +60,7 @@ const ListingsTab = ({ nft }: ListingsProps) => {
   const sortCollections = (sortBy: string) => {
     let direction = 'desc';
 
-    if (filters.sortBy?.includes(sortBy) && filters.direction == 'desc') {
+    if (filters.sortBy == sortBy && filters.direction == 'desc') {
       direction = 'asc'
     }
     console.log('SORT', sortBy, direction, filters)
