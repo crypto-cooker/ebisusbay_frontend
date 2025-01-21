@@ -103,8 +103,12 @@ export const ListingDrawer = () => {
   const { tokens: listableCurrencies, search: findListableToken, exists: isCurrencyListable } = useListingsTokens(chain.chainId);
   
   const currencies = useMemo(() => {
-    return  ['cro', ...new Set(batchListingCart.items.map((item) => item.currency?.toLowerCase() ?? 'cro'))]
-      .filter((currencySymbol) => !!currencySymbol && isCurrencyListable(currencySymbol));
+    return listableCurrencies.filter((currency) => {
+      return Object.values(batchListingCart.extras).some((extra) => {
+        return extra.availableCurrencies?.some((c) => ciEquals(c.symbol, currency.symbol)) ?? false;
+      });
+    });
+
   }, [batchListingCart.items, listableCurrencies]);
 
 
@@ -466,7 +470,7 @@ export const ListingDrawer = () => {
                       bg="transparent !important"
                       onChange={(e) => setCurrencyAllOption(e.target.value)}
                     >
-                      {listableCurrencies.map((currency) => (
+                      {currencies.map((currency) => (
                         <option key={currency.symbol} value={currency.symbol}>{currency.symbol}</option>
                       ))}
                     </Select>
