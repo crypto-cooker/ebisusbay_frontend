@@ -310,7 +310,18 @@ export const MultimediaImage = ({ source, fallbackSource, title, width = 1, heig
 
   const determineMediaType = () => {
     if (!source || source.startsWith('data')) {
-      setImage(source);
+      const [baseUrl, queryParams] = source.split("?");
+      
+      setImage(baseUrl);
+    
+      if (queryParams) {
+        const widthMatch = queryParams.match(/width=(\d+)/);
+        const heightMatch = queryParams.match(/height=(\d+)/);
+    
+        if (widthMatch) width = Number(widthMatch[1]);
+        if (heightMatch) height = Number(heightMatch[1]);
+      }
+      
       return;
     }
 

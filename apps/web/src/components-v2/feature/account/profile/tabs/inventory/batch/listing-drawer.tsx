@@ -101,11 +101,12 @@ export const ListingDrawer = () => {
   const [cancelGaslessListing, response] = useCancelGaslessListing();
   const { tokenToCroValue } = useExchangeRate();
   const { tokens: listableCurrencies, search: findListableToken, exists: isCurrencyListable } = useListingsTokens(chain.chainId);
-
+  
   const currencies = useMemo(() => {
     return  ['cro', ...new Set(batchListingCart.items.map((item) => item.currency?.toLowerCase() ?? 'cro'))]
       .filter((currencySymbol) => !!currencySymbol && isCurrencyListable(currencySymbol));
   }, [batchListingCart.items, listableCurrencies]);
+
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
@@ -465,8 +466,8 @@ export const ListingDrawer = () => {
                       bg="transparent !important"
                       onChange={(e) => setCurrencyAllOption(e.target.value)}
                     >
-                      {currencies.map((currency) => (
-                        <option key={currency.toLowerCase()} value={currency.toLowerCase()}>{currency.toUpperCase()}</option>
+                      {listableCurrencies.map((currency) => (
+                        <option key={currency.symbol} value={currency.symbol}>{currency.symbol}</option>
                       ))}
                     </Select>
                     <IconButton
