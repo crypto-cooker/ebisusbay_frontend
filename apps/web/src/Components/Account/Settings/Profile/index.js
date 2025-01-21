@@ -1,26 +1,26 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {useSelector} from 'react-redux';
-import {useFormik} from 'formik';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import * as Filter from 'bad-words';
 
-import Messages, {getDynamicMessage} from '../../../../modules/market/languages';
-import {editProfileFormFields, initialValues} from './Form/constants';
+import Messages, { getDynamicMessage } from '../../../../modules/market/languages';
+import { editProfileFormFields, initialValues } from './Form/constants';
 import useCreateSettings from '../hooks/useCreateSettings';
 import useUpdateSettings from '../hooks/useUpdateSettings';
-import useResendEmailVerification from '../hooks/useResendEmailVerification'
+import useResendEmailVerification from '../hooks/useResendEmailVerification';
 
 import Banner from './Banner';
 import Bio from '@src/components-v2/feature/account/settings/fields/bio';
 import Form from './Form';
 import Pfp from './Pfp';
 import useGetSettings from '../hooks/useGetSettings';
-import {Flex} from "@chakra-ui/react";
-import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {parseErrorMessage} from "@src/helpers/validator";
-import {getCroidInfo} from "@market/helpers/croid";
-import {useUser} from "@src/components-v2/useUser";
+import { Flex } from '@chakra-ui/react';
+import { PrimaryButton } from '@src/components-v2/foundation/button';
+import { parseErrorMessage } from '@src/helpers/validator';
+import { getCroidInfo } from '@market/helpers/croid';
+import { useUser } from '@src/components-v2/useUser';
 
 export default function EditProfile() {
   const user = useUser();
@@ -43,33 +43,38 @@ export default function EditProfile() {
         }, {});
 
       const result = {
-        userInfo: { userInfo: { ...filteredSettings }, userAvatar: { profilePicture: [{ result: settings.data.profilePicture, position: 0, file: { type: 'image' } }] }, userBanner: { banner: [{ result: settings.data.banner, position: 0, file: { type: 'image' } }] }, profilePictureUrl: settings.profilePicture, bannerUrl: settings.banner },
+        userInfo: {
+          userInfo: { ...filteredSettings },
+          userAvatar: {
+            profilePicture: [{ result: settings.data.profilePicture, position: 0, file: { type: 'image' } }],
+          },
+          userBanner: { banner: [{ result: settings.data.banner, position: 0, file: { type: 'image' } }] },
+          profilePictureUrl: settings.profilePicture,
+          bannerUrl: settings.banner,
+        },
       };
       return result;
     }
     return { userInfo: { ...initialValues } };
   }, [settings]);
 
-  Yup.addMethod(Yup.string, "isProfane", function (errorMessage) {
+  Yup.addMethod(Yup.string, 'isProfane', function (errorMessage) {
     return this.test(`isProfane`, errorMessage, function (value) {
       const filter = new Filter();
       return !filter.isProfane(value);
     });
   });
 
-  Yup.addMethod(Yup.string, "customUsernameRules", function (errorMessage) {
+  Yup.addMethod(Yup.string, 'customUsernameRules', function (errorMessage) {
     return this.test(`customUsernameRules`, errorMessage, function (value) {
       if (!value) return false;
 
       if (value.includes('.')) {
         const validTlds = ['.cro', '.caw'];
-        return validTlds.some(v => value.toLowerCase().endsWith(v));
+        return validTlds.some((v) => value.toLowerCase().endsWith(v));
       }
 
-      if (value.startsWith('-') ||
-          value.startsWith('_') ||
-          value.startsWith('.')
-      ) return false;
+      if (value.startsWith('-') || value.startsWith('_') || value.startsWith('.')) return false;
 
       return true;
     });
@@ -101,35 +106,41 @@ export default function EditProfile() {
             .max(30)
             .matches(/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/, 'Invalid Instagram username'),
           website: Yup.string().url(Messages.errors.urlError).nullable(),
-          bio: Yup.string()
-              .max(100, getDynamicMessage(Messages.errors.charactersMaxLimit, ['100']))
+          bio: Yup.string().max(100, getDynamicMessage(Messages.errors.charactersMaxLimit, ['100'])),
         })
         .required(),
       userAvatar: Yup.object()
         .shape({
           profilePicture: Yup.array().of(
             Yup.object().shape({
-              file: Yup.mixed().nullable().test('', 'Avatar must not exceed 2MB in size',
-                (file) => file && file.size? file.size <= 2 * 1024 * 1024 : true
-              )
-            })
-          )
-        }).required(),
+              file: Yup.mixed()
+                .nullable()
+                .test('', 'Avatar must not exceed 2MB in size', (file) =>
+                  file && file.size ? file.size <= 2 * 1024 * 1024 : true,
+                ),
+            }),
+          ),
+        })
+        .required(),
       userBanner: Yup.object()
         .shape({
           banner: Yup.array().of(
             Yup.object().shape({
-              size: Yup.object().nullable().test('', 'Banner must be at least 800 x 360 px',
-                (size) => size ? size.width >= 800 && size.height >= 360 : true
-              ),
-              file: Yup.mixed().nullable().test('', 'Banner must not exceed 2MB in size',
-                (file) => file && file.size? file.size <= 2 * 1024 * 1024 : true
-              )
-            })
-          )
-        }).required(),
-    })
-
+              size: Yup.object()
+                .nullable()
+                .test('', 'Banner must be at least 800 x 360 px', (size) =>
+                  size ? size.width >= 800 && size.height >= 360 : true,
+                ),
+              file: Yup.mixed()
+                .nullable()
+                .test('', 'Banner must not exceed 2MB in size', (file) =>
+                  file && file.size ? file.size <= 2 * 1024 * 1024 : true,
+                ),
+            }),
+          ),
+        })
+        .required(),
+    }),
   });
 
   const handleCnsSync = async () => {
@@ -144,7 +155,6 @@ export default function EditProfile() {
         toast.error('No domain found. Make sure to claim and set a default domain on Cronos ID');
         return;
       }
-
 
       const userInfo = values?.userInfo;
       const tempData = {
@@ -167,7 +177,7 @@ export default function EditProfile() {
   useEffect(() => {
     if (!mergedValues) return;
 
-    for(const [key, value] of Object.entries(mergedValues.userInfo)) {
+    for (const [key, value] of Object.entries(mergedValues.userInfo)) {
       formikProps.setFieldValue(`userInfo.userInfo.${key}`, value);
     }
   }, [mergedValues]);
@@ -183,7 +193,6 @@ export default function EditProfile() {
         toast.success('Your profile was saved successfully');
         updateProfileSettings();
       }
-
     } catch (error) {
       console.log(error);
       toast.error('Error');
@@ -214,23 +223,21 @@ export default function EditProfile() {
       const keysErrorsGroup = Object.keys(errors.userInfo);
       if (keysErrorsGroup.length > 0) {
         e.preventDefault();
-        keysErrorsGroup.forEach(keyGroup => {
-
+        keysErrorsGroup.forEach((keyGroup) => {
           const keysErrorsFields = Object.keys(errors.userInfo[keyGroup]);
 
-          keysErrorsFields.forEach(keyField => {
-            setFieldTouched(`userInfo.${keyGroup}.${keyField}`, true)
+          keysErrorsFields.forEach((keyField) => {
+            setFieldTouched(`userInfo.${keyGroup}.${keyField}`, true);
           });
-        })
+        });
       }
     }
-  }
+  };
 
   const createNewEmailVerification = async (e) => {
     e.preventDefault();
 
     try {
-
       const response = await requestResendEmailVerification(user.address);
 
       if (!response || response?.message?.error) {
@@ -238,13 +245,11 @@ export default function EditProfile() {
       } else {
         toast.success('Verification forwarded');
       }
-
     } catch (error) {
       console.log(error);
       toast.error('Error');
     }
-    
-  }
+  };
 
   return (
     <>
@@ -269,7 +274,11 @@ export default function EditProfile() {
               setFieldTouched={setFieldTouched}
               handleBlur={handleBlur}
             />
-            <Bio value={values?.userInfo?.userInfo?.bio} handleChange={handleChange} error={errors.userInfo?.userInfo?.bio} />
+            <Bio
+              value={values?.userInfo?.userInfo?.bio}
+              handleChange={handleChange}
+              error={errors.userInfo?.userInfo?.bio}
+            />
           </div>
           <div className="col-12 col-sm-12 col-lg-8">
             <Form
@@ -288,13 +297,8 @@ export default function EditProfile() {
           </div>
         </div>
       </form>
-      <Flex justify='end' mt={5}>
-        <PrimaryButton
-          form='userSettings'
-          type='submit'
-          onClick={validationForm}
-          isLoading={(loading || updateLoading)}
-        >
+      <Flex justify="end" mt={5}>
+        <PrimaryButton form="userSettings" type="submit" onClick={validationForm} isLoading={loading || updateLoading}>
           {settings?.data?.walletAddress ? 'Update Profile' : 'Create Profile'}
         </PrimaryButton>
       </Flex>
