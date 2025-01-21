@@ -329,7 +329,7 @@ const Village = ({ onChange, firstRun, onFirstRun }: VillageProps) => {
                         onClick={handleEnterScene}
                       />
                       <Sprite
-                        id='townHall'
+                        id='town-hall'
                         position={{ x: buildings.townhall.left, y: buildings.townhall.top }}
                         image={ImageService.translate(`/img/battle-bay/mapImages/townhall${xmasTheme}.png`).convert()}
                         onClick={handleEnterScene}

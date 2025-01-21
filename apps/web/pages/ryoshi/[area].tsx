@@ -7,7 +7,7 @@ import ImageService from '@src/core/services/image';
 import fallbackConfig from '@src/core/configs/fallbacks/rd-config';
 import { GetStaticPaths, GetStaticProps } from 'next';
 
-const VALID_AREAS = ['bank', 'barracks', 'battle-map', 'alliance-center', 'townHall'] as const;
+const VALID_AREAS = ['bank', 'barracks', 'battle-map', 'alliance-center', 'town-hall'] as const;
 type ValidArea = (typeof VALID_AREAS)[number];
 
 const AREA_METADATA: Record<ValidArea, { title: string; description: string; image: string }> = {
@@ -31,7 +31,7 @@ const AREA_METADATA: Record<ValidArea, { title: string; description: string; ima
     description: "Manage your faction, diplomacy with other factions, and delegate troops.",
     image: "/img/ryoshi-dynasties/areas/alliance-center/preview.webp",
   },
-  'townHall': {
+  'town-hall': {
     title: "Town Hall - Ryoshi Dynasties",
     description: "Conquer your opponents and get rewarded.",
     image: "/img/ryoshi-dynasties/areas/town-hall/preview.webp",
