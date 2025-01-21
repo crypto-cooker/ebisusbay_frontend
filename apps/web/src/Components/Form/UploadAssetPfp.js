@@ -1,12 +1,12 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Blockies from 'react-blockies';
-import {faEdit} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useGetSettings from '../Account/Settings/hooks/useGetSettings';
 import useUpdatePfp from '../Account/Settings/hooks/useUpdatePfp';
-import styles from "@src/Components/Account/Settings/Profile/Pfp/pfp.module.scss";
-import {Stack} from "@chakra-ui/react";
-import {useUser} from "@src/components-v2/useUser";
+import styles from '@src/Components/Account/Settings/Profile/Pfp/pfp.module.scss';
+import { Stack } from '@chakra-ui/react';
+import { useUser } from '@src/components-v2/useUser';
 
 const UploadAssetPfp = ({
   id,
@@ -15,6 +15,7 @@ const UploadAssetPfp = ({
   accept = 'image/png, image/jpeg, image/jpg',
   onChange,
   onClose,
+  onClickPfp,
 }) => {
   const user = useUser();
   const [file, setFile] = useState(null);
@@ -25,6 +26,7 @@ const UploadAssetPfp = ({
 
   const isVideo = value?.file?.type?.includes('video');
   const isImage = value?.file?.type?.includes('image');
+  const isBlob = false;
 
   const handleClose = useCallback(() => {
     setFile(null);
@@ -68,7 +70,7 @@ const UploadAssetPfp = ({
       }
       if (file) setFile(file);
     },
-    [setFile]
+    [setFile],
   );
 
   const handleClick = useCallback(() => {
@@ -82,21 +84,30 @@ const UploadAssetPfp = ({
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         className="cursor-pointer"
+        onClick={(e) => {
+          if (!!onClickPfp) {
+            e.preventDefault();
+            onClickPfp();
+          }
+        }}
       >
-        <input
-          id={id}
-          ref={inputFile}
-          defaultValue={null}
-          accept={accept}
-          type="file"
-          onChange={handleChange}
-          onClick={handleClick}
-          style={{ display: 'none' }}
-        />
+        {!!!onClickPfp && (
+          <input
+            id={id}
+            ref={inputFile}
+            defaultValue={null}
+            accept={accept}
+            type="file"
+            onChange={handleChange}
+            onClick={handleClick}
+            style={{ display: 'none' }}
+          />
+        )}
+
         {value?.result ? (
           isVideo ? (
             <video src={value.result} />
-          ) : isImage ? (
+          ) : isImage || isBlob ? (
             <div className={styles.pfp}>
               <img src={value.result} />
             </div>
