@@ -225,6 +225,9 @@ export default function Profile({ address, profile, tab }: ProfileProps) {
                   <Flex direction='column' ms={4} flex={1}>
                     <Wrap align='center'>
                       <Heading>{username(identifier)}</Heading>
+                      {username(identifier).endsWith('.caw') && (
+                        <>🐦‍⬛🔪</>
+                      )}
                       <SocialsBar socials={profile} address={address}/>
                       {isProfileOwner && (
                         <span onClick={handleCopyDealLink} style={{cursor: 'pointer'}} title="Copy Deal Link">

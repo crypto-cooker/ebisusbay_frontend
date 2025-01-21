@@ -71,7 +71,7 @@ export const CreateDeal = ({address}: CreateDealProps) => {
       <DefaultContainer>
         <Box minH='calc(100vh - 289px)'>
           {currentStep === CreateDealStep.CHOOSE_CHAIN ? (
-            <Step0ChooseChain />
+            <Step0ChooseChain address={address} />
           ) : currentStep === CreateDealStep.CHOOSE_TAKER ? (
             <Step1ChooseItems address={address} />
           ) : (
