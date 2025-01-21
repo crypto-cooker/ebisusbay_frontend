@@ -60,7 +60,6 @@ import useDebounce from "@src/core/hooks/useDebounce";
 import {useUser} from "@src/components-v2/useUser";
 import {ApiService} from "@src/core/services/api-service";
 import {toast} from "react-toastify";
-import {ChainId} from "@pancakeswap/chains";
 import {useAccount} from "wagmi";
 
 
