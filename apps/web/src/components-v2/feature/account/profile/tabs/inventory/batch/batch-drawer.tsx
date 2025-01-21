@@ -17,6 +17,8 @@ import {setBatchType} from "@market/state/redux/slices/user-batch";
 import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
 import {getTheme} from "@src/global/theme/theme";
 import {useUser} from "@src/components-v2/useUser";
+import { useActiveChainId } from "@dex/swap/imported/pancakeswap/web/hooks/useActiveChainId";
+import { ChainId } from "@pancakeswap/chains";
 
 const MAX_NFTS_IN_CART = 40;
 
@@ -39,6 +41,8 @@ const BatchDrawer = ({ onClose, ...gridProps }: BatchDrawerProps & GridProps) =>
     {base: true, lg: false},
     {fallback: 'lg'},
   );
+
+  const {chainId} = useActiveChainId();
 
   const gridTemplateRows = {
     [actions.listing]: '60px 1fr auto',
@@ -70,7 +74,7 @@ const BatchDrawer = ({ onClose, ...gridProps }: BatchDrawerProps & GridProps) =>
           {/*TODO update*/}
           <Select me={2} value={batchListingCart.type} onChange={handleTypeChange}>
             <option value={actions.listing}>List for sale</option>
-            <option value={actions.bundle}>Create a Bundle</option>
+            {chainId == ChainId.CRONOS && <option value={actions.bundle}>Create a Bundle</option>}
             <option value={actions.transfer}>Transfer</option>
           </Select>
           <Spacer />
