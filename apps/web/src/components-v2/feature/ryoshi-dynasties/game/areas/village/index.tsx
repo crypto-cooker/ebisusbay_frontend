@@ -163,10 +163,10 @@ const Village = ({ onChange, firstRun, onFirstRun }: VillageProps) => {
 
   const router = useRouter();
 
-  const changeAreaPath = (newArea: string) => {
-    const updatedPath = `/ryoshi/${newArea}`;
-    router.replace(updatedPath, updatedPath, { shallow: true });
-  };
+  const changeAreaURL = (area:string) => {
+    const newURL = area == "" ? "/ryoshi" : `/ryoshi/${area}`;
+    window.history.replaceState({}, "", newURL);
+  }
 
   const handleEnterScene = async (elementId: string) => {
     if (elementId === 'battle-map') {
@@ -182,7 +182,7 @@ const Village = ({ onChange, firstRun, onFirstRun }: VillageProps) => {
       }
     }
 
-    changeAreaPath(elementId);
+    changeAreaURL(elementId);
 
     setElementToZoomTo(elementId);
     await enterScene(elementId);

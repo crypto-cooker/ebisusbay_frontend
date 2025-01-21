@@ -34,6 +34,11 @@ const RyoshiDynasties = ({ initialRdConfig, initialScene }: { initialRdConfig: R
   const [currentModalRef, setCurrentModalRef] = useState<React.RefObject<HTMLDivElement> | null>(null);
   const ref = useRef(null);
 
+  const changeAreaURL = (area:string) => {
+    const newURL = area == "" ? "/ryoshi" : `/ryoshi/${area}`;
+    window.history.replaceState({}, "", newURL);
+  }
+
   const navigate = (page: string) => {
     setPreviousPage(currentPage)
     setCurrentPage(page);
@@ -41,6 +46,7 @@ const RyoshiDynasties = ({ initialRdConfig, initialScene }: { initialRdConfig: R
 
   const returnToPreviousPage = () => {
     setCurrentPage(previousPage ?? DEFAULT_SCENE);
+    changeAreaURL(previousPage ?? DEFAULT_SCENE);
   };
 
   useEffect(() => {
