@@ -28,6 +28,7 @@ import {DynamicNftImage} from "@src/components-v2/shared/media/dynamic-nft-image
 import {useUser} from "@src/components-v2/useUser";
 import {ResponsiveDialogComponents, useResponsiveDialog} from "@src/components-v2/foundation/responsive-dialog";
 import {PrimaryButton, SecondaryButton} from "@src/components-v2/foundation/button";
+import { useActiveChainId } from '@dex/swap/imported/pancakeswap/web/hooks/useActiveChainId';
 
 type TransferNftDialogProps = {
   isOpen: boolean;
@@ -64,6 +65,7 @@ const DialogContent = ({isOpen, onClose, nft, DialogBody, DialogFooter}: Pick<Re
   const [showConfirmButton, setShowConfirmButton] = useState(false);
 
   const user = useUser();
+  const {chainId} = useActiveChainId();
 
   const onChangeAddress = useCallback((e: any) => {
     const newRecipientAddress = e.target.value.toString();
@@ -127,7 +129,7 @@ const DialogContent = ({isOpen, onClose, nft, DialogBody, DialogFooter}: Pick<Re
       }
 
       let receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash, chainId));
       setExecutingTransferNft(false);
       onClose();
     } catch (error) {

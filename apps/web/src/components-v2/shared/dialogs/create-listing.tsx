@@ -298,7 +298,7 @@ export default function MakeGaslessListingDialog({ isOpen, nft, onClose, listing
 
       // console.log('APPROVE', nftAddress, 'setApprovalForAll', [marketContractAddress, true])
       const tx = await callWithGasPrice(nftContract, 'setApprovalForAll', [marketContractAddress, true]);
-      toast.success(createSuccessfulTransactionToastContent(tx.hash));
+      toast.success(createSuccessfulTransactionToastContent(tx.hash, chainId));
       setIsTransferApproved(true);
 
     } catch (error) {

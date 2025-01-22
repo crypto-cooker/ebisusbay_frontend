@@ -15,6 +15,8 @@ const UploadPfp = ({
   isRequired,
   onChange,
   onTouched,
+  onOpenPfpModal,
+  onClosePfpModal,
 }) => {
   const onUpload = (i) => (asset) => {
     const newAsset = { ...asset, position: i };
@@ -24,12 +26,14 @@ const UploadPfp = ({
 
     onChange(name, newData);
     onTouched(name);
+
+    if (!!onClosePfpModal) onClosePfpModal();
   };
 
   const onClean = (i) => () => {
     onChange(
       name,
-      value.filter(({ position }) => position !== i)
+      value.filter(({ position }) => position !== i),
     );
     onTouched(name);
   };
@@ -45,7 +49,7 @@ const UploadPfp = ({
       <div className="upload-container overflow-auto justify-content-center">
         {[...Array(numberOfAssets).keys()].map((_, i) => {
           const asset = value.find(({ position }) => position === i);
-          
+
           return (
             <UploadAssetPfp
               key={`${name}-${i}`}
@@ -55,6 +59,7 @@ const UploadPfp = ({
               url={value?.[0]?.url}
               onClose={asset?.result ? onClean(i) : undefined}
               onChange={onUpload(i)}
+              onClickPfp={onOpenPfpModal}
             />
           );
         })}
