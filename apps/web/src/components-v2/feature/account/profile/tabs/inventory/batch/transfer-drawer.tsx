@@ -1,19 +1,20 @@
-import {Alert, AlertDescription, AlertIcon, Box, Center, Flex, GridItem, Spacer, Text} from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, Box, Center, Flex, GridItem, Spacer, Text } from "@chakra-ui/react";
 import Button from "@src/Components/components/Button";
-import React, {useState} from "react";
-import {addToBatchListingCart, clearBatchListingCart, setRefetchNfts} from "@market/state/redux/slices/user-batch";
-import {toast} from "react-toastify";
-import {createSuccessfulTransactionToastContent, pluralize, shortAddress} from "@market/helpers/utils";
+import React, { useState } from "react";
+import { addToBatchListingCart, clearBatchListingCart, setRefetchNfts } from "@market/state/redux/slices/user-batch";
+import { toast } from "react-toastify";
+import { createSuccessfulTransactionToastContent, pluralize, shortAddress } from "@market/helpers/utils";
 import TransferDrawerItem from "@src/components-v2/feature/account/profile/tabs/inventory/batch/transfer-drawer-item";
-import {FormControl as FormControlCK} from "@src/Components/components/chakra-components";
+import { FormControl as FormControlCK } from "@src/Components/components/chakra-components";
 import * as Yup from "yup";
-import {useFormik} from "formik";
-import {useAppDispatch, useAppSelector} from "@market/state/redux/store/hooks";
+import { useFormik } from "formik";
+import { useAppDispatch, useAppSelector } from "@market/state/redux/store/hooks";
 import nextApiService from "@src/core/services/api-service/next";
-import {PrimaryButton} from "@src/components-v2/foundation/button";
-import {parseErrorMessage} from "@src/helpers/validator";
-import {getCroidAddressFromName, isCroName} from "@market/helpers/croid";
-import {useContractService, useUser} from "@src/components-v2/useUser";
+import { PrimaryButton } from "@src/components-v2/foundation/button";
+import { parseErrorMessage } from "@src/helpers/validator";
+import { getCroidAddressFromName, isCroName } from "@market/helpers/croid";
+import { useContractService, useUser } from "@src/components-v2/useUser";
+import { useActiveChainId } from "@dex/swap/imported/pancakeswap/web/hooks/useActiveChainId";
 
 const MAX_NFTS_IN_CART = 100;
 
@@ -21,6 +22,7 @@ const TransferDrawer = () => {
   const dispatch = useAppDispatch();
   const user = useUser();
   const contractService = useContractService();
+  const { chainId } = useActiveChainId();
   const batchListingCart = useAppSelector((state) => state.batchListing);
   const [executingTransfer, setExecutingTransfer] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState(false);
@@ -75,7 +77,7 @@ const TransferDrawer = () => {
 
       let tx = await contractService!.market.bulkTransfer(nftAddresses, nftIds, recipient);
       let receipt = await tx.wait();
-      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+      toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash, chainId));
       resetDrawer();
       dispatch(setRefetchNfts(true))
     } catch (error: any) {
@@ -206,10 +208,10 @@ const TransferDrawer = () => {
       </GridItem>
       <GridItem p={4}>
         {/*TODO update*/}
-        { showConfirmButton ? (
+        {showConfirmButton ? (
           <>
             {!executingTransfer && (
-              <Alert status="error" mb={2}>
+              <Alert status="warning" mb={2}>
                 <AlertIcon />
                 <AlertDescription>Transferring {totalItemsPlusQuantity} {pluralize(totalItemsPlusQuantity, 'item')}. Please double check the receiving address before continuing</AlertDescription>
               </Alert>
@@ -221,16 +223,16 @@ const TransferDrawer = () => {
             )}
             <Flex>
               <Button type="legacy"
-                      onClick={() => setShowConfirmButton(false)}
-                      disabled={executingTransfer}
-                      className="me-2 flex-fill">
+                onClick={() => setShowConfirmButton(false)}
+                disabled={executingTransfer}
+                className="me-2 flex-fill">
                 Go Back
               </Button>
               <Button type="legacy-outlined"
-                      onClick={executeTransfer}
-                      isLoading={executingTransfer}
-                      disabled={executingTransfer}
-                      className="flex-fill">
+                onClick={executeTransfer}
+                isLoading={executingTransfer}
+                disabled={executingTransfer}
+                className="flex-fill">
                 Continue
               </Button>
             </Flex>

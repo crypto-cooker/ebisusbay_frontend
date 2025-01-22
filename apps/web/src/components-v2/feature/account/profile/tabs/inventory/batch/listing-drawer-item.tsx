@@ -396,7 +396,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
                               onChange={handleCurrencyChange}
                             >
                               {extras.availableCurrencies?.map((c: any) => (
-                                <option key={c} value={c.symbol}>{c.name}</option>
+                                <option key={c} value={c.symbol}>{c.symbol}</option>
                               ))}
                             </Select>
                           ) : (

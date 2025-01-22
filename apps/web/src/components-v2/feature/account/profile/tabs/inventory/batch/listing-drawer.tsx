@@ -101,11 +101,16 @@ export const ListingDrawer = () => {
   const [cancelGaslessListing, response] = useCancelGaslessListing();
   const { tokenToCroValue } = useExchangeRate();
   const { tokens: listableCurrencies, search: findListableToken, exists: isCurrencyListable } = useListingsTokens(chain.chainId);
-
+  
   const currencies = useMemo(() => {
-    return  ['cro', ...new Set(batchListingCart.items.map((item) => item.currency?.toLowerCase() ?? 'cro'))]
-      .filter((currencySymbol) => !!currencySymbol && isCurrencyListable(currencySymbol));
+    return listableCurrencies.filter((currency) => {
+      return Object.values(batchListingCart.extras).some((extra) => {
+        return extra.availableCurrencies?.some((c) => ciEquals(c.symbol, currency.symbol)) ?? false;
+      });
+    });
+
   }, [batchListingCart.items, listableCurrencies]);
+
 
   const handleClearCart = () => {
     setShowConfirmButton(false);
@@ -296,7 +301,7 @@ export const ListingDrawer = () => {
     let tx = await contractService!.market.makeListings(nftAddresses, nftIds, nftPrices);
     let receipt = await tx.wait();
 
-    toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash));
+    toast.success(createSuccessfulTransactionToastContent(receipt.transactionHash, chain.chainId));
   }
 
   const prepareListing = async () => {
@@ -466,7 +471,7 @@ export const ListingDrawer = () => {
                       onChange={(e) => setCurrencyAllOption(e.target.value)}
                     >
                       {currencies.map((currency) => (
-                        <option key={currency.toLowerCase()} value={currency.toLowerCase()}>{currency.toUpperCase()}</option>
+                        <option key={currency.symbol} value={currency.symbol}>{currency.symbol}</option>
                       ))}
                     </Select>
                     <IconButton
@@ -567,7 +572,7 @@ export const ListingDrawer = () => {
         { showConfirmButton ? (
           <>
             {!executingCreateListing && (
-              <Alert status="error" mb={2}>
+              <Alert status="warning" mb={2}>
                 <AlertIcon />
                 <AlertDescription>Some items above are below their current floor price. Are you sure?</AlertDescription>
               </Alert>
