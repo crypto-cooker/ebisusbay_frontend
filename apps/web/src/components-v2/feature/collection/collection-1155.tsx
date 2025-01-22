@@ -1,26 +1,30 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Blockies from 'react-blockies';
-import {isBundle, isCrosmocraftsPartsCollection} from '@market/helpers/utils';
+import { isBundle, isCrosmocraftsPartsCollection } from '@market/helpers/utils';
 import SocialsBar from '@src/Components/Collection/SocialsBar';
 import CollectionInfoBar from '@src/Components/components/CollectionInfoBar';
 import SalesCollection from '@src/Components/components/SalesCollection';
-import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-import {pushQueryString} from "@src/helpers/query";
-import {useRouter} from "next/router";
-import {AspectRatio, Avatar, Box, Button, Flex, Heading, Image, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, Text, useBreakpointValue} from "@chakra-ui/react";
+import { CollectionVerificationRow } from "@src/Components/components/CollectionVerificationRow";
+import { pushQueryString } from "@src/helpers/query";
+import { useRouter } from "next/router";
+import { AspectRatio, Avatar, Box, Button, Flex, Heading, Image, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, Text, useBreakpointValue } from "@chakra-ui/react";
 import MintingButton from "@src/Components/Collection/MintingButton";
-import {ChevronDownIcon, ChevronUpIcon, WarningIcon} from "@chakra-ui/icons";
+import { ChevronDownIcon, ChevronUpIcon, WarningIcon } from "@chakra-ui/icons";
 import useGetStakingPlatform from "@market/hooks/useGetStakingPlatform";
 import ImageService from "@src/core/services/image";
 import CollectionBundlesGroup from "@src/Components/components/CollectionBundlesGroup";
 import Items from "@src/components-v2/feature/collection/tabs/items";
-import {useQuery} from "@tanstack/react-query";
-import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
-import {getStats} from "@src/components-v2/feature/collection/collection-721";
-import {getTheme} from "@src/global/theme/theme";
-import {BlueCheckIcon} from "@src/components-v2/shared/icons/blue-check";
-import {useUser} from "@src/components-v2/useUser";
+import { useQuery } from "@tanstack/react-query";
+import { FullCollectionsQueryParams } from "@src/core/services/api-service/mapi/queries/fullcollections";
+import { getStats } from "@src/components-v2/feature/collection/collection-721";
+import { getTheme } from "@src/global/theme/theme";
+import { BlueCheckIcon } from "@src/components-v2/shared/icons/blue-check";
+import { useUser } from "@src/components-v2/useUser";
 import { MapiCollectionBlacklist } from '@src/core/services/api-service/mapi/types';
+import { readContract } from '@wagmi/core';
+import { wagmiConfig } from '@src/wagmi';
+import { ERC1155 } from '@src/global/contracts/Abis';
+import { Address, erc721Abi, zeroAddress } from 'viem';
 
 
 const tabs = {
@@ -46,11 +50,56 @@ const Collection1155 = ({ collection, tokenId, ssrTab, ssrQuery, activeDrop = nu
   const [showFullDescription, setShowFullDescription] = useState(false);
   const { stakingPlatform } = useGetStakingPlatform(collection.address);
   const [openMenu, setOpenMenu] = React.useState(tabs.items);
-  const isMobileLayout = useBreakpointValue({base: true, sm: false}, {fallback: 'sm'});
+  const isMobileLayout = useBreakpointValue({ base: true, sm: false }, { fallback: 'sm' });
+
+  const getBaseERC20Address = async () => {
+    try {
+      const baseERC20Address: Address = await readContract(wagmiConfig, {
+        address: collection.address,
+        abi: [{
+          type: 'function',
+          stateMutability: 'view',
+          outputs: [{ type: 'address', name: '', internalType: 'address' }],
+          name: 'baseERC20',
+          inputs: [],
+        }],
+        functionName: "baseERC20",
+        chainId: collection.chainId
+      });
+      return baseERC20Address;
+    } catch (e) {
+      console.log(e);
+      return zeroAddress;
+    }
+  };
+
+  const getTotalSupply = async () => {
+    const address = await getBaseERC20Address();
+    if (address == zeroAddress) return 0;
+    try {
+      const totalSupply = await readContract(wagmiConfig, {
+        address: collection.address,
+        abi: erc721Abi,
+        functionName: "totalSupply",
+        chainId: collection.chainId
+      });
+      return totalSupply;
+    } catch (e) {
+      console.log(e);
+      return 0;
+    }
+  }
 
   const { data: collectionStats } = useQuery({
     queryKey: ['CollectionStats', collection.address],
-    queryFn: () => getStats(collection, null, collection.mergedAddresses),
+    queryFn: async () => {
+      const collectionStats = await getStats(collection, null, collection.mergedAddresses);
+      const totalSupply = await getTotalSupply();
+      if (totalSupply != 0) {
+        collectionStats.totalSupply = totalSupply;
+      }
+      return collectionStats
+    },
     refetchOnWindowFocus: false
   });
 
@@ -79,8 +128,8 @@ const Collection1155 = ({ collection, tokenId, ssrTab, ssrQuery, activeDrop = nu
 
   return (
     <Box>
-      <AspectRatio ratio={{base: 4/3, sm: 2.66}} maxH='360px'>
-        {(!!collection.metadata.card || !!collection.metadata.banner)  ? (
+      <AspectRatio ratio={{ base: 4 / 3, sm: 2.66 }} maxH='360px'>
+        {(!!collection.metadata.card || !!collection.metadata.banner) ? (
           <>
             {isMobileLayout ? (
               <Image src={ImageService.translate(collection.metadata.card ?? collection.metadata.banner).banner()} alt='banner' objectFit='cover' />
@@ -91,13 +140,13 @@ const Collection1155 = ({ collection, tokenId, ssrTab, ssrQuery, activeDrop = nu
         ) : <></>}
       </AspectRatio>
       <Box as='section' className="gl-legacy container d_coll no-top no-bottom">
-        <Flex mt={{base: '-55px', lg: '-73px'}} justify='center'>
+        <Flex mt={{ base: '-55px', lg: '-73px' }} justify='center'>
           <Box position='relative'>
             {collection.metadata.avatar ? (
               <Avatar
                 src={ImageService.translate(collection.metadata.avatar).fixedWidth(150, 150)}
                 rounded='full'
-                size={{base: 'xl', sm: '2xl'}}
+                size={{ base: 'xl', sm: '2xl' }}
                 border={`6px solid ${getTheme(user.theme).colors.bgColor1}`}
                 bg={getTheme(user.theme).colors.bgColor1}
               />
@@ -108,7 +157,7 @@ const Collection1155 = ({ collection, tokenId, ssrTab, ssrQuery, activeDrop = nu
               <Popover>
                 <PopoverTrigger>
                   <Box position='absolute' bottom={2} right={2} cursor='pointer'>
-                    <WarningIcon boxSize={6}/>
+                    <WarningIcon boxSize={6} />
                   </Box>
                 </PopoverTrigger>
                 <PopoverContent>
@@ -118,7 +167,7 @@ const Collection1155 = ({ collection, tokenId, ssrTab, ssrQuery, activeDrop = nu
               </Popover>
             ) : collection.verification.verified && (
               <Box position='absolute' bottom={2} right={2}>
-                <BlueCheckIcon boxSize={6}/>
+                <BlueCheckIcon boxSize={6} />
               </Box>
             )}
           </Box>
