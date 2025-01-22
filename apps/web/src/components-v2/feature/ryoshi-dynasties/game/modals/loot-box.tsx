@@ -3,6 +3,9 @@ import { RdButton, RdModal } from '@src/components-v2/feature/ryoshi-dynasties/c
 import { atom, useAtom } from 'jotai';
 import LootBoxBreakdown from '../../components/lootbox-breakdown';
 import { RdModalBody, RdModalBox } from '../../components/rd-modal';
+import APNGBox from '../areas/village/christmas/apng-box';
+import ImageService from '@src/core/services/image';
+import { useEffect, useState } from 'react';
 
 export const openedLootboxAtom = atom<any>();
 
@@ -12,11 +15,22 @@ interface LootBoxProps {
 }
 const LootBoxModal = ({ isOpen, onClose }: LootBoxProps) => {
   const [openedLootbox, setOpenedLootbox] = useAtom(openedLootboxAtom);
+  const [animated, setAnimated] = useState<boolean>(true);
+  const [isOpening, setIsOpening] = useState<boolean>(true);
 
   const handleClose = () => {
     setOpenedLootbox(undefined);
     onClose();
   }
+
+  useEffect(() => {
+    setAnimated(openedLootbox != undefined);
+    return () => {
+      setAnimated(false);
+      setIsOpening(true);
+    }
+
+  }, [isOpen, openedLootbox])
 
   return (
     <RdModal isOpen={isOpen} onClose={handleClose} title="Loot Box">
@@ -29,7 +43,14 @@ const LootBoxModal = ({ isOpen, onClose }: LootBoxProps) => {
         </Box>
         {openedLootbox ? (
           <VStack>
-            <RdModalBox>
+            <Box h="198px">
+              <APNGBox
+                imageSrc={ImageService.apng("https://cdn-prod.ebisusbay.com/files/lootboxes/xmas_gift_no_loop.apng.png").custom({ width: 250 })}
+                animate={animated}
+                onLoad={() => {setIsOpening(false)}}
+              />
+            </Box>
+            <RdModalBox hidden={isOpening}>
               <VStack align='stretch' justify='center'>
                 <Box fontWeight='bold'>You have received</Box>
                 <HStack padding={2} h='full'>

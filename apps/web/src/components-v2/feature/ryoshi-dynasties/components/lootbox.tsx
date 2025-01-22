@@ -109,7 +109,6 @@ export const LootBox = ({ item, onChange, onOpened }: { item: any; onChange: () 
           <HStack justify="space-around" w={{ base: 'full', sm: 'unset' }}>
             <Box w={100}>
               {isOpened ? (
-                // <Image src={`img/lootbox/${boxType}_chest_no_loop_open.png`} alt="Lootbox Open" />
                 <Image src={`img/lootbox/xmas_gift_no_loop.png`} alt="Lootbox Open" />
               ) : (
                 <Image src={`img/lootbox/xmas_gift_no_loop_close.png`} alt="Lootbox Closed" />

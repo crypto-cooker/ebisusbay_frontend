@@ -8,8 +8,6 @@ import { RdModalAlert, RdModalBox } from '@src/components-v2/feature/ryoshi-dyna
 import RdButton from '../../../../components/rd-button';
 import { RdModalFooter } from '@src/components-v2/feature/ryoshi-dynasties/components/rd-announcement-modal';
 import useEnforceSignature from '@src/Components/Account/Settings/hooks/useEnforceSigner';
-import ImageService from '@src/core/services/image';
-import StaticAPNG from '@src/components-v2/shared/media/static-apng';
 
 interface LootBox {
   id: number;
@@ -111,10 +109,6 @@ export const ShakeTreeDialog = ({ isOpen, onClose }: { isOpen: boolean; onClose:
             <VStack mt={2}>
               {!!box ? (
                 <VStack>
-                  {/*<APNGBox*/}
-                  {/*  imageSrc={ImageService.apng(box.image).custom({ width: 250 })}*/}
-                  {/*  animate={isOpening || opened}*/}
-                  {/*/>*/}
                   <Image
                     w={250}
                     src={box.image}
@@ -262,37 +256,4 @@ const styles2 = {
     display: 'inline-block',
     margin: '0 2px',
   },
-};
-
-interface APNGBoxProps {
-  imageSrc: string;
-  animate: boolean;
-}
-
-const APNGBox: React.FC<APNGBoxProps> = ({ imageSrc, animate }) => {
-  const [preloadedImage, setPreloadedImage] = useState<string | null>(null);
-
-  // Preload the animated APNG
-  useEffect(() => {
-    const preloadImage = new window.Image();
-    preloadImage.src = imageSrc;
-
-    preloadImage.onload = () => {
-      setPreloadedImage(imageSrc);
-    };
-
-    preloadImage.onerror = (err) => {
-      console.error('Failed to preload image:', err);
-    };
-  }, [imageSrc]);
-
-  return (
-    <Box h="198px">
-      {animate && preloadedImage ? (
-        <Image src={preloadedImage} alt="Animated APNG" />
-      ) : (
-        <StaticAPNG src={imageSrc} alt="Static APNG" />
-      )}
-    </Box>
-  );
 };
