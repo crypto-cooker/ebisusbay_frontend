@@ -271,7 +271,7 @@ export const ListingDrawerItem = ({ item, onCascadePriceSelected, onApplyAllSele
       }
     }
     func();
-  }, [isBundling]);
+  }, [isBundling, collectionMarketTokens]);
 
   useEffect(() => {
     const safePrice = Number(price ?? 0);
