@@ -42,7 +42,7 @@ const useUpsertGaslessListings = (chainId?: number) => {
 
   const user = useUser();
   const contractService = useContractService();
-  const { tokens: listableCurrencies } = useListingsTokens(chainId ?? ChainId.CRONOS);
+  const { tokens: listableCurrencies, search: findCurrency } = useListingsTokens(chainId ?? ChainId.CRONOS);
 
   const upsertGaslessListings = async (pendingListings: PendingListing[] | PendingListing, secureCancel: boolean = false) => {
     if (!Array.isArray(pendingListings)) pendingListings = [pendingListings];
@@ -100,9 +100,9 @@ const useUpsertGaslessListings = (chainId?: number) => {
           itemTypes[pendingListing.collectionAddress] = await getItemType(pendingListing.collectionAddress, pendingListing.chainId);
         }
 
-        const currencyAddress = pendingListing.currencySymbol ? listableCurrencies.find((token) => ciEquals(token.symbol, pendingListing.currencySymbol) && token.chainId === pendingListing.chainId)?.address : undefined;
+        const currency = findCurrency({address: pendingListing.currencySymbol});
 
-        if (!currencyAddress) {
+        if (!currency) {
           throw new Error('Unsupported currency for listings');
         }
 
@@ -115,7 +115,7 @@ const useUpsertGaslessListings = (chainId?: number) => {
           expirationDate: Math.round(pendingListing.expirationDate / 1000),
           salt: generator.uuid(),
           amount: pendingListing.amount,
-          currency: currencyAddress
+          currency: currency
         };
 
         const {objectSignature, objectHash} = await createListingSigner(listingSignerProps);
@@ -124,7 +124,7 @@ const useUpsertGaslessListings = (chainId?: number) => {
           sellerSignature: objectSignature,
           seller: user.address!.toLowerCase(),
           digest: objectHash,
-          currency: currencyAddress,
+          currency: currency.address,
           chainId: pendingListing.chainId
         });
       }

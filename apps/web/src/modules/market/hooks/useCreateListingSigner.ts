@@ -5,6 +5,8 @@ import * as Sentry from "@sentry/nextjs";
 import {useSignTypedData} from "wagmi";
 import {useAppChainConfig} from "@src/config/hooks";
 import {ChainId} from "@pancakeswap/chains";
+import {CmsToken} from "@/components-v2/global-data-fetcher";
+import {parseUnits} from "viem";
 
 export interface ListingSignerProps {
   price: string;
@@ -15,7 +17,7 @@ export interface ListingSignerProps {
   expirationDate: number;
   salt: number;
   amount: number;
-  currency?: string;
+  currency?: CmsToken;
 }
 
 export enum ItemType {
@@ -136,9 +138,10 @@ const useSignature = (chainId?: number) => {
   const createSigner = useCallback(async (signatureValues: ListingSignerProps) => {
     setIsLoading(true);
 
-    const isNative = signatureValues?.currency === ethers.constants.AddressZero;
+    const isNative = !signatureValues.currency || signatureValues.currency.address === ethers.constants.AddressZero;
+    const decimals = signatureValues.currency?.decimals ?? 18;
 
-    const considerationPrice= ethers.utils.parseEther(`${signatureValues.price}`).toBigInt();
+    const considerationPrice= parseUnits(`${signatureValues.price}`, decimals);
     const offerItem = {
       itemType: signatureValues.itemType,
       token: signatureValues.collectionAddress.toLowerCase(),
@@ -149,7 +152,7 @@ const useSignature = (chainId?: number) => {
 
     const considerationItem = {
       itemType: isNative ? ItemType.NATIVE : ItemType.ERC20,
-      token: signatureValues.currency ?? ethers.constants.AddressZero,
+      token: signatureValues.currency?.address ?? ethers.constants.AddressZero,
       identifierOrCriteria: BigInt(0),
       startAmount: considerationPrice,
       endAmount: considerationPrice
