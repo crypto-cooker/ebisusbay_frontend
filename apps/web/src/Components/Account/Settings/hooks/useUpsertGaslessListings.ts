@@ -100,7 +100,7 @@ const useUpsertGaslessListings = (chainId?: number) => {
           itemTypes[pendingListing.collectionAddress] = await getItemType(pendingListing.collectionAddress, pendingListing.chainId);
         }
 
-        const currency = findCurrency({address: pendingListing.currencySymbol});
+        const currency = findCurrency({symbol: pendingListing.currencySymbol});
 
         if (!currency) {
           throw new Error('Unsupported currency for listings');
