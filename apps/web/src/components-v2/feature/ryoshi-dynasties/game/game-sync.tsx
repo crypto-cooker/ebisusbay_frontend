@@ -14,6 +14,7 @@ import {RdModalFooter} from "@src/components-v2/feature/ryoshi-dynasties/compone
 import useEnforceSignature from "@src/Components/Account/Settings/hooks/useEnforceSigner";
 import {useUser} from "@src/components-v2/useUser";
 import AuthenticationRdButton from "@src/components-v2/feature/ryoshi-dynasties/components/authentication-rd-button";
+import * as Sentry from '@sentry/nextjs';
 
 interface GameSyncProps {
   initialRdConfig: RyoshiConfig;
@@ -36,10 +37,11 @@ const GameSync = ({initialRdConfig, children}: GameSyncProps) => {
 
   const { data: rdConfig, status: rdConfigFetchStatus, error: rdFetchError} = useQuery({
     queryKey: ['RyoshiDynastiesContext'],
-    queryFn: () => {
+    queryFn: async () => {
       try {
-        return ApiService.withoutKey().ryoshiDynasties.getGlobalContext()
-      } catch {
+        return await ApiService.withoutKey().ryoshiDynasties.getGlobalContext();
+      } catch (e) {
+        Sentry.captureException(e);
         return initialRdConfig;
       }
     },
