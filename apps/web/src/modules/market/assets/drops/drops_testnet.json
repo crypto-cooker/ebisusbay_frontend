@@ -5732,5 +5732,46 @@
       "escrow": false,
       "verified": true
     }
+  },
+  {
+    "id": 202,
+    "chainId": 338,
+    "slug": "ryoshi-tales-zodiac-enlightened-series",
+    "title": "Ryoshi Tales: Zodiac Enlightened Series",
+    "subtitle": "The Zodiac Enlightened Series - Where mystical warriors of Ebisu's Bay don the essence and power of the twelve zodiac signs.",
+    "description": "The Zodiac Enlightened Series - Where mystical warriors of Ebisu's Bay don the essence and power of the twelve zodiac signs. Each character channels their zodiac spirit through enchanted armor and artifacts, creating unique warriors who blend traditional lunar zodiac symbolism with the supernatural elements of Ebisu's Bay. Ring in the Lunar New Year with Ryoshi Tales: Zodiac Enlightened Series.",
+    "author": {
+      "name": "Ebisu's Bay",
+      "website": "https://app.ebisusbay.com/",
+      "twitter": "https://twitter.com/EbisusBay",
+      "discord": "https://discord.gg/ynrBrSkAFG",
+      "medium": "https://blog.ebisusbay.com/",
+      "instagram": "https://www.instagram.com/ebisusbayofficial",
+      "telegram": "https://t.me/ebisusbay"
+    },
+    "address": "0xc54884FE06fe65070F5Ad2d05851D12120e70877",
+    "maxMintPerTx": 100,
+    "maxMintPerAddress": 100,
+    "totalSupply": 1000,
+    "cost": "50",
+    "foundersOnly": false,
+    "start": 1738088507000,
+    "end": null,
+    "referral": false,
+    "is1155": false,
+    "published": true,
+    "complete": false,
+    "images": {
+      "drop": "https://cdn-prod.ebisusbay.com/files/drop-images/ryoshi-tales-zodiac-enlightened-series/drop.webp",
+      "banner": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-zodiac-enlightened-series/banner.webp",
+      "avatar": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-zodiac-enlightened-series/avatar.webp",
+      "preview": "https://cdn-prod.ebisusbay.com/files/collection-images/ryoshi-tales-zodiac-enlightened-series/card.webp"
+    },
+    "verification": {
+      "verified": true,
+      "doxx": false,
+      "kyc": true,
+      "escrow": false
+    }
   }
 ]

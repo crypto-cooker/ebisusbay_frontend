@@ -93,6 +93,7 @@ const FaqPage = () => {
           <EligibilityCriteriaItem name='Ryoshi Tales (Celestial Celebration)' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales' && c.minId === 501 && c.maxId === 700)!} />
           <EligibilityCriteriaItem name='Pixel Ryoshi' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'pixel-ryoshi')!} />
           <EligibilityCriteriaItem name='Mystic Sea Dragons' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'mystic-sea-dragons')!} />
+          <EligibilityCriteriaItem name='Ryoshi Tales: Zodiac Enlightened Series' collectionStakingConfig={rdConfig.barracks.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-zodiac-enlightened-series')!} />
         </Accordion>
       </Box>
     </Stack>

@@ -463,25 +463,11 @@ const SingleDrop = ({drop}: SingleDropProps) => {
                 </div>
               ) : (
                 <div className="mt-3 mb-4">
-                  {drop.slug === 'the-cronosverse-suites' && (
-                    <Text mb={4}>
-                      Preview the CronosVerse Suites here: <br />
-                      <a href="https://thecronosverse.com/suite/virtual-viewer" target="_blank">
-                        https://thecronosverse.com/suite/virtual-viewer
-                    </a>
-                    </Text>
-                  )}
                   <Container>
                     <Markdown>
                       {drop.description}
                     </Markdown>
                   </Container>
-
-                  {drop.slug === 'ryoshi-playing-cards' && (
-                    <Text align="center" fontSize="sm" fontWeight="semibold" mt={4}>
-                      For complete rules to Crypto Hodl'em please visit our blog post <Link href={'https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496'} target='_blank' className='color'>https://blog.ebisusbay.com/unveiling-ebisus-bay-latest-playing-cards-collection-ryoshi-diamonds-c9298741f496</Link>
-                    </Text>
-                  )}
                 </div>
               )}
             </div>

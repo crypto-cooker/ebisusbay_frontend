@@ -108,6 +108,7 @@ const FaqPage = () => {
           <EligibilityCriteriaItem name='Pixel Ryoshi' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'pixel-ryoshi')!} />
           <EligibilityCriteriaItem name='Moggy Money Brokers' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'moggy-money-brokers')!} />
           <EligibilityCriteriaItem name='Mystic Sea Dragons' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'mystic-sea-dragons')!} />
+          <EligibilityCriteriaItem name='Ryoshi Tales: Zodiac Enlightened Series' collectionStakingConfig={rdConfig.bank.staking.nft.collections.find((c) => c.slug === 'ryoshi-tales-zodiac-enlightened-series')!} />
         </Accordion>
       </Box>
     </Stack>
