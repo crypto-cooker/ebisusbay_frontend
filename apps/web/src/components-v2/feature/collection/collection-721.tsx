@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
-import {useQuery} from "@tanstack/react-query";
-import {FullCollectionsQueryParams} from "@src/core/services/api-service/mapi/queries/fullcollections";
-import {AspectRatio, Avatar, Box, Button, Flex, Heading, IconButton, Image, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, Text, useBreakpointValue} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { FullCollectionsQueryParams } from "@src/core/services/api-service/mapi/queries/fullcollections";
+import { AspectRatio, Avatar, Box, Button, Flex, Heading, IconButton, Image, Popover, PopoverArrow, PopoverBody, PopoverContent, PopoverTrigger, Text, useBreakpointValue } from "@chakra-ui/react";
 import ImageService from "@src/core/services/image";
 import Blockies from "react-blockies";
 import MintingButton from "@src/Components/Collection/MintingButton";
-import {CollectionVerificationRow} from "@src/Components/components/CollectionVerificationRow";
-import {ChevronDownIcon, ChevronUpIcon, Icon, WarningIcon} from "@chakra-ui/icons";
+import { CollectionVerificationRow } from "@src/Components/components/CollectionVerificationRow";
+import { ChevronDownIcon, ChevronUpIcon, Icon, WarningIcon } from "@chakra-ui/icons";
 import SocialsBar from "@src/Components/Collection/SocialsBar";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import CollectionInfoBar from "@src/Components/components/CollectionInfoBar";
 import {
   ciEquals,
@@ -25,17 +25,20 @@ import CollectionBundlesGroup from "@src/Components/components/CollectionBundles
 import SalesCollection from "@src/Components/components/SalesCollection";
 import CollectionCronosverse from "@src/components-v2/feature/collection/tabs/cronosverse";
 import DynastiesLands from "@src/components-v2/feature/ryoshi-dynasties/game/areas/lands";
-import {pushQueryString} from "@src/helpers/query";
+import { pushQueryString } from "@src/helpers/query";
 import styled from "styled-components";
-import {getCollectionMetadata, getCollectionPowertraits, getCollectionTraits} from "@src/core/api";
-import {getCollections} from "@src/core/api/next/collectioninfo";
+import { getCollectionMetadata, getCollectionPowertraits, getCollectionTraits } from "@src/core/api";
+import { getCollections } from "@src/core/api/next/collectioninfo";
 import Items from "@src/components-v2/feature/collection/tabs/items";
 import PokerLeaderboardComponentPast from "@src/components-v2/feature/poker/poker-leaderboard-past";
-import {PokerCollection} from "@src/core/services/api-service/types";
-import {getTheme} from "@src/global/theme/theme";
-import {useUser} from "@src/components-v2/useUser";
-import {BlueCheckIcon} from "@src/components-v2/shared/icons/blue-check";
+import { PokerCollection } from "@src/core/services/api-service/types";
+import { getTheme } from "@src/global/theme/theme";
+import { useUser } from "@src/components-v2/useUser";
+import { BlueCheckIcon } from "@src/components-v2/shared/icons/blue-check";
 import { MapiCollectionBlacklist } from "@src/core/services/api-service/mapi/types";
+import { Address, erc721Abi, zeroAddress } from "viem";
+import { readContract } from "@wagmi/core";
+import { wagmiConfig } from "@src/wagmi";
 
 const tabs = {
   items: 'items',
@@ -69,19 +72,64 @@ interface Collection721Props {
 // TODO fix
 const hasRank = false;
 
-const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Collection721Props) => {
+const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null }: Collection721Props) => {
   const router = useRouter();
   const user = useUser();
   const [showFullDescription, setShowFullDescription] = useState(false);
   const { stakingPlatform } = useGetStakingPlatform(collection.address);
   const [openMenu, setOpenMenu] = useState(tabs.items);
-  const isMobileLayout = useBreakpointValue({base: true, sm: false}, {fallback: 'sm'});
+  const isMobileLayout = useBreakpointValue({ base: true, sm: false }, { fallback: 'sm' });
 
   const emptyFunction = () => {};
+  
+  const getBaseERC20Address = async () => {
+    try {
+      const baseERC20Address: Address = await readContract(wagmiConfig, {
+        address: collection.address,
+        abi: [{
+          type: 'function',
+          stateMutability: 'view',
+          outputs: [{ type: 'address', name: '', internalType: 'address' }],
+          name: 'baseERC20',
+          inputs: [],
+        }],
+        functionName: "baseERC20",
+        chainId: collection.chainId
+      });
+      return baseERC20Address;
+    } catch (e) {
+      console.log(e);
+      return zeroAddress;
+    }
+  };
+
+  const getTotalSupply = async () => {
+    const address = await getBaseERC20Address();
+    if (address == zeroAddress) return 0;
+    try {
+      const totalSupply = await readContract(wagmiConfig, {
+        address: collection.address,
+        abi: erc721Abi,
+        functionName: "totalSupply",
+        chainId: collection.chainId
+      });
+      return totalSupply;
+    } catch (e) {
+      console.log(e);
+      return 0;
+    }
+  }
 
   const { data: collectionStats } = useQuery({
     queryKey: ['CollectionStats', collection.address],
-    queryFn: () => getStats(collection, null, collection.mergedAddresses),
+    queryFn: async () => {
+      const collectionStats = await getStats(collection, null, collection.mergedAddresses);
+      const totalSupply = await getTotalSupply();
+      if (totalSupply != 0) {
+        collectionStats.totalSupply = totalSupply;
+      }
+      return collectionStats
+    },
     refetchOnWindowFocus: false
   });
 
@@ -110,8 +158,8 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
 
   return (
     <Box>
-      <AspectRatio ratio={{base: 4/3, sm: 2.66}} maxH='360px'>
-        {(!!collection.metadata.card || !!collection.metadata.banner)  ? (
+      <AspectRatio ratio={{ base: 4 / 3, sm: 2.66 }} maxH='360px'>
+        {(!!collection.metadata.card || !!collection.metadata.banner) ? (
           <>
             {isMobileLayout ? (
               <Image src={ImageService.translate(collection.metadata.card ?? collection.metadata.banner).banner()} alt='banner' objectFit='cover' />
@@ -122,13 +170,13 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
         ) : <></>}
       </AspectRatio>
       <Box as='section' className="gl-legacy container d_coll no-top no-bottom">
-        <Flex mt={{base: '-55px', lg: '-73px'}} justify='center'>
+        <Flex mt={{ base: '-55px', lg: '-73px' }} justify='center'>
           <Box position='relative'>
             {collection.metadata.avatar ? (
               <Avatar
                 src={ImageService.translate(collection.metadata.avatar).fixedWidth(150, 150)}
                 rounded='full'
-                size={{base: 'xl', sm: '2xl'}}
+                size={{ base: 'xl', sm: '2xl' }}
                 border={`6px solid ${getTheme(user.theme).colors.bgColor1}`}
                 bg={getTheme(user.theme).colors.bgColor1}
               />
@@ -139,7 +187,7 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
               <Popover>
                 <PopoverTrigger>
                   <Box position='absolute' bottom={2} right={2} cursor='pointer'>
-                    <WarningIcon boxSize={6}/>
+                    <WarningIcon boxSize={6} />
                   </Box>
                 </PopoverTrigger>
                 <PopoverContent>
@@ -149,7 +197,7 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
               </Popover>
             ) : collection.verification.verified && (
               <Box position='absolute' bottom={2} right={2}>
-                <BlueCheckIcon boxSize={6}/>
+                <BlueCheckIcon boxSize={6} />
               </Box>
             )}
           </Box>
@@ -260,21 +308,21 @@ const Collection721 = ({ collection, ssrTab, ssrQuery, activeDrop = null}: Colle
           )}
           {isPlayingCardsCollection(collection.address) && (
             <>
-            <li className={`tab ${openMenu === tabs.diamondsPokerGame ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.diamondsPokerGame)}>Diamonds Game</span>
-            </li>
-            <li className={`tab ${openMenu === tabs.clubsPokerGame ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.clubsPokerGame)}>Clubs Game</span>
-            </li>
-            <li className={`tab ${openMenu === tabs.heartsPokerGame ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.heartsPokerGame)}>Hearts Game</span>
-            </li>
-            <li className={`tab ${openMenu === tabs.spadesPokerGame ? 'active' : ''} my-1`}>
-              <span onClick={handleBtnClick(tabs.spadesPokerGame)}>Spades Game</span>
-            </li>
+              <li className={`tab ${openMenu === tabs.diamondsPokerGame ? 'active' : ''} my-1`}>
+                <span onClick={handleBtnClick(tabs.diamondsPokerGame)}>Diamonds Game</span>
+              </li>
+              <li className={`tab ${openMenu === tabs.clubsPokerGame ? 'active' : ''} my-1`}>
+                <span onClick={handleBtnClick(tabs.clubsPokerGame)}>Clubs Game</span>
+              </li>
+              <li className={`tab ${openMenu === tabs.heartsPokerGame ? 'active' : ''} my-1`}>
+                <span onClick={handleBtnClick(tabs.heartsPokerGame)}>Hearts Game</span>
+              </li>
+              <li className={`tab ${openMenu === tabs.spadesPokerGame ? 'active' : ''} my-1`}>
+                <span onClick={handleBtnClick(tabs.spadesPokerGame)}>Spades Game</span>
+              </li>
             </>
           )}
-          </ul>
+        </ul>
 
         <Box className="de_tab_content" px={2}>
           {openMenu === tabs.items && (
@@ -361,7 +409,7 @@ export const getStats = async (collection: any, id = null, extraAddresses = null
         ))
       };
     } else if (Array.isArray(mergedAddresses)) {
-      const newStats = await getCollections({address: mergedAddresses.join(',')});
+      const newStats = await getCollections({ address: mergedAddresses.join(',') });
       response = {
         collections: newStats.data.collections.map((sCollection: any) => (
           {
@@ -377,7 +425,7 @@ export const getStats = async (collection: any, id = null, extraAddresses = null
         ))
       }
     } else {
-      const newStats = await getCollections({address: mergedAddresses});
+      const newStats = await getCollections({ address: mergedAddresses });
       const sCollection = newStats.data.collections[0];
       response = {
         collections: [
@@ -397,7 +445,7 @@ export const getStats = async (collection: any, id = null, extraAddresses = null
     const traits = await getCollectionTraits(collection.address, collection.chain);
     const powertraits = collection.powertraits ? await getCollectionPowertraits(collection.address) : null;
 
-    let remainingStats: {traits: any, powertraits: any, totalSupply?: number} = {
+    let remainingStats: { traits: any, powertraits: any, totalSupply?: number } = {
       traits: traits,
       powertraits: powertraits,
     };
