@@ -84,6 +84,12 @@ const mainnetCollections: RyoshiConfigCollections[] = [
     slug: 'materialization-infusion-terminal',
     address: '0x36fc7f007e05449d07a8129a3aca9be87b5bba01',
     chainId: 388
+  },
+  {
+    name: 'Ryoshi Tales: Zodiac Enlightened Series',
+    slug: 'ryoshi-tales-zodiac-enlightened-series',
+    address: '0x2841a5cA6efaa1E631553b646dB57D73564320b0',
+    chainId: 25
   }
 ];
 
@@ -164,6 +170,12 @@ const testnetCollections: RyoshiConfigCollections[] = [
     name: 'Materialization Infusion Terminal',
     slug: 'materialization-infusion-terminal',
     address: '0xb115c623109b7998e497837ae6200ff79e49e1ee',
+    chainId: 338
+  },
+  {
+    name: 'Ryoshi Tales: Zodiac Enlightened Series',
+    slug: 'ryoshi-tales-zodiac-enlightened-series',
+    address: '0x104e8b17c9936a9038247f4dfbd6a40e92001a15',
     chainId: 338
   }
 ];
@@ -646,6 +658,22 @@ export const ryoshiConfig: RyoshiConfig = {
             apr: {
               multipliers: [],
               adders: [],
+              ids: []
+            }
+          },
+          {
+            ...collections.find(c => c.slug === 'ryoshi-tales-zodiac-enlightened-series')!,
+            active: true,
+            minId: 1,
+            maxId: 2004,
+            apr: {
+              multipliers: [],
+              adders: [
+                { percentile: 5, value: 0.5 },
+                { percentile: 10, value: 0.4 },
+                { percentile: 20, value: 0.3 },
+                { percentile: 100, value: 0.2 },
+              ],
               ids: []
             }
           }
@@ -1141,6 +1169,38 @@ export const ryoshiConfig: RyoshiConfig = {
             multipliers: [],
             ids: [],
             bonus: []
+          },
+          {
+            ...collections.find(c => c.slug === 'ryoshi-tales-zodiac-enlightened-series')!,
+            active: true,
+            minId: 1,
+            maxId: 2004,
+            traits: [],
+            multipliers: [
+              { percentile: 5, value: 100 },
+              { percentile: 10, value: 60 },
+              { percentile: 10, value: 40 },
+              { percentile: 100, value: 20 },
+            ],
+            ids: [],
+            bonus: [
+              {
+                value: 250,
+                traits: [
+                  {
+                    type: '1 of 1',
+                    inclusion: RyoshiConfigTraitInclusionType.INCLUDE,
+                    values: [
+                      'jade lutist',
+                      'reanimated chieftan',
+                      'golden piggy',
+                      'frostfire rodent',
+                      'the void hunter'
+                    ]
+                  }
+                ]
+              },
+            ]
           }
         ]
       }
